@@ -34,12 +34,12 @@ update() {
   local logo; logo=$(jq -r '.logo' < "$metadata")
   local logoData; logoData="$(base64 < "../$dir/$logo")"
 
-  local data; data="$(jq "{apiTemplate: { slug: .slug, name: .title, description: .description, tags: .tags, logoData: \"$logoData\"}, logoMediaType: .logoMediaType }" < "$metadata")"
+  local data; data="$(jq "{apiTemplate: { slug: .slug, name: .title, description: .description, tags: .tags, logoData: \"$logoData\", logoMediaType: .logoMediaType } }" < "$metadata")"
 
   echo "Creating template: $dir via POST to $wiremock_cloud_url/v1/api-templates/public"
 
   local apiTemplate; apiTemplate="$( \
-    curl -fsS \
+    curl -sS --fail-with-body \
       -u "$wiremock_cloud_username:$wiremock_cloud_api_token" \
       -H 'Content-Type: application/json' \
       -d "$data" \
@@ -54,7 +54,7 @@ update() {
 
   echo "Setting stubs: $stubsFile for template $dir via PUT to $wiremock_cloud_url/v1/api-templates/$apiTemplateId/stubs"
 
-  curl -fsS \
+  curl -sS --fail-with-body \
     -u "$wiremock_cloud_username:$wiremock_cloud_api_token" \
     -H 'Content-Type: application/json' \
     -X PUT \
