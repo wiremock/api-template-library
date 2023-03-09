@@ -39,27 +39,42 @@ update() {
   echo "Creating template: $dir via POST to $wiremock_cloud_url/v1/api-templates/public"
 
   local apiTemplate; apiTemplate="$( \
-    curl -sS --fail-with-body \
-      -u "$wiremock_cloud_username:$wiremock_cloud_api_token" \
+    curl_auth \
+      "$wiremock_cloud_username" \
+      "$wiremock_cloud_api_token" \
       -H 'Content-Type: application/json' \
       -d "$data" \
       "$wiremock_cloud_url/v1/api-templates/public" \
   )"
 
-  echo "Created apiTemplate $apiTemplate"
-
   local apiTemplateId; apiTemplateId="$(echo "$apiTemplate" | jq -r .apiTemplate.id)"
+  local apiTemplateDetails; apiTemplateDetails="$(echo "$apiTemplate" | jq -c '{ { apiTemplate: { id: .apiTemplate.id, slug: .apiTemplate.slug, name: .apiTemplate.name, description: .apiTemplate.description, tags: .apiTemplate.tags } }')"
 
-  local stubsFile; stubsFile=$(jq -r '.stubs' < "$metadata")
+  echo "Created $apiTemplateDetails"
+
+  local stubsFile; stubsFile="../$dir/$(jq -r '.stubs' < "$metadata")"
 
   echo "Setting stubs: $stubsFile for template $dir via PUT to $wiremock_cloud_url/v1/api-templates/$apiTemplateId/stubs"
 
-  curl -sS --fail-with-body \
-    -u "$wiremock_cloud_username:$wiremock_cloud_api_token" \
+  curl_auth \
+    "$wiremock_cloud_username" \
+    "$wiremock_cloud_api_token" \
     -H 'Content-Type: application/json' \
     -X PUT \
     -d "@$stubsFile" \
-    "$wiremock_cloud_url/v1/api-templates/$apiTemplateId/stubs"
+    "$wiremock_cloud_url/v1/api-templates/$apiTemplateId/stubs" >/dev/null
+}
+
+curl_auth() {
+  local wiremock_cloud_username=$1
+  local wiremock_cloud_api_token=$2
+
+  shift
+  shift
+
+  curl -sS --fail-with-body \
+    -u "$wiremock_cloud_username:$wiremock_cloud_api_token" \
+    "$@"
 }
 
 update "$@"
