@@ -48,7 +48,7 @@ update() {
   )"
 
   local apiTemplateId; apiTemplateId="$(echo "$apiTemplate" | jq -r .apiTemplate.id)"
-  local apiTemplateDetails; apiTemplateDetails="$(echo "$apiTemplate" | jq -c '{ { apiTemplate: { id: .apiTemplate.id, slug: .apiTemplate.slug, name: .apiTemplate.name, description: .apiTemplate.description, tags: .apiTemplate.tags } }')"
+  local apiTemplateDetails; apiTemplateDetails="$(echo "$apiTemplate" | jq -c '{ apiTemplate: { id: .apiTemplate.id, slug: .apiTemplate.slug, name: .apiTemplate.name, description: .apiTemplate.description, tags: .apiTemplate.tags } }')"
 
   echo "Created $apiTemplateDetails"
 
