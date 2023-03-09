@@ -18,12 +18,24 @@ updateAll() {
 
   for dir in ../*; do
     if [[ -d "$dir" ]]; then
-      update "${dir#../}" "$wiremock_cloud_url" "$wiremock_cloud_username" "$wiremock_cloud_api_token"
+
+      set +e
+      (update "${dir#../}" "$wiremock_cloud_url" "$wiremock_cloud_username" "$wiremock_cloud_api_token")
+      local result=$?
+      set -e
+
+      if [[ result -eq 0 ]]; then
+        echo "Imported $dir"
+      else
+        >&2 echo "Failed to import $dir"
+      fi
     fi
   done
 }
 
 update() {
+  set -euo pipefail
+
   local dir=$1
   local wiremock_cloud_url=$2
   local wiremock_cloud_username=$3
