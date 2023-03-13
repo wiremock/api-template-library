@@ -46,7 +46,7 @@ update() {
   local logo; logo=$(jq -r '.logo' < "$metadata")
   local logoData; logoData="$(base64 < "../$dir/$logo")"
 
-  local data; data="$(jq "{apiTemplate: { slug: .slug, name: .title, description: .description, tags: .tags, logoData: \"$logoData\", logoMediaType: .logoMediaType } }" < "$metadata")"
+  local data; data="$(jq "{apiTemplate: { slug: .slug, name: .name, provider: .provider, description: .description, tags: .tags, logoData: \"$logoData\", logoMediaType: .logoMediaType } }" < "$metadata")"
 
   echo "Creating template: $dir via POST to $wiremock_cloud_url/v1/api-templates/public"
 
@@ -60,7 +60,7 @@ update() {
   )"
 
   local apiTemplateId; apiTemplateId="$(echo "$apiTemplate" | jq -r .apiTemplate.id)"
-  local apiTemplateDetails; apiTemplateDetails="$(echo "$apiTemplate" | jq -c '{ apiTemplate: { id: .apiTemplate.id, slug: .apiTemplate.slug, name: .apiTemplate.name, tags: .apiTemplate.tags } }')"
+  local apiTemplateDetails; apiTemplateDetails="$(echo "$apiTemplate" | jq -c '{ apiTemplate: { id: .apiTemplate.id, slug: .apiTemplate.slug, name: .apiTemplate.name, provider: .apiTemplate.provider, tags: .apiTemplate.tags } }')"
 
   echo "Created $apiTemplateDetails"
 
