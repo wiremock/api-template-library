@@ -1,1 +1,2652 @@
-{"openapi":"3.0.1","info":{"title":"Azure Alerts Management Service Resource Provider","description":"Azure Alerts Management Service provides a single pane of glass of alerts across Azure Monitor.","version":"2019-05-05-preview"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/providers/Microsoft.AlertsManagement/alertsMetaData":{"get":{"description":"List alerts meta data information based on value of identifier parameter.","operationId":"Alerts_MetaData","parameters":[{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}},{"name":"identifier","in":"query","description":"Identification of the information to be retrieved by API call.","required":true,"schema":{"type":"string","enum":["MonitorServiceList"]}}],"responses":{"200":{"description":"OK. Successfully listed alert meta data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alertsMetaData"}}}}}}},"/providers/Microsoft.AlertsManagement/operations":{"get":{"description":"List all operations available through Azure Alerts Management Resource Provider.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Successfully retrieved operations list.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/operationsList"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules":{"get":{"summary":"Get all action rule in a given subscription","description":"List all action rules of the subscription and given input filters","operationId":"ActionRules_ListBySubscription","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},{"name":"impactedScope","in":"query","description":"filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.","schema":{"type":"string"}},{"name":"description","in":"query","description":"filter by alert rule description","schema":{"type":"string"}},{"name":"alertRuleId","in":"query","description":"filter by alert rule id","schema":{"type":"string"}},{"name":"actionGroup","in":"query","description":"filter by action group configured as part of action rule","schema":{"type":"string"}},{"name":"name","in":"query","description":"filter by action rule name","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Return the list of action rules","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRulesList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts":{"get":{"description":"List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. ","operationId":"Alerts_GetAll","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},{"name":"monitorCondition","in":"query","description":"Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.","schema":{"type":"string","enum":["Fired","Resolved"]}},{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},{"name":"alertState","in":"query","description":"Filter by state of the alert instance. Default value is to select all.","schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},{"name":"alertRule","in":"query","description":"Filter by specific alert rule.  Default value is to select all.","schema":{"type":"string"}},{"name":"smartGroupId","in":"query","description":"Filter the alerts list by the Smart Group Id. Default value is none.","schema":{"type":"string"}},{"name":"includeContext","in":"query","description":"Include context which has contextual data specific to the monitor service. Default value is false'","schema":{"type":"boolean"}},{"name":"includeEgressConfig","in":"query","description":"Include egress config which would be used for displaying the content in portal.  Default value is 'false'.","schema":{"type":"boolean"}},{"name":"pageCount","in":"query","description":"Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.","schema":{"type":"integer"}},{"name":"sortBy","in":"query","description":"Sort the query results by input field,  Default value is 'lastModifiedDateTime'.","schema":{"type":"string","enum":["name","severity","alertState","monitorCondition","targetResource","targetResourceName","targetResourceGroup","targetResourceType","startDateTime","lastModifiedDateTime"]}},{"name":"sortOrder","in":"query","description":"Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.","schema":{"type":"string","enum":["asc","desc"]}},{"name":"select","in":"query","description":"This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section.","schema":{"type":"string"}},{"name":"timeRange","in":"query","description":"Filter by time range by below listed values. Default value is 1 day.","schema":{"type":"string","enum":["1h","1d","7d","30d"]}},{"name":"customTimeRange","in":"query","description":"Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Successfully listed alert objects.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alertsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}":{"get":{"summary":"Get a specific alert.","description":"Get information related to a specific alert","operationId":"Alerts_GetById","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"alertId","in":"path","description":"Unique ID of an alert instance.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns the alert with the specified ID.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alert"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate":{"post":{"description":"Change the state of an alert.","operationId":"Alerts_ChangeState","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"alertId","in":"path","description":"Unique ID of an alert instance.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}},{"name":"newState","in":"query","description":"New state of the alert.","required":true,"schema":{"type":"string","enum":["New","Acknowledged","Closed"]}}],"responses":{"200":{"description":"OK. Alert state updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alert"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history":{"get":{"description":"Get the history of an alert, which captures any monitor condition changes (Fired/Resolved) and alert state changes (New/Acknowledged/Closed).","operationId":"Alerts_GetHistory","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"alertId","in":"path","description":"Unique ID of an alert instance.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns the history of the specified alert.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alertModification"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary":{"get":{"description":"Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).","operationId":"Alerts_GetSummary","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"groupby","in":"query","description":"This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate.","required":true,"schema":{"type":"string","enum":["severity","alertState","monitorCondition","monitorService","signalType","alertRule"]}},{"name":"includeSmartGroupsCount","in":"query","description":"Include count of the SmartGroups as part of the summary. Default value is 'false'.","schema":{"type":"boolean"}},{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},{"name":"monitorCondition","in":"query","description":"Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.","schema":{"type":"string","enum":["Fired","Resolved"]}},{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},{"name":"alertState","in":"query","description":"Filter by state of the alert instance. Default value is to select all.","schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},{"name":"alertRule","in":"query","description":"Filter by specific alert rule.  Default value is to select all.","schema":{"type":"string"}},{"name":"timeRange","in":"query","description":"Filter by time range by below listed values. Default value is 1 day.","schema":{"type":"string","enum":["1h","1d","7d","30d"]}},{"name":"customTimeRange","in":"query","description":"Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Alert summary returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/alertsSummary"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups":{"get":{"summary":"Get all Smart Groups within a specified subscription","description":"List all the Smart Groups within a specified subscription. ","operationId":"SmartGroups_GetAll","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},{"name":"monitorCondition","in":"query","description":"Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.","schema":{"type":"string","enum":["Fired","Resolved"]}},{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},{"name":"smartGroupState","in":"query","description":"Filter by state of the smart group. Default value is to select all.","schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},{"name":"timeRange","in":"query","description":"Filter by time range by below listed values. Default value is 1 day.","schema":{"type":"string","enum":["1h","1d","7d","30d"]}},{"name":"pageCount","in":"query","description":"Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.","schema":{"type":"integer"}},{"name":"sortBy","in":"query","description":"Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'.","schema":{"type":"string","enum":["alertsCount","state","severity","startDateTime","lastModifiedDateTime"]}},{"name":"sortOrder","in":"query","description":"Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.","schema":{"type":"string","enum":["asc","desc"]}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns list of all smartGroups.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/smartGroupsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}":{"get":{"summary":"Get information related to a specific Smart Group.","description":"Get information related to a specific Smart Group.","operationId":"SmartGroups_GetById","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"smartGroupId","in":"path","description":"Smart group unique id. ","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns the group with the specified smart group Id.","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/smartGroup"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}/changeState":{"post":{"description":"Change the state of a Smart Group.","operationId":"SmartGroups_ChangeState","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"smartGroupId","in":"path","description":"Smart group unique id. ","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}},{"name":"newState","in":"query","description":"New state of the alert.","required":true,"schema":{"type":"string","enum":["New","Acknowledged","Closed"]}}],"responses":{"200":{"description":"OK. Smart Group state updated.","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/smartGroup"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}/history":{"get":{"description":"Get the history a smart group, which captures any Smart Group state changes (New/Acknowledged/Closed) .","operationId":"SmartGroups_GetHistory","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"smartGroupId","in":"path","description":"Smart group unique id. ","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns the list of changes of smart group.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/smartGroupModification"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules":{"get":{"summary":"Get all action rules created in a resource group","description":"List all action rules of the subscription, created in given resource group and given input filters","operationId":"ActionRules_ListByResourceGroup","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},{"name":"impactedScope","in":"query","description":"filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.","schema":{"type":"string"}},{"name":"description","in":"query","description":"filter by alert rule description","schema":{"type":"string"}},{"name":"alertRuleId","in":"query","description":"filter by alert rule id","schema":{"type":"string"}},{"name":"actionGroup","in":"query","description":"filter by action group configured as part of action rule","schema":{"type":"string"}},{"name":"name","in":"query","description":"filter by action rule name","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Return the list of action rules","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRulesList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}":{"get":{"summary":"Get action rule by name","description":"Get a specific action rule","operationId":"ActionRules_GetByName","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},{"name":"actionRuleName","in":"path","description":"The name of action rule that needs to be fetched","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns the specific action rule","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRule"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}},"put":{"summary":"Create/update an action rule","description":"Creates/Updates a specific action rule","operationId":"ActionRules_CreateUpdate","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},{"name":"actionRuleName","in":"path","description":"The name of action rule that needs to be created/updated","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"requestBody":{"description":"action rule to be created/updated","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRule"}}},"required":true},"responses":{"200":{"description":"OK. Returns the created/updated action rule","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRule"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}},"delete":{"summary":"Delete action rule","description":"Deletes a given action rule","operationId":"ActionRules_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},{"name":"actionRuleName","in":"path","description":"The name that needs to be deleted","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"responses":{"200":{"description":"OK. Returns true if deleted successfully","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"boolean"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}},"patch":{"summary":"Patch action rule","description":"Update enabled flag and/or tags for the given action rule","operationId":"ActionRules_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},{"name":"actionRuleName","in":"path","description":"The name that needs to be updated","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}}],"requestBody":{"description":"Parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PatchObject"}}},"required":true},"responses":{"200":{"description":"OK. Returns the created/updated action rule","headers":{"x-ms-request-id":{"description":"Service generated Request ID.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionRule"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/errorResponse"}}}}}}}},"components":{"schemas":{"ActionGroup":{"title":"Action Group based Action Rule","properties":{"actionGroupId":{"type":"string","description":"Action group to trigger if action rule matches"}},"description":"Action rule with action group configuration","allOf":[{"$ref":"#/components/schemas/ActionRuleProperties"},{"type":"object"}]},"ActionRule":{"properties":{"properties":{"$ref":"#/components/schemas/ActionRuleProperties"}},"description":"Action rule object containing target scope, conditions and suppression logic","allOf":[{"$ref":"#/components/schemas/ManagedResource"}]},"ActionRuleProperties":{"required":["type"],"type":"object","properties":{"conditions":{"$ref":"#/components/schemas/Conditions"},"createdAt":{"type":"string","description":"Creation time of action rule. Date-Time in ISO-8601 format.","format":"date-time","readOnly":true},"createdBy":{"type":"string","description":"Created by user name.","readOnly":true},"description":{"type":"string","description":"Description of action rule"},"lastModifiedAt":{"type":"string","description":"Last updated time of action rule. Date-Time in ISO-8601 format.","format":"date-time","readOnly":true},"lastModifiedBy":{"type":"string","description":"Last modified by user name.","readOnly":true},"scope":{"$ref":"#/components/schemas/Scope"},"status":{"type":"string","description":"Indicates if the given action rule is enabled or disabled","enum":["Enabled","Disabled"]},"type":{"type":"string","description":"Indicates type of action rule","enum":["Suppression","ActionGroup","Diagnostics"]}},"description":"Action rule properties defining scope, conditions, suppression logic for action rule","discriminator":{"propertyName":"type"}},"ActionRulesList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to fetch the next set of action rules"},"value":{"type":"array","description":"List of action rules","items":{"$ref":"#/components/schemas/ActionRule"}}},"description":"List of action rules"},"Condition":{"type":"object","properties":{"operator":{"type":"string","description":"operator for a given condition","enum":["Equals","NotEquals","Contains","DoesNotContain"]},"values":{"type":"array","description":"list of values to match for a given condition.","items":{"type":"string"}}},"description":"condition to trigger an action rule"},"Conditions":{"type":"object","properties":{"alertContext":{"$ref":"#/components/schemas/Condition"},"alertRuleId":{"$ref":"#/components/schemas/Condition"},"description":{"$ref":"#/components/schemas/Condition"},"monitorCondition":{"$ref":"#/components/schemas/Condition"},"monitorService":{"$ref":"#/components/schemas/Condition"},"severity":{"$ref":"#/components/schemas/Condition"},"targetResourceType":{"$ref":"#/components/schemas/Condition"}},"description":"Conditions in alert instance to be matched for a given action rule. Default value is all. Multiple values could be provided with comma separation."},"Diagnostics":{"title":"Diagnostics based Action Rule","description":"Action rule with diagnostics configuration","allOf":[{"$ref":"#/components/schemas/ActionRuleProperties"},{"type":"object"}]},"ManagedResource":{"properties":{"location":{"type":"string","description":"Resource location"},"tags":{"type":"object","description":"Resource tags"}},"description":"An azure managed resource object","allOf":[{"$ref":"#/components/schemas/Resource"}]},"MonitorServiceDetails":{"type":"object","properties":{"displayName":{"type":"string","description":"Monitor service display name"},"name":{"type":"string","description":"Monitor service name"}},"description":"Details of a monitor service"},"MonitorServiceList":{"title":"Monitor service details","properties":{"data":{"type":"array","description":"Array of operations","items":{"$ref":"#/components/schemas/MonitorServiceDetails"}}},"description":"Monitor service details","allOf":[{"$ref":"#/components/schemas/alertsMetaDataProperties"},{"type":"object"}]},"PatchObject":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/PatchProperties"},"tags":{"type":"object","description":"tags to be updated"}},"description":"Data contract for patch"},"PatchProperties":{"type":"object","properties":{"status":{"type":"string","description":"Indicates if the given action rule is enabled or disabled","enum":["Enabled","Disabled"]}},"description":"Action rule properties supported by patch"},"Resource":{"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"name":{"type":"string","description":"Azure resource name","readOnly":true},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"Scope":{"type":"object","properties":{"scopeType":{"type":"string","description":"type of target scope","enum":["ResourceGroup","Resource"]},"values":{"type":"array","description":"list of ARM IDs of the given scope type which will be the target of the given action rule.","items":{"type":"string"}}},"description":"Target scope for a given action rule. By default scope will be the subscription. User can also provide list of resource groups or list of resources from the scope subscription as well."},"Suppression":{"title":"Suppression based Action Rule","properties":{"suppressionConfig":{"$ref":"#/components/schemas/SuppressionConfig"}},"description":"Action rule with suppression configuration","allOf":[{"$ref":"#/components/schemas/ActionRuleProperties"},{"type":"object"}]},"SuppressionConfig":{"required":["recurrenceType"],"type":"object","properties":{"recurrenceType":{"type":"string","description":"Specifies when the suppression should be applied","enum":["Always","Once","Daily","Weekly","Monthly"]},"schedule":{"$ref":"#/components/schemas/SuppressionSchedule"}},"description":"Suppression logic for a given action rule"},"SuppressionSchedule":{"type":"object","properties":{"endDate":{"type":"string","description":"End date for suppression"},"endTime":{"type":"string","description":"End date for suppression"},"recurrenceValues":{"type":"array","description":"Specifies the values for recurrence pattern","items":{"type":"integer"}},"startDate":{"type":"string","description":"Start date for suppression"},"startTime":{"type":"string","description":"Start time for suppression"}},"description":"Schedule for a given suppression configuration."},"alert":{"properties":{"properties":{"$ref":"#/components/schemas/alertProperties"}},"description":"An alert created in alert management service.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"alertContext":{"type":"object","description":"Information specific to the monitor service that gives more contextual details about the alert."},"alertModification":{"properties":{"properties":{"$ref":"#/components/schemas/alertModificationProperties"}},"description":"Alert Modification details","allOf":[{"$ref":"#/components/schemas/Resource"}]},"alertModificationItem":{"type":"object","properties":{"comments":{"type":"string","description":"Modification comments"},"description":{"type":"string","description":"Description of the modification"},"modificationEvent":{"type":"string","description":"Reason for the modification","enum":["AlertCreated","StateChange","MonitorConditionChange"]},"modifiedAt":{"type":"string","description":"Modified date and time"},"modifiedBy":{"type":"string","description":"Modified user details (Principal client name)"},"newValue":{"type":"string","description":"New value"},"oldValue":{"type":"string","description":"Old value"}},"description":"Alert modification item."},"alertModificationProperties":{"type":"object","properties":{"alertId":{"type":"string","description":"Unique Id of the alert for which the history is being retrieved","readOnly":true},"modifications":{"type":"array","description":"Modification details","items":{"$ref":"#/components/schemas/alertModificationItem"}}},"description":"Properties of the alert modification item."},"alertProperties":{"type":"object","properties":{"context":{"$ref":"#/components/schemas/alertContext"},"egressConfig":{"$ref":"#/components/schemas/egressConfig"},"essentials":{"$ref":"#/components/schemas/essentials"}},"description":"Alert property bag"},"alertsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to fetch the next set of alerts."},"value":{"type":"array","description":"List of alerts","items":{"$ref":"#/components/schemas/alert"}}},"description":"List the alerts."},"alertsMetaData":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/alertsMetaDataProperties"}},"description":"alert meta data information."},"alertsMetaDataProperties":{"required":["metadataIdentifier"],"type":"object","properties":{"metadataIdentifier":{"type":"string","description":"Identification of the information to be retrieved by API call","enum":["MonitorServiceList"]}},"description":"alert meta data property bag","discriminator":{"propertyName":"metadataIdentifier"}},"alertsSummary":{"properties":{"properties":{"$ref":"#/components/schemas/alertsSummaryGroup"}},"description":"Summary of alerts based on the input filters and 'groupby' parameters.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"alertsSummaryGroup":{"type":"object","properties":{"groupedby":{"type":"string","description":"Name of the field aggregated"},"smartGroupsCount":{"type":"integer","description":"Total count of the smart groups."},"total":{"type":"integer","description":"Total count of the result set."},"values":{"type":"array","description":"List of the items","items":{"$ref":"#/components/schemas/alertsSummaryGroupItem"}}},"description":"Group the result set."},"alertsSummaryGroupItem":{"type":"object","properties":{"count":{"type":"integer","description":"Count of the aggregated field"},"groupedby":{"type":"string","description":"Name of the field aggregated"},"name":{"type":"string","description":"Value of the aggregated field"},"values":{"type":"array","description":"List of the items","items":{"$ref":"#/components/schemas/alertsSummaryGroupItem"}}},"description":"Alerts summary group item"},"egressConfig":{"type":"object","description":"Config which would be used for displaying the data in portal."},"errorResponse":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/errorResponseBody"}},"description":"An error response from the service."},"errorResponseBody":{"type":"object","properties":{"code":{"type":"string","description":"Error code, intended to be consumed programmatically."},"details":{"type":"array","description":"A list of additional details about the error.","items":{"$ref":"#/components/schemas/errorResponseBody"}},"message":{"type":"string","description":"Description of the error, intended for display in user interface."},"target":{"type":"string","description":"Target of the particular error, for example name of the property."}},"description":"Details of error response."},"essentials":{"type":"object","properties":{"alertRule":{"type":"string","description":"Rule(monitor) which fired alert instance. Depending on the monitor service,  this would be ARM id or name of the rule.","readOnly":true},"alertState":{"type":"string","description":"Alert object state, which can be modified by the user.","readOnly":true,"enum":["New","Acknowledged","Closed"]},"lastModifiedDateTime":{"type":"string","description":"Last modification time(ISO-8601 format) of alert instance.","format":"date-time","readOnly":true},"lastModifiedUserName":{"type":"string","description":"User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user.","readOnly":true},"monitorCondition":{"type":"string","description":"Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds.","readOnly":true,"enum":["Fired","Resolved"]},"monitorConditionResolvedDateTime":{"type":"string","description":"Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met.","format":"date-time","readOnly":true},"monitorService":{"type":"string","description":"Monitor service on which the rule(monitor) is set.","readOnly":true,"enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]},"severity":{"type":"string","description":"Severity of alert Sev0 being highest and Sev4 being lowest.","readOnly":true,"enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]},"signalType":{"type":"string","description":"The type of signal the alert is based on, which could be metrics, logs or activity logs.","readOnly":true,"enum":["Metric","Log","Unknown"]},"smartGroupId":{"type":"string","description":"Unique Id of the smart group","readOnly":true},"smartGroupingReason":{"type":"string","description":"Verbose reason describing the reason why this alert instance is added to a smart group","readOnly":true},"sourceCreatedId":{"type":"string","description":"Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc.","readOnly":true},"startDateTime":{"type":"string","description":"Creation time(ISO-8601 format) of alert instance.","format":"date-time","readOnly":true},"targetResource":{"type":"string","description":"Target ARM resource, on which alert got created."},"targetResourceGroup":{"type":"string","description":"Resource group of target ARM resource, on which alert got created."},"targetResourceName":{"type":"string","description":"Name of the target ARM resource name, on which alert got created."},"targetResourceType":{"type":"string","description":"Resource type of target ARM resource, on which alert got created."}},"description":"This object contains consistent fields across different monitor services."},"operation":{"type":"object","properties":{"display":{"type":"object","properties":{"description":{"type":"string","description":"Description of the operation"},"operation":{"type":"string","description":"Operation name"},"provider":{"type":"string","description":"Provider name"},"resource":{"type":"string","description":"Resource name"}},"description":"Properties of the operation"},"name":{"type":"string","description":"Name of the operation"}},"description":"Operation provided by provider"},"operationsList":{"required":["value"],"type":"object","properties":{"nextLink":{"type":"string","description":"URL to fetch the next set of alerts."},"value":{"type":"array","description":"Array of operations","items":{"$ref":"#/components/schemas/operation"}}},"description":"Lists the operations available in the AlertsManagement RP."},"smartGroup":{"properties":{"properties":{"$ref":"#/components/schemas/smartGroupProperties"}},"description":"Set of related alerts grouped together smartly by AMS.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"smartGroupAggregatedProperty":{"type":"object","properties":{"count":{"type":"integer","description":"Total number of items of type."},"name":{"type":"string","description":"Name of the type."}},"description":"Aggregated property of each type"},"smartGroupModification":{"properties":{"properties":{"$ref":"#/components/schemas/smartGroupModificationProperties"}},"description":"Alert Modification details","allOf":[{"$ref":"#/components/schemas/Resource"}]},"smartGroupModificationItem":{"type":"object","properties":{"comments":{"type":"string","description":"Modification comments"},"description":{"type":"string","description":"Description of the modification"},"modificationEvent":{"type":"string","description":"Reason for the modification","enum":["SmartGroupCreated","StateChange","AlertAdded","AlertRemoved"]},"modifiedAt":{"type":"string","description":"Modified date and time"},"modifiedBy":{"type":"string","description":"Modified user details (Principal client name)"},"newValue":{"type":"string","description":"New value"},"oldValue":{"type":"string","description":"Old value"}},"description":"smartGroup modification item."},"smartGroupModificationProperties":{"type":"object","properties":{"modifications":{"type":"array","description":"Modification details","items":{"$ref":"#/components/schemas/smartGroupModificationItem"}},"nextLink":{"type":"string","description":"URL to fetch the next set of results."},"smartGroupId":{"type":"string","description":"Unique Id of the smartGroup for which the history is being retrieved","readOnly":true}},"description":"Properties of the smartGroup modification item."},"smartGroupProperties":{"type":"object","properties":{"alertSeverities":{"type":"array","description":"Summary of alertSeverities in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"alertStates":{"type":"array","description":"Summary of alertStates in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"alertsCount":{"type":"integer","description":"Total number of alerts in smart group"},"lastModifiedDateTime":{"type":"string","description":"Last updated time of smart group. Date-Time in ISO-8601 format.","format":"date-time","readOnly":true},"lastModifiedUserName":{"type":"string","description":"Last modified by user name.","readOnly":true},"monitorConditions":{"type":"array","description":"Summary of monitorConditions in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"monitorServices":{"type":"array","description":"Summary of monitorServices in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"nextLink":{"type":"string","description":"The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts."},"resourceGroups":{"type":"array","description":"Summary of target resource groups in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"resourceTypes":{"type":"array","description":"Summary of target resource types in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"resources":{"type":"array","description":"Summary of target resources in the smart group","items":{"$ref":"#/components/schemas/smartGroupAggregatedProperty"}},"severity":{"type":"string","description":"Severity of smart group is the highest(Sev0 >... > Sev4) severity of all the alerts in the group.","readOnly":true,"enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]},"smartGroupState":{"type":"string","description":"Smart group state","readOnly":true,"enum":["New","Acknowledged","Closed"]},"startDateTime":{"type":"string","description":"Creation time of smart group. Date-Time in ISO-8601 format.","format":"date-time","readOnly":true}},"description":"Properties of smart group."},"smartGroupsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to fetch the next set of alerts."},"value":{"type":"array","description":"List of alerts","items":{"$ref":"#/components/schemas/smartGroup"}}},"description":"List the alerts."}},"parameters":{"actionGroup":{"name":"actionGroup","in":"query","description":"filter by action group configured as part of action rule","schema":{"type":"string"}},"actionRuleName":{"name":"name","in":"query","description":"filter by action rule name","schema":{"type":"string"}},"alertId":{"name":"alertId","in":"path","description":"Unique ID of an alert instance.","required":true,"schema":{"type":"string"}},"alertRule":{"name":"alertRule","in":"query","description":"Filter by specific alert rule.  Default value is to select all.","schema":{"type":"string"}},"alertRuleId":{"name":"alertRuleId","in":"query","description":"filter by alert rule id","schema":{"type":"string"}},"alertState":{"name":"alertState","in":"query","description":"Filter by state of the alert instance. Default value is to select all.","schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},"alertsSortBy":{"name":"sortBy","in":"query","description":"Sort the query results by input field,  Default value is 'lastModifiedDateTime'.","schema":{"type":"string","enum":["name","severity","alertState","monitorCondition","targetResource","targetResourceName","targetResourceGroup","targetResourceType","startDateTime","lastModifiedDateTime"]}},"alertsSummaryGroupBy":{"name":"groupby","in":"query","description":"This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate.","required":true,"schema":{"type":"string","enum":["severity","alertState","monitorCondition","monitorService","signalType","alertRule"]}},"api-version":{"name":"api-version","in":"query","description":"client API version","required":true,"schema":{"type":"string","enum":["2019-05-05-preview"]}},"customTimeRange":{"name":"customTimeRange","in":"query","description":"Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.","schema":{"type":"string"}},"description":{"name":"description","in":"query","description":"filter by alert rule description","schema":{"type":"string"}},"identifier":{"name":"identifier","in":"query","description":"Identification of the information to be retrieved by API call.","required":true,"schema":{"type":"string","enum":["MonitorServiceList"]}},"impactedScope":{"name":"impactedScope","in":"query","description":"filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.","schema":{"type":"string"}},"includeContext":{"name":"includeContext","in":"query","description":"Include context which has contextual data specific to the monitor service. Default value is false'","schema":{"type":"boolean"}},"includeEgressConfig":{"name":"includeEgressConfig","in":"query","description":"Include egress config which would be used for displaying the content in portal.  Default value is 'false'.","schema":{"type":"boolean"}},"includeSmartGroupsCount":{"name":"includeSmartGroupsCount","in":"query","description":"Include count of the SmartGroups as part of the summary. Default value is 'false'.","schema":{"type":"boolean"}},"monitorCondition":{"name":"monitorCondition","in":"query","description":"Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.","schema":{"type":"string","enum":["Fired","Resolved"]}},"monitorService":{"name":"monitorService","in":"query","description":"Filter by monitor service which generates the alert instance. Default value is select all.","schema":{"type":"string","enum":["Application Insights","ActivityLog Administrative","ActivityLog Security","ActivityLog Recommendation","ActivityLog Policy","ActivityLog Autoscale","Log Analytics","Nagios","Platform","SCOM","ServiceHealth","SmartDetector","VM Insights","Zabbix"]}},"newState":{"name":"newState","in":"query","description":"New state of the alert.","required":true,"schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},"pageCount":{"name":"pageCount","in":"query","description":"Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.","schema":{"type":"integer"}},"resourceGroupName":{"name":"resourceGroupName","in":"path","description":"Resource group name where the resource is created.","required":true,"schema":{"type":"string"}},"select":{"name":"select","in":"query","description":"This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section.","schema":{"type":"string"}},"severity":{"name":"severity","in":"query","description":"Filter by severity.  Default value is select all.","schema":{"type":"string","enum":["Sev0","Sev1","Sev2","Sev3","Sev4"]}},"smartGroupId":{"name":"smartGroupId","in":"path","description":"Smart group unique id. ","required":true,"schema":{"type":"string"}},"smartGroupIdFilter":{"name":"smartGroupId","in":"query","description":"Filter the alerts list by the Smart Group Id. Default value is none.","schema":{"type":"string"}},"smartGroupState":{"name":"smartGroupState","in":"query","description":"Filter by state of the smart group. Default value is to select all.","schema":{"type":"string","enum":["New","Acknowledged","Closed"]}},"smartGroupsSortBy":{"name":"sortBy","in":"query","description":"Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'.","schema":{"type":"string","enum":["alertsCount","state","severity","startDateTime","lastModifiedDateTime"]}},"sortOrder":{"name":"sortOrder","in":"query","description":"Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.","schema":{"type":"string","enum":["asc","desc"]}},"subscriptionId":{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},"targetResource":{"name":"targetResource","in":"query","description":"Filter by target resource( which is full ARM ID) Default value is select all.","schema":{"type":"string"}},"targetResourceGroup":{"name":"targetResourceGroup","in":"query","description":"Filter by target resource group name. Default value is select all.","schema":{"type":"string"}},"targetResourceType":{"name":"targetResourceType","in":"query","description":"Filter by target resource type. Default value is select all.","schema":{"type":"string"}},"timeRange":{"name":"timeRange","in":"query","description":"Filter by time range by below listed values. Default value is 1 day.","schema":{"type":"string","enum":["1h","1d","7d","30d"]}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure Alerts Management Service Resource Provider",
+    "description" : "Azure Alerts Management Service provides a single pane of glass of alerts across Azure Monitor.",
+    "version" : "2019-05-05-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/providers/Microsoft.AlertsManagement/alertsMetaData" : {
+      "get" : {
+        "description" : "List alerts meta data information based on value of identifier parameter.",
+        "operationId" : "Alerts_MetaData",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        }, {
+          "name" : "identifier",
+          "in" : "query",
+          "description" : "Identification of the information to be retrieved by API call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "MonitorServiceList" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Successfully listed alert meta data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alertsMetaData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.AlertsManagement/operations" : {
+      "get" : {
+        "description" : "List all operations available through Azure Alerts Management Resource Provider.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Successfully retrieved operations list.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/operationsList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules" : {
+      "get" : {
+        "summary" : "Get all action rule in a given subscription",
+        "description" : "List all action rules of the subscription and given input filters",
+        "operationId" : "ActionRules_ListBySubscription",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceGroup",
+          "in" : "query",
+          "description" : "Filter by target resource group name. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceType",
+          "in" : "query",
+          "description" : "Filter by target resource type. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResource",
+          "in" : "query",
+          "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "severity",
+          "in" : "query",
+          "description" : "Filter by severity.  Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          }
+        }, {
+          "name" : "monitorService",
+          "in" : "query",
+          "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          }
+        }, {
+          "name" : "impactedScope",
+          "in" : "query",
+          "description" : "filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "filter by alert rule description",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertRuleId",
+          "in" : "query",
+          "description" : "filter by alert rule id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroup",
+          "in" : "query",
+          "description" : "filter by action group configured as part of action rule",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "filter by action rule name",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Return the list of action rules",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionRulesList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts" : {
+      "get" : {
+        "description" : "List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. ",
+        "operationId" : "Alerts_GetAll",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResource",
+          "in" : "query",
+          "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceType",
+          "in" : "query",
+          "description" : "Filter by target resource type. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceGroup",
+          "in" : "query",
+          "description" : "Filter by target resource group name. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "monitorService",
+          "in" : "query",
+          "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          }
+        }, {
+          "name" : "monitorCondition",
+          "in" : "query",
+          "description" : "Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Fired", "Resolved" ]
+          }
+        }, {
+          "name" : "severity",
+          "in" : "query",
+          "description" : "Filter by severity.  Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          }
+        }, {
+          "name" : "alertState",
+          "in" : "query",
+          "description" : "Filter by state of the alert instance. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          }
+        }, {
+          "name" : "alertRule",
+          "in" : "query",
+          "description" : "Filter by specific alert rule.  Default value is to select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "smartGroupId",
+          "in" : "query",
+          "description" : "Filter the alerts list by the Smart Group Id. Default value is none.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeContext",
+          "in" : "query",
+          "description" : "Include context which has contextual data specific to the monitor service. Default value is false'",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "includeEgressConfig",
+          "in" : "query",
+          "description" : "Include egress config which would be used for displaying the content in portal.  Default value is 'false'.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "pageCount",
+          "in" : "query",
+          "description" : "Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "sortBy",
+          "in" : "query",
+          "description" : "Sort the query results by input field,  Default value is 'lastModifiedDateTime'.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "name", "severity", "alertState", "monitorCondition", "targetResource", "targetResourceName", "targetResourceGroup", "targetResourceType", "startDateTime", "lastModifiedDateTime" ]
+          }
+        }, {
+          "name" : "sortOrder",
+          "in" : "query",
+          "description" : "Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "asc", "desc" ]
+          }
+        }, {
+          "name" : "select",
+          "in" : "query",
+          "description" : "This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeRange",
+          "in" : "query",
+          "description" : "Filter by time range by below listed values. Default value is 1 day.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "1h", "1d", "7d", "30d" ]
+          }
+        }, {
+          "name" : "customTimeRange",
+          "in" : "query",
+          "description" : "Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Successfully listed alert objects.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alertsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}" : {
+      "get" : {
+        "summary" : "Get a specific alert.",
+        "description" : "Get information related to a specific alert",
+        "operationId" : "Alerts_GetById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertId",
+          "in" : "path",
+          "description" : "Unique ID of an alert instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the alert with the specified ID.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alert"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate" : {
+      "post" : {
+        "description" : "Change the state of an alert.",
+        "operationId" : "Alerts_ChangeState",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertId",
+          "in" : "path",
+          "description" : "Unique ID of an alert instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        }, {
+          "name" : "newState",
+          "in" : "query",
+          "description" : "New state of the alert.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Alert state updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alert"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history" : {
+      "get" : {
+        "description" : "Get the history of an alert, which captures any monitor condition changes (Fired/Resolved) and alert state changes (New/Acknowledged/Closed).",
+        "operationId" : "Alerts_GetHistory",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertId",
+          "in" : "path",
+          "description" : "Unique ID of an alert instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the history of the specified alert.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alertModification"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary" : {
+      "get" : {
+        "description" : "Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).",
+        "operationId" : "Alerts_GetSummary",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "groupby",
+          "in" : "query",
+          "description" : "This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "severity", "alertState", "monitorCondition", "monitorService", "signalType", "alertRule" ]
+          }
+        }, {
+          "name" : "includeSmartGroupsCount",
+          "in" : "query",
+          "description" : "Include count of the SmartGroups as part of the summary. Default value is 'false'.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "targetResource",
+          "in" : "query",
+          "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceType",
+          "in" : "query",
+          "description" : "Filter by target resource type. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceGroup",
+          "in" : "query",
+          "description" : "Filter by target resource group name. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "monitorService",
+          "in" : "query",
+          "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          }
+        }, {
+          "name" : "monitorCondition",
+          "in" : "query",
+          "description" : "Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Fired", "Resolved" ]
+          }
+        }, {
+          "name" : "severity",
+          "in" : "query",
+          "description" : "Filter by severity.  Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          }
+        }, {
+          "name" : "alertState",
+          "in" : "query",
+          "description" : "Filter by state of the alert instance. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          }
+        }, {
+          "name" : "alertRule",
+          "in" : "query",
+          "description" : "Filter by specific alert rule.  Default value is to select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeRange",
+          "in" : "query",
+          "description" : "Filter by time range by below listed values. Default value is 1 day.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "1h", "1d", "7d", "30d" ]
+          }
+        }, {
+          "name" : "customTimeRange",
+          "in" : "query",
+          "description" : "Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Alert summary returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/alertsSummary"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups" : {
+      "get" : {
+        "summary" : "Get all Smart Groups within a specified subscription",
+        "description" : "List all the Smart Groups within a specified subscription. ",
+        "operationId" : "SmartGroups_GetAll",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResource",
+          "in" : "query",
+          "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceGroup",
+          "in" : "query",
+          "description" : "Filter by target resource group name. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceType",
+          "in" : "query",
+          "description" : "Filter by target resource type. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "monitorService",
+          "in" : "query",
+          "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          }
+        }, {
+          "name" : "monitorCondition",
+          "in" : "query",
+          "description" : "Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Fired", "Resolved" ]
+          }
+        }, {
+          "name" : "severity",
+          "in" : "query",
+          "description" : "Filter by severity.  Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          }
+        }, {
+          "name" : "smartGroupState",
+          "in" : "query",
+          "description" : "Filter by state of the smart group. Default value is to select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          }
+        }, {
+          "name" : "timeRange",
+          "in" : "query",
+          "description" : "Filter by time range by below listed values. Default value is 1 day.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "1h", "1d", "7d", "30d" ]
+          }
+        }, {
+          "name" : "pageCount",
+          "in" : "query",
+          "description" : "Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "sortBy",
+          "in" : "query",
+          "description" : "Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "alertsCount", "state", "severity", "startDateTime", "lastModifiedDateTime" ]
+          }
+        }, {
+          "name" : "sortOrder",
+          "in" : "query",
+          "description" : "Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "asc", "desc" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns list of all smartGroups.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/smartGroupsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}" : {
+      "get" : {
+        "summary" : "Get information related to a specific Smart Group.",
+        "description" : "Get information related to a specific Smart Group.",
+        "operationId" : "SmartGroups_GetById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "smartGroupId",
+          "in" : "path",
+          "description" : "Smart group unique id. ",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the group with the specified smart group Id.",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/smartGroup"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}/changeState" : {
+      "post" : {
+        "description" : "Change the state of a Smart Group.",
+        "operationId" : "SmartGroups_ChangeState",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "smartGroupId",
+          "in" : "path",
+          "description" : "Smart group unique id. ",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        }, {
+          "name" : "newState",
+          "in" : "query",
+          "description" : "New state of the alert.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Smart Group state updated.",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/smartGroup"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}/history" : {
+      "get" : {
+        "description" : "Get the history a smart group, which captures any Smart Group state changes (New/Acknowledged/Closed) .",
+        "operationId" : "SmartGroups_GetHistory",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "smartGroupId",
+          "in" : "path",
+          "description" : "Smart group unique id. ",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the list of changes of smart group.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/smartGroupModification"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules" : {
+      "get" : {
+        "summary" : "Get all action rules created in a resource group",
+        "description" : "List all action rules of the subscription, created in given resource group and given input filters",
+        "operationId" : "ActionRules_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name where the resource is created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceGroup",
+          "in" : "query",
+          "description" : "Filter by target resource group name. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResourceType",
+          "in" : "query",
+          "description" : "Filter by target resource type. Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetResource",
+          "in" : "query",
+          "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "severity",
+          "in" : "query",
+          "description" : "Filter by severity.  Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          }
+        }, {
+          "name" : "monitorService",
+          "in" : "query",
+          "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          }
+        }, {
+          "name" : "impactedScope",
+          "in" : "query",
+          "description" : "filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "filter by alert rule description",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertRuleId",
+          "in" : "query",
+          "description" : "filter by alert rule id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroup",
+          "in" : "query",
+          "description" : "filter by action group configured as part of action rule",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "filter by action rule name",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Return the list of action rules",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionRulesList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}" : {
+      "get" : {
+        "summary" : "Get action rule by name",
+        "description" : "Get a specific action rule",
+        "operationId" : "ActionRules_GetByName",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name where the resource is created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionRuleName",
+          "in" : "path",
+          "description" : "The name of action rule that needs to be fetched",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the specific action rule",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionRule"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Create/update an action rule",
+        "description" : "Creates/Updates a specific action rule",
+        "operationId" : "ActionRules_CreateUpdate",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name where the resource is created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionRuleName",
+          "in" : "path",
+          "description" : "The name of action rule that needs to be created/updated",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "action rule to be created/updated",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionRule"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the created/updated action rule",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionRule"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete action rule",
+        "description" : "Deletes a given action rule",
+        "operationId" : "ActionRules_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name where the resource is created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionRuleName",
+          "in" : "path",
+          "description" : "The name that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns true if deleted successfully",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "boolean"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Patch action rule",
+        "description" : "Update enabled flag and/or tags for the given action rule",
+        "operationId" : "ActionRules_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name where the resource is created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionRuleName",
+          "in" : "path",
+          "description" : "The name that needs to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "client API version",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2019-05-05-preview" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchObject"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns the created/updated action rule",
+            "headers" : {
+              "x-ms-request-id" : {
+                "description" : "Service generated Request ID.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionRule"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ActionGroup" : {
+        "title" : "Action Group based Action Rule",
+        "properties" : {
+          "actionGroupId" : {
+            "type" : "string",
+            "description" : "Action group to trigger if action rule matches"
+          }
+        },
+        "description" : "Action rule with action group configuration",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ActionRuleProperties"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "ActionRule" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ActionRuleProperties"
+          }
+        },
+        "description" : "Action rule object containing target scope, conditions and suppression logic",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ManagedResource"
+        } ]
+      },
+      "ActionRuleProperties" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "conditions" : {
+            "$ref" : "#/components/schemas/Conditions"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "description" : "Creation time of action rule. Date-Time in ISO-8601 format.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "createdBy" : {
+            "type" : "string",
+            "description" : "Created by user name.",
+            "readOnly" : true
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description of action rule"
+          },
+          "lastModifiedAt" : {
+            "type" : "string",
+            "description" : "Last updated time of action rule. Date-Time in ISO-8601 format.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "lastModifiedBy" : {
+            "type" : "string",
+            "description" : "Last modified by user name.",
+            "readOnly" : true
+          },
+          "scope" : {
+            "$ref" : "#/components/schemas/Scope"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Indicates if the given action rule is enabled or disabled",
+            "enum" : [ "Enabled", "Disabled" ]
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Indicates type of action rule",
+            "enum" : [ "Suppression", "ActionGroup", "Diagnostics" ]
+          }
+        },
+        "description" : "Action rule properties defining scope, conditions, suppression logic for action rule",
+        "discriminator" : {
+          "propertyName" : "type"
+        }
+      },
+      "ActionRulesList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to fetch the next set of action rules"
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of action rules",
+            "items" : {
+              "$ref" : "#/components/schemas/ActionRule"
+            }
+          }
+        },
+        "description" : "List of action rules"
+      },
+      "Condition" : {
+        "type" : "object",
+        "properties" : {
+          "operator" : {
+            "type" : "string",
+            "description" : "operator for a given condition",
+            "enum" : [ "Equals", "NotEquals", "Contains", "DoesNotContain" ]
+          },
+          "values" : {
+            "type" : "array",
+            "description" : "list of values to match for a given condition.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "condition to trigger an action rule"
+      },
+      "Conditions" : {
+        "type" : "object",
+        "properties" : {
+          "alertContext" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "alertRuleId" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "monitorCondition" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "monitorService" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "severity" : {
+            "$ref" : "#/components/schemas/Condition"
+          },
+          "targetResourceType" : {
+            "$ref" : "#/components/schemas/Condition"
+          }
+        },
+        "description" : "Conditions in alert instance to be matched for a given action rule. Default value is all. Multiple values could be provided with comma separation."
+      },
+      "Diagnostics" : {
+        "title" : "Diagnostics based Action Rule",
+        "description" : "Action rule with diagnostics configuration",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ActionRuleProperties"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "ManagedResource" : {
+        "properties" : {
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "An azure managed resource object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "MonitorServiceDetails" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "Monitor service display name"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Monitor service name"
+          }
+        },
+        "description" : "Details of a monitor service"
+      },
+      "MonitorServiceList" : {
+        "title" : "Monitor service details",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "Array of operations",
+            "items" : {
+              "$ref" : "#/components/schemas/MonitorServiceDetails"
+            }
+          }
+        },
+        "description" : "Monitor service details",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/alertsMetaDataProperties"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "PatchObject" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/PatchProperties"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "tags to be updated"
+          }
+        },
+        "description" : "Data contract for patch"
+      },
+      "PatchProperties" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "Indicates if the given action rule is enabled or disabled",
+            "enum" : [ "Enabled", "Disabled" ]
+          }
+        },
+        "description" : "Action rule properties supported by patch"
+      },
+      "Resource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "Scope" : {
+        "type" : "object",
+        "properties" : {
+          "scopeType" : {
+            "type" : "string",
+            "description" : "type of target scope",
+            "enum" : [ "ResourceGroup", "Resource" ]
+          },
+          "values" : {
+            "type" : "array",
+            "description" : "list of ARM IDs of the given scope type which will be the target of the given action rule.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "Target scope for a given action rule. By default scope will be the subscription. User can also provide list of resource groups or list of resources from the scope subscription as well."
+      },
+      "Suppression" : {
+        "title" : "Suppression based Action Rule",
+        "properties" : {
+          "suppressionConfig" : {
+            "$ref" : "#/components/schemas/SuppressionConfig"
+          }
+        },
+        "description" : "Action rule with suppression configuration",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ActionRuleProperties"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "SuppressionConfig" : {
+        "required" : [ "recurrenceType" ],
+        "type" : "object",
+        "properties" : {
+          "recurrenceType" : {
+            "type" : "string",
+            "description" : "Specifies when the suppression should be applied",
+            "enum" : [ "Always", "Once", "Daily", "Weekly", "Monthly" ]
+          },
+          "schedule" : {
+            "$ref" : "#/components/schemas/SuppressionSchedule"
+          }
+        },
+        "description" : "Suppression logic for a given action rule"
+      },
+      "SuppressionSchedule" : {
+        "type" : "object",
+        "properties" : {
+          "endDate" : {
+            "type" : "string",
+            "description" : "End date for suppression"
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "End date for suppression"
+          },
+          "recurrenceValues" : {
+            "type" : "array",
+            "description" : "Specifies the values for recurrence pattern",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "Start date for suppression"
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "Start time for suppression"
+          }
+        },
+        "description" : "Schedule for a given suppression configuration."
+      },
+      "alert" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/alertProperties"
+          }
+        },
+        "description" : "An alert created in alert management service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "alertContext" : {
+        "type" : "object",
+        "description" : "Information specific to the monitor service that gives more contextual details about the alert."
+      },
+      "alertModification" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/alertModificationProperties"
+          }
+        },
+        "description" : "Alert Modification details",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "alertModificationItem" : {
+        "type" : "object",
+        "properties" : {
+          "comments" : {
+            "type" : "string",
+            "description" : "Modification comments"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the modification"
+          },
+          "modificationEvent" : {
+            "type" : "string",
+            "description" : "Reason for the modification",
+            "enum" : [ "AlertCreated", "StateChange", "MonitorConditionChange" ]
+          },
+          "modifiedAt" : {
+            "type" : "string",
+            "description" : "Modified date and time"
+          },
+          "modifiedBy" : {
+            "type" : "string",
+            "description" : "Modified user details (Principal client name)"
+          },
+          "newValue" : {
+            "type" : "string",
+            "description" : "New value"
+          },
+          "oldValue" : {
+            "type" : "string",
+            "description" : "Old value"
+          }
+        },
+        "description" : "Alert modification item."
+      },
+      "alertModificationProperties" : {
+        "type" : "object",
+        "properties" : {
+          "alertId" : {
+            "type" : "string",
+            "description" : "Unique Id of the alert for which the history is being retrieved",
+            "readOnly" : true
+          },
+          "modifications" : {
+            "type" : "array",
+            "description" : "Modification details",
+            "items" : {
+              "$ref" : "#/components/schemas/alertModificationItem"
+            }
+          }
+        },
+        "description" : "Properties of the alert modification item."
+      },
+      "alertProperties" : {
+        "type" : "object",
+        "properties" : {
+          "context" : {
+            "$ref" : "#/components/schemas/alertContext"
+          },
+          "egressConfig" : {
+            "$ref" : "#/components/schemas/egressConfig"
+          },
+          "essentials" : {
+            "$ref" : "#/components/schemas/essentials"
+          }
+        },
+        "description" : "Alert property bag"
+      },
+      "alertsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to fetch the next set of alerts."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of alerts",
+            "items" : {
+              "$ref" : "#/components/schemas/alert"
+            }
+          }
+        },
+        "description" : "List the alerts."
+      },
+      "alertsMetaData" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/alertsMetaDataProperties"
+          }
+        },
+        "description" : "alert meta data information."
+      },
+      "alertsMetaDataProperties" : {
+        "required" : [ "metadataIdentifier" ],
+        "type" : "object",
+        "properties" : {
+          "metadataIdentifier" : {
+            "type" : "string",
+            "description" : "Identification of the information to be retrieved by API call",
+            "enum" : [ "MonitorServiceList" ]
+          }
+        },
+        "description" : "alert meta data property bag",
+        "discriminator" : {
+          "propertyName" : "metadataIdentifier"
+        }
+      },
+      "alertsSummary" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/alertsSummaryGroup"
+          }
+        },
+        "description" : "Summary of alerts based on the input filters and 'groupby' parameters.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "alertsSummaryGroup" : {
+        "type" : "object",
+        "properties" : {
+          "groupedby" : {
+            "type" : "string",
+            "description" : "Name of the field aggregated"
+          },
+          "smartGroupsCount" : {
+            "type" : "integer",
+            "description" : "Total count of the smart groups."
+          },
+          "total" : {
+            "type" : "integer",
+            "description" : "Total count of the result set."
+          },
+          "values" : {
+            "type" : "array",
+            "description" : "List of the items",
+            "items" : {
+              "$ref" : "#/components/schemas/alertsSummaryGroupItem"
+            }
+          }
+        },
+        "description" : "Group the result set."
+      },
+      "alertsSummaryGroupItem" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "description" : "Count of the aggregated field"
+          },
+          "groupedby" : {
+            "type" : "string",
+            "description" : "Name of the field aggregated"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Value of the aggregated field"
+          },
+          "values" : {
+            "type" : "array",
+            "description" : "List of the items",
+            "items" : {
+              "$ref" : "#/components/schemas/alertsSummaryGroupItem"
+            }
+          }
+        },
+        "description" : "Alerts summary group item"
+      },
+      "egressConfig" : {
+        "type" : "object",
+        "description" : "Config which would be used for displaying the data in portal."
+      },
+      "errorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/errorResponseBody"
+          }
+        },
+        "description" : "An error response from the service."
+      },
+      "errorResponseBody" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code, intended to be consumed programmatically."
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "A list of additional details about the error.",
+            "items" : {
+              "$ref" : "#/components/schemas/errorResponseBody"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Description of the error, intended for display in user interface."
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "Target of the particular error, for example name of the property."
+          }
+        },
+        "description" : "Details of error response."
+      },
+      "essentials" : {
+        "type" : "object",
+        "properties" : {
+          "alertRule" : {
+            "type" : "string",
+            "description" : "Rule(monitor) which fired alert instance. Depending on the monitor service,  this would be ARM id or name of the rule.",
+            "readOnly" : true
+          },
+          "alertState" : {
+            "type" : "string",
+            "description" : "Alert object state, which can be modified by the user.",
+            "readOnly" : true,
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          },
+          "lastModifiedDateTime" : {
+            "type" : "string",
+            "description" : "Last modification time(ISO-8601 format) of alert instance.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "lastModifiedUserName" : {
+            "type" : "string",
+            "description" : "User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user.",
+            "readOnly" : true
+          },
+          "monitorCondition" : {
+            "type" : "string",
+            "description" : "Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds.",
+            "readOnly" : true,
+            "enum" : [ "Fired", "Resolved" ]
+          },
+          "monitorConditionResolvedDateTime" : {
+            "type" : "string",
+            "description" : "Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "monitorService" : {
+            "type" : "string",
+            "description" : "Monitor service on which the rule(monitor) is set.",
+            "readOnly" : true,
+            "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "Severity of alert Sev0 being highest and Sev4 being lowest.",
+            "readOnly" : true,
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          },
+          "signalType" : {
+            "type" : "string",
+            "description" : "The type of signal the alert is based on, which could be metrics, logs or activity logs.",
+            "readOnly" : true,
+            "enum" : [ "Metric", "Log", "Unknown" ]
+          },
+          "smartGroupId" : {
+            "type" : "string",
+            "description" : "Unique Id of the smart group",
+            "readOnly" : true
+          },
+          "smartGroupingReason" : {
+            "type" : "string",
+            "description" : "Verbose reason describing the reason why this alert instance is added to a smart group",
+            "readOnly" : true
+          },
+          "sourceCreatedId" : {
+            "type" : "string",
+            "description" : "Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc.",
+            "readOnly" : true
+          },
+          "startDateTime" : {
+            "type" : "string",
+            "description" : "Creation time(ISO-8601 format) of alert instance.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "targetResource" : {
+            "type" : "string",
+            "description" : "Target ARM resource, on which alert got created."
+          },
+          "targetResourceGroup" : {
+            "type" : "string",
+            "description" : "Resource group of target ARM resource, on which alert got created."
+          },
+          "targetResourceName" : {
+            "type" : "string",
+            "description" : "Name of the target ARM resource name, on which alert got created."
+          },
+          "targetResourceType" : {
+            "type" : "string",
+            "description" : "Resource type of target ARM resource, on which alert got created."
+          }
+        },
+        "description" : "This object contains consistent fields across different monitor services."
+      },
+      "operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "description" : {
+                "type" : "string",
+                "description" : "Description of the operation"
+              },
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation name"
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Provider name"
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource name"
+              }
+            },
+            "description" : "Properties of the operation"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the operation"
+          }
+        },
+        "description" : "Operation provided by provider"
+      },
+      "operationsList" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to fetch the next set of alerts."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Array of operations",
+            "items" : {
+              "$ref" : "#/components/schemas/operation"
+            }
+          }
+        },
+        "description" : "Lists the operations available in the AlertsManagement RP."
+      },
+      "smartGroup" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/smartGroupProperties"
+          }
+        },
+        "description" : "Set of related alerts grouped together smartly by AMS.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "smartGroupAggregatedProperty" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "description" : "Total number of items of type."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the type."
+          }
+        },
+        "description" : "Aggregated property of each type"
+      },
+      "smartGroupModification" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/smartGroupModificationProperties"
+          }
+        },
+        "description" : "Alert Modification details",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "smartGroupModificationItem" : {
+        "type" : "object",
+        "properties" : {
+          "comments" : {
+            "type" : "string",
+            "description" : "Modification comments"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the modification"
+          },
+          "modificationEvent" : {
+            "type" : "string",
+            "description" : "Reason for the modification",
+            "enum" : [ "SmartGroupCreated", "StateChange", "AlertAdded", "AlertRemoved" ]
+          },
+          "modifiedAt" : {
+            "type" : "string",
+            "description" : "Modified date and time"
+          },
+          "modifiedBy" : {
+            "type" : "string",
+            "description" : "Modified user details (Principal client name)"
+          },
+          "newValue" : {
+            "type" : "string",
+            "description" : "New value"
+          },
+          "oldValue" : {
+            "type" : "string",
+            "description" : "Old value"
+          }
+        },
+        "description" : "smartGroup modification item."
+      },
+      "smartGroupModificationProperties" : {
+        "type" : "object",
+        "properties" : {
+          "modifications" : {
+            "type" : "array",
+            "description" : "Modification details",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupModificationItem"
+            }
+          },
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to fetch the next set of results."
+          },
+          "smartGroupId" : {
+            "type" : "string",
+            "description" : "Unique Id of the smartGroup for which the history is being retrieved",
+            "readOnly" : true
+          }
+        },
+        "description" : "Properties of the smartGroup modification item."
+      },
+      "smartGroupProperties" : {
+        "type" : "object",
+        "properties" : {
+          "alertSeverities" : {
+            "type" : "array",
+            "description" : "Summary of alertSeverities in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "alertStates" : {
+            "type" : "array",
+            "description" : "Summary of alertStates in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "alertsCount" : {
+            "type" : "integer",
+            "description" : "Total number of alerts in smart group"
+          },
+          "lastModifiedDateTime" : {
+            "type" : "string",
+            "description" : "Last updated time of smart group. Date-Time in ISO-8601 format.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "lastModifiedUserName" : {
+            "type" : "string",
+            "description" : "Last modified by user name.",
+            "readOnly" : true
+          },
+          "monitorConditions" : {
+            "type" : "array",
+            "description" : "Summary of monitorConditions in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "monitorServices" : {
+            "type" : "array",
+            "description" : "Summary of monitorServices in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts."
+          },
+          "resourceGroups" : {
+            "type" : "array",
+            "description" : "Summary of target resource groups in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "resourceTypes" : {
+            "type" : "array",
+            "description" : "Summary of target resource types in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "resources" : {
+            "type" : "array",
+            "description" : "Summary of target resources in the smart group",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroupAggregatedProperty"
+            }
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "Severity of smart group is the highest(Sev0 >... > Sev4) severity of all the alerts in the group.",
+            "readOnly" : true,
+            "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+          },
+          "smartGroupState" : {
+            "type" : "string",
+            "description" : "Smart group state",
+            "readOnly" : true,
+            "enum" : [ "New", "Acknowledged", "Closed" ]
+          },
+          "startDateTime" : {
+            "type" : "string",
+            "description" : "Creation time of smart group. Date-Time in ISO-8601 format.",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "Properties of smart group."
+      },
+      "smartGroupsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to fetch the next set of alerts."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of alerts",
+            "items" : {
+              "$ref" : "#/components/schemas/smartGroup"
+            }
+          }
+        },
+        "description" : "List the alerts."
+      }
+    },
+    "parameters" : {
+      "actionGroup" : {
+        "name" : "actionGroup",
+        "in" : "query",
+        "description" : "filter by action group configured as part of action rule",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "actionRuleName" : {
+        "name" : "name",
+        "in" : "query",
+        "description" : "filter by action rule name",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "alertId" : {
+        "name" : "alertId",
+        "in" : "path",
+        "description" : "Unique ID of an alert instance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "alertRule" : {
+        "name" : "alertRule",
+        "in" : "query",
+        "description" : "Filter by specific alert rule.  Default value is to select all.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "alertRuleId" : {
+        "name" : "alertRuleId",
+        "in" : "query",
+        "description" : "filter by alert rule id",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "alertState" : {
+        "name" : "alertState",
+        "in" : "query",
+        "description" : "Filter by state of the alert instance. Default value is to select all.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "New", "Acknowledged", "Closed" ]
+        }
+      },
+      "alertsSortBy" : {
+        "name" : "sortBy",
+        "in" : "query",
+        "description" : "Sort the query results by input field,  Default value is 'lastModifiedDateTime'.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "name", "severity", "alertState", "monitorCondition", "targetResource", "targetResourceName", "targetResourceGroup", "targetResourceType", "startDateTime", "lastModifiedDateTime" ]
+        }
+      },
+      "alertsSummaryGroupBy" : {
+        "name" : "groupby",
+        "in" : "query",
+        "description" : "This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "severity", "alertState", "monitorCondition", "monitorService", "signalType", "alertRule" ]
+        }
+      },
+      "api-version" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "client API version",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "2019-05-05-preview" ]
+        }
+      },
+      "customTimeRange" : {
+        "name" : "customTimeRange",
+        "in" : "query",
+        "description" : "Filter by custom time range in the format <start-time>/<end-time>  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "description" : {
+        "name" : "description",
+        "in" : "query",
+        "description" : "filter by alert rule description",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "identifier" : {
+        "name" : "identifier",
+        "in" : "query",
+        "description" : "Identification of the information to be retrieved by API call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "MonitorServiceList" ]
+        }
+      },
+      "impactedScope" : {
+        "name" : "impactedScope",
+        "in" : "query",
+        "description" : "filter by impacted/target scope (provide comma separated list for multiple scopes). The value should be an well constructed ARM id of the scope.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "includeContext" : {
+        "name" : "includeContext",
+        "in" : "query",
+        "description" : "Include context which has contextual data specific to the monitor service. Default value is false'",
+        "schema" : {
+          "type" : "boolean"
+        }
+      },
+      "includeEgressConfig" : {
+        "name" : "includeEgressConfig",
+        "in" : "query",
+        "description" : "Include egress config which would be used for displaying the content in portal.  Default value is 'false'.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      },
+      "includeSmartGroupsCount" : {
+        "name" : "includeSmartGroupsCount",
+        "in" : "query",
+        "description" : "Include count of the SmartGroups as part of the summary. Default value is 'false'.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      },
+      "monitorCondition" : {
+        "name" : "monitorCondition",
+        "in" : "query",
+        "description" : "Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Fired", "Resolved" ]
+        }
+      },
+      "monitorService" : {
+        "name" : "monitorService",
+        "in" : "query",
+        "description" : "Filter by monitor service which generates the alert instance. Default value is select all.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Application Insights", "ActivityLog Administrative", "ActivityLog Security", "ActivityLog Recommendation", "ActivityLog Policy", "ActivityLog Autoscale", "Log Analytics", "Nagios", "Platform", "SCOM", "ServiceHealth", "SmartDetector", "VM Insights", "Zabbix" ]
+        }
+      },
+      "newState" : {
+        "name" : "newState",
+        "in" : "query",
+        "description" : "New state of the alert.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "New", "Acknowledged", "Closed" ]
+        }
+      },
+      "pageCount" : {
+        "name" : "pageCount",
+        "in" : "query",
+        "description" : "Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the \"includeContent\"  filter is selected, maximum value allowed is 25. Default value is 25.",
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "resourceGroupName" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "Resource group name where the resource is created.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "select" : {
+        "name" : "select",
+        "in" : "query",
+        "description" : "This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "severity" : {
+        "name" : "severity",
+        "in" : "query",
+        "description" : "Filter by severity.  Default value is select all.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Sev0", "Sev1", "Sev2", "Sev3", "Sev4" ]
+        }
+      },
+      "smartGroupId" : {
+        "name" : "smartGroupId",
+        "in" : "path",
+        "description" : "Smart group unique id. ",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "smartGroupIdFilter" : {
+        "name" : "smartGroupId",
+        "in" : "query",
+        "description" : "Filter the alerts list by the Smart Group Id. Default value is none.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "smartGroupState" : {
+        "name" : "smartGroupState",
+        "in" : "query",
+        "description" : "Filter by state of the smart group. Default value is to select all.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "New", "Acknowledged", "Closed" ]
+        }
+      },
+      "smartGroupsSortBy" : {
+        "name" : "sortBy",
+        "in" : "query",
+        "description" : "Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "alertsCount", "state", "severity", "startDateTime", "lastModifiedDateTime" ]
+        }
+      },
+      "sortOrder" : {
+        "name" : "sortOrder",
+        "in" : "query",
+        "description" : "Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+        }
+      },
+      "subscriptionId" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The ID of the target subscription.",
+        "required" : true,
+        "schema" : {
+          "minLength" : 1,
+          "type" : "string"
+        }
+      },
+      "targetResource" : {
+        "name" : "targetResource",
+        "in" : "query",
+        "description" : "Filter by target resource( which is full ARM ID) Default value is select all.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "targetResourceGroup" : {
+        "name" : "targetResourceGroup",
+        "in" : "query",
+        "description" : "Filter by target resource group name. Default value is select all.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "targetResourceType" : {
+        "name" : "targetResourceType",
+        "in" : "query",
+        "description" : "Filter by target resource type. Default value is select all.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "timeRange" : {
+        "name" : "timeRange",
+        "in" : "query",
+        "description" : "Filter by time range by below listed values. Default value is 1 day.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "1h", "1d", "7d", "30d" ]
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,334 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2018-06-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings":{"get":{"tags":["Pricings"],"description":"Lists Security Center pricing configurations in the subscription.","operationId":"Pricings_List","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PricingList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}":{"get":{"tags":["Pricings"],"description":"Gets a provided Security Center pricing configuration in the subscription.","operationId":"Pricings_Get","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"pricingName","in":"path","description":"name of the pricing configuration","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Pricing"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}},"put":{"tags":["Pricings"],"description":"Updates a provided Security Center pricing configuration in the subscription.","operationId":"Pricings_Update","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"pricingName","in":"path","description":"name of the pricing configuration","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Pricing object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Pricing"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Pricing"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"Pricing":{"properties":{"properties":{"$ref":"#/components/schemas/PricingProperties"}},"description":"Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."}]},"PricingList":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"List of pricing configurations","items":{"$ref":"#/components/schemas/Pricing"}}},"description":"List of pricing configurations response."},"PricingProperties":{"required":["pricingTier"],"type":"object","properties":{"freeTrialRemainingTime":{"type":"string","description":"The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S).","format":"duration","readOnly":true},"pricingTier":{"type":"string","description":"The pricing tier value. Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features.","enum":["Free","Standard"]}},"description":"Pricing properties for the relevant scope"}},"parameters":{"PricingName":{"name":"pricingName","in":"path","description":"name of the pricing configuration","required":true,"schema":{"type":"string"}}},"requestBodies":{"Pricing":{"description":"Pricing object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Pricing"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2018-06-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings" : {
+      "get" : {
+        "tags" : [ "Pricings" ],
+        "description" : "Lists Security Center pricing configurations in the subscription.",
+        "operationId" : "Pricings_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PricingList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}" : {
+      "get" : {
+        "tags" : [ "Pricings" ],
+        "description" : "Gets a provided Security Center pricing configuration in the subscription.",
+        "operationId" : "Pricings_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "pricingName",
+          "in" : "path",
+          "description" : "name of the pricing configuration",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pricing"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Pricings" ],
+        "description" : "Updates a provided Security Center pricing configuration in the subscription.",
+        "operationId" : "Pricings_Update",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "pricingName",
+          "in" : "path",
+          "description" : "name of the pricing configuration",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Pricing object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pricing"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pricing"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Pricing" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/PricingProperties"
+          }
+        },
+        "description" : "Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        } ]
+      },
+      "PricingList" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "List of pricing configurations",
+            "items" : {
+              "$ref" : "#/components/schemas/Pricing"
+            }
+          }
+        },
+        "description" : "List of pricing configurations response."
+      },
+      "PricingProperties" : {
+        "required" : [ "pricingTier" ],
+        "type" : "object",
+        "properties" : {
+          "freeTrialRemainingTime" : {
+            "type" : "string",
+            "description" : "The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S).",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "pricingTier" : {
+            "type" : "string",
+            "description" : "The pricing tier value. Azure Security Center is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features.",
+            "enum" : [ "Free", "Standard" ]
+          }
+        },
+        "description" : "Pricing properties for the relevant scope"
+      }
+    },
+    "parameters" : {
+      "PricingName" : {
+        "name" : "pricingName",
+        "in" : "path",
+        "description" : "name of the pricing configuration",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "Pricing" : {
+        "description" : "Pricing object",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pricing"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

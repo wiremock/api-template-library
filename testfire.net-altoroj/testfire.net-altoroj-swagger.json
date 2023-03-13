@@ -1,1 +1,552 @@
-{"openapi":"3.0.1","info":{"title":"AltoroJ REST API","version":"1.0.2"},"servers":[{"url":"/api"}],"tags":[{"name":"1. Login","description":"Login mechanism"},{"name":"2. Account","description":"View account information"},{"name":"3. Transfer","description":"Transfer funds between accounts"},{"name":"4. Feedback","description":"Submit and review feedback"},{"name":"5. Admin","description":"Add and change user details"},{"name":"6. Logout","description":"Logout mechanism"}],"paths":{"/account":{"get":{"tags":["2. Account"],"description":"Returns a list of all the accounts owned by the user","operationId":"getAccount","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful operation"},"401":{"description":"Unauthorized request"},"500":{"description":"Internal server error"}}}},"/account/{accountNo}":{"get":{"tags":["2. Account"],"description":"Returns details about a specific account","operationId":"getAccountBalance","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}},{"name":"accountNo","in":"path","description":"Account id","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful operation"},"401":{"description":"Unauthorized request"},"500":{"description":"Internal server error"}}}},"/account/{accountNo}/transactions":{"get":{"tags":["2. Account"],"description":"Returns the last 10 transactions attached to an account","operationId":"showLastTenTransactions","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}},{"name":"accountNo","in":"path","description":"Account id","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful operation"},"401":{"description":"Unauthorized request"},"500":{"description":"Internal server error"}}},"post":{"tags":["2. Account"],"description":"Return transactions between 2 specific dates","operationId":"getTransactions","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}},{"name":"accountNo","in":"path","description":"Account id","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"A start date and an end date","content":{"application/json":{"schema":{"$ref":"#/components/schemas/dates"}}},"required":true},"responses":{"200":{"description":"Successful operation"},"400":{"description":"Bad parameters: Please check provided values"},"401":{"description":"Unauthorized request"},"501":{"description":"Internal server error"}}}},"/admin/addUser":{"post":{"tags":["5. Admin"],"description":"Add new user","operationId":"addUser","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Details of a new user including first name, last name, desired username and a password","content":{"application/json":{"schema":{"$ref":"#/components/schemas/newUser"}}},"required":true},"responses":{"200":{"description":"Successful operation"},"400":{"description":"Unauthorized request"},"401":{"description":"Unauthorized request"},"500":{"description":"Error creating user"}}}},"/admin/changePassword":{"post":{"tags":["5. Admin"],"description":"Change user password","operationId":"changePassword","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Information about the user password to be changed including id and new password","content":{"application/json":{"schema":{"$ref":"#/components/schemas/changePassword"}}},"required":true},"responses":{"200":{"description":"Successful operation"},"400":{"description":"Unauthorized request"},"401":{"description":"Unauthorized request"},"500":{"description":"Error in changing the username password"}}}},"/feedback/submit":{"post":{"tags":["4. Feedback"],"description":"Submit feedback for the bank","operationId":"sendFeedback","requestBody":{"description":"Feedback details including name, email the subject and complete message","content":{"application/json":{"schema":{"$ref":"#/components/schemas/feedback"}}},"required":true},"responses":{"200":{"description":"Successful operation"},"401":{"description":"Unauthorized request"},"500":{"description":"Internal server error"}}}},"/feedback/{feedbackId}":{"get":{"tags":["4. Feedback"],"description":"Retrieve feedback","operationId":"getFeedback","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}},{"name":"feedbackId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful operation"},"400":{"description":"Bad parameters: Please check provided values"},"401":{"description":"Unauthorized request"},"500":{"description":"Internal server error"}}}},"/login":{"get":{"tags":["1. Login"],"summary":"Check if any user is logged in","description":"If a user is loggedin the username will be returned","operationId":"checkLogin","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Logged in"},"401":{"description":"Logged out"}}},"post":{"tags":["1. Login"],"summary":"Login method","description":"After a successful login a token is returned. This is a Bearer token. To authenticate with it use the Authorization header and set value to Bearer empty space and the token value.","operationId":"login","requestBody":{"description":"Username and password combination to allow users to log-in","content":{"application/json":{"schema":{"$ref":"#/components/schemas/login"}}},"required":true},"responses":{"200":{"description":"Success message when login is complete"},"400":{"description":"Bad parameters: Please check provided values"},"500":{"description":"Internal server error: Please see error message or logs for details"}}}},"/logout":{"get":{"tags":["6. Logout"],"description":"Logout from the bank","operationId":"doLogOut","responses":{"200":{"description":"Successful operation"},"500":{"description":"Unauthorized request "}}}},"/transfer":{"post":{"tags":["3. Transfer"],"description":"Transfer money between two accounts","operationId":"trasnfer","parameters":[{"name":"Authorization","in":"header","description":"Authorization token (provided upon successful login)","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Transfer details including ammount, sender and receiver","content":{"application/json":{"schema":{"$ref":"#/components/schemas/transfer"}}},"required":true},"responses":{"200":{"description":"Successful operation"},"400":{"description":"Bad parameters: Please check provided values"},"501":{"description":"Internal server error"}}}}},"components":{"schemas":{"changePassword":{"required":["password2","username"],"type":"object","properties":{"password1":{"type":"string","format":"password","example":"Th1s!sz3nu3Passv0rd"},"password2":{"type":"string","format":"password","example":"Th1s!sz3nu3Passv0rd"},"username":{"type":"string","example":"jdoe"}}},"dates":{"required":["endDate","startDate"],"type":"object","properties":{"endDate":{"type":"string","format":"date","example":1331942400000},"startDate":{"type":"string","format":"date","example":1331510400000}}},"feedback":{"required":["email","message","name","subject"],"type":"object","properties":{"email":{"type":"string","format":"email","example":"jsmtih@altoromutual.com"},"message":{"type":"string","example":"I like the new look of your applicaiton"},"name":{"type":"string","example":"J Smith"},"subject":{"type":"string","example":"Amazing web design"}}},"login":{"required":["password","username"],"type":"object","properties":{"password":{"type":"string","example":"demo1234"},"username":{"type":"string","example":"jsmith"}}},"newUser":{"required":["firstname","lastname","password1","password2","username"],"type":"object","properties":{"firstname":{"type":"string","example":"Bilbo"},"lastname":{"type":"string","example":"Baggins"},"password1":{"type":"string","format":"password","example":"S3l3ctS0methingStr0ng5AsP@ssword"},"password2":{"type":"string","format":"password","example":"S3l3ctS0methingStr0ng5AsP@ssword"},"username":{"type":"string","example":"bilbob"}}},"transfer":{"required":["fromAccount","toAccount","transferAmount"],"type":"object","properties":{"fromAccount":{"type":"string","example":"800003"},"toAccount":{"type":"string","example":"800002"},"transferAmount":{"type":"string","example":"200"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "AltoroJ REST API",
+    "version" : "1.0.2"
+  },
+  "servers" : [ {
+    "url" : "/api"
+  } ],
+  "tags" : [ {
+    "name" : "1. Login",
+    "description" : "Login mechanism"
+  }, {
+    "name" : "2. Account",
+    "description" : "View account information"
+  }, {
+    "name" : "3. Transfer",
+    "description" : "Transfer funds between accounts"
+  }, {
+    "name" : "4. Feedback",
+    "description" : "Submit and review feedback"
+  }, {
+    "name" : "5. Admin",
+    "description" : "Add and change user details"
+  }, {
+    "name" : "6. Logout",
+    "description" : "Logout mechanism"
+  } ],
+  "paths" : {
+    "/account" : {
+      "get" : {
+        "tags" : [ "2. Account" ],
+        "description" : "Returns a list of all the accounts owned by the user",
+        "operationId" : "getAccount",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/{accountNo}" : {
+      "get" : {
+        "tags" : [ "2. Account" ],
+        "description" : "Returns details about a specific account",
+        "operationId" : "getAccountBalance",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountNo",
+          "in" : "path",
+          "description" : "Account id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/{accountNo}/transactions" : {
+      "get" : {
+        "tags" : [ "2. Account" ],
+        "description" : "Returns the last 10 transactions attached to an account",
+        "operationId" : "showLastTenTransactions",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountNo",
+          "in" : "path",
+          "description" : "Account id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "2. Account" ],
+        "description" : "Return transactions between 2 specific dates",
+        "operationId" : "getTransactions",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountNo",
+          "in" : "path",
+          "description" : "Account id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A start date and an end date",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/dates"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Bad parameters: Please check provided values"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "501" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/admin/addUser" : {
+      "post" : {
+        "tags" : [ "5. Admin" ],
+        "description" : "Add new user",
+        "operationId" : "addUser",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Details of a new user including first name, last name, desired username and a password",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/newUser"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Unauthorized request"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Error creating user"
+          }
+        }
+      }
+    },
+    "/admin/changePassword" : {
+      "post" : {
+        "tags" : [ "5. Admin" ],
+        "description" : "Change user password",
+        "operationId" : "changePassword",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Information about the user password to be changed including id and new password",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/changePassword"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Unauthorized request"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Error in changing the username password"
+          }
+        }
+      }
+    },
+    "/feedback/submit" : {
+      "post" : {
+        "tags" : [ "4. Feedback" ],
+        "description" : "Submit feedback for the bank",
+        "operationId" : "sendFeedback",
+        "requestBody" : {
+          "description" : "Feedback details including name, email the subject and complete message",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/feedback"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/feedback/{feedbackId}" : {
+      "get" : {
+        "tags" : [ "4. Feedback" ],
+        "description" : "Retrieve feedback",
+        "operationId" : "getFeedback",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "feedbackId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Bad parameters: Please check provided values"
+          },
+          "401" : {
+            "description" : "Unauthorized request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/login" : {
+      "get" : {
+        "tags" : [ "1. Login" ],
+        "summary" : "Check if any user is logged in",
+        "description" : "If a user is loggedin the username will be returned",
+        "operationId" : "checkLogin",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Logged in"
+          },
+          "401" : {
+            "description" : "Logged out"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "1. Login" ],
+        "summary" : "Login method",
+        "description" : "After a successful login a token is returned. This is a Bearer token. To authenticate with it use the Authorization header and set value to Bearer empty space and the token value.",
+        "operationId" : "login",
+        "requestBody" : {
+          "description" : "Username and password combination to allow users to log-in",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/login"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success message when login is complete"
+          },
+          "400" : {
+            "description" : "Bad parameters: Please check provided values"
+          },
+          "500" : {
+            "description" : "Internal server error: Please see error message or logs for details"
+          }
+        }
+      }
+    },
+    "/logout" : {
+      "get" : {
+        "tags" : [ "6. Logout" ],
+        "description" : "Logout from the bank",
+        "operationId" : "doLogOut",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "500" : {
+            "description" : "Unauthorized request "
+          }
+        }
+      }
+    },
+    "/transfer" : {
+      "post" : {
+        "tags" : [ "3. Transfer" ],
+        "description" : "Transfer money between two accounts",
+        "operationId" : "trasnfer",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Authorization token (provided upon successful login)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Transfer details including ammount, sender and receiver",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/transfer"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Bad parameters: Please check provided values"
+          },
+          "501" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "changePassword" : {
+        "required" : [ "password2", "username" ],
+        "type" : "object",
+        "properties" : {
+          "password1" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "Th1s!sz3nu3Passv0rd"
+          },
+          "password2" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "Th1s!sz3nu3Passv0rd"
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "jdoe"
+          }
+        }
+      },
+      "dates" : {
+        "required" : [ "endDate", "startDate" ],
+        "type" : "object",
+        "properties" : {
+          "endDate" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : 1331942400000
+          },
+          "startDate" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : 1331510400000
+          }
+        }
+      },
+      "feedback" : {
+        "required" : [ "email", "message", "name", "subject" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "jsmtih@altoromutual.com"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "I like the new look of your applicaiton"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "J Smith"
+          },
+          "subject" : {
+            "type" : "string",
+            "example" : "Amazing web design"
+          }
+        }
+      },
+      "login" : {
+        "required" : [ "password", "username" ],
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "type" : "string",
+            "example" : "demo1234"
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "jsmith"
+          }
+        }
+      },
+      "newUser" : {
+        "required" : [ "firstname", "lastname", "password1", "password2", "username" ],
+        "type" : "object",
+        "properties" : {
+          "firstname" : {
+            "type" : "string",
+            "example" : "Bilbo"
+          },
+          "lastname" : {
+            "type" : "string",
+            "example" : "Baggins"
+          },
+          "password1" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "S3l3ctS0methingStr0ng5AsP@ssword"
+          },
+          "password2" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "S3l3ctS0methingStr0ng5AsP@ssword"
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "bilbob"
+          }
+        }
+      },
+      "transfer" : {
+        "required" : [ "fromAccount", "toAccount", "transferAmount" ],
+        "type" : "object",
+        "properties" : {
+          "fromAccount" : {
+            "type" : "string",
+            "example" : "800003"
+          },
+          "toAccount" : {
+            "type" : "string",
+            "example" : "800002"
+          },
+          "transferAmount" : {
+            "type" : "string",
+            "example" : "200"
+          }
+        }
+      }
+    }
+  }
+}

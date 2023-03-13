@@ -1,1 +1,1359 @@
-{"openapi":"3.0.1","info":{"title":"link.fish API","description":"API to easily extract data from websites.\n\n\n# Base URL\n\n\nAll URLs referenced in the documentation have the following base:\n\n\n```\nhttps://api.link.fish\n```\n\n\nThe REST API is only served over HTTPS. To ensure data privacy, unencrypted HTTP is not supported.\n\n\n# Authentication\nHTTP requests to the REST API are protected with [HTTP Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). You will use the email address of your link.fish account as the username and your API access token as the password for HTTP Basic authentication.\n\nIf you do not have an account yet, go to [https://link.fish/api](https://link.fish/api) and create one first.\n\nYou will receive the API access token automatically via email after you signed up. To generate a new token and invalidate the current one log into your link.fish  account at [https://app.link.fish](https://app.link.fish) and go to: \"Plugins\" -> \"API Dashboard\"\n\nThere you can also see how many credits you used already.\n\n\n# Errors\nThe API uses standard HTTP status codes to indicate the success or failure of the API call. The body of the response will be JSON in the following format:\n```\n{\n\n  \"status\": {HTTP STATUS CODE}\n  \"message\": \"{ERROR MESSAGE}\"\n}\n```\nLike for example when the authorization is not provided or wrong:\n```\n{\n\n  \"status\": 401\n  \"message\": \"Unauthorized\"\n}\n```\n\n# Request IDs\n\nEach API request has an associated request identifier. You can find it in the response headers, under X-LF-Request-Id. In case you have problems please provide this identifier that we can help you as good and fast as possible.\n\n\nExample:\n```\nX-LF-Request-Id: f7f0036f-5277-421a-b143-f7a151571d18\n```\n\n\n# Item format\n\nThe data is by default deeply nested. So if it should be checked if there is an offer with a price, the whole tree has to be checked. To make that simpler, it is also possible to return the data \"flat\". If selected it will flatten the tree by copying all the data to the main level under a property with the name of its type and link the data internally.\n\nInformation: We created a node module which allows converting between the two formats. It did not get open sourced yet. If you are in need, simply contact us via api@link.fish.\n\n\n# Response Content Type\nBy default, all data gets returned as JSON. If the data should be returned as XML add the following header:\n\n```\nAccept: application/xml\n```\n\n# Credits\n\nDepending on the request made a different amount of credits get charged. How many which request costs can be found on the [API pricing page](http://link.fish/api/#pricing). Additionally, does a  header named \"X-LF-Credits-Charged\" get added to each successful response with information about the credits.\n\nExample:\n```\nX-LF-Credits-Charged: 1 # Credits used for current requests\nX-LF-Credits-Subscription-Max: 1000 # Total credits available in subscription\nX-LF-Credits-Subscription-Used: 512 # Credits still left in current month\n```\nYou can check anytime how many credits you did use already by logging into your link.fish  account at [https://app.link.fish](https://app.link.fish) and checking under:  \"Plugins\" -> \"API Dashboard\"\n\n\nIf you have problems, questions or improvement advice please send us an email to api@link.fish\n","termsOfService":"https://link.fish/terms-of-service/","contact":{"name":"link.fish","url":"https://link.fish/api","email":"api@link.fish"},"version":"2018-07-05"},"servers":[{"url":"https://api.link.fish/"}],"tags":[{"name":"REST-Endpoints","description":"All the currently available link.fish REST endpoints."}],"paths":{"/Urls/apps":{"get":{"tags":["REST-Endpoints"],"summary":"Get mobile apps","description":"Visits the URL and checks if there are mobile apps on them and returns the found ones.\n\nWill by default return the app identifiers and not the full URL to the apps. To return URLs instead set the parameter \"return_urls\" to true.\n\nThe URLs can also be created manually like this:\n\n| Property | URL                                                |\n| -------- | -------------------------------------------------- |\n| android  | https://play.google.com/store/apps/details?id={ID} |\n| ios      | https://itunes.apple.com/us/app/app-name/id{ID}    |\n\nProperties only get set when a value for it has been found. That means that if no app has been found only the property \"url\" will be set.\n","parameters":[{"name":"url","in":"query","description":"The URL of the website to query","required":true,"schema":{"type":"string"}},{"name":"return_urls","in":"query","description":"Returns app URLs instead of the identifiers","schema":{"type":"boolean","default":false}},{"name":"browser_render","in":"query","description":"If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Apps"}},"application/xml":{"schema":{"$ref":"#/components/schemas/Apps"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/browser-data":{"get":{"tags":["REST-Endpoints"],"summary":"Extract data (browser)","description":"Visits the URL with a full browser and extracts the data. This request costs 5 credits.","parameters":[{"name":"url","in":"query","description":"The URL of the website to query","required":true,"schema":{"type":"string"}},{"name":"item_format","in":"query","description":"If the items should be return \"normal\" with multiple levels or \"flat\" with just one level and linked instead.","schema":{"type":"string","default":"normal","enum":["normal","flat"]}},{"name":"simplify_special_types","in":"query","description":"Some types like \"PropertyValue\" do save key and value in separate properties which makes the data harder to process. If this option gets set it converts them automatically into the regular key -> value format.","schema":{"type":"boolean","default":false}},{"name":"include_raw_html","in":"query","description":"Returns additionally also the raw HTML as property \"rawHtml\".","schema":{"type":"boolean","default":false}},{"name":"screenshot","in":"query","description":"If and what kind of screenshot should be returned. Do only request screenshot generation when really needed because it will increase the response time significantly.","schema":{"type":"string","default":"none","enum":["none","normal","full"]}},{"name":"screenshot_width","in":"query","description":"The widh of the screenshot in pixel.","schema":{"maximum":1280,"minimum":50,"type":"integer","default":640}},{"name":"screenshot_file_format","in":"query","description":"The file format of the screenshot","schema":{"type":"string","default":"png","enum":["png","jpg"]}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UrlBrowser"}},"application/xml":{"schema":{"$ref":"#/components/schemas/UrlBrowser"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/browser-screenshot":{"get":{"tags":["REST-Endpoints"],"summary":"Generate screenshot (browser)","description":"Visits the URL with full browser and creates a screenshot. This request costs 5 credits.","parameters":[{"name":"url","in":"query","description":"The URL of the website to create screenshot of","required":true,"schema":{"type":"string"}},{"name":"type","in":"query","description":"What kind of screenshot should be returned. If it should be a regular 16:9 screenshot or one with the full page height","schema":{"type":"string","default":"normal","enum":["normal","full"]}},{"name":"file_format","in":"query","description":"The file format of the screenshot","schema":{"type":"string","default":"png","enum":["png","jpg"]}},{"name":"width","in":"query","description":"The widh of the screenshot in pixel.","schema":{"maximum":1280,"minimum":50,"type":"integer","default":640}}],"responses":{"200":{"description":"OK - Successful Request"},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"image/png":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"image/jpeg":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"image/png":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"image/jpeg":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"image/png":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"image/jpeg":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"image/png":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"image/jpeg":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"image/png":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"image/jpeg":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/data":{"get":{"tags":["REST-Endpoints"],"summary":"Extract data","description":"Visits the URL and extracts the data.","parameters":[{"name":"url","in":"query","description":"The URL of the website to query","required":true,"schema":{"type":"string"}},{"name":"item_format","in":"query","description":"If the items should be return \"normal\" with multiple levels or \"flat\" with just one level and linked instead.","schema":{"type":"string","default":"normal","enum":["normal","flat"]}},{"name":"simplify_special_types","in":"query","description":"Some types like \"PropertyValue\" do save key and value in separate properties which makes the data harder to process. If this option gets set it converts them automatically into the regular key -> value format.","schema":{"type":"boolean","default":false}},{"name":"include_raw_html","in":"query","description":"Returns additionally also the raw HTML as property \"rawHtml\".","schema":{"type":"boolean","default":false}},{"name":"browser_render","in":"query","description":"If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Url"}},"application/xml":{"schema":{"$ref":"#/components/schemas/Url"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/data-raw":{"get":{"tags":["REST-Endpoints"],"summary":"Return data of JSON/XML","description":"Visits the URL and extracts the data.","parameters":[{"name":"url","in":"query","description":"The URL to get the data of","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DataRaw"}},"application/xml":{"schema":{"$ref":"#/components/schemas/DataRaw"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/data-tabular":{"get":{"tags":["REST-Endpoints"],"summary":"Return tabular data","description":"Visits the URL and extracts tabular data.","parameters":[{"name":"url","in":"query","description":"The URL to get the data of","required":true,"schema":{"type":"string"}},{"name":"selector","in":"query","description":"CSS selector to define tabular data which should get returned","schema":{"type":"string"}},{"name":"browser_render","in":"query","description":"If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DataTabular"}},"application/xml":{"schema":{"$ref":"#/components/schemas/DataTabular"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/geo-coordinates":{"get":{"tags":["REST-Endpoints"],"summary":"Get geo coordinates","description":"Visits the URL and checks if there are Geo Coordinates on them and returns the found ones.\n\nProperties only get set when a value for both latitude and longitude have been found. That means that if no geo coordinates have been found only the property \"url\" will be set.","parameters":[{"name":"url","in":"query","description":"The URL of the website to query","required":true,"schema":{"type":"string"}},{"name":"browser_render","in":"query","description":"If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GeoCoordinates"}},"application/xml":{"schema":{"$ref":"#/components/schemas/GeoCoordinates"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}},"/Urls/social-media":{"get":{"tags":["REST-Endpoints"],"summary":"Get social media accounts","description":"Visits the URL and checks if there are any social media accounts and returns the found ones.\n\nWill by default return the account identifiers and not the full URL to the profiles. To return URLs instead set the parameter \"return_urls\" to true.\n\nThe URLs can also be created manually like this:\n\n| Property        | URL                                    |\n| --------------- | -------------------------------------- |\n| facebookPage    | https://facebook.com/{ID}              |\n| githubUser      | https://github.com/{ID}                |\n| googlePlus      | https://plus.google.com/+{ID}          |\n| instagram       | https://instagram.com/{ID}             |\n| linkedInCompany | https://linkedin.com/company/{ID}      |\n| pinterest       | https://pinterest.com/{ID}             |\n| twitter         | https://twitter.com/{ID}               |\n| youTubeUser     | https://youtube.com/user/{ID}          |\n\nProperties only get set when a value for it has been found. That means that if no social media account has been found only the property \"url\" will be set.\n","parameters":[{"name":"url","in":"query","description":"The URL of the website to query","required":true,"schema":{"type":"string"}},{"name":"return_urls","in":"query","description":"Returns profile URLs instead of the profile names/ids","schema":{"type":"boolean","default":false}},{"name":"browser_render","in":"query","description":"If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK - Successful Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SocialMedia"}},"application/xml":{"schema":{"$ref":"#/components/schemas/SocialMedia"}}}},"400":{"description":"Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"401":{"description":"Unauthorized - Authentication missing or failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"402":{"description":"Request failed - All parameters were correct but the request failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"404":{"description":"Not Found - The requested resource does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}},"500":{"description":"Internal Server Error - Something went wrong on our side.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}},"application/xml":{"schema":{"$ref":"#/components/schemas/ApiResponsError"}}}}},"security":[{"basicAuth":null}]}}},"components":{"schemas":{"ApiResponsError":{"required":["message","status"],"type":"object","properties":{"message":{"type":"string","description":"The error message."},"status":{"type":"string","description":"The HTTP status code for the error."}},"discriminator":{"propertyName":"type"}},"Apps":{"required":["android","ios","url"],"type":"object","properties":{"android":{"type":"string","description":"Android app","example":"com.example"},"ios":{"type":"string","description":"iOS app","example":"1234567890"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/product_1.html"}}},"DataRaw":{"required":["data","statusCode","url"],"type":"object","properties":{"data":{"type":"object","description":"The found data (can be an object or array)"},"sourceFormat":{"type":"string","description":"The format the source data was in. (json/xml)","example":"json"},"statusCode":{"type":"string","description":"The HTTP status code the URL returned","example":"200"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/data.xml"}}},"DataTabular":{"required":["data","statusCode","url"],"type":"object","properties":{"data":{"type":"object","properties":{"data":{"type":"array","description":"The found tabular data on the website.","items":{"type":"array","items":{"type":"array","items":{"type":"string"}}}},"metadata":{"type":"object"}}},"statusCode":{"type":"string","description":"The HTTP status code the URL returned","example":"200"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com"}}},"GeoCoordinates":{"required":["latitude","longitude","url"],"type":"object","properties":{"latitude":{"type":"number","description":"The latitude","example":52.5333},"longitude":{"type":"number","description":"The longitude","example":13.38},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/product_1.html"}}},"SocialMedia":{"required":["facebookPage","githubUser","linkedInCompany","twitter","url"],"type":"object","properties":{"facebookPage":{"type":"string","description":"The facebook page name","example":"link.fish"},"githubUser":{"type":"string","description":"The Github user name","example":"link-fish"},"linkedInCompany":{"type":"string","description":"The LinkedIn page name","example":"link-fish"},"twitter":{"type":"string","description":"The Twitter handle","example":"linkfish_"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/product_1.html"}}},"Url":{"required":["additionalData","items","statusCode","title","url"],"type":"object","properties":{"additionalData":{"type":"object","properties":{"locality":{"type":"object","properties":{"country":{"type":"string","description":"The recognized country of the website determined by TLD.","example":"US"},"language":{"type":"string","description":"The language of website. Recognized by header information if supplied or text analysis.","example":"en"}}}}},"favicon":{"type":"string","description":"Url of website favicon","example":"http://example.com/favicon.ico"},"items":{"type":"array","description":"The found data items on the website.","items":{"type":"object","properties":{"@type":{"type":"string","description":"The item type","example":"WebPage"}},"description":"The properties depend on the type of the item. The field \"@type\" exists for all."}},"statusCode":{"type":"string","description":"The HTTP status code the URL returned","example":"200"},"title":{"type":"string","description":"The title of the page","example":"Product 1 - Online Shop - example.com"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/product_1.html"}}},"UrlBrowser":{"required":["additionalData","items","statusCode","title","url"],"type":"object","properties":{"additionalData":{"type":"object","properties":{"locality":{"type":"object","properties":{"country":{"type":"string","description":"The recognized country of the website determined by TLD.","example":"US"},"language":{"type":"string","description":"The language of website. Recognized by header information if supplied or text analysis.","example":"en"}}}}},"favicon":{"type":"string","description":"Url of website favicon","example":"http://example.com/favicon.ico"},"items":{"type":"array","description":"The found data items on the website.","items":{"type":"object","properties":{"@type":{"type":"string","description":"The item type","example":"WebPage"}},"description":"The properties depend on the type of the item. The field \"@type\" exists for all."}},"screenshot":{"pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$","type":"string","description":"Base64 encoded PNG screenshot of website (if generation got requested)","format":"byte","example":"AvDjs4...SjfRf"},"statusCode":{"type":"string","description":"The HTTP status code the URL returned","example":"200"},"title":{"type":"string","description":"The title of the page","example":"Product 1 - Online Shop - example.com"},"url":{"type":"string","description":"The url of the website. Can be different to requested one if there were redirects","example":"http://example.com/product_1.html"}}}},"securitySchemes":{"basicAuth":{"type":"http","scheme":"basic"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "link.fish API",
+    "description" : "API to easily extract data from websites.\n\n\n# Base URL\n\n\nAll URLs referenced in the documentation have the following base:\n\n\n```\nhttps://api.link.fish\n```\n\n\nThe REST API is only served over HTTPS. To ensure data privacy, unencrypted HTTP is not supported.\n\n\n# Authentication\nHTTP requests to the REST API are protected with [HTTP Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). You will use the email address of your link.fish account as the username and your API access token as the password for HTTP Basic authentication.\n\nIf you do not have an account yet, go to [https://link.fish/api](https://link.fish/api) and create one first.\n\nYou will receive the API access token automatically via email after you signed up. To generate a new token and invalidate the current one log into your link.fish  account at [https://app.link.fish](https://app.link.fish) and go to: \"Plugins\" -> \"API Dashboard\"\n\nThere you can also see how many credits you used already.\n\n\n# Errors\nThe API uses standard HTTP status codes to indicate the success or failure of the API call. The body of the response will be JSON in the following format:\n```\n{\n\n  \"status\": {HTTP STATUS CODE}\n  \"message\": \"{ERROR MESSAGE}\"\n}\n```\nLike for example when the authorization is not provided or wrong:\n```\n{\n\n  \"status\": 401\n  \"message\": \"Unauthorized\"\n}\n```\n\n# Request IDs\n\nEach API request has an associated request identifier. You can find it in the response headers, under X-LF-Request-Id. In case you have problems please provide this identifier that we can help you as good and fast as possible.\n\n\nExample:\n```\nX-LF-Request-Id: f7f0036f-5277-421a-b143-f7a151571d18\n```\n\n\n# Item format\n\nThe data is by default deeply nested. So if it should be checked if there is an offer with a price, the whole tree has to be checked. To make that simpler, it is also possible to return the data \"flat\". If selected it will flatten the tree by copying all the data to the main level under a property with the name of its type and link the data internally.\n\nInformation: We created a node module which allows converting between the two formats. It did not get open sourced yet. If you are in need, simply contact us via api@link.fish.\n\n\n# Response Content Type\nBy default, all data gets returned as JSON. If the data should be returned as XML add the following header:\n\n```\nAccept: application/xml\n```\n\n# Credits\n\nDepending on the request made a different amount of credits get charged. How many which request costs can be found on the [API pricing page](http://link.fish/api/#pricing). Additionally, does a  header named \"X-LF-Credits-Charged\" get added to each successful response with information about the credits.\n\nExample:\n```\nX-LF-Credits-Charged: 1 # Credits used for current requests\nX-LF-Credits-Subscription-Max: 1000 # Total credits available in subscription\nX-LF-Credits-Subscription-Used: 512 # Credits still left in current month\n```\nYou can check anytime how many credits you did use already by logging into your link.fish  account at [https://app.link.fish](https://app.link.fish) and checking under:  \"Plugins\" -> \"API Dashboard\"\n\n\nIf you have problems, questions or improvement advice please send us an email to api@link.fish\n",
+    "termsOfService" : "https://link.fish/terms-of-service/",
+    "contact" : {
+      "name" : "link.fish",
+      "url" : "https://link.fish/api",
+      "email" : "api@link.fish"
+    },
+    "version" : "2018-07-05"
+  },
+  "servers" : [ {
+    "url" : "https://api.link.fish/"
+  } ],
+  "tags" : [ {
+    "name" : "REST-Endpoints",
+    "description" : "All the currently available link.fish REST endpoints."
+  } ],
+  "paths" : {
+    "/Urls/apps" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Get mobile apps",
+        "description" : "Visits the URL and checks if there are mobile apps on them and returns the found ones.\n\nWill by default return the app identifiers and not the full URL to the apps. To return URLs instead set the parameter \"return_urls\" to true.\n\nThe URLs can also be created manually like this:\n\n| Property | URL                                                |\n| -------- | -------------------------------------------------- |\n| android  | https://play.google.com/store/apps/details?id={ID} |\n| ios      | https://itunes.apple.com/us/app/app-name/id{ID}    |\n\nProperties only get set when a value for it has been found. That means that if no app has been found only the property \"url\" will be set.\n",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "return_urls",
+          "in" : "query",
+          "description" : "Returns app URLs instead of the identifiers",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "browser_render",
+          "in" : "query",
+          "description" : "If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Apps"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Apps"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/browser-data" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Extract data (browser)",
+        "description" : "Visits the URL with a full browser and extracts the data. This request costs 5 credits.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "item_format",
+          "in" : "query",
+          "description" : "If the items should be return \"normal\" with multiple levels or \"flat\" with just one level and linked instead.",
+          "schema" : {
+            "type" : "string",
+            "default" : "normal",
+            "enum" : [ "normal", "flat" ]
+          }
+        }, {
+          "name" : "simplify_special_types",
+          "in" : "query",
+          "description" : "Some types like \"PropertyValue\" do save key and value in separate properties which makes the data harder to process. If this option gets set it converts them automatically into the regular key -> value format.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "include_raw_html",
+          "in" : "query",
+          "description" : "Returns additionally also the raw HTML as property \"rawHtml\".",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "screenshot",
+          "in" : "query",
+          "description" : "If and what kind of screenshot should be returned. Do only request screenshot generation when really needed because it will increase the response time significantly.",
+          "schema" : {
+            "type" : "string",
+            "default" : "none",
+            "enum" : [ "none", "normal", "full" ]
+          }
+        }, {
+          "name" : "screenshot_width",
+          "in" : "query",
+          "description" : "The widh of the screenshot in pixel.",
+          "schema" : {
+            "maximum" : 1280,
+            "minimum" : 50,
+            "type" : "integer",
+            "default" : 640
+          }
+        }, {
+          "name" : "screenshot_file_format",
+          "in" : "query",
+          "description" : "The file format of the screenshot",
+          "schema" : {
+            "type" : "string",
+            "default" : "png",
+            "enum" : [ "png", "jpg" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UrlBrowser"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UrlBrowser"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/browser-screenshot" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Generate screenshot (browser)",
+        "description" : "Visits the URL with full browser and creates a screenshot. This request costs 5 credits.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to create screenshot of",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "What kind of screenshot should be returned. If it should be a regular 16:9 screenshot or one with the full page height",
+          "schema" : {
+            "type" : "string",
+            "default" : "normal",
+            "enum" : [ "normal", "full" ]
+          }
+        }, {
+          "name" : "file_format",
+          "in" : "query",
+          "description" : "The file format of the screenshot",
+          "schema" : {
+            "type" : "string",
+            "default" : "png",
+            "enum" : [ "png", "jpg" ]
+          }
+        }, {
+          "name" : "width",
+          "in" : "query",
+          "description" : "The widh of the screenshot in pixel.",
+          "schema" : {
+            "maximum" : 1280,
+            "minimum" : 50,
+            "type" : "integer",
+            "default" : 640
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request"
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "image/jpeg" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "image/jpeg" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "image/jpeg" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "image/jpeg" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "image/jpeg" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/data" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Extract data",
+        "description" : "Visits the URL and extracts the data.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "item_format",
+          "in" : "query",
+          "description" : "If the items should be return \"normal\" with multiple levels or \"flat\" with just one level and linked instead.",
+          "schema" : {
+            "type" : "string",
+            "default" : "normal",
+            "enum" : [ "normal", "flat" ]
+          }
+        }, {
+          "name" : "simplify_special_types",
+          "in" : "query",
+          "description" : "Some types like \"PropertyValue\" do save key and value in separate properties which makes the data harder to process. If this option gets set it converts them automatically into the regular key -> value format.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "include_raw_html",
+          "in" : "query",
+          "description" : "Returns additionally also the raw HTML as property \"rawHtml\".",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "browser_render",
+          "in" : "query",
+          "description" : "If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Url"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Url"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/data-raw" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Return data of JSON/XML",
+        "description" : "Visits the URL and extracts the data.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL to get the data of",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DataRaw"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DataRaw"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/data-tabular" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Return tabular data",
+        "description" : "Visits the URL and extracts tabular data.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL to get the data of",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "selector",
+          "in" : "query",
+          "description" : "CSS selector to define tabular data which should get returned",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "browser_render",
+          "in" : "query",
+          "description" : "If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DataTabular"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DataTabular"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/geo-coordinates" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Get geo coordinates",
+        "description" : "Visits the URL and checks if there are Geo Coordinates on them and returns the found ones.\n\nProperties only get set when a value for both latitude and longitude have been found. That means that if no geo coordinates have been found only the property \"url\" will be set.",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "browser_render",
+          "in" : "query",
+          "description" : "If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GeoCoordinates"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GeoCoordinates"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    },
+    "/Urls/social-media" : {
+      "get" : {
+        "tags" : [ "REST-Endpoints" ],
+        "summary" : "Get social media accounts",
+        "description" : "Visits the URL and checks if there are any social media accounts and returns the found ones.\n\nWill by default return the account identifiers and not the full URL to the profiles. To return URLs instead set the parameter \"return_urls\" to true.\n\nThe URLs can also be created manually like this:\n\n| Property        | URL                                    |\n| --------------- | -------------------------------------- |\n| facebookPage    | https://facebook.com/{ID}              |\n| githubUser      | https://github.com/{ID}                |\n| googlePlus      | https://plus.google.com/+{ID}          |\n| instagram       | https://instagram.com/{ID}             |\n| linkedInCompany | https://linkedin.com/company/{ID}      |\n| pinterest       | https://pinterest.com/{ID}             |\n| twitter         | https://twitter.com/{ID}               |\n| youTubeUser     | https://youtube.com/user/{ID}          |\n\nProperties only get set when a value for it has been found. That means that if no social media account has been found only the property \"url\" will be set.\n",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "The URL of the website to query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "return_urls",
+          "in" : "query",
+          "description" : "Returns profile URLs instead of the profile names/ids",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "browser_render",
+          "in" : "query",
+          "description" : "If the page should be fully rendered with a browser to extract data. The request will then cost 5 credits instead of 1!",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Successful Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SocialMedia"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SocialMedia"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request - Request was unacceptable. Normally because of missing required parameters or invalid data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - Authentication missing or failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Request failed - All parameters were correct but the request failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found - The requested resource does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error - Something went wrong on our side.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponsError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : null
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApiResponsError" : {
+        "required" : [ "message", "status" ],
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "The error message."
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The HTTP status code for the error."
+          }
+        },
+        "discriminator" : {
+          "propertyName" : "type"
+        }
+      },
+      "Apps" : {
+        "required" : [ "android", "ios", "url" ],
+        "type" : "object",
+        "properties" : {
+          "android" : {
+            "type" : "string",
+            "description" : "Android app",
+            "example" : "com.example"
+          },
+          "ios" : {
+            "type" : "string",
+            "description" : "iOS app",
+            "example" : "1234567890"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/product_1.html"
+          }
+        }
+      },
+      "DataRaw" : {
+        "required" : [ "data", "statusCode", "url" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "description" : "The found data (can be an object or array)"
+          },
+          "sourceFormat" : {
+            "type" : "string",
+            "description" : "The format the source data was in. (json/xml)",
+            "example" : "json"
+          },
+          "statusCode" : {
+            "type" : "string",
+            "description" : "The HTTP status code the URL returned",
+            "example" : "200"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/data.xml"
+          }
+        }
+      },
+      "DataTabular" : {
+        "required" : [ "data", "statusCode", "url" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "data" : {
+                "type" : "array",
+                "description" : "The found tabular data on the website.",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "metadata" : {
+                "type" : "object"
+              }
+            }
+          },
+          "statusCode" : {
+            "type" : "string",
+            "description" : "The HTTP status code the URL returned",
+            "example" : "200"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com"
+          }
+        }
+      },
+      "GeoCoordinates" : {
+        "required" : [ "latitude", "longitude", "url" ],
+        "type" : "object",
+        "properties" : {
+          "latitude" : {
+            "type" : "number",
+            "description" : "The latitude",
+            "example" : 52.5333
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "The longitude",
+            "example" : 13.38
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/product_1.html"
+          }
+        }
+      },
+      "SocialMedia" : {
+        "required" : [ "facebookPage", "githubUser", "linkedInCompany", "twitter", "url" ],
+        "type" : "object",
+        "properties" : {
+          "facebookPage" : {
+            "type" : "string",
+            "description" : "The facebook page name",
+            "example" : "link.fish"
+          },
+          "githubUser" : {
+            "type" : "string",
+            "description" : "The Github user name",
+            "example" : "link-fish"
+          },
+          "linkedInCompany" : {
+            "type" : "string",
+            "description" : "The LinkedIn page name",
+            "example" : "link-fish"
+          },
+          "twitter" : {
+            "type" : "string",
+            "description" : "The Twitter handle",
+            "example" : "linkfish_"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/product_1.html"
+          }
+        }
+      },
+      "Url" : {
+        "required" : [ "additionalData", "items", "statusCode", "title", "url" ],
+        "type" : "object",
+        "properties" : {
+          "additionalData" : {
+            "type" : "object",
+            "properties" : {
+              "locality" : {
+                "type" : "object",
+                "properties" : {
+                  "country" : {
+                    "type" : "string",
+                    "description" : "The recognized country of the website determined by TLD.",
+                    "example" : "US"
+                  },
+                  "language" : {
+                    "type" : "string",
+                    "description" : "The language of website. Recognized by header information if supplied or text analysis.",
+                    "example" : "en"
+                  }
+                }
+              }
+            }
+          },
+          "favicon" : {
+            "type" : "string",
+            "description" : "Url of website favicon",
+            "example" : "http://example.com/favicon.ico"
+          },
+          "items" : {
+            "type" : "array",
+            "description" : "The found data items on the website.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "@type" : {
+                  "type" : "string",
+                  "description" : "The item type",
+                  "example" : "WebPage"
+                }
+              },
+              "description" : "The properties depend on the type of the item. The field \"@type\" exists for all."
+            }
+          },
+          "statusCode" : {
+            "type" : "string",
+            "description" : "The HTTP status code the URL returned",
+            "example" : "200"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "The title of the page",
+            "example" : "Product 1 - Online Shop - example.com"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/product_1.html"
+          }
+        }
+      },
+      "UrlBrowser" : {
+        "required" : [ "additionalData", "items", "statusCode", "title", "url" ],
+        "type" : "object",
+        "properties" : {
+          "additionalData" : {
+            "type" : "object",
+            "properties" : {
+              "locality" : {
+                "type" : "object",
+                "properties" : {
+                  "country" : {
+                    "type" : "string",
+                    "description" : "The recognized country of the website determined by TLD.",
+                    "example" : "US"
+                  },
+                  "language" : {
+                    "type" : "string",
+                    "description" : "The language of website. Recognized by header information if supplied or text analysis.",
+                    "example" : "en"
+                  }
+                }
+              }
+            }
+          },
+          "favicon" : {
+            "type" : "string",
+            "description" : "Url of website favicon",
+            "example" : "http://example.com/favicon.ico"
+          },
+          "items" : {
+            "type" : "array",
+            "description" : "The found data items on the website.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "@type" : {
+                  "type" : "string",
+                  "description" : "The item type",
+                  "example" : "WebPage"
+                }
+              },
+              "description" : "The properties depend on the type of the item. The field \"@type\" exists for all."
+            }
+          },
+          "screenshot" : {
+            "pattern" : "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type" : "string",
+            "description" : "Base64 encoded PNG screenshot of website (if generation got requested)",
+            "format" : "byte",
+            "example" : "AvDjs4...SjfRf"
+          },
+          "statusCode" : {
+            "type" : "string",
+            "description" : "The HTTP status code the URL returned",
+            "example" : "200"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "The title of the page",
+            "example" : "Product 1 - Online Shop - example.com"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url of the website. Can be different to requested one if there were redirects",
+            "example" : "http://example.com/product_1.html"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "basicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}

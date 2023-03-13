@@ -1,1 +1,819 @@
-{"openapi":"3.0.1","info":{"title":"InstanceMetadataClient","description":"The Azure Instance Metadata Client","version":"2019-08-15"},"servers":[{"url":"http://169.254.169.254/metadata"},{"url":"https://169.254.169.254/metadata"}],"paths":{"/attested/document":{"get":{"description":"Get Attested Data for the Virtual Machine.","operationId":"Attested_GetDocument","parameters":[{"name":"api-version","in":"query","description":"This is the API version to use.","required":true,"schema":{"type":"string","enum":["2018-10-01"]}},{"name":"nonce","in":"query","description":"This is a string of up to 32 random alphanumeric characters.","schema":{"type":"string"}},{"name":"Metadata","in":"header","description":"This must be set to 'true'.","required":true,"schema":{"type":"string","enum":["true"]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AttestedData"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/identity/info":{"get":{"tags":["Get metadata information"],"description":"Get information about AAD Metadata","operationId":"Identity_GetInfo","parameters":[{"name":"Metadata","in":"header","description":"This must be set to 'true'.","required":true,"schema":{"type":"string","enum":["true"]}},{"name":"api-version","in":"query","description":"This is the API version to use.","required":true,"schema":{"type":"string","enum":["2018-10-01"]}}],"responses":{"200":{"description":"Successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IdentityInfoResponse"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IdentityErrorResponse"}}}}}}},"/identity/oauth2/token":{"get":{"tags":["Get token"],"description":"Get a Token from Azure AD","operationId":"Identity_GetToken","parameters":[{"name":"Metadata","in":"header","description":"This must be set to 'true'.","required":true,"schema":{"type":"string","enum":["true"]}},{"name":"resource","in":"query","description":"This is the urlencoded identifier URI of the sink resource for the requested Azure AD token. The resulting token contains the corresponding aud for this resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"This is the API version to use.","required":true,"schema":{"type":"string","enum":["2018-10-01"]}},{"name":"client_id","in":"query","description":"This identifies, by Azure AD client id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with object_id and msi_res_id.","schema":{"type":"string"}},{"name":"object_id","in":"query","description":"This identifies, by Azure AD object id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with client_id and msi_res_id.","schema":{"type":"string"}},{"name":"msi_res_id","in":"query","description":"This identifies, by urlencoded ARM resource id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with client_id and object_id.","schema":{"type":"string"}},{"name":"authority","in":"query","description":"This indicates the authority to request AAD tokens from. Defaults to the known authority of the identity to be used.","schema":{"type":"string"}},{"name":"bypass_cache","in":"query","description":"If provided, the value must be 'true'. This indicates to the server that the token must be retrieved from Azure AD and cannot be retrieved from an internal cache.","schema":{"type":"string","enum":["true"]}}],"responses":{"200":{"description":"Successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IdentityTokenResponse"}}}},"default":{"description":"Error response describing why the operation failed.","headers":{"Www-Authenticate":{"description":"This is the response header containing a challenge for the Basic scheme with a realm value","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/IdentityErrorResponse"}}}}},"security":[null,{"basic_auth":null}]}},"/instance":{"get":{"description":"Get Instance Metadata for the Virtual Machine.","operationId":"Instances_GetMetadata","parameters":[{"name":"api-version","in":"query","description":"This is the API version to use.","required":true,"schema":{"type":"string","enum":["2018-10-01"]}},{"name":"Metadata","in":"header","description":"This must be set to 'true'.","required":true,"schema":{"type":"string","enum":["true"]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Instance"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"ApplicationResponse":{"type":"string","description":"This is a binary string containing the application."},"AttestedData":{"type":"object","properties":{"encoding":{"type":"string","description":"This is the encoding scheme of the signature."},"signature":{"type":"string","description":"This is the encoded string containing the VM ID, plan information, public key, timestamp, and nonce value."}},"description":"This is the response from the Attested_GetDocument operation."},"Compute":{"type":"object","properties":{"azEnvironment":{"type":"string","description":"This is the name of the environment in which the VM is running."},"location":{"type":"string","description":"This is the Azure Region in which the VM is running."},"name":{"type":"string","description":"This is the name of the VM."},"offer":{"type":"string","description":"This is the offer information for the VM image. This value is only present for images deployed from the Azure Image Gallery."},"osType":{"type":"string","description":"This value indicates the type of OS the VM is running, either Linux or Windows."},"placementGroupId":{"type":"string","description":"This is the placement group of your Virtual Machine Scale Set."},"plan":{"$ref":"#/components/schemas/PlanProperties"},"platformFaultDomain":{"type":"string","description":"This is the fault domain in which the VM."},"platformUpdateDomain":{"type":"string","description":"This is the update domain in which the VM."},"provider":{"type":"string","description":"This is the provider of the VM."},"publicKeys":{"type":"array","description":"This is information about the SSH certificate","items":{"$ref":"#/components/schemas/PublicKeysProperties"}},"publisher":{"type":"string","description":"This is the publisher of the VM image."},"resourceGroupName":{"type":"string","description":"This is the resource group for the VM."},"resourceId":{"type":"string","description":"This is the fully qualified ID for the VM."},"sku":{"type":"string","description":"This is the specific SKU for the VM image."},"storageProfile":{"$ref":"#/components/schemas/StorageProfile"},"subscriptionId":{"type":"string","description":"This is the Azure subscription for the VM."},"tags":{"type":"string","description":"This is the list of tags for your VM."},"version":{"type":"string","description":"This is the version of the VM image."},"vmId":{"type":"string","description":"This is the unique identifier for the VM."},"vmScaleSetName":{"type":"string","description":"This is the resource name of the VMSS."},"vmSize":{"type":"string","description":"This is the size of the VM."},"zone":{"type":"string","description":"This is the availability zone of the VM."}},"description":"Compute Metadata"},"DataDisk":{"type":"object","properties":{"caching":{"type":"string","description":"This is the caching requirements."},"createOption":{"type":"string","description":"This is information about how the VM was created."},"diskSizeGB":{"type":"string","description":"This is the size of the disk in GB."},"image":{"$ref":"#/components/schemas/DiskImage"},"lun":{"type":"string","description":"This is the logical unit number of the disk."},"managedDisk":{"$ref":"#/components/schemas/ManagedDisk"},"name":{"type":"string","description":"This is the disk name."},"vhd":{"$ref":"#/components/schemas/VirtualHardDisk"},"writeAcceleratorEnabled":{"type":"string","description":"This specifies whether or not writeAccelerator is enabled on the disk."}},"description":"This contains information about the data disk."},"DiffDiskSettings":{"type":"object","properties":{"option":{"type":"string","description":"This specifies the ephemeral disk settings."}},"description":"This is the ephemeral disk settings."},"DiskImage":{"type":"object","properties":{"uri":{"type":"string","description":"This is the uri of the virtual hard disk."}},"description":"This is the source user image virtual hard disk."},"EncryptionSettings":{"type":"object","properties":{"enabled":{"type":"string","description":"This specifies whether or not disk encryption is enabled on the VM."}},"description":"This is the encryption settings for the disk."},"ErrorResponse":{"type":"object","properties":{"error":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"This is the response from an operation in the case an error occurs."},"IdentityErrorResponse":{"type":"object","properties":{"error":{"type":"string","description":"Error code","enum":["invalid_request","unauthorized_client","access_denied","unsupported_response_type","invalid_scope","server_error","service_unavailable","bad_request","forbidden","not_found","method_not_allowed","too_many_requests"]},"error_description":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"This is the response from an Identity operation in the case an error occurs."},"IdentityInfoResponse":{"type":"object","properties":{"tenantId":{"type":"string","description":"This is the AAD tenantId of the identity of the system assigned managed identity."}},"description":"This is the response from the Identity_GetInfo operation."},"IdentityTokenResponse":{"type":"object","properties":{"access_token":{"type":"string","description":"This is the requested access token. The app can use this token to authenticate to the sink resource."},"client_id":{"type":"string","description":"This is the client_id specified in the request, if any."},"expires_in":{"type":"string","description":"This is how long the access token is valid (in seconds)."},"expires_on":{"type":"string","description":"This is the time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time. This value is used to determine the lifetime of cached tokens."},"ext_expires_in":{"type":"string","description":"This indicates the extended lifetime of the token (in seconds)."},"msi_res_id":{"type":"string","description":"This is the msi_res_id specified in the request, if any."},"not_before":{"type":"string","description":"This is the time when the access token becomes effective. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time."},"object_id":{"type":"string","description":"This is the object_id specified in the request, if any."},"resource":{"type":"string","description":"This is the app ID URI of the sink resource."},"token_type":{"type":"string","description":"This indicates the token type value."}},"description":"This is the response from the Identity_GetToken operation."},"ImageReference":{"type":"object","properties":{"id":{"type":"string","description":"This is the resource ID."},"offer":{"type":"string","description":"This is the offer of the platform or marketplace image."},"publisher":{"type":"string","description":"This is the image publisher."},"sku":{"type":"string","description":"This is the image SKU."},"version":{"type":"string","description":"This is the version of the platform or marketplace image."}},"description":"This contains information about the OS image."},"Instance":{"type":"object","properties":{"compute":{"$ref":"#/components/schemas/Compute"},"network":{"$ref":"#/components/schemas/Network"}},"description":"This is the response from the Instance_GetMetadata operation."},"Ipv4Properties":{"type":"object","properties":{"privateIpAddress":{"type":"string","description":"This is the private IP address assigned to the interface."},"publicIpAddress":{"type":"string","description":"This is the public IP address assigned to the interface."}},"description":"This contains the IPv4 properties."},"Ipv6Properties":{"type":"object","properties":{"privateIpAddress":{"type":"string","description":"This is the private IPv6 address assigned to the interface."}},"description":"This contains the IPv6 properties."},"ManagedDisk":{"type":"object","properties":{"id":{"type":"string","description":"This is the resource ID."},"storageAccountType":{"type":"string","description":"This is the storage account type for the managed disk."}},"description":"This is managed disk parameters."},"Network":{"type":"object","properties":{"interface":{"type":"array","description":"This contains data about the network interface.","items":{"$ref":"#/components/schemas/NetworkInterface"}}},"description":"Network Metadata"},"NetworkInterface":{"type":"object","properties":{"ipv4":{"type":"object","properties":{"ipAddress":{"type":"array","description":"This is the IP address","items":{"$ref":"#/components/schemas/Ipv4Properties"}},"subnet":{"type":"array","description":"This is the subnet","items":{"$ref":"#/components/schemas/SubnetProperties"}}},"description":"This contains the IPv4 address."},"ipv6":{"type":"object","properties":{"ipAddress":{"type":"array","description":"This is the IP address","items":{"$ref":"#/components/schemas/Ipv6Properties"}}},"description":"This contains the IPv6 address."},"macAddress":{"type":"string","description":"This is the MAC address of the interface."}},"description":"This contains data about the network interface."},"OsDisk":{"type":"object","properties":{"caching":{"type":"string","description":"This is the caching requirements."},"createOption":{"type":"string","description":"This is information about how the VM was created."},"diffDiskSettings":{"$ref":"#/components/schemas/DiffDiskSettings"},"diskSizeGB":{"type":"string","description":"This is the size of the disk in GB."},"encryptionSettings":{"$ref":"#/components/schemas/EncryptionSettings"},"image":{"$ref":"#/components/schemas/DiskImage"},"managedDisk":{"$ref":"#/components/schemas/ManagedDisk"},"name":{"type":"string","description":"This is the disk name."},"osType":{"type":"string","description":"This is the type of OS included in the disk."},"vhd":{"$ref":"#/components/schemas/VirtualHardDisk"},"writeAcceleratorEnabled":{"type":"string","description":"This specifies whether or not writeAccelerator is enabled on the disk."}},"description":"This contains information about the OS disk used by the VM."},"PlanProperties":{"type":"object","properties":{"name":{"type":"string","description":"This is the Plan ID."},"product":{"type":"string","description":"This is the product of the image from the Marketplace."},"publisher":{"type":"string","description":"This is the publisher ID."}},"description":"This contains the data about the plan."},"PublicKeysProperties":{"type":"object","properties":{"keyData":{"type":"string","description":"This is the SSH public key certificate used to authenticate with the VM."},"path":{"type":"string","description":"This specifies the full path on the VM where the SSH public key is stored."}},"description":"This contains the data about the public key."},"StorageProfile":{"type":"object","properties":{"dataDisks":{"type":"array","description":"Data disk information","items":{"$ref":"#/components/schemas/DataDisk"}},"imageReference":{"$ref":"#/components/schemas/ImageReference"},"osDisk":{"$ref":"#/components/schemas/OsDisk"}},"description":"This contains the data about the storage disks associated with the VM."},"SubnetProperties":{"type":"object","properties":{"address":{"type":"string","description":"This is the address range of the subnet."},"prefix":{"type":"string","description":"This is the prefix of the subnet."}},"description":"This contains the properties of the subnet."},"VirtualHardDisk":{"type":"object","properties":{"uri":{"type":"string","description":"This is the uri of the virtual hard disk."}},"description":"This is the virtual hard disk."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"This is the API version to use.","required":true,"schema":{"type":"string","enum":["2018-10-01"]}},"MetadataParameter":{"name":"Metadata","in":"header","description":"This must be set to 'true'.","required":true,"schema":{"type":"string","enum":["true"]}}},"securitySchemes":{"basic_auth":{"type":"http","description":"A Basic authentication flow","scheme":"basic"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "InstanceMetadataClient",
+    "description" : "The Azure Instance Metadata Client",
+    "version" : "2019-08-15"
+  },
+  "servers" : [ {
+    "url" : "http://169.254.169.254/metadata"
+  }, {
+    "url" : "https://169.254.169.254/metadata"
+  } ],
+  "paths" : {
+    "/attested/document" : {
+      "get" : {
+        "description" : "Get Attested Data for the Virtual Machine.",
+        "operationId" : "Attested_GetDocument",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "This is the API version to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-10-01" ]
+          }
+        }, {
+          "name" : "nonce",
+          "in" : "query",
+          "description" : "This is a string of up to 32 random alphanumeric characters.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Metadata",
+          "in" : "header",
+          "description" : "This must be set to 'true'.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "true" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AttestedData"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/info" : {
+      "get" : {
+        "tags" : [ "Get metadata information" ],
+        "description" : "Get information about AAD Metadata",
+        "operationId" : "Identity_GetInfo",
+        "parameters" : [ {
+          "name" : "Metadata",
+          "in" : "header",
+          "description" : "This must be set to 'true'.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "true" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "This is the API version to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-10-01" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IdentityInfoResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IdentityErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/oauth2/token" : {
+      "get" : {
+        "tags" : [ "Get token" ],
+        "description" : "Get a Token from Azure AD",
+        "operationId" : "Identity_GetToken",
+        "parameters" : [ {
+          "name" : "Metadata",
+          "in" : "header",
+          "description" : "This must be set to 'true'.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "true" ]
+          }
+        }, {
+          "name" : "resource",
+          "in" : "query",
+          "description" : "This is the urlencoded identifier URI of the sink resource for the requested Azure AD token. The resulting token contains the corresponding aud for this resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "This is the API version to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-10-01" ]
+          }
+        }, {
+          "name" : "client_id",
+          "in" : "query",
+          "description" : "This identifies, by Azure AD client id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with object_id and msi_res_id.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "object_id",
+          "in" : "query",
+          "description" : "This identifies, by Azure AD object id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with client_id and msi_res_id.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "msi_res_id",
+          "in" : "query",
+          "description" : "This identifies, by urlencoded ARM resource id, a specific explicit identity to use when authenticating to Azure AD. Mutually exclusive with client_id and object_id.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "authority",
+          "in" : "query",
+          "description" : "This indicates the authority to request AAD tokens from. Defaults to the known authority of the identity to be used.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bypass_cache",
+          "in" : "query",
+          "description" : "If provided, the value must be 'true'. This indicates to the server that the token must be retrieved from Azure AD and cannot be retrieved from an internal cache.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "true" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IdentityTokenResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "headers" : {
+              "Www-Authenticate" : {
+                "description" : "This is the response header containing a challenge for the Basic scheme with a realm value",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IdentityErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null, {
+          "basic_auth" : null
+        } ]
+      }
+    },
+    "/instance" : {
+      "get" : {
+        "description" : "Get Instance Metadata for the Virtual Machine.",
+        "operationId" : "Instances_GetMetadata",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "This is the API version to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-10-01" ]
+          }
+        }, {
+          "name" : "Metadata",
+          "in" : "header",
+          "description" : "This must be set to 'true'.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "true" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Instance"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApplicationResponse" : {
+        "type" : "string",
+        "description" : "This is a binary string containing the application."
+      },
+      "AttestedData" : {
+        "type" : "object",
+        "properties" : {
+          "encoding" : {
+            "type" : "string",
+            "description" : "This is the encoding scheme of the signature."
+          },
+          "signature" : {
+            "type" : "string",
+            "description" : "This is the encoded string containing the VM ID, plan information, public key, timestamp, and nonce value."
+          }
+        },
+        "description" : "This is the response from the Attested_GetDocument operation."
+      },
+      "Compute" : {
+        "type" : "object",
+        "properties" : {
+          "azEnvironment" : {
+            "type" : "string",
+            "description" : "This is the name of the environment in which the VM is running."
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "This is the Azure Region in which the VM is running."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "This is the name of the VM."
+          },
+          "offer" : {
+            "type" : "string",
+            "description" : "This is the offer information for the VM image. This value is only present for images deployed from the Azure Image Gallery."
+          },
+          "osType" : {
+            "type" : "string",
+            "description" : "This value indicates the type of OS the VM is running, either Linux or Windows."
+          },
+          "placementGroupId" : {
+            "type" : "string",
+            "description" : "This is the placement group of your Virtual Machine Scale Set."
+          },
+          "plan" : {
+            "$ref" : "#/components/schemas/PlanProperties"
+          },
+          "platformFaultDomain" : {
+            "type" : "string",
+            "description" : "This is the fault domain in which the VM."
+          },
+          "platformUpdateDomain" : {
+            "type" : "string",
+            "description" : "This is the update domain in which the VM."
+          },
+          "provider" : {
+            "type" : "string",
+            "description" : "This is the provider of the VM."
+          },
+          "publicKeys" : {
+            "type" : "array",
+            "description" : "This is information about the SSH certificate",
+            "items" : {
+              "$ref" : "#/components/schemas/PublicKeysProperties"
+            }
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "This is the publisher of the VM image."
+          },
+          "resourceGroupName" : {
+            "type" : "string",
+            "description" : "This is the resource group for the VM."
+          },
+          "resourceId" : {
+            "type" : "string",
+            "description" : "This is the fully qualified ID for the VM."
+          },
+          "sku" : {
+            "type" : "string",
+            "description" : "This is the specific SKU for the VM image."
+          },
+          "storageProfile" : {
+            "$ref" : "#/components/schemas/StorageProfile"
+          },
+          "subscriptionId" : {
+            "type" : "string",
+            "description" : "This is the Azure subscription for the VM."
+          },
+          "tags" : {
+            "type" : "string",
+            "description" : "This is the list of tags for your VM."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "This is the version of the VM image."
+          },
+          "vmId" : {
+            "type" : "string",
+            "description" : "This is the unique identifier for the VM."
+          },
+          "vmScaleSetName" : {
+            "type" : "string",
+            "description" : "This is the resource name of the VMSS."
+          },
+          "vmSize" : {
+            "type" : "string",
+            "description" : "This is the size of the VM."
+          },
+          "zone" : {
+            "type" : "string",
+            "description" : "This is the availability zone of the VM."
+          }
+        },
+        "description" : "Compute Metadata"
+      },
+      "DataDisk" : {
+        "type" : "object",
+        "properties" : {
+          "caching" : {
+            "type" : "string",
+            "description" : "This is the caching requirements."
+          },
+          "createOption" : {
+            "type" : "string",
+            "description" : "This is information about how the VM was created."
+          },
+          "diskSizeGB" : {
+            "type" : "string",
+            "description" : "This is the size of the disk in GB."
+          },
+          "image" : {
+            "$ref" : "#/components/schemas/DiskImage"
+          },
+          "lun" : {
+            "type" : "string",
+            "description" : "This is the logical unit number of the disk."
+          },
+          "managedDisk" : {
+            "$ref" : "#/components/schemas/ManagedDisk"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "This is the disk name."
+          },
+          "vhd" : {
+            "$ref" : "#/components/schemas/VirtualHardDisk"
+          },
+          "writeAcceleratorEnabled" : {
+            "type" : "string",
+            "description" : "This specifies whether or not writeAccelerator is enabled on the disk."
+          }
+        },
+        "description" : "This contains information about the data disk."
+      },
+      "DiffDiskSettings" : {
+        "type" : "object",
+        "properties" : {
+          "option" : {
+            "type" : "string",
+            "description" : "This specifies the ephemeral disk settings."
+          }
+        },
+        "description" : "This is the ephemeral disk settings."
+      },
+      "DiskImage" : {
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "type" : "string",
+            "description" : "This is the uri of the virtual hard disk."
+          }
+        },
+        "description" : "This is the source user image virtual hard disk."
+      },
+      "EncryptionSettings" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "string",
+            "description" : "This specifies whether or not disk encryption is enabled on the VM."
+          }
+        },
+        "description" : "This is the encryption settings for the disk."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "This is the response from an operation in the case an error occurs."
+      },
+      "IdentityErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string",
+            "description" : "Error code",
+            "enum" : [ "invalid_request", "unauthorized_client", "access_denied", "unsupported_response_type", "invalid_scope", "server_error", "service_unavailable", "bad_request", "forbidden", "not_found", "method_not_allowed", "too_many_requests" ]
+          },
+          "error_description" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "This is the response from an Identity operation in the case an error occurs."
+      },
+      "IdentityInfoResponse" : {
+        "type" : "object",
+        "properties" : {
+          "tenantId" : {
+            "type" : "string",
+            "description" : "This is the AAD tenantId of the identity of the system assigned managed identity."
+          }
+        },
+        "description" : "This is the response from the Identity_GetInfo operation."
+      },
+      "IdentityTokenResponse" : {
+        "type" : "object",
+        "properties" : {
+          "access_token" : {
+            "type" : "string",
+            "description" : "This is the requested access token. The app can use this token to authenticate to the sink resource."
+          },
+          "client_id" : {
+            "type" : "string",
+            "description" : "This is the client_id specified in the request, if any."
+          },
+          "expires_in" : {
+            "type" : "string",
+            "description" : "This is how long the access token is valid (in seconds)."
+          },
+          "expires_on" : {
+            "type" : "string",
+            "description" : "This is the time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time. This value is used to determine the lifetime of cached tokens."
+          },
+          "ext_expires_in" : {
+            "type" : "string",
+            "description" : "This indicates the extended lifetime of the token (in seconds)."
+          },
+          "msi_res_id" : {
+            "type" : "string",
+            "description" : "This is the msi_res_id specified in the request, if any."
+          },
+          "not_before" : {
+            "type" : "string",
+            "description" : "This is the time when the access token becomes effective. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time."
+          },
+          "object_id" : {
+            "type" : "string",
+            "description" : "This is the object_id specified in the request, if any."
+          },
+          "resource" : {
+            "type" : "string",
+            "description" : "This is the app ID URI of the sink resource."
+          },
+          "token_type" : {
+            "type" : "string",
+            "description" : "This indicates the token type value."
+          }
+        },
+        "description" : "This is the response from the Identity_GetToken operation."
+      },
+      "ImageReference" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "This is the resource ID."
+          },
+          "offer" : {
+            "type" : "string",
+            "description" : "This is the offer of the platform or marketplace image."
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "This is the image publisher."
+          },
+          "sku" : {
+            "type" : "string",
+            "description" : "This is the image SKU."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "This is the version of the platform or marketplace image."
+          }
+        },
+        "description" : "This contains information about the OS image."
+      },
+      "Instance" : {
+        "type" : "object",
+        "properties" : {
+          "compute" : {
+            "$ref" : "#/components/schemas/Compute"
+          },
+          "network" : {
+            "$ref" : "#/components/schemas/Network"
+          }
+        },
+        "description" : "This is the response from the Instance_GetMetadata operation."
+      },
+      "Ipv4Properties" : {
+        "type" : "object",
+        "properties" : {
+          "privateIpAddress" : {
+            "type" : "string",
+            "description" : "This is the private IP address assigned to the interface."
+          },
+          "publicIpAddress" : {
+            "type" : "string",
+            "description" : "This is the public IP address assigned to the interface."
+          }
+        },
+        "description" : "This contains the IPv4 properties."
+      },
+      "Ipv6Properties" : {
+        "type" : "object",
+        "properties" : {
+          "privateIpAddress" : {
+            "type" : "string",
+            "description" : "This is the private IPv6 address assigned to the interface."
+          }
+        },
+        "description" : "This contains the IPv6 properties."
+      },
+      "ManagedDisk" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "This is the resource ID."
+          },
+          "storageAccountType" : {
+            "type" : "string",
+            "description" : "This is the storage account type for the managed disk."
+          }
+        },
+        "description" : "This is managed disk parameters."
+      },
+      "Network" : {
+        "type" : "object",
+        "properties" : {
+          "interface" : {
+            "type" : "array",
+            "description" : "This contains data about the network interface.",
+            "items" : {
+              "$ref" : "#/components/schemas/NetworkInterface"
+            }
+          }
+        },
+        "description" : "Network Metadata"
+      },
+      "NetworkInterface" : {
+        "type" : "object",
+        "properties" : {
+          "ipv4" : {
+            "type" : "object",
+            "properties" : {
+              "ipAddress" : {
+                "type" : "array",
+                "description" : "This is the IP address",
+                "items" : {
+                  "$ref" : "#/components/schemas/Ipv4Properties"
+                }
+              },
+              "subnet" : {
+                "type" : "array",
+                "description" : "This is the subnet",
+                "items" : {
+                  "$ref" : "#/components/schemas/SubnetProperties"
+                }
+              }
+            },
+            "description" : "This contains the IPv4 address."
+          },
+          "ipv6" : {
+            "type" : "object",
+            "properties" : {
+              "ipAddress" : {
+                "type" : "array",
+                "description" : "This is the IP address",
+                "items" : {
+                  "$ref" : "#/components/schemas/Ipv6Properties"
+                }
+              }
+            },
+            "description" : "This contains the IPv6 address."
+          },
+          "macAddress" : {
+            "type" : "string",
+            "description" : "This is the MAC address of the interface."
+          }
+        },
+        "description" : "This contains data about the network interface."
+      },
+      "OsDisk" : {
+        "type" : "object",
+        "properties" : {
+          "caching" : {
+            "type" : "string",
+            "description" : "This is the caching requirements."
+          },
+          "createOption" : {
+            "type" : "string",
+            "description" : "This is information about how the VM was created."
+          },
+          "diffDiskSettings" : {
+            "$ref" : "#/components/schemas/DiffDiskSettings"
+          },
+          "diskSizeGB" : {
+            "type" : "string",
+            "description" : "This is the size of the disk in GB."
+          },
+          "encryptionSettings" : {
+            "$ref" : "#/components/schemas/EncryptionSettings"
+          },
+          "image" : {
+            "$ref" : "#/components/schemas/DiskImage"
+          },
+          "managedDisk" : {
+            "$ref" : "#/components/schemas/ManagedDisk"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "This is the disk name."
+          },
+          "osType" : {
+            "type" : "string",
+            "description" : "This is the type of OS included in the disk."
+          },
+          "vhd" : {
+            "$ref" : "#/components/schemas/VirtualHardDisk"
+          },
+          "writeAcceleratorEnabled" : {
+            "type" : "string",
+            "description" : "This specifies whether or not writeAccelerator is enabled on the disk."
+          }
+        },
+        "description" : "This contains information about the OS disk used by the VM."
+      },
+      "PlanProperties" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "This is the Plan ID."
+          },
+          "product" : {
+            "type" : "string",
+            "description" : "This is the product of the image from the Marketplace."
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "This is the publisher ID."
+          }
+        },
+        "description" : "This contains the data about the plan."
+      },
+      "PublicKeysProperties" : {
+        "type" : "object",
+        "properties" : {
+          "keyData" : {
+            "type" : "string",
+            "description" : "This is the SSH public key certificate used to authenticate with the VM."
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "This specifies the full path on the VM where the SSH public key is stored."
+          }
+        },
+        "description" : "This contains the data about the public key."
+      },
+      "StorageProfile" : {
+        "type" : "object",
+        "properties" : {
+          "dataDisks" : {
+            "type" : "array",
+            "description" : "Data disk information",
+            "items" : {
+              "$ref" : "#/components/schemas/DataDisk"
+            }
+          },
+          "imageReference" : {
+            "$ref" : "#/components/schemas/ImageReference"
+          },
+          "osDisk" : {
+            "$ref" : "#/components/schemas/OsDisk"
+          }
+        },
+        "description" : "This contains the data about the storage disks associated with the VM."
+      },
+      "SubnetProperties" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "type" : "string",
+            "description" : "This is the address range of the subnet."
+          },
+          "prefix" : {
+            "type" : "string",
+            "description" : "This is the prefix of the subnet."
+          }
+        },
+        "description" : "This contains the properties of the subnet."
+      },
+      "VirtualHardDisk" : {
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "type" : "string",
+            "description" : "This is the uri of the virtual hard disk."
+          }
+        },
+        "description" : "This is the virtual hard disk."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "This is the API version to use.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "2018-10-01" ]
+        }
+      },
+      "MetadataParameter" : {
+        "name" : "Metadata",
+        "in" : "header",
+        "description" : "This must be set to 'true'.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "true" ]
+        }
+      }
+    },
+    "securitySchemes" : {
+      "basic_auth" : {
+        "type" : "http",
+        "description" : "A Basic authentication flow",
+        "scheme" : "basic"
+      }
+    }
+  }
+}

@@ -1,1 +1,1877 @@
-{"openapi":"3.0.1","info":{"title":"Infermedica API","description":"Empower your healthcare services with intelligent diagnostic insights of Infermedica API.","version":"v2"},"servers":[{"url":"https://api.infermedica.com/v2"}],"tags":[{"name":"info"},{"name":"diagnosis"},{"name":"explain"},{"name":"conditions"},{"name":"symptoms"},{"name":"lab_tests"},{"name":"risk_factors"},{"name":"search"},{"name":"parse"},{"name":"lookup"},{"name":"concepts"},{"name":"rationale"},{"name":"recommend_specialist"},{"name":"red_flags"},{"name":"triage"},{"name":"suggest"}],"paths":{"/concepts":{"get":{"tags":["concepts"],"operationId":"getConcepts","parameters":[{"name":"ids","in":"query","description":"ids","schema":{"type":"string"}},{"name":"types","in":"query","description":"types","schema":{"type":"string"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/ConceptItemModel_Public"}}}}}}}},"/concepts/{id}":{"get":{"tags":["concepts"],"operationId":"getConcept","parameters":[{"name":"id","in":"path","description":"concept id","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ConceptItemModel_Public"}}}}}}},"/conditions":{"get":{"tags":["conditions"],"summary":"List all conditions","description":"Returns a list of all available conditions.","operationId":"getAllConditions","parameters":[{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Condition_Public"}}}}}}}},"/conditions/{id}":{"get":{"tags":["conditions"],"summary":"Get condition by id","description":"Returns details of a single condition specified by id parameter.","operationId":"getCondition","parameters":[{"name":"id","in":"path","description":"condition id","required":true,"schema":{"type":"string"}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Condition_Details"}}}},"400":{"description":"Invalid id specified"},"404":{"description":"Condition not found"}}}},"/diagnosis":{"post":{"tags":["diagnosis"],"summary":"Query diagnostic engine","description":"Suggests possible diagnoses and relevant observations based on provided patient information.","operationId":"computeDiagnosis","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/DiagnosisRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DiagnosisResponse_Public"}}}}}}},"/explain":{"post":{"tags":["explain"],"summary":"Query diagnostic engine for explanation","description":"Explains which evidence impact probability of selected condition.","operationId":"computeExplanation","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExplanationRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExplanationResponse"}}}}}}},"/info":{"get":{"tags":["info"],"summary":"Get database information","description":"Returns information about data used by diagnostic engine.","operationId":"getDatabaseInfo","parameters":[{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Info_Public"}}}}}}},"/lab_tests":{"get":{"tags":["lab_tests"],"summary":"List all lab tests","description":"Returns a list of all available lab tests.","operationId":"getAllLabTests","parameters":[{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/LabTest_Public"}}}}}}}},"/lab_tests/{id}":{"get":{"tags":["lab_tests"],"summary":"Get lab test by id","description":"Returns details of a single lab test specified by id parameter.","operationId":"getLabTest","parameters":[{"name":"id","in":"path","description":"lab test id","required":true,"schema":{"type":"string"}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LabTest_Details"}}}},"400":{"description":"Invalid id specified"},"404":{"description":"Lab test not found"}}}},"/lookup":{"get":{"tags":["lookup"],"summary":"Find observation matching given phrase","description":"Returns a single observation matching given phrase.","operationId":"getMatchingObservation","parameters":[{"name":"phrase","in":"query","description":"phrase to match","required":true,"schema":{"type":"string"}},{"name":"sex","in":"query","description":"sex filter","schema":{"type":"string","enum":["male","female"]}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SearchResult"}}}},"400":{"description":"Phrase missing or invalid sex specified"},"404":{"description":"No observation matches given phrase"}}}},"/parse":{"post":{"tags":["parse"],"summary":"Find mentions of observations in given text","description":"Returns list of mentions of observation found in given text.","operationId":"getMentions","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ParseRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ParseResponse"}}}},"400":{"description":"Text too long"}}}},"/rationale":{"post":{"tags":["rationale"],"summary":"Query diagnostic engine for question rationale","description":"Returns rationale behind the question asked by the system.","operationId":"computeRationale","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/RationaleRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RationaleResponse"}}}}}}},"/red_flags":{"post":{"tags":["red_flags"],"summary":"Query the diagnostic engine for possible red flag symptoms","description":"Suggests possible red flag symptoms based on provided patient information.","operationId":"computeRedFlags","parameters":[{"name":"max_results","in":"query","description":"maximum number of results","schema":{"type":"integer","format":"int32","default":8}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/DiagnosisRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SuggestResult"}}}}}}}},"/risk_factors":{"get":{"tags":["risk_factors"],"summary":"List all risk factors","description":"Returns a list of all available risk factors.","operationId":"getAllRiskFactors","parameters":[{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/RiskFactor_Public"}}}}}}}},"/risk_factors/{id}":{"get":{"tags":["risk_factors"],"summary":"Get risk factor by id","description":"Returns details of a single risk factor specified by id parameter.","operationId":"getRiskFactor","parameters":[{"name":"id","in":"path","description":"risk factor id","required":true,"schema":{"type":"string"}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RiskFactor_Details"}}}},"400":{"description":"Invalid id specified"},"404":{"description":"Risk factor not found"}}}},"/search":{"get":{"tags":["search"],"summary":"Find observations matching given phrase","description":"Returns list of observations matching the given phrase.","operationId":"getMatchingObservations","parameters":[{"name":"phrase","in":"query","description":"phrase to match","required":true,"schema":{"type":"string"}},{"name":"sex","in":"query","description":"sex filter","schema":{"type":"string","enum":["male","female"]}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"max_results","in":"query","description":"maximum number of results","schema":{"type":"integer","format":"int32","default":8}},{"name":"type","in":"query","description":"type of results","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string","enum":["symptom","risk_factor","lab_test"]}}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SearchResult"}}}}},"400":{"description":"Phrase missing or invalid sex specified"}}}},"/suggest":{"post":{"tags":["suggest"],"summary":"Query diagnostic engine for related symptoms","description":"Suggests possible symptoms based on provided patient information.","operationId":"getSuggestions","parameters":[{"name":"max_results","in":"query","description":"maximum number of results","schema":{"type":"integer","format":"int32","default":8}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SuggestRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SuggestResult"}}}}}}}},"/symptoms":{"get":{"tags":["symptoms"],"summary":"List all symptoms","description":"Returns a list of all available symptoms.","operationId":"getAllSymptoms","parameters":[{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Symptom_Public"}}}}}}}},"/symptoms/{id}":{"get":{"tags":["symptoms"],"summary":"Get symptoms by id","description":"Returns details of a single symptom specified by id parameter.","operationId":"getSymptom","parameters":[{"name":"id","in":"path","description":"symptoms id","required":true,"schema":{"type":"string"}},{"name":"age.value","in":"query","description":"age value","schema":{"type":"integer","format":"int32"},"example":18},{"name":"age.unit","in":"query","description":"unit in which age value was provided","schema":{"type":"string","default":"year","enum":["year","month"]},"example":"year"},{"name":"enable_triage_5","in":"query","description":"enable 5-level triage values","schema":{"type":"boolean"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Symptom_Details"}}}},"400":{"description":"Invalid id specified"},"404":{"description":"symptom not found"}}}},"/triage":{"post":{"tags":["triage"],"summary":"Query diagnostic engine for triage level","description":"Estimates triage level based on provided patient information.","operationId":"computeTriage","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/DiagnosisRequest"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TriageResponse"}}}}}}}},"components":{"schemas":{"Choice_Public":{"required":["id","label"],"type":"object","properties":{"id":{"type":"string","enum":["present","absent","unknown"]},"label":{"type":"string"}}},"ConceptItemModel_Public":{"type":"object","properties":{"common_name":{"type":"string"},"id":{"type":"string"},"name":{"type":"string"},"type":{"type":"string","enum":["condition","symptom","risk_factor","lab_test"]}}},"ConditionProbability_Public":{"required":["id","name","probability"],"type":"object","properties":{"common_name":{"type":"string","description":"condition common name"},"id":{"type":"string","description":"condition id"},"name":{"type":"string","description":"condition name"},"probability":{"type":"number","format":"double"}}},"Condition_Details":{"required":["categories","id","name","sex_filter"],"type":"object","properties":{"acuteness":{"type":"string","enum":["chronic","chronic_with_exacerbations","acute_potentially_chronic","acute"]},"categories":{"type":"array","items":{"type":"string"}},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"name":{"type":"string"},"prevalence":{"type":"string","enum":["very_rare","rare","moderate","common"]},"severity":{"type":"string","enum":["mild","moderate","severe"]},"sex_filter":{"type":"string","enum":["both","male","female"]},"triage_level":{"type":"string","enum":["emergency_ambulance","emergency","consultation_24","consultation","self_care"]}}},"Condition_Public":{"required":["categories","id","name","sex_filter"],"type":"object","properties":{"acuteness":{"type":"string","enum":["chronic","chronic_with_exacerbations","acute_potentially_chronic","acute"]},"categories":{"type":"array","items":{"type":"string"}},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"name":{"type":"string"},"prevalence":{"type":"string","enum":["very_rare","rare","moderate","common"]},"severity":{"type":"string","enum":["mild","moderate","severe"]},"sex_filter":{"type":"string","enum":["both","male","female"]},"triage_level":{"type":"string","enum":["emergency_ambulance","emergency","consultation_24","consultation","self_care"]}}},"DiagnosisRequest":{"required":["age","sex"],"type":"object","properties":{"age":{"type":"object","example":"18"},"evaluated_at":{"type":"string","description":"time when diagnosis was evaluated in ISO 8601 format","readOnly":true,"example":"2020-06-02"},"evidence":{"type":"array","items":{"$ref":"#/components/schemas/Evidence"}},"extras":{"type":"object","additionalProperties":{"type":"object"}},"sex":{"type":"string","enum":["male","female"]}}},"DiagnosisResponse_Public":{"type":"object","properties":{"conditions":{"type":"array","items":{"$ref":"#/components/schemas/ConditionProbability_Public"}},"extras":{"type":"object","additionalProperties":{"type":"object"}},"question":{"$ref":"#/components/schemas/Question_Public"},"should_stop":{"type":"boolean"}}},"Evidence":{"required":["choice_id","id"],"type":"object","properties":{"choice_id":{"type":"string","enum":["present","absent","unknown"]},"id":{"type":"string","description":"id of observation or condition","example":"s_1"},"observed_at":{"type":"string","description":"time when evidence was observed in ISO 8601 format","example":"2020-06-02"},"source":{"type":"string","description":"Flag describing evidence origin","enum":["initial","suggest","predefined","red_flags"]}}},"ExplanationEvidence":{"required":["id","name"],"type":"object","properties":{"common_name":{"type":"string","description":"observation common name"},"id":{"type":"string","description":"observation id"},"name":{"type":"string","description":"observation name"}}},"ExplanationRequest":{"required":["age","sex","target"],"type":"object","properties":{"age":{"type":"object","example":"18"},"evaluated_at":{"type":"string","description":"time when diagnosis was evaluated in ISO 8601 format","readOnly":true,"example":"2020-06-02"},"evidence":{"type":"array","items":{"$ref":"#/components/schemas/Evidence"}},"extras":{"type":"object","additionalProperties":{"type":"object"}},"sex":{"type":"string","enum":["male","female"]},"target":{"type":"string","description":"target condition id","example":"c_1"}}},"ExplanationResponse":{"required":["conflicting_evidence","supporting_evidence","unconfirmed_evidence"],"type":"object","properties":{"conflicting_evidence":{"type":"array","description":"conflicting evidence","items":{"$ref":"#/components/schemas/ExplanationEvidence"}},"supporting_evidence":{"type":"array","description":"supporting evidence","items":{"$ref":"#/components/schemas/ExplanationEvidence"}},"unconfirmed_evidence":{"type":"array","description":"unconfirmed evidence","items":{"$ref":"#/components/schemas/ExplanationEvidence"}}}},"Info_Public":{"required":["conditions_count","lab_tests_count","risk_factors_count","symptoms_count","updated_at"],"type":"object","properties":{"api_version":{"type":"string","description":"version of api release"},"conditions_count":{"type":"integer","format":"int32"},"lab_tests_count":{"type":"integer","format":"int32"},"risk_factors_count":{"type":"integer","format":"int32"},"symptoms_count":{"type":"integer","format":"int32"},"updated_at":{"type":"string","description":"time of last model update in ISO 8601 format"}}},"LabTestResult_Details":{"required":["id","type"],"type":"object","properties":{"id":{"type":"string"},"type":{"type":"string","enum":["very_low","low","normal","high","very_high","absent","present"]}}},"LabTestResult_Public":{"required":["id","type"],"type":"object","properties":{"id":{"type":"string"},"type":{"type":"string","enum":["very_low","low","normal","high","very_high","absent","present"]}}},"LabTest_Details":{"required":["id","name"],"type":"object","properties":{"category":{"type":"string"},"common_name":{"type":"string"},"id":{"type":"string"},"name":{"type":"string"},"results":{"type":"array","items":{"$ref":"#/components/schemas/LabTestResult_Details"}}}},"LabTest_Public":{"required":["id","name"],"type":"object","properties":{"category":{"type":"string"},"common_name":{"type":"string"},"id":{"type":"string"},"name":{"type":"string"},"results":{"type":"array","items":{"$ref":"#/components/schemas/LabTestResult_Public"}}}},"ObservationMention":{"required":["choice_id","head_position","id","name","orth","positions"],"type":"object","properties":{"choice_id":{"type":"string","enum":["present","absent","unknown"]},"common_name":{"type":"string","description":"observation common name"},"head_position":{"type":"integer","format":"int32"},"id":{"type":"string","description":"observation id"},"name":{"type":"string","description":"observation name"},"orth":{"type":"string"},"positions":{"type":"array","items":{"type":"integer","format":"int32"}}}},"ParseRequest":{"required":["text"],"type":"object","properties":{"concept_types":{"type":"array","description":"list of concept types that should be captured","items":{"type":"string","enum":["symptom","risk_factor"]}},"context":{"type":"array","description":"ordered list of ids of present symptoms that were already captured and can be used as context","items":{"type":"string"}},"correct_spelling":{"type":"boolean","description":"correct spelling of input text before proper analysis"},"include_tokens":{"type":"boolean","description":"include tokenization details in output"},"text":{"type":"string","description":"user text to process"}}},"ParseResponse":{"required":["mentions","obvious"],"type":"object","properties":{"mentions":{"type":"array","description":"list of recognized symptom or risk factor mentions","items":{"$ref":"#/components/schemas/ObservationMention"}},"obvious":{"type":"boolean","description":"indicates that entire input text has been parsed successfully and unambiguously"},"tokens":{"type":"array","items":{"type":"string"}}}},"QuestionItem_Public":{"required":["choices","id","name"],"type":"object","properties":{"choices":{"type":"array","description":"list of available answer choices","items":{"$ref":"#/components/schemas/Choice_Public"}},"id":{"type":"string","description":"observation id"},"name":{"type":"string","description":"name or alias of observation"}}},"Question_Public":{"required":["items","text"],"type":"object","properties":{"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like images or HTML"},"items":{"type":"array","description":"one or more observations to evaluate","items":{"$ref":"#/components/schemas/QuestionItem_Public"}},"text":{"type":"string","description":"question text"},"type":{"type":"string","enum":["single","group_single","group_multiple"]}}},"RationaleParam":{"required":["id","name"],"type":"object","properties":{"common_name":{"type":"string","description":"observation or condition common name"},"id":{"type":"string","description":"observation or condition id"},"name":{"type":"string","description":"observation or condition name"}}},"RationaleRequest":{"required":["age","sex"],"type":"object","properties":{"age":{"type":"object","example":"18"},"evaluated_at":{"type":"string","description":"time when diagnosis was evaluated in ISO 8601 format","readOnly":true,"example":"2020-06-02"},"evidence":{"type":"array","items":{"$ref":"#/components/schemas/Evidence"}},"extras":{"type":"object","additionalProperties":{"type":"object"}},"sex":{"type":"string","enum":["male","female"]}}},"RationaleResponse":{"required":["type"],"type":"object","properties":{"condition_params":{"type":"array","description":"condition params","items":{"$ref":"#/components/schemas/RationaleParam"}},"observation_params":{"type":"array","description":"observation params","items":{"$ref":"#/components/schemas/RationaleParam"}},"type":{"type":"string","description":"type","enum":["r0","r1","r2","r3","r4","r5","r6"]}}},"RiskFactor_Details":{"required":["id","name","question","sex_filter"],"type":"object","properties":{"category":{"type":"string"},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"image_source":{"type":"string"},"image_url":{"type":"string"},"name":{"type":"string"},"question":{"type":"string","description":"only available in object details, not in listing"},"sex_filter":{"type":"string","enum":["both","male","female"]}}},"RiskFactor_Public":{"required":["id","name","sex_filter"],"type":"object","properties":{"category":{"type":"string"},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"image_source":{"type":"string"},"image_url":{"type":"string"},"name":{"type":"string"},"sex_filter":{"type":"string","enum":["both","male","female"]}}},"SearchResult":{"required":["id","label"],"type":"object","properties":{"id":{"type":"string"},"label":{"type":"string","description":"matched phrase, name or its synonym"}}},"SeriousObservation":{"required":["id","name"],"type":"object","properties":{"common_name":{"type":"string","description":"observation common name"},"id":{"type":"string","description":"observation id"},"is_emergency":{"type":"boolean"},"name":{"type":"string","description":"observation name"}}},"SuggestRequest":{"type":"object","properties":{"age":{"type":"object","example":"18"},"evaluated_at":{"type":"string","description":"time when diagnosis was evaluated in ISO 8601 format","readOnly":true,"example":"2020-06-02"},"evidence":{"type":"array","items":{"$ref":"#/components/schemas/Evidence"}},"extras":{"type":"object","additionalProperties":{"type":"object"}},"sex":{"type":"string","enum":["male","female"]}}},"SuggestResult":{"required":["id","name"],"type":"object","properties":{"common_name":{"type":"string"},"id":{"type":"string"},"name":{"type":"string"}}},"Symptom_Details":{"required":["id","name","question","sex_filter"],"type":"object","properties":{"category":{"type":"string"},"children":{"type":"object","description":"list of child symptoms"},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"image_source":{"type":"string"},"image_url":{"type":"string"},"name":{"type":"string"},"parent_id":{"type":"string","description":"id of parent symptom"},"parent_relation":{"type":"string","description":"type of relation with parent symptom","enum":["base","duration","severity","character","exacerbating_factor","diminishing_factor","location","radiation"]},"question":{"type":"string","description":"only available in object details, not in listing"},"sex_filter":{"type":"string","enum":["both","male","female"]}}},"Symptom_Public":{"required":["id","name","sex_filter"],"type":"object","properties":{"category":{"type":"string"},"children":{"type":"object","description":"list of child symptoms"},"common_name":{"type":"string"},"extras":{"type":"object","additionalProperties":{"type":"object"},"description":"additional content, like custom properties or images"},"id":{"type":"string"},"image_source":{"type":"string"},"image_url":{"type":"string"},"name":{"type":"string"},"parent_id":{"type":"string","description":"id of parent symptom"},"parent_relation":{"type":"string","description":"type of relation with parent symptom","enum":["base","duration","severity","character","exacerbating_factor","diminishing_factor","location","radiation"]},"sex_filter":{"type":"string","enum":["both","male","female"]}}},"TriageResponse":{"type":"object","properties":{"root_cause":{"type":"string","enum":["r1","r2","r3","r4","r5","r6","r7","r8","r9","r10","r11","r12"]},"serious":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/SeriousObservation"}},"teleconsultation_applicable":{"type":"boolean"},"triage_level":{"type":"string","enum":["emergency_ambulance","emergency","consultation_24","consultation","self_care"]}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Infermedica API",
+    "description" : "Empower your healthcare services with intelligent diagnostic insights of Infermedica API.",
+    "version" : "v2"
+  },
+  "servers" : [ {
+    "url" : "https://api.infermedica.com/v2"
+  } ],
+  "tags" : [ {
+    "name" : "info"
+  }, {
+    "name" : "diagnosis"
+  }, {
+    "name" : "explain"
+  }, {
+    "name" : "conditions"
+  }, {
+    "name" : "symptoms"
+  }, {
+    "name" : "lab_tests"
+  }, {
+    "name" : "risk_factors"
+  }, {
+    "name" : "search"
+  }, {
+    "name" : "parse"
+  }, {
+    "name" : "lookup"
+  }, {
+    "name" : "concepts"
+  }, {
+    "name" : "rationale"
+  }, {
+    "name" : "recommend_specialist"
+  }, {
+    "name" : "red_flags"
+  }, {
+    "name" : "triage"
+  }, {
+    "name" : "suggest"
+  } ],
+  "paths" : {
+    "/concepts" : {
+      "get" : {
+        "tags" : [ "concepts" ],
+        "operationId" : "getConcepts",
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "ids",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "types",
+          "in" : "query",
+          "description" : "types",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "uniqueItems" : true,
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ConceptItemModel_Public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concepts/{id}" : {
+      "get" : {
+        "tags" : [ "concepts" ],
+        "operationId" : "getConcept",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "concept id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ConceptItemModel_Public"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conditions" : {
+      "get" : {
+        "tags" : [ "conditions" ],
+        "summary" : "List all conditions",
+        "description" : "Returns a list of all available conditions.",
+        "operationId" : "getAllConditions",
+        "parameters" : [ {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Condition_Public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conditions/{id}" : {
+      "get" : {
+        "tags" : [ "conditions" ],
+        "summary" : "Get condition by id",
+        "description" : "Returns details of a single condition specified by id parameter.",
+        "operationId" : "getCondition",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "condition id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Condition_Details"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid id specified"
+          },
+          "404" : {
+            "description" : "Condition not found"
+          }
+        }
+      }
+    },
+    "/diagnosis" : {
+      "post" : {
+        "tags" : [ "diagnosis" ],
+        "summary" : "Query diagnostic engine",
+        "description" : "Suggests possible diagnoses and relevant observations based on provided patient information.",
+        "operationId" : "computeDiagnosis",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiagnosisRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DiagnosisResponse_Public"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/explain" : {
+      "post" : {
+        "tags" : [ "explain" ],
+        "summary" : "Query diagnostic engine for explanation",
+        "description" : "Explains which evidence impact probability of selected condition.",
+        "operationId" : "computeExplanation",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExplanationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExplanationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/info" : {
+      "get" : {
+        "tags" : [ "info" ],
+        "summary" : "Get database information",
+        "description" : "Returns information about data used by diagnostic engine.",
+        "operationId" : "getDatabaseInfo",
+        "parameters" : [ {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Info_Public"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lab_tests" : {
+      "get" : {
+        "tags" : [ "lab_tests" ],
+        "summary" : "List all lab tests",
+        "description" : "Returns a list of all available lab tests.",
+        "operationId" : "getAllLabTests",
+        "parameters" : [ {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/LabTest_Public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lab_tests/{id}" : {
+      "get" : {
+        "tags" : [ "lab_tests" ],
+        "summary" : "Get lab test by id",
+        "description" : "Returns details of a single lab test specified by id parameter.",
+        "operationId" : "getLabTest",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "lab test id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LabTest_Details"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid id specified"
+          },
+          "404" : {
+            "description" : "Lab test not found"
+          }
+        }
+      }
+    },
+    "/lookup" : {
+      "get" : {
+        "tags" : [ "lookup" ],
+        "summary" : "Find observation matching given phrase",
+        "description" : "Returns a single observation matching given phrase.",
+        "operationId" : "getMatchingObservation",
+        "parameters" : [ {
+          "name" : "phrase",
+          "in" : "query",
+          "description" : "phrase to match",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sex",
+          "in" : "query",
+          "description" : "sex filter",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SearchResult"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Phrase missing or invalid sex specified"
+          },
+          "404" : {
+            "description" : "No observation matches given phrase"
+          }
+        }
+      }
+    },
+    "/parse" : {
+      "post" : {
+        "tags" : [ "parse" ],
+        "summary" : "Find mentions of observations in given text",
+        "description" : "Returns list of mentions of observation found in given text.",
+        "operationId" : "getMentions",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ParseRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ParseResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Text too long"
+          }
+        }
+      }
+    },
+    "/rationale" : {
+      "post" : {
+        "tags" : [ "rationale" ],
+        "summary" : "Query diagnostic engine for question rationale",
+        "description" : "Returns rationale behind the question asked by the system.",
+        "operationId" : "computeRationale",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RationaleRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RationaleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/red_flags" : {
+      "post" : {
+        "tags" : [ "red_flags" ],
+        "summary" : "Query the diagnostic engine for possible red flag symptoms",
+        "description" : "Suggests possible red flag symptoms based on provided patient information.",
+        "operationId" : "computeRedFlags",
+        "parameters" : [ {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "maximum number of results",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 8
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiagnosisRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SuggestResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/risk_factors" : {
+      "get" : {
+        "tags" : [ "risk_factors" ],
+        "summary" : "List all risk factors",
+        "description" : "Returns a list of all available risk factors.",
+        "operationId" : "getAllRiskFactors",
+        "parameters" : [ {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RiskFactor_Public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/risk_factors/{id}" : {
+      "get" : {
+        "tags" : [ "risk_factors" ],
+        "summary" : "Get risk factor by id",
+        "description" : "Returns details of a single risk factor specified by id parameter.",
+        "operationId" : "getRiskFactor",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "risk factor id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RiskFactor_Details"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid id specified"
+          },
+          "404" : {
+            "description" : "Risk factor not found"
+          }
+        }
+      }
+    },
+    "/search" : {
+      "get" : {
+        "tags" : [ "search" ],
+        "summary" : "Find observations matching given phrase",
+        "description" : "Returns list of observations matching the given phrase.",
+        "operationId" : "getMatchingObservations",
+        "parameters" : [ {
+          "name" : "phrase",
+          "in" : "query",
+          "description" : "phrase to match",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sex",
+          "in" : "query",
+          "description" : "sex filter",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "maximum number of results",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 8
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "type of results",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "symptom", "risk_factor", "lab_test" ]
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SearchResult"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Phrase missing or invalid sex specified"
+          }
+        }
+      }
+    },
+    "/suggest" : {
+      "post" : {
+        "tags" : [ "suggest" ],
+        "summary" : "Query diagnostic engine for related symptoms",
+        "description" : "Suggests possible symptoms based on provided patient information.",
+        "operationId" : "getSuggestions",
+        "parameters" : [ {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "maximum number of results",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 8
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SuggestRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SuggestResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symptoms" : {
+      "get" : {
+        "tags" : [ "symptoms" ],
+        "summary" : "List all symptoms",
+        "description" : "Returns a list of all available symptoms.",
+        "operationId" : "getAllSymptoms",
+        "parameters" : [ {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Symptom_Public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symptoms/{id}" : {
+      "get" : {
+        "tags" : [ "symptoms" ],
+        "summary" : "Get symptoms by id",
+        "description" : "Returns details of a single symptom specified by id parameter.",
+        "operationId" : "getSymptom",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "symptoms id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "age.value",
+          "in" : "query",
+          "description" : "age value",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 18
+        }, {
+          "name" : "age.unit",
+          "in" : "query",
+          "description" : "unit in which age value was provided",
+          "schema" : {
+            "type" : "string",
+            "default" : "year",
+            "enum" : [ "year", "month" ]
+          },
+          "example" : "year"
+        }, {
+          "name" : "enable_triage_5",
+          "in" : "query",
+          "description" : "enable 5-level triage values",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Symptom_Details"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid id specified"
+          },
+          "404" : {
+            "description" : "symptom not found"
+          }
+        }
+      }
+    },
+    "/triage" : {
+      "post" : {
+        "tags" : [ "triage" ],
+        "summary" : "Query diagnostic engine for triage level",
+        "description" : "Estimates triage level based on provided patient information.",
+        "operationId" : "computeTriage",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiagnosisRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TriageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Choice_Public" : {
+        "required" : [ "id", "label" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "enum" : [ "present", "absent", "unknown" ]
+          },
+          "label" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ConceptItemModel_Public" : {
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "condition", "symptom", "risk_factor", "lab_test" ]
+          }
+        }
+      },
+      "ConditionProbability_Public" : {
+        "required" : [ "id", "name", "probability" ],
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string",
+            "description" : "condition common name"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "condition id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "condition name"
+          },
+          "probability" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "Condition_Details" : {
+        "required" : [ "categories", "id", "name", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "acuteness" : {
+            "type" : "string",
+            "enum" : [ "chronic", "chronic_with_exacerbations", "acute_potentially_chronic", "acute" ]
+          },
+          "categories" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "prevalence" : {
+            "type" : "string",
+            "enum" : [ "very_rare", "rare", "moderate", "common" ]
+          },
+          "severity" : {
+            "type" : "string",
+            "enum" : [ "mild", "moderate", "severe" ]
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          },
+          "triage_level" : {
+            "type" : "string",
+            "enum" : [ "emergency_ambulance", "emergency", "consultation_24", "consultation", "self_care" ]
+          }
+        }
+      },
+      "Condition_Public" : {
+        "required" : [ "categories", "id", "name", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "acuteness" : {
+            "type" : "string",
+            "enum" : [ "chronic", "chronic_with_exacerbations", "acute_potentially_chronic", "acute" ]
+          },
+          "categories" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "prevalence" : {
+            "type" : "string",
+            "enum" : [ "very_rare", "rare", "moderate", "common" ]
+          },
+          "severity" : {
+            "type" : "string",
+            "enum" : [ "mild", "moderate", "severe" ]
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          },
+          "triage_level" : {
+            "type" : "string",
+            "enum" : [ "emergency_ambulance", "emergency", "consultation_24", "consultation", "self_care" ]
+          }
+        }
+      },
+      "DiagnosisRequest" : {
+        "required" : [ "age", "sex" ],
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "object",
+            "example" : "18"
+          },
+          "evaluated_at" : {
+            "type" : "string",
+            "description" : "time when diagnosis was evaluated in ISO 8601 format",
+            "readOnly" : true,
+            "example" : "2020-06-02"
+          },
+          "evidence" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Evidence"
+            }
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          }
+        }
+      },
+      "DiagnosisResponse_Public" : {
+        "type" : "object",
+        "properties" : {
+          "conditions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ConditionProbability_Public"
+            }
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "question" : {
+            "$ref" : "#/components/schemas/Question_Public"
+          },
+          "should_stop" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Evidence" : {
+        "required" : [ "choice_id", "id" ],
+        "type" : "object",
+        "properties" : {
+          "choice_id" : {
+            "type" : "string",
+            "enum" : [ "present", "absent", "unknown" ]
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "id of observation or condition",
+            "example" : "s_1"
+          },
+          "observed_at" : {
+            "type" : "string",
+            "description" : "time when evidence was observed in ISO 8601 format",
+            "example" : "2020-06-02"
+          },
+          "source" : {
+            "type" : "string",
+            "description" : "Flag describing evidence origin",
+            "enum" : [ "initial", "suggest", "predefined", "red_flags" ]
+          }
+        }
+      },
+      "ExplanationEvidence" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string",
+            "description" : "observation common name"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "observation id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "observation name"
+          }
+        }
+      },
+      "ExplanationRequest" : {
+        "required" : [ "age", "sex", "target" ],
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "object",
+            "example" : "18"
+          },
+          "evaluated_at" : {
+            "type" : "string",
+            "description" : "time when diagnosis was evaluated in ISO 8601 format",
+            "readOnly" : true,
+            "example" : "2020-06-02"
+          },
+          "evidence" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Evidence"
+            }
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "target condition id",
+            "example" : "c_1"
+          }
+        }
+      },
+      "ExplanationResponse" : {
+        "required" : [ "conflicting_evidence", "supporting_evidence", "unconfirmed_evidence" ],
+        "type" : "object",
+        "properties" : {
+          "conflicting_evidence" : {
+            "type" : "array",
+            "description" : "conflicting evidence",
+            "items" : {
+              "$ref" : "#/components/schemas/ExplanationEvidence"
+            }
+          },
+          "supporting_evidence" : {
+            "type" : "array",
+            "description" : "supporting evidence",
+            "items" : {
+              "$ref" : "#/components/schemas/ExplanationEvidence"
+            }
+          },
+          "unconfirmed_evidence" : {
+            "type" : "array",
+            "description" : "unconfirmed evidence",
+            "items" : {
+              "$ref" : "#/components/schemas/ExplanationEvidence"
+            }
+          }
+        }
+      },
+      "Info_Public" : {
+        "required" : [ "conditions_count", "lab_tests_count", "risk_factors_count", "symptoms_count", "updated_at" ],
+        "type" : "object",
+        "properties" : {
+          "api_version" : {
+            "type" : "string",
+            "description" : "version of api release"
+          },
+          "conditions_count" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "lab_tests_count" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "risk_factors_count" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "symptoms_count" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "description" : "time of last model update in ISO 8601 format"
+          }
+        }
+      },
+      "LabTestResult_Details" : {
+        "required" : [ "id", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "very_low", "low", "normal", "high", "very_high", "absent", "present" ]
+          }
+        }
+      },
+      "LabTestResult_Public" : {
+        "required" : [ "id", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "very_low", "low", "normal", "high", "very_high", "absent", "present" ]
+          }
+        }
+      },
+      "LabTest_Details" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "results" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LabTestResult_Details"
+            }
+          }
+        }
+      },
+      "LabTest_Public" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "results" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LabTestResult_Public"
+            }
+          }
+        }
+      },
+      "ObservationMention" : {
+        "required" : [ "choice_id", "head_position", "id", "name", "orth", "positions" ],
+        "type" : "object",
+        "properties" : {
+          "choice_id" : {
+            "type" : "string",
+            "enum" : [ "present", "absent", "unknown" ]
+          },
+          "common_name" : {
+            "type" : "string",
+            "description" : "observation common name"
+          },
+          "head_position" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "observation id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "observation name"
+          },
+          "orth" : {
+            "type" : "string"
+          },
+          "positions" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }
+      },
+      "ParseRequest" : {
+        "required" : [ "text" ],
+        "type" : "object",
+        "properties" : {
+          "concept_types" : {
+            "type" : "array",
+            "description" : "list of concept types that should be captured",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "symptom", "risk_factor" ]
+            }
+          },
+          "context" : {
+            "type" : "array",
+            "description" : "ordered list of ids of present symptoms that were already captured and can be used as context",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "correct_spelling" : {
+            "type" : "boolean",
+            "description" : "correct spelling of input text before proper analysis"
+          },
+          "include_tokens" : {
+            "type" : "boolean",
+            "description" : "include tokenization details in output"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "user text to process"
+          }
+        }
+      },
+      "ParseResponse" : {
+        "required" : [ "mentions", "obvious" ],
+        "type" : "object",
+        "properties" : {
+          "mentions" : {
+            "type" : "array",
+            "description" : "list of recognized symptom or risk factor mentions",
+            "items" : {
+              "$ref" : "#/components/schemas/ObservationMention"
+            }
+          },
+          "obvious" : {
+            "type" : "boolean",
+            "description" : "indicates that entire input text has been parsed successfully and unambiguously"
+          },
+          "tokens" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "QuestionItem_Public" : {
+        "required" : [ "choices", "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "choices" : {
+            "type" : "array",
+            "description" : "list of available answer choices",
+            "items" : {
+              "$ref" : "#/components/schemas/Choice_Public"
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "observation id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "name or alias of observation"
+          }
+        }
+      },
+      "Question_Public" : {
+        "required" : [ "items", "text" ],
+        "type" : "object",
+        "properties" : {
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like images or HTML"
+          },
+          "items" : {
+            "type" : "array",
+            "description" : "one or more observations to evaluate",
+            "items" : {
+              "$ref" : "#/components/schemas/QuestionItem_Public"
+            }
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "question text"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "single", "group_single", "group_multiple" ]
+          }
+        }
+      },
+      "RationaleParam" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string",
+            "description" : "observation or condition common name"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "observation or condition id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "observation or condition name"
+          }
+        }
+      },
+      "RationaleRequest" : {
+        "required" : [ "age", "sex" ],
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "object",
+            "example" : "18"
+          },
+          "evaluated_at" : {
+            "type" : "string",
+            "description" : "time when diagnosis was evaluated in ISO 8601 format",
+            "readOnly" : true,
+            "example" : "2020-06-02"
+          },
+          "evidence" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Evidence"
+            }
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          }
+        }
+      },
+      "RationaleResponse" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "condition_params" : {
+            "type" : "array",
+            "description" : "condition params",
+            "items" : {
+              "$ref" : "#/components/schemas/RationaleParam"
+            }
+          },
+          "observation_params" : {
+            "type" : "array",
+            "description" : "observation params",
+            "items" : {
+              "$ref" : "#/components/schemas/RationaleParam"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "type",
+            "enum" : [ "r0", "r1", "r2", "r3", "r4", "r5", "r6" ]
+          }
+        }
+      },
+      "RiskFactor_Details" : {
+        "required" : [ "id", "name", "question", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "image_source" : {
+            "type" : "string"
+          },
+          "image_url" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string",
+            "description" : "only available in object details, not in listing"
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          }
+        }
+      },
+      "RiskFactor_Public" : {
+        "required" : [ "id", "name", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "image_source" : {
+            "type" : "string"
+          },
+          "image_url" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          }
+        }
+      },
+      "SearchResult" : {
+        "required" : [ "id", "label" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string",
+            "description" : "matched phrase, name or its synonym"
+          }
+        }
+      },
+      "SeriousObservation" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string",
+            "description" : "observation common name"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "observation id"
+          },
+          "is_emergency" : {
+            "type" : "boolean"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "observation name"
+          }
+        }
+      },
+      "SuggestRequest" : {
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "object",
+            "example" : "18"
+          },
+          "evaluated_at" : {
+            "type" : "string",
+            "description" : "time when diagnosis was evaluated in ISO 8601 format",
+            "readOnly" : true,
+            "example" : "2020-06-02"
+          },
+          "evidence" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Evidence"
+            }
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          }
+        }
+      },
+      "SuggestResult" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "common_name" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Symptom_Details" : {
+        "required" : [ "id", "name", "question", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "children" : {
+            "type" : "object",
+            "description" : "list of child symptoms"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "image_source" : {
+            "type" : "string"
+          },
+          "image_url" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent_id" : {
+            "type" : "string",
+            "description" : "id of parent symptom"
+          },
+          "parent_relation" : {
+            "type" : "string",
+            "description" : "type of relation with parent symptom",
+            "enum" : [ "base", "duration", "severity", "character", "exacerbating_factor", "diminishing_factor", "location", "radiation" ]
+          },
+          "question" : {
+            "type" : "string",
+            "description" : "only available in object details, not in listing"
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          }
+        }
+      },
+      "Symptom_Public" : {
+        "required" : [ "id", "name", "sex_filter" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "children" : {
+            "type" : "object",
+            "description" : "list of child symptoms"
+          },
+          "common_name" : {
+            "type" : "string"
+          },
+          "extras" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "additional content, like custom properties or images"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "image_source" : {
+            "type" : "string"
+          },
+          "image_url" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent_id" : {
+            "type" : "string",
+            "description" : "id of parent symptom"
+          },
+          "parent_relation" : {
+            "type" : "string",
+            "description" : "type of relation with parent symptom",
+            "enum" : [ "base", "duration", "severity", "character", "exacerbating_factor", "diminishing_factor", "location", "radiation" ]
+          },
+          "sex_filter" : {
+            "type" : "string",
+            "enum" : [ "both", "male", "female" ]
+          }
+        }
+      },
+      "TriageResponse" : {
+        "type" : "object",
+        "properties" : {
+          "root_cause" : {
+            "type" : "string",
+            "enum" : [ "r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12" ]
+          },
+          "serious" : {
+            "uniqueItems" : true,
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SeriousObservation"
+            }
+          },
+          "teleconsultation_applicable" : {
+            "type" : "boolean"
+          },
+          "triage_level" : {
+            "type" : "string",
+            "enum" : [ "emergency_ambulance", "emergency", "consultation_24", "consultation", "self_care" ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5926 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Slicebox API",
+    "description" : "Slicebox - safe sharing of medical images",
+    "contact" : {
+      "url" : "http://github.org/slicebox/slicebox"
+    },
+    "license" : {
+      "name" : "Apache 2.0 License",
+      "url" : "http://opensource.org/licenses/Apache-2.0"
+    },
+    "version" : "2.0"
+  },
+  "servers" : [ {
+    "url" : "http://slicebox.local/api"
+  } ],
+  "tags" : [ {
+    "name" : "General",
+    "description" : "General routes applicable to multiple aspects of the slicebox API and to the slicebox system"
+  }, {
+    "name" : "Import",
+    "description" : "Methods for handling structured importing of DICOM files into slicebox"
+  }, {
+    "name" : "Meta Data",
+    "description" : "Methods for handling DICOM meta data (attributes)"
+  }, {
+    "name" : "Images",
+    "description" : "Methods concerning images and datasets"
+  }, {
+    "name" : "Anonymization",
+    "description" : "Methods concerning anonymization and de-anonymization of images and the associated anonymization data"
+  }, {
+    "name" : "Boxes",
+    "description" : "Methods for handling box-to-box connections and issuing box commands"
+  }, {
+    "name" : "Transactions",
+    "description" : "Methods for handling box-to-box transactions of images (primarily for internal slicebox use)"
+  }, {
+    "name" : "SCPs",
+    "description" : "Methods for handling DICOM storage class providers for receiving images from PACS"
+  }, {
+    "name" : "SCUs",
+    "description" : "Methods for handling DICOM storage class users for sending images to PACS"
+  }, {
+    "name" : "Directories",
+    "description" : "Methods for handling watch directories for importing images stored as files"
+  }, {
+    "name" : "Forwarding",
+    "description" : "Methods for handling forwarding rules for automatically forwarding image data from sources to destinations."
+  }, {
+    "name" : "Filtering",
+    "description" : "Methods for handling filtering of DICOM attributes on incoming objects."
+  }, {
+    "name" : "Series Types",
+    "description" : "Methods for defining and handling series types"
+  }, {
+    "name" : "Logs",
+    "description" : "Methods for handling slicebox system log messages"
+  }, {
+    "name" : "Users",
+    "description" : "Methods for handling users"
+  } ],
+  "paths" : {
+    "/anonymization/anonymize" : {
+      "post" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "anonymize the images corresponding to the supplied list of image IDs (each paired with a list of DICOM tag translation). This route corresponds to repeated use of the route /images/{id}/anonymize.",
+        "requestBody" : {
+          "description" : "parameters of anonymization key query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/imageTagValues"
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/imageTagValues"
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/imageTagValues"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "the list of newly created anonymous images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/anonymization/keys" : {
+      "get" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "get a list of anonymization keys, each specifying how vital DICOM attributes have been anonymized for a particular image",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of anonymization keys",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of anonymization keys",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "property to order results by",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderascending",
+          "in" : "query",
+          "description" : "order result ascendingly if true, descendingly otherwise",
+          "schema" : {
+            "type" : "boolean",
+            "default" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter the results by matching substrings of properties against this value",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "anonymization keys, one per DICOM image",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKey"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/anonymization/keys/export/csv" : {
+      "get" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "export all anonymization keys as a csv file",
+        "responses" : {
+          "200" : {
+            "description" : "all anonymization keys as a csv file",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/anonymization/keys/query" : {
+      "post" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "submit a query for anonymization keys",
+        "requestBody" : {
+          "description" : "parameters of anonymization key query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationKeyQuery"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationKeyQuery"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationKeyQuery"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "anonymization keys",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKey"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/anonymization/keys/{id}" : {
+      "get" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "get the anonymization key with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of anonymization key",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "anonymization key for the supplied ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/anonymizationKey"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/anonymizationKey"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "if no anonymization key could be found for the supplied ID"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "delete an anonymization key that is no longer of interest",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of anonymization key",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "anonymization key deleted"
+          }
+        }
+      }
+    },
+    "/anonymization/keys/{id}/keyvalues" : {
+      "get" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "get pointers to the images corresponding to the anonymization key with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of anonymization key",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "an array of anonymization key-value pairs corresponding to the anonymization key for the supplied ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKeyValue"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/anonymizationKeyValue"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "if no anonymization key could be found for the supplied ID"
+          }
+        }
+      }
+    },
+    "/anonymization/options" : {
+      "get" : {
+        "tags" : [ "Anonymization" ],
+        "description" : "list all supported anonymization options defining an anonymization profile",
+        "responses" : {
+          "200" : {
+            "description" : "supported anonymization options",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/confidentialityOption"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/confidentialityOption"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes" : {
+      "get" : {
+        "tags" : [ "Boxes" ],
+        "description" : "get a list of box connections",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of boxes",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of boxes",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "box connections",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/box"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/box"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes/connect" : {
+      "post" : {
+        "tags" : [ "Boxes" ],
+        "description" : "connect to another box using a received URL. Used to connect to a public box.",
+        "requestBody" : {
+          "description" : "remote box to connect with",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBox"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBox"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBox"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "connected box",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/box"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/box"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes/createconnection" : {
+      "post" : {
+        "tags" : [ "Boxes" ],
+        "description" : "create a new box connection where the supplied entity holds the remote box name. Used by publicly available boxes.",
+        "requestBody" : {
+          "description" : "name of box to connect (and send URL) to",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBoxConnectionData"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBoxConnectionData"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/remoteBoxConnectionData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "remote box of the connection",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/box"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/box"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes/incoming" : {
+      "get" : {
+        "tags" : [ "Boxes" ],
+        "description" : "get incoming transactions (finished, currently receiving, waiting or failed)",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of transactions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of transactions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "incoming transactions, sorted from most to least recently updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/incomingTransaction"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/incomingTransaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes/incoming/{id}" : {
+      "delete" : {
+        "tags" : [ "Boxes" ],
+        "description" : "delete an incoming transaction. If a currently active transaction is deleted, a new transaction with the remainder of the images is created when receiving the next incoming image.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of incoming transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "incoming transaction deleted"
+          }
+        }
+      }
+    },
+    "/boxes/incoming/{id}/images" : {
+      "get" : {
+        "tags" : [ "Boxes" ],
+        "description" : "get the received images corresponding to the incoming transaction with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of incoming transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "images received corresponding to the specified incoming transaction",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "incoming transaction not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/boxes/outgoing" : {
+      "get" : {
+        "tags" : [ "Boxes" ],
+        "description" : "get outgoing transactions (finished, currently sending, waiting or failed)",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of transactions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of transactions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "outgoing transactions, finished, sending, waiting or failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/outgoingTransaction"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/outgoingTransaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boxes/outgoing/{id}" : {
+      "delete" : {
+        "tags" : [ "Boxes" ],
+        "description" : "delete an outgoing transaction. This will stop ongoing transactions.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "outgoing transaction deleted"
+          }
+        }
+      }
+    },
+    "/boxes/outgoing/{id}/images" : {
+      "get" : {
+        "tags" : [ "Boxes" ],
+        "description" : "get the sent images corresponding to the outgoing transaction with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "images sent corresponding to the specified outgoing transaction",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "outgoing transaction not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/boxes/{id}" : {
+      "delete" : {
+        "tags" : [ "Boxes" ],
+        "description" : "Delete the remote box with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of box to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "box deleted"
+          }
+        }
+      }
+    },
+    "/boxes/{id}/send" : {
+      "post" : {
+        "tags" : [ "Boxes" ],
+        "description" : "send images corresponding to the supplied image ids to the remote box with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of box to send images to",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "specification of which images to send and list of DICOM attribute values to use in anonymized datasets",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/bulkAnonymizationData"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/bulkAnonymizationData"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/bulkAnonymizationData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "images sent"
+          },
+          "404" : {
+            "description" : "box not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/destinations" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "description" : "Returns a list of currently available destinations. Possible destinations are box - sending data to a remote box, and scu - sending data a receiving SCP.",
+        "responses" : {
+          "200" : {
+            "description" : "currently available destinations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/destination"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/destination"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directorywatches" : {
+      "get" : {
+        "tags" : [ "Directories" ],
+        "description" : "get a list of watch directories. Each watch directory and its sub-directories are watched for incoming DICOM files, which are read and imported into slicebox.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of watched directories",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of watched directories",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of watched directories",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/watchedDirectory"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/watchedDirectory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Directories" ],
+        "description" : "add a new directory to watch for incoming DICOM files",
+        "requestBody" : {
+          "description" : "directory to setup a watch for. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/watchedDirectory"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/watchedDirectory"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/watchedDirectory"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the directory now being watched",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/watchedDirectory"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/watchedDirectory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directorywatches/{id}" : {
+      "delete" : {
+        "tags" : [ "Directories" ],
+        "description" : "stop watching and remove the directory corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of directory to stop watching",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "directory watch removed"
+          }
+        }
+      }
+    },
+    "/filtering/associations" : {
+      "get" : {
+        "tags" : [ "Filtering" ],
+        "description" : "Get a list of source to filter associations.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of source <-> filter associations",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of source <-> filter associations",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of source <-> filter associations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/sourceTagFilter"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/sourceTagFilter"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Filtering" ],
+        "description" : "Inserts or updates a source <-> filter associations. If the specified Source already  has an association this is updated, otherwise a new is inserted.",
+        "requestBody" : {
+          "description" : "Source to Filter association",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/sourceTagFilter"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/sourceTagFilter"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/sourceTagFilter"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Upserted source <-> filter association"
+          }
+        }
+      }
+    },
+    "/filtering/associations/{id}" : {
+      "delete" : {
+        "tags" : [ "Filtering" ],
+        "description" : "remove the source <-> filter association corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of source <-> filter association to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "source <-> filter association removed"
+          }
+        }
+      }
+    },
+    "/filtering/filters" : {
+      "get" : {
+        "tags" : [ "Filtering" ],
+        "description" : "List defined filters",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of filters",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of filters",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of filters",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/filter"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/filter"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Filtering" ],
+        "description" : "Inserts or updates a filter. If a filter with same name as supplied filter exists this filter is updated, otherwise a new filter is inserted.",
+        "requestBody" : {
+          "description" : "Filter",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/filter"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/filter"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/filter"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Filter upserted"
+          }
+        }
+      }
+    },
+    "/filtering/filters/{id}" : {
+      "delete" : {
+        "tags" : [ "Filtering" ],
+        "description" : "remove the filter corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of filter to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Filter removed"
+          }
+        }
+      }
+    },
+    "/filtering/filters/{id}/tagpaths" : {
+      "get" : {
+        "tags" : [ "Filtering" ],
+        "description" : "List tagpaths for the selected filter",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of filter",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of tagpaths",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/tagPathTag"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/tagPathTag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Filtering" ],
+        "description" : "add a tagpath to a filter",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of filter to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "id of filter to remove",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/tagPathTag"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/tagPathTag"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/tagPathTag"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "TagPath added"
+          }
+        }
+      }
+    },
+    "/filtering/filters/{id}/tagpaths/{tagpathid}" : {
+      "delete" : {
+        "tags" : [ "Filtering" ],
+        "description" : "remove the tagpath corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of filter",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "tagpathid",
+          "in" : "path",
+          "description" : "id of TagPath to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "TagPath removed"
+          }
+        }
+      }
+    },
+    "/forwarding/rule/{id}" : {
+      "delete" : {
+        "tags" : [ "Forwarding" ],
+        "description" : "remove the forwarding rule corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of forwarding rule to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "forwarding rule removed"
+          }
+        }
+      }
+    },
+    "/forwarding/rules" : {
+      "get" : {
+        "tags" : [ "Forwarding" ],
+        "description" : "get a list of all forwarding rules. A forwarding rule specifies the automatic forwarding of images from a source (SCP, BOX, etc.) to a destimation (BOX, SCU, etc.)",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of rules",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of rules",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of forwarding rules",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/forwardingrule"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/forwardingrule"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Forwarding" ],
+        "description" : "add a new forwarding rule",
+        "requestBody" : {
+          "description" : "The forwarding rule to add. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/forwardingrule"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/forwardingrule"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/forwardingrule"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created forwarding rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/forwardingrule"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/forwardingrule"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images" : {
+      "post" : {
+        "tags" : [ "Images" ],
+        "description" : "add a DICOM dataset to slicebox",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "meta data for added dataset on the image level of the DICOM hierarchy. Status code 200 signifies that this image was already present in the slicebox database.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "meta data for added dataset on the image level of the DICOM hierarchy",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/delete" : {
+      "post" : {
+        "tags" : [ "Images" ],
+        "description" : "bulk delete a sequence of images according to the supplied image IDs. This is the same as a sequence of DELETE requests to /images/{id}",
+        "requestBody" : {
+          "description" : "IDs of images to delete",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Images deleted"
+          }
+        }
+      }
+    },
+    "/images/export" : {
+      "get" : {
+        "tags" : [ "Images" ],
+        "description" : "download the export set with the supplied export set ID as a zip archive",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "ID of export set to download",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "zip archive of images"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Images" ],
+        "description" : "create an export set, a group of image IDs of images to export. The export set will contain the selected images. The export set is available for download 12 hours before it is automatically deleted.",
+        "requestBody" : {
+          "description" : "ids of images to export",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ID of created export set. To be used with the associated GET method for downloading.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/exportSetId"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/exportSetId"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "if the supplied list of image ids is empty or no if images could be found"
+          }
+        }
+      }
+    },
+    "/images/jpeg" : {
+      "post" : {
+        "tags" : [ "Images" ],
+        "description" : "add a JPEG image to slicebox. The image data will be wrapped in a DICOM file and added as a new series belonging to the study with the supplied ID",
+        "parameters" : [ {
+          "name" : "studyid",
+          "in" : "query",
+          "description" : "ID of study to add new series to",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "DICOM series description of the resulting secondary capture series",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The jpeg image data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "object"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "meta data for added dataset on the image level of the DICOM hierarchy",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/{id}" : {
+      "get" : {
+        "tags" : [ "Images" ],
+        "description" : "fetch dataset corresponding to the supplied image ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "binary data of dataset"
+          },
+          "404" : {
+            "description" : "if no image was found for the supplied image ID"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Images" ],
+        "description" : "Delete the image with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "image deleted"
+          }
+        }
+      }
+    },
+    "/images/{id}/anonymize" : {
+      "put" : {
+        "tags" : [ "Anonymization", "Images" ],
+        "description" : "delete the selected image and replace it with an anonymized version",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image to anonymize",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "specification of values for anonymous DICOM attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "the newly created anonymous image",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "image or corresponding dataset not found"
+          }
+        }
+      }
+    },
+    "/images/{id}/anonymized" : {
+      "post" : {
+        "tags" : [ "Anonymization", "Images" ],
+        "description" : "get an anonymized version of the image with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image for which to get anonymized dataset",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "specification of values for anonymous DICOM attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/anonymizationData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "binary data of anonymized dataset"
+          },
+          "404" : {
+            "description" : "if no image was found for the supplied image ID"
+          }
+        }
+      }
+    },
+    "/images/{id}/attributes" : {
+      "get" : {
+        "tags" : [ "Images" ],
+        "description" : "list all DICOM attributes of the dataset corresponding to the supplied image ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "list of DICOM attributes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/imageAttribute"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/imageAttribute"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "if no image was found for the supplied image ID"
+          }
+        }
+      }
+    },
+    "/images/{id}/imageinformation" : {
+      "get" : {
+        "tags" : [ "Images" ],
+        "description" : "get basic information about the pixel data of an image",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "basic information about the pixeldata of an image",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/imageInformation"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/imageInformation"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "if no image was found for the supplied image ID"
+          }
+        }
+      }
+    },
+    "/images/{id}/modify" : {
+      "put" : {
+        "tags" : [ "Images" ],
+        "description" : "modify and/or insert image attributes according to the input tagpath-value mappings",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image to modify",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "specification of tag paths and corresponding values to insert or modify",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/tagMapping"
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/tagMapping"
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/tagMapping"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "image attributes successfully modified"
+          }
+        }
+      }
+    },
+    "/images/{id}/png" : {
+      "get" : {
+        "tags" : [ "Images" ],
+        "description" : "get a PNG image representation of the image corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "framenumber",
+          "in" : "query",
+          "description" : "frame/slice to show",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        }, {
+          "name" : "windowmin",
+          "in" : "query",
+          "description" : "intensity window minimum value. If not specified or set to zero, windowing will be selected from relevant DICOM attributes",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "windowmax",
+          "in" : "query",
+          "description" : "intensity window maximum value. If not specified or set to zero, windowing will be selected from relevant DICOM attributes",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "imageheight",
+          "in" : "query",
+          "description" : "height of PNG image. If not specified or set to zero, the image height will equal that of the data",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "image data"
+          },
+          "404" : {
+            "description" : "if no image was found for the supplied image ID"
+          },
+          "501" : {
+            "description" : "if the system is not capable of creating an image representation of the data"
+          }
+        }
+      }
+    },
+    "/import/sessions" : {
+      "get" : {
+        "tags" : [ "Import" ],
+        "description" : "Returns a list of available import sessions.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of import sessions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of import sessions",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "available import sessions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/importSession"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/importSession"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Import" ],
+        "description" : "create a new import sessions",
+        "requestBody" : {
+          "description" : "The import session to create containing the user defined name of the session",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/importSession"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/importSession"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/importSession"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created import session",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/importSession"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/importSession"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/import/sessions/{id}" : {
+      "get" : {
+        "tags" : [ "Import" ],
+        "description" : "Returns the import sessions with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of session",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the import session with the supplied ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/importSession"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/importSession"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "import session not found (invalid ID)"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Import" ],
+        "description" : "deletes the import session with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of import session to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "import session deleted"
+          }
+        }
+      }
+    },
+    "/import/sessions/{id}/images" : {
+      "get" : {
+        "tags" : [ "Import" ],
+        "description" : "get the imported images corresponding to the import session with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of import session",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "images corresponding to the specified import session",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "import session not found (invalid ID)"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Import" ],
+        "description" : "add a DICOM dataset to the import session with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of session",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "dataset" ],
+                "type" : "object",
+                "properties" : {
+                  "dataset" : {
+                    "type" : "string",
+                    "description" : "The dataset file",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "meta data for the imported dataset on the image level of the DICOM hierarchy. Status code 200 signifies that this image was already present in the slicebox database.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "meta data for the imported dataset on the image level of the DICOM hierarchy",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "import session not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/log" : {
+      "get" : {
+        "tags" : [ "Logs" ],
+        "description" : "get a list of slicebox log messages",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of log messages",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of log messages",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "subject",
+          "in" : "query",
+          "description" : "log subject to filter results by",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "log type (DEFAULT, INFO, WARN, ERROR) to filter results by",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "log messages",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/logEntry"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/logEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Logs" ],
+        "description" : "delete all log messages",
+        "responses" : {
+          "204" : {
+            "description" : "log messages successfully"
+          }
+        }
+      }
+    },
+    "/log/{id}" : {
+      "delete" : {
+        "tags" : [ "Logs" ],
+        "description" : "Delete the log entry with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of log entry",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "log entry deleted"
+          }
+        }
+      }
+    },
+    "/metadata/flatseries" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of flattened metadata on the patient, study and series levels",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of flat series",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of flat series",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "flat series property to order results by",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderascending",
+          "in" : "query",
+          "description" : "order result ascendingly if true, descendingly otherwise",
+          "schema" : {
+            "type" : "boolean",
+            "default" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter the results by matching substrings of flat series properties against this value",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "flat series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/flatSeries"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/flatSeries"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/flatseries/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for flat series",
+        "requestBody" : {
+          "description" : "parameters of flat series query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "flat series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/flatSeries"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/flatSeries"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/flatseries/{id}" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the flat series with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of flat series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "flat series response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/flatSeries"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/flatSeries"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "flat series not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/images" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of metadata on the image level of the DICOM hierarchy",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of images",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of images",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "seriesid",
+          "in" : "query",
+          "description" : "reference to series to list images for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/images/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for images",
+        "requestBody" : {
+          "description" : "parameters of images query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/images/{id}" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the image with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "image response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "image not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/patients" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of metadata on the patient level of the DICOM hierarchy",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of patients",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of patients",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "patient property to order results by",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderascending",
+          "in" : "query",
+          "description" : "order result ascendingly if true, descendingly otherwise",
+          "schema" : {
+            "type" : "boolean",
+            "default" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter the results by matching substrings of patient properties against this value",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows results including series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows results including series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "patients",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/patient"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/patient"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/patients/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for patients",
+        "requestBody" : {
+          "description" : "parameters of patient query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "patients",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/patient"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/patient"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/patients/{id}" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the patient with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of patient",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "patient response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/patient"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/patient"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "patient not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/patients/{id}/images" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns all images for the patient with the supplied patient ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of patient",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "list of images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/series" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of metadata on the series level of the DICOM hierarchy",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of series",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of series",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "studyid",
+          "in" : "query",
+          "description" : "reference to study to list series for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/series"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/series"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/series/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for series",
+        "requestBody" : {
+          "description" : "parameters of series query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/series"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/series"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/series/{id}" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the series with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "series response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/series"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/series"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "series not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/series/{id}/seriestags" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "get the list of series tags for the series with the supplied ID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of series tags",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestag"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestag"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "series not found (invalid ID)"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "add a series tag to the series with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "series tag to add",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestag"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestag"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestag"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "added series tag",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestag"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestag"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "if no series with the supplied ID exists"
+          }
+        }
+      }
+    },
+    "/metadata/series/{id}/seriestypes" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "get the list of series types for the series with the supplied ID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of series types",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestype"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestype"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "series not found (invalid ID)"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Delete all series types for the series with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series types deleted"
+          }
+        }
+      }
+    },
+    "/metadata/series/{id}/source" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the source of the series with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "source for series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/source"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/source"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "series not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/series/{seriesId}/seriestags/{seriesTagId}" : {
+      "delete" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Delete the series tag with the supplied series tag ID from the series with the supplied series ID",
+        "parameters" : [ {
+          "name" : "seriesId",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "seriesTagId",
+          "in" : "path",
+          "description" : "ID of series tag to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series tag removed"
+          }
+        }
+      }
+    },
+    "/metadata/series/{seriesId}/seriestypes/{seriesTypeId}" : {
+      "put" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Add the series type with the supplied series type ID to the series with the supplied series ID",
+        "parameters" : [ {
+          "name" : "seriesId",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "seriesTypeId",
+          "in" : "path",
+          "description" : "ID of series type to add",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series type added"
+          },
+          "404" : {
+            "description" : "no series or series type found for the supplied ID(s)"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Delete the series type with the supplied series type ID from the series with the supplied series ID",
+        "parameters" : [ {
+          "name" : "seriesId",
+          "in" : "path",
+          "description" : "ID of series",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "seriesTypeId",
+          "in" : "path",
+          "description" : "ID of series type to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series type removed"
+          }
+        }
+      }
+    },
+    "/metadata/seriestags" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of series tags currently currently in use.",
+        "responses" : {
+          "200" : {
+            "description" : "a list of unique series tags currently used to tag series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestag"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/studies" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns a list of metadata on the study level of the DICOM hierarchy",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of studies",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of studies",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        }, {
+          "name" : "patientid",
+          "in" : "query",
+          "description" : "reference to patient to list studies for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows results including series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more underlying series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows results including series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "studies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/study"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/study"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/studies/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for studies",
+        "requestBody" : {
+          "description" : "parameters of study query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/query"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "studies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/study"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/study"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/studies/{id}" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Return the study with the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of study",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "study response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/study"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/study"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "study not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/metadata/studies/{id}/images" : {
+      "get" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "Returns all images for the study with the supplied study ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of study",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series sources. Examples of sources are user, box, directory or scp. The list of sources to filter results by must have the form TYPE1:ID1,TYPE2:ID2,...,TYPEN:IDN. For instance, the argument sources=box:1,user:5 shows results either sent from (slice)box with id 1 or uploaded by user with id 5.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestypes",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series types. The supplied list of series types must be a comma separated list of series type ids. For instance, the argument seriestypes=3,7,22 shows series assigned to either of the series types with ids 3, 7 and 22.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "seriestags",
+          "in" : "query",
+          "description" : "filter the results by matching on one or more series tags. The supplied list of series tags must be a comma separated list of series tag ids. For instance, the argument seriestags=6,2,11 shows series with either of the series tags with ids 6, 2 and 11.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "list of images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/image"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "study not found (invalid ID)"
+          }
+        }
+      }
+    },
+    "/scps" : {
+      "get" : {
+        "tags" : [ "SCPs" ],
+        "description" : "get a list of DICOM SCPs. Each SCP is a server for receiving DICOM images from e.g. a PACS system.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of SCPs",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of SCPs",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of SCPs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/scp"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/scp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "SCPs" ],
+        "description" : "add a new SCP for receiving DICOM images",
+        "requestBody" : {
+          "description" : "SCP information. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scp"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scp"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scp"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created SCP",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/scp"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/scp"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid port number or AE title"
+          }
+        }
+      }
+    },
+    "/scps/{id}" : {
+      "delete" : {
+        "tags" : [ "SCPs" ],
+        "description" : "shut down and remove the SCP corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of SCP to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "SCP removed"
+          }
+        }
+      }
+    },
+    "/scus" : {
+      "get" : {
+        "tags" : [ "SCUs" ],
+        "description" : "get a list of DICOM SCUs. Each SCU is a client for sending DICOM images to an SCP, e.g. a PACS system.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of SCUs",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of SCUs",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of SCUs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/scu"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/scu"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "SCUs" ],
+        "description" : "add a new SCU for sending DICOM images",
+        "requestBody" : {
+          "description" : "SCU information. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scu"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scu"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/scu"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created SCU",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/scu"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/scu"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid port number or AE title"
+          }
+        }
+      }
+    },
+    "/scus/{id}" : {
+      "delete" : {
+        "tags" : [ "SCUs" ],
+        "description" : "remove the SCU corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of SCU to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "SCU removed"
+          }
+        }
+      }
+    },
+    "/scus/{id}/send" : {
+      "post" : {
+        "tags" : [ "SCUs" ],
+        "description" : "send the images with the supplied image IDs to a DICOM SCP using the the SCU with the supplied scu ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of SCU to use for sending",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "array of ids of images to send",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int64"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Series sent"
+          },
+          "404" : {
+            "description" : "Series not found or SCU not found"
+          },
+          "502" : {
+            "description" : "Receiving SCP host not available"
+          }
+        }
+      }
+    },
+    "/seriestypes" : {
+      "get" : {
+        "tags" : [ "Series Types" ],
+        "description" : "get a list of all added series types. By filtering search results for certain series types, it is easier for applications to ensure that they read images of applicable types.",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of series types",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of series types",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of series types",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestype"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestype"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Series Types" ],
+        "description" : "add a new series type",
+        "requestBody" : {
+          "description" : "Series type information. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestype"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestype"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestype"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created series type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestype"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestype"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seriestypes/rules" : {
+      "get" : {
+        "tags" : [ "Series Types" ],
+        "description" : "get a list of rules for assigning series types to series. A rule connects to a series of attributes with values and a resulting series type. If a series has the required values of the listed attributes, it is assigned to the series type of the rule.",
+        "parameters" : [ {
+          "name" : "seriestypeid",
+          "in" : "query",
+          "description" : "ID of series type to list rules for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of series type rules for the series type with the supplied ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestyperule"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestyperule"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Series Types" ],
+        "description" : "add a new series type rule",
+        "requestBody" : {
+          "description" : "Series type rule information. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperule"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperule"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperule"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created series type rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestyperule"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestyperule"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seriestypes/rules/updatestatus" : {
+      "get" : {
+        "tags" : [ "Series Types" ],
+        "description" : "get the status of the internal process of updating series types for series following a change of series types, rules or attributes.",
+        "responses" : {
+          "200" : {
+            "description" : "a status message, indicating if an update is running",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestypeupdatestatus"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestypeupdatestatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seriestypes/rules/{id}" : {
+      "delete" : {
+        "tags" : [ "Series Types" ],
+        "description" : "remove the series type rule corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of series type rule to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series type rule removed"
+          }
+        }
+      }
+    },
+    "/seriestypes/rules/{id}/attributes" : {
+      "get" : {
+        "tags" : [ "Series Types" ],
+        "description" : "get the list of attributes for the series type rule with the supplied ID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "index of series type rule to list rule attributes for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the list of series type rule attributes for the series type rule with the supplied ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestyperuleattribute"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/seriestyperuleattribute"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Series Types" ],
+        "description" : "add a new series type rule attribute",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of rule",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Series type rule attribute information. The ID property is irrelevant, the ID of the inserted record is present in the returned data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperuleattribute"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperuleattribute"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/seriestyperuleattribute"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "the created series type rule attribute",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestyperuleattribute"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriestyperuleattribute"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seriestypes/rules/{ruleId}/attributes/{attributeId}" : {
+      "delete" : {
+        "tags" : [ "Series Types" ],
+        "description" : "remove the series type rule attribute corresponding to the supplied series type and attribute IDs",
+        "parameters" : [ {
+          "name" : "ruleId",
+          "in" : "path",
+          "description" : "id of series type rule for which to remove an attribute",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "attributeId",
+          "in" : "path",
+          "description" : "id of attribute to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series type rule attribute removed"
+          }
+        }
+      }
+    },
+    "/seriestypes/series/query" : {
+      "post" : {
+        "tags" : [ "Meta Data" ],
+        "description" : "submit a query for seriestypes for a list of series",
+        "requestBody" : {
+          "description" : "parameters of series query",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/idsquery"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/idsquery"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/idsquery"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "series",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriesidseriestypesresult"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/seriesidseriestypesresult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seriestypes/{id}" : {
+      "put" : {
+        "tags" : [ "Series Types" ],
+        "description" : "request an asynchronous update of all series, labelling appropriate series with the series type corresponding to the supplied ID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of series type to update series labels for",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "update successfully added to queue of series type updates"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Series Types" ],
+        "description" : "remove the series type corresponding to the supplied ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of series type to remove",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "series type removed"
+          }
+        }
+      }
+    },
+    "/sources" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "description" : "Returns a list of currently available data sources. Possible source types are user - data imported by an API call by a user, box - data received from a remote box, directory - data imported via a watched directory, import - data imported into slicebox using import sessions, or scp - data received from a PACS.",
+        "responses" : {
+          "200" : {
+            "description" : "currently available sources",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/source"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/health" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "description" : "No-op route for checking whether the service is alive or not",
+        "responses" : {
+          "200" : {
+            "description" : "The service is up and running"
+          }
+        }
+      }
+    },
+    "/system/stop" : {
+      "post" : {
+        "tags" : [ "General" ],
+        "description" : "stop and shut down slicebox",
+        "responses" : {
+          "200" : {
+            "description" : "shutdown message"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/image" : {
+      "post" : {
+        "tags" : [ "Transactions" ],
+        "description" : "add an image (dataset) as part of a transaction. This method is used when sending images using the push method to a public slicebox.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transactionid",
+          "in" : "query",
+          "description" : "the ID of the client's outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sequencenumber",
+          "in" : "query",
+          "description" : "the index of this image in the transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "totalimagecount",
+          "in" : "query",
+          "description" : "the total number of images in this transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "the dataset byte array",
+          "content" : {
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "image data received"
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/outgoing" : {
+      "get" : {
+        "tags" : [ "Transactions" ],
+        "description" : "fetch an image from the connected box as part of a transaction. This method is used when sending images using the poll method from a public slicebox.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transactionid",
+          "in" : "query",
+          "description" : "the ID of the outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "imageid",
+          "in" : "query",
+          "description" : "the ID of the outgoing transaction image",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "binary data of dataset"
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          },
+          "404" : {
+            "description" : "no outgoing trensaction and/or image found for the supplied transaction id and transaction image id"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/outgoing/done" : {
+      "post" : {
+        "tags" : [ "Transactions" ],
+        "description" : "signal that the supplied outgoing transaction and image was successfully received and can be marked as sent. This method is used when sending images using the poll method from a public slicebox.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "outgoing transaction and image that has been successfully received",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/outgoingTransactionImage"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/outgoingTransactionImage"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/outgoingTransactionImage"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "done message received"
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/outgoing/failed" : {
+      "post" : {
+        "tags" : [ "Transactions" ],
+        "description" : "signal that the image corresponding to the supplied outgoing transaction and image could not be read or stored properly on the receiving side, and that the transaction should be marked as failed.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "the outgoing transaction and image information block corresponding to the failed image transfer, along with the associated error message",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/failedOutgoingTransactionImage"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/failedOutgoingTransactionImage"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/failedOutgoingTransactionImage"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "failed message received"
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/outgoing/poll" : {
+      "get" : {
+        "tags" : [ "Transactions" ],
+        "description" : "get next outgoing transaction and image (information on the next image that the connected box wishes to send to you), if any. This method is used when sending images using the poll method from a public slicebox.",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "next outgoing transaction and image information block",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/outgoingTransactionImage"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/outgoingTransactionImage"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          },
+          "404" : {
+            "description" : "there are currently no outgoing transactions to fetch for the box connection with the supplied token"
+          }
+        }
+      }
+    },
+    "/transactions/{token}/status" : {
+      "get" : {
+        "tags" : [ "Transactions" ],
+        "description" : "get the status of the remote incoming transaction with the supplied transaction ID",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transactionid",
+          "in" : "query",
+          "description" : "the ID of the client's outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "string representation of the transaction status (FINISHED, FAILED, WAITING or PROCESSING)"
+          },
+          "401" : {
+            "description" : "unauthorized, invalid token"
+          },
+          "404" : {
+            "description" : "no transaction found for the supplied transaction ID and box token"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Transactions" ],
+        "description" : "update the status of the transaction with the supplied ID",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "path",
+          "description" : "authentication token identifying the current box-to-box connection",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transactionid",
+          "in" : "query",
+          "description" : "the ID of the client's outgoing transaction",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "the updated status of the transaction",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "type" : "string"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "status update successfully applied to transaction"
+          },
+          "404" : {
+            "description" : "no transaction found for the supplied transaction ID and box token"
+          }
+        }
+      }
+    },
+    "/users" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "description" : "Returns all users of slicebox",
+        "parameters" : [ {
+          "name" : "startindex",
+          "in" : "query",
+          "description" : "start index of returned slice of users",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 0
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "size of returned slice of users",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "user response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Users" ],
+        "description" : "Creates a new user. Dupicates are accepted but not added.",
+        "requestBody" : {
+          "description" : "User to add",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/newUser"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/newUser"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/newUser"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "user response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/user"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "description" : "obtain information on the currently logged in user as specified by the supplied session cookie, IP address and user agent.",
+        "responses" : {
+          "200" : {
+            "description" : "user information",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/userInfo"
+                }
+              },
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/userInfo"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "no user found for the supplied session cookie, IP address and user agent, or if any of the required headers are missing."
+          }
+        }
+      }
+    },
+    "/users/login" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "description" : "Obtain a session cookie that can be used to authenticate future API calls from the present IP address and with the present user agent.",
+        "requestBody" : {
+          "description" : "username and password for user logging in",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/userPass"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/userPass"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/userPass"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "if the supplied credentials are valid. The response headers will contain Set-Cookie."
+          },
+          "401" : {
+            "description" : "if the supplied credentials are invalid."
+          }
+        }
+      }
+    },
+    "/users/logout" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "description" : "Logout the current user by responding with a delete cookie header removing the session cookie for this user.",
+        "responses" : {
+          "201" : {
+            "description" : "the user was logged out"
+          }
+        }
+      }
+    },
+    "/users/{id}" : {
+      "delete" : {
+        "tags" : [ "Users" ],
+        "description" : "deletes a single user based on the ID supplied",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of user to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "user deleted"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "anonymizationData" : {
+        "type" : "object",
+        "properties" : {
+          "profile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          },
+          "tagValues" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/tagValue"
+            }
+          }
+        }
+      },
+      "anonymizationKey" : {
+        "type" : "object",
+        "properties" : {
+          "anonPatientID" : {
+            "type" : "string"
+          },
+          "anonPatientName" : {
+            "type" : "string"
+          },
+          "anonSOPInstanceUID" : {
+            "type" : "string"
+          },
+          "anonSeriesInstanceUID" : {
+            "type" : "string"
+          },
+          "anonStudyInstanceUID" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "imageId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "patientID" : {
+            "type" : "string"
+          },
+          "patientName" : {
+            "type" : "string"
+          },
+          "seriesInstanceUID" : {
+            "type" : "string"
+          },
+          "sopInstanceUID" : {
+            "type" : "string"
+          },
+          "studyInstanceUID" : {
+            "type" : "string"
+          }
+        }
+      },
+      "anonymizationKeyQuery" : {
+        "required" : [ "count", "queryProperties", "startIndex" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "order" : {
+            "$ref" : "#/components/schemas/queryOrder"
+          },
+          "queryProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/queryProperty"
+            }
+          },
+          "startIndex" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "anonymizationKeyValue" : {
+        "type" : "object",
+        "properties" : {
+          "anonymizationKeyId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "anonymizedValue" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "tagPath" : {
+            "$ref" : "#/components/schemas/tagPathTag"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "anonymizationProfile" : {
+        "type" : "object",
+        "properties" : {
+          "options" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/confidentialityOption"
+            }
+          }
+        }
+      },
+      "box" : {
+        "type" : "object",
+        "properties" : {
+          "baseUrl" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "online" : {
+            "type" : "boolean"
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          },
+          "sendMethod" : {
+            "type" : "string"
+          },
+          "token" : {
+            "type" : "string"
+          }
+        }
+      },
+      "bulkAnonymizationData" : {
+        "type" : "object",
+        "properties" : {
+          "imageTagValuesSet" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/imageTagValues"
+            }
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          }
+        }
+      },
+      "confidentialityOption" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "rank" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        }
+      },
+      "destination" : {
+        "type" : "object",
+        "properties" : {
+          "destinationId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "destinationName" : {
+            "type" : "string"
+          },
+          "destinationType" : {
+            "type" : "string"
+          }
+        }
+      },
+      "dicomPropertyValue" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "exportSetId" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "failedOutgoingTransactionImage" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          },
+          "transactionImage" : {
+            "$ref" : "#/components/schemas/outgoingTransactionImage"
+          }
+        }
+      },
+      "filter" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "tagFilterType" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/tagPathTag"
+            }
+          }
+        }
+      },
+      "flatSeries" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "patient" : {
+            "$ref" : "#/components/schemas/patient"
+          },
+          "series" : {
+            "$ref" : "#/components/schemas/series"
+          },
+          "study" : {
+            "$ref" : "#/components/schemas/study"
+          }
+        }
+      },
+      "forwardingrule" : {
+        "type" : "object",
+        "properties" : {
+          "destination" : {
+            "$ref" : "#/components/schemas/destination"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "keepImages" : {
+            "type" : "boolean"
+          },
+          "source" : {
+            "$ref" : "#/components/schemas/source"
+          }
+        }
+      },
+      "idsquery" : {
+        "required" : [ "ids" ],
+        "type" : "object",
+        "properties" : {
+          "ids" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        }
+      },
+      "image" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "imageType" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "instanceNumber" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "seriesId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sopInstanceUID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          }
+        }
+      },
+      "imageAttribute" : {
+        "type" : "object",
+        "properties" : {
+          "depth" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "element" : {
+            "type" : "string"
+          },
+          "group" : {
+            "type" : "string"
+          },
+          "length" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "multiplicity" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "path" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          },
+          "vr" : {
+            "type" : "string"
+          }
+        }
+      },
+      "imageInformation" : {
+        "type" : "object",
+        "properties" : {
+          "frameIndex" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "maximumPixelValue" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minimumPixelValue" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberOfFrames" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "imageTagValues" : {
+        "type" : "object",
+        "properties" : {
+          "imageId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "tagValues" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/tagValue"
+            }
+          }
+        }
+      },
+      "importSession" : {
+        "type" : "object",
+        "properties" : {
+          "created" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "filesAdded" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "filesImported" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "filesRejected" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "lastUpdated" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "incomingTransaction" : {
+        "type" : "object",
+        "properties" : {
+          "boxId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "boxName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "outgoingTransactionId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "receivedImageCount" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "totalImageCount" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "updated" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "logEntry" : {
+        "type" : "object",
+        "properties" : {
+          "created" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "entryType" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "subject" : {
+            "type" : "string"
+          }
+        }
+      },
+      "newUser" : {
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "type" : "string"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "string"
+          }
+        }
+      },
+      "outgoingImage" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "imageId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "outgoingTransactionId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sent" : {
+            "type" : "boolean"
+          },
+          "sequenceNumber" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "outgoingTransaction" : {
+        "type" : "object",
+        "properties" : {
+          "boxId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "boxName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          },
+          "sentImageCount" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "totalImageCount" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "updated" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "outgoingTransactionImage" : {
+        "type" : "object",
+        "properties" : {
+          "image" : {
+            "$ref" : "#/components/schemas/outgoingImage"
+          },
+          "transaction" : {
+            "$ref" : "#/components/schemas/outgoingTransaction"
+          }
+        }
+      },
+      "patient" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "patientBirthDate" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "patientID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "patientName" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "patientSex" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          }
+        }
+      },
+      "query" : {
+        "required" : [ "count", "queryProperties", "startIndex" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "filters" : {
+            "$ref" : "#/components/schemas/queryFilters"
+          },
+          "order" : {
+            "$ref" : "#/components/schemas/queryOrder"
+          },
+          "queryProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/queryProperty"
+            }
+          },
+          "startIndex" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "queryFilters" : {
+        "type" : "object",
+        "properties" : {
+          "seriesTagIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          },
+          "seriesTypeIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          },
+          "sourceRefs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/sourceRef"
+            }
+          }
+        }
+      },
+      "queryOrder" : {
+        "type" : "object",
+        "properties" : {
+          "orderAscending" : {
+            "type" : "boolean"
+          },
+          "orderBy" : {
+            "type" : "string"
+          }
+        }
+      },
+      "queryProperty" : {
+        "type" : "object",
+        "properties" : {
+          "operator" : {
+            "type" : "string"
+          },
+          "propertyName" : {
+            "type" : "string"
+          },
+          "propertyValue" : {
+            "type" : "string"
+          }
+        }
+      },
+      "remoteBox" : {
+        "type" : "object",
+        "properties" : {
+          "baseUrl" : {
+            "type" : "string"
+          },
+          "defaultProfile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "remoteBoxConnectionData" : {
+        "type" : "object",
+        "properties" : {
+          "defaultProfile" : {
+            "$ref" : "#/components/schemas/anonymizationProfile"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "scp" : {
+        "type" : "object",
+        "properties" : {
+          "aeTitle" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "port" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "scu" : {
+        "type" : "object",
+        "properties" : {
+          "aeTitle" : {
+            "type" : "string"
+          },
+          "host" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "port" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "series" : {
+        "type" : "object",
+        "properties" : {
+          "bodyPartExamined" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "frameOfReferenceUID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "manufacturer" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "modality" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "protocolName" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "seriesDate" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "seriesDescription" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "seriesInstanceUID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "stationName" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "studyId" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "seriesidseriestype" : {
+        "type" : "object",
+        "properties" : {
+          "seriesid" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "seriestype" : {
+            "$ref" : "#/components/schemas/seriestype"
+          }
+        }
+      },
+      "seriesidseriestypesresult" : {
+        "type" : "object",
+        "properties" : {
+          "seriesidseriestypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/seriesidseriestype"
+            }
+          }
+        }
+      },
+      "seriestag" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "seriestype" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "seriestyperule" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "seriesTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "seriestyperuleattribute" : {
+        "required" : [ "element", "group", "id", "seriesTypeRuleId", "value" ],
+        "type" : "object",
+        "properties" : {
+          "element" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "group" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "path" : {
+            "type" : "string"
+          },
+          "seriesTypeRuleId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "seriestypeupdatestatus" : {
+        "required" : [ "running" ],
+        "type" : "object",
+        "properties" : {
+          "running" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "source" : {
+        "type" : "object",
+        "properties" : {
+          "sourceId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sourceName" : {
+            "type" : "string"
+          },
+          "sourceType" : {
+            "type" : "string"
+          }
+        }
+      },
+      "sourceRef" : {
+        "type" : "object",
+        "properties" : {
+          "sourceId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sourceType" : {
+            "type" : "string"
+          }
+        }
+      },
+      "sourceTagFilter" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sourceId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sourceType" : {
+            "type" : "string"
+          },
+          "tagFilterId" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "study" : {
+        "type" : "object",
+        "properties" : {
+          "accessionNumber" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "patientAge" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "patientId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "studyDate" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "studyDescription" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "studyID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          },
+          "studyInstanceUID" : {
+            "$ref" : "#/components/schemas/dicomPropertyValue"
+          }
+        }
+      },
+      "tagMapping" : {
+        "type" : "object",
+        "properties" : {
+          "tagPath" : {
+            "$ref" : "#/components/schemas/tagPathTag"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "tagPathTag" : {
+        "type" : "object",
+        "properties" : {
+          "previous" : {
+            "$ref" : "#/components/schemas/tagPathTrunk"
+          },
+          "tag" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "tagPathTrunk" : {
+        "type" : "object",
+        "properties" : {
+          "item" : {
+            "type" : "string"
+          },
+          "previous" : {
+            "$ref" : "#/components/schemas/tagPathTrunk"
+          },
+          "tag" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "tagValue" : {
+        "type" : "object",
+        "properties" : {
+          "tagPath" : {
+            "$ref" : "#/components/schemas/tagPathTag"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "user" : {
+        "required" : [ "id", "role", "user" ],
+        "type" : "object",
+        "properties" : {
+          "hashedPassword" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "string"
+          }
+        }
+      },
+      "userInfo" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "string"
+          }
+        }
+      },
+      "userPass" : {
+        "type" : "object",
+        "properties" : {
+          "pass" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "string"
+          }
+        }
+      },
+      "watchedDirectory" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "path" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

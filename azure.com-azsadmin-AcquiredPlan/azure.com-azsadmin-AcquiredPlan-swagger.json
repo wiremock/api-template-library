@@ -1,1 +1,328 @@
-{"openapi":"3.0.1","info":{"title":"SubscriptionsManagementClient","description":"The Admin Subscriptions Management Client.","version":"2015-11-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans":{"get":{"tags":["AcquiredPlans"],"description":"Get a collection of all acquired plans that subscription has access to.","operationId":"AcquiredPlans_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"targetSubscriptionId","in":"path","description":"The target subscription ID.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string","default":"2015-11-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisitionList"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}":{"get":{"tags":["AcquiredPlans"],"description":"Gets the specified plan acquired by a subscription consuming the offer.","operationId":"AcquiredPlans_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"targetSubscriptionId","in":"path","description":"The target subscription ID.","required":true,"schema":{"type":"string"}},{"name":"planAcquisitionId","in":"path","description":"The plan acquisition Identifier","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string","default":"2015-11-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisition"}}}}}},"put":{"tags":["AcquiredPlans"],"description":"Creates an acquired plan.","operationId":"AcquiredPlans_Create","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"targetSubscriptionId","in":"path","description":"The target subscription ID.","required":true,"schema":{"type":"string"}},{"name":"planAcquisitionId","in":"path","description":"The plan acquisition Identifier","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string","default":"2015-11-01"}}],"requestBody":{"description":"The new acquired plan.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisition"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisition"}}}},"201":{"description":"Created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisition"}}}}}},"delete":{"tags":["AcquiredPlans"],"description":"Deletes an acquired plan.","operationId":"AcquiredPlans_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"targetSubscriptionId","in":"path","description":"The target subscription ID.","required":true,"schema":{"type":"string"}},{"name":"planAcquisitionId","in":"path","description":"The plan acquisition Identifier","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string","default":"2015-11-01"}}],"responses":{"200":{"description":"OK"},"204":{"description":"No Content"}}}}},"components":{"schemas":{"PlanAcquisition":{"type":"object","properties":{"acquisitionId":{"type":"string","description":"Acquisition identifier."},"acquisitionTime":{"type":"string","description":"Acquisition time.","format":"date-time"},"externalReferenceId":{"type":"string","description":"External reference identifier."},"id":{"type":"string","description":"Identifier in the tenant subscription context."},"planId":{"type":"string","description":"Plan identifier in the tenant subscription context."},"provisioningState":{"$ref":"#/components/schemas/ProvisioningState"}},"description":"Represents the acquisition of an add-on plan for a subscription."},"PlanAcquisitionList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of acquired plans.","items":{"$ref":"#/components/schemas/PlanAcquisition"}}},"description":"List of acquired plans."},"ProvisioningState":{"type":"string","description":"Provisioning state for subscriptions service resources, for example, resource provider registration.","enum":["NotSpecified","Accepted","Failed","Succeeded"]}},"parameters":{"PlanAcquisitionIdParameter":{"name":"planAcquisitionId","in":"path","description":"The plan acquisition Identifier","required":true,"schema":{"type":"string"}},"TargetSubscriptionIdParameter":{"name":"targetSubscriptionId","in":"path","description":"The target subscription ID.","required":true,"schema":{"type":"string"}}},"requestBodies":{"NewAcquiredPlanParameter":{"description":"The new acquired plan.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlanAcquisition"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SubscriptionsManagementClient",
+    "description" : "The Admin Subscriptions Management Client.",
+    "version" : "2015-11-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans" : {
+      "get" : {
+        "tags" : [ "AcquiredPlans" ],
+        "description" : "Get a collection of all acquired plans that subscription has access to.",
+        "operationId" : "AcquiredPlans_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetSubscriptionId",
+          "in" : "path",
+          "description" : "The target subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2015-11-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlanAcquisitionList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}" : {
+      "get" : {
+        "tags" : [ "AcquiredPlans" ],
+        "description" : "Gets the specified plan acquired by a subscription consuming the offer.",
+        "operationId" : "AcquiredPlans_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetSubscriptionId",
+          "in" : "path",
+          "description" : "The target subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "planAcquisitionId",
+          "in" : "path",
+          "description" : "The plan acquisition Identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2015-11-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlanAcquisition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "AcquiredPlans" ],
+        "description" : "Creates an acquired plan.",
+        "operationId" : "AcquiredPlans_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetSubscriptionId",
+          "in" : "path",
+          "description" : "The target subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "planAcquisitionId",
+          "in" : "path",
+          "description" : "The plan acquisition Identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2015-11-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The new acquired plan.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PlanAcquisition"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlanAcquisition"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlanAcquisition"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "AcquiredPlans" ],
+        "description" : "Deletes an acquired plan.",
+        "operationId" : "AcquiredPlans_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetSubscriptionId",
+          "in" : "path",
+          "description" : "The target subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "planAcquisitionId",
+          "in" : "path",
+          "description" : "The plan acquisition Identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2015-11-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "PlanAcquisition" : {
+        "type" : "object",
+        "properties" : {
+          "acquisitionId" : {
+            "type" : "string",
+            "description" : "Acquisition identifier."
+          },
+          "acquisitionTime" : {
+            "type" : "string",
+            "description" : "Acquisition time.",
+            "format" : "date-time"
+          },
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "External reference identifier."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Identifier in the tenant subscription context."
+          },
+          "planId" : {
+            "type" : "string",
+            "description" : "Plan identifier in the tenant subscription context."
+          },
+          "provisioningState" : {
+            "$ref" : "#/components/schemas/ProvisioningState"
+          }
+        },
+        "description" : "Represents the acquisition of an add-on plan for a subscription."
+      },
+      "PlanAcquisitionList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of acquired plans.",
+            "items" : {
+              "$ref" : "#/components/schemas/PlanAcquisition"
+            }
+          }
+        },
+        "description" : "List of acquired plans."
+      },
+      "ProvisioningState" : {
+        "type" : "string",
+        "description" : "Provisioning state for subscriptions service resources, for example, resource provider registration.",
+        "enum" : [ "NotSpecified", "Accepted", "Failed", "Succeeded" ]
+      }
+    },
+    "parameters" : {
+      "PlanAcquisitionIdParameter" : {
+        "name" : "planAcquisitionId",
+        "in" : "path",
+        "description" : "The plan acquisition Identifier",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "TargetSubscriptionIdParameter" : {
+        "name" : "targetSubscriptionId",
+        "in" : "path",
+        "description" : "The target subscription ID.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "NewAcquiredPlanParameter" : {
+        "description" : "The new acquired plan.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/PlanAcquisition"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 flow"
+      }
+    }
+  }
+}

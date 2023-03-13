@@ -1,1 +1,374 @@
-{"openapi":"3.0.1","info":{"title":"Azure SQL Database","description":"Provides create, read, update and delete functionality for Azure SQL Database resources including recommendations and operations.","version":"2014-04-01"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools":{"get":{"tags":["RecommendedElasticPools"],"description":"Returns recommended elastic pools.","operationId":"RecommendedElasticPools_ListByServer","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RecommendedElasticPoolListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools/{recommendedElasticPoolName}":{"get":{"tags":["RecommendedElasticPools"],"description":"Gets a recommended elastic pool.","operationId":"RecommendedElasticPools_Get","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"recommendedElasticPoolName","in":"path","description":"The name of the recommended elastic pool to be retrieved.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RecommendedElasticPool"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools/{recommendedElasticPoolName}/metrics":{"get":{"tags":["RecommendedElasticPools"],"description":"Returns recommended elastic pool metrics.","operationId":"RecommendedElasticPools_ListMetrics","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"recommendedElasticPoolName","in":"path","description":"The name of the recommended elastic pool to be retrieved.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RecommendedElasticPoolListMetricsResult"}}}}}}}},"components":{"schemas":{"RecommendedElasticPool":{"properties":{"properties":{"$ref":"#/components/schemas/RecommendedElasticPoolProperties"}},"description":"Represents a recommended elastic pool.","allOf":[{"description":"ARM proxy resource.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."}]}]},"RecommendedElasticPoolListMetricsResult":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"The list of recommended elastic pools metrics.","items":{"$ref":"#/components/schemas/RecommendedElasticPoolMetric"}}},"description":"Represents the response to a list recommended elastic pool metrics request."},"RecommendedElasticPoolListResult":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"The list of recommended elastic pools hosted in the server.","items":{"$ref":"#/components/schemas/RecommendedElasticPool"}}},"description":"Represents the response to a list recommended elastic pool request."},"RecommendedElasticPoolMetric":{"type":"object","properties":{"dateTime":{"type":"string","description":"The time of metric (ISO8601 format).","format":"date-time"},"dtu":{"type":"number","description":"Gets or sets the DTUs (Database Transaction Units). See https://azure.microsoft.com/documentation/articles/sql-database-what-is-a-dtu/","format":"double"},"sizeGB":{"type":"number","description":"Gets or sets size in gigabytes.","format":"double"}},"description":"Represents recommended elastic pool metric."},"RecommendedElasticPoolProperties":{"type":"object","properties":{"databaseDtuMax":{"type":"number","description":"The maximum DTU for the database.","format":"double"},"databaseDtuMin":{"type":"number","description":"The minimum DTU for the database.","format":"double"},"databaseEdition":{"type":"string","description":"The edition of the recommended elastic pool. The ElasticPoolEdition enumeration contains all the valid editions.","readOnly":true,"enum":["Basic","Standard","Premium","GeneralPurpose","BusinessCritical"]},"databases":{"type":"array","description":"The list of databases in this pool. Expanded property","readOnly":true,"items":{"required":["location"],"type":"object","properties":{"location":{"type":"string","description":"Resource location."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."}},"description":"ARM tracked top level resource."}},"dtu":{"type":"number","description":"The DTU for the recommended elastic pool.","format":"double"},"maxObservedDtu":{"type":"number","description":"Gets maximum observed DTU.","format":"double","readOnly":true},"maxObservedStorageMB":{"type":"number","description":"Gets maximum observed storage in megabytes.","format":"double","readOnly":true},"metrics":{"type":"array","description":"The list of databases housed in the server. Expanded property","readOnly":true,"items":{"$ref":"#/components/schemas/RecommendedElasticPoolMetric"}},"observationPeriodEnd":{"type":"string","description":"The observation period start (ISO8601 format).","format":"date-time","readOnly":true},"observationPeriodStart":{"type":"string","description":"The observation period start (ISO8601 format).","format":"date-time","readOnly":true},"storageMB":{"type":"number","description":"Gets storage size in megabytes.","format":"double"}},"description":"Represents the properties of a recommended elastic pool."}},"parameters":{"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure SQL Database",
+    "description" : "Provides create, read, update and delete functionality for Azure SQL Database resources including recommendations and operations.",
+    "version" : "2014-04-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools" : {
+      "get" : {
+        "tags" : [ "RecommendedElasticPools" ],
+        "description" : "Returns recommended elastic pools.",
+        "operationId" : "RecommendedElasticPools_ListByServer",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RecommendedElasticPoolListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools/{recommendedElasticPoolName}" : {
+      "get" : {
+        "tags" : [ "RecommendedElasticPools" ],
+        "description" : "Gets a recommended elastic pool.",
+        "operationId" : "RecommendedElasticPools_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "recommendedElasticPoolName",
+          "in" : "path",
+          "description" : "The name of the recommended elastic pool to be retrieved.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RecommendedElasticPool"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recommendedElasticPools/{recommendedElasticPoolName}/metrics" : {
+      "get" : {
+        "tags" : [ "RecommendedElasticPools" ],
+        "description" : "Returns recommended elastic pool metrics.",
+        "operationId" : "RecommendedElasticPools_ListMetrics",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "recommendedElasticPoolName",
+          "in" : "path",
+          "description" : "The name of the recommended elastic pool to be retrieved.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RecommendedElasticPoolListMetricsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "RecommendedElasticPool" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/RecommendedElasticPoolProperties"
+          }
+        },
+        "description" : "Represents a recommended elastic pool.",
+        "allOf" : [ {
+          "description" : "ARM proxy resource.",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Resource ID.",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Resource name.",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "Resource type.",
+                "readOnly" : true
+              }
+            },
+            "description" : "ARM resource."
+          } ]
+        } ]
+      },
+      "RecommendedElasticPoolListMetricsResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The list of recommended elastic pools metrics.",
+            "items" : {
+              "$ref" : "#/components/schemas/RecommendedElasticPoolMetric"
+            }
+          }
+        },
+        "description" : "Represents the response to a list recommended elastic pool metrics request."
+      },
+      "RecommendedElasticPoolListResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The list of recommended elastic pools hosted in the server.",
+            "items" : {
+              "$ref" : "#/components/schemas/RecommendedElasticPool"
+            }
+          }
+        },
+        "description" : "Represents the response to a list recommended elastic pool request."
+      },
+      "RecommendedElasticPoolMetric" : {
+        "type" : "object",
+        "properties" : {
+          "dateTime" : {
+            "type" : "string",
+            "description" : "The time of metric (ISO8601 format).",
+            "format" : "date-time"
+          },
+          "dtu" : {
+            "type" : "number",
+            "description" : "Gets or sets the DTUs (Database Transaction Units). See https://azure.microsoft.com/documentation/articles/sql-database-what-is-a-dtu/",
+            "format" : "double"
+          },
+          "sizeGB" : {
+            "type" : "number",
+            "description" : "Gets or sets size in gigabytes.",
+            "format" : "double"
+          }
+        },
+        "description" : "Represents recommended elastic pool metric."
+      },
+      "RecommendedElasticPoolProperties" : {
+        "type" : "object",
+        "properties" : {
+          "databaseDtuMax" : {
+            "type" : "number",
+            "description" : "The maximum DTU for the database.",
+            "format" : "double"
+          },
+          "databaseDtuMin" : {
+            "type" : "number",
+            "description" : "The minimum DTU for the database.",
+            "format" : "double"
+          },
+          "databaseEdition" : {
+            "type" : "string",
+            "description" : "The edition of the recommended elastic pool. The ElasticPoolEdition enumeration contains all the valid editions.",
+            "readOnly" : true,
+            "enum" : [ "Basic", "Standard", "Premium", "GeneralPurpose", "BusinessCritical" ]
+          },
+          "databases" : {
+            "type" : "array",
+            "description" : "The list of databases in this pool. Expanded property",
+            "readOnly" : true,
+            "items" : {
+              "required" : [ "location" ],
+              "type" : "object",
+              "properties" : {
+                "location" : {
+                  "type" : "string",
+                  "description" : "Resource location."
+                },
+                "tags" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  },
+                  "description" : "Resource tags."
+                }
+              },
+              "description" : "ARM tracked top level resource."
+            }
+          },
+          "dtu" : {
+            "type" : "number",
+            "description" : "The DTU for the recommended elastic pool.",
+            "format" : "double"
+          },
+          "maxObservedDtu" : {
+            "type" : "number",
+            "description" : "Gets maximum observed DTU.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "maxObservedStorageMB" : {
+            "type" : "number",
+            "description" : "Gets maximum observed storage in megabytes.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "metrics" : {
+            "type" : "array",
+            "description" : "The list of databases housed in the server. Expanded property",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/RecommendedElasticPoolMetric"
+            }
+          },
+          "observationPeriodEnd" : {
+            "type" : "string",
+            "description" : "The observation period start (ISO8601 format).",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "observationPeriodStart" : {
+            "type" : "string",
+            "description" : "The observation period start (ISO8601 format).",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "storageMB" : {
+            "type" : "number",
+            "description" : "Gets storage size in megabytes.",
+            "format" : "double"
+          }
+        },
+        "description" : "Represents the properties of a recommended elastic pool."
+      }
+    },
+    "parameters" : {
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

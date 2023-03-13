@@ -1,1 +1,468 @@
-{"openapi":"3.0.1","info":{"title":"Azure SQL Database replication links","description":"Provides read, delete, and failover functionality for Azure SQL Database replication links.","version":"2014-04-01"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks":{"get":{"tags":["DatabaseReplicationLinks"],"description":"Lists a database's replication links.","operationId":"ReplicationLinks_ListByDatabase","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database to retrieve links for.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ReplicationLinkListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}":{"get":{"tags":["DatabaseReplicationLinks"],"description":"Gets a database replication link.","operationId":"ReplicationLinks_Get","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database to get the link for.","required":true,"schema":{"type":"string"}},{"name":"linkId","in":"path","description":"The replication link ID to be retrieved.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ReplicationLink"}}}}}},"delete":{"tags":["DatabaseReplicationLinks"],"description":"Deletes a database replication link. Cannot be done during failover.","operationId":"ReplicationLinks_Delete","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database that has the replication link to be dropped.","required":true,"schema":{"type":"string"}},{"name":"linkId","in":"path","description":"The ID of the replication link to be deleted.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"},"204":{"description":"NoContent"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}/failover":{"post":{"tags":["DatabaseReplicationLinks"],"description":"Sets which replica database is primary by failing over from the current primary replica database.","operationId":"ReplicationLinks_Failover","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database that has the replication link to be failed over.","required":true,"schema":{"type":"string"}},{"name":"linkId","in":"path","description":"The ID of the replication link to be failed over.","required":true,"schema":{"type":"string"}}],"responses":{"202":{"description":"Accepted"},"204":{"description":"No Content"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}/forceFailoverAllowDataLoss":{"post":{"tags":["DatabaseReplicationLinks"],"description":"Sets which replica database is primary by failing over from the current primary replica database. This operation might result in data loss.","operationId":"ReplicationLinks_FailoverAllowDataLoss","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database that has the replication link to be failed over.","required":true,"schema":{"type":"string"}},{"name":"linkId","in":"path","description":"The ID of the replication link to be failed over.","required":true,"schema":{"type":"string"}}],"responses":{"202":{"description":"Accepted"},"204":{"description":"No Content"}}}}},"components":{"schemas":{"ReplicationLink":{"properties":{"location":{"type":"string","description":"Location of the server that contains this firewall rule.","readOnly":true},"properties":{"$ref":"#/components/schemas/ReplicationLinkProperties"},"type":{"type":"string","description":"Type of resource this is.","readOnly":true}},"description":"Represents a database replication link.","allOf":[{"description":"ARM proxy resource.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."}]}]},"ReplicationLinkListResult":{"type":"object","properties":{"value":{"type":"array","description":"The list of database replication links housed in the database.","items":{"$ref":"#/components/schemas/ReplicationLink"}}},"description":"Represents the response to a List database replication link request."},"ReplicationLinkProperties":{"type":"object","properties":{"isTerminationAllowed":{"type":"boolean","description":"Legacy value indicating whether termination is allowed.  Currently always returns true.","readOnly":true},"partnerDatabase":{"type":"string","description":"The name of the partner database.","readOnly":true},"partnerLocation":{"type":"string","description":"The Azure Region of the partner database.","readOnly":true},"partnerRole":{"type":"string","description":"The role of the partner database in the replication link.","readOnly":true,"enum":["Primary","Secondary","NonReadableSecondary","Source","Copy"]},"partnerServer":{"type":"string","description":"The name of the server hosting the partner database.","readOnly":true},"percentComplete":{"type":"integer","description":"The percentage of seeding complete for the replication link.","format":"int32","readOnly":true},"replicationMode":{"type":"string","description":"Replication mode of this replication link.","readOnly":true},"replicationState":{"type":"string","description":"The replication state for the replication link.","readOnly":true,"enum":["PENDING","SEEDING","CATCH_UP","SUSPENDED"]},"role":{"type":"string","description":"The role of the database in the replication link.","readOnly":true,"enum":["Primary","Secondary","NonReadableSecondary","Source","Copy"]},"startTime":{"type":"string","description":"The start time for the replication link.","format":"date-time","readOnly":true}},"description":"Represents the properties of a database replication link."}},"parameters":{"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure SQL Database replication links",
+    "description" : "Provides read, delete, and failover functionality for Azure SQL Database replication links.",
+    "version" : "2014-04-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks" : {
+      "get" : {
+        "tags" : [ "DatabaseReplicationLinks" ],
+        "description" : "Lists a database's replication links.",
+        "operationId" : "ReplicationLinks_ListByDatabase",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database to retrieve links for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ReplicationLinkListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}" : {
+      "get" : {
+        "tags" : [ "DatabaseReplicationLinks" ],
+        "description" : "Gets a database replication link.",
+        "operationId" : "ReplicationLinks_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database to get the link for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The replication link ID to be retrieved.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ReplicationLink"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "DatabaseReplicationLinks" ],
+        "description" : "Deletes a database replication link. Cannot be done during failover.",
+        "operationId" : "ReplicationLinks_Delete",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database that has the replication link to be dropped.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The ID of the replication link to be deleted.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "204" : {
+            "description" : "NoContent"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}/failover" : {
+      "post" : {
+        "tags" : [ "DatabaseReplicationLinks" ],
+        "description" : "Sets which replica database is primary by failing over from the current primary replica database.",
+        "operationId" : "ReplicationLinks_Failover",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database that has the replication link to be failed over.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The ID of the replication link to be failed over.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted"
+          },
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}/forceFailoverAllowDataLoss" : {
+      "post" : {
+        "tags" : [ "DatabaseReplicationLinks" ],
+        "description" : "Sets which replica database is primary by failing over from the current primary replica database. This operation might result in data loss.",
+        "operationId" : "ReplicationLinks_FailoverAllowDataLoss",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database that has the replication link to be failed over.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The ID of the replication link to be failed over.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted"
+          },
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ReplicationLink" : {
+        "properties" : {
+          "location" : {
+            "type" : "string",
+            "description" : "Location of the server that contains this firewall rule.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ReplicationLinkProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of resource this is.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Represents a database replication link.",
+        "allOf" : [ {
+          "description" : "ARM proxy resource.",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Resource ID.",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Resource name.",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "Resource type.",
+                "readOnly" : true
+              }
+            },
+            "description" : "ARM resource."
+          } ]
+        } ]
+      },
+      "ReplicationLinkListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The list of database replication links housed in the database.",
+            "items" : {
+              "$ref" : "#/components/schemas/ReplicationLink"
+            }
+          }
+        },
+        "description" : "Represents the response to a List database replication link request."
+      },
+      "ReplicationLinkProperties" : {
+        "type" : "object",
+        "properties" : {
+          "isTerminationAllowed" : {
+            "type" : "boolean",
+            "description" : "Legacy value indicating whether termination is allowed.  Currently always returns true.",
+            "readOnly" : true
+          },
+          "partnerDatabase" : {
+            "type" : "string",
+            "description" : "The name of the partner database.",
+            "readOnly" : true
+          },
+          "partnerLocation" : {
+            "type" : "string",
+            "description" : "The Azure Region of the partner database.",
+            "readOnly" : true
+          },
+          "partnerRole" : {
+            "type" : "string",
+            "description" : "The role of the partner database in the replication link.",
+            "readOnly" : true,
+            "enum" : [ "Primary", "Secondary", "NonReadableSecondary", "Source", "Copy" ]
+          },
+          "partnerServer" : {
+            "type" : "string",
+            "description" : "The name of the server hosting the partner database.",
+            "readOnly" : true
+          },
+          "percentComplete" : {
+            "type" : "integer",
+            "description" : "The percentage of seeding complete for the replication link.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "replicationMode" : {
+            "type" : "string",
+            "description" : "Replication mode of this replication link.",
+            "readOnly" : true
+          },
+          "replicationState" : {
+            "type" : "string",
+            "description" : "The replication state for the replication link.",
+            "readOnly" : true,
+            "enum" : [ "PENDING", "SEEDING", "CATCH_UP", "SUSPENDED" ]
+          },
+          "role" : {
+            "type" : "string",
+            "description" : "The role of the database in the replication link.",
+            "readOnly" : true,
+            "enum" : [ "Primary", "Secondary", "NonReadableSecondary", "Source", "Copy" ]
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The start time for the replication link.",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "Represents the properties of a database replication link."
+      }
+    },
+    "parameters" : {
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

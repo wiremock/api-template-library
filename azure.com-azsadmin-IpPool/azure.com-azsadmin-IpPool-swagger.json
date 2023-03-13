@@ -1,1 +1,347 @@
-{"openapi":"3.0.1","info":{"title":"FabricAdminClient","description":"IP pool operation endpoints and objects.","version":"2016-05-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools":{"get":{"tags":["IpPools"],"description":"Returns a list of all IP pools at a certain location.","operationId":"IpPools_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"$filter","in":"query","description":"OData filter parameter.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPoolList"}}}},"404":{"description":"NOT FOUND"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools/{ipPool}":{"get":{"tags":["IpPools"],"description":"Return the requested IP pool.","operationId":"IpPools_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"ipPool","in":"path","description":"IP pool name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPool"}}}},"404":{"description":"NOT FOUND"}}},"put":{"tags":["IpPools"],"description":"Create an IP pool.  Once created an IP pool cannot be deleted.","operationId":"IpPools_CreateOrUpdate","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"ipPool","in":"path","description":"IP pool name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"requestBody":{"description":"IP pool object to send.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPool"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPool"}}}},"202":{"description":"Accepted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPool"}}}}}}}},"components":{"schemas":{"IpPool":{"properties":{"properties":{"$ref":"#/components/schemas/IpPoolModel"}},"description":"This resource defines the range of IP addresses from which addresses are  allocated for nodes within a subnet.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"The region where the resource is located."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key-value pairs."},"type":{"type":"string","description":"Type of resource.","readOnly":true}},"description":"Base resource object."}]},"IpPoolList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of IP pools.","items":{"$ref":"#/components/schemas/IpPool"}}},"description":"Pageable list of IP pools."},"IpPoolModel":{"type":"object","properties":{"addressPrefix":{"type":"string","description":"The address prefix."},"endIpAddress":{"type":"string","description":"The ending IP address."},"numberOfAllocatedIpAddresses":{"type":"integer","description":"The number of currently allocated IP addresses.","format":"int64"},"numberOfIpAddresses":{"type":"integer","description":"The total number of IP addresses.","format":"int64"},"numberOfIpAddressesInTransition":{"type":"integer","description":"The current number of IP addresses in transition.","format":"int64"},"startIpAddress":{"type":"string","description":"The starting IP address."}},"description":"Properties of an IpPool."}},"parameters":{"IpPoolNameParameter":{"name":"ipPool","in":"path","description":"IP pool name.","required":true,"schema":{"type":"string"}}},"requestBodies":{"IpPoolParameter":{"description":"IP pool object to send.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IpPool"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "FabricAdminClient",
+    "description" : "IP pool operation endpoints and objects.",
+    "version" : "2016-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools" : {
+      "get" : {
+        "tags" : [ "IpPools" ],
+        "description" : "Returns a list of all IP pools at a certain location.",
+        "operationId" : "IpPools_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter parameter.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IpPoolList"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools/{ipPool}" : {
+      "get" : {
+        "tags" : [ "IpPools" ],
+        "description" : "Return the requested IP pool.",
+        "operationId" : "IpPools_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ipPool",
+          "in" : "path",
+          "description" : "IP pool name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IpPool"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "IpPools" ],
+        "description" : "Create an IP pool.  Once created an IP pool cannot be deleted.",
+        "operationId" : "IpPools_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ipPool",
+          "in" : "path",
+          "description" : "IP pool name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "IP pool object to send.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/IpPool"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IpPool"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IpPool"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "IpPool" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/IpPoolModel"
+          }
+        },
+        "description" : "This resource defines the range of IP addresses from which addresses are  allocated for nodes within a subnet.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "URI of the resource.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "The region where the resource is located."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Name of the resource.",
+              "readOnly" : true
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "List of key-value pairs."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Type of resource.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "IpPoolList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of IP pools.",
+            "items" : {
+              "$ref" : "#/components/schemas/IpPool"
+            }
+          }
+        },
+        "description" : "Pageable list of IP pools."
+      },
+      "IpPoolModel" : {
+        "type" : "object",
+        "properties" : {
+          "addressPrefix" : {
+            "type" : "string",
+            "description" : "The address prefix."
+          },
+          "endIpAddress" : {
+            "type" : "string",
+            "description" : "The ending IP address."
+          },
+          "numberOfAllocatedIpAddresses" : {
+            "type" : "integer",
+            "description" : "The number of currently allocated IP addresses.",
+            "format" : "int64"
+          },
+          "numberOfIpAddresses" : {
+            "type" : "integer",
+            "description" : "The total number of IP addresses.",
+            "format" : "int64"
+          },
+          "numberOfIpAddressesInTransition" : {
+            "type" : "integer",
+            "description" : "The current number of IP addresses in transition.",
+            "format" : "int64"
+          },
+          "startIpAddress" : {
+            "type" : "string",
+            "description" : "The starting IP address."
+          }
+        },
+        "description" : "Properties of an IpPool."
+      }
+    },
+    "parameters" : {
+      "IpPoolNameParameter" : {
+        "name" : "ipPool",
+        "in" : "path",
+        "description" : "IP pool name.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "IpPoolParameter" : {
+        "description" : "IP pool object to send.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/IpPool"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

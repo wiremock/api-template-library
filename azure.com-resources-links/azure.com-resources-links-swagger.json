@@ -1,1 +1,405 @@
-{"openapi":"3.0.1","info":{"title":"ManagementLinkClient","description":"Azure resources can be linked together to form logical relationships. You can establish links between resources belonging to different resource groups. However, all the linked resources must belong to the same subscription. Each resource can be linked to 50 other resources. If any of the linked resources are deleted or moved, the link owner must clean up the remaining link.","version":"2016-09-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.Resources/operations":{"get":{"tags":["Operations"],"description":"Lists all of the available Microsoft.Resources REST API operations.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Resources/links":{"get":{"tags":["ResourceLinks"],"description":"Gets all the linked resources for the subscription.","operationId":"ResourceLinks_ListAtSubscription","parameters":[{"name":"$filter","in":"query","description":"The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Returns an array of resource links for the subscription.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLinkResult"}}}}}}},"/{linkId}":{"get":{"tags":["ResourceLinks"],"description":"Gets a resource link with the specified ID.","operationId":"ResourceLinks_Get","parameters":[{"name":"linkId","in":"path","description":"The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns information about the resource link.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLink"}}}}}},"put":{"tags":["ResourceLinks"],"description":"Creates or updates a resource link between the specified resources.","operationId":"ResourceLinks_CreateOrUpdate","parameters":[{"name":"linkId","in":"path","description":"The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters for creating or updating a resource link.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLink"}}},"required":true},"responses":{"200":{"description":"OK - Returns information about the link.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLink"}}}},"201":{"description":"Created - Returns information about the link.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLink"}}}}}},"delete":{"tags":["ResourceLinks"],"description":"Deletes a resource link with the specified ID.","operationId":"ResourceLinks_Delete","parameters":[{"name":"linkId","in":"path","description":"The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"},"204":{"description":"No Content"}}}},"/{scope}/providers/Microsoft.Resources/links":{"get":{"tags":["ResourceLinks"],"description":"Gets a list of resource links at and below the specified source scope.","operationId":"ResourceLinks_ListAtSourceScope","parameters":[{"name":"scope","in":"path","description":"The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.","required":true,"schema":{"type":"string"}},{"name":"$filter","in":"query","description":"The filter to apply when getting resource links. To get links only at the specified scope (not below the scope), use Filter.atScope().","schema":{"type":"string","enum":["atScope()"]}},{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns an array of links at the specified scope.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceLinkResult"}}}}}}}},"components":{"schemas":{"Operation":{"type":"object","properties":{"display":{"type":"object","properties":{"description":{"type":"string","description":"Description of the operation."},"operation":{"type":"string","description":"Operation type: Read, write, delete, etc."},"provider":{"type":"string","description":"Service provider: Microsoft.Resources"},"resource":{"type":"string","description":"Resource on which the operation is performed: Profile, endpoint, etc."}},"description":"The object that represents the operation."},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}"}},"description":"Microsoft.Resources operation"},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any."},"value":{"type":"array","description":"List of Microsoft.Resources operations.","items":{"$ref":"#/components/schemas/Operation"}}},"description":"Result of the request to list Microsoft.Resources operations. It contains a list of operations and a URL link to get the next set of results."},"ResourceLink":{"type":"object","properties":{"id":{"type":"string","description":"The fully qualified ID of the resource link.","readOnly":true},"name":{"type":"string","description":"The name of the resource link.","readOnly":true},"properties":{"$ref":"#/components/schemas/ResourceLinkProperties"},"type":{"type":"object","description":"The resource link object.","readOnly":true}},"description":"The resource link."},"ResourceLinkFilter":{"required":["targetId"],"type":"object","properties":{"targetId":{"type":"string","description":"The ID of the target resource."}},"description":"Resource link filter."},"ResourceLinkProperties":{"required":["targetId"],"type":"object","properties":{"notes":{"type":"string","description":"Notes about the resource link."},"sourceId":{"type":"string","description":"The fully qualified ID of the source resource in the link. ","readOnly":true},"targetId":{"type":"string","description":"The fully qualified ID of the target resource in the link."}},"description":"The resource link properties."},"ResourceLinkResult":{"required":["value"],"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to use for getting the next set of results.","readOnly":true},"value":{"type":"array","description":"An array of resource links.","items":{"$ref":"#/components/schemas/ResourceLink"}}},"description":"List of resource links."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for the operation.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ManagementLinkClient",
+    "description" : "Azure resources can be linked together to form logical relationships. You can establish links between resources belonging to different resource groups. However, all the linked resources must belong to the same subscription. Each resource can be linked to 50 other resources. If any of the linked resources are deleted or moved, the link owner must clean up the remaining link.",
+    "version" : "2016-09-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.Resources/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "description" : "Lists all of the available Microsoft.Resources REST API operations.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/links" : {
+      "get" : {
+        "tags" : [ "ResourceLinks" ],
+        "description" : "Gets all the linked resources for the subscription.",
+        "operationId" : "ResourceLinks_ListAtSubscription",
+        "parameters" : [ {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of resource links for the subscription.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceLinkResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{linkId}" : {
+      "get" : {
+        "tags" : [ "ResourceLinks" ],
+        "description" : "Gets a resource link with the specified ID.",
+        "operationId" : "ResourceLinks_Get",
+        "parameters" : [ {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns information about the resource link.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceLink"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ResourceLinks" ],
+        "description" : "Creates or updates a resource link between the specified resources.",
+        "operationId" : "ResourceLinks_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters for creating or updating a resource link.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResourceLink"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns information about the link.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceLink"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created - Returns information about the link.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceLink"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ResourceLinks" ],
+        "description" : "Deletes a resource link with the specified ID.",
+        "operationId" : "ResourceLinks_Delete",
+        "parameters" : [ {
+          "name" : "linkId",
+          "in" : "path",
+          "description" : "The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Resources/links" : {
+      "get" : {
+        "tags" : [ "ResourceLinks" ],
+        "description" : "Gets a list of resource links at and below the specified source scope.",
+        "operationId" : "ResourceLinks_ListAtSourceScope",
+        "parameters" : [ {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The filter to apply when getting resource links. To get links only at the specified scope (not below the scope), use Filter.atScope().",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "atScope()" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns an array of links at the specified scope.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceLinkResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "description" : {
+                "type" : "string",
+                "description" : "Description of the operation."
+              },
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation type: Read, write, delete, etc."
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Service provider: Microsoft.Resources"
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed: Profile, endpoint, etc."
+              }
+            },
+            "description" : "The object that represents the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}"
+          }
+        },
+        "description" : "Microsoft.Resources operation"
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of Microsoft.Resources operations.",
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Result of the request to list Microsoft.Resources operations. It contains a list of operations and a URL link to get the next set of results."
+      },
+      "ResourceLink" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The fully qualified ID of the resource link.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource link.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ResourceLinkProperties"
+          },
+          "type" : {
+            "type" : "object",
+            "description" : "The resource link object.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The resource link."
+      },
+      "ResourceLinkFilter" : {
+        "required" : [ "targetId" ],
+        "type" : "object",
+        "properties" : {
+          "targetId" : {
+            "type" : "string",
+            "description" : "The ID of the target resource."
+          }
+        },
+        "description" : "Resource link filter."
+      },
+      "ResourceLinkProperties" : {
+        "required" : [ "targetId" ],
+        "type" : "object",
+        "properties" : {
+          "notes" : {
+            "type" : "string",
+            "description" : "Notes about the resource link."
+          },
+          "sourceId" : {
+            "type" : "string",
+            "description" : "The fully qualified ID of the source resource in the link. ",
+            "readOnly" : true
+          },
+          "targetId" : {
+            "type" : "string",
+            "description" : "The fully qualified ID of the target resource in the link."
+          }
+        },
+        "description" : "The resource link properties."
+      },
+      "ResourceLinkResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to use for getting the next set of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of resource links.",
+            "items" : {
+              "$ref" : "#/components/schemas/ResourceLink"
+            }
+          }
+        },
+        "description" : "List of resource links."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for the operation.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The ID of the target subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

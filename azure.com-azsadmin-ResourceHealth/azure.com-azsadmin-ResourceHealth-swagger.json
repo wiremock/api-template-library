@@ -1,1 +1,353 @@
-{"openapi":"3.0.1","info":{"title":"InfrastructureInsightsManagementClient","description":"Resource health operation endpoints and objects.","version":"2016-05-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/serviceHealths/{serviceRegistrationId}/resourceHealths":{"get":{"tags":["Resources"],"description":"Returns a list of each resource's health under a service.","operationId":"ResourceHealths_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"serviceRegistrationId","in":"path","description":"Service registration ID.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"$filter","in":"query","description":"OData filter parameter.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceHealthList"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/serviceHealths/{serviceRegistrationId}/resourceHealths/{resourceRegistrationId}":{"get":{"tags":["Resources"],"description":"Returns the requested health information about a resource.","operationId":"ResourceHealths_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"serviceRegistrationId","in":"path","description":"Service registration ID.","required":true,"schema":{"type":"string"}},{"name":"resourceRegistrationId","in":"path","description":"Resource registration ID.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"$filter","in":"query","description":"OData filter parameter.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceHealth"}}}}}}}},"components":{"schemas":{"ResourceHealth":{"properties":{"properties":{"$ref":"#/components/schemas/ResourceHealthModel"}},"description":"Health information related to a resource.","allOf":[{"properties":{"location":{"type":"string","description":"The Azure Region where the resource lives"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."}},"description":"The resource model definition for a ARM tracked top level resource","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Fully qualified resource Id for the resource","readOnly":true},"name":{"type":"string","description":"The name of the resource","readOnly":true},"type":{"type":"string","description":"The type of the resource.","readOnly":true}},"description":"The core properties of ARM resources"}]}]},"ResourceHealthList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to next page."},"value":{"type":"array","description":"List of resource health objects.","items":{"$ref":"#/components/schemas/ResourceHealth"}}},"description":"Pageable list of resource health objects."},"ResourceHealthModel":{"properties":{"resourceDisplayName":{"type":"string","description":"Resource display name."},"resourceLocation":{"type":"string","description":"Resource location."},"resourceName":{"type":"string","description":"Resource name."},"resourceType":{"type":"string","description":"Resource type."},"resourceURI":{"type":"string","description":"Gets or sets the resource URI."},"rpRegistrationId":{"type":"string","description":"Gets or sets the resource provider registration ID."},"usageMetrics":{"type":"array","description":"Usage metrics.","items":{"type":"object","properties":{"metricsValue":{"type":"array","description":"List of usage metrics.","items":{"type":"object","properties":{"maCounterName":{"type":"string","description":"Name of the counter."},"name":{"type":"string","description":"Name of the usage metric."},"observedTimestamp":{"type":"string","description":"Time counter was observed.","format":"date-time"},"sourceName":{"type":"string","description":"The origin of the metric.","enum":["PhysicalNode","VirtualMachine","ResourceProvider"]},"sourceType":{"type":"string","description":"Type of the source."},"unit":{"type":"string","description":"The unit of the metric.","enum":["One","Percentage","B","KB","MB","GB","TB"]},"value":{"type":"number","description":"Name of the usage metric.","format":"double"}},"description":"Metrics for a source."}},"name":{"type":"string","description":"Name of the usage metric."}},"description":"Metrics of resource usage."}}},"description":"Health information related to a resource.","allOf":[{"type":"object","properties":{"alertSummary":{"type":"object","properties":{"criticalAlertCount":{"type":"integer","description":"The number of critical alerts for the service."},"warningAlertCount":{"type":"integer","description":"The number of warning alerts for the service."}},"description":"Summary of the alerts."},"healthState":{"type":"string","description":"Health state."},"namespace":{"type":"string","description":"Namespace of the health resource."},"registrationId":{"type":"string","description":"Registration ID."},"routePrefix":{"type":"string","description":"Route prefix."}},"description":"Models the base properties for health resource."}]}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "InfrastructureInsightsManagementClient",
+    "description" : "Resource health operation endpoints and objects.",
+    "version" : "2016-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/serviceHealths/{serviceRegistrationId}/resourceHealths" : {
+      "get" : {
+        "tags" : [ "Resources" ],
+        "description" : "Returns a list of each resource's health under a service.",
+        "operationId" : "ResourceHealths_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceRegistrationId",
+          "in" : "path",
+          "description" : "Service registration ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter parameter.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceHealthList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/serviceHealths/{serviceRegistrationId}/resourceHealths/{resourceRegistrationId}" : {
+      "get" : {
+        "tags" : [ "Resources" ],
+        "description" : "Returns the requested health information about a resource.",
+        "operationId" : "ResourceHealths_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceRegistrationId",
+          "in" : "path",
+          "description" : "Service registration ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceRegistrationId",
+          "in" : "path",
+          "description" : "Resource registration ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter parameter.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceHealth"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ResourceHealth" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ResourceHealthModel"
+          }
+        },
+        "description" : "Health information related to a resource.",
+        "allOf" : [ {
+          "properties" : {
+            "location" : {
+              "type" : "string",
+              "description" : "The Azure Region where the resource lives"
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Resource tags."
+            }
+          },
+          "description" : "The resource model definition for a ARM tracked top level resource",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Fully qualified resource Id for the resource",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "The name of the resource",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "The type of the resource.",
+                "readOnly" : true
+              }
+            },
+            "description" : "The core properties of ARM resources"
+          } ]
+        } ]
+      },
+      "ResourceHealthList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of resource health objects.",
+            "items" : {
+              "$ref" : "#/components/schemas/ResourceHealth"
+            }
+          }
+        },
+        "description" : "Pageable list of resource health objects."
+      },
+      "ResourceHealthModel" : {
+        "properties" : {
+          "resourceDisplayName" : {
+            "type" : "string",
+            "description" : "Resource display name."
+          },
+          "resourceLocation" : {
+            "type" : "string",
+            "description" : "Resource location."
+          },
+          "resourceName" : {
+            "type" : "string",
+            "description" : "Resource name."
+          },
+          "resourceType" : {
+            "type" : "string",
+            "description" : "Resource type."
+          },
+          "resourceURI" : {
+            "type" : "string",
+            "description" : "Gets or sets the resource URI."
+          },
+          "rpRegistrationId" : {
+            "type" : "string",
+            "description" : "Gets or sets the resource provider registration ID."
+          },
+          "usageMetrics" : {
+            "type" : "array",
+            "description" : "Usage metrics.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "metricsValue" : {
+                  "type" : "array",
+                  "description" : "List of usage metrics.",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "maCounterName" : {
+                        "type" : "string",
+                        "description" : "Name of the counter."
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Name of the usage metric."
+                      },
+                      "observedTimestamp" : {
+                        "type" : "string",
+                        "description" : "Time counter was observed.",
+                        "format" : "date-time"
+                      },
+                      "sourceName" : {
+                        "type" : "string",
+                        "description" : "The origin of the metric.",
+                        "enum" : [ "PhysicalNode", "VirtualMachine", "ResourceProvider" ]
+                      },
+                      "sourceType" : {
+                        "type" : "string",
+                        "description" : "Type of the source."
+                      },
+                      "unit" : {
+                        "type" : "string",
+                        "description" : "The unit of the metric.",
+                        "enum" : [ "One", "Percentage", "B", "KB", "MB", "GB", "TB" ]
+                      },
+                      "value" : {
+                        "type" : "number",
+                        "description" : "Name of the usage metric.",
+                        "format" : "double"
+                      }
+                    },
+                    "description" : "Metrics for a source."
+                  }
+                },
+                "name" : {
+                  "type" : "string",
+                  "description" : "Name of the usage metric."
+                }
+              },
+              "description" : "Metrics of resource usage."
+            }
+          }
+        },
+        "description" : "Health information related to a resource.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "alertSummary" : {
+              "type" : "object",
+              "properties" : {
+                "criticalAlertCount" : {
+                  "type" : "integer",
+                  "description" : "The number of critical alerts for the service."
+                },
+                "warningAlertCount" : {
+                  "type" : "integer",
+                  "description" : "The number of warning alerts for the service."
+                }
+              },
+              "description" : "Summary of the alerts."
+            },
+            "healthState" : {
+              "type" : "string",
+              "description" : "Health state."
+            },
+            "namespace" : {
+              "type" : "string",
+              "description" : "Namespace of the health resource."
+            },
+            "registrationId" : {
+              "type" : "string",
+              "description" : "Registration ID."
+            },
+            "routePrefix" : {
+              "type" : "string",
+              "description" : "Route prefix."
+            }
+          },
+          "description" : "Models the base properties for health resource."
+        } ]
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

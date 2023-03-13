@@ -1,1 +1,472 @@
-{"openapi":"3.0.1","info":{"title":"InfrastructureInsightsManagementClient","description":"Alert operation endpoints and objects.","version":"2016-05-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts":{"get":{"tags":["Alerts"],"description":"Returns the list of all alerts in a given region.","operationId":"Alerts_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"$filter","in":"query","description":"OData filter parameter.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertList"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts/{alertName}":{"get":{"tags":["Alerts"],"description":"Returns the requested an alert.","operationId":"Alerts_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"alertName","in":"path","description":"Name of the alert.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Alert"}}}}}},"put":{"tags":["Alerts"],"description":"Closes the given alert.","operationId":"Alerts_Close","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"alertName","in":"path","description":"Name of the alert.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"user","in":"query","description":"The username used to perform the operation.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Updated alert parameter.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Alert"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Alert"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts/{alertName}/repair":{"post":{"tags":["Alerts"],"description":"Repairs an alert.","operationId":"Alerts_Repair","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the region","required":true,"schema":{"type":"string"}},{"name":"alertName","in":"path","description":"Name of the alert.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK"},"202":{"description":"ACCEPTED"}}}}},"components":{"schemas":{"Alert":{"properties":{"properties":{"$ref":"#/components/schemas/AlertModel"}},"description":"This object represents an alert resource.","allOf":[{"properties":{"location":{"type":"string","description":"The Azure Region where the resource lives"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."}},"description":"The resource model definition for a ARM tracked top level resource","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Fully qualified resource Id for the resource","readOnly":true},"name":{"type":"string","description":"The name of the resource","readOnly":true},"type":{"type":"string","description":"The type of the resource.","readOnly":true}},"description":"The core properties of ARM resources"}]}]},"AlertList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of alerts.","items":{"$ref":"#/components/schemas/Alert"}}},"description":"A pageable list of alerts"},"AlertModel":{"type":"object","properties":{"alertId":{"type":"string","description":"Gets or sets the ID of the alert."},"alertProperties":{"type":"object","additionalProperties":{"type":"string"},"description":"Properties of the alert."},"closedByUserAlias":{"type":"string","description":"User alias who closed the alert."},"closedTimestamp":{"type":"string","description":"Timestamp when the alert was closed."},"createdTimestamp":{"type":"string","description":"Timestamp when the alert was created."},"description":{"type":"array","description":"Description of the alert.","items":{"type":"object","additionalProperties":{"type":"string"},"description":"Dictionary of string key-value pairs."}},"faultId":{"type":"string","description":"Gets or sets the fault ID of the alert."},"faultTypeId":{"type":"string","description":"Gets or sets the fault type ID of the alert."},"hasValidRemediationAction":{"type":"boolean","description":"Indicates if the alert can be remediated."},"impactedResourceDisplayName":{"type":"string","description":"Display name for the impacted item."},"impactedResourceId":{"type":"string","description":"Gets or sets the Resource ID for the impacted item."},"lastUpdatedTimestamp":{"type":"string","description":"Timestamp when the alert was last updated."},"remediation":{"type":"array","description":"Gets or sets the admin friendly remediation instructions for the alert.","items":{"type":"object","additionalProperties":{"type":"string"},"description":"Dictionary of string key-value pairs."}},"resourceProviderRegistrationId":{"type":"string","description":"Gets or sets the registration ID of the service the alert belongs to."},"resourceRegistrationId":{"type":"string","description":"Gets or sets the registration ID of the resource associated with the alert. If the alert is not associated with a resource, the resource registration ID is null."},"severity":{"type":"string","description":"Severity of the alert."},"state":{"type":"string","description":"State of the alert."},"title":{"type":"string","description":"Gets or sets the Resource ID for the impacted item."}},"description":"Contains alert data."}},"parameters":{"AlertNameParameter":{"name":"alertName","in":"path","description":"Name of the alert.","required":true,"schema":{"type":"string"}},"UserParameter":{"name":"user","in":"query","description":"The username used to perform the operation.","required":true,"schema":{"type":"string"}}},"requestBodies":{"AlertParameter":{"description":"Updated alert parameter.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Alert"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "InfrastructureInsightsManagementClient",
+    "description" : "Alert operation endpoints and objects.",
+    "version" : "2016-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts" : {
+      "get" : {
+        "tags" : [ "Alerts" ],
+        "description" : "Returns the list of all alerts in a given region.",
+        "operationId" : "Alerts_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter parameter.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts/{alertName}" : {
+      "get" : {
+        "tags" : [ "Alerts" ],
+        "description" : "Returns the requested an alert.",
+        "operationId" : "Alerts_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertName",
+          "in" : "path",
+          "description" : "Name of the alert.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Alert"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Alerts" ],
+        "description" : "Closes the given alert.",
+        "operationId" : "Alerts_Close",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertName",
+          "in" : "path",
+          "description" : "Name of the alert.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "user",
+          "in" : "query",
+          "description" : "The username used to perform the operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Updated alert parameter.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Alert"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Alert"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{location}/alerts/{alertName}/repair" : {
+      "post" : {
+        "tags" : [ "Alerts" ],
+        "description" : "Repairs an alert.",
+        "operationId" : "Alerts_Repair",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the region",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alertName",
+          "in" : "path",
+          "description" : "Name of the alert.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "202" : {
+            "description" : "ACCEPTED"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Alert" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AlertModel"
+          }
+        },
+        "description" : "This object represents an alert resource.",
+        "allOf" : [ {
+          "properties" : {
+            "location" : {
+              "type" : "string",
+              "description" : "The Azure Region where the resource lives"
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Resource tags."
+            }
+          },
+          "description" : "The resource model definition for a ARM tracked top level resource",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Fully qualified resource Id for the resource",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "The name of the resource",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "The type of the resource.",
+                "readOnly" : true
+              }
+            },
+            "description" : "The core properties of ARM resources"
+          } ]
+        } ]
+      },
+      "AlertList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of alerts.",
+            "items" : {
+              "$ref" : "#/components/schemas/Alert"
+            }
+          }
+        },
+        "description" : "A pageable list of alerts"
+      },
+      "AlertModel" : {
+        "type" : "object",
+        "properties" : {
+          "alertId" : {
+            "type" : "string",
+            "description" : "Gets or sets the ID of the alert."
+          },
+          "alertProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Properties of the alert."
+          },
+          "closedByUserAlias" : {
+            "type" : "string",
+            "description" : "User alias who closed the alert."
+          },
+          "closedTimestamp" : {
+            "type" : "string",
+            "description" : "Timestamp when the alert was closed."
+          },
+          "createdTimestamp" : {
+            "type" : "string",
+            "description" : "Timestamp when the alert was created."
+          },
+          "description" : {
+            "type" : "array",
+            "description" : "Description of the alert.",
+            "items" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Dictionary of string key-value pairs."
+            }
+          },
+          "faultId" : {
+            "type" : "string",
+            "description" : "Gets or sets the fault ID of the alert."
+          },
+          "faultTypeId" : {
+            "type" : "string",
+            "description" : "Gets or sets the fault type ID of the alert."
+          },
+          "hasValidRemediationAction" : {
+            "type" : "boolean",
+            "description" : "Indicates if the alert can be remediated."
+          },
+          "impactedResourceDisplayName" : {
+            "type" : "string",
+            "description" : "Display name for the impacted item."
+          },
+          "impactedResourceId" : {
+            "type" : "string",
+            "description" : "Gets or sets the Resource ID for the impacted item."
+          },
+          "lastUpdatedTimestamp" : {
+            "type" : "string",
+            "description" : "Timestamp when the alert was last updated."
+          },
+          "remediation" : {
+            "type" : "array",
+            "description" : "Gets or sets the admin friendly remediation instructions for the alert.",
+            "items" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Dictionary of string key-value pairs."
+            }
+          },
+          "resourceProviderRegistrationId" : {
+            "type" : "string",
+            "description" : "Gets or sets the registration ID of the service the alert belongs to."
+          },
+          "resourceRegistrationId" : {
+            "type" : "string",
+            "description" : "Gets or sets the registration ID of the resource associated with the alert. If the alert is not associated with a resource, the resource registration ID is null."
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "Severity of the alert."
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "State of the alert."
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Gets or sets the Resource ID for the impacted item."
+          }
+        },
+        "description" : "Contains alert data."
+      }
+    },
+    "parameters" : {
+      "AlertNameParameter" : {
+        "name" : "alertName",
+        "in" : "path",
+        "description" : "Name of the alert.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "UserParameter" : {
+        "name" : "user",
+        "in" : "query",
+        "description" : "The username used to perform the operation.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "AlertParameter" : {
+        "description" : "Updated alert parameter.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Alert"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

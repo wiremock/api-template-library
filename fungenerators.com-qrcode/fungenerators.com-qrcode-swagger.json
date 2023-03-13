@@ -1,1 +1,590 @@
-{"openapi":"3.0.1","info":{"title":"Fun Generators API","description":"Fungenerators API gives access to the full set of generators available at fungenerators.com so that you can integrate them in your workflow or an app. [Click here to get details and subscribe](http://fungenerators.com/api) . Here are the individual API links:\n\n  ## QR Code API ##\n  Generate QR Code images for text, url, email , business cards etc. You can decode QR Code images and get the contents as well. The best and complete QR Code API on the cloud. [Click here to subscribe](http://fungenerators.com/api/qrcode)\n","termsOfService":"https://fungenerators.com/terms","contact":{"name":"Fun Generators","url":"http://fungenerators.com/"},"version":"1.5"},"servers":[{"url":"https://api.fungenerators.com/"},{"url":"http://api.fungenerators.com/"}],"tags":[{"name":"QR Code","description":"QR code API","externalDocs":{"description":"Find out more","url":"http://fungenerators.com/api/qrcode"}}],"paths":{"/qrcode/business_card":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a business card aka VCARD","parameters":[{"name":"firstname","in":"query","description":"First Name","required":true,"schema":{"type":"string","format":"string"}},{"name":"lastname","in":"query","description":"Last Name","required":true,"schema":{"type":"string","format":"string"}},{"name":"middlename","in":"query","description":"Middle Name","schema":{"type":"string","format":"string"}},{"name":"email","in":"query","description":"Email id","required":true,"schema":{"type":"string","format":"string"}},{"name":"company","in":"query","description":"Company Name","schema":{"type":"string","format":"string"}},{"name":"phone_work","in":"query","description":"Work Phone Number","schema":{"type":"string","format":"string"}},{"name":"phone_home","in":"query","description":"Home Phone Number","schema":{"type":"string","format":"string"}},{"name":"phone_cell","in":"query","description":"Cell Phone Number","schema":{"type":"string","format":"string"}},{"name":"street1","in":"query","description":"Street Address","schema":{"type":"string","format":"string"}},{"name":"street2","in":"query","description":"Street Address 2","schema":{"type":"string","format":"string"}},{"name":"city","in":"query","description":"City","schema":{"type":"string","format":"string"}},{"name":"zip","in":"query","description":"Zip Code","schema":{"type":"string","format":"string"}},{"name":"state","in":"query","description":"State","schema":{"type":"string","format":"string"}},{"name":"country","in":"query","description":"Country","schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/decode":{"post":{"tags":["QR Code"],"description":"Decode a QR Code image and return the cotents if successful","requestBody":{"content":{"mulitpart/form-data":{"schema":{"required":["qrimage"],"type":"object","properties":{"qrimage":{"type":"string","description":"QR Code image to decode and get the content value","format":"binary"}}}},"mulitpart/form-data-endcoded":{"schema":{"required":["qrimage"],"type":"object","properties":{"qrimage":{"type":"string","description":"QR Code image to decode and get the content value","format":"binary"}}}},"application/x-www-form-urlencoded":{"schema":{"required":["qrimage"],"type":"object","properties":{"qrimage":{"type":"string","description":"QR Code image to decode and get the content value","format":"binary"}}}}},"required":true},"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n  \"success\": {\n    \"total\": 1\n  },\n  \"contents\": {\n      \"content_value\": \"http://fungenerators.com/qr-code/\"\n  }\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}              "}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/email":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for an email","parameters":[{"name":"email","in":"query","description":"Email id to send the email to","required":true,"schema":{"type":"string","format":"string"}},{"name":"subject","in":"query","description":"Subject of the email(optional)","schema":{"type":"string","format":"string"}},{"name":"body","in":"query","description":"Body of the email(optional)","schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/phone":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a phone number","parameters":[{"name":"number","in":"query","description":"Phone Number","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/raw":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a block of raw data","parameters":[{"name":"rawtext","in":"query","description":"Raw Text value","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/skype":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a skype user","parameters":[{"name":"username","in":"query","description":"Skype User name","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/sms":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a Phone number for SMS messaging","parameters":[{"name":"number","in":"query","description":"Phone Number to SMS","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/text":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a block of text","parameters":[{"name":"text","in":"query","description":"Text value","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/eps/raw/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}},"/qrcode/url":{"get":{"tags":["QR Code"],"description":"Get a QR Code image for a url","parameters":[{"name":"url","in":"query","description":"URL value","required":true,"schema":{"type":"string","format":"string"}},{"name":"format","in":"query","description":"Output image format. Must be one of png/raw/eps/svg","schema":{"type":"string","format":"string"}}],"responses":{"200":{"description":"200  response","content":{"application/json":{"example":"{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"}}},"401":{"description":"401  response","content":{"application/json":{"example":"{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"}}}},"security":[{"X-Fungenerators-Api-Secret":null}]}}},"components":{"securitySchemes":{"X-Fungenerators-Api-Secret":{"type":"apiKey","name":"X-Fungenerators-Api-Secret","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Fun Generators API",
+    "description" : "Fungenerators API gives access to the full set of generators available at fungenerators.com so that you can integrate them in your workflow or an app. [Click here to get details and subscribe](http://fungenerators.com/api) . Here are the individual API links:\n\n  ## QR Code API ##\n  Generate QR Code images for text, url, email , business cards etc. You can decode QR Code images and get the contents as well. The best and complete QR Code API on the cloud. [Click here to subscribe](http://fungenerators.com/api/qrcode)\n",
+    "termsOfService" : "https://fungenerators.com/terms",
+    "contact" : {
+      "name" : "Fun Generators",
+      "url" : "http://fungenerators.com/"
+    },
+    "version" : "1.5"
+  },
+  "servers" : [ {
+    "url" : "https://api.fungenerators.com/"
+  }, {
+    "url" : "http://api.fungenerators.com/"
+  } ],
+  "tags" : [ {
+    "name" : "QR Code",
+    "description" : "QR code API",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "http://fungenerators.com/api/qrcode"
+    }
+  } ],
+  "paths" : {
+    "/qrcode/business_card" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a business card aka VCARD",
+        "parameters" : [ {
+          "name" : "firstname",
+          "in" : "query",
+          "description" : "First Name",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "lastname",
+          "in" : "query",
+          "description" : "Last Name",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "middlename",
+          "in" : "query",
+          "description" : "Middle Name",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "email",
+          "in" : "query",
+          "description" : "Email id",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "company",
+          "in" : "query",
+          "description" : "Company Name",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "phone_work",
+          "in" : "query",
+          "description" : "Work Phone Number",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "phone_home",
+          "in" : "query",
+          "description" : "Home Phone Number",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "phone_cell",
+          "in" : "query",
+          "description" : "Cell Phone Number",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "street1",
+          "in" : "query",
+          "description" : "Street Address",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "street2",
+          "in" : "query",
+          "description" : "Street Address 2",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "city",
+          "in" : "query",
+          "description" : "City",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "description" : "Zip Code",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "state",
+          "in" : "query",
+          "description" : "State",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : "Country",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/decode" : {
+      "post" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Decode a QR Code image and return the cotents if successful",
+        "requestBody" : {
+          "content" : {
+            "mulitpart/form-data" : {
+              "schema" : {
+                "required" : [ "qrimage" ],
+                "type" : "object",
+                "properties" : {
+                  "qrimage" : {
+                    "type" : "string",
+                    "description" : "QR Code image to decode and get the content value",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "mulitpart/form-data-endcoded" : {
+              "schema" : {
+                "required" : [ "qrimage" ],
+                "type" : "object",
+                "properties" : {
+                  "qrimage" : {
+                    "type" : "string",
+                    "description" : "QR Code image to decode and get the content value",
+                    "format" : "binary"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "required" : [ "qrimage" ],
+                "type" : "object",
+                "properties" : {
+                  "qrimage" : {
+                    "type" : "string",
+                    "description" : "QR Code image to decode and get the content value",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n  \"success\": {\n    \"total\": 1\n  },\n  \"contents\": {\n      \"content_value\": \"http://fungenerators.com/qr-code/\"\n  }\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}              "
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/email" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for an email",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "query",
+          "description" : "Email id to send the email to",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "subject",
+          "in" : "query",
+          "description" : "Subject of the email(optional)",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "body",
+          "in" : "query",
+          "description" : "Body of the email(optional)",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/phone" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a phone number",
+        "parameters" : [ {
+          "name" : "number",
+          "in" : "query",
+          "description" : "Phone Number",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/raw" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a block of raw data",
+        "parameters" : [ {
+          "name" : "rawtext",
+          "in" : "query",
+          "description" : "Raw Text value",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/skype" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a skype user",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "description" : "Skype User name",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/sms" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a Phone number for SMS messaging",
+        "parameters" : [ {
+          "name" : "number",
+          "in" : "query",
+          "description" : "Phone Number to SMS",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/text" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a block of text",
+        "parameters" : [ {
+          "name" : "text",
+          "in" : "query",
+          "description" : "Text value",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/eps/raw/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    },
+    "/qrcode/url" : {
+      "get" : {
+        "tags" : [ "QR Code" ],
+        "description" : "Get a QR Code image for a url",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "URL value",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        }, {
+          "name" : "format",
+          "in" : "query",
+          "description" : "Output image format. Must be one of png/raw/eps/svg",
+          "schema" : {
+            "type" : "string",
+            "format" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"success\": {\n        \"total\": 1\n    },\n    \"contents\": [\n        {\n            \"encoding\": \"base64\",\n            \"format\": \"png\",\n            \"content\": \"base64 encoded image file\",\n        }\n    ]\n}"
+              }
+            }
+          },
+          "401" : {
+            "description" : "401  response",
+            "content" : {
+              "application/json" : {
+                "example" : "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Unauthorized\"\n    }\n}"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-Fungenerators-Api-Secret" : null
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "X-Fungenerators-Api-Secret" : {
+        "type" : "apiKey",
+        "name" : "X-Fungenerators-Api-Secret",
+        "in" : "header"
+      }
+    }
+  }
+}

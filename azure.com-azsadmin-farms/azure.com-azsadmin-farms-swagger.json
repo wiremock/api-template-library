@@ -1,1 +1,969 @@
-{"openapi":"3.0.1","info":{"title":"StorageManagementClient","description":"The Admin Storage Management Client.","version":"2015-12-01-preview"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms":{"get":{"tags":["Farms"],"description":"Returns a list of all storage farms.","operationId":"Farms_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of storage farms has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FarmList"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}":{"get":{"tags":["Farms"],"description":"Returns the Storage properties and settings for a specified storage farm.","operationId":"Farms_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The farm has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Farm"}}}},"404":{"description":"NOT FOUND -- The specified farm was not found."}}},"put":{"tags":["Farms"],"description":"Create a new storage farm.","operationId":"Farms_Create","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters used to create a farm","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FarmCreationProperties"}}},"required":true},"responses":{"200":{"description":"OK -- The new storage farm has been created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Farm"}}}}}},"patch":{"tags":["Farms"],"description":"Update an existing storage farm.","operationId":"Farms_Update","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Farm to update.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Farm"}}},"required":true},"responses":{"200":{"description":"OK -- The properties and settings of storage farm have been updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Farm"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/metricdefinitions":{"get":{"tags":["Farms"],"description":"Returns a list of metric definitions for a storage farm.","operationId":"Farms_ListMetricDefinitions","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of metric definitions has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of metric definitions.","readOnly":true,"items":{"type":"object","properties":{"metricAvailabilities":{"type":"array","description":"Metric availabilities.","readOnly":true,"items":{"type":"object","properties":{"retention":{"type":"string","description":"Retention of metric."},"timeGrain":{"type":"string","description":"Time grain."}},"description":"Metric availability."}},"name":{"type":"object","properties":{"localizedValue":{"type":"string","description":"Localized value of the string."},"value":{"type":"string","description":"Value of the string."}},"description":"Localizable string."},"primaryAggregationType":{"type":"string","description":"Aggregate type.","readOnly":true,"enum":["None","Average","Total","Minimum","Maximum","Last"]},"unit":{"type":"string","description":"Metric unit.","enum":["Count","Bytes","Seconds","CountPerSecond","BytesPerSecond"]}},"description":"Metric definition."}}},"description":"Pageable list of metric definitions."}}}},"404":{"description":"NOT FOUND -- The specified farm was not found."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/metrics":{"get":{"tags":["Farms"],"description":"Returns a list of storage farm metrics.","operationId":"Farms_ListMetrics","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of metrics has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of metrics.","readOnly":true,"items":{"type":"object","properties":{"endTime":{"type":"string","description":"Metric end time.","format":"date-time","readOnly":true},"metricUnit":{"type":"string","description":"Metric unit.","enum":["Count","Bytes","Seconds","CountPerSecond","BytesPerSecond"]},"metricValues":{"type":"array","description":"List of metric values.","readOnly":true,"items":{"type":"object","properties":{"average":{"type":"number","description":"Average value of metric.","format":"float","readOnly":true},"count":{"type":"integer","description":"Count of metric values.","format":"int32","readOnly":true},"maximum":{"type":"number","description":"Maximum value of metric.","format":"float","readOnly":true},"minimum":{"type":"number","description":"Minimum value of metric.","format":"float","readOnly":true},"properties":{"type":"string","description":"Metric value properties.","readOnly":true},"timeStamp":{"type":"string","description":"Timestamp of metric value.","format":"date-time","readOnly":true},"total":{"type":"number","description":"Total value of metric.","format":"float","readOnly":true}},"description":"Metric value."}},"name":{"type":"object","properties":{"localizedValue":{"type":"string","description":"Localized value of the string."},"value":{"type":"string","description":"Value of the string."}},"description":"Localizable string."},"startTime":{"type":"string","description":"Metric start time.","format":"date-time","readOnly":true},"timeGrain":{"type":"string","description":"Metric time grain.","readOnly":true}},"description":"Metric information."}}},"description":"Pageable list of metrics."}}}},"404":{"description":"NOT FOUND -- The specified farm was not found."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/ondemandgc":{"post":{"tags":["Farms"],"description":"Start garbage collection on deleted storage objects.","operationId":"Farms_StartGarbageCollection","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- Garbage collection has completed."},"202":{"description":"ACCEPTED -- Garbage collection has started."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/operationresults/{operationId}":{"get":{"tags":["GC"],"description":"Returns the state of the garbage collection job.","operationId":"Farms_GetGarbageCollectionState","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}},{"name":"operationId","in":"path","description":"Operation Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The state of garbage collection has been returned.","content":{"application/json":{"schema":{"type":"string"}}}},"404":{"description":"NOT FOUND -- The specified farm or garbage collection job can not be found."}}}}},"components":{"schemas":{"Farm":{"properties":{"properties":{"$ref":"#/components/schemas/FarmProperties"}},"description":"Storage farm.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID."},"location":{"type":"string","description":"Resource location."},"name":{"type":"string","description":"Resource Name."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."},"type":{"type":"string","description":"Resource type."}},"description":"Base resource object."}]},"FarmCreationProperties":{"properties":{"properties":{"$ref":"#/components/schemas/SettingAccessString"}},"description":"Storage farm properties.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID."},"location":{"type":"string","description":"Resource location."},"name":{"type":"string","description":"Resource Name."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."},"type":{"type":"string","description":"Resource type."}},"description":"Base resource object."}]},"FarmList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of storage farms.","items":{"$ref":"#/components/schemas/Farm"}}},"description":"Pageable list of storage farms."},"FarmProperties":{"type":"object","properties":{"farmId":{"type":"string","description":"Farm identifier."},"settings":{"$ref":"#/components/schemas/FarmSettings"},"settingsStore":{"type":"string","description":"The settings of storage farm."},"version":{"type":"string","description":"Resource version."}},"description":"The properties of storage farm."},"FarmSettings":{"type":"object","properties":{"bandwidthThrottleIsEnabled":{"type":"boolean","description":"Switch of bandwidth throttle enablement."},"corsAllowedOriginsList":{"type":"string","description":"The list of allowed origins."},"dataCenterUriHostSuffixes":{"type":"string","description":"The suffixes of URI of hosts in data center."},"defaultEgressThresholdInGbps":{"type":"number","description":"Default egress threshold (in Gbps).","format":"float"},"defaultIngressThresholdInGbps":{"type":"number","description":"Default ingress threshold (in Gbps).","format":"float"},"defaultIntranetEgressThresholdInGbps":{"type":"number","description":"Default Intranet egress threshold (in Gbps).","format":"float"},"defaultIntranetIngressThresholdInGbps":{"type":"number","description":"Default Intranet ingress threshold (in Gbps).","format":"float"},"defaultRequestThresholdInTps":{"type":"number","description":"Default request threshold (in TPS).","format":"float"},"defaultThrottleProbabilityDecayIntervalInSeconds":{"type":"integer","description":"Interval (in seconds) of default throttle probability decay.","format":"int32"},"defaultTotalEgressThresholdInGbps":{"type":"number","description":"Default total egress threshold (in Gbps).","format":"float"},"defaultTotalIngressThresholdInGbps":{"type":"number","description":"Default total ingress threshold (in Gbps).","format":"float"},"feedbackRefreshIntervalInSeconds":{"type":"integer","description":"Interval (in seconds) of feedback refresh.","format":"int32"},"gracePeriodForFullThrottlingInRefreshIntervals":{"type":"integer","description":"Grace period for full throttling in refresh intervals.","format":"int32"},"gracePeriodMaxThrottleProbability":{"type":"number","description":"Maximum probability of throttle in grace period.","format":"float"},"hostStyleHttpPort":{"type":"integer","description":"Host style HTTP port.","format":"int32"},"hostStyleHttpsPort":{"type":"integer","description":"Host style HTTPs port.","format":"int32"},"minimumEgressThresholdInGbps":{"type":"number","description":"Minimum egress threshold (in Gbps).","format":"float"},"minimumIngressThresholdInGbps":{"type":"number","description":"Minimum ingress threshold (in Gbps).","format":"float"},"minimumIntranetEgressThresholdInGbps":{"type":"number","description":"Minimum Intranet egress threshold (in Gbps).","format":"float"},"minimumIntranetIngressThresholdInGbps":{"type":"number","description":"Minimum Intranet ingress threshold (in Gbps).","format":"float"},"minimumRequestThresholdInTps":{"type":"number","description":"Minimum request threshold (in TPS).","format":"float"},"minimumTotalEgressThresholdInGbps":{"type":"number","description":"Minimum total egress threshold (in Gbp","format":"float"},"minimumTotalIngressThresholdInGbps":{"type":"number","description":"Minimum total ingress threshold (in Gbps).","format":"float"},"numberOfAccountsToSync":{"type":"integer","description":"Number of accounts to sync.","format":"int32"},"overallEgressThresholdInGbps":{"type":"number","description":"Overall egress threshold (in Gbps).","format":"float"},"overallIngressThresholdInGbps":{"type":"number","description":"Overall ingress threshold (in Gbps)","format":"float"},"overallIntranetEgressThresholdInGbps":{"type":"number","description":"Overall Intranet egress threshold (in Gbps).","format":"float"},"overallIntranetIngressThresholdInGbps":{"type":"number","description":"Overall Intranet ingress threshold (in Gbps).","format":"float"},"overallRequestThresholdInTps":{"type":"number","description":"Overall request threshold (in TPS).","format":"float"},"overallTotalEgressThresholdInGbps":{"type":"number","description":"Overall total egress threshold (in Gbps).","format":"float"},"overallTotalIngressThresholdInGbps":{"type":"number","description":"Overall total ingress threshold (in Gbps).","format":"float"},"retentionPeriodForDeletedStorageAccountsInDays":{"type":"integer","description":"The retention period (in days) for deleted storage account.","format":"int32"},"settingsPollingIntervalInSecond":{"type":"integer","description":"The polling interval (in second).","format":"int32"},"toleranceFactorForEgress":{"type":"number","description":"Tolerance factor for egress.","format":"float"},"toleranceFactorForIngress":{"type":"number","description":"Tolerance factor for ingress.","format":"float"},"toleranceFactorForIntranetEgress":{"type":"number","description":"Tolerance factor for Intranet egress.","format":"float"},"toleranceFactorForIntranetIngress":{"type":"number","description":"Tolerance factor for Intranet ingress.","format":"float"},"toleranceFactorForTotalEgress":{"type":"number","description":"Tolerance factor for total egress.","format":"float"},"toleranceFactorForTotalIngress":{"type":"number","description":"Tolerance factor for total ingress.","format":"float"},"toleranceFactorForTps":{"type":"number","description":"Tolerance factor for TPS.","format":"float"},"usageCollectionIntervalInSeconds":{"type":"integer","description":"Interval (in seconds) of storage usage collection.","format":"int32"}},"description":"Storage farm settings."},"SettingAccessString":{"type":"object","properties":{"settingAccessString":{"type":"string","description":"Setting access string."}},"description":"Setting access string."}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "StorageManagementClient",
+    "description" : "The Admin Storage Management Client.",
+    "version" : "2015-12-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms" : {
+      "get" : {
+        "tags" : [ "Farms" ],
+        "description" : "Returns a list of all storage farms.",
+        "operationId" : "Farms_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of storage farms has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FarmList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}" : {
+      "get" : {
+        "tags" : [ "Farms" ],
+        "description" : "Returns the Storage properties and settings for a specified storage farm.",
+        "operationId" : "Farms_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The farm has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Farm"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The specified farm was not found."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Farms" ],
+        "description" : "Create a new storage farm.",
+        "operationId" : "Farms_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters used to create a farm",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FarmCreationProperties"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The new storage farm has been created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Farm"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Farms" ],
+        "description" : "Update an existing storage farm.",
+        "operationId" : "Farms_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Farm to update.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Farm"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The properties and settings of storage farm have been updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Farm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/metricdefinitions" : {
+      "get" : {
+        "tags" : [ "Farms" ],
+        "description" : "Returns a list of metric definitions for a storage farm.",
+        "operationId" : "Farms_ListMetricDefinitions",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of metric definitions has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "URI to the next page.",
+                      "readOnly" : true
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "List of metric definitions.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "metricAvailabilities" : {
+                            "type" : "array",
+                            "description" : "Metric availabilities.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "retention" : {
+                                  "type" : "string",
+                                  "description" : "Retention of metric."
+                                },
+                                "timeGrain" : {
+                                  "type" : "string",
+                                  "description" : "Time grain."
+                                }
+                              },
+                              "description" : "Metric availability."
+                            }
+                          },
+                          "name" : {
+                            "type" : "object",
+                            "properties" : {
+                              "localizedValue" : {
+                                "type" : "string",
+                                "description" : "Localized value of the string."
+                              },
+                              "value" : {
+                                "type" : "string",
+                                "description" : "Value of the string."
+                              }
+                            },
+                            "description" : "Localizable string."
+                          },
+                          "primaryAggregationType" : {
+                            "type" : "string",
+                            "description" : "Aggregate type.",
+                            "readOnly" : true,
+                            "enum" : [ "None", "Average", "Total", "Minimum", "Maximum", "Last" ]
+                          },
+                          "unit" : {
+                            "type" : "string",
+                            "description" : "Metric unit.",
+                            "enum" : [ "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond" ]
+                          }
+                        },
+                        "description" : "Metric definition."
+                      }
+                    }
+                  },
+                  "description" : "Pageable list of metric definitions."
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The specified farm was not found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/metrics" : {
+      "get" : {
+        "tags" : [ "Farms" ],
+        "description" : "Returns a list of storage farm metrics.",
+        "operationId" : "Farms_ListMetrics",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of metrics has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "URI to the next page.",
+                      "readOnly" : true
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "List of metrics.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "endTime" : {
+                            "type" : "string",
+                            "description" : "Metric end time.",
+                            "format" : "date-time",
+                            "readOnly" : true
+                          },
+                          "metricUnit" : {
+                            "type" : "string",
+                            "description" : "Metric unit.",
+                            "enum" : [ "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond" ]
+                          },
+                          "metricValues" : {
+                            "type" : "array",
+                            "description" : "List of metric values.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "average" : {
+                                  "type" : "number",
+                                  "description" : "Average value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "count" : {
+                                  "type" : "integer",
+                                  "description" : "Count of metric values.",
+                                  "format" : "int32",
+                                  "readOnly" : true
+                                },
+                                "maximum" : {
+                                  "type" : "number",
+                                  "description" : "Maximum value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "minimum" : {
+                                  "type" : "number",
+                                  "description" : "Minimum value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "properties" : {
+                                  "type" : "string",
+                                  "description" : "Metric value properties.",
+                                  "readOnly" : true
+                                },
+                                "timeStamp" : {
+                                  "type" : "string",
+                                  "description" : "Timestamp of metric value.",
+                                  "format" : "date-time",
+                                  "readOnly" : true
+                                },
+                                "total" : {
+                                  "type" : "number",
+                                  "description" : "Total value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                }
+                              },
+                              "description" : "Metric value."
+                            }
+                          },
+                          "name" : {
+                            "type" : "object",
+                            "properties" : {
+                              "localizedValue" : {
+                                "type" : "string",
+                                "description" : "Localized value of the string."
+                              },
+                              "value" : {
+                                "type" : "string",
+                                "description" : "Value of the string."
+                              }
+                            },
+                            "description" : "Localizable string."
+                          },
+                          "startTime" : {
+                            "type" : "string",
+                            "description" : "Metric start time.",
+                            "format" : "date-time",
+                            "readOnly" : true
+                          },
+                          "timeGrain" : {
+                            "type" : "string",
+                            "description" : "Metric time grain.",
+                            "readOnly" : true
+                          }
+                        },
+                        "description" : "Metric information."
+                      }
+                    }
+                  },
+                  "description" : "Pageable list of metrics."
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The specified farm was not found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/ondemandgc" : {
+      "post" : {
+        "tags" : [ "Farms" ],
+        "description" : "Start garbage collection on deleted storage objects.",
+        "operationId" : "Farms_StartGarbageCollection",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- Garbage collection has completed."
+          },
+          "202" : {
+            "description" : "ACCEPTED -- Garbage collection has started."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/operationresults/{operationId}" : {
+      "get" : {
+        "tags" : [ "GC" ],
+        "description" : "Returns the state of the garbage collection job.",
+        "operationId" : "Farms_GetGarbageCollectionState",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "Operation Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The state of garbage collection has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The specified farm or garbage collection job can not be found."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Farm" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/FarmProperties"
+          }
+        },
+        "description" : "Storage farm.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource ID."
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Resource location."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource Name."
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Resource tags."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type."
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "FarmCreationProperties" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/SettingAccessString"
+          }
+        },
+        "description" : "Storage farm properties.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource ID."
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Resource location."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource Name."
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Resource tags."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type."
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "FarmList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of storage farms.",
+            "items" : {
+              "$ref" : "#/components/schemas/Farm"
+            }
+          }
+        },
+        "description" : "Pageable list of storage farms."
+      },
+      "FarmProperties" : {
+        "type" : "object",
+        "properties" : {
+          "farmId" : {
+            "type" : "string",
+            "description" : "Farm identifier."
+          },
+          "settings" : {
+            "$ref" : "#/components/schemas/FarmSettings"
+          },
+          "settingsStore" : {
+            "type" : "string",
+            "description" : "The settings of storage farm."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "Resource version."
+          }
+        },
+        "description" : "The properties of storage farm."
+      },
+      "FarmSettings" : {
+        "type" : "object",
+        "properties" : {
+          "bandwidthThrottleIsEnabled" : {
+            "type" : "boolean",
+            "description" : "Switch of bandwidth throttle enablement."
+          },
+          "corsAllowedOriginsList" : {
+            "type" : "string",
+            "description" : "The list of allowed origins."
+          },
+          "dataCenterUriHostSuffixes" : {
+            "type" : "string",
+            "description" : "The suffixes of URI of hosts in data center."
+          },
+          "defaultEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "defaultIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "defaultIntranetEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default Intranet egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "defaultIntranetIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default Intranet ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "defaultRequestThresholdInTps" : {
+            "type" : "number",
+            "description" : "Default request threshold (in TPS).",
+            "format" : "float"
+          },
+          "defaultThrottleProbabilityDecayIntervalInSeconds" : {
+            "type" : "integer",
+            "description" : "Interval (in seconds) of default throttle probability decay.",
+            "format" : "int32"
+          },
+          "defaultTotalEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default total egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "defaultTotalIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Default total ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "feedbackRefreshIntervalInSeconds" : {
+            "type" : "integer",
+            "description" : "Interval (in seconds) of feedback refresh.",
+            "format" : "int32"
+          },
+          "gracePeriodForFullThrottlingInRefreshIntervals" : {
+            "type" : "integer",
+            "description" : "Grace period for full throttling in refresh intervals.",
+            "format" : "int32"
+          },
+          "gracePeriodMaxThrottleProbability" : {
+            "type" : "number",
+            "description" : "Maximum probability of throttle in grace period.",
+            "format" : "float"
+          },
+          "hostStyleHttpPort" : {
+            "type" : "integer",
+            "description" : "Host style HTTP port.",
+            "format" : "int32"
+          },
+          "hostStyleHttpsPort" : {
+            "type" : "integer",
+            "description" : "Host style HTTPs port.",
+            "format" : "int32"
+          },
+          "minimumEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "minimumIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "minimumIntranetEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum Intranet egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "minimumIntranetIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum Intranet ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "minimumRequestThresholdInTps" : {
+            "type" : "number",
+            "description" : "Minimum request threshold (in TPS).",
+            "format" : "float"
+          },
+          "minimumTotalEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum total egress threshold (in Gbp",
+            "format" : "float"
+          },
+          "minimumTotalIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Minimum total ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "numberOfAccountsToSync" : {
+            "type" : "integer",
+            "description" : "Number of accounts to sync.",
+            "format" : "int32"
+          },
+          "overallEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "overallIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall ingress threshold (in Gbps)",
+            "format" : "float"
+          },
+          "overallIntranetEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall Intranet egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "overallIntranetIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall Intranet ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "overallRequestThresholdInTps" : {
+            "type" : "number",
+            "description" : "Overall request threshold (in TPS).",
+            "format" : "float"
+          },
+          "overallTotalEgressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall total egress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "overallTotalIngressThresholdInGbps" : {
+            "type" : "number",
+            "description" : "Overall total ingress threshold (in Gbps).",
+            "format" : "float"
+          },
+          "retentionPeriodForDeletedStorageAccountsInDays" : {
+            "type" : "integer",
+            "description" : "The retention period (in days) for deleted storage account.",
+            "format" : "int32"
+          },
+          "settingsPollingIntervalInSecond" : {
+            "type" : "integer",
+            "description" : "The polling interval (in second).",
+            "format" : "int32"
+          },
+          "toleranceFactorForEgress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for egress.",
+            "format" : "float"
+          },
+          "toleranceFactorForIngress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for ingress.",
+            "format" : "float"
+          },
+          "toleranceFactorForIntranetEgress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for Intranet egress.",
+            "format" : "float"
+          },
+          "toleranceFactorForIntranetIngress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for Intranet ingress.",
+            "format" : "float"
+          },
+          "toleranceFactorForTotalEgress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for total egress.",
+            "format" : "float"
+          },
+          "toleranceFactorForTotalIngress" : {
+            "type" : "number",
+            "description" : "Tolerance factor for total ingress.",
+            "format" : "float"
+          },
+          "toleranceFactorForTps" : {
+            "type" : "number",
+            "description" : "Tolerance factor for TPS.",
+            "format" : "float"
+          },
+          "usageCollectionIntervalInSeconds" : {
+            "type" : "integer",
+            "description" : "Interval (in seconds) of storage usage collection.",
+            "format" : "int32"
+          }
+        },
+        "description" : "Storage farm settings."
+      },
+      "SettingAccessString" : {
+        "type" : "object",
+        "properties" : {
+          "settingAccessString" : {
+            "type" : "string",
+            "description" : "Setting access string."
+          }
+        },
+        "description" : "Setting access string."
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

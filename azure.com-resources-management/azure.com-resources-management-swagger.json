@@ -1,1 +1,588 @@
-{"openapi":"3.0.1","info":{"title":"Management Groups","description":"The Azure Management Groups API enables consolidation of multiple \nsubscriptions/resources into an organizational hierarchy and centrally \nmanage access control, policies, alerting and reporting for those resources.\n","version":"2017-08-31-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"tags":[{"name":"ManagementGroups","description":"A Management Group is a customer defined scope (grouping mechanism) that \nprovides access control (authorization), policy management and reporting. \nManagement Groups are organized in a strictly tree-based hierarchy.\n"}],"paths":{"/providers/Microsoft.Management/managementGroups":{"get":{"tags":["ManagementGroups"],"description":"List management groups for the authenticated user.\n","operationId":"ManagementGroups_List","parameters":[{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. The current version is 2017-08-31-preview.","required":true,"schema":{"type":"string"}},{"name":"$skiptoken","in":"query","description":"Page continuation token is only used if a previous operation returned a partial result. \nIf a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.\n","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagementGroupListResult"}}}},"default":{"description":"Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/providers/Microsoft.Management/managementGroups/{groupId}":{"get":{"tags":["ManagementGroups"],"description":"Get the details of the management group.\n","operationId":"ManagementGroups_Get","parameters":[{"name":"groupId","in":"path","description":"Management Group ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. The current version is 2017-08-31-preview.","required":true,"schema":{"type":"string"}},{"name":"$expand","in":"query","description":"The $expand=children query string parameter allows clients to request inclusion of children in the response payload.","schema":{"type":"string","enum":["children"]}},{"name":"$recurse","in":"query","description":"The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagementGroupWithHierarchy"}}}},"default":{"description":"Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/providers/Microsoft.Management/operations":{"get":{"tags":["Operations"],"description":"Lists all of the available management REST API operations.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. The current version is 2017-08-31-preview.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"ErrorDetails":{"type":"object","properties":{"code":{"type":"string","description":"One of a server-defined set of error codes."},"message":{"type":"string","description":"A human-readable representation of the error."},"target":{"type":"string","description":"(Optional) The target of the error."}},"description":"The details of the error."},"ErrorResponse":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/ErrorDetails"}},"description":"The error object."},"ManagementGroup":{"type":"object","properties":{"id":{"type":"string","description":"The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000","readOnly":true},"name":{"type":"string","description":"The name of the management group. E.g. 20000000-0000-0000-0000-000000000000","format":"uuid","readOnly":true},"properties":{"$ref":"#/components/schemas/ManagementGroupProperties"},"type":{"type":"string","description":"The type of the resource. E.g. /providers/Microsoft.Management/managementGroups","readOnly":true}},"description":"The management group details."},"ManagementGroupChildInfo":{"type":"object","properties":{"childId":{"type":"string","description":"The ID of the child resource (management group or subscription). E.g. /providers/Microsoft.Management/managementGroups/40000000-0000-0000-0000-000000000000"},"childType":{"$ref":"#/components/schemas/ManagementGroupType"},"displayName":{"type":"string","description":"The friendly name of the child resource."},"tenantId":{"type":"string","description":"(Optional) The AAD Tenant ID associated with the child resource.","format":"uuid"}},"description":"The unique identifier (ID) of a management group."},"ManagementGroupDetailsProperties":{"type":"object","properties":{"managementGroupType":{"$ref":"#/components/schemas/ManagementGroupType"},"parent":{"$ref":"#/components/schemas/ParentGroupInfo"},"updatedBy":{"type":"string","description":"The identity of the principal or process that updated the object."},"updatedTime":{"type":"string","description":"The date and time when this object was last updated.","format":"date-time"},"version":{"type":"number","description":"The version number of the object.","format":"int32"}},"description":"The details properties of a management group."},"ManagementGroupInfo":{"type":"object","properties":{"id":{"type":"string","description":"The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000","readOnly":true},"name":{"type":"string","description":"The name of the management group. E.g. 20000000-0000-0000-0000-000000000000","format":"uuid","readOnly":true},"properties":{"$ref":"#/components/schemas/ManagementGroupInfoProperties"},"type":{"type":"string","description":"The type of the resource. E.g. /providers/Microsoft.Management/managementGroups","readOnly":true}},"description":"The management group."},"ManagementGroupInfoProperties":{"type":"object","properties":{"displayName":{"type":"string","description":"The friendly name of the management group."},"tenantId":{"type":"string","description":"The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000","format":"uuid"}},"description":"The generic properties of a management group."},"ManagementGroupListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of management groups.","items":{"$ref":"#/components/schemas/ManagementGroupInfo"}}},"description":"The result of listing management groups."},"ManagementGroupProperties":{"type":"object","properties":{"details":{"$ref":"#/components/schemas/ManagementGroupDetailsProperties"},"displayName":{"type":"string","description":"The friendly name of the management group."},"tenantId":{"type":"string","description":"The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000","format":"uuid"}},"description":"The generic properties of a management group."},"ManagementGroupPropertiesWithChildren":{"type":"object","properties":{"children":{"type":"array","description":"The list of children.","items":{"$ref":"#/components/schemas/ManagementGroupChildInfo"}},"details":{"$ref":"#/components/schemas/ManagementGroupDetailsProperties"},"displayName":{"type":"string","description":"The friendly name of the management group."},"tenantId":{"type":"string","description":"The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000","format":"uuid"}},"description":"The generic properties of a management group."},"ManagementGroupPropertiesWithHierarchy":{"type":"object","properties":{"children":{"type":"array","description":"The list of children.","items":{"$ref":"#/components/schemas/ManagementGroupRecursiveChildInfo"}},"details":{"$ref":"#/components/schemas/ManagementGroupDetailsProperties"},"displayName":{"type":"string","description":"The friendly name of the management group."},"tenantId":{"type":"string","description":"The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000","format":"uuid"}},"description":"The generic properties of a management group."},"ManagementGroupRecursiveChildInfo":{"type":"object","properties":{"childId":{"type":"string","description":"The ID of the child resource (management group or subscription). E.g. /providers/Microsoft.Management/managementGroups/40000000-0000-0000-0000-000000000000"},"childType":{"$ref":"#/components/schemas/ManagementGroupType"},"children":{"type":"array","description":"The list of children.","items":{"$ref":"#/components/schemas/ManagementGroupRecursiveChildInfo"}},"displayName":{"type":"string","description":"The friendly name of the child resource."},"tenantId":{"type":"string","description":"(Optional) The AAD Tenant ID associated with the child resource.","format":"uuid"}},"description":"The unique identifier (ID) of a management group."},"ManagementGroupType":{"type":"string","description":"(Optional) The type of the management group.","enum":["Enrollment","Department","Account","Subscription"]},"ManagementGroupWithChildren":{"type":"object","properties":{"id":{"type":"string","description":"The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000","readOnly":true},"name":{"type":"string","description":"The name of the management group. E.g. 20000000-0000-0000-0000-000000000000","format":"uuid","readOnly":true},"properties":{"$ref":"#/components/schemas/ManagementGroupPropertiesWithChildren"},"type":{"type":"string","description":"The type of the resource. E.g. /providers/Microsoft.Management/managementGroups","readOnly":true}},"description":"The management group details."},"ManagementGroupWithHierarchy":{"type":"object","properties":{"id":{"type":"string","description":"The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000","readOnly":true},"name":{"type":"string","description":"The name of the management group. E.g. 20000000-0000-0000-0000-000000000000","format":"uuid","readOnly":true},"properties":{"$ref":"#/components/schemas/ManagementGroupPropertiesWithHierarchy"},"type":{"type":"string","description":"The type of the resource. E.g. /providers/Microsoft.Management/managementGroups","readOnly":true}},"description":"The management group details."},"Operation":{"type":"object","properties":{"display":{"type":"object","properties":{"operation":{"type":"string","description":"Operation type: Read, write, delete, etc.","readOnly":true},"provider":{"type":"string","description":"Service provider: Microsoft.Management.","readOnly":true},"resource":{"type":"string","description":"Resource on which the operation is performed: Invoice, etc.","readOnly":true}},"description":"The object that represents the operation."},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}.","readOnly":true}},"description":"A Management REST API operation."},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any.","readOnly":true},"value":{"type":"array","description":"List of management operations supported by the Microsoft.Management resource provider.","readOnly":true,"items":{"$ref":"#/components/schemas/Operation"}}},"description":"Result listing  operations. It contains a list of operations and a URL link to get the next set of results."},"ParentGroupInfo":{"type":"object","properties":{"displayName":{"type":"string","description":"The friendly name of the management group."},"parentId":{"type":"string","description":"The ID of the parent management group. E.g. /providers/Microsoft.Management/managementGroups/30000000-0000-0000-0000-000000000000"}},"description":"(Optional) The ID of the parent management group."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. The current version is 2017-08-31-preview.","required":true,"schema":{"type":"string"}},"ExpandParameter":{"name":"$expand","in":"query","description":"The $expand=children query string parameter allows clients to request inclusion of children in the response payload.","schema":{"type":"string","enum":["children"]}},"GroupIdParameter":{"name":"groupId","in":"path","description":"Management Group ID.","required":true,"schema":{"type":"string","format":"uuid"}},"RecurseParameter":{"name":"$recurse","in":"query","description":"The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload.","schema":{"type":"boolean"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Management Groups",
+    "description" : "The Azure Management Groups API enables consolidation of multiple \nsubscriptions/resources into an organizational hierarchy and centrally \nmanage access control, policies, alerting and reporting for those resources.\n",
+    "version" : "2017-08-31-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "tags" : [ {
+    "name" : "ManagementGroups",
+    "description" : "A Management Group is a customer defined scope (grouping mechanism) that \nprovides access control (authorization), policy management and reporting. \nManagement Groups are organized in a strictly tree-based hierarchy.\n"
+  } ],
+  "paths" : {
+    "/providers/Microsoft.Management/managementGroups" : {
+      "get" : {
+        "tags" : [ "ManagementGroups" ],
+        "description" : "List management groups for the authenticated user.\n",
+        "operationId" : "ManagementGroups_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. The current version is 2017-08-31-preview.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$skiptoken",
+          "in" : "query",
+          "description" : "Page continuation token is only used if a previous operation returned a partial result. \nIf a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.\n",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagementGroupListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Management/managementGroups/{groupId}" : {
+      "get" : {
+        "tags" : [ "ManagementGroups" ],
+        "description" : "Get the details of the management group.\n",
+        "operationId" : "ManagementGroups_Get",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "path",
+          "description" : "Management Group ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. The current version is 2017-08-31-preview.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$expand",
+          "in" : "query",
+          "description" : "The $expand=children query string parameter allows clients to request inclusion of children in the response payload.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "children" ]
+          }
+        }, {
+          "name" : "$recurse",
+          "in" : "query",
+          "description" : "The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagementGroupWithHierarchy"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Management/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "description" : "Lists all of the available management REST API operations.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. The current version is 2017-08-31-preview.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorDetails" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "One of a server-defined set of error codes."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A human-readable representation of the error."
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "(Optional) The target of the error."
+          }
+        },
+        "description" : "The details of the error."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/ErrorDetails"
+          }
+        },
+        "description" : "The error object."
+      },
+      "ManagementGroup" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the management group. E.g. 20000000-0000-0000-0000-000000000000",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ManagementGroupProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. E.g. /providers/Microsoft.Management/managementGroups",
+            "readOnly" : true
+          }
+        },
+        "description" : "The management group details."
+      },
+      "ManagementGroupChildInfo" : {
+        "type" : "object",
+        "properties" : {
+          "childId" : {
+            "type" : "string",
+            "description" : "The ID of the child resource (management group or subscription). E.g. /providers/Microsoft.Management/managementGroups/40000000-0000-0000-0000-000000000000"
+          },
+          "childType" : {
+            "$ref" : "#/components/schemas/ManagementGroupType"
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the child resource."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "(Optional) The AAD Tenant ID associated with the child resource.",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The unique identifier (ID) of a management group."
+      },
+      "ManagementGroupDetailsProperties" : {
+        "type" : "object",
+        "properties" : {
+          "managementGroupType" : {
+            "$ref" : "#/components/schemas/ManagementGroupType"
+          },
+          "parent" : {
+            "$ref" : "#/components/schemas/ParentGroupInfo"
+          },
+          "updatedBy" : {
+            "type" : "string",
+            "description" : "The identity of the principal or process that updated the object."
+          },
+          "updatedTime" : {
+            "type" : "string",
+            "description" : "The date and time when this object was last updated.",
+            "format" : "date-time"
+          },
+          "version" : {
+            "type" : "number",
+            "description" : "The version number of the object.",
+            "format" : "int32"
+          }
+        },
+        "description" : "The details properties of a management group."
+      },
+      "ManagementGroupInfo" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the management group. E.g. 20000000-0000-0000-0000-000000000000",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ManagementGroupInfoProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. E.g. /providers/Microsoft.Management/managementGroups",
+            "readOnly" : true
+          }
+        },
+        "description" : "The management group."
+      },
+      "ManagementGroupInfoProperties" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the management group."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The generic properties of a management group."
+      },
+      "ManagementGroupListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of management groups.",
+            "items" : {
+              "$ref" : "#/components/schemas/ManagementGroupInfo"
+            }
+          }
+        },
+        "description" : "The result of listing management groups."
+      },
+      "ManagementGroupProperties" : {
+        "type" : "object",
+        "properties" : {
+          "details" : {
+            "$ref" : "#/components/schemas/ManagementGroupDetailsProperties"
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the management group."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The generic properties of a management group."
+      },
+      "ManagementGroupPropertiesWithChildren" : {
+        "type" : "object",
+        "properties" : {
+          "children" : {
+            "type" : "array",
+            "description" : "The list of children.",
+            "items" : {
+              "$ref" : "#/components/schemas/ManagementGroupChildInfo"
+            }
+          },
+          "details" : {
+            "$ref" : "#/components/schemas/ManagementGroupDetailsProperties"
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the management group."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The generic properties of a management group."
+      },
+      "ManagementGroupPropertiesWithHierarchy" : {
+        "type" : "object",
+        "properties" : {
+          "children" : {
+            "type" : "array",
+            "description" : "The list of children.",
+            "items" : {
+              "$ref" : "#/components/schemas/ManagementGroupRecursiveChildInfo"
+            }
+          },
+          "details" : {
+            "$ref" : "#/components/schemas/ManagementGroupDetailsProperties"
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the management group."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "The AAD Tenant ID associated with the management group. E.g. 10000000-0000-0000-0000-000000000000",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The generic properties of a management group."
+      },
+      "ManagementGroupRecursiveChildInfo" : {
+        "type" : "object",
+        "properties" : {
+          "childId" : {
+            "type" : "string",
+            "description" : "The ID of the child resource (management group or subscription). E.g. /providers/Microsoft.Management/managementGroups/40000000-0000-0000-0000-000000000000"
+          },
+          "childType" : {
+            "$ref" : "#/components/schemas/ManagementGroupType"
+          },
+          "children" : {
+            "type" : "array",
+            "description" : "The list of children.",
+            "items" : {
+              "$ref" : "#/components/schemas/ManagementGroupRecursiveChildInfo"
+            }
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the child resource."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "(Optional) The AAD Tenant ID associated with the child resource.",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The unique identifier (ID) of a management group."
+      },
+      "ManagementGroupType" : {
+        "type" : "string",
+        "description" : "(Optional) The type of the management group.",
+        "enum" : [ "Enrollment", "Department", "Account", "Subscription" ]
+      },
+      "ManagementGroupWithChildren" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the management group. E.g. 20000000-0000-0000-0000-000000000000",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ManagementGroupPropertiesWithChildren"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. E.g. /providers/Microsoft.Management/managementGroups",
+            "readOnly" : true
+          }
+        },
+        "description" : "The management group details."
+      },
+      "ManagementGroupWithHierarchy" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The ID of the management group. E.g. /providers/Microsoft.Management/managementGroups/20000000-0000-0000-0000-000000000000",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the management group. E.g. 20000000-0000-0000-0000-000000000000",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ManagementGroupPropertiesWithHierarchy"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. E.g. /providers/Microsoft.Management/managementGroups",
+            "readOnly" : true
+          }
+        },
+        "description" : "The management group details."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation type: Read, write, delete, etc.",
+                "readOnly" : true
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Service provider: Microsoft.Management.",
+                "readOnly" : true
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed: Invoice, etc.",
+                "readOnly" : true
+              }
+            },
+            "description" : "The object that represents the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}.",
+            "readOnly" : true
+          }
+        },
+        "description" : "A Management REST API operation."
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of management operations supported by the Microsoft.Management resource provider.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Result listing  operations. It contains a list of operations and a URL link to get the next set of results."
+      },
+      "ParentGroupInfo" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "The friendly name of the management group."
+          },
+          "parentId" : {
+            "type" : "string",
+            "description" : "The ID of the parent management group. E.g. /providers/Microsoft.Management/managementGroups/30000000-0000-0000-0000-000000000000"
+          }
+        },
+        "description" : "(Optional) The ID of the parent management group."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Version of the API to be used with the client request. The current version is 2017-08-31-preview.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ExpandParameter" : {
+        "name" : "$expand",
+        "in" : "query",
+        "description" : "The $expand=children query string parameter allows clients to request inclusion of children in the response payload.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "children" ]
+        }
+      },
+      "GroupIdParameter" : {
+        "name" : "groupId",
+        "in" : "path",
+        "description" : "Management Group ID.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "RecurseParameter" : {
+        "name" : "$recurse",
+        "in" : "query",
+        "description" : "The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

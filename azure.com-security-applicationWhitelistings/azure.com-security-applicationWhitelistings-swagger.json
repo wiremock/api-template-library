@@ -1,1 +1,624 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2015-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings":{"get":{"tags":["applicationWhitelistings"],"description":"Gets a list of application control VM/server groups for the subscription.","operationId":"AdaptiveApplicationControls_List","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"includePathRecommendations","in":"query","description":"Include the policy rules","schema":{"type":"boolean","enum":[false,true]}},{"name":"summary","in":"query","description":"Return output in a summarized form","schema":{"type":"boolean","enum":[false,true]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AppWhitelistingGroups"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}":{"get":{"tags":["applicationWhitelistings"],"description":"Gets an application control VM/server group.","operationId":"AdaptiveApplicationControls_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"groupName","in":"path","description":"Name of an application control VM/server group","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AppWhitelistingGroup"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}},"put":{"tags":["applicationWhitelistings"],"description":"Update an application control VM/server group","operationId":"AdaptiveApplicationControls_Put","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"groupName","in":"path","description":"Name of an application control VM/server group","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The updated VM/server group data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AppWhitelistingPutGroupData"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AppWhitelistingGroup"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"AppWhitelistingGroup":{"properties":{"properties":{"$ref":"#/components/schemas/AppWhitelistingGroupData"}},"allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."},{"type":"object","properties":{"location":{"type":"string","description":"Location where the resource is stored","readOnly":true}},"description":"Describes an Azure resource with location"}]},"AppWhitelistingGroupData":{"type":"object","properties":{"configurationStatus":{"$ref":"#/components/schemas/ConfigurationStatus"},"enforcementMode":{"$ref":"#/components/schemas/EnforcementMode"},"issues":{"$ref":"#/components/schemas/AppWhitelistingIssuesSummaries"},"pathRecommendations":{"$ref":"#/components/schemas/PathRecommendations"},"protectionMode":{"$ref":"#/components/schemas/ProtectionMode"},"recommendationStatus":{"$ref":"#/components/schemas/RecommendationStatus"},"sourceSystem":{"$ref":"#/components/schemas/SourceSystem"},"vmRecommendations":{"$ref":"#/components/schemas/VmRecommendations"}},"description":"Represents a VM/server group and set of rules that are Recommended by Azure Security Center to be allowed"},"AppWhitelistingGroups":{"type":"object","properties":{"value":{"type":"array","items":{"$ref":"#/components/schemas/AppWhitelistingGroup"}}},"description":"Represents a list of VM/server groups and set of rules that are Recommended by Azure Security Center to be allowed"},"AppWhitelistingIssue":{"type":"string","description":"An alert that VMs/servers within a group can have","enum":["ViolationsAudited","ViolationsBlocked","MsiAndScriptViolationsAudited","MsiAndScriptViolationsBlocked","ExecutableViolationsAudited","RulesViolatedManually"]},"AppWhitelistingIssueSummary":{"type":"object","properties":{"issue":{"$ref":"#/components/schemas/AppWhitelistingIssue"},"numberOfVms":{"type":"number","description":"The number of machines in the VM/server group that have this alert"}},"description":"Represents a summary of the alerts of the VM/server group"},"AppWhitelistingIssuesSummaries":{"type":"array","items":{"$ref":"#/components/schemas/AppWhitelistingIssueSummary"}},"AppWhitelistingPutGroupData":{"type":"object","properties":{"enforcementMode":{"$ref":"#/components/schemas/EnforcementMode"},"pathRecommendations":{"$ref":"#/components/schemas/PathRecommendations"},"protectionMode":{"$ref":"#/components/schemas/ProtectionMode"},"vmRecommendations":{"$ref":"#/components/schemas/VmRecommendations"}},"description":"The altered data of the recommended VM/server group policy"},"AppWhitelistingResourceType":{"type":"string","description":"The resource type of the application control resources","example":"Microsoft.Security/applicationWhitelistings"},"ConfigurationStatus":{"type":"string","description":"The configuration status of the VM/server group or machine or rule on the machine","enum":["Configured","NotConfigured","InProgress","Failed","NoStatus"]},"EnforcementMode":{"type":"string","description":"The application control policy enforcement/protection mode of the VM/server group","enum":["Audit","Enforce","None"]},"FileType":{"type":"string","description":"The type of the file (for Linux files - Executable is used)","enum":["Exe","Dll","Msi","Script","Executable","Unknown"]},"GroupResourceId":{"type":"string","description":"The azure resource id of the application control VM/server group","example":"/subscriptions/12345678-1234-1234-1234-123456789123/providers/Microsoft.Security/applicationWhitelistings/GROUP1"},"PathRecommendation":{"type":"object","properties":{"action":{"$ref":"#/components/schemas/RecommendationAction"},"common":{"type":"boolean","description":"Whether the path is commonly run on the machine"},"configurationStatus":{"$ref":"#/components/schemas/ConfigurationStatus"},"fileType":{"$ref":"#/components/schemas/FileType"},"path":{"type":"string","description":"The full path to whitelist","example":"C:\\Windows\\System32\\calc.exe"},"publisherInfo":{"$ref":"#/components/schemas/PublisherInfo"},"type":{"$ref":"#/components/schemas/RecommendationType"},"userSids":{"type":"array","items":{"type":"string","description":"A security identifier","example":"S-1-5-18"}},"usernames":{"type":"array","items":{"$ref":"#/components/schemas/UserRecommendation"}}},"description":"Represents a path that is recommended to be allowed and its properties"},"PathRecommendations":{"type":"array","items":{"$ref":"#/components/schemas/PathRecommendation"}},"ProtectionMode":{"type":"object","properties":{"exe":{"$ref":"#/components/schemas/EnforcementMode"},"executable":{"$ref":"#/components/schemas/EnforcementMode"},"msi":{"$ref":"#/components/schemas/EnforcementMode"},"script":{"$ref":"#/components/schemas/EnforcementMode"}},"description":"The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux."},"PublisherInfo":{"type":"object","properties":{"binaryName":{"type":"string","description":"The \"OriginalName\" field taken from the file's version resource","example":"CHROME.EXE"},"productName":{"type":"string","description":"The product name taken from the file's version resource","example":"GOOGLE CHROME"},"publisherName":{"type":"string","description":"The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country","example":"O=GOOGLE INC, L=MOUNTAIN VIEW, S=CALIFORNIA, C=US"},"version":{"type":"string","description":"The binary file version taken from the file's version resource","example":"66.0.3359.139"}},"description":"Represents the publisher information of a process/rule"},"RecommendationAction":{"type":"string","description":"The recommendation action of the VM/server or rule","enum":["Recommended","Add","Remove"]},"RecommendationStatus":{"type":"string","description":"The recommendation status of the VM/server group or VM/server","enum":["Recommended","NotRecommended","NotAvailable","NoStatus"]},"RecommendationType":{"type":"string","description":"The type of the rule to be allowed","enum":["File","FileHash","PublisherSignature","ProductSignature","BinarySignature","VersionAndAboveSignature"]},"SourceSystem":{"type":"string","description":"The source type of the VM/server group","enum":["Azure_AppLocker","Azure_AuditD","NonAzure_AppLocker","NonAzure_AuditD","None"]},"UserRecommendation":{"type":"object","properties":{"recommendationAction":{"$ref":"#/components/schemas/RecommendationAction"},"username":{"type":"string","description":"Represents a user that is recommended to be allowed for a certain rule","example":"LOCAL SYSTEM"}},"description":"Represents a user that is recommended to be allowed for a certain rule"},"VmRecommendation":{"type":"object","properties":{"configurationStatus":{"$ref":"#/components/schemas/ConfigurationStatus"},"recommendationAction":{"$ref":"#/components/schemas/RecommendationAction"},"resourceId":{"$ref":"#/components/schemas/VmResourceId"}},"description":"Represents a machine that is part of a VM/server group"},"VmRecommendations":{"type":"array","items":{"$ref":"#/components/schemas/VmRecommendation"}},"VmResourceId":{"type":"string","description":"The full azure resource id of the machine","example":"/subscriptions/12345678-1234-1234-1234-123456789123/resourcegroups/group/providers/microsoft.compute/virtualmachines/vm"}},"parameters":{"GroupName":{"name":"groupName","in":"path","description":"Name of an application control VM/server group","required":true,"schema":{"type":"string"}},"IncludePathRecommendations":{"name":"includePathRecommendations","in":"query","description":"Include the policy rules","schema":{"type":"boolean","enum":[false,true]}},"Summary":{"name":"summary","in":"query","description":"Return output in a summarized form","schema":{"type":"boolean","enum":[false,true]}}},"requestBodies":{"AppWhitelistingGroupDataPutDataBody":{"description":"The updated VM/server group data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AppWhitelistingPutGroupData"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2015-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings" : {
+      "get" : {
+        "tags" : [ "applicationWhitelistings" ],
+        "description" : "Gets a list of application control VM/server groups for the subscription.",
+        "operationId" : "AdaptiveApplicationControls_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includePathRecommendations",
+          "in" : "query",
+          "description" : "Include the policy rules",
+          "schema" : {
+            "type" : "boolean",
+            "enum" : [ false, true ]
+          }
+        }, {
+          "name" : "summary",
+          "in" : "query",
+          "description" : "Return output in a summarized form",
+          "schema" : {
+            "type" : "boolean",
+            "enum" : [ false, true ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AppWhitelistingGroups"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}" : {
+      "get" : {
+        "tags" : [ "applicationWhitelistings" ],
+        "description" : "Gets an application control VM/server group.",
+        "operationId" : "AdaptiveApplicationControls_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "groupName",
+          "in" : "path",
+          "description" : "Name of an application control VM/server group",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AppWhitelistingGroup"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "applicationWhitelistings" ],
+        "description" : "Update an application control VM/server group",
+        "operationId" : "AdaptiveApplicationControls_Put",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "groupName",
+          "in" : "path",
+          "description" : "Name of an application control VM/server group",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The updated VM/server group data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AppWhitelistingPutGroupData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AppWhitelistingGroup"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AppWhitelistingGroup" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AppWhitelistingGroupData"
+          }
+        },
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        }, {
+          "type" : "object",
+          "properties" : {
+            "location" : {
+              "type" : "string",
+              "description" : "Location where the resource is stored",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource with location"
+        } ]
+      },
+      "AppWhitelistingGroupData" : {
+        "type" : "object",
+        "properties" : {
+          "configurationStatus" : {
+            "$ref" : "#/components/schemas/ConfigurationStatus"
+          },
+          "enforcementMode" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          },
+          "issues" : {
+            "$ref" : "#/components/schemas/AppWhitelistingIssuesSummaries"
+          },
+          "pathRecommendations" : {
+            "$ref" : "#/components/schemas/PathRecommendations"
+          },
+          "protectionMode" : {
+            "$ref" : "#/components/schemas/ProtectionMode"
+          },
+          "recommendationStatus" : {
+            "$ref" : "#/components/schemas/RecommendationStatus"
+          },
+          "sourceSystem" : {
+            "$ref" : "#/components/schemas/SourceSystem"
+          },
+          "vmRecommendations" : {
+            "$ref" : "#/components/schemas/VmRecommendations"
+          }
+        },
+        "description" : "Represents a VM/server group and set of rules that are Recommended by Azure Security Center to be allowed"
+      },
+      "AppWhitelistingGroups" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AppWhitelistingGroup"
+            }
+          }
+        },
+        "description" : "Represents a list of VM/server groups and set of rules that are Recommended by Azure Security Center to be allowed"
+      },
+      "AppWhitelistingIssue" : {
+        "type" : "string",
+        "description" : "An alert that VMs/servers within a group can have",
+        "enum" : [ "ViolationsAudited", "ViolationsBlocked", "MsiAndScriptViolationsAudited", "MsiAndScriptViolationsBlocked", "ExecutableViolationsAudited", "RulesViolatedManually" ]
+      },
+      "AppWhitelistingIssueSummary" : {
+        "type" : "object",
+        "properties" : {
+          "issue" : {
+            "$ref" : "#/components/schemas/AppWhitelistingIssue"
+          },
+          "numberOfVms" : {
+            "type" : "number",
+            "description" : "The number of machines in the VM/server group that have this alert"
+          }
+        },
+        "description" : "Represents a summary of the alerts of the VM/server group"
+      },
+      "AppWhitelistingIssuesSummaries" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/AppWhitelistingIssueSummary"
+        }
+      },
+      "AppWhitelistingPutGroupData" : {
+        "type" : "object",
+        "properties" : {
+          "enforcementMode" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          },
+          "pathRecommendations" : {
+            "$ref" : "#/components/schemas/PathRecommendations"
+          },
+          "protectionMode" : {
+            "$ref" : "#/components/schemas/ProtectionMode"
+          },
+          "vmRecommendations" : {
+            "$ref" : "#/components/schemas/VmRecommendations"
+          }
+        },
+        "description" : "The altered data of the recommended VM/server group policy"
+      },
+      "AppWhitelistingResourceType" : {
+        "type" : "string",
+        "description" : "The resource type of the application control resources",
+        "example" : "Microsoft.Security/applicationWhitelistings"
+      },
+      "ConfigurationStatus" : {
+        "type" : "string",
+        "description" : "The configuration status of the VM/server group or machine or rule on the machine",
+        "enum" : [ "Configured", "NotConfigured", "InProgress", "Failed", "NoStatus" ]
+      },
+      "EnforcementMode" : {
+        "type" : "string",
+        "description" : "The application control policy enforcement/protection mode of the VM/server group",
+        "enum" : [ "Audit", "Enforce", "None" ]
+      },
+      "FileType" : {
+        "type" : "string",
+        "description" : "The type of the file (for Linux files - Executable is used)",
+        "enum" : [ "Exe", "Dll", "Msi", "Script", "Executable", "Unknown" ]
+      },
+      "GroupResourceId" : {
+        "type" : "string",
+        "description" : "The azure resource id of the application control VM/server group",
+        "example" : "/subscriptions/12345678-1234-1234-1234-123456789123/providers/Microsoft.Security/applicationWhitelistings/GROUP1"
+      },
+      "PathRecommendation" : {
+        "type" : "object",
+        "properties" : {
+          "action" : {
+            "$ref" : "#/components/schemas/RecommendationAction"
+          },
+          "common" : {
+            "type" : "boolean",
+            "description" : "Whether the path is commonly run on the machine"
+          },
+          "configurationStatus" : {
+            "$ref" : "#/components/schemas/ConfigurationStatus"
+          },
+          "fileType" : {
+            "$ref" : "#/components/schemas/FileType"
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "The full path to whitelist",
+            "example" : "C:\\Windows\\System32\\calc.exe"
+          },
+          "publisherInfo" : {
+            "$ref" : "#/components/schemas/PublisherInfo"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/RecommendationType"
+          },
+          "userSids" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "A security identifier",
+              "example" : "S-1-5-18"
+            }
+          },
+          "usernames" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/UserRecommendation"
+            }
+          }
+        },
+        "description" : "Represents a path that is recommended to be allowed and its properties"
+      },
+      "PathRecommendations" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/PathRecommendation"
+        }
+      },
+      "ProtectionMode" : {
+        "type" : "object",
+        "properties" : {
+          "exe" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          },
+          "executable" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          },
+          "msi" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          },
+          "script" : {
+            "$ref" : "#/components/schemas/EnforcementMode"
+          }
+        },
+        "description" : "The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux."
+      },
+      "PublisherInfo" : {
+        "type" : "object",
+        "properties" : {
+          "binaryName" : {
+            "type" : "string",
+            "description" : "The \"OriginalName\" field taken from the file's version resource",
+            "example" : "CHROME.EXE"
+          },
+          "productName" : {
+            "type" : "string",
+            "description" : "The product name taken from the file's version resource",
+            "example" : "GOOGLE CHROME"
+          },
+          "publisherName" : {
+            "type" : "string",
+            "description" : "The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country",
+            "example" : "O=GOOGLE INC, L=MOUNTAIN VIEW, S=CALIFORNIA, C=US"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The binary file version taken from the file's version resource",
+            "example" : "66.0.3359.139"
+          }
+        },
+        "description" : "Represents the publisher information of a process/rule"
+      },
+      "RecommendationAction" : {
+        "type" : "string",
+        "description" : "The recommendation action of the VM/server or rule",
+        "enum" : [ "Recommended", "Add", "Remove" ]
+      },
+      "RecommendationStatus" : {
+        "type" : "string",
+        "description" : "The recommendation status of the VM/server group or VM/server",
+        "enum" : [ "Recommended", "NotRecommended", "NotAvailable", "NoStatus" ]
+      },
+      "RecommendationType" : {
+        "type" : "string",
+        "description" : "The type of the rule to be allowed",
+        "enum" : [ "File", "FileHash", "PublisherSignature", "ProductSignature", "BinarySignature", "VersionAndAboveSignature" ]
+      },
+      "SourceSystem" : {
+        "type" : "string",
+        "description" : "The source type of the VM/server group",
+        "enum" : [ "Azure_AppLocker", "Azure_AuditD", "NonAzure_AppLocker", "NonAzure_AuditD", "None" ]
+      },
+      "UserRecommendation" : {
+        "type" : "object",
+        "properties" : {
+          "recommendationAction" : {
+            "$ref" : "#/components/schemas/RecommendationAction"
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "Represents a user that is recommended to be allowed for a certain rule",
+            "example" : "LOCAL SYSTEM"
+          }
+        },
+        "description" : "Represents a user that is recommended to be allowed for a certain rule"
+      },
+      "VmRecommendation" : {
+        "type" : "object",
+        "properties" : {
+          "configurationStatus" : {
+            "$ref" : "#/components/schemas/ConfigurationStatus"
+          },
+          "recommendationAction" : {
+            "$ref" : "#/components/schemas/RecommendationAction"
+          },
+          "resourceId" : {
+            "$ref" : "#/components/schemas/VmResourceId"
+          }
+        },
+        "description" : "Represents a machine that is part of a VM/server group"
+      },
+      "VmRecommendations" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/VmRecommendation"
+        }
+      },
+      "VmResourceId" : {
+        "type" : "string",
+        "description" : "The full azure resource id of the machine",
+        "example" : "/subscriptions/12345678-1234-1234-1234-123456789123/resourcegroups/group/providers/microsoft.compute/virtualmachines/vm"
+      }
+    },
+    "parameters" : {
+      "GroupName" : {
+        "name" : "groupName",
+        "in" : "path",
+        "description" : "Name of an application control VM/server group",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "IncludePathRecommendations" : {
+        "name" : "includePathRecommendations",
+        "in" : "query",
+        "description" : "Include the policy rules",
+        "schema" : {
+          "type" : "boolean",
+          "enum" : [ false, true ]
+        }
+      },
+      "Summary" : {
+        "name" : "summary",
+        "in" : "query",
+        "description" : "Return output in a summarized form",
+        "schema" : {
+          "type" : "boolean",
+          "enum" : [ false, true ]
+        }
+      }
+    },
+    "requestBodies" : {
+      "AppWhitelistingGroupDataPutDataBody" : {
+        "description" : "The updated VM/server group data",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/AppWhitelistingPutGroupData"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

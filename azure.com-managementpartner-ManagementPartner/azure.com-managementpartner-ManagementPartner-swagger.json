@@ -1,1 +1,451 @@
-{"openapi":"3.0.1","info":{"title":"ACE Provisioning ManagementPartner","description":"This API describe ACE Provisioning ManagementPartner","version":"2018-02-01"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/providers/Microsoft.ManagementPartner/operations":{"get":{"tags":["Operation"],"summary":"Get operations.","description":"List all the operations.","operationId":"Operation_List","parameters":[{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"List all the operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationList"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/providers/Microsoft.ManagementPartner/partners":{"get":{"tags":["Partners"],"summary":"Get a specific `Partner`.","description":"Get the management partner using the objectId and tenantId.","operationId":"Partners_Get","parameters":[{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Get the details of the `Partner`.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PartnerResponse"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/providers/Microsoft.ManagementPartner/partners/{partnerId}":{"get":{"tags":["Partner"],"summary":"Get a specific `Partner`.","description":"Get the management partner using the partnerId, objectId and tenantId.","operationId":"Partner_Get","parameters":[{"name":"partnerId","in":"path","description":"Id of the Partner","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Get the details of the `Partner`.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PartnerResponse"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}},"put":{"tags":["Partner"],"summary":"Create a specific `Partner`.","description":"Create a management partner for the objectId and tenantId.","operationId":"Partner_Create","parameters":[{"name":"partnerId","in":"path","description":"Id of the Partner","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Get the details of the `Partner`.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PartnerResponse"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}},"delete":{"tags":["Partner"],"summary":"Delete a specific `Partner`.","description":"Delete the management partner for the objectId and tenantId.","operationId":"Partner_Delete","parameters":[{"name":"partnerId","in":"path","description":"Id of the Partner","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Deleted the `Partner`."},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}},"patch":{"tags":["Partner"],"summary":"Update a specific `Partner`.","description":"Update the management partner for the objectId and tenantId.","operationId":"Partner_Update","parameters":[{"name":"partnerId","in":"path","description":"Id of the Partner","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Get the details of the `Partner`.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PartnerResponse"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}}},"components":{"schemas":{"Error":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/ExtendedErrorInfo"}},"description":"this is the management partner operations error"},"ErrorResponseCode":{"type":"string","description":"this is the error response code that management partner operations may return","enum":["NotFound","Conflict","BadRequest"]},"ExtendedErrorInfo":{"type":"object","properties":{"code":{"$ref":"#/components/schemas/ErrorResponseCode"},"message":{"type":"string","description":"this is the extended error info message"}},"description":"this is the extended error info"},"ManagementPartnerState":{"type":"string","description":"this is the management partner state: Active or Deleted","enum":["Active","Deleted"]},"OperationDisplay":{"type":"object","properties":{"description":{"type":"string","description":"the is management partner operation description"},"operation":{"type":"string","description":"the is management partner operation"},"provider":{"type":"string","description":"the is management partner provider"},"resource":{"type":"string","description":"the is management partner resource"}},"description":"this is the management partner operation"},"OperationList":{"type":"object","properties":{"nextLink":{"type":"string","description":"Url to get the next page of items."},"value":{"type":"array","description":"this is the operation response list","items":{"$ref":"#/components/schemas/OperationResponse"}}},"description":"this is the management partner operations list"},"OperationResponse":{"type":"object","properties":{"display":{"$ref":"#/components/schemas/OperationDisplay"},"name":{"type":"string","description":"this is the operation response name"},"origin":{"type":"string","description":"the is operation response origin information"}},"description":"this is the management partner operations response"},"PartnerProperties":{"type":"object","properties":{"createdTime":{"type":"string","description":"This is the DateTime when the partner was created.","format":"date-time"},"objectId":{"type":"string","description":"This is the object id."},"partnerId":{"type":"string","description":"This is the partner id"},"partnerName":{"type":"string","description":"This is the partner name"},"state":{"$ref":"#/components/schemas/ManagementPartnerState"},"tenantId":{"type":"string","description":"This is the tenant id."},"updatedTime":{"type":"string","description":"This is the DateTime when the partner was updated.","format":"date-time"},"version":{"type":"string","description":"This is the version."}},"description":"this is the management partner properties"},"PartnerResponse":{"type":"object","properties":{"etag":{"type":"integer","description":"Type of the partner"},"id":{"type":"string","description":"Identifier of the partner","readOnly":true},"name":{"type":"string","description":"Name of the partner","readOnly":true},"properties":{"$ref":"#/components/schemas/PartnerProperties"},"type":{"type":"string","description":"Type of resource. \"Microsoft.ManagementPartner/partners\"","readOnly":true}},"description":"this is the management partner operations response"}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Supported version.","required":true,"schema":{"type":"string"}},"PartnerIdParameter":{"name":"partnerId","in":"path","description":"Id of the Partner","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ACE Provisioning ManagementPartner",
+    "description" : "This API describe ACE Provisioning ManagementPartner",
+    "version" : "2018-02-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/providers/Microsoft.ManagementPartner/operations" : {
+      "get" : {
+        "tags" : [ "Operation" ],
+        "summary" : "Get operations.",
+        "description" : "List all the operations.",
+        "operationId" : "Operation_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List all the operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.ManagementPartner/partners" : {
+      "get" : {
+        "tags" : [ "Partners" ],
+        "summary" : "Get a specific `Partner`.",
+        "description" : "Get the management partner using the objectId and tenantId.",
+        "operationId" : "Partners_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the details of the `Partner`.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.ManagementPartner/partners/{partnerId}" : {
+      "get" : {
+        "tags" : [ "Partner" ],
+        "summary" : "Get a specific `Partner`.",
+        "description" : "Get the management partner using the partnerId, objectId and tenantId.",
+        "operationId" : "Partner_Get",
+        "parameters" : [ {
+          "name" : "partnerId",
+          "in" : "path",
+          "description" : "Id of the Partner",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the details of the `Partner`.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Partner" ],
+        "summary" : "Create a specific `Partner`.",
+        "description" : "Create a management partner for the objectId and tenantId.",
+        "operationId" : "Partner_Create",
+        "parameters" : [ {
+          "name" : "partnerId",
+          "in" : "path",
+          "description" : "Id of the Partner",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the details of the `Partner`.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Partner" ],
+        "summary" : "Delete a specific `Partner`.",
+        "description" : "Delete the management partner for the objectId and tenantId.",
+        "operationId" : "Partner_Delete",
+        "parameters" : [ {
+          "name" : "partnerId",
+          "in" : "path",
+          "description" : "Id of the Partner",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Deleted the `Partner`."
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Partner" ],
+        "summary" : "Update a specific `Partner`.",
+        "description" : "Update the management partner for the objectId and tenantId.",
+        "operationId" : "Partner_Update",
+        "parameters" : [ {
+          "name" : "partnerId",
+          "in" : "path",
+          "description" : "Id of the Partner",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Supported version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the details of the `Partner`.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/ExtendedErrorInfo"
+          }
+        },
+        "description" : "this is the management partner operations error"
+      },
+      "ErrorResponseCode" : {
+        "type" : "string",
+        "description" : "this is the error response code that management partner operations may return",
+        "enum" : [ "NotFound", "Conflict", "BadRequest" ]
+      },
+      "ExtendedErrorInfo" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "$ref" : "#/components/schemas/ErrorResponseCode"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "this is the extended error info message"
+          }
+        },
+        "description" : "this is the extended error info"
+      },
+      "ManagementPartnerState" : {
+        "type" : "string",
+        "description" : "this is the management partner state: Active or Deleted",
+        "enum" : [ "Active", "Deleted" ]
+      },
+      "OperationDisplay" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "the is management partner operation description"
+          },
+          "operation" : {
+            "type" : "string",
+            "description" : "the is management partner operation"
+          },
+          "provider" : {
+            "type" : "string",
+            "description" : "the is management partner provider"
+          },
+          "resource" : {
+            "type" : "string",
+            "description" : "the is management partner resource"
+          }
+        },
+        "description" : "this is the management partner operation"
+      },
+      "OperationList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Url to get the next page of items."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "this is the operation response list",
+            "items" : {
+              "$ref" : "#/components/schemas/OperationResponse"
+            }
+          }
+        },
+        "description" : "this is the management partner operations list"
+      },
+      "OperationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "$ref" : "#/components/schemas/OperationDisplay"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "this is the operation response name"
+          },
+          "origin" : {
+            "type" : "string",
+            "description" : "the is operation response origin information"
+          }
+        },
+        "description" : "this is the management partner operations response"
+      },
+      "PartnerProperties" : {
+        "type" : "object",
+        "properties" : {
+          "createdTime" : {
+            "type" : "string",
+            "description" : "This is the DateTime when the partner was created.",
+            "format" : "date-time"
+          },
+          "objectId" : {
+            "type" : "string",
+            "description" : "This is the object id."
+          },
+          "partnerId" : {
+            "type" : "string",
+            "description" : "This is the partner id"
+          },
+          "partnerName" : {
+            "type" : "string",
+            "description" : "This is the partner name"
+          },
+          "state" : {
+            "$ref" : "#/components/schemas/ManagementPartnerState"
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "This is the tenant id."
+          },
+          "updatedTime" : {
+            "type" : "string",
+            "description" : "This is the DateTime when the partner was updated.",
+            "format" : "date-time"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "This is the version."
+          }
+        },
+        "description" : "this is the management partner properties"
+      },
+      "PartnerResponse" : {
+        "type" : "object",
+        "properties" : {
+          "etag" : {
+            "type" : "integer",
+            "description" : "Type of the partner"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Identifier of the partner",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the partner",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/PartnerProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of resource. \"Microsoft.ManagementPartner/partners\"",
+            "readOnly" : true
+          }
+        },
+        "description" : "this is the management partner operations response"
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Supported version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "PartnerIdParameter" : {
+        "name" : "partnerId",
+        "in" : "path",
+        "description" : "Id of the Partner",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,2253 @@
-{"openapi":"3.0.1","info":{"title":"Lyft","description":"Drive your app to success with Lyft's API","contact":{"name":"Lyft","url":"http://developer.lyft.com","email":"api-support@lyft.com"},"version":"1.0.0"},"servers":[{"url":"https://api.lyft.com/v1"}],"security":[null,null],"tags":[{"name":"Public","description":"Endpoints that do not require a user"},{"name":"User","description":"Endpoints that require a user context"},{"name":"Sandbox","description":"Endpoints that manipulate the Lyft sandbox"},{"name":"Restricted","description":"Endpoints that require special permission from Lyft to use"}],"paths":{"/cost":{"get":{"tags":["Public"],"summary":"Cost estimates","description":"Estimate the cost of taking a Lyft between two points.\n","operationId":"GetCost","parameters":[{"name":"ride_type","in":"query","description":"ID of a ride type","schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}},{"name":"start_lat","in":"query","description":"Latitude of the starting location","required":true,"schema":{"type":"number","format":"double"}},{"name":"start_lng","in":"query","description":"Longitude of the starting location","required":true,"schema":{"type":"number","format":"double"}},{"name":"end_lat","in":"query","description":"Latitude of the ending location","schema":{"type":"number","format":"double"}},{"name":"end_lng","in":"query","description":"Longitude of the ending location","schema":{"type":"number","format":"double"}}],"responses":{"200":{"description":"An object with an array of cost estimates by ride type","content":{"application/json":{"schema":{"title":"CostEstimateResponse","type":"object","properties":{"cost_estimates":{"type":"array","items":{"$ref":"#/components/schemas/CostEstimate"}}}}}}},"400":{"description":"The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: start location is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at this start location\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/drivers":{"get":{"tags":["Public"],"summary":"Available drivers nearby","description":"The drivers endpoint returns a list of nearby drivers' lat and lng at a given location.\n","operationId":"GetDrivers","parameters":[{"name":"lat","in":"query","description":"Latitude of a location","required":true,"schema":{"type":"number","format":"double"}},{"name":"lng","in":"query","description":"Longitude of a location","required":true,"schema":{"type":"number","format":"double"}}],"responses":{"200":{"description":"An object with an array of available drivers sorted by eta for the given location","content":{"application/json":{"schema":{"title":"NearbyDriversResponse","type":"object","properties":{"nearby_drivers":{"type":"array","items":{"$ref":"#/components/schemas/NearbyDriversByRideType"}}}}}}},"400":{"description":"A validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/eta":{"get":{"tags":["Public"],"summary":"Pickup ETAs","description":"The ETA endpoint lets you know how quickly a Lyft driver can come get you\n","operationId":"GetETA","parameters":[{"name":"lat","in":"query","description":"Latitude of a location","required":true,"schema":{"type":"number","format":"double"}},{"name":"lng","in":"query","description":"Longitude of a location","required":true,"schema":{"type":"number","format":"double"}},{"name":"destination_lat","in":"query","description":"Latitude of destination location","schema":{"type":"number","format":"double"}},{"name":"destination_lng","in":"query","description":"Longitude of destination location","schema":{"type":"number","format":"double"}},{"name":"ride_type","in":"query","description":"ID of a ride type","schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}}],"responses":{"200":{"description":"An object with an array of ETAs by ride type for the given location","content":{"application/json":{"schema":{"title":"EtaEstimateResponse","type":"object","properties":{"eta_estimates":{"type":"array","items":{"$ref":"#/components/schemas/Eta"}}}}}}},"400":{"description":"The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: location is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at this location\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/profile":{"get":{"tags":["User"],"summary":"The user's general info","description":"The v1 of this endpoint returns the user's ID, v2 will return more general info about the user. We require authentication for this endpoint, so we extract the user ID from the access token.\n","operationId":"GetProfile","responses":{"200":{"description":"User ID was found and returned","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Profile"}}}}},"security":[null]}},"/rides":{"get":{"tags":["User"],"summary":"List rides","description":"Get a list of past & current rides for this passenger.\n","operationId":"GetRides","parameters":[{"name":"start_time","in":"query","description":"Restrict to rides starting after this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n","required":true,"schema":{"type":"string","format":"date-time"}},{"name":"end_time","in":"query","description":"Restrict to rides starting before this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n","schema":{"type":"string","format":"date-time"}},{"name":"limit","in":"query","description":"The maximum number of rides to return. The default limit is 10 if not specified. The maximum allowed value is 50, an integer greater that 50 will return at most 50 results.\n","schema":{"maximum":50,"exclusiveMaximum":false,"minimum":0,"exclusiveMinimum":true,"type":"integer","format":"int32","default":10}}],"responses":{"200":{"description":"An object with an array of up to `limit` rides taken by the user between `start_time` and `end_time`.\n","content":{"application/json":{"schema":{"title":"RidesResponse","type":"object","properties":{"ride_history":{"type":"array","items":{"$ref":"#/components/schemas/RideDetail"}}}}}}},"400":{"description":"A validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]},"post":{"tags":["User"],"summary":"Request a Lyft","description":"Request a Lyft come pick you up at the given location.\n","operationId":"NewRide","requestBody":{"description":"Ride request information","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Ride"}}},"required":true},"responses":{"201":{"description":"An object with high level ride information. Use `GET /v1/rides/{id}` for more details.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RideRequest"}}}},"400":{"description":"The 'error' field can be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: origin is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at origin\n * `primetime_confirmation_required`: user must accept primetime. A primetime confirmation token and\ndetails will be included in the response\n * `invalid_primetime_confirmation`: supplied token is invalid or expired\n * `destination_prohibited`: Lyft is not allowed to drop off at that destination (e.g. some airports).\n User-displayable details in the 'error_description' field\n * `client_error`: an uncategorized error. Details in the 'error_description' field\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RideRequestError"}}}},"403":{"description":"User or client does not have permission to complete this request. Specific errors include:\n * `user_payment_required`: The user does not have a valid payment method on file.\n They must use the Lyft app to add or update one.\n * `account_disabled`: The user's account has been suspended, and they must contact Lyft support.\n * `user_in_driver_mode`: The user is logged in as a driver and can't request rides until they log out\n * `verified_phone_required`: The user has not provided or verified their phone number.\n They can add one in the Lyft app\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"409":{"description":"The 'error' field will be one of the following:\n * `no_drivers_available`: No drivers are available right now\n * `user_already_in_ride`: User cannot request a ride while in a ride\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/rides/{id}":{"get":{"tags":["User"],"summary":"Get the ride detail of a given ride ID","description":"Get the status of a ride along with information about the driver, vehicle and price of a given ride ID\n","operationId":"GetRide","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Detailed ride information including ride status, driver information, passenger information, vehicle information, location information and price\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RideDetail"}}}},"403":{"description":"User or client does not have permission to complete this request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"404":{"description":"No ride found with provided ride ID","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/rides/{id}/cancel":{"post":{"tags":["User"],"summary":"Cancel a ongoing requested ride","description":"Cancel a ongoing ride which was requested earlier by providing the ride id.\n","operationId":"CancelRide","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CancellationRequest"}}},"required":false},"responses":{"204":{"description":"Successfully canceled the ride"},"400":{"description":"Cancellation token required\n * `cancel_confirmation_required`: a cancelation fee applies which the user must accept\n * `invalid_cancel_confirmation`: provided token was invalid or expired\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CancellationCostError"}}}},"403":{"description":"User or client does not have permission to complete this request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"404":{"description":"No ride found with provided ride ID","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"409":{"description":"You cannot cancel this ride","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/rides/{id}/destination":{"put":{"tags":["User"],"summary":"Update the destination of the ride","description":"Add or update the ride's destination. Note that the ride must still be active (not droppedOff or canceled), and that destinations on Lyft Line rides can not be changed.\n","operationId":"SetRideDestination","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The coordinates and optional address of the destination","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Location"}}},"required":true},"responses":{"200":{"description":"Successfully updated the destination. Returns the new destination.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Location"}}}},"400":{"description":"The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `invalid_destination`: Destination is generally invalid (eg. not in a Lyft service area)\n * `destination_prohibited`: Lyft drop-offs are not permitted at this location (eg. some airports).\n The 'error_description' field will contain an explaination suitable to display to the user.\n * `ride_is_lyft_line`: Cannot change the destination on Line rides\n * `ride_is_finished`: Ride has already been completed\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"403":{"description":"User or client does not have permission to complete this request (`ride_does_not_belong_to_user`)\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"404":{"description":"No ride found with provided ride ID","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/rides/{id}/rating":{"put":{"tags":["User"],"summary":"Add the passenger's rating, feedback, and tip","description":"Add the passenger's 1 to 5 star rating of the ride, optional written feedback, and optional tip amount in minor units and currency. The ride must already be dropped off, and ratings must be given within 24 hours of drop off. For purposes of display, 5 is considered the default rating. When this endpoint is successfully called, payment processing will begin.\n","operationId":"SetRideRating","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The rating and optional feedback","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RatingRequest"}}},"required":true},"responses":{"204":{"description":"Successfully added the rating"},"400":{"description":"The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `user_cannot_rate_this_ride`: Rides can only be rated once, within 24 hours of drop-off, and before\n the user starts another ride\n * `tip_too_large`: tip amount is too large for this ride\n * `tip_currency_not_accepted`: That tip currency is not accepted\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"409":{"description":"The 'error' field will be:\n * `ride_not_finished`: Ride is still in progress (not yet in the droppedOff status)\n","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/rides/{id}/receipt":{"get":{"tags":["User"],"summary":"Get the receipt of the rides.","description":"Get the receipt information of a processed ride by providing the ride id. Receipts will only be available to view once the payment has been processed. In the case of canceled ride, cancellation penalty is included if applicable.\n","operationId":"GetRideReceipt","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Detailed ride receipt information including cancel penalty if applicable.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RideReceipt"}}}},"403":{"description":"User or client does not have permission to complete this request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"404":{"description":"No ride receipt found with provided ride ID","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/ridetypes":{"get":{"tags":["Public"],"summary":"Types of rides","description":"The ride types endpoint returns information about what kinds of Lyft rides you can request at a given location.\n","operationId":"GetRideTypes","parameters":[{"name":"lat","in":"query","description":"Latitude of a location","required":true,"schema":{"type":"number","format":"double"}},{"name":"lng","in":"query","description":"Longitude of a location","required":true,"schema":{"type":"number","format":"double"}},{"name":"ride_type","in":"query","description":"ID of a ride type","schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}}],"responses":{"200":{"description":"An object with an array of available Ride Types for the given location","content":{"application/json":{"schema":{"title":"RideTypesResponse","type":"object","properties":{"ride_types":{"type":"array","items":{"$ref":"#/components/schemas/RideType"}}}}}}},"400":{"description":"A validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/sandbox/primetime":{"put":{"tags":["Sandbox"],"summary":"Preset Prime Time percentage","description":"Preset a Prime Time percentage in the region surrounding the specified location. This Prime Time percentage will be applied when requesting cost, or when requesting a ride in sandbox mode.\n","operationId":"SetPrimeTime","requestBody":{"description":"Prime Time to be preset in the region surrounding the lat, lng","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxPrimetime"}}},"required":true},"responses":{"204":{"description":"Successfully applied Prime Time in sandbox"},"400":{"description":"Validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/sandbox/rides/{id}":{"put":{"tags":["Sandbox"],"summary":"Propagate ride through ride status","description":"Propagate a sandbox-ride through various ride status\n","operationId":"SetRideStatus","parameters":[{"name":"id","in":"path","description":"The ID of the ride","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"status to propagate the ride into","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxRideStatus"}}},"required":true},"responses":{"200":{"description":"An object with the Ride ID and the new status","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxRideUpdate"}}}},"400":{"description":"Validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"403":{"description":"User or client does not have permission to complete this request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}},"security":[null]}},"/sandbox/ridetypes":{"put":{"tags":["Sandbox"],"summary":"Preset types of rides for sandbox","description":"The sandbox-ridetypes endpoint allows you to preset the ridetypes in the region surrounding the specified latitude and longitude to allow testing different scenarios\n","operationId":"SetRideTypes","requestBody":{"description":"Ridetypes to be preset in the region surrounding the lat, lng","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxRideType"}}},"required":true},"responses":{"200":{"description":"An object listing the ridetypes at a given location","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxRideType"}}}},"400":{"description":"Validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}},"/sandbox/ridetypes/{ride_type}":{"put":{"tags":["Sandbox"],"summary":"Driver availability for processing ride request","description":"Set driver availability for the provided ride_type in the city/region surrounding the specified location\n","operationId":"SetRideTypeAvailability","parameters":[{"name":"ride_type","in":"path","required":true,"schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}}],"requestBody":{"description":"Driver availability to be preset in the region surrounding the lat, lng","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SandboxDriverAvailability"}}},"required":true},"responses":{"204":{"description":"Successfully set driver availability in sandbox"},"400":{"description":"Validation error occurred","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}},"404":{"description":"ride_type provided in the path is not supported in the current area","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApiError"}}}}}}}},"components":{"schemas":{"ApiError":{"type":"object","properties":{"error":{"type":"string","description":"A \"slug\" that serves as the error code (eg. \"bad_parameter\")"},"error_description":{"type":"string","description":"A user-friendly description of the error (appropriate to show to an end-user)"},"error_detail":{"type":"array","items":{"$ref":"#/components/schemas/ErrorDetail"}}},"description":"Details about why a request failed, such as missing or invalid parameters"},"CancellationCost":{"allOf":[{"$ref":"#/components/schemas/Cost"},{"type":"object","properties":{"token":{"type":"string","description":"Token used to confirm the fee when cancelling a request"},"token_duration":{"minimum":0,"type":"integer","description":"How long, in seconds, before the token expires","format":"int32"}}}]},"CancellationCostError":{"allOf":[{"$ref":"#/components/schemas/CancellationCost"},{"$ref":"#/components/schemas/ApiError"}]},"CancellationRequest":{"type":"object","properties":{"cancel_confirmation_token":{"type":"string","description":"Token affirming the user accepts the cancellation fee. Required if a cancellation fee is in effect."}},"example":{"cancel_confirmation_token":"656a91d"}},"Charge":{"required":["amount","currency","payment_method"],"type":"object","properties":{"amount":{"type":"integer","description":"The line item amount","format":"int32"},"currency":{"type":"string","description":"The currency for the amount"},"payment_method":{"type":"string","description":"The payment method display name."}}},"Cost":{"required":["amount","currency","description"],"type":"object","properties":{"amount":{"type":"integer","description":"Total price of the ride","format":"int32"},"currency":{"type":"string","description":"The ISO 4217 currency code for the amount (e.g. USD)"},"description":{"type":"string","description":"The description for the cost"}},"example":{"amount":500,"currency":"USD","description":"Total cost"}},"CostEstimate":{"type":"object","properties":{"cost_token":{"type":"string","description":"A token that confirms the user has accepted current Prime Time and/or fixed price charges. See 'Request a Lyft' for more details"},"currency":{"type":"string","description":"The ISO 4217 currency code for the amount (e.g. 'USD')"},"display_name":{"type":"string","description":"A human readable description of the ride type"},"estimated_cost_cents_max":{"type":"integer","description":"Estimated upper bound for trip cost, in minor units (cents). Estimates are not guaranteed, and only provide a reasonable range based on current conditions.\n","format":"int32"},"estimated_cost_cents_min":{"type":"integer","description":"Estimated lower bound for trip cost, in minor units (cents). Estimates are not guaranteed, and only provide a reasonable range based on current conditions.\n","format":"int32"},"estimated_distance_miles":{"type":"number","description":"Estimated distance for this trip\n","format":"double"},"estimated_duration_seconds":{"type":"integer","description":"Estimated time to get from the start location to the end.\n","format":"int32"},"is_valid_estimate":{"type":"boolean","description":"The validity of the cost estimate returned"},"primetime_confirmation_token":{"type":"string","description":"This token is needed when requesting rides. (Deprecated)"},"primetime_percentage":{"type":"string","description":"Current Prime Time Percentage. Prime Time adds a percentage to ride costs, prior to other applicable fees. When ride requests greatly outnumber available drivers, our system will automatically turn on Prime Time.\nIf Prime Time is inactive, the value returned will be '0%'.\nNote: The returned estimate already has Prime Time factored in. The value is returned here for reference and to allow users to confirm/accept Prime Time prior to initiating a ride.\n"},"ride_type":{"$ref":"#/components/schemas/RideTypeEnum"}},"description":"A non-guaranteed estimate of price","example":{"cost_token":"EupdCgIzy17lJoRmiO5","display_name":"Lyft","estimated_cost_cents_max":1080,"estimated_cost_cents_min":1390,"estimated_distance_miles":12.4,"estimated_duration_seconds":540,"is_valid_estimate":true,"primetime_confirmation_token":"EupdCgIzy17lJoRmiO5","primetime_percentage":"25%","ride_type":"lyft"}},"CurrentRideLocation":{"allOf":[{"$ref":"#/components/schemas/LatLng"},{"type":"object","properties":{"bearing":{"type":"number","description":"Bearing of the driver's car in degrees","format":"double"}}}]},"DriverDetail":{"required":["first_name","image_url","phone_number","rating","user_id"],"type":"object","properties":{"first_name":{"type":"string","description":"The driver's first name"},"image_url":{"type":"string","description":"The driver's image url"},"phone_number":{"type":"string","description":"The driver's contact phone number. Must be E.164 formatted.\n","format":"phone"},"rating":{"type":"string","description":"The driver's rating based in 0-5 scale"},"user_id":{"type":"string","description":"The driver's id"}},"example":{"first_name":"Joe","image_url":"http://example.com/lyft.png","phone_number":"+15554445000","rating":"4.9","user_id":"123456789"}},"ErrorDetail":{"type":"object","properties":{"field_name":{"type":"string","description":"description of the error"}},"description":"An object with a single key-value pair, where the key is the name of the invalid parameter, and the value is a description of the error.\n","example":{"lat":"(latitude) Missing required parameter in the query string"}},"Eta":{"type":"object","properties":{"display_name":{"type":"string","description":"A human readable description of the ride type"},"eta_seconds":{"type":"integer","description":"Estimated seconds for a driver to arrive","format":"int32"},"eta_seconds_max":{"type":"integer","description":"Estimated upper bound of seconds for a driver to arrive","format":"int32"},"is_valid_estimate":{"type":"boolean","description":"The validity of the ETA estimate returned"},"ride_type":{"$ref":"#/components/schemas/RideTypeEnum"}},"description":"Estimated Time of Arrival","example":{"display_name":"Lyft Line","eta_seconds":120,"is_valid_estimate":true,"ride_type":"lyft_line"}},"LatLng":{"required":["lat","lng"],"type":"object","properties":{"lat":{"type":"number","description":"The latitude component of a location","format":"double"},"lng":{"type":"number","description":"The longitude component of a location","format":"double"}},"example":{"lat":36.9442175,"lng":-123.8679133}},"LineItem":{"required":["amount","currency","type"],"type":"object","properties":{"amount":{"type":"integer","description":"The line item amount","format":"int32"},"currency":{"type":"string","description":"The currency for the amount"},"type":{"type":"string","description":"The line item display name for a charge item"}}},"Location":{"allOf":[{"$ref":"#/components/schemas/LatLng"},{"type":"object","properties":{"address":{"type":"string","description":"A human readable address at/near the given location"}}}]},"NearbyDriver":{"type":"object","properties":{"locations":{"type":"array","description":"the lastest recorded driver locations up to 5 sorted in chronological order.","items":{"$ref":"#/components/schemas/LatLng"}}}},"NearbyDriversByRideType":{"type":"object","properties":{"drivers":{"type":"array","description":"list of nearby drivers group by ride type sorted by eta","items":{"$ref":"#/components/schemas/NearbyDriver"}},"ride_type":{"type":"string","description":"driver's ride type. if driver is eligable for several ride types, he will be duplicated."}}},"PassengerDetail":{"allOf":[{"$ref":"#/components/schemas/UserDetail"},{"type":"object","properties":{"last_name":{"type":"string","description":"The passenger's last name"},"user_id":{"type":"string","description":"The passenger's lyft user id"}}}]},"PickupDropoffLocation":{"allOf":[{"$ref":"#/components/schemas/Location"},{"type":"object","properties":{"time":{"type":"string","description":"Server time when the location object is created","format":"date-time"}}}]},"PricingDetails":{"type":"object","properties":{"base_charge":{"type":"integer","description":"The base charge of the trip","format":"int32"},"cancel_penalty_amount":{"type":"integer","description":"The charge amount if cancel penalty is involved","format":"int32"},"cost_minimum":{"type":"integer","description":"The minimum charge for the trip","format":"int32"},"cost_per_mile":{"type":"integer","description":"The cost per mile","format":"int32"},"cost_per_minute":{"type":"integer","description":"The cost per minute","format":"int32"},"currency":{"type":"string","description":"The ISO 4217 currency code for the amount (e.g. USD)"},"trust_and_service":{"type":"integer","description":"Service fee","format":"int32"}},"example":{"base_charge":175,"cancel_penalty_amount":500,"cost_minumum":500,"cost_per_mile":116,"cost_per_minute":23,"currency":"USD","trust_and_service":155}},"Profile":{"required":["first_name","has_taken_a_ride","id","last_name"],"type":"object","properties":{"first_name":{"type":"string","description":"The first name of this user"},"has_taken_a_ride":{"type":"boolean","description":"Indicates whether this user has taken at least one Lyft ride"},"id":{"type":"string","description":"The unique ID of this user"},"last_name":{"type":"string","description":"The last name of this user"}},"description":"Represents the general information about a user."},"RatingRequest":{"required":["rating"],"type":"object","properties":{"feedback":{"type":"string","description":"The passenger's written feedback about this ride"},"rating":{"maximum":5,"minimum":1,"type":"integer","description":"The passenger's rating of this ride from 1 to 5","format":"int32"},"tip":{"type":"object","description":"Tip amount in minor units and tip currency","allOf":[{"$ref":"#/components/schemas/TipParams"}]}},"description":"Rating and optional feedback and tip","example":{"feedback":"Great ride!","rating":5,"tip":{"amount":100,"currency":"USD"}}},"Ride":{"required":["origin","ride_type"],"type":"object","properties":{"cost_token":{"type":"string","description":"A token that confirms the user has accepted current Prime Time and/or fixed price charges"},"destination":{"type":"object","description":"The *requested* location for passenger drop off","allOf":[{"$ref":"#/components/schemas/Location"}]},"origin":{"type":"object","description":"The *requested* location for passenger pickup","allOf":[{"$ref":"#/components/schemas/Location"}]},"primetime_confirmation_token":{"type":"string","description":"A token that confirms the user has accepted current primetime charges (Deprecated)"},"ride_type":{"$ref":"#/components/schemas/RideTypeEnum"}},"description":"Represents a requested, ongoing, or finished Lyft ride"},"RideDetail":{"type":"object","properties":{"beacon_color":{"type":"string","description":"Hex color code of the driver AMP device."},"can_cancel":{"type":"array","items":{"type":"string","description":"The array of actors who may cancel the ride at this point","enum":["driver","passenger","dispatcher"]}},"canceled_by":{"type":"string","description":"The role of user who canceled the ride (if applicable)"},"cancellation_price":{"type":"object","description":"The cost of cancellation if there would be a penalty","allOf":[{"$ref":"#/components/schemas/CancellationCost"}]},"destination":{"type":"object","description":"The *requested* location for passenger drop off","allOf":[{"$ref":"#/components/schemas/RideLocation"}]},"distance_miles":{"type":"number","description":"The distance, in miles, that this ride traveled. This field is only present after drop-off","format":"float"},"driver":{"$ref":"#/components/schemas/DriverDetail"},"dropoff":{"type":"object","description":"The *actual* location of passenger drop off","allOf":[{"$ref":"#/components/schemas/PickupDropoffLocation"}]},"duration_seconds":{"type":"integer","description":"Duration of the ride in seconds from pickup to drop-off. This field is only present after drop-off.","format":"int32"},"feedback":{"type":"string","description":"The written feedback the user left for this ride"},"generated_at":{"type":"string","description":"The request timestamp in date and time","format":"date-time"},"line_items":{"type":"array","description":"The break down of cost","items":{"$ref":"#/components/schemas/LineItem"}},"location":{"type":"object","description":"The *current* location info of the ride","allOf":[{"$ref":"#/components/schemas/CurrentRideLocation"}]},"origin":{"type":"object","description":"The *requested* location for passenger pickup","allOf":[{"$ref":"#/components/schemas/RideLocation"}]},"passenger":{"$ref":"#/components/schemas/PassengerDetail"},"pickup":{"type":"object","description":"The *actual* location of passenger pickup","allOf":[{"$ref":"#/components/schemas/PickupDropoffLocation"}]},"price":{"type":"object","description":"The total price for the current ride","allOf":[{"$ref":"#/components/schemas/Cost"}]},"pricing_details_url":{"type":"string","description":"The web view showing the pricing structure for the geographic area where the ride was taken\n"},"primetime_percentage":{"type":"string","description":"The Prime Time percentage applied to the base price"},"rating":{"type":"integer","description":"The rating the user left for this ride, from 1 to 5","format":"int32"},"requested_at":{"type":"string","description":"The ride requested timestamp in date and time","format":"date-time"},"ride_id":{"type":"string","description":"The unique ID of this ride"},"ride_profile":{"type":"object","description":"Indicates whether the ride was requested from the business profile or personal profile of the user.\n","allOf":[{"$ref":"#/components/schemas/RideProfileEnum"}]},"ride_type":{"$ref":"#/components/schemas/RideTypeEnumWithOther"},"route_url":{"type":"string","description":"The web view showing the passenger, driver, and route for this ride. This field will only be present for rides created through this API, or that have been shared through the \"Share my Route\" feature\n"},"status":{"$ref":"#/components/schemas/RideStatusEnum"},"vehicle":{"$ref":"#/components/schemas/VehicleDetail"}},"description":"Detail information about a ride","example":{"beacon_color":"#FFFFFF","destination":{"address":"987 Second St, Anytown, CA","lat":36.9453452,"lng":-123.8642521},"distance_miles":16.2,"driver":{"first_name":"Joe","image_url":"http://example.com/lyft.png","phone_number":"+15554445111","rating":"4.9"},"dropoff":{"address":"987 Second St, Anytown, CA","lat":36.9453452,"lng":-123.8642521,"time":"2015-09-24T23:28:25+00:00"},"duration_seconds":1620,"line_items":[{"amount":500,"currency":"USD","type":"Ride"},{"amount":250,"currency":"USD","type":"Prime Time"},{"amount":155,"currency":"USD","type":"Service fee"}],"location":{"address":"987 Second St, Anytown, CA","lat":36.9453452,"lng":-123.8642521},"origin":{"address":"123 Main St, Anytown, CA","lat":36.9442175,"lng":-123.8679133},"passenger":{"first_name":"Jane","phone_number":"+15554445000","user_id":"776630198662493392"},"pickup":{"address":"123 Main St, Anytown, CA","lat":36.9442175,"lng":-123.8679133,"time":"2015-09-24T23:27:25+00:00"},"price":{"amount":905,"currency":"USD","description":"Total ride price"},"primetime_percentage":"50%","requested_at":"2015-09-24T23:26:25+00:00","ride_id":123456789,"ride_profile":"personal","ride_type":"lyft","status":"droppedOff","vehicle":{"color":"black","image_url":"http://example.com/lyft.png","license_plate":"AAAAAAA","make":"Audi","model":"A4"}}},"RideLocation":{"allOf":[{"$ref":"#/components/schemas/Location"},{"type":"object","properties":{"eta_seconds":{"type":"integer","description":"Estimated seconds for a driver to pickup or reach destination based on ride status","format":"int32"}}}]},"RideProfileEnum":{"type":"string","description":"The payment profile which the user has picked for the ride","enum":["personal","business"]},"RideReceipt":{"type":"object","properties":{"charges":{"type":"array","description":"The break down of charge method","items":{"$ref":"#/components/schemas/Charge"}},"line_items":{"type":"array","description":"The break down of line items","items":{"$ref":"#/components/schemas/LineItem"}},"price":{"type":"object","description":"The total price for the current ride","allOf":[{"$ref":"#/components/schemas/Cost"}]},"requested_at":{"type":"string","description":"The ride requested timestamp in date and time","format":"date-time"},"ride_id":{"type":"string","description":"The unique ID of this ride"},"ride_profile":{"type":"object","description":"Indicates whether the ride was requested from the business profile or personal profile of the user.\n","allOf":[{"$ref":"#/components/schemas/RideProfileEnum"}]}},"description":"Receipt information of a processed ride.","example":{"charges":[{"amount":500,"currency":"USD","payment_method":"Card"},{"amount":405,"currency":"USD","payment_method":"Lyft Credit"}],"line_items":[{"amount":500,"currency":"USD","type":"Ride"},{"amount":250,"currency":"USD","type":"Prime Time"},{"amount":155,"currency":"USD","type":"Service fee"}],"price":{"amount":905,"currency":"USD","description":"Total ride price"},"requested_at":"2015-09-24T23:26:25+00:00","ride_id":123456789,"ride_profile":"personal"}},"RideRequest":{"type":"object","properties":{"destination":{"type":"object","description":"The *requested* location for passenger drop off","allOf":[{"$ref":"#/components/schemas/Location"}]},"origin":{"type":"object","description":"The *requested* location for passenger pickup","allOf":[{"$ref":"#/components/schemas/Location"}]},"passenger":{"$ref":"#/components/schemas/PassengerDetail"},"ride_id":{"type":"string","description":"The ID of the requested ride"},"status":{"$ref":"#/components/schemas/RideStatusEnum"}},"description":"Minimal set of ride details","example":{"destination":{"address":"123 Main St, Anytown, CA","lat":36.9442175,"lng":-123.8679133},"origin":{"address":"123 Main St, Anytown, CA","lat":36.9442175,"lng":-123.8679133},"passenger":{"first_name":"Jane","image_url":"https://public-api.lyft.com/static/images/user.png","rating":4.9,"user_id":"776630198662493392"},"ride_id":123456789,"status":"pending"}},"RideRequestError":{"required":["error"],"type":"object","properties":{"cost_token":{"type":"string","description":"A token that confirms the user has accepted current Prime Time and/or fixed price charges"},"error":{"type":"string","description":"A \"slug\" that serves as the error code (eg. \"bad_parameter\")"},"error_description":{"type":"string","description":"A user-friendly description of the error (appropriate to show to an end-user)"},"error_detail":{"type":"array","items":{"$ref":"#/components/schemas/ErrorDetail"}},"error_uri":{"type":"string","description":"When a user must go through another flow before requesting a ride, this URI specifies which flow to use (e.g. an account challenge flow in a web view)"},"primetime_confirmation_token":{"type":"string","description":"A token that confirms the user has accepted current Prime Time charges (Deprecated)"},"primetime_multiplier":{"type":"number","description":"Current Prime Time multiplier (eg. if primetime_percentage is 100%, primetime_multiplier will be 2.0)","format":"float"},"primetime_percentage":{"type":"string","description":"Current Prime Time percentage"},"token_duration":{"type":"string","description":"Validity of the token in seconds"}},"description":"Details about why a request failed, such as missing or invalid parameters"},"RideStatusEnum":{"type":"string","description":"The status of the ride","enum":["pending","accepted","arrived","pickedUp","droppedOff","canceled","scheduled","unknown"]},"RideType":{"type":"object","properties":{"display_name":{"type":"string","description":"A human readable description of the ride type"},"image_url":{"type":"string","description":"The URL of an image representing this ride type"},"pricing_details":{"$ref":"#/components/schemas/PricingDetails"},"ride_type":{"$ref":"#/components/schemas/RideTypeEnum"},"scheduled_pricing_details":{"$ref":"#/components/schemas/PricingDetails"},"seats":{"type":"integer","description":"The maximum number of seats available for rides requested with this ride type"}},"example":{"ride_types":[{"display_name":"Lyft Line","image_url":"https://cdn.lyft.com/assets/car_standard.png","pricing_details":{"base_charge":200,"cancel_penalty_amount":500,"cost_minimum":475,"cost_per_mile":115,"cost_per_minute":23,"currency":"USD","trust_and_service":155},"ride_type":"lyft_line","seats":2},{"display_name":"Lyft","image_url":"https://cdn.lyft.com/assets/car_standard.png","pricing_details":{"base_charge":200,"cancel_penalty_amount":500,"cost_minimum":500,"cost_per_mile":115,"cost_per_minute":23,"currency":"USD","trust_and_service":155},"ride_type":"lyft","seats":4},{"display_name":"Lyft Plus","image_url":"https://cdn.lyft.com/assets/car_plus.png","pricing_details":{"base_charge":300,"cancel_penalty_amount":500,"cost_minimum":700,"cost_per_mile":200,"cost_per_minute":30,"currency":"USD","trust_and_service":155},"ride_type":"lyft_plus","seats":6}]}},"RideTypeEnum":{"type":"string","description":"The ID of the ride type","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]},"RideTypeEnumWithOther":{"type":"string","description":"The ID of the ride type","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv","other"]},"SandboxDriverAvailability":{"required":["driver_availability","lat","lng"],"type":"object","properties":{"driver_availability":{"type":"boolean","description":"The availability of driver in a region"},"lat":{"type":"number","description":"The latitude component of a location","format":"double"},"lng":{"type":"number","description":"The longitude component of a location","format":"double"}},"example":{"driver_availability":true,"lat":37.7833,"lng":-122.4167}},"SandboxPrimetime":{"required":["lat","lng","primetime_percentage"],"type":"object","properties":{"lat":{"type":"number","description":"The latitude component of a location","format":"double"},"lng":{"type":"number","description":"The longitude component of a location","format":"double"},"primetime_percentage":{"type":"string","description":"The Prime Time to be applied as a string, e.g., '25%'"}},"example":{"lat":37.7833,"lng":-122.4167,"primetime_percentage":"25%"}},"SandboxRideStatus":{"required":["status"],"type":"object","properties":{"status":{"$ref":"#/components/schemas/RideStatusEnum"}},"example":{"status":"lyft"}},"SandboxRideType":{"required":["lat","lng","ride_types"],"type":"object","properties":{"lat":{"type":"number","description":"The latitude component of a location","format":"double"},"lng":{"type":"number","description":"The longitude component of a location","format":"double"},"ride_types":{"type":"array","items":{"$ref":"#/components/schemas/RideTypeEnum"}}},"example":{"lat":37.7833,"lng":-122.4167,"ride_types":["lyft","lyft_line","lyft_plus"]}},"SandboxRideUpdate":{"type":"object","properties":{"ride_id":{"type":"string","description":"The ID of the ride"},"status":{"$ref":"#/components/schemas/RideStatusEnum"}},"description":"Response when a sandbox ride is propagated through ride status","example":{"ride_id":123456789,"status":"accepted"}},"Tip":{"type":"object","properties":{"amount":{"minimum":0,"type":"integer","description":"A tip for the driver in cents. To be charged to the user's default charge account.","format":"int32"},"currency":{"type":"string","description":"The currency in which you want to tip. e.g. USD"}},"example":{"amount":300,"currency":"USD"}},"TipParams":{"allOf":[{"$ref":"#/components/schemas/Tip"}]},"UserDetail":{"required":["first_name","image_url","rating"],"type":"object","properties":{"first_name":{"type":"string","description":"The passenger's first name"},"image_url":{"type":"string","description":"The passenger's profile image"},"rating":{"type":"string","description":"The passenger's rating"}},"example":{"first_name":"Jane","image_url":"https://public-api.lyft.com/static/images/user.png","rating":4.9}},"VehicleDetail":{"required":["color","image_url","license_plate","license_plate_state","make","model","year"],"type":"object","properties":{"color":{"type":"string","description":"The vehicle's color"},"image_url":{"type":"string","description":"The vehicle's image url"},"license_plate":{"type":"string","description":"The vehicle's license plate"},"license_plate_state":{"type":"string","description":"The vehicle's license plate state"},"make":{"type":"string","description":"The vehicle's maker"},"model":{"type":"string","description":"The vehicle's model"},"year":{"type":"integer","description":"The vehicle's model year","format":"int32"}},"example":{"color":"black","image_url":"http://example.com/lyft.png","license_plate":"AAAAAAA","license_plate_state":"CA","make":"Audi","model":"A4","year":2016}}},"parameters":{"LatParam":{"name":"lat","in":"query","description":"Latitude of a location","required":true,"schema":{"type":"number","format":"double"}},"LngParam":{"name":"lng","in":"query","description":"Longitude of a location","required":true,"schema":{"type":"number","format":"double"}},"OptionalDestLatParam":{"name":"destination_lat","in":"query","description":"Latitude of destination location","schema":{"type":"number","format":"double"}},"OptionalDestLngParam":{"name":"destination_lng","in":"query","description":"Longitude of destination location","schema":{"type":"number","format":"double"}},"OptionalEndTime":{"name":"end_time","in":"query","description":"Restrict to rides starting before this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n","schema":{"type":"string","format":"date-time"}},"OptionalLimit":{"name":"limit","in":"query","description":"The maximum number of rides to return. The default limit is 10 if not specified. The maximum allowed value is 50, an integer greater that 50 will return at most 50 results.\n","schema":{"maximum":50,"exclusiveMaximum":false,"minimum":0,"exclusiveMinimum":true,"type":"integer","format":"int32","default":10}},"OptionalRideType":{"name":"ride_type","in":"query","description":"ID of a ride type","schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}},"RideStatusParam":{"name":"ride_type","in":"path","required":true,"schema":{"type":"string","enum":["lyft","lyft_line","lyft_plus","lyft_premier","lyft_lux","lyft_luxsuv"]}},"StartTime":{"name":"start_time","in":"query","description":"Restrict to rides starting after this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n","required":true,"schema":{"type":"string","format":"date-time"}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Lyft",
+    "description" : "Drive your app to success with Lyft's API",
+    "contact" : {
+      "name" : "Lyft",
+      "url" : "http://developer.lyft.com",
+      "email" : "api-support@lyft.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.lyft.com/v1"
+  } ],
+  "security" : [ null, null ],
+  "tags" : [ {
+    "name" : "Public",
+    "description" : "Endpoints that do not require a user"
+  }, {
+    "name" : "User",
+    "description" : "Endpoints that require a user context"
+  }, {
+    "name" : "Sandbox",
+    "description" : "Endpoints that manipulate the Lyft sandbox"
+  }, {
+    "name" : "Restricted",
+    "description" : "Endpoints that require special permission from Lyft to use"
+  } ],
+  "paths" : {
+    "/cost" : {
+      "get" : {
+        "tags" : [ "Public" ],
+        "summary" : "Cost estimates",
+        "description" : "Estimate the cost of taking a Lyft between two points.\n",
+        "operationId" : "GetCost",
+        "parameters" : [ {
+          "name" : "ride_type",
+          "in" : "query",
+          "description" : "ID of a ride type",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+          }
+        }, {
+          "name" : "start_lat",
+          "in" : "query",
+          "description" : "Latitude of the starting location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "start_lng",
+          "in" : "query",
+          "description" : "Longitude of the starting location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "end_lat",
+          "in" : "query",
+          "description" : "Latitude of the ending location",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "end_lng",
+          "in" : "query",
+          "description" : "Longitude of the ending location",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An object with an array of cost estimates by ride type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "title" : "CostEstimateResponse",
+                  "type" : "object",
+                  "properties" : {
+                    "cost_estimates" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/CostEstimate"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: start location is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at this start location\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drivers" : {
+      "get" : {
+        "tags" : [ "Public" ],
+        "summary" : "Available drivers nearby",
+        "description" : "The drivers endpoint returns a list of nearby drivers' lat and lng at a given location.\n",
+        "operationId" : "GetDrivers",
+        "parameters" : [ {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "Latitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "lng",
+          "in" : "query",
+          "description" : "Longitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An object with an array of available drivers sorted by eta for the given location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "title" : "NearbyDriversResponse",
+                  "type" : "object",
+                  "properties" : {
+                    "nearby_drivers" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/NearbyDriversByRideType"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "A validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eta" : {
+      "get" : {
+        "tags" : [ "Public" ],
+        "summary" : "Pickup ETAs",
+        "description" : "The ETA endpoint lets you know how quickly a Lyft driver can come get you\n",
+        "operationId" : "GetETA",
+        "parameters" : [ {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "Latitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "lng",
+          "in" : "query",
+          "description" : "Longitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "destination_lat",
+          "in" : "query",
+          "description" : "Latitude of destination location",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "destination_lng",
+          "in" : "query",
+          "description" : "Longitude of destination location",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "ride_type",
+          "in" : "query",
+          "description" : "ID of a ride type",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An object with an array of ETAs by ride type for the given location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "title" : "EtaEstimateResponse",
+                  "type" : "object",
+                  "properties" : {
+                    "eta_estimates" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Eta"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: location is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at this location\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "The user's general info",
+        "description" : "The v1 of this endpoint returns the user's ID, v2 will return more general info about the user. We require authentication for this endpoint, so we extract the user ID from the access token.\n",
+        "operationId" : "GetProfile",
+        "responses" : {
+          "200" : {
+            "description" : "User ID was found and returned",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Profile"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "List rides",
+        "description" : "Get a list of past & current rides for this passenger.\n",
+        "operationId" : "GetRides",
+        "parameters" : [ {
+          "name" : "start_time",
+          "in" : "query",
+          "description" : "Restrict to rides starting after this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "end_time",
+          "in" : "query",
+          "description" : "Restrict to rides starting before this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The maximum number of rides to return. The default limit is 10 if not specified. The maximum allowed value is 50, an integer greater that 50 will return at most 50 results.\n",
+          "schema" : {
+            "maximum" : 50,
+            "exclusiveMaximum" : false,
+            "minimum" : 0,
+            "exclusiveMinimum" : true,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An object with an array of up to `limit` rides taken by the user between `start_time` and `end_time`.\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "title" : "RidesResponse",
+                  "type" : "object",
+                  "properties" : {
+                    "ride_history" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/RideDetail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "A validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      },
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Request a Lyft",
+        "description" : "Request a Lyft come pick you up at the given location.\n",
+        "operationId" : "NewRide",
+        "requestBody" : {
+          "description" : "Ride request information",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Ride"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "An object with high level ride information. Use `GET /v1/rides/{id}` for more details.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RideRequest"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The 'error' field can be one of the following:\n * `bad_parameter`: A validation error occurred\n * `no_service_in_area`: origin is not within a Lyft service area\n * `ridetype_unavailable_in_region`: ridetype not supported at origin\n * `primetime_confirmation_required`: user must accept primetime. A primetime confirmation token and\ndetails will be included in the response\n * `invalid_primetime_confirmation`: supplied token is invalid or expired\n * `destination_prohibited`: Lyft is not allowed to drop off at that destination (e.g. some airports).\n User-displayable details in the 'error_description' field\n * `client_error`: an uncategorized error. Details in the 'error_description' field\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RideRequestError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request. Specific errors include:\n * `user_payment_required`: The user does not have a valid payment method on file.\n They must use the Lyft app to add or update one.\n * `account_disabled`: The user's account has been suspended, and they must contact Lyft support.\n * `user_in_driver_mode`: The user is logged in as a driver and can't request rides until they log out\n * `verified_phone_required`: The user has not provided or verified their phone number.\n They can add one in the Lyft app\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "The 'error' field will be one of the following:\n * `no_drivers_available`: No drivers are available right now\n * `user_already_in_ride`: User cannot request a ride while in a ride\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides/{id}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get the ride detail of a given ride ID",
+        "description" : "Get the status of a ride along with information about the driver, vehicle and price of a given ride ID\n",
+        "operationId" : "GetRide",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Detailed ride information including ride status, driver information, passenger information, vehicle information, location information and price\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RideDetail"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No ride found with provided ride ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides/{id}/cancel" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Cancel a ongoing requested ride",
+        "description" : "Cancel a ongoing ride which was requested earlier by providing the ride id.\n",
+        "operationId" : "CancelRide",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CancellationRequest"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Successfully canceled the ride"
+          },
+          "400" : {
+            "description" : "Cancellation token required\n * `cancel_confirmation_required`: a cancelation fee applies which the user must accept\n * `invalid_cancel_confirmation`: provided token was invalid or expired\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CancellationCostError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No ride found with provided ride ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "You cannot cancel this ride",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides/{id}/destination" : {
+      "put" : {
+        "tags" : [ "User" ],
+        "summary" : "Update the destination of the ride",
+        "description" : "Add or update the ride's destination. Note that the ride must still be active (not droppedOff or canceled), and that destinations on Lyft Line rides can not be changed.\n",
+        "operationId" : "SetRideDestination",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The coordinates and optional address of the destination",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Location"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the destination. Returns the new destination.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `invalid_destination`: Destination is generally invalid (eg. not in a Lyft service area)\n * `destination_prohibited`: Lyft drop-offs are not permitted at this location (eg. some airports).\n The 'error_description' field will contain an explaination suitable to display to the user.\n * `ride_is_lyft_line`: Cannot change the destination on Line rides\n * `ride_is_finished`: Ride has already been completed\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request (`ride_does_not_belong_to_user`)\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No ride found with provided ride ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides/{id}/rating" : {
+      "put" : {
+        "tags" : [ "User" ],
+        "summary" : "Add the passenger's rating, feedback, and tip",
+        "description" : "Add the passenger's 1 to 5 star rating of the ride, optional written feedback, and optional tip amount in minor units and currency. The ride must already be dropped off, and ratings must be given within 24 hours of drop off. For purposes of display, 5 is considered the default rating. When this endpoint is successfully called, payment processing will begin.\n",
+        "operationId" : "SetRideRating",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The rating and optional feedback",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RatingRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Successfully added the rating"
+          },
+          "400" : {
+            "description" : "The 'error' field will be one of the following:\n * `bad_parameter`: A validation error occurred\n * `user_cannot_rate_this_ride`: Rides can only be rated once, within 24 hours of drop-off, and before\n the user starts another ride\n * `tip_too_large`: tip amount is too large for this ride\n * `tip_currency_not_accepted`: That tip currency is not accepted\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "The 'error' field will be:\n * `ride_not_finished`: Ride is still in progress (not yet in the droppedOff status)\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/rides/{id}/receipt" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get the receipt of the rides.",
+        "description" : "Get the receipt information of a processed ride by providing the ride id. Receipts will only be available to view once the payment has been processed. In the case of canceled ride, cancellation penalty is included if applicable.\n",
+        "operationId" : "GetRideReceipt",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Detailed ride receipt information including cancel penalty if applicable.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RideReceipt"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No ride receipt found with provided ride ID",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/ridetypes" : {
+      "get" : {
+        "tags" : [ "Public" ],
+        "summary" : "Types of rides",
+        "description" : "The ride types endpoint returns information about what kinds of Lyft rides you can request at a given location.\n",
+        "operationId" : "GetRideTypes",
+        "parameters" : [ {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "Latitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "lng",
+          "in" : "query",
+          "description" : "Longitude of a location",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "ride_type",
+          "in" : "query",
+          "description" : "ID of a ride type",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An object with an array of available Ride Types for the given location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "title" : "RideTypesResponse",
+                  "type" : "object",
+                  "properties" : {
+                    "ride_types" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/RideType"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "A validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/primetime" : {
+      "put" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "Preset Prime Time percentage",
+        "description" : "Preset a Prime Time percentage in the region surrounding the specified location. This Prime Time percentage will be applied when requesting cost, or when requesting a ride in sandbox mode.\n",
+        "operationId" : "SetPrimeTime",
+        "requestBody" : {
+          "description" : "Prime Time to be preset in the region surrounding the lat, lng",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SandboxPrimetime"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Successfully applied Prime Time in sandbox"
+          },
+          "400" : {
+            "description" : "Validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/rides/{id}" : {
+      "put" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "Propagate ride through ride status",
+        "description" : "Propagate a sandbox-ride through various ride status\n",
+        "operationId" : "SetRideStatus",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the ride",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "status to propagate the ride into",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SandboxRideStatus"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An object with the Ride ID and the new status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SandboxRideUpdate"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "User or client does not have permission to complete this request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ null ]
+      }
+    },
+    "/sandbox/ridetypes" : {
+      "put" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "Preset types of rides for sandbox",
+        "description" : "The sandbox-ridetypes endpoint allows you to preset the ridetypes in the region surrounding the specified latitude and longitude to allow testing different scenarios\n",
+        "operationId" : "SetRideTypes",
+        "requestBody" : {
+          "description" : "Ridetypes to be preset in the region surrounding the lat, lng",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SandboxRideType"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An object listing the ridetypes at a given location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SandboxRideType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/ridetypes/{ride_type}" : {
+      "put" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "Driver availability for processing ride request",
+        "description" : "Set driver availability for the provided ride_type in the city/region surrounding the specified location\n",
+        "operationId" : "SetRideTypeAvailability",
+        "parameters" : [ {
+          "name" : "ride_type",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Driver availability to be preset in the region surrounding the lat, lng",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SandboxDriverAvailability"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Successfully set driver availability in sandbox"
+          },
+          "400" : {
+            "description" : "Validation error occurred",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "ride_type provided in the path is not supported in the current area",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApiError" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string",
+            "description" : "A \"slug\" that serves as the error code (eg. \"bad_parameter\")"
+          },
+          "error_description" : {
+            "type" : "string",
+            "description" : "A user-friendly description of the error (appropriate to show to an end-user)"
+          },
+          "error_detail" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDetail"
+            }
+          }
+        },
+        "description" : "Details about why a request failed, such as missing or invalid parameters"
+      },
+      "CancellationCost" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Cost"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "token" : {
+              "type" : "string",
+              "description" : "Token used to confirm the fee when cancelling a request"
+            },
+            "token_duration" : {
+              "minimum" : 0,
+              "type" : "integer",
+              "description" : "How long, in seconds, before the token expires",
+              "format" : "int32"
+            }
+          }
+        } ]
+      },
+      "CancellationCostError" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CancellationCost"
+        }, {
+          "$ref" : "#/components/schemas/ApiError"
+        } ]
+      },
+      "CancellationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "cancel_confirmation_token" : {
+            "type" : "string",
+            "description" : "Token affirming the user accepts the cancellation fee. Required if a cancellation fee is in effect."
+          }
+        },
+        "example" : {
+          "cancel_confirmation_token" : "656a91d"
+        }
+      },
+      "Charge" : {
+        "required" : [ "amount", "currency", "payment_method" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "integer",
+            "description" : "The line item amount",
+            "format" : "int32"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The currency for the amount"
+          },
+          "payment_method" : {
+            "type" : "string",
+            "description" : "The payment method display name."
+          }
+        }
+      },
+      "Cost" : {
+        "required" : [ "amount", "currency", "description" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "integer",
+            "description" : "Total price of the ride",
+            "format" : "int32"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The ISO 4217 currency code for the amount (e.g. USD)"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description for the cost"
+          }
+        },
+        "example" : {
+          "amount" : 500,
+          "currency" : "USD",
+          "description" : "Total cost"
+        }
+      },
+      "CostEstimate" : {
+        "type" : "object",
+        "properties" : {
+          "cost_token" : {
+            "type" : "string",
+            "description" : "A token that confirms the user has accepted current Prime Time and/or fixed price charges. See 'Request a Lyft' for more details"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The ISO 4217 currency code for the amount (e.g. 'USD')"
+          },
+          "display_name" : {
+            "type" : "string",
+            "description" : "A human readable description of the ride type"
+          },
+          "estimated_cost_cents_max" : {
+            "type" : "integer",
+            "description" : "Estimated upper bound for trip cost, in minor units (cents). Estimates are not guaranteed, and only provide a reasonable range based on current conditions.\n",
+            "format" : "int32"
+          },
+          "estimated_cost_cents_min" : {
+            "type" : "integer",
+            "description" : "Estimated lower bound for trip cost, in minor units (cents). Estimates are not guaranteed, and only provide a reasonable range based on current conditions.\n",
+            "format" : "int32"
+          },
+          "estimated_distance_miles" : {
+            "type" : "number",
+            "description" : "Estimated distance for this trip\n",
+            "format" : "double"
+          },
+          "estimated_duration_seconds" : {
+            "type" : "integer",
+            "description" : "Estimated time to get from the start location to the end.\n",
+            "format" : "int32"
+          },
+          "is_valid_estimate" : {
+            "type" : "boolean",
+            "description" : "The validity of the cost estimate returned"
+          },
+          "primetime_confirmation_token" : {
+            "type" : "string",
+            "description" : "This token is needed when requesting rides. (Deprecated)"
+          },
+          "primetime_percentage" : {
+            "type" : "string",
+            "description" : "Current Prime Time Percentage. Prime Time adds a percentage to ride costs, prior to other applicable fees. When ride requests greatly outnumber available drivers, our system will automatically turn on Prime Time.\nIf Prime Time is inactive, the value returned will be '0%'.\nNote: The returned estimate already has Prime Time factored in. The value is returned here for reference and to allow users to confirm/accept Prime Time prior to initiating a ride.\n"
+          },
+          "ride_type" : {
+            "$ref" : "#/components/schemas/RideTypeEnum"
+          }
+        },
+        "description" : "A non-guaranteed estimate of price",
+        "example" : {
+          "cost_token" : "EupdCgIzy17lJoRmiO5",
+          "display_name" : "Lyft",
+          "estimated_cost_cents_max" : 1080,
+          "estimated_cost_cents_min" : 1390,
+          "estimated_distance_miles" : 12.4,
+          "estimated_duration_seconds" : 540,
+          "is_valid_estimate" : true,
+          "primetime_confirmation_token" : "EupdCgIzy17lJoRmiO5",
+          "primetime_percentage" : "25%",
+          "ride_type" : "lyft"
+        }
+      },
+      "CurrentRideLocation" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/LatLng"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "bearing" : {
+              "type" : "number",
+              "description" : "Bearing of the driver's car in degrees",
+              "format" : "double"
+            }
+          }
+        } ]
+      },
+      "DriverDetail" : {
+        "required" : [ "first_name", "image_url", "phone_number", "rating", "user_id" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "description" : "The driver's first name"
+          },
+          "image_url" : {
+            "type" : "string",
+            "description" : "The driver's image url"
+          },
+          "phone_number" : {
+            "type" : "string",
+            "description" : "The driver's contact phone number. Must be E.164 formatted.\n",
+            "format" : "phone"
+          },
+          "rating" : {
+            "type" : "string",
+            "description" : "The driver's rating based in 0-5 scale"
+          },
+          "user_id" : {
+            "type" : "string",
+            "description" : "The driver's id"
+          }
+        },
+        "example" : {
+          "first_name" : "Joe",
+          "image_url" : "http://example.com/lyft.png",
+          "phone_number" : "+15554445000",
+          "rating" : "4.9",
+          "user_id" : "123456789"
+        }
+      },
+      "ErrorDetail" : {
+        "type" : "object",
+        "properties" : {
+          "field_name" : {
+            "type" : "string",
+            "description" : "description of the error"
+          }
+        },
+        "description" : "An object with a single key-value pair, where the key is the name of the invalid parameter, and the value is a description of the error.\n",
+        "example" : {
+          "lat" : "(latitude) Missing required parameter in the query string"
+        }
+      },
+      "Eta" : {
+        "type" : "object",
+        "properties" : {
+          "display_name" : {
+            "type" : "string",
+            "description" : "A human readable description of the ride type"
+          },
+          "eta_seconds" : {
+            "type" : "integer",
+            "description" : "Estimated seconds for a driver to arrive",
+            "format" : "int32"
+          },
+          "eta_seconds_max" : {
+            "type" : "integer",
+            "description" : "Estimated upper bound of seconds for a driver to arrive",
+            "format" : "int32"
+          },
+          "is_valid_estimate" : {
+            "type" : "boolean",
+            "description" : "The validity of the ETA estimate returned"
+          },
+          "ride_type" : {
+            "$ref" : "#/components/schemas/RideTypeEnum"
+          }
+        },
+        "description" : "Estimated Time of Arrival",
+        "example" : {
+          "display_name" : "Lyft Line",
+          "eta_seconds" : 120,
+          "is_valid_estimate" : true,
+          "ride_type" : "lyft_line"
+        }
+      },
+      "LatLng" : {
+        "required" : [ "lat", "lng" ],
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "description" : "The latitude component of a location",
+            "format" : "double"
+          },
+          "lng" : {
+            "type" : "number",
+            "description" : "The longitude component of a location",
+            "format" : "double"
+          }
+        },
+        "example" : {
+          "lat" : 36.9442175,
+          "lng" : -123.8679133
+        }
+      },
+      "LineItem" : {
+        "required" : [ "amount", "currency", "type" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "integer",
+            "description" : "The line item amount",
+            "format" : "int32"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The currency for the amount"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The line item display name for a charge item"
+          }
+        }
+      },
+      "Location" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/LatLng"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "address" : {
+              "type" : "string",
+              "description" : "A human readable address at/near the given location"
+            }
+          }
+        } ]
+      },
+      "NearbyDriver" : {
+        "type" : "object",
+        "properties" : {
+          "locations" : {
+            "type" : "array",
+            "description" : "the lastest recorded driver locations up to 5 sorted in chronological order.",
+            "items" : {
+              "$ref" : "#/components/schemas/LatLng"
+            }
+          }
+        }
+      },
+      "NearbyDriversByRideType" : {
+        "type" : "object",
+        "properties" : {
+          "drivers" : {
+            "type" : "array",
+            "description" : "list of nearby drivers group by ride type sorted by eta",
+            "items" : {
+              "$ref" : "#/components/schemas/NearbyDriver"
+            }
+          },
+          "ride_type" : {
+            "type" : "string",
+            "description" : "driver's ride type. if driver is eligable for several ride types, he will be duplicated."
+          }
+        }
+      },
+      "PassengerDetail" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/UserDetail"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "last_name" : {
+              "type" : "string",
+              "description" : "The passenger's last name"
+            },
+            "user_id" : {
+              "type" : "string",
+              "description" : "The passenger's lyft user id"
+            }
+          }
+        } ]
+      },
+      "PickupDropoffLocation" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Location"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "time" : {
+              "type" : "string",
+              "description" : "Server time when the location object is created",
+              "format" : "date-time"
+            }
+          }
+        } ]
+      },
+      "PricingDetails" : {
+        "type" : "object",
+        "properties" : {
+          "base_charge" : {
+            "type" : "integer",
+            "description" : "The base charge of the trip",
+            "format" : "int32"
+          },
+          "cancel_penalty_amount" : {
+            "type" : "integer",
+            "description" : "The charge amount if cancel penalty is involved",
+            "format" : "int32"
+          },
+          "cost_minimum" : {
+            "type" : "integer",
+            "description" : "The minimum charge for the trip",
+            "format" : "int32"
+          },
+          "cost_per_mile" : {
+            "type" : "integer",
+            "description" : "The cost per mile",
+            "format" : "int32"
+          },
+          "cost_per_minute" : {
+            "type" : "integer",
+            "description" : "The cost per minute",
+            "format" : "int32"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The ISO 4217 currency code for the amount (e.g. USD)"
+          },
+          "trust_and_service" : {
+            "type" : "integer",
+            "description" : "Service fee",
+            "format" : "int32"
+          }
+        },
+        "example" : {
+          "base_charge" : 175,
+          "cancel_penalty_amount" : 500,
+          "cost_minumum" : 500,
+          "cost_per_mile" : 116,
+          "cost_per_minute" : 23,
+          "currency" : "USD",
+          "trust_and_service" : 155
+        }
+      },
+      "Profile" : {
+        "required" : [ "first_name", "has_taken_a_ride", "id", "last_name" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "description" : "The first name of this user"
+          },
+          "has_taken_a_ride" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this user has taken at least one Lyft ride"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The unique ID of this user"
+          },
+          "last_name" : {
+            "type" : "string",
+            "description" : "The last name of this user"
+          }
+        },
+        "description" : "Represents the general information about a user."
+      },
+      "RatingRequest" : {
+        "required" : [ "rating" ],
+        "type" : "object",
+        "properties" : {
+          "feedback" : {
+            "type" : "string",
+            "description" : "The passenger's written feedback about this ride"
+          },
+          "rating" : {
+            "maximum" : 5,
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "The passenger's rating of this ride from 1 to 5",
+            "format" : "int32"
+          },
+          "tip" : {
+            "type" : "object",
+            "description" : "Tip amount in minor units and tip currency",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/TipParams"
+            } ]
+          }
+        },
+        "description" : "Rating and optional feedback and tip",
+        "example" : {
+          "feedback" : "Great ride!",
+          "rating" : 5,
+          "tip" : {
+            "amount" : 100,
+            "currency" : "USD"
+          }
+        }
+      },
+      "Ride" : {
+        "required" : [ "origin", "ride_type" ],
+        "type" : "object",
+        "properties" : {
+          "cost_token" : {
+            "type" : "string",
+            "description" : "A token that confirms the user has accepted current Prime Time and/or fixed price charges"
+          },
+          "destination" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger drop off",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Location"
+            } ]
+          },
+          "origin" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger pickup",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Location"
+            } ]
+          },
+          "primetime_confirmation_token" : {
+            "type" : "string",
+            "description" : "A token that confirms the user has accepted current primetime charges (Deprecated)"
+          },
+          "ride_type" : {
+            "$ref" : "#/components/schemas/RideTypeEnum"
+          }
+        },
+        "description" : "Represents a requested, ongoing, or finished Lyft ride"
+      },
+      "RideDetail" : {
+        "type" : "object",
+        "properties" : {
+          "beacon_color" : {
+            "type" : "string",
+            "description" : "Hex color code of the driver AMP device."
+          },
+          "can_cancel" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "The array of actors who may cancel the ride at this point",
+              "enum" : [ "driver", "passenger", "dispatcher" ]
+            }
+          },
+          "canceled_by" : {
+            "type" : "string",
+            "description" : "The role of user who canceled the ride (if applicable)"
+          },
+          "cancellation_price" : {
+            "type" : "object",
+            "description" : "The cost of cancellation if there would be a penalty",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/CancellationCost"
+            } ]
+          },
+          "destination" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger drop off",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/RideLocation"
+            } ]
+          },
+          "distance_miles" : {
+            "type" : "number",
+            "description" : "The distance, in miles, that this ride traveled. This field is only present after drop-off",
+            "format" : "float"
+          },
+          "driver" : {
+            "$ref" : "#/components/schemas/DriverDetail"
+          },
+          "dropoff" : {
+            "type" : "object",
+            "description" : "The *actual* location of passenger drop off",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/PickupDropoffLocation"
+            } ]
+          },
+          "duration_seconds" : {
+            "type" : "integer",
+            "description" : "Duration of the ride in seconds from pickup to drop-off. This field is only present after drop-off.",
+            "format" : "int32"
+          },
+          "feedback" : {
+            "type" : "string",
+            "description" : "The written feedback the user left for this ride"
+          },
+          "generated_at" : {
+            "type" : "string",
+            "description" : "The request timestamp in date and time",
+            "format" : "date-time"
+          },
+          "line_items" : {
+            "type" : "array",
+            "description" : "The break down of cost",
+            "items" : {
+              "$ref" : "#/components/schemas/LineItem"
+            }
+          },
+          "location" : {
+            "type" : "object",
+            "description" : "The *current* location info of the ride",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/CurrentRideLocation"
+            } ]
+          },
+          "origin" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger pickup",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/RideLocation"
+            } ]
+          },
+          "passenger" : {
+            "$ref" : "#/components/schemas/PassengerDetail"
+          },
+          "pickup" : {
+            "type" : "object",
+            "description" : "The *actual* location of passenger pickup",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/PickupDropoffLocation"
+            } ]
+          },
+          "price" : {
+            "type" : "object",
+            "description" : "The total price for the current ride",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Cost"
+            } ]
+          },
+          "pricing_details_url" : {
+            "type" : "string",
+            "description" : "The web view showing the pricing structure for the geographic area where the ride was taken\n"
+          },
+          "primetime_percentage" : {
+            "type" : "string",
+            "description" : "The Prime Time percentage applied to the base price"
+          },
+          "rating" : {
+            "type" : "integer",
+            "description" : "The rating the user left for this ride, from 1 to 5",
+            "format" : "int32"
+          },
+          "requested_at" : {
+            "type" : "string",
+            "description" : "The ride requested timestamp in date and time",
+            "format" : "date-time"
+          },
+          "ride_id" : {
+            "type" : "string",
+            "description" : "The unique ID of this ride"
+          },
+          "ride_profile" : {
+            "type" : "object",
+            "description" : "Indicates whether the ride was requested from the business profile or personal profile of the user.\n",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/RideProfileEnum"
+            } ]
+          },
+          "ride_type" : {
+            "$ref" : "#/components/schemas/RideTypeEnumWithOther"
+          },
+          "route_url" : {
+            "type" : "string",
+            "description" : "The web view showing the passenger, driver, and route for this ride. This field will only be present for rides created through this API, or that have been shared through the \"Share my Route\" feature\n"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/RideStatusEnum"
+          },
+          "vehicle" : {
+            "$ref" : "#/components/schemas/VehicleDetail"
+          }
+        },
+        "description" : "Detail information about a ride",
+        "example" : {
+          "beacon_color" : "#FFFFFF",
+          "destination" : {
+            "address" : "987 Second St, Anytown, CA",
+            "lat" : 36.9453452,
+            "lng" : -123.8642521
+          },
+          "distance_miles" : 16.2,
+          "driver" : {
+            "first_name" : "Joe",
+            "image_url" : "http://example.com/lyft.png",
+            "phone_number" : "+15554445111",
+            "rating" : "4.9"
+          },
+          "dropoff" : {
+            "address" : "987 Second St, Anytown, CA",
+            "lat" : 36.9453452,
+            "lng" : -123.8642521,
+            "time" : "2015-09-24T23:28:25+00:00"
+          },
+          "duration_seconds" : 1620,
+          "line_items" : [ {
+            "amount" : 500,
+            "currency" : "USD",
+            "type" : "Ride"
+          }, {
+            "amount" : 250,
+            "currency" : "USD",
+            "type" : "Prime Time"
+          }, {
+            "amount" : 155,
+            "currency" : "USD",
+            "type" : "Service fee"
+          } ],
+          "location" : {
+            "address" : "987 Second St, Anytown, CA",
+            "lat" : 36.9453452,
+            "lng" : -123.8642521
+          },
+          "origin" : {
+            "address" : "123 Main St, Anytown, CA",
+            "lat" : 36.9442175,
+            "lng" : -123.8679133
+          },
+          "passenger" : {
+            "first_name" : "Jane",
+            "phone_number" : "+15554445000",
+            "user_id" : "776630198662493392"
+          },
+          "pickup" : {
+            "address" : "123 Main St, Anytown, CA",
+            "lat" : 36.9442175,
+            "lng" : -123.8679133,
+            "time" : "2015-09-24T23:27:25+00:00"
+          },
+          "price" : {
+            "amount" : 905,
+            "currency" : "USD",
+            "description" : "Total ride price"
+          },
+          "primetime_percentage" : "50%",
+          "requested_at" : "2015-09-24T23:26:25+00:00",
+          "ride_id" : 123456789,
+          "ride_profile" : "personal",
+          "ride_type" : "lyft",
+          "status" : "droppedOff",
+          "vehicle" : {
+            "color" : "black",
+            "image_url" : "http://example.com/lyft.png",
+            "license_plate" : "AAAAAAA",
+            "make" : "Audi",
+            "model" : "A4"
+          }
+        }
+      },
+      "RideLocation" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Location"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "eta_seconds" : {
+              "type" : "integer",
+              "description" : "Estimated seconds for a driver to pickup or reach destination based on ride status",
+              "format" : "int32"
+            }
+          }
+        } ]
+      },
+      "RideProfileEnum" : {
+        "type" : "string",
+        "description" : "The payment profile which the user has picked for the ride",
+        "enum" : [ "personal", "business" ]
+      },
+      "RideReceipt" : {
+        "type" : "object",
+        "properties" : {
+          "charges" : {
+            "type" : "array",
+            "description" : "The break down of charge method",
+            "items" : {
+              "$ref" : "#/components/schemas/Charge"
+            }
+          },
+          "line_items" : {
+            "type" : "array",
+            "description" : "The break down of line items",
+            "items" : {
+              "$ref" : "#/components/schemas/LineItem"
+            }
+          },
+          "price" : {
+            "type" : "object",
+            "description" : "The total price for the current ride",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Cost"
+            } ]
+          },
+          "requested_at" : {
+            "type" : "string",
+            "description" : "The ride requested timestamp in date and time",
+            "format" : "date-time"
+          },
+          "ride_id" : {
+            "type" : "string",
+            "description" : "The unique ID of this ride"
+          },
+          "ride_profile" : {
+            "type" : "object",
+            "description" : "Indicates whether the ride was requested from the business profile or personal profile of the user.\n",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/RideProfileEnum"
+            } ]
+          }
+        },
+        "description" : "Receipt information of a processed ride.",
+        "example" : {
+          "charges" : [ {
+            "amount" : 500,
+            "currency" : "USD",
+            "payment_method" : "Card"
+          }, {
+            "amount" : 405,
+            "currency" : "USD",
+            "payment_method" : "Lyft Credit"
+          } ],
+          "line_items" : [ {
+            "amount" : 500,
+            "currency" : "USD",
+            "type" : "Ride"
+          }, {
+            "amount" : 250,
+            "currency" : "USD",
+            "type" : "Prime Time"
+          }, {
+            "amount" : 155,
+            "currency" : "USD",
+            "type" : "Service fee"
+          } ],
+          "price" : {
+            "amount" : 905,
+            "currency" : "USD",
+            "description" : "Total ride price"
+          },
+          "requested_at" : "2015-09-24T23:26:25+00:00",
+          "ride_id" : 123456789,
+          "ride_profile" : "personal"
+        }
+      },
+      "RideRequest" : {
+        "type" : "object",
+        "properties" : {
+          "destination" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger drop off",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Location"
+            } ]
+          },
+          "origin" : {
+            "type" : "object",
+            "description" : "The *requested* location for passenger pickup",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Location"
+            } ]
+          },
+          "passenger" : {
+            "$ref" : "#/components/schemas/PassengerDetail"
+          },
+          "ride_id" : {
+            "type" : "string",
+            "description" : "The ID of the requested ride"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/RideStatusEnum"
+          }
+        },
+        "description" : "Minimal set of ride details",
+        "example" : {
+          "destination" : {
+            "address" : "123 Main St, Anytown, CA",
+            "lat" : 36.9442175,
+            "lng" : -123.8679133
+          },
+          "origin" : {
+            "address" : "123 Main St, Anytown, CA",
+            "lat" : 36.9442175,
+            "lng" : -123.8679133
+          },
+          "passenger" : {
+            "first_name" : "Jane",
+            "image_url" : "https://public-api.lyft.com/static/images/user.png",
+            "rating" : 4.9,
+            "user_id" : "776630198662493392"
+          },
+          "ride_id" : 123456789,
+          "status" : "pending"
+        }
+      },
+      "RideRequestError" : {
+        "required" : [ "error" ],
+        "type" : "object",
+        "properties" : {
+          "cost_token" : {
+            "type" : "string",
+            "description" : "A token that confirms the user has accepted current Prime Time and/or fixed price charges"
+          },
+          "error" : {
+            "type" : "string",
+            "description" : "A \"slug\" that serves as the error code (eg. \"bad_parameter\")"
+          },
+          "error_description" : {
+            "type" : "string",
+            "description" : "A user-friendly description of the error (appropriate to show to an end-user)"
+          },
+          "error_detail" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDetail"
+            }
+          },
+          "error_uri" : {
+            "type" : "string",
+            "description" : "When a user must go through another flow before requesting a ride, this URI specifies which flow to use (e.g. an account challenge flow in a web view)"
+          },
+          "primetime_confirmation_token" : {
+            "type" : "string",
+            "description" : "A token that confirms the user has accepted current Prime Time charges (Deprecated)"
+          },
+          "primetime_multiplier" : {
+            "type" : "number",
+            "description" : "Current Prime Time multiplier (eg. if primetime_percentage is 100%, primetime_multiplier will be 2.0)",
+            "format" : "float"
+          },
+          "primetime_percentage" : {
+            "type" : "string",
+            "description" : "Current Prime Time percentage"
+          },
+          "token_duration" : {
+            "type" : "string",
+            "description" : "Validity of the token in seconds"
+          }
+        },
+        "description" : "Details about why a request failed, such as missing or invalid parameters"
+      },
+      "RideStatusEnum" : {
+        "type" : "string",
+        "description" : "The status of the ride",
+        "enum" : [ "pending", "accepted", "arrived", "pickedUp", "droppedOff", "canceled", "scheduled", "unknown" ]
+      },
+      "RideType" : {
+        "type" : "object",
+        "properties" : {
+          "display_name" : {
+            "type" : "string",
+            "description" : "A human readable description of the ride type"
+          },
+          "image_url" : {
+            "type" : "string",
+            "description" : "The URL of an image representing this ride type"
+          },
+          "pricing_details" : {
+            "$ref" : "#/components/schemas/PricingDetails"
+          },
+          "ride_type" : {
+            "$ref" : "#/components/schemas/RideTypeEnum"
+          },
+          "scheduled_pricing_details" : {
+            "$ref" : "#/components/schemas/PricingDetails"
+          },
+          "seats" : {
+            "type" : "integer",
+            "description" : "The maximum number of seats available for rides requested with this ride type"
+          }
+        },
+        "example" : {
+          "ride_types" : [ {
+            "display_name" : "Lyft Line",
+            "image_url" : "https://cdn.lyft.com/assets/car_standard.png",
+            "pricing_details" : {
+              "base_charge" : 200,
+              "cancel_penalty_amount" : 500,
+              "cost_minimum" : 475,
+              "cost_per_mile" : 115,
+              "cost_per_minute" : 23,
+              "currency" : "USD",
+              "trust_and_service" : 155
+            },
+            "ride_type" : "lyft_line",
+            "seats" : 2
+          }, {
+            "display_name" : "Lyft",
+            "image_url" : "https://cdn.lyft.com/assets/car_standard.png",
+            "pricing_details" : {
+              "base_charge" : 200,
+              "cancel_penalty_amount" : 500,
+              "cost_minimum" : 500,
+              "cost_per_mile" : 115,
+              "cost_per_minute" : 23,
+              "currency" : "USD",
+              "trust_and_service" : 155
+            },
+            "ride_type" : "lyft",
+            "seats" : 4
+          }, {
+            "display_name" : "Lyft Plus",
+            "image_url" : "https://cdn.lyft.com/assets/car_plus.png",
+            "pricing_details" : {
+              "base_charge" : 300,
+              "cancel_penalty_amount" : 500,
+              "cost_minimum" : 700,
+              "cost_per_mile" : 200,
+              "cost_per_minute" : 30,
+              "currency" : "USD",
+              "trust_and_service" : 155
+            },
+            "ride_type" : "lyft_plus",
+            "seats" : 6
+          } ]
+        }
+      },
+      "RideTypeEnum" : {
+        "type" : "string",
+        "description" : "The ID of the ride type",
+        "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+      },
+      "RideTypeEnumWithOther" : {
+        "type" : "string",
+        "description" : "The ID of the ride type",
+        "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv", "other" ]
+      },
+      "SandboxDriverAvailability" : {
+        "required" : [ "driver_availability", "lat", "lng" ],
+        "type" : "object",
+        "properties" : {
+          "driver_availability" : {
+            "type" : "boolean",
+            "description" : "The availability of driver in a region"
+          },
+          "lat" : {
+            "type" : "number",
+            "description" : "The latitude component of a location",
+            "format" : "double"
+          },
+          "lng" : {
+            "type" : "number",
+            "description" : "The longitude component of a location",
+            "format" : "double"
+          }
+        },
+        "example" : {
+          "driver_availability" : true,
+          "lat" : 37.7833,
+          "lng" : -122.4167
+        }
+      },
+      "SandboxPrimetime" : {
+        "required" : [ "lat", "lng", "primetime_percentage" ],
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "description" : "The latitude component of a location",
+            "format" : "double"
+          },
+          "lng" : {
+            "type" : "number",
+            "description" : "The longitude component of a location",
+            "format" : "double"
+          },
+          "primetime_percentage" : {
+            "type" : "string",
+            "description" : "The Prime Time to be applied as a string, e.g., '25%'"
+          }
+        },
+        "example" : {
+          "lat" : 37.7833,
+          "lng" : -122.4167,
+          "primetime_percentage" : "25%"
+        }
+      },
+      "SandboxRideStatus" : {
+        "required" : [ "status" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "$ref" : "#/components/schemas/RideStatusEnum"
+          }
+        },
+        "example" : {
+          "status" : "lyft"
+        }
+      },
+      "SandboxRideType" : {
+        "required" : [ "lat", "lng", "ride_types" ],
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "description" : "The latitude component of a location",
+            "format" : "double"
+          },
+          "lng" : {
+            "type" : "number",
+            "description" : "The longitude component of a location",
+            "format" : "double"
+          },
+          "ride_types" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RideTypeEnum"
+            }
+          }
+        },
+        "example" : {
+          "lat" : 37.7833,
+          "lng" : -122.4167,
+          "ride_types" : [ "lyft", "lyft_line", "lyft_plus" ]
+        }
+      },
+      "SandboxRideUpdate" : {
+        "type" : "object",
+        "properties" : {
+          "ride_id" : {
+            "type" : "string",
+            "description" : "The ID of the ride"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/RideStatusEnum"
+          }
+        },
+        "description" : "Response when a sandbox ride is propagated through ride status",
+        "example" : {
+          "ride_id" : 123456789,
+          "status" : "accepted"
+        }
+      },
+      "Tip" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "A tip for the driver in cents. To be charged to the user's default charge account.",
+            "format" : "int32"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "The currency in which you want to tip. e.g. USD"
+          }
+        },
+        "example" : {
+          "amount" : 300,
+          "currency" : "USD"
+        }
+      },
+      "TipParams" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tip"
+        } ]
+      },
+      "UserDetail" : {
+        "required" : [ "first_name", "image_url", "rating" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "description" : "The passenger's first name"
+          },
+          "image_url" : {
+            "type" : "string",
+            "description" : "The passenger's profile image"
+          },
+          "rating" : {
+            "type" : "string",
+            "description" : "The passenger's rating"
+          }
+        },
+        "example" : {
+          "first_name" : "Jane",
+          "image_url" : "https://public-api.lyft.com/static/images/user.png",
+          "rating" : 4.9
+        }
+      },
+      "VehicleDetail" : {
+        "required" : [ "color", "image_url", "license_plate", "license_plate_state", "make", "model", "year" ],
+        "type" : "object",
+        "properties" : {
+          "color" : {
+            "type" : "string",
+            "description" : "The vehicle's color"
+          },
+          "image_url" : {
+            "type" : "string",
+            "description" : "The vehicle's image url"
+          },
+          "license_plate" : {
+            "type" : "string",
+            "description" : "The vehicle's license plate"
+          },
+          "license_plate_state" : {
+            "type" : "string",
+            "description" : "The vehicle's license plate state"
+          },
+          "make" : {
+            "type" : "string",
+            "description" : "The vehicle's maker"
+          },
+          "model" : {
+            "type" : "string",
+            "description" : "The vehicle's model"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "The vehicle's model year",
+            "format" : "int32"
+          }
+        },
+        "example" : {
+          "color" : "black",
+          "image_url" : "http://example.com/lyft.png",
+          "license_plate" : "AAAAAAA",
+          "license_plate_state" : "CA",
+          "make" : "Audi",
+          "model" : "A4",
+          "year" : 2016
+        }
+      }
+    },
+    "parameters" : {
+      "LatParam" : {
+        "name" : "lat",
+        "in" : "query",
+        "description" : "Latitude of a location",
+        "required" : true,
+        "schema" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "LngParam" : {
+        "name" : "lng",
+        "in" : "query",
+        "description" : "Longitude of a location",
+        "required" : true,
+        "schema" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "OptionalDestLatParam" : {
+        "name" : "destination_lat",
+        "in" : "query",
+        "description" : "Latitude of destination location",
+        "schema" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "OptionalDestLngParam" : {
+        "name" : "destination_lng",
+        "in" : "query",
+        "description" : "Longitude of destination location",
+        "schema" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "OptionalEndTime" : {
+        "name" : "end_time",
+        "in" : "query",
+        "description" : "Restrict to rides starting before this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n",
+        "schema" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      },
+      "OptionalLimit" : {
+        "name" : "limit",
+        "in" : "query",
+        "description" : "The maximum number of rides to return. The default limit is 10 if not specified. The maximum allowed value is 50, an integer greater that 50 will return at most 50 results.\n",
+        "schema" : {
+          "maximum" : 50,
+          "exclusiveMaximum" : false,
+          "minimum" : 0,
+          "exclusiveMinimum" : true,
+          "type" : "integer",
+          "format" : "int32",
+          "default" : 10
+        }
+      },
+      "OptionalRideType" : {
+        "name" : "ride_type",
+        "in" : "query",
+        "description" : "ID of a ride type",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+        }
+      },
+      "RideStatusParam" : {
+        "name" : "ride_type",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "lyft", "lyft_line", "lyft_plus", "lyft_premier", "lyft_lux", "lyft_luxsuv" ]
+        }
+      },
+      "StartTime" : {
+        "name" : "start_time",
+        "in" : "query",
+        "description" : "Restrict to rides starting after this point in time. The earliest supported date is 2015-01-01T00:00:00+00:00\n",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,661 @@
-{"openapi":"3.0.1","info":{"title":"Guest Diagnostic Settings","description":"API to Add/Remove/List Guest Diagnostics Configuration to Azure Resources","version":"2018-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/microsoft.insights/guestDiagnosticSettings":{"get":{"description":"Get a list of all guest diagnostic settings in a subscription.","operationId":"guestDiagnosticsSettings_List","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsList"}}}},"default":{"description":"An error occurred and the list of guest diagnostic settings could not be retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/guestDiagnosticSettings":{"get":{"description":"Get a list of all guest diagnostic settings in a resource group.","operationId":"guestDiagnosticsSettings_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsList"}}}},"default":{"description":"An error occurred and the list of guest diagnostic settings could not be retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/guestDiagnosticSettings/{diagnosticSettingsName}":{"get":{"tags":["GuestDiagnosticsSettings"],"description":"Gets guest diagnostics settings.","operationId":"guestDiagnosticsSettings_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"diagnosticSettingsName","in":"path","description":"The name of the diagnostic setting.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}}},"default":{"description":"An error occurred and the diagnostic settings could not be retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"tags":["GuestDiagnosticsSettings"],"description":"Creates or updates guest diagnostics settings.","operationId":"guestDiagnosticsSettings_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"diagnosticSettingsName","in":"path","description":"The name of the diagnostic setting.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The configuration to create or update.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}},"required":true},"responses":{"200":{"description":"An existing guest diagnostic settings was successfully updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}}},"201":{"description":"A new guest diagnostic settings was successfully created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}}},"default":{"description":"An error occurred and the guest diagnostic settings could not be created or updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"delete":{"tags":["GuestDiagnosticsSettings"],"description":"Delete guest diagnostics settings.","operationId":"guestDiagnosticsSettings_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"diagnosticSettingsName","in":"path","description":"The name of the diagnostic setting.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The diagnostic settings was successfully deleted."},"204":{"description":"The diagnostic settings does not exist. It may have already been deleted."},"default":{"description":"An error occurred and the diagnostic settings could not be deleted.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"patch":{"description":"Updates guest diagnostics settings.","operationId":"guestDiagnosticsSettings_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"diagnosticSettingsName","in":"path","description":"The name of the diagnostic setting.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The configuration to patch.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsPatchResource"}}},"required":true},"responses":{"200":{"description":"An existing guest diagnostic settings was successfully updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}}},"201":{"description":"A new guest diagnostic settings was successfully created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}}},"default":{"description":"An error occurred and the guest diagnostic settings could not be created or updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"DataSource":{"required":["configuration","kind","sinks"],"type":"object","properties":{"configuration":{"$ref":"#/components/schemas/DataSourceConfiguration"},"kind":{"type":"string","description":"Datasource kind","enum":["PerformanceCounter","ETWProviders","WindowsEventLogs"]},"sinks":{"type":"array","items":{"$ref":"#/components/schemas/SinkConfiguration"}}},"description":"Data source object contains configuration to collect telemetry and one or more sinks to send that telemetry data to"},"DataSourceConfiguration":{"type":"object","properties":{"eventLogs":{"type":"array","description":"Windows event logs configuration.","items":{"$ref":"#/components/schemas/EventLogConfiguration"}},"perfCounters":{"type":"array","description":"Performance counter configuration","items":{"$ref":"#/components/schemas/PerformanceCounterConfiguration"}},"providers":{"type":"array","description":"ETW providers configuration","items":{"$ref":"#/components/schemas/EtwProviderConfiguration"}}}},"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"EtwEventConfiguration":{"required":["id","name"],"type":"object","properties":{"filter":{"type":"string"},"id":{"type":"integer"},"name":{"type":"string"}}},"EtwProviderConfiguration":{"required":["events","id"],"type":"object","properties":{"events":{"type":"array","items":{"$ref":"#/components/schemas/EtwEventConfiguration"}},"id":{"type":"string"}}},"EventLogConfiguration":{"required":["logName"],"type":"object","properties":{"filter":{"type":"string"},"logName":{"type":"string"}}},"GuestDiagnosticSettings":{"type":"object","properties":{"dataSources":{"type":"array","description":"the array of data source object which are configured to collect and send data","items":{"$ref":"#/components/schemas/DataSource"}},"osType":{"type":"string","description":"Operating system type for the configuration","enum":["Windows","Linux"]},"proxySetting":{"type":"string"}},"description":"Virtual machine diagnostic settings"},"GuestDiagnosticSettingsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"Provides the link to retrieve the next set of elements."},"value":{"type":"array","description":"The list of guest diagnostic settings.","items":{"$ref":"#/components/schemas/GuestDiagnosticSettingsResource"}}},"description":"A list of guest diagnostic settings."},"GuestDiagnosticSettingsPatchResource":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/GuestDiagnosticSettings"},"tags":{"type":"object","description":"Resource tags"}},"description":"An diagnostic settings object for the body of patch operations."},"GuestDiagnosticSettingsResource":{"properties":{"properties":{"$ref":"#/components/schemas/GuestDiagnosticSettings"}},"description":"Virtual machine guest diagnostics settings resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"PerformanceCounterConfiguration":{"required":["name","samplingPeriod"],"type":"object","properties":{"instance":{"type":"string"},"name":{"type":"string"},"samplingPeriod":{"type":"string"}}},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Azure resource name","readOnly":true},"tags":{"type":"object","description":"Resource tags"},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"SinkConfiguration":{"required":["kind"],"type":"object","properties":{"kind":{"type":"string","enum":["EventHub","ApplicationInsights","LogAnalytics"]}}}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"DiagnosticSettingNameParameter":{"name":"diagnosticSettingsName","in":"path","description":"The name of the diagnostic setting.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Guest Diagnostic Settings",
+    "description" : "API to Add/Remove/List Guest Diagnostics Configuration to Azure Resources",
+    "version" : "2018-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/microsoft.insights/guestDiagnosticSettings" : {
+      "get" : {
+        "description" : "Get a list of all guest diagnostic settings in a subscription.",
+        "operationId" : "guestDiagnosticsSettings_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the list of guest diagnostic settings could not be retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/guestDiagnosticSettings" : {
+      "get" : {
+        "description" : "Get a list of all guest diagnostic settings in a resource group.",
+        "operationId" : "guestDiagnosticsSettings_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the list of guest diagnostic settings could not be retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/guestDiagnosticSettings/{diagnosticSettingsName}" : {
+      "get" : {
+        "tags" : [ "GuestDiagnosticsSettings" ],
+        "description" : "Gets guest diagnostics settings.",
+        "operationId" : "guestDiagnosticsSettings_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticSettingsName",
+          "in" : "path",
+          "description" : "The name of the diagnostic setting.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the diagnostic settings could not be retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "GuestDiagnosticsSettings" ],
+        "description" : "Creates or updates guest diagnostics settings.",
+        "operationId" : "guestDiagnosticsSettings_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticSettingsName",
+          "in" : "path",
+          "description" : "The name of the diagnostic setting.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The configuration to create or update.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An existing guest diagnostic settings was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "A new guest diagnostic settings was successfully created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the guest diagnostic settings could not be created or updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "GuestDiagnosticsSettings" ],
+        "description" : "Delete guest diagnostics settings.",
+        "operationId" : "guestDiagnosticsSettings_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticSettingsName",
+          "in" : "path",
+          "description" : "The name of the diagnostic setting.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The diagnostic settings was successfully deleted."
+          },
+          "204" : {
+            "description" : "The diagnostic settings does not exist. It may have already been deleted."
+          },
+          "default" : {
+            "description" : "An error occurred and the diagnostic settings could not be deleted.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "description" : "Updates guest diagnostics settings.",
+        "operationId" : "guestDiagnosticsSettings_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticSettingsName",
+          "in" : "path",
+          "description" : "The name of the diagnostic setting.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The configuration to patch.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GuestDiagnosticSettingsPatchResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An existing guest diagnostic settings was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "A new guest diagnostic settings was successfully created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the guest diagnostic settings could not be created or updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "DataSource" : {
+        "required" : [ "configuration", "kind", "sinks" ],
+        "type" : "object",
+        "properties" : {
+          "configuration" : {
+            "$ref" : "#/components/schemas/DataSourceConfiguration"
+          },
+          "kind" : {
+            "type" : "string",
+            "description" : "Datasource kind",
+            "enum" : [ "PerformanceCounter", "ETWProviders", "WindowsEventLogs" ]
+          },
+          "sinks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SinkConfiguration"
+            }
+          }
+        },
+        "description" : "Data source object contains configuration to collect telemetry and one or more sinks to send that telemetry data to"
+      },
+      "DataSourceConfiguration" : {
+        "type" : "object",
+        "properties" : {
+          "eventLogs" : {
+            "type" : "array",
+            "description" : "Windows event logs configuration.",
+            "items" : {
+              "$ref" : "#/components/schemas/EventLogConfiguration"
+            }
+          },
+          "perfCounters" : {
+            "type" : "array",
+            "description" : "Performance counter configuration",
+            "items" : {
+              "$ref" : "#/components/schemas/PerformanceCounterConfiguration"
+            }
+          },
+          "providers" : {
+            "type" : "array",
+            "description" : "ETW providers configuration",
+            "items" : {
+              "$ref" : "#/components/schemas/EtwProviderConfiguration"
+            }
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "EtwEventConfiguration" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "filter" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EtwProviderConfiguration" : {
+        "required" : [ "events", "id" ],
+        "type" : "object",
+        "properties" : {
+          "events" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/EtwEventConfiguration"
+            }
+          },
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventLogConfiguration" : {
+        "required" : [ "logName" ],
+        "type" : "object",
+        "properties" : {
+          "filter" : {
+            "type" : "string"
+          },
+          "logName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GuestDiagnosticSettings" : {
+        "type" : "object",
+        "properties" : {
+          "dataSources" : {
+            "type" : "array",
+            "description" : "the array of data source object which are configured to collect and send data",
+            "items" : {
+              "$ref" : "#/components/schemas/DataSource"
+            }
+          },
+          "osType" : {
+            "type" : "string",
+            "description" : "Operating system type for the configuration",
+            "enum" : [ "Windows", "Linux" ]
+          },
+          "proxySetting" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Virtual machine diagnostic settings"
+      },
+      "GuestDiagnosticSettingsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Provides the link to retrieve the next set of elements."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of guest diagnostic settings.",
+            "items" : {
+              "$ref" : "#/components/schemas/GuestDiagnosticSettingsResource"
+            }
+          }
+        },
+        "description" : "A list of guest diagnostic settings."
+      },
+      "GuestDiagnosticSettingsPatchResource" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/GuestDiagnosticSettings"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "An diagnostic settings object for the body of patch operations."
+      },
+      "GuestDiagnosticSettingsResource" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/GuestDiagnosticSettings"
+          }
+        },
+        "description" : "Virtual machine guest diagnostics settings resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "PerformanceCounterConfiguration" : {
+        "required" : [ "name", "samplingPeriod" ],
+        "type" : "object",
+        "properties" : {
+          "instance" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "samplingPeriod" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "SinkConfiguration" : {
+        "required" : [ "kind" ],
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string",
+            "enum" : [ "EventHub", "ApplicationInsights", "LogAnalytics" ]
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "DiagnosticSettingNameParameter" : {
+        "name" : "diagnosticSettingsName",
+        "in" : "path",
+        "description" : "The name of the diagnostic setting.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription Id.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

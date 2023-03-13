@@ -1,1 +1,457 @@
-{"openapi":"3.0.1","info":{"title":"MonitorManagementClient","version":"2018-09-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{resourceUri}/providers/microsoft.insights/baseline":{"get":{"tags":["Baseline"],"description":"**Gets the baseline values for a resource**.","operationId":"Baseline_Get","parameters":[{"name":"resourceUri","in":"path","description":"The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1","required":true,"schema":{"type":"string"}},{"name":"metricnames","in":"query","description":"The names of the metrics (comma separated) to retrieve.","schema":{"type":"string"}},{"name":"timespan","in":"query","description":"The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.","schema":{"type":"string"}},{"name":"interval","in":"query","description":"The interval (i.e. timegrain) of the query.","schema":{"type":"string","format":"duration"}},{"name":"aggregation","in":"query","description":"The aggregation type of the metric to retrieve the baseline for.","schema":{"type":"string"}},{"name":"sensitivities","in":"query","description":"The list of sensitivities (comma separated) to retrieve.","schema":{"type":"string"}},{"name":"resultType","in":"query","description":"Allows retrieving only metadata of the baseline. On data request all information is retrieved.","schema":{"type":"string","enum":["Data","Metadata"]}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"metricnamespace","in":"query","description":"Metric namespace to query metric definitions for.","schema":{"type":"string"}},{"name":"$filter","in":"query","description":"The **$filter** is used to describe a set of dimensions with their concrete values which produce a specific metric's time series, in which a baseline is requested for.","schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to get the list of metric values.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BaselineResponse"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/{resourceUri}/providers/microsoft.insights/baseline/{metricName}":{"get":{"tags":["Baseline"],"description":"**Gets the baseline values for a specific metric**.","operationId":"MetricBaseline_Get","parameters":[{"name":"resourceUri","in":"path","description":"The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1","required":true,"schema":{"type":"string"}},{"name":"metricName","in":"path","description":"The name of the metric to retrieve the baseline for.","required":true,"schema":{"type":"string"}},{"name":"timespan","in":"query","description":"The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.","schema":{"type":"string"}},{"name":"interval","in":"query","description":"The interval (i.e. timegrain) of the query.","schema":{"type":"string","format":"duration"}},{"name":"aggregation","in":"query","description":"The aggregation type of the metric to retrieve the baseline for.","schema":{"type":"string"}},{"name":"sensitivities","in":"query","description":"The list of sensitivities (comma separated) to retrieve.","schema":{"type":"string"}},{"name":"resultType","in":"query","description":"Allows retrieving only metadata of the baseline. On data request all information is retrieved.","schema":{"type":"string","enum":["Data","Metadata"]}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"metricnamespace","in":"query","description":"Metric namespace to query metric definitions for.","schema":{"type":"string"}},{"name":"$filter","in":"query","description":"The **$filter** is used to describe a set of dimensions with their concrete values which produce a specific metric's time series, in which a baseline is requested for.","schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to get the list of metric values.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BaselineResponse"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"Baseline":{"required":["highThresholds","lowThresholds","sensitivity"],"type":"object","properties":{"highThresholds":{"type":"array","description":"The high thresholds of the baseline.","items":{"type":"number","description":"A single high threshold value.","format":"double"}},"lowThresholds":{"type":"array","description":"The low thresholds of the baseline.","items":{"type":"number","description":"A single low threshold value.","format":"double"}},"sensitivity":{"type":"string","description":"The sensitivity of the baseline.","enum":["Low","Medium","High"]}},"description":"The baseline values for a single sensitivity value."},"BaselineMetadataValue":{"type":"object","properties":{"name":{"$ref":"#/components/schemas/LocalizableString"},"value":{"type":"string","description":"The value of the metadata."}},"description":"Represents a baseline metadata value."},"BaselineProperties":{"type":"object","properties":{"aggregation":{"type":"string","description":"The aggregation type of the metric."},"baseline":{"type":"array","description":"The baseline values for each sensitivity.","items":{"$ref":"#/components/schemas/Baseline"}},"interval":{"type":"string","description":"The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.","format":"duration"},"metadata":{"type":"array","description":"The baseline metadata values.","items":{"$ref":"#/components/schemas/BaselineMetadataValue"}},"timespan":{"type":"string","description":"The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested."},"timestamps":{"type":"array","description":"The array of timestamps of the baselines.","items":{"type":"string","description":"The timestamp for the baseline value in ISO 8601 format.","format":"date-time"}}},"description":"The baseline properties class."},"BaselineResponse":{"type":"object","properties":{"id":{"type":"string","description":"The metric baseline ID.","readOnly":true},"name":{"$ref":"#/components/schemas/LocalizableString"},"properties":{"$ref":"#/components/schemas/BaselineProperties"},"type":{"type":"string","description":"The resource type of the baseline resource.","readOnly":true}},"description":"The response to a baseline query."},"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"LocalizableString":{"required":["value"],"type":"object","properties":{"localizedValue":{"type":"string","description":"The locale specific value."},"value":{"type":"string","description":"The invariant value."}},"description":"The localizable string class."}},"parameters":{"AggregationParameter":{"name":"aggregation","in":"query","description":"The aggregation type of the metric to retrieve the baseline for.","schema":{"type":"string"}},"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"BaselineResultTypeParameter":{"name":"resultType","in":"query","description":"Allows retrieving only metadata of the baseline. On data request all information is retrieved.","schema":{"type":"string","enum":["Data","Metadata"]}},"ExtendedResourceUriParameter":{"name":"resourceUri","in":"path","description":"The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1","required":true,"schema":{"type":"string"}},"IntervalParameter":{"name":"interval","in":"query","description":"The interval (i.e. timegrain) of the query.","schema":{"type":"string","format":"duration"}},"MetricNameParameter":{"name":"metricName","in":"path","description":"The name of the metric to retrieve the baseline for.","required":true,"schema":{"type":"string"}},"MetricNamesParameter":{"name":"metricnames","in":"query","description":"The names of the metrics (comma separated) to retrieve.","schema":{"type":"string"}},"MetricNamespaceParameter":{"name":"metricnamespace","in":"query","description":"Metric namespace to query metric definitions for.","schema":{"type":"string"}},"SensitivitiesParameter":{"name":"sensitivities","in":"query","description":"The list of sensitivities (comma separated) to retrieve.","schema":{"type":"string"}},"TimespanParameter":{"name":"timespan","in":"query","description":"The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.","schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MonitorManagementClient",
+    "version" : "2018-09-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{resourceUri}/providers/microsoft.insights/baseline" : {
+      "get" : {
+        "tags" : [ "Baseline" ],
+        "description" : "**Gets the baseline values for a resource**.",
+        "operationId" : "Baseline_Get",
+        "parameters" : [ {
+          "name" : "resourceUri",
+          "in" : "path",
+          "description" : "The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metricnames",
+          "in" : "query",
+          "description" : "The names of the metrics (comma separated) to retrieve.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timespan",
+          "in" : "query",
+          "description" : "The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "interval",
+          "in" : "query",
+          "description" : "The interval (i.e. timegrain) of the query.",
+          "schema" : {
+            "type" : "string",
+            "format" : "duration"
+          }
+        }, {
+          "name" : "aggregation",
+          "in" : "query",
+          "description" : "The aggregation type of the metric to retrieve the baseline for.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivities",
+          "in" : "query",
+          "description" : "The list of sensitivities (comma separated) to retrieve.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resultType",
+          "in" : "query",
+          "description" : "Allows retrieving only metadata of the baseline. On data request all information is retrieved.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Data", "Metadata" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metricnamespace",
+          "in" : "query",
+          "description" : "Metric namespace to query metric definitions for.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The **$filter** is used to describe a set of dimensions with their concrete values which produce a specific metric's time series, in which a baseline is requested for.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to get the list of metric values.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BaselineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{resourceUri}/providers/microsoft.insights/baseline/{metricName}" : {
+      "get" : {
+        "tags" : [ "Baseline" ],
+        "description" : "**Gets the baseline values for a specific metric**.",
+        "operationId" : "MetricBaseline_Get",
+        "parameters" : [ {
+          "name" : "resourceUri",
+          "in" : "path",
+          "description" : "The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metricName",
+          "in" : "path",
+          "description" : "The name of the metric to retrieve the baseline for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timespan",
+          "in" : "query",
+          "description" : "The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "interval",
+          "in" : "query",
+          "description" : "The interval (i.e. timegrain) of the query.",
+          "schema" : {
+            "type" : "string",
+            "format" : "duration"
+          }
+        }, {
+          "name" : "aggregation",
+          "in" : "query",
+          "description" : "The aggregation type of the metric to retrieve the baseline for.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivities",
+          "in" : "query",
+          "description" : "The list of sensitivities (comma separated) to retrieve.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resultType",
+          "in" : "query",
+          "description" : "Allows retrieving only metadata of the baseline. On data request all information is retrieved.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Data", "Metadata" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metricnamespace",
+          "in" : "query",
+          "description" : "Metric namespace to query metric definitions for.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The **$filter** is used to describe a set of dimensions with their concrete values which produce a specific metric's time series, in which a baseline is requested for.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to get the list of metric values.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BaselineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Baseline" : {
+        "required" : [ "highThresholds", "lowThresholds", "sensitivity" ],
+        "type" : "object",
+        "properties" : {
+          "highThresholds" : {
+            "type" : "array",
+            "description" : "The high thresholds of the baseline.",
+            "items" : {
+              "type" : "number",
+              "description" : "A single high threshold value.",
+              "format" : "double"
+            }
+          },
+          "lowThresholds" : {
+            "type" : "array",
+            "description" : "The low thresholds of the baseline.",
+            "items" : {
+              "type" : "number",
+              "description" : "A single low threshold value.",
+              "format" : "double"
+            }
+          },
+          "sensitivity" : {
+            "type" : "string",
+            "description" : "The sensitivity of the baseline.",
+            "enum" : [ "Low", "Medium", "High" ]
+          }
+        },
+        "description" : "The baseline values for a single sensitivity value."
+      },
+      "BaselineMetadataValue" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizableString"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "The value of the metadata."
+          }
+        },
+        "description" : "Represents a baseline metadata value."
+      },
+      "BaselineProperties" : {
+        "type" : "object",
+        "properties" : {
+          "aggregation" : {
+            "type" : "string",
+            "description" : "The aggregation type of the metric."
+          },
+          "baseline" : {
+            "type" : "array",
+            "description" : "The baseline values for each sensitivity.",
+            "items" : {
+              "$ref" : "#/components/schemas/Baseline"
+            }
+          },
+          "interval" : {
+            "type" : "string",
+            "description" : "The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.",
+            "format" : "duration"
+          },
+          "metadata" : {
+            "type" : "array",
+            "description" : "The baseline metadata values.",
+            "items" : {
+              "$ref" : "#/components/schemas/BaselineMetadataValue"
+            }
+          },
+          "timespan" : {
+            "type" : "string",
+            "description" : "The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested."
+          },
+          "timestamps" : {
+            "type" : "array",
+            "description" : "The array of timestamps of the baselines.",
+            "items" : {
+              "type" : "string",
+              "description" : "The timestamp for the baseline value in ISO 8601 format.",
+              "format" : "date-time"
+            }
+          }
+        },
+        "description" : "The baseline properties class."
+      },
+      "BaselineResponse" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The metric baseline ID.",
+            "readOnly" : true
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizableString"
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/BaselineProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The resource type of the baseline resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The response to a baseline query."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "LocalizableString" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "localizedValue" : {
+            "type" : "string",
+            "description" : "The locale specific value."
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "The invariant value."
+          }
+        },
+        "description" : "The localizable string class."
+      }
+    },
+    "parameters" : {
+      "AggregationParameter" : {
+        "name" : "aggregation",
+        "in" : "query",
+        "description" : "The aggregation type of the metric to retrieve the baseline for.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "BaselineResultTypeParameter" : {
+        "name" : "resultType",
+        "in" : "query",
+        "description" : "Allows retrieving only metadata of the baseline. On data request all information is retrieved.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Data", "Metadata" ]
+        }
+      },
+      "ExtendedResourceUriParameter" : {
+        "name" : "resourceUri",
+        "in" : "path",
+        "description" : "The identifier of the resource. It has the following structure: subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}. For example: subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "IntervalParameter" : {
+        "name" : "interval",
+        "in" : "query",
+        "description" : "The interval (i.e. timegrain) of the query.",
+        "schema" : {
+          "type" : "string",
+          "format" : "duration"
+        }
+      },
+      "MetricNameParameter" : {
+        "name" : "metricName",
+        "in" : "path",
+        "description" : "The name of the metric to retrieve the baseline for.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "MetricNamesParameter" : {
+        "name" : "metricnames",
+        "in" : "query",
+        "description" : "The names of the metrics (comma separated) to retrieve.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "MetricNamespaceParameter" : {
+        "name" : "metricnamespace",
+        "in" : "query",
+        "description" : "Metric namespace to query metric definitions for.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SensitivitiesParameter" : {
+        "name" : "sensitivities",
+        "in" : "query",
+        "description" : "The list of sensitivities (comma separated) to retrieve.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "TimespanParameter" : {
+        "name" : "timespan",
+        "in" : "query",
+        "description" : "The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.",
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

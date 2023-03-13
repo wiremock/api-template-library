@@ -1,1 +1,931 @@
-{"openapi":"3.0.1","info":{"title":"ApiManagementClient","description":"Use these REST APIs for performing operations on Diagnostic entity associated with your Azure API Management deployment. Diagnostics are used to log requests/responses in the APIM proxy.","version":"2019-12-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics":{"get":{"tags":["Diagnostic"],"description":"Lists all diagnostics of the API Management service instance.","operationId":"Diagnostic_ListByService","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"$filter","in":"query","description":"|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>","schema":{"type":"string"}},{"name":"$top","in":"query","description":"Number of records to return.","schema":{"minimum":1,"type":"integer","format":"int32"}},{"name":"$skip","in":"query","description":"Number of records to skip.","schema":{"minimum":0,"type":"integer","format":"int32"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Paged Result response of diagnostics.","content":{"application/json":{"schema":{"type":"object","description":"Paged Diagnostic list representation."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}":{"get":{"tags":["Diagnostic"],"description":"Gets the details of the Diagnostic specified by its identifier.","operationId":"Diagnostic_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"diagnosticId","in":"path","description":"Diagnostic identifier. Must be unique in the current API Management service instance.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The response body contains the specified Diagnostic entity.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Diagnostic details."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"put":{"tags":["Diagnostic"],"description":"Creates a new Diagnostic or updates an existing one.","operationId":"Diagnostic_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"diagnosticId","in":"path","description":"Diagnostic identifier. Must be unique in the current API Management service instance.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. Not required when creating an entity, but required when updating an entity.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Create parameters.","content":{"application/json":{"schema":{"properties":{"properties":{"required":["loggerId"],"type":"object","properties":{"alwaysLog":{"type":"string","description":"Specifies for what type of messages sampling settings should not apply.","enum":["allErrors"]},"backend":{"type":"object","properties":{"request":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."},"response":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."}},"description":"Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."},"frontend":{"type":"object","properties":{"request":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."},"response":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."}},"description":"Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."},"httpCorrelationProtocol":{"type":"string","description":"Sets correlation protocol to use for Application Insights diagnostics.","enum":["None","Legacy","W3C"]},"logClientIp":{"type":"boolean","description":"Log the ClientIP. Default is false."},"loggerId":{"type":"string","description":"Resource Id of a target logger."},"sampling":{"type":"object","properties":{"percentage":{"maximum":100,"minimum":0,"type":"number","description":"Rate of sampling for fixed-rate sampling.","format":"double"},"samplingType":{"type":"string","description":"Sampling type.","enum":["fixed"]}},"description":"Sampling settings for Diagnostic."},"verbosity":{"type":"string","description":"The verbosity level applied to traces emitted by trace policies.","enum":["verbose","information","error"]}},"description":"Diagnostic Entity Properties"}},"description":"Diagnostic details.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type for API Management resource.","readOnly":true}},"description":"The Resource definition."}]}}},"required":true},"responses":{"200":{"description":"Diagnostic successfully updated","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Diagnostic details."}}}},"201":{"description":"Diagnostic was successfully created.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Diagnostic details."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"delete":{"tags":["Diagnostic"],"description":"Deletes the specified Diagnostic.","operationId":"Diagnostic_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"diagnosticId","in":"path","description":"Diagnostic identifier. Must be unique in the current API Management service instance.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Diagnostic was successfully deleted."},"204":{"description":"The Diagnostic was successfully deleted."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"head":{"tags":["Diagnostic"],"description":"Gets the entity state (Etag) version of the Diagnostic specified by its identifier.","operationId":"Diagnostic_GetEntityTag","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"diagnosticId","in":"path","description":"Diagnostic identifier. Must be unique in the current API Management service instance.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Gets the entity tag of the diagnostic","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"patch":{"tags":["Diagnostic"],"description":"Updates the details of the Diagnostic specified by its identifier.","operationId":"Diagnostic_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"diagnosticId","in":"path","description":"Diagnostic identifier. Must be unique in the current API Management service instance.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Diagnostic Update parameters.","content":{"application/json":{"schema":{"properties":{"properties":{"required":["loggerId"],"type":"object","properties":{"alwaysLog":{"type":"string","description":"Specifies for what type of messages sampling settings should not apply.","enum":["allErrors"]},"backend":{"type":"object","properties":{"request":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."},"response":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."}},"description":"Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."},"frontend":{"type":"object","properties":{"request":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."},"response":{"type":"object","properties":{"body":{"type":"object","properties":{"bytes":{"maximum":8192,"type":"integer","description":"Number of request body bytes to log.","format":"int32"}},"description":"Body logging settings."},"headers":{"type":"array","description":"Array of HTTP Headers to log.","items":{"type":"string"}}},"description":"Http message diagnostic settings."}},"description":"Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."},"httpCorrelationProtocol":{"type":"string","description":"Sets correlation protocol to use for Application Insights diagnostics.","enum":["None","Legacy","W3C"]},"logClientIp":{"type":"boolean","description":"Log the ClientIP. Default is false."},"loggerId":{"type":"string","description":"Resource Id of a target logger."},"sampling":{"type":"object","properties":{"percentage":{"maximum":100,"minimum":0,"type":"number","description":"Rate of sampling for fixed-rate sampling.","format":"double"},"samplingType":{"type":"string","description":"Sampling type.","enum":["fixed"]}},"description":"Sampling settings for Diagnostic."},"verbosity":{"type":"string","description":"The verbosity level applied to traces emitted by trace policies.","enum":["verbose","information","error"]}},"description":"Diagnostic Entity Properties"}},"description":"Diagnostic details.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type for API Management resource.","readOnly":true}},"description":"The Resource definition."}]}}},"required":true},"responses":{"204":{"description":"The Diagnostic was successfully updated."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}}},"components":{"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ApiManagementClient",
+    "description" : "Use these REST APIs for performing operations on Diagnostic entity associated with your Azure API Management deployment. Diagnostics are used to log requests/responses in the APIM proxy.",
+    "version" : "2019-12-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics" : {
+      "get" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Lists all diagnostics of the API Management service instance.",
+        "operationId" : "Diagnostic_ListByService",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Number of records to return.",
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Number of records to skip.",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Paged Result response of diagnostics.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Paged Diagnostic list representation."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}" : {
+      "get" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Gets the details of the Diagnostic specified by its identifier.",
+        "operationId" : "Diagnostic_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticId",
+          "in" : "path",
+          "description" : "Diagnostic identifier. Must be unique in the current API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The response body contains the specified Diagnostic entity.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Diagnostic details."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Creates a new Diagnostic or updates an existing one.",
+        "operationId" : "Diagnostic_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticId",
+          "in" : "path",
+          "description" : "Diagnostic identifier. Must be unique in the current API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Create parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "properties" : {
+                    "required" : [ "loggerId" ],
+                    "type" : "object",
+                    "properties" : {
+                      "alwaysLog" : {
+                        "type" : "string",
+                        "description" : "Specifies for what type of messages sampling settings should not apply.",
+                        "enum" : [ "allErrors" ]
+                      },
+                      "backend" : {
+                        "type" : "object",
+                        "properties" : {
+                          "request" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          },
+                          "response" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          }
+                        },
+                        "description" : "Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."
+                      },
+                      "frontend" : {
+                        "type" : "object",
+                        "properties" : {
+                          "request" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          },
+                          "response" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          }
+                        },
+                        "description" : "Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."
+                      },
+                      "httpCorrelationProtocol" : {
+                        "type" : "string",
+                        "description" : "Sets correlation protocol to use for Application Insights diagnostics.",
+                        "enum" : [ "None", "Legacy", "W3C" ]
+                      },
+                      "logClientIp" : {
+                        "type" : "boolean",
+                        "description" : "Log the ClientIP. Default is false."
+                      },
+                      "loggerId" : {
+                        "type" : "string",
+                        "description" : "Resource Id of a target logger."
+                      },
+                      "sampling" : {
+                        "type" : "object",
+                        "properties" : {
+                          "percentage" : {
+                            "maximum" : 100,
+                            "minimum" : 0,
+                            "type" : "number",
+                            "description" : "Rate of sampling for fixed-rate sampling.",
+                            "format" : "double"
+                          },
+                          "samplingType" : {
+                            "type" : "string",
+                            "description" : "Sampling type.",
+                            "enum" : [ "fixed" ]
+                          }
+                        },
+                        "description" : "Sampling settings for Diagnostic."
+                      },
+                      "verbosity" : {
+                        "type" : "string",
+                        "description" : "The verbosity level applied to traces emitted by trace policies.",
+                        "enum" : [ "verbose", "information", "error" ]
+                      }
+                    },
+                    "description" : "Diagnostic Entity Properties"
+                  }
+                },
+                "description" : "Diagnostic details.",
+                "allOf" : [ {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "Resource ID.",
+                      "readOnly" : true
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Resource name.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Resource type for API Management resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The Resource definition."
+                } ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Diagnostic successfully updated",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Diagnostic details."
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Diagnostic was successfully created.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Diagnostic details."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Deletes the specified Diagnostic.",
+        "operationId" : "Diagnostic_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticId",
+          "in" : "path",
+          "description" : "Diagnostic identifier. Must be unique in the current API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Diagnostic was successfully deleted."
+          },
+          "204" : {
+            "description" : "The Diagnostic was successfully deleted."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "head" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Gets the entity state (Etag) version of the Diagnostic specified by its identifier.",
+        "operationId" : "Diagnostic_GetEntityTag",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticId",
+          "in" : "path",
+          "description" : "Diagnostic identifier. Must be unique in the current API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Gets the entity tag of the diagnostic",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Diagnostic" ],
+        "description" : "Updates the details of the Diagnostic specified by its identifier.",
+        "operationId" : "Diagnostic_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "diagnosticId",
+          "in" : "path",
+          "description" : "Diagnostic identifier. Must be unique in the current API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Diagnostic Update parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "properties" : {
+                    "required" : [ "loggerId" ],
+                    "type" : "object",
+                    "properties" : {
+                      "alwaysLog" : {
+                        "type" : "string",
+                        "description" : "Specifies for what type of messages sampling settings should not apply.",
+                        "enum" : [ "allErrors" ]
+                      },
+                      "backend" : {
+                        "type" : "object",
+                        "properties" : {
+                          "request" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          },
+                          "response" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          }
+                        },
+                        "description" : "Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."
+                      },
+                      "frontend" : {
+                        "type" : "object",
+                        "properties" : {
+                          "request" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          },
+                          "response" : {
+                            "type" : "object",
+                            "properties" : {
+                              "body" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "bytes" : {
+                                    "maximum" : 8192,
+                                    "type" : "integer",
+                                    "description" : "Number of request body bytes to log.",
+                                    "format" : "int32"
+                                  }
+                                },
+                                "description" : "Body logging settings."
+                              },
+                              "headers" : {
+                                "type" : "array",
+                                "description" : "Array of HTTP Headers to log.",
+                                "items" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "description" : "Http message diagnostic settings."
+                          }
+                        },
+                        "description" : "Diagnostic settings for incoming/outgoing HTTP messages to the Gateway."
+                      },
+                      "httpCorrelationProtocol" : {
+                        "type" : "string",
+                        "description" : "Sets correlation protocol to use for Application Insights diagnostics.",
+                        "enum" : [ "None", "Legacy", "W3C" ]
+                      },
+                      "logClientIp" : {
+                        "type" : "boolean",
+                        "description" : "Log the ClientIP. Default is false."
+                      },
+                      "loggerId" : {
+                        "type" : "string",
+                        "description" : "Resource Id of a target logger."
+                      },
+                      "sampling" : {
+                        "type" : "object",
+                        "properties" : {
+                          "percentage" : {
+                            "maximum" : 100,
+                            "minimum" : 0,
+                            "type" : "number",
+                            "description" : "Rate of sampling for fixed-rate sampling.",
+                            "format" : "double"
+                          },
+                          "samplingType" : {
+                            "type" : "string",
+                            "description" : "Sampling type.",
+                            "enum" : [ "fixed" ]
+                          }
+                        },
+                        "description" : "Sampling settings for Diagnostic."
+                      },
+                      "verbosity" : {
+                        "type" : "string",
+                        "description" : "The verbosity level applied to traces emitted by trace policies.",
+                        "enum" : [ "verbose", "information", "error" ]
+                      }
+                    },
+                    "description" : "Diagnostic Entity Properties"
+                  }
+                },
+                "description" : "Diagnostic details.",
+                "allOf" : [ {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "Resource ID.",
+                      "readOnly" : true
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Resource name.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Resource type for API Management resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The Resource definition."
+                } ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "The Diagnostic was successfully updated."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

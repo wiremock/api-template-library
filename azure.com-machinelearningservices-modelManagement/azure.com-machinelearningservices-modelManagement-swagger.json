@@ -1,1 +1,3650 @@
-{"openapi":"3.0.1","info":{"title":"Azure Machine Learning Model Management Service","description":"These APIs allow end users to manage Azure Machine Learning Models, Images, Profiles, and Services.","version":"2019-09-30"},"servers":[{"url":"https://azure.local/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/assets":{"get":{"tags":["Asset"],"summary":"Query the list of Assets in a workspace.","description":"If no filter is passed, the query lists all the Assets in the given workspace. The returned list is paginated and the count of items in each page is an optional parameter.","operationId":"Assets_ListQuery","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"runId","in":"query","description":"The run Id associated with the Assets.","schema":{"type":"string"}},{"name":"name","in":"query","description":"The object name.","schema":{"type":"string"}},{"name":"count","in":"query","description":"The number of items to retrieve in a page.","schema":{"type":"integer","format":"int32"}},{"name":"$skipToken","in":"query","description":"The continuation token to retrieve the next page.","schema":{"type":"string"}},{"name":"tags","in":"query","description":"A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3","schema":{"type":"string"}},{"name":"properties","in":"query","description":"A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3","schema":{"type":"string"}},{"name":"orderby","in":"query","description":"An option for specifying how to order the list.","schema":{"type":"string","default":"CreatedAtDesc","enum":["CreatedAtDesc","CreatedAtAsc","UpdatedAtDesc","UpdatedAtAsc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedAssetList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"post":{"tags":["Asset"],"summary":"Create an Asset.","description":"Create an Asset from the provided payload.","operationId":"Assets_Create","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The Asset to be created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Asset"}}},"required":false},"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Asset"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/assets/{id}":{"get":{"tags":["Asset"],"summary":"Get an Asset.","description":"Get an Asset by Id.","operationId":"Assets_QueryById","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Asset Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Asset"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"delete":{"tags":["Asset"],"summary":"Delete an Asset.","description":"Delete the specified Asset.","operationId":"Assets_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Id of the Asset to delete.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The resource exists and was deleted successfully."},"204":{"description":"The resource does not exist and the request was well formed."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"patch":{"tags":["Asset"],"summary":"Update an Asset.","description":"Patch a specific Asset.","operationId":"Assets_Patch","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Id of the Asset to patch.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to patch an Asset.","content":{"application/json-patch+json":{"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/components/schemas/JsonPatchOperation"}}}},"required":true},"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Asset"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/images/{imageId}/profiles":{"get":{"tags":["Profile"],"summary":"Get a list of Image Profiles.","description":"If no filter is passed, the query lists all Profiles for the Image. The returned list is paginated and the count of items in each page is an optional parameter.","operationId":"Profiles_ListQuery","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"imageId","in":"path","description":"The Image Id.","required":true,"schema":{"type":"string"}},{"name":"name","in":"query","description":"The Profile name.","schema":{"type":"string"}},{"name":"description","in":"query","description":"The Profile description.","schema":{"type":"string"}},{"name":"tags","in":"query","description":"A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3","schema":{"type":"string"}},{"name":"properties","in":"query","description":"A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3","schema":{"type":"string"}},{"name":"count","in":"query","description":"The number of items to retrieve in a page.","schema":{"type":"integer","format":"int32"}},{"name":"$skipToken","in":"query","description":"The continuation token to retrieve the next page.","schema":{"type":"string"}},{"name":"orderBy","in":"query","description":"The option to order the response.","schema":{"type":"string","default":"CreatedAtDesc","enum":["CreatedAtDesc","CreatedAtAsc","UpdatedAtDesc","UpdatedAtAsc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedProfileResponseList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"post":{"tags":["Profile"],"summary":"Create a Profile.","description":"Create a Profile for an Image.","operationId":"Profiles_Create","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"imageId","in":"path","description":"The Image Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to create the Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileRequestBase"}}},"required":true},"responses":{"202":{"description":"The request was accepted. The header 'Operation-Location' contains the async operation location URL. Accessing this URL with a GET call will return the status of the background task."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/images/{imageId}/profiles/{id}":{"get":{"tags":["Profile"],"summary":"Get a Profile.","description":"Get the Profile for an Image.","operationId":"Profiles_QueryById","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"imageId","in":"path","description":"The Image Id.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Profile Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models":{"get":{"tags":["Model"],"summary":"Query the list of Models in a workspace.","description":"The result list can be filtered using tag and name. If no filter is passed, the query lists all the Models in the given workspace. The returned list is paginated and the count of items in each page is an optional parameter.","operationId":"MLModels_ListQuery","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"name","in":"query","description":"The object name.","schema":{"type":"string"}},{"name":"framework","in":"query","description":"The framework.","schema":{"type":"string"}},{"name":"description","in":"query","description":"The object description.","schema":{"type":"string"}},{"name":"count","in":"query","description":"The number of items to retrieve in a page.","schema":{"type":"integer","format":"int32"}},{"name":"$skipToken","in":"query","description":"The continuation token to retrieve the next page.","schema":{"type":"string"}},{"name":"tags","in":"query","description":"A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3","schema":{"type":"string"}},{"name":"properties","in":"query","description":"A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3","schema":{"type":"string"}},{"name":"runId","in":"query","description":"The runId which created the model.","schema":{"type":"string"}},{"name":"orderBy","in":"query","description":"An option to specify how the models are ordered in the response.","schema":{"type":"string","default":"CreatedAtDesc","enum":["CreatedAtDesc","CreatedAtAsc","UpdatedAtDesc","UpdatedAtAsc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedModelList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"post":{"tags":["Model"],"summary":"Register a model.","description":"Register the model provided.","operationId":"MLModels_Register","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to register the model.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"}}},"required":true},"responses":{"200":{"description":"The model registration was successful.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models/{id}":{"get":{"tags":["Model"],"summary":"Gets a model.","description":"Gets a model by model id.","operationId":"MLModels_QueryById","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The model id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"delete":{"tags":["Model"],"summary":"Delete the specified Model.","description":"Deletes a model if it exists.","operationId":"MLModels_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The model id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The resource exists and was deleted successfully."},"204":{"description":"The resource does not exist and the request was well formed."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"patch":{"tags":["Model"],"summary":"Patch a specific model.","description":"Updates an existing model with the specified patch.","operationId":"MLModels_Patch","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The model id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to patch the model.","content":{"application/json-patch+json":{"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/components/schemas/JsonPatchOperation"}}}},"required":true},"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models/{id}/metrics":{"get":{"tags":["Model"],"summary":"Retrieve the metrics for a Model.","description":"The operational events collected for the Model are returned.","operationId":"MLModels_GetMetrics","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Model Id.","required":true,"schema":{"type":"string"}},{"name":"startDate","in":"query","description":"The start date from which to retrieve metrics, ISO 8601 literal format.","schema":{"type":"string"}},{"name":"endDate","in":"query","description":"The end date from which to retrieve metrics, ISO 8601 literal format.","schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelOperationalState"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/operations/{id}":{"get":{"tags":["Operations"],"summary":"Get the status of an async operation.","description":"Get the status of an async operation by operation id.","operationId":"Operations_Get","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The operation id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AsyncOperationStatus"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services":{"get":{"tags":["Service"],"summary":"Query the list of Services in a Workspace.","description":"If no filter is passed, the query lists all Services in the Workspace. The returned list is paginated and the count of item in each page is an optional parameter.","operationId":"Services_ListQuery","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"imageId","in":"query","description":"The Image Id.","schema":{"type":"string"}},{"name":"imageName","in":"query","description":"The Image name.","schema":{"type":"string"}},{"name":"modelId","in":"query","description":"The Model Id.","schema":{"type":"string"}},{"name":"modelName","in":"query","description":"The Model name.","schema":{"type":"string"}},{"name":"name","in":"query","description":"The object name.","schema":{"type":"string"}},{"name":"count","in":"query","description":"The number of items to retrieve in a page.","schema":{"type":"integer","format":"int32"}},{"name":"computeType","in":"query","description":"The compute environment type.","schema":{"type":"string"}},{"name":"$skipToken","in":"query","description":"The continuation token to retrieve the next page.","schema":{"type":"string"}},{"name":"tags","in":"query","description":"A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3","schema":{"type":"string"}},{"name":"properties","in":"query","description":"A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3","schema":{"type":"string"}},{"name":"expand","in":"query","description":"Set to True to include Model details.","schema":{"type":"boolean","default":false}},{"name":"orderby","in":"query","description":"The option to order the response.","schema":{"type":"string","default":"UpdatedAtDesc","enum":["CreatedAtDesc","CreatedAtAsc","UpdatedAtDesc","UpdatedAtAsc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedServiceList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"post":{"tags":["Service"],"summary":"Create a Service.","description":"Create a Service with the specified payload.","operationId":"Services_Create","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to create the Service.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateServiceRequest"}}},"required":true},"responses":{"202":{"description":"The request was accepted.  The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}":{"get":{"tags":["Service"],"summary":"Get a Service.","description":"Get a Service by Id.","operationId":"Services_QueryById","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}},{"name":"expand","in":"query","description":"Set to True to include Model details.","schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ServiceResponseBase"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"delete":{"tags":["Service"],"summary":"Delete a Service.","description":"Delete a specific Service.","operationId":"Services_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The resource exists and was deleted successfully."},"202":{"description":"Success"},"204":{"description":"The resource does not exist and the request was well formed."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}},"patch":{"tags":["Service"],"summary":"Patch a Service.","description":"Patch a specific Service.","operationId":"Services_Patch","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to patch the Service.","content":{"application/json-patch+json":{"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/components/schemas/JsonPatchOperation"}}}},"required":true},"responses":{"200":{"description":"Success"},"202":{"description":"The request was accepted.  The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/listkeys":{"post":{"tags":["Service","Keys"],"summary":"Lists Service keys.","description":"Gets a list of Service keys.","operationId":"Services_ListServiceKeys","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AuthKeys"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/regenerateKeys":{"post":{"tags":["Service","Keys"],"summary":"Regenerate Service Keys.","description":"Regenerate and return the Service keys.","operationId":"Services_RegenerateServiceKeys","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to regenerate keys.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegenerateServiceKeysRequest"}}},"required":true},"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AuthKeys"}}}},"202":{"description":"The request was accepted. The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}},"/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/token":{"post":{"tags":["Service","Token"],"summary":"Generate Service Access Token.","description":"Gets access token that can be used for calling service.","operationId":"Services_GetServiceToken","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"The Service Id.","required":true,"schema":{"type":"string"}}],"responses":{"201":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AuthToken"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelErrorResponse"}}}}}}}},"components":{"schemas":{"ACIServiceCreateRequest":{"allOf":[{"$ref":"#/components/schemas/CreateServiceRequest"},{"type":"object","properties":{"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled.","default":false},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled on the service.","default":false},"cname":{"type":"string","description":"The CName for the service."},"containerResourceRequirements":{"$ref":"#/components/schemas/ContainerResourceRequirements"},"dataCollection":{"$ref":"#/components/schemas/ModelDataCollection"},"dnsNameLabel":{"type":"string","description":"The Dns label for the service."},"sslCertificate":{"type":"string","description":"The SSL certificate to use if SSL is enabled."},"sslEnabled":{"type":"boolean","description":"Whether or not SSL is enabled.","default":false},"sslKey":{"type":"string","description":"The SSL key for the certificate."}}}]},"ACIServiceResponse":{"description":"The response for an ACI service.","allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object","properties":{"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled."},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled on the service."},"cname":{"type":"string","description":"The CName for the service."},"containerResourceRequirements":{"$ref":"#/components/schemas/ContainerResourceRequirements"},"dataCollection":{"$ref":"#/components/schemas/ModelDataCollection"},"environment":{"$ref":"#/components/schemas/ModelEnvironmentDefinition"},"imageDetails":{"$ref":"#/components/schemas/DockerImageResponse"},"imageId":{"type":"string","description":"The Id of the Image."},"location":{"type":"string","description":"The location of the service."},"modelConfigMap":{"type":"object","additionalProperties":{"type":"object"},"description":"Details on the models and configurations."},"models":{"type":"array","description":"The list of models.","items":{"$ref":"#/components/schemas/Model"}},"publicFqdn":{"type":"string","description":"The public Fqdn for the service."},"publicIp":{"type":"string","description":"The public IP address for the service."},"scoringUri":{"type":"string","description":"The Uri for sending scoring requests."},"sslCertificate":{"type":"string","description":"The SSL certificate to use if SSL is enabled."},"sslEnabled":{"type":"boolean","description":"Whether or not SSL is enabled."},"sslKey":{"type":"string","description":"The SSL key for the certificate."},"swaggerUri":{"type":"string","description":"The Uri for sending swagger requests."}}}]},"AKSEndpointResponse":{"description":"The response for an AKS Endpoint.","allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object","properties":{"aadAuthEnabled":{"type":"boolean","description":"Whether or not AAD authentication is enabled."},"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled."},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled."},"computeName":{"type":"string","description":"The name of the compute resource."},"namespace":{"type":"string","description":"The Kubernetes namespace of the deployment."},"scoringUri":{"type":"string","description":"The Uri for sending scoring requests."},"swaggerUri":{"type":"string","description":"The Uri for sending swagger requests."},"variants":{"type":"array","description":"All the variants that belongs to this endpoint.","items":{"$ref":"#/components/schemas/AKSServiceResponse"}}}}]},"AKSReplicaStatus":{"type":"object","properties":{"availableReplicas":{"type":"integer","description":"The number of available replicas.","format":"int32","example":1},"desiredReplicas":{"type":"integer","description":"The desired number of replicas.","format":"int32","example":2},"error":{"$ref":"#/components/schemas/ModelErrorResponse"},"updatedReplicas":{"type":"integer","description":"The number of updated replicas.","format":"int32","example":1}}},"AKSServiceCreateRequest":{"description":"The request to create an AKS service.","allOf":[{"$ref":"#/components/schemas/CreateEndpointVariantRequest"},{"type":"object","properties":{"aadAuthEnabled":{"type":"boolean","description":"Whether or not AAD authentication is enabled."},"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled."},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled."},"autoScaler":{"$ref":"#/components/schemas/AutoScaler"},"computeName":{"type":"string","description":"The name of the compute resource."},"containerResourceRequirements":{"$ref":"#/components/schemas/ContainerResourceRequirements"},"dataCollection":{"$ref":"#/components/schemas/ModelDataCollection"},"livenessProbeRequirements":{"$ref":"#/components/schemas/LivenessProbeRequirements"},"maxConcurrentRequestsPerContainer":{"type":"integer","description":"The maximum number of concurrent requests per container.","format":"int32"},"maxQueueWaitMs":{"type":"integer","description":"Maximum time a request will wait in the queue (in milliseconds). After this time, the service will return 503 (Service Unavailable)","format":"int32"},"namespace":{"type":"string","description":"Kubernetes namespace for the service."},"numReplicas":{"type":"integer","description":"The number of replicas on the cluster.","format":"int32"},"scoringTimeoutMs":{"type":"integer","description":"The scoring timeout in milliseconds.","format":"int32"}}}]},"AKSServiceResponse":{"description":"The response for an AKS service.","allOf":[{"$ref":"#/components/schemas/AKSVariantResponse"},{"type":"object","properties":{"aadAuthEnabled":{"type":"boolean","description":"Whether or not AAD authentication is enabled."},"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled."},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled."},"autoScaler":{"$ref":"#/components/schemas/AutoScaler"},"computeName":{"type":"string","description":"The name of the compute resource."},"containerResourceRequirements":{"$ref":"#/components/schemas/ContainerResourceRequirements"},"dataCollection":{"$ref":"#/components/schemas/ModelDataCollection"},"deploymentStatus":{"$ref":"#/components/schemas/AKSReplicaStatus"},"environment":{"$ref":"#/components/schemas/ModelEnvironmentDefinition"},"imageDetails":{"$ref":"#/components/schemas/ImageResponseBase"},"imageId":{"type":"string","description":"The Id of the Image."},"livenessProbeRequirements":{"$ref":"#/components/schemas/LivenessProbeRequirements"},"maxConcurrentRequestsPerContainer":{"type":"integer","description":"The maximum number of concurrent requests per container.","format":"int32"},"maxQueueWaitMs":{"type":"integer","description":"Maximum time a request will wait in the queue (in milliseconds). After this time, the service will return 503 (Service Unavailable)","format":"int32"},"modelConfigMap":{"type":"object","additionalProperties":{"type":"object"},"description":"Details on the models and configurations."},"models":{"type":"array","description":"The list of models.","items":{"$ref":"#/components/schemas/Model"}},"namespace":{"type":"string","description":"The Kubernetes namespace of the deployment."},"numReplicas":{"type":"integer","description":"The number of replicas on the cluster.","format":"int32"},"scoringTimeoutMs":{"type":"integer","description":"The scoring timeout in milliseconds.","format":"int32"},"scoringUri":{"type":"string","description":"The Uri for sending scoring requests."},"swaggerUri":{"type":"string","description":"The Uri for sending swagger requests."}}}]},"AKSVariantResponse":{"description":"The response for an AKS variant.","allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object","properties":{"isDefault":{"type":"boolean","description":"Is this the default variant."},"trafficPercentile":{"type":"number","description":"The amount of traffic variant receives.","format":"float"},"type":{"type":"string","description":"The type of the variant.","enum":["Control","Treatment"]}}}]},"ArtifactDetails":{"type":"object","properties":{"id":{"type":"string"},"prefix":{"type":"string"}}},"Asset":{"required":["name"],"type":"object","properties":{"artifacts":{"type":"array","description":"A list of child artifacts.","items":{"$ref":"#/components/schemas/ArtifactDetails"}},"createdTime":{"type":"string","description":"The time the Asset was created in UTC.","format":"date-time","readOnly":true},"description":{"type":"string","description":"The Asset description."},"id":{"type":"string","description":"The Asset Id."},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The Asset tag dictionary. Tags are mutable."},"meta":{"type":"object","additionalProperties":{"type":"string"},"description":"A dictionary containing metadata about the Asset."},"name":{"type":"string","description":"The name of the Asset."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The Asset property dictionary. Properties are immutable."},"runid":{"type":"string","description":"The RunId associated with this Asset."}},"description":"The Asset definition."},"AsyncOperationDetails":{"type":"object","properties":{"subOperationState":{"type":"string","description":"The suboperation state."},"subOperationType":{"type":"string","description":"The suboperation type."}},"description":"The async operation details."},"AsyncOperationStatus":{"type":"object","properties":{"createdTime":{"type":"string","description":"The async operation creation time (UTC).","format":"date-time"},"endTime":{"type":"string","description":"The async operation end time (UTC)l","format":"date-time"},"error":{"$ref":"#/components/schemas/ModelErrorResponse"},"id":{"type":"string","description":"The async operation id."},"operationDetails":{"$ref":"#/components/schemas/AsyncOperationDetails"},"operationLog":{"type":"string","description":"The async operation log."},"operationType":{"type":"string","description":"The async operation type."},"parentRequestId":{"type":"string","description":"The request id that created this operation"},"resourceLocation":{"type":"string","description":"The resource created/updated by the async operation."},"state":{"type":"string","description":"The async operation state.","enum":["NotStarted","Running","Cancelled","Succeeded","Failed","TimedOut"]}},"description":"The async operation status."},"AuthKeys":{"type":"object","properties":{"primaryKey":{"type":"string","description":"The primary key."},"secondaryKey":{"type":"string","description":"The secondary key."}}},"AuthToken":{"type":"object","properties":{"accessToken":{"type":"string","description":"Access token."},"expiryOn":{"type":"integer","description":"Access token expiry time (UTC).","format":"int64"},"refreshAfter":{"type":"integer","description":"Refresh access token after time (UTC).","format":"int64"},"tokenType":{"type":"string","description":"Access token type."}},"description":"Service Token"},"AutoScaler":{"type":"object","properties":{"autoscaleEnabled":{"type":"boolean","description":"Option to enable/disable auto scaling."},"maxReplicas":{"type":"integer","description":"The maximum number of replicas in the cluster.","format":"int32","example":3},"minReplicas":{"type":"integer","description":"The minimum number of replicas to scale down to.","format":"int32","example":1},"refreshPeriodInSeconds":{"type":"integer","description":"The amount of seconds to wait between auto scale updates.","format":"int32","example":120},"targetUtilization":{"type":"integer","description":"The target utilization percentage to use for determining whether to scale the cluster.","format":"int32","example":70}},"description":"The Auto Scaler properties."},"BatchServiceResponse":{"allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object","properties":{"appInsightsEnabled":{"type":"boolean"},"computeName":{"type":"string"},"entryScript":{"type":"string"},"environmentName":{"type":"string"},"environmentVersion":{"type":"string"},"errorThreshold":{"type":"number","format":"double"},"inputFormat":{"type":"string"},"miniBatchSize":{"type":"integer","format":"int32"},"modelDataCollection":{"$ref":"#/components/schemas/ModelDataCollection"},"modelIds":{"type":"array","items":{"type":"string"}},"nodeCount":{"type":"integer","format":"int32"},"outputAction":{"type":"string"},"processCountPerNode":{"type":"integer","format":"int32"},"scoringUri":{"type":"string"}}}]},"ContainerRegistry":{"type":"object","properties":{"address":{"type":"string"},"password":{"type":"string"},"username":{"type":"string"}}},"ContainerResourceRequirements":{"type":"object","properties":{"cpu":{"type":"number","description":"The number of CPU cores on the container.","format":"double","example":4.0},"fpga":{"type":"integer","description":"The number of FPGA PCIE devices exposed to the container. Must be multiple of 2.","format":"int32"},"gpu":{"type":"integer","description":"The number of GPU cores in the container.","format":"int32"},"memoryInGB":{"type":"number","description":"The amount of memory on the container in GB.","format":"double","example":64.0}},"description":"The resource requirements for the container (cpu and memory)."},"CreateEndpointRequest":{"description":"The request to create an Endpoint in the AKS.","allOf":[{"$ref":"#/components/schemas/CreateServiceRequest"},{"type":"object","properties":{"aadAuthEnabled":{"type":"boolean","description":"Whether or not AAD authentication is enabled."},"appInsightsEnabled":{"type":"boolean","description":"Whether or not Application Insights is enabled."},"authEnabled":{"type":"boolean","description":"Whether or not authentication is enabled."},"computeName":{"type":"string","description":"The name of the compute resource."},"namespace":{"type":"string","description":"Kubernetes namespace for the service."},"variants":{"type":"array","description":"The service tag list.","items":{"$ref":"#/components/schemas/AKSServiceCreateRequest"}}}}]},"CreateEndpointVariantRequest":{"description":"The Variant properties.","allOf":[{"$ref":"#/components/schemas/CreateServiceRequest"},{"type":"object","properties":{"isDefault":{"type":"boolean","description":"Is this the default variant."},"trafficPercentile":{"type":"number","description":"The amount of traffic variant receives.","format":"float"},"type":{"type":"string","description":"The type of the variant.","enum":["Control","Treatment"]}}}]},"CreateIotServiceRequest":{"allOf":[{"$ref":"#/components/schemas/CreateServiceRequest"},{"type":"object","properties":{"acrCredentials":{"type":"array","items":{"$ref":"#/components/schemas/RegistryInfo"}},"authEnabled":{"type":"boolean"},"computeName":{"type":"string"},"iotDeviceId":{"type":"string"},"iotEdgeModule":{"$ref":"#/components/schemas/IotBaseModuleSettings"},"iotEdgeUserModule":{"type":"array","items":{"$ref":"#/components/schemas/IotModuleSettings"}},"routes":{"type":"object","additionalProperties":{"type":"string"}}}}]},"CreateServiceRequest":{"required":["computeType","name"],"type":"object","properties":{"computeType":{"type":"string","description":"The compute environment type for the service.","example":"AKS","enum":["ACI","AKS","AMLCOMPUTE","IOT","AKSENDPOINT","UNKNOWN"]},"deploymentType":{"type":"string","description":"The deployment type for the service.","example":"HttpRealtimeEndpoint","enum":["GRPCRealtimeEndpoint","HttpRealtimeEndpoint","Batch"]},"description":{"type":"string","description":"The description of the service."},"environmentImageRequest":{"$ref":"#/components/schemas/EnvironmentImageRequest"},"imageId":{"type":"string","description":"The Image Id."},"keys":{"$ref":"#/components/schemas/AuthKeys"},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The service tag dictionary. Tags are mutable."},"location":{"type":"string","description":"The location of the service."},"name":{"type":"string","description":"The service name."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The service properties dictionary. Properties are immutable."}},"description":"The base class for creating a service.","discriminator":{"propertyName":"computeType"}},"DatasetReference":{"type":"object","properties":{"id":{"type":"string","description":"The id of the dataset reference."},"name":{"type":"string","description":"The name of the dataset reference."}},"description":"The dataset reference object."},"DeploymentSummary":{"type":"object","properties":{"successfulDeployments":{"type":"integer","description":"The number of successful deployments.","format":"int32"},"unsuccessfulDeployments":{"type":"integer","description":"The number of unsuccessful deployments.","format":"int32"}},"description":"The deployment summary."},"DockerImageResponse":{"allOf":[{"$ref":"#/components/schemas/ImageResponseBase"},{"type":"object","properties":{"assets":{"type":"array","description":"The list of assets.","items":{"$ref":"#/components/schemas/EnvironmentImageAsset"}},"dockerFileUri":{"type":"string","description":"The Uri to the docker file."},"driverProgram":{"type":"string","description":"The name of the driver file."},"generatedDockerFileUri":{"type":"string","description":"The Uri to the generated docker file."},"targetRuntime":{"$ref":"#/components/schemas/TargetRuntime"}}}]},"EnvironmentImageAsset":{"type":"object","properties":{"id":{"type":"string","description":"The Asset Id."},"mimeType":{"type":"string","description":"The mime type."},"unpack":{"type":"boolean","description":"Whether the Asset is unpacked."},"url":{"type":"string","description":"The Url of the Asset."}},"description":"An Image asset."},"EnvironmentImageRequest":{"type":"object","properties":{"assets":{"type":"array","description":"The list of assets.","items":{"$ref":"#/components/schemas/EnvironmentImageAsset"}},"driverProgram":{"type":"string","description":"The name of the driver file."},"environment":{"$ref":"#/components/schemas/ModelEnvironmentDefinition"},"modelIds":{"type":"array","description":"The list of model Ids.","example":"[mymodel:1, mymodel:2]","items":{"type":"string"}}},"description":"Request to create a Docker image based on Environment."},"ErrorDetails":{"type":"object","properties":{"code":{"type":"string","description":"The error code."},"message":{"type":"string","description":"The error message."},"target":{"type":"string","description":"The target of the error (e.g., the name of the property in error)."}},"description":"The error details."},"FPGADockerImageResponse":{"description":"The FPGA Docker Image response.","allOf":[{"$ref":"#/components/schemas/ImageResponseBase"},{"type":"object"}]},"ImageResponseBase":{"required":["imageFlavor"],"type":"object","properties":{"autoDelete":{"type":"boolean","description":"Whether the image will be automatically deleted with the last service using it."},"createdTime":{"type":"string","description":"The time the image was created.","format":"date-time"},"creationState":{"type":"string","description":"The state of the operation.","example":"Running","enum":["NotStarted","Running","Cancelled","Succeeded","Failed","TimedOut"]},"description":{"type":"string","description":"The image description.","example":"My docker image."},"error":{"$ref":"#/components/schemas/ModelErrorResponse"},"id":{"type":"string","description":"The image Id.","example":"myimage:3"},"imageBuildLogUri":{"type":"string","description":"The Uri to the image build logs."},"imageFlavor":{"type":"string","description":"The flavor of the image.","example":"WebApiContainer","enum":["WebApiContainer","BatchContainer","IoTContainer","AccelContainer","UserProvidedContainer"]},"imageLocation":{"type":"string","description":"The Image location string."},"imageType":{"type":"string","description":"The type of the image.","example":"Docker","enum":["Docker"]},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The image tag dictionary. Tags are mutable."},"modelDetails":{"type":"array","description":"The list of models.","items":{"$ref":"#/components/schemas/Model"}},"modelIds":{"type":"array","description":"The list of model Ids.","items":{"type":"string"}},"modifiedTime":{"type":"string","description":"The time the image was last modified.","format":"date-time"},"name":{"type":"string","description":"The image name.","example":"myimage:3"},"operationId":{"type":"string","description":"The ID of the asynchronous operation for this image."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The image properties dictionary. Properties are immutable."},"version":{"type":"integer","description":"The image version.","format":"int64","example":3}},"discriminator":{"propertyName":"imageFlavor"}},"IotBaseModuleSettings":{"type":"object","properties":{"createOptions":{"type":"string"},"environmentVariables":{"type":"object","additionalProperties":{"type":"string"}},"moduleName":{"type":"string"},"propertiesDesired":{"type":"object","additionalProperties":{"type":"string"}}}},"IotModuleSettings":{"type":"object","properties":{"createOptions":{"type":"string"},"environmentVariables":{"type":"object","additionalProperties":{"type":"string"}},"imageLocation":{"type":"string"},"moduleName":{"type":"string"},"propertiesDesired":{"type":"object","additionalProperties":{"type":"string"}}}},"IotServiceResponse":{"allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object","properties":{"authEnabled":{"type":"boolean"},"computeName":{"type":"string"},"imageDetails":{"$ref":"#/components/schemas/ImageResponseBase"},"imageId":{"type":"string"},"iotDeviceId":{"type":"string"},"iotEdgeModules":{"type":"array","items":{"$ref":"#/components/schemas/IotModuleSettings"}},"routes":{"type":"object","additionalProperties":{"type":"string"}}}}]},"JsonPatchOperation":{"type":"object","properties":{"from":{"type":"string","description":"The source location."},"op":{"type":"string","description":"The operation."},"path":{"type":"string","description":"The target location."},"value":{"type":"object","description":"The value."}},"description":"The Json Patch definition."},"LivenessProbeRequirements":{"type":"object","properties":{"failureThreshold":{"type":"integer","description":"The number of failures to allow before returning an unhealthy status.","format":"int32"},"initialDelaySeconds":{"type":"integer","description":"The delay before the first probe in seconds.","format":"int32"},"periodSeconds":{"type":"integer","description":"The length of time between probes in seconds.","format":"int32"},"successThreshold":{"type":"integer","description":"The number of successful probes before returning a healthy status.","format":"int32"},"timeoutSeconds":{"type":"integer","description":"The probe timeout in seconds.","format":"int32"}},"description":"The liveness probe requirements."},"Model":{"required":["mimeType","name","url"],"type":"object","properties":{"createdTime":{"type":"string","description":"The Model creation time (UTC).","format":"date-time","readOnly":true},"datasets":{"type":"array","description":"The list of datasets associated with the model.","items":{"$ref":"#/components/schemas/DatasetReference"}},"description":{"type":"string","description":"The Model description text.","example":"A mnist model, first version."},"experimentName":{"type":"string","description":"The name of the experiment where this model was created."},"framework":{"type":"string","description":"The Model framework."},"frameworkVersion":{"type":"string","description":"The Model framework version."},"id":{"type":"string","description":"The Model Id.","example":"sklearn_mnist:1"},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The Model tag dictionary. Items are mutable."},"mimeType":{"type":"string","description":"The MIME type of Model content. For more details about MIME type, please open https://www.iana.org/assignments/media-types/media-types.xhtml"},"modifiedTime":{"type":"string","description":"The Model last modified time (UTC).","format":"date-time","readOnly":true},"name":{"type":"string","description":"The Model name.","example":"sklearn_mnist"},"parentModelId":{"type":"string","description":"The Parent Model Id.","example":"sklearn_mnist_root:1"},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The Model property dictionary. Properties are immutable."},"runId":{"type":"string","description":"The RunId that created this model."},"unpack":{"type":"boolean","description":"Indicates whether we need to unpack the Model during docker Image creation."},"url":{"type":"string","description":"The URL of the Model. Usually a SAS URL."},"version":{"type":"integer","description":"The Model version assigned by Model Management Service.","format":"int64","example":1}},"description":"An Azure Machine Learning Model."},"ModelDataCollection":{"type":"object","properties":{"eventHubEnabled":{"type":"boolean","description":"Option for enabling/disabling Event Hub."},"storageEnabled":{"type":"boolean","description":"Option for enabling/disabling storage."}},"description":"The Model data collection properties."},"ModelDockerSection":{"type":"object","properties":{"arguments":{"type":"array","description":"Extra arguments to the Docker run command.","items":{"type":"string"}},"baseDockerfile":{"type":"string","description":"Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage.","example":"FROM ubuntu:latest\r\nRUN echo \"Hello world!\""},"baseImage":{"type":"string","description":"Base image used for Docker-based runs. Mutually exclusive with BaseDockerfile.","example":"ubuntu:latest"},"baseImageRegistry":{"$ref":"#/components/schemas/ContainerRegistry"},"enabled":{"type":"boolean","description":"Set True to perform this run inside a Docker container.","example":true},"gpuSupport":{"type":"boolean","description":"Run with NVidia Docker extension to support GPUs.","example":false},"sharedVolumes":{"type":"boolean","description":"Set False if necessary to work around shared volume bugs on Windows.","example":true},"shmSize":{"type":"string","description":"The shared memory size setting for NVidia GPUs.","example":"1g"}}},"ModelEnvironmentDefinition":{"type":"object","properties":{"docker":{"$ref":"#/components/schemas/ModelDockerSection"},"environmentVariables":{"type":"object","additionalProperties":{"type":"string"},"description":"Definition of environment variables to be defined in the environment."},"inferencingStackVersion":{"type":"string","description":"The Inferencing stack version.","example":"latest"},"name":{"type":"string","description":"The name of the environment.","example":"mydevenvironment"},"python":{"$ref":"#/components/schemas/ModelPythonSection"},"spark":{"$ref":"#/components/schemas/ModelSparkSection"},"version":{"type":"string","description":"The environment version.","example":"1"}}},"ModelErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"The error code."},"details":{"type":"array","description":"An array of error detail objects.","items":{"$ref":"#/components/schemas/ErrorDetails"}},"message":{"type":"string","description":"The error message."},"statusCode":{"type":"integer","description":"The HTTP status code.","format":"int32"}},"description":"The Model Management Service Error object."},"ModelOperationalState":{"type":"object","properties":{"deploymentSummary":{"$ref":"#/components/schemas/DeploymentSummary"},"endTime":{"type":"string","description":"The deployment end time."},"startTime":{"type":"string","description":"The deployment start time."}},"description":"The operational state of the Model."},"ModelPythonSection":{"type":"object","properties":{"baseCondaEnvironment":{"type":"string"},"condaDependencies":{"type":"object"},"interpreterPath":{"type":"string","description":"The python interpreter path. This is only used when user_managed_dependencies=True."},"userManagedDependencies":{"type":"boolean","description":"True means that AzureML reuses an existing python environment; False means that AzureML will create a python environment based on the Conda dependencies specification."}}},"ModelSparkSection":{"type":"object","properties":{"packages":{"type":"array","description":"The Spark packages to use.","items":{"$ref":"#/components/schemas/SparkMavenPackage"}},"precachePackages":{"type":"boolean","description":"Whether to precache the packages.","example":true},"repositories":{"type":"array","description":"The list of spark repositories.","items":{"type":"string"}}}},"PaginatedAssetList":{"type":"object","properties":{"nextLink":{"type":"string","description":"A continuation link (absolute URI) to the next page of results in the list."},"value":{"type":"array","description":"An array of objects of type Asset.","items":{"$ref":"#/components/schemas/Asset"}}},"description":"A paginated list of Assets."},"PaginatedModelList":{"type":"object","properties":{"nextLink":{"type":"string","description":"A continuation link (absolute URI) to the next page of results in the list."},"value":{"type":"array","description":"An array of objects of type Model.","items":{"$ref":"#/components/schemas/Model"}}},"description":"A paginated list of Models."},"PaginatedProfileResponseList":{"type":"object","properties":{"nextLink":{"type":"string","description":"A continuation link (absolute URI) to the next page of results in the list."},"value":{"type":"array","description":"An array of objects of type ProfileResponse.","items":{"$ref":"#/components/schemas/ProfileResponse"}}},"description":"A paginated list of ProfileResponses."},"PaginatedServiceList":{"type":"object","properties":{"nextLink":{"type":"string","description":"A continuation link (absolute URI) to the next page of results in the list."},"value":{"type":"array","description":"An array of objects of type Service.","items":{"$ref":"#/components/schemas/ServiceResponseBase"}}},"description":"A paginated list of Services."},"ProfileRequestBase":{"required":["name"],"type":"object","properties":{"description":{"type":"string","description":"The profile description."},"inputData":{"type":"string","description":"The profile input data."},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The tags dictionary."},"name":{"type":"string","description":"The profile name."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The properties dictionary."}},"description":"The request for creating a profile."},"ProfileResponse":{"type":"object","properties":{"createdTime":{"type":"string","description":"The profile creation time (UTC).","format":"date-time"},"description":{"type":"string","description":"The profile description."},"error":{"$ref":"#/components/schemas/ModelErrorResponse"},"imageId":{"type":"string","description":"The Image Id."},"inputData":{"type":"string","description":"The input data."},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The profile tags dictionary. Tags are mutable."},"name":{"type":"string","description":"The profile name."},"profileRunResult":{"type":"string","description":"The profile run result."},"profilingErrorLogs":{"type":"string","description":"The profiling error logs."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The profile properties dictionary. Properties are immutable."},"recommendationLatencyInMs":{"type":"number","description":"Latency associated with the recommended memory/cpu config","format":"double"},"recommendedCpu":{"type":"number","description":"The recommended CPU allocation.","format":"double"},"recommendedMemoryInGB":{"type":"number","description":"The recommended amount of memory to allocate in GB.","format":"double"},"state":{"type":"string","description":"The state of the profile."}},"description":"The profile response."},"RegenerateServiceKeysRequest":{"type":"object","properties":{"keyType":{"type":"integer","description":"Specification for which type of key to generate.","format":"int32"},"keyValue":{"type":"string","description":"The value the key is set to."}}},"RegistryInfo":{"required":["location","password","user"],"type":"object","properties":{"location":{"type":"string","description":"The location."},"password":{"type":"string","description":"The password."},"user":{"type":"string","description":"The user."}},"description":"Contains registry information."},"ServiceResponseBase":{"required":["computeType"],"type":"object","properties":{"computeType":{"type":"string","description":"The compute environment type for the service.","example":"AKS","enum":["ACI","AKS","AMLCOMPUTE","IOT","AKSENDPOINT","UNKNOWN"]},"createdTime":{"type":"string","description":"The time the service was created.","format":"date-time"},"deploymentType":{"type":"string","description":"The deployment type for the service.","example":"HttpRealtimeEndpoint","enum":["GRPCRealtimeEndpoint","HttpRealtimeEndpoint","Batch"]},"description":{"type":"string","description":"The service description."},"error":{"$ref":"#/components/schemas/ModelErrorResponse"},"id":{"type":"string","description":"The service Id."},"kvTags":{"type":"object","additionalProperties":{"type":"string"},"description":"The service tag dictionary. Tags are mutable."},"name":{"type":"string","description":"The service name."},"operationId":{"type":"string","description":"The ID of the latest asynchronous operation for this service."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The service property dictionary. Properties are immutable."},"state":{"type":"string","description":"The current state of the service.","example":"Healthy","enum":["Transitioning","Healthy","Unhealthy","Failed"]},"updatedTime":{"type":"string","description":"The time the service was updated.","format":"date-time"}},"description":"The base service response. The correct inherited response based on computeType will be returned (ex. ACIServiceResponse)","discriminator":{"propertyName":"computeType"}},"SparkMavenPackage":{"type":"object","properties":{"artifact":{"type":"string"},"group":{"type":"string"},"version":{"type":"string"}}},"TargetRuntime":{"type":"object","properties":{"osType":{"type":"string","description":"The target operating system.","example":"linux","enum":["Linux","Windows"]},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The properties dictionary.","readOnly":true},"runtimeType":{"type":"string","description":"The target runtime type.","example":"Python","enum":["SparkPython","Tlc37","Tlc38","Tlc310","Python","PythonSlim","PythonCustom"]},"targetArchitecture":{"type":"string","description":"The target architecture.","example":"Amd64","enum":["Amd64","Arm32v7"]}},"description":"The target runtime."},"UnknownServiceResponse":{"description":"The response for an unsupported Service\r\nDefines the basic service properties","allOf":[{"$ref":"#/components/schemas/ServiceResponseBase"},{"type":"object"}]}},"parameters":{"resourceGroupParameter":{"name":"resourceGroup","in":"path","description":"The Name of the resource group in which the workspace is located.","required":true,"schema":{"type":"string"}},"subscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure Subscription ID.","required":true,"schema":{"type":"string","format":"uuid"}},"workspaceParameter":{"name":"workspace","in":"path","description":"The name of the workspace.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure Machine Learning Model Management Service",
+    "description" : "These APIs allow end users to manage Azure Machine Learning Models, Images, Profiles, and Services.",
+    "version" : "2019-09-30"
+  },
+  "servers" : [ {
+    "url" : "https://azure.local/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/assets" : {
+      "get" : {
+        "tags" : [ "Asset" ],
+        "summary" : "Query the list of Assets in a workspace.",
+        "description" : "If no filter is passed, the query lists all the Assets in the given workspace. The returned list is paginated and the count of items in each page is an optional parameter.",
+        "operationId" : "Assets_ListQuery",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "runId",
+          "in" : "query",
+          "description" : "The run Id associated with the Assets.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The object name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "The number of items to retrieve in a page.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skipToken",
+          "in" : "query",
+          "description" : "The continuation token to retrieve the next page.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "properties",
+          "in" : "query",
+          "description" : "A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "An option for specifying how to order the list.",
+          "schema" : {
+            "type" : "string",
+            "default" : "CreatedAtDesc",
+            "enum" : [ "CreatedAtDesc", "CreatedAtAsc", "UpdatedAtDesc", "UpdatedAtAsc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedAssetList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Asset" ],
+        "summary" : "Create an Asset.",
+        "description" : "Create an Asset from the provided payload.",
+        "operationId" : "Assets_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The Asset to be created.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Asset"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/assets/{id}" : {
+      "get" : {
+        "tags" : [ "Asset" ],
+        "summary" : "Get an Asset.",
+        "description" : "Get an Asset by Id.",
+        "operationId" : "Assets_QueryById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Asset Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Asset" ],
+        "summary" : "Delete an Asset.",
+        "description" : "Delete the specified Asset.",
+        "operationId" : "Assets_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Id of the Asset to delete.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The resource exists and was deleted successfully."
+          },
+          "204" : {
+            "description" : "The resource does not exist and the request was well formed."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Asset" ],
+        "summary" : "Update an Asset.",
+        "description" : "Patch a specific Asset.",
+        "operationId" : "Assets_Patch",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Id of the Asset to patch.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to patch an Asset.",
+          "content" : {
+            "application/json-patch+json" : {
+              "schema" : {
+                "uniqueItems" : false,
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/JsonPatchOperation"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/images/{imageId}/profiles" : {
+      "get" : {
+        "tags" : [ "Profile" ],
+        "summary" : "Get a list of Image Profiles.",
+        "description" : "If no filter is passed, the query lists all Profiles for the Image. The returned list is paginated and the count of items in each page is an optional parameter.",
+        "operationId" : "Profiles_ListQuery",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "imageId",
+          "in" : "path",
+          "description" : "The Image Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The Profile name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "The Profile description.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "properties",
+          "in" : "query",
+          "description" : "A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "The number of items to retrieve in a page.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skipToken",
+          "in" : "query",
+          "description" : "The continuation token to retrieve the next page.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderBy",
+          "in" : "query",
+          "description" : "The option to order the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "CreatedAtDesc",
+            "enum" : [ "CreatedAtDesc", "CreatedAtAsc", "UpdatedAtDesc", "UpdatedAtAsc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedProfileResponseList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Profile" ],
+        "summary" : "Create a Profile.",
+        "description" : "Create a Profile for an Image.",
+        "operationId" : "Profiles_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "imageId",
+          "in" : "path",
+          "description" : "The Image Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to create the Profile.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProfileRequestBase"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "202" : {
+            "description" : "The request was accepted. The header 'Operation-Location' contains the async operation location URL. Accessing this URL with a GET call will return the status of the background task."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/images/{imageId}/profiles/{id}" : {
+      "get" : {
+        "tags" : [ "Profile" ],
+        "summary" : "Get a Profile.",
+        "description" : "Get the Profile for an Image.",
+        "operationId" : "Profiles_QueryById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "imageId",
+          "in" : "path",
+          "description" : "The Image Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Profile Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models" : {
+      "get" : {
+        "tags" : [ "Model" ],
+        "summary" : "Query the list of Models in a workspace.",
+        "description" : "The result list can be filtered using tag and name. If no filter is passed, the query lists all the Models in the given workspace. The returned list is paginated and the count of items in each page is an optional parameter.",
+        "operationId" : "MLModels_ListQuery",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The object name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "framework",
+          "in" : "query",
+          "description" : "The framework.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "The object description.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "The number of items to retrieve in a page.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skipToken",
+          "in" : "query",
+          "description" : "The continuation token to retrieve the next page.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "properties",
+          "in" : "query",
+          "description" : "A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "runId",
+          "in" : "query",
+          "description" : "The runId which created the model.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderBy",
+          "in" : "query",
+          "description" : "An option to specify how the models are ordered in the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "CreatedAtDesc",
+            "enum" : [ "CreatedAtDesc", "CreatedAtAsc", "UpdatedAtDesc", "UpdatedAtAsc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedModelList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Model" ],
+        "summary" : "Register a model.",
+        "description" : "Register the model provided.",
+        "operationId" : "MLModels_Register",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to register the model.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Model"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The model registration was successful.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Model"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models/{id}" : {
+      "get" : {
+        "tags" : [ "Model" ],
+        "summary" : "Gets a model.",
+        "description" : "Gets a model by model id.",
+        "operationId" : "MLModels_QueryById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The model id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Model"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Model" ],
+        "summary" : "Delete the specified Model.",
+        "description" : "Deletes a model if it exists.",
+        "operationId" : "MLModels_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The model id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The resource exists and was deleted successfully."
+          },
+          "204" : {
+            "description" : "The resource does not exist and the request was well formed."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Model" ],
+        "summary" : "Patch a specific model.",
+        "description" : "Updates an existing model with the specified patch.",
+        "operationId" : "MLModels_Patch",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The model id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to patch the model.",
+          "content" : {
+            "application/json-patch+json" : {
+              "schema" : {
+                "uniqueItems" : false,
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/JsonPatchOperation"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Model"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/models/{id}/metrics" : {
+      "get" : {
+        "tags" : [ "Model" ],
+        "summary" : "Retrieve the metrics for a Model.",
+        "description" : "The operational events collected for the Model are returned.",
+        "operationId" : "MLModels_GetMetrics",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Model Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "The start date from which to retrieve metrics, ISO 8601 literal format.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "The end date from which to retrieve metrics, ISO 8601 literal format.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelOperationalState"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/operations/{id}" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "summary" : "Get the status of an async operation.",
+        "description" : "Get the status of an async operation by operation id.",
+        "operationId" : "Operations_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The operation id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AsyncOperationStatus"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services" : {
+      "get" : {
+        "tags" : [ "Service" ],
+        "summary" : "Query the list of Services in a Workspace.",
+        "description" : "If no filter is passed, the query lists all Services in the Workspace. The returned list is paginated and the count of item in each page is an optional parameter.",
+        "operationId" : "Services_ListQuery",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "imageId",
+          "in" : "query",
+          "description" : "The Image Id.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "imageName",
+          "in" : "query",
+          "description" : "The Image name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "modelId",
+          "in" : "query",
+          "description" : "The Model Id.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "modelName",
+          "in" : "query",
+          "description" : "The Model name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The object name.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "The number of items to retrieve in a page.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "computeType",
+          "in" : "query",
+          "description" : "The compute environment type.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$skipToken",
+          "in" : "query",
+          "description" : "The continuation token to retrieve the next page.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "A set of tags with which to filter the returned models.\r\n            It is a comma separated string of tags key or tags key=value\r\n            Example: tagKey1,tagKey2,tagKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "properties",
+          "in" : "query",
+          "description" : "A set of properties with which to filter the returned models.\r\n            It is a comma separated string of properties key and/or properties key=value\r\n            Example: propKey1,propKey2,propKey3=value3",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "expand",
+          "in" : "query",
+          "description" : "Set to True to include Model details.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "The option to order the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "UpdatedAtDesc",
+            "enum" : [ "CreatedAtDesc", "CreatedAtAsc", "UpdatedAtDesc", "UpdatedAtAsc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedServiceList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Service" ],
+        "summary" : "Create a Service.",
+        "description" : "Create a Service with the specified payload.",
+        "operationId" : "Services_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to create the Service.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateServiceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "202" : {
+            "description" : "The request was accepted.  The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}" : {
+      "get" : {
+        "tags" : [ "Service" ],
+        "summary" : "Get a Service.",
+        "description" : "Get a Service by Id.",
+        "operationId" : "Services_QueryById",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "expand",
+          "in" : "query",
+          "description" : "Set to True to include Model details.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ServiceResponseBase"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Service" ],
+        "summary" : "Delete a Service.",
+        "description" : "Delete a specific Service.",
+        "operationId" : "Services_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The resource exists and was deleted successfully."
+          },
+          "202" : {
+            "description" : "Success"
+          },
+          "204" : {
+            "description" : "The resource does not exist and the request was well formed."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Service" ],
+        "summary" : "Patch a Service.",
+        "description" : "Patch a specific Service.",
+        "operationId" : "Services_Patch",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to patch the Service.",
+          "content" : {
+            "application/json-patch+json" : {
+              "schema" : {
+                "uniqueItems" : false,
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/JsonPatchOperation"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "202" : {
+            "description" : "The request was accepted.  The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/listkeys" : {
+      "post" : {
+        "tags" : [ "Service", "Keys" ],
+        "summary" : "Lists Service keys.",
+        "description" : "Gets a list of Service keys.",
+        "operationId" : "Services_ListServiceKeys",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthKeys"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/regenerateKeys" : {
+      "post" : {
+        "tags" : [ "Service", "Keys" ],
+        "summary" : "Regenerate Service Keys.",
+        "description" : "Regenerate and return the Service keys.",
+        "operationId" : "Services_RegenerateServiceKeys",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to regenerate keys.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RegenerateServiceKeysRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthKeys"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The request was accepted. The header 'Operation-Location' contains the async operation location URL.  Accessing this URL with a GET call will return the status of the background task."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelmanagement/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.MachineLearningServices/workspaces/{workspace}/services/{id}/token" : {
+      "post" : {
+        "tags" : [ "Service", "Token" ],
+        "summary" : "Generate Service Access Token.",
+        "description" : "Gets access token that can be used for calling service.",
+        "operationId" : "Services_GetServiceToken",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure Subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroup",
+          "in" : "path",
+          "description" : "The Name of the resource group in which the workspace is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "workspace",
+          "in" : "path",
+          "description" : "The name of the workspace.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Service Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthToken"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ACIServiceCreateRequest" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateServiceRequest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled.",
+              "default" : false
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled on the service.",
+              "default" : false
+            },
+            "cname" : {
+              "type" : "string",
+              "description" : "The CName for the service."
+            },
+            "containerResourceRequirements" : {
+              "$ref" : "#/components/schemas/ContainerResourceRequirements"
+            },
+            "dataCollection" : {
+              "$ref" : "#/components/schemas/ModelDataCollection"
+            },
+            "dnsNameLabel" : {
+              "type" : "string",
+              "description" : "The Dns label for the service."
+            },
+            "sslCertificate" : {
+              "type" : "string",
+              "description" : "The SSL certificate to use if SSL is enabled."
+            },
+            "sslEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not SSL is enabled.",
+              "default" : false
+            },
+            "sslKey" : {
+              "type" : "string",
+              "description" : "The SSL key for the certificate."
+            }
+          }
+        } ]
+      },
+      "ACIServiceResponse" : {
+        "description" : "The response for an ACI service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled."
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled on the service."
+            },
+            "cname" : {
+              "type" : "string",
+              "description" : "The CName for the service."
+            },
+            "containerResourceRequirements" : {
+              "$ref" : "#/components/schemas/ContainerResourceRequirements"
+            },
+            "dataCollection" : {
+              "$ref" : "#/components/schemas/ModelDataCollection"
+            },
+            "environment" : {
+              "$ref" : "#/components/schemas/ModelEnvironmentDefinition"
+            },
+            "imageDetails" : {
+              "$ref" : "#/components/schemas/DockerImageResponse"
+            },
+            "imageId" : {
+              "type" : "string",
+              "description" : "The Id of the Image."
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "The location of the service."
+            },
+            "modelConfigMap" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object"
+              },
+              "description" : "Details on the models and configurations."
+            },
+            "models" : {
+              "type" : "array",
+              "description" : "The list of models.",
+              "items" : {
+                "$ref" : "#/components/schemas/Model"
+              }
+            },
+            "publicFqdn" : {
+              "type" : "string",
+              "description" : "The public Fqdn for the service."
+            },
+            "publicIp" : {
+              "type" : "string",
+              "description" : "The public IP address for the service."
+            },
+            "scoringUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending scoring requests."
+            },
+            "sslCertificate" : {
+              "type" : "string",
+              "description" : "The SSL certificate to use if SSL is enabled."
+            },
+            "sslEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not SSL is enabled."
+            },
+            "sslKey" : {
+              "type" : "string",
+              "description" : "The SSL key for the certificate."
+            },
+            "swaggerUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending swagger requests."
+            }
+          }
+        } ]
+      },
+      "AKSEndpointResponse" : {
+        "description" : "The response for an AKS Endpoint.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "aadAuthEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not AAD authentication is enabled."
+            },
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled."
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled."
+            },
+            "computeName" : {
+              "type" : "string",
+              "description" : "The name of the compute resource."
+            },
+            "namespace" : {
+              "type" : "string",
+              "description" : "The Kubernetes namespace of the deployment."
+            },
+            "scoringUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending scoring requests."
+            },
+            "swaggerUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending swagger requests."
+            },
+            "variants" : {
+              "type" : "array",
+              "description" : "All the variants that belongs to this endpoint.",
+              "items" : {
+                "$ref" : "#/components/schemas/AKSServiceResponse"
+              }
+            }
+          }
+        } ]
+      },
+      "AKSReplicaStatus" : {
+        "type" : "object",
+        "properties" : {
+          "availableReplicas" : {
+            "type" : "integer",
+            "description" : "The number of available replicas.",
+            "format" : "int32",
+            "example" : 1
+          },
+          "desiredReplicas" : {
+            "type" : "integer",
+            "description" : "The desired number of replicas.",
+            "format" : "int32",
+            "example" : 2
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ModelErrorResponse"
+          },
+          "updatedReplicas" : {
+            "type" : "integer",
+            "description" : "The number of updated replicas.",
+            "format" : "int32",
+            "example" : 1
+          }
+        }
+      },
+      "AKSServiceCreateRequest" : {
+        "description" : "The request to create an AKS service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateEndpointVariantRequest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "aadAuthEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not AAD authentication is enabled."
+            },
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled."
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled."
+            },
+            "autoScaler" : {
+              "$ref" : "#/components/schemas/AutoScaler"
+            },
+            "computeName" : {
+              "type" : "string",
+              "description" : "The name of the compute resource."
+            },
+            "containerResourceRequirements" : {
+              "$ref" : "#/components/schemas/ContainerResourceRequirements"
+            },
+            "dataCollection" : {
+              "$ref" : "#/components/schemas/ModelDataCollection"
+            },
+            "livenessProbeRequirements" : {
+              "$ref" : "#/components/schemas/LivenessProbeRequirements"
+            },
+            "maxConcurrentRequestsPerContainer" : {
+              "type" : "integer",
+              "description" : "The maximum number of concurrent requests per container.",
+              "format" : "int32"
+            },
+            "maxQueueWaitMs" : {
+              "type" : "integer",
+              "description" : "Maximum time a request will wait in the queue (in milliseconds). After this time, the service will return 503 (Service Unavailable)",
+              "format" : "int32"
+            },
+            "namespace" : {
+              "type" : "string",
+              "description" : "Kubernetes namespace for the service."
+            },
+            "numReplicas" : {
+              "type" : "integer",
+              "description" : "The number of replicas on the cluster.",
+              "format" : "int32"
+            },
+            "scoringTimeoutMs" : {
+              "type" : "integer",
+              "description" : "The scoring timeout in milliseconds.",
+              "format" : "int32"
+            }
+          }
+        } ]
+      },
+      "AKSServiceResponse" : {
+        "description" : "The response for an AKS service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AKSVariantResponse"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "aadAuthEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not AAD authentication is enabled."
+            },
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled."
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled."
+            },
+            "autoScaler" : {
+              "$ref" : "#/components/schemas/AutoScaler"
+            },
+            "computeName" : {
+              "type" : "string",
+              "description" : "The name of the compute resource."
+            },
+            "containerResourceRequirements" : {
+              "$ref" : "#/components/schemas/ContainerResourceRequirements"
+            },
+            "dataCollection" : {
+              "$ref" : "#/components/schemas/ModelDataCollection"
+            },
+            "deploymentStatus" : {
+              "$ref" : "#/components/schemas/AKSReplicaStatus"
+            },
+            "environment" : {
+              "$ref" : "#/components/schemas/ModelEnvironmentDefinition"
+            },
+            "imageDetails" : {
+              "$ref" : "#/components/schemas/ImageResponseBase"
+            },
+            "imageId" : {
+              "type" : "string",
+              "description" : "The Id of the Image."
+            },
+            "livenessProbeRequirements" : {
+              "$ref" : "#/components/schemas/LivenessProbeRequirements"
+            },
+            "maxConcurrentRequestsPerContainer" : {
+              "type" : "integer",
+              "description" : "The maximum number of concurrent requests per container.",
+              "format" : "int32"
+            },
+            "maxQueueWaitMs" : {
+              "type" : "integer",
+              "description" : "Maximum time a request will wait in the queue (in milliseconds). After this time, the service will return 503 (Service Unavailable)",
+              "format" : "int32"
+            },
+            "modelConfigMap" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object"
+              },
+              "description" : "Details on the models and configurations."
+            },
+            "models" : {
+              "type" : "array",
+              "description" : "The list of models.",
+              "items" : {
+                "$ref" : "#/components/schemas/Model"
+              }
+            },
+            "namespace" : {
+              "type" : "string",
+              "description" : "The Kubernetes namespace of the deployment."
+            },
+            "numReplicas" : {
+              "type" : "integer",
+              "description" : "The number of replicas on the cluster.",
+              "format" : "int32"
+            },
+            "scoringTimeoutMs" : {
+              "type" : "integer",
+              "description" : "The scoring timeout in milliseconds.",
+              "format" : "int32"
+            },
+            "scoringUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending scoring requests."
+            },
+            "swaggerUri" : {
+              "type" : "string",
+              "description" : "The Uri for sending swagger requests."
+            }
+          }
+        } ]
+      },
+      "AKSVariantResponse" : {
+        "description" : "The response for an AKS variant.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "isDefault" : {
+              "type" : "boolean",
+              "description" : "Is this the default variant."
+            },
+            "trafficPercentile" : {
+              "type" : "number",
+              "description" : "The amount of traffic variant receives.",
+              "format" : "float"
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "The type of the variant.",
+              "enum" : [ "Control", "Treatment" ]
+            }
+          }
+        } ]
+      },
+      "ArtifactDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "prefix" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Asset" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "artifacts" : {
+            "type" : "array",
+            "description" : "A list of child artifacts.",
+            "items" : {
+              "$ref" : "#/components/schemas/ArtifactDetails"
+            }
+          },
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The time the Asset was created in UTC.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The Asset description."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The Asset Id."
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The Asset tag dictionary. Tags are mutable."
+          },
+          "meta" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "A dictionary containing metadata about the Asset."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Asset."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The Asset property dictionary. Properties are immutable."
+          },
+          "runid" : {
+            "type" : "string",
+            "description" : "The RunId associated with this Asset."
+          }
+        },
+        "description" : "The Asset definition."
+      },
+      "AsyncOperationDetails" : {
+        "type" : "object",
+        "properties" : {
+          "subOperationState" : {
+            "type" : "string",
+            "description" : "The suboperation state."
+          },
+          "subOperationType" : {
+            "type" : "string",
+            "description" : "The suboperation type."
+          }
+        },
+        "description" : "The async operation details."
+      },
+      "AsyncOperationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The async operation creation time (UTC).",
+            "format" : "date-time"
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "The async operation end time (UTC)l",
+            "format" : "date-time"
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ModelErrorResponse"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The async operation id."
+          },
+          "operationDetails" : {
+            "$ref" : "#/components/schemas/AsyncOperationDetails"
+          },
+          "operationLog" : {
+            "type" : "string",
+            "description" : "The async operation log."
+          },
+          "operationType" : {
+            "type" : "string",
+            "description" : "The async operation type."
+          },
+          "parentRequestId" : {
+            "type" : "string",
+            "description" : "The request id that created this operation"
+          },
+          "resourceLocation" : {
+            "type" : "string",
+            "description" : "The resource created/updated by the async operation."
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The async operation state.",
+            "enum" : [ "NotStarted", "Running", "Cancelled", "Succeeded", "Failed", "TimedOut" ]
+          }
+        },
+        "description" : "The async operation status."
+      },
+      "AuthKeys" : {
+        "type" : "object",
+        "properties" : {
+          "primaryKey" : {
+            "type" : "string",
+            "description" : "The primary key."
+          },
+          "secondaryKey" : {
+            "type" : "string",
+            "description" : "The secondary key."
+          }
+        }
+      },
+      "AuthToken" : {
+        "type" : "object",
+        "properties" : {
+          "accessToken" : {
+            "type" : "string",
+            "description" : "Access token."
+          },
+          "expiryOn" : {
+            "type" : "integer",
+            "description" : "Access token expiry time (UTC).",
+            "format" : "int64"
+          },
+          "refreshAfter" : {
+            "type" : "integer",
+            "description" : "Refresh access token after time (UTC).",
+            "format" : "int64"
+          },
+          "tokenType" : {
+            "type" : "string",
+            "description" : "Access token type."
+          }
+        },
+        "description" : "Service Token"
+      },
+      "AutoScaler" : {
+        "type" : "object",
+        "properties" : {
+          "autoscaleEnabled" : {
+            "type" : "boolean",
+            "description" : "Option to enable/disable auto scaling."
+          },
+          "maxReplicas" : {
+            "type" : "integer",
+            "description" : "The maximum number of replicas in the cluster.",
+            "format" : "int32",
+            "example" : 3
+          },
+          "minReplicas" : {
+            "type" : "integer",
+            "description" : "The minimum number of replicas to scale down to.",
+            "format" : "int32",
+            "example" : 1
+          },
+          "refreshPeriodInSeconds" : {
+            "type" : "integer",
+            "description" : "The amount of seconds to wait between auto scale updates.",
+            "format" : "int32",
+            "example" : 120
+          },
+          "targetUtilization" : {
+            "type" : "integer",
+            "description" : "The target utilization percentage to use for determining whether to scale the cluster.",
+            "format" : "int32",
+            "example" : 70
+          }
+        },
+        "description" : "The Auto Scaler properties."
+      },
+      "BatchServiceResponse" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "appInsightsEnabled" : {
+              "type" : "boolean"
+            },
+            "computeName" : {
+              "type" : "string"
+            },
+            "entryScript" : {
+              "type" : "string"
+            },
+            "environmentName" : {
+              "type" : "string"
+            },
+            "environmentVersion" : {
+              "type" : "string"
+            },
+            "errorThreshold" : {
+              "type" : "number",
+              "format" : "double"
+            },
+            "inputFormat" : {
+              "type" : "string"
+            },
+            "miniBatchSize" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "modelDataCollection" : {
+              "$ref" : "#/components/schemas/ModelDataCollection"
+            },
+            "modelIds" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            },
+            "nodeCount" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "outputAction" : {
+              "type" : "string"
+            },
+            "processCountPerNode" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "scoringUri" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      },
+      "ContainerRegistry" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ContainerResourceRequirements" : {
+        "type" : "object",
+        "properties" : {
+          "cpu" : {
+            "type" : "number",
+            "description" : "The number of CPU cores on the container.",
+            "format" : "double",
+            "example" : 4.0
+          },
+          "fpga" : {
+            "type" : "integer",
+            "description" : "The number of FPGA PCIE devices exposed to the container. Must be multiple of 2.",
+            "format" : "int32"
+          },
+          "gpu" : {
+            "type" : "integer",
+            "description" : "The number of GPU cores in the container.",
+            "format" : "int32"
+          },
+          "memoryInGB" : {
+            "type" : "number",
+            "description" : "The amount of memory on the container in GB.",
+            "format" : "double",
+            "example" : 64.0
+          }
+        },
+        "description" : "The resource requirements for the container (cpu and memory)."
+      },
+      "CreateEndpointRequest" : {
+        "description" : "The request to create an Endpoint in the AKS.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateServiceRequest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "aadAuthEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not AAD authentication is enabled."
+            },
+            "appInsightsEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not Application Insights is enabled."
+            },
+            "authEnabled" : {
+              "type" : "boolean",
+              "description" : "Whether or not authentication is enabled."
+            },
+            "computeName" : {
+              "type" : "string",
+              "description" : "The name of the compute resource."
+            },
+            "namespace" : {
+              "type" : "string",
+              "description" : "Kubernetes namespace for the service."
+            },
+            "variants" : {
+              "type" : "array",
+              "description" : "The service tag list.",
+              "items" : {
+                "$ref" : "#/components/schemas/AKSServiceCreateRequest"
+              }
+            }
+          }
+        } ]
+      },
+      "CreateEndpointVariantRequest" : {
+        "description" : "The Variant properties.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateServiceRequest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "isDefault" : {
+              "type" : "boolean",
+              "description" : "Is this the default variant."
+            },
+            "trafficPercentile" : {
+              "type" : "number",
+              "description" : "The amount of traffic variant receives.",
+              "format" : "float"
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "The type of the variant.",
+              "enum" : [ "Control", "Treatment" ]
+            }
+          }
+        } ]
+      },
+      "CreateIotServiceRequest" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateServiceRequest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "acrCredentials" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/RegistryInfo"
+              }
+            },
+            "authEnabled" : {
+              "type" : "boolean"
+            },
+            "computeName" : {
+              "type" : "string"
+            },
+            "iotDeviceId" : {
+              "type" : "string"
+            },
+            "iotEdgeModule" : {
+              "$ref" : "#/components/schemas/IotBaseModuleSettings"
+            },
+            "iotEdgeUserModule" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/IotModuleSettings"
+              }
+            },
+            "routes" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ]
+      },
+      "CreateServiceRequest" : {
+        "required" : [ "computeType", "name" ],
+        "type" : "object",
+        "properties" : {
+          "computeType" : {
+            "type" : "string",
+            "description" : "The compute environment type for the service.",
+            "example" : "AKS",
+            "enum" : [ "ACI", "AKS", "AMLCOMPUTE", "IOT", "AKSENDPOINT", "UNKNOWN" ]
+          },
+          "deploymentType" : {
+            "type" : "string",
+            "description" : "The deployment type for the service.",
+            "example" : "HttpRealtimeEndpoint",
+            "enum" : [ "GRPCRealtimeEndpoint", "HttpRealtimeEndpoint", "Batch" ]
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the service."
+          },
+          "environmentImageRequest" : {
+            "$ref" : "#/components/schemas/EnvironmentImageRequest"
+          },
+          "imageId" : {
+            "type" : "string",
+            "description" : "The Image Id."
+          },
+          "keys" : {
+            "$ref" : "#/components/schemas/AuthKeys"
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The service tag dictionary. Tags are mutable."
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "The location of the service."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The service name."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The service properties dictionary. Properties are immutable."
+          }
+        },
+        "description" : "The base class for creating a service.",
+        "discriminator" : {
+          "propertyName" : "computeType"
+        }
+      },
+      "DatasetReference" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The id of the dataset reference."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the dataset reference."
+          }
+        },
+        "description" : "The dataset reference object."
+      },
+      "DeploymentSummary" : {
+        "type" : "object",
+        "properties" : {
+          "successfulDeployments" : {
+            "type" : "integer",
+            "description" : "The number of successful deployments.",
+            "format" : "int32"
+          },
+          "unsuccessfulDeployments" : {
+            "type" : "integer",
+            "description" : "The number of unsuccessful deployments.",
+            "format" : "int32"
+          }
+        },
+        "description" : "The deployment summary."
+      },
+      "DockerImageResponse" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ImageResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "assets" : {
+              "type" : "array",
+              "description" : "The list of assets.",
+              "items" : {
+                "$ref" : "#/components/schemas/EnvironmentImageAsset"
+              }
+            },
+            "dockerFileUri" : {
+              "type" : "string",
+              "description" : "The Uri to the docker file."
+            },
+            "driverProgram" : {
+              "type" : "string",
+              "description" : "The name of the driver file."
+            },
+            "generatedDockerFileUri" : {
+              "type" : "string",
+              "description" : "The Uri to the generated docker file."
+            },
+            "targetRuntime" : {
+              "$ref" : "#/components/schemas/TargetRuntime"
+            }
+          }
+        } ]
+      },
+      "EnvironmentImageAsset" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The Asset Id."
+          },
+          "mimeType" : {
+            "type" : "string",
+            "description" : "The mime type."
+          },
+          "unpack" : {
+            "type" : "boolean",
+            "description" : "Whether the Asset is unpacked."
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The Url of the Asset."
+          }
+        },
+        "description" : "An Image asset."
+      },
+      "EnvironmentImageRequest" : {
+        "type" : "object",
+        "properties" : {
+          "assets" : {
+            "type" : "array",
+            "description" : "The list of assets.",
+            "items" : {
+              "$ref" : "#/components/schemas/EnvironmentImageAsset"
+            }
+          },
+          "driverProgram" : {
+            "type" : "string",
+            "description" : "The name of the driver file."
+          },
+          "environment" : {
+            "$ref" : "#/components/schemas/ModelEnvironmentDefinition"
+          },
+          "modelIds" : {
+            "type" : "array",
+            "description" : "The list of model Ids.",
+            "example" : "[mymodel:1, mymodel:2]",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "Request to create a Docker image based on Environment."
+      },
+      "ErrorDetails" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The error message."
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "The target of the error (e.g., the name of the property in error)."
+          }
+        },
+        "description" : "The error details."
+      },
+      "FPGADockerImageResponse" : {
+        "description" : "The FPGA Docker Image response.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ImageResponseBase"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "ImageResponseBase" : {
+        "required" : [ "imageFlavor" ],
+        "type" : "object",
+        "properties" : {
+          "autoDelete" : {
+            "type" : "boolean",
+            "description" : "Whether the image will be automatically deleted with the last service using it."
+          },
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The time the image was created.",
+            "format" : "date-time"
+          },
+          "creationState" : {
+            "type" : "string",
+            "description" : "The state of the operation.",
+            "example" : "Running",
+            "enum" : [ "NotStarted", "Running", "Cancelled", "Succeeded", "Failed", "TimedOut" ]
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The image description.",
+            "example" : "My docker image."
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ModelErrorResponse"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The image Id.",
+            "example" : "myimage:3"
+          },
+          "imageBuildLogUri" : {
+            "type" : "string",
+            "description" : "The Uri to the image build logs."
+          },
+          "imageFlavor" : {
+            "type" : "string",
+            "description" : "The flavor of the image.",
+            "example" : "WebApiContainer",
+            "enum" : [ "WebApiContainer", "BatchContainer", "IoTContainer", "AccelContainer", "UserProvidedContainer" ]
+          },
+          "imageLocation" : {
+            "type" : "string",
+            "description" : "The Image location string."
+          },
+          "imageType" : {
+            "type" : "string",
+            "description" : "The type of the image.",
+            "example" : "Docker",
+            "enum" : [ "Docker" ]
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The image tag dictionary. Tags are mutable."
+          },
+          "modelDetails" : {
+            "type" : "array",
+            "description" : "The list of models.",
+            "items" : {
+              "$ref" : "#/components/schemas/Model"
+            }
+          },
+          "modelIds" : {
+            "type" : "array",
+            "description" : "The list of model Ids.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "modifiedTime" : {
+            "type" : "string",
+            "description" : "The time the image was last modified.",
+            "format" : "date-time"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The image name.",
+            "example" : "myimage:3"
+          },
+          "operationId" : {
+            "type" : "string",
+            "description" : "The ID of the asynchronous operation for this image."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The image properties dictionary. Properties are immutable."
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "The image version.",
+            "format" : "int64",
+            "example" : 3
+          }
+        },
+        "discriminator" : {
+          "propertyName" : "imageFlavor"
+        }
+      },
+      "IotBaseModuleSettings" : {
+        "type" : "object",
+        "properties" : {
+          "createOptions" : {
+            "type" : "string"
+          },
+          "environmentVariables" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "moduleName" : {
+            "type" : "string"
+          },
+          "propertiesDesired" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "IotModuleSettings" : {
+        "type" : "object",
+        "properties" : {
+          "createOptions" : {
+            "type" : "string"
+          },
+          "environmentVariables" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "imageLocation" : {
+            "type" : "string"
+          },
+          "moduleName" : {
+            "type" : "string"
+          },
+          "propertiesDesired" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "IotServiceResponse" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "authEnabled" : {
+              "type" : "boolean"
+            },
+            "computeName" : {
+              "type" : "string"
+            },
+            "imageDetails" : {
+              "$ref" : "#/components/schemas/ImageResponseBase"
+            },
+            "imageId" : {
+              "type" : "string"
+            },
+            "iotDeviceId" : {
+              "type" : "string"
+            },
+            "iotEdgeModules" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/IotModuleSettings"
+              }
+            },
+            "routes" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ]
+      },
+      "JsonPatchOperation" : {
+        "type" : "object",
+        "properties" : {
+          "from" : {
+            "type" : "string",
+            "description" : "The source location."
+          },
+          "op" : {
+            "type" : "string",
+            "description" : "The operation."
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "The target location."
+          },
+          "value" : {
+            "type" : "object",
+            "description" : "The value."
+          }
+        },
+        "description" : "The Json Patch definition."
+      },
+      "LivenessProbeRequirements" : {
+        "type" : "object",
+        "properties" : {
+          "failureThreshold" : {
+            "type" : "integer",
+            "description" : "The number of failures to allow before returning an unhealthy status.",
+            "format" : "int32"
+          },
+          "initialDelaySeconds" : {
+            "type" : "integer",
+            "description" : "The delay before the first probe in seconds.",
+            "format" : "int32"
+          },
+          "periodSeconds" : {
+            "type" : "integer",
+            "description" : "The length of time between probes in seconds.",
+            "format" : "int32"
+          },
+          "successThreshold" : {
+            "type" : "integer",
+            "description" : "The number of successful probes before returning a healthy status.",
+            "format" : "int32"
+          },
+          "timeoutSeconds" : {
+            "type" : "integer",
+            "description" : "The probe timeout in seconds.",
+            "format" : "int32"
+          }
+        },
+        "description" : "The liveness probe requirements."
+      },
+      "Model" : {
+        "required" : [ "mimeType", "name", "url" ],
+        "type" : "object",
+        "properties" : {
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The Model creation time (UTC).",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "datasets" : {
+            "type" : "array",
+            "description" : "The list of datasets associated with the model.",
+            "items" : {
+              "$ref" : "#/components/schemas/DatasetReference"
+            }
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The Model description text.",
+            "example" : "A mnist model, first version."
+          },
+          "experimentName" : {
+            "type" : "string",
+            "description" : "The name of the experiment where this model was created."
+          },
+          "framework" : {
+            "type" : "string",
+            "description" : "The Model framework."
+          },
+          "frameworkVersion" : {
+            "type" : "string",
+            "description" : "The Model framework version."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The Model Id.",
+            "example" : "sklearn_mnist:1"
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The Model tag dictionary. Items are mutable."
+          },
+          "mimeType" : {
+            "type" : "string",
+            "description" : "The MIME type of Model content. For more details about MIME type, please open https://www.iana.org/assignments/media-types/media-types.xhtml"
+          },
+          "modifiedTime" : {
+            "type" : "string",
+            "description" : "The Model last modified time (UTC).",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The Model name.",
+            "example" : "sklearn_mnist"
+          },
+          "parentModelId" : {
+            "type" : "string",
+            "description" : "The Parent Model Id.",
+            "example" : "sklearn_mnist_root:1"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The Model property dictionary. Properties are immutable."
+          },
+          "runId" : {
+            "type" : "string",
+            "description" : "The RunId that created this model."
+          },
+          "unpack" : {
+            "type" : "boolean",
+            "description" : "Indicates whether we need to unpack the Model during docker Image creation."
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The URL of the Model. Usually a SAS URL."
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "The Model version assigned by Model Management Service.",
+            "format" : "int64",
+            "example" : 1
+          }
+        },
+        "description" : "An Azure Machine Learning Model."
+      },
+      "ModelDataCollection" : {
+        "type" : "object",
+        "properties" : {
+          "eventHubEnabled" : {
+            "type" : "boolean",
+            "description" : "Option for enabling/disabling Event Hub."
+          },
+          "storageEnabled" : {
+            "type" : "boolean",
+            "description" : "Option for enabling/disabling storage."
+          }
+        },
+        "description" : "The Model data collection properties."
+      },
+      "ModelDockerSection" : {
+        "type" : "object",
+        "properties" : {
+          "arguments" : {
+            "type" : "array",
+            "description" : "Extra arguments to the Docker run command.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "baseDockerfile" : {
+            "type" : "string",
+            "description" : "Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage.",
+            "example" : "FROM ubuntu:latest\r\nRUN echo \"Hello world!\""
+          },
+          "baseImage" : {
+            "type" : "string",
+            "description" : "Base image used for Docker-based runs. Mutually exclusive with BaseDockerfile.",
+            "example" : "ubuntu:latest"
+          },
+          "baseImageRegistry" : {
+            "$ref" : "#/components/schemas/ContainerRegistry"
+          },
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Set True to perform this run inside a Docker container.",
+            "example" : true
+          },
+          "gpuSupport" : {
+            "type" : "boolean",
+            "description" : "Run with NVidia Docker extension to support GPUs.",
+            "example" : false
+          },
+          "sharedVolumes" : {
+            "type" : "boolean",
+            "description" : "Set False if necessary to work around shared volume bugs on Windows.",
+            "example" : true
+          },
+          "shmSize" : {
+            "type" : "string",
+            "description" : "The shared memory size setting for NVidia GPUs.",
+            "example" : "1g"
+          }
+        }
+      },
+      "ModelEnvironmentDefinition" : {
+        "type" : "object",
+        "properties" : {
+          "docker" : {
+            "$ref" : "#/components/schemas/ModelDockerSection"
+          },
+          "environmentVariables" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Definition of environment variables to be defined in the environment."
+          },
+          "inferencingStackVersion" : {
+            "type" : "string",
+            "description" : "The Inferencing stack version.",
+            "example" : "latest"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the environment.",
+            "example" : "mydevenvironment"
+          },
+          "python" : {
+            "$ref" : "#/components/schemas/ModelPythonSection"
+          },
+          "spark" : {
+            "$ref" : "#/components/schemas/ModelSparkSection"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The environment version.",
+            "example" : "1"
+          }
+        }
+      },
+      "ModelErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code."
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "An array of error detail objects.",
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDetails"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The error message."
+          },
+          "statusCode" : {
+            "type" : "integer",
+            "description" : "The HTTP status code.",
+            "format" : "int32"
+          }
+        },
+        "description" : "The Model Management Service Error object."
+      },
+      "ModelOperationalState" : {
+        "type" : "object",
+        "properties" : {
+          "deploymentSummary" : {
+            "$ref" : "#/components/schemas/DeploymentSummary"
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "The deployment end time."
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The deployment start time."
+          }
+        },
+        "description" : "The operational state of the Model."
+      },
+      "ModelPythonSection" : {
+        "type" : "object",
+        "properties" : {
+          "baseCondaEnvironment" : {
+            "type" : "string"
+          },
+          "condaDependencies" : {
+            "type" : "object"
+          },
+          "interpreterPath" : {
+            "type" : "string",
+            "description" : "The python interpreter path. This is only used when user_managed_dependencies=True."
+          },
+          "userManagedDependencies" : {
+            "type" : "boolean",
+            "description" : "True means that AzureML reuses an existing python environment; False means that AzureML will create a python environment based on the Conda dependencies specification."
+          }
+        }
+      },
+      "ModelSparkSection" : {
+        "type" : "object",
+        "properties" : {
+          "packages" : {
+            "type" : "array",
+            "description" : "The Spark packages to use.",
+            "items" : {
+              "$ref" : "#/components/schemas/SparkMavenPackage"
+            }
+          },
+          "precachePackages" : {
+            "type" : "boolean",
+            "description" : "Whether to precache the packages.",
+            "example" : true
+          },
+          "repositories" : {
+            "type" : "array",
+            "description" : "The list of spark repositories.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "PaginatedAssetList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "A continuation link (absolute URI) to the next page of results in the list."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of objects of type Asset.",
+            "items" : {
+              "$ref" : "#/components/schemas/Asset"
+            }
+          }
+        },
+        "description" : "A paginated list of Assets."
+      },
+      "PaginatedModelList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "A continuation link (absolute URI) to the next page of results in the list."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of objects of type Model.",
+            "items" : {
+              "$ref" : "#/components/schemas/Model"
+            }
+          }
+        },
+        "description" : "A paginated list of Models."
+      },
+      "PaginatedProfileResponseList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "A continuation link (absolute URI) to the next page of results in the list."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of objects of type ProfileResponse.",
+            "items" : {
+              "$ref" : "#/components/schemas/ProfileResponse"
+            }
+          }
+        },
+        "description" : "A paginated list of ProfileResponses."
+      },
+      "PaginatedServiceList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "A continuation link (absolute URI) to the next page of results in the list."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of objects of type Service.",
+            "items" : {
+              "$ref" : "#/components/schemas/ServiceResponseBase"
+            }
+          }
+        },
+        "description" : "A paginated list of Services."
+      },
+      "ProfileRequestBase" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The profile description."
+          },
+          "inputData" : {
+            "type" : "string",
+            "description" : "The profile input data."
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The tags dictionary."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The profile name."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The properties dictionary."
+          }
+        },
+        "description" : "The request for creating a profile."
+      },
+      "ProfileResponse" : {
+        "type" : "object",
+        "properties" : {
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The profile creation time (UTC).",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The profile description."
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ModelErrorResponse"
+          },
+          "imageId" : {
+            "type" : "string",
+            "description" : "The Image Id."
+          },
+          "inputData" : {
+            "type" : "string",
+            "description" : "The input data."
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The profile tags dictionary. Tags are mutable."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The profile name."
+          },
+          "profileRunResult" : {
+            "type" : "string",
+            "description" : "The profile run result."
+          },
+          "profilingErrorLogs" : {
+            "type" : "string",
+            "description" : "The profiling error logs."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The profile properties dictionary. Properties are immutable."
+          },
+          "recommendationLatencyInMs" : {
+            "type" : "number",
+            "description" : "Latency associated with the recommended memory/cpu config",
+            "format" : "double"
+          },
+          "recommendedCpu" : {
+            "type" : "number",
+            "description" : "The recommended CPU allocation.",
+            "format" : "double"
+          },
+          "recommendedMemoryInGB" : {
+            "type" : "number",
+            "description" : "The recommended amount of memory to allocate in GB.",
+            "format" : "double"
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The state of the profile."
+          }
+        },
+        "description" : "The profile response."
+      },
+      "RegenerateServiceKeysRequest" : {
+        "type" : "object",
+        "properties" : {
+          "keyType" : {
+            "type" : "integer",
+            "description" : "Specification for which type of key to generate.",
+            "format" : "int32"
+          },
+          "keyValue" : {
+            "type" : "string",
+            "description" : "The value the key is set to."
+          }
+        }
+      },
+      "RegistryInfo" : {
+        "required" : [ "location", "password", "user" ],
+        "type" : "object",
+        "properties" : {
+          "location" : {
+            "type" : "string",
+            "description" : "The location."
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "The password."
+          },
+          "user" : {
+            "type" : "string",
+            "description" : "The user."
+          }
+        },
+        "description" : "Contains registry information."
+      },
+      "ServiceResponseBase" : {
+        "required" : [ "computeType" ],
+        "type" : "object",
+        "properties" : {
+          "computeType" : {
+            "type" : "string",
+            "description" : "The compute environment type for the service.",
+            "example" : "AKS",
+            "enum" : [ "ACI", "AKS", "AMLCOMPUTE", "IOT", "AKSENDPOINT", "UNKNOWN" ]
+          },
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The time the service was created.",
+            "format" : "date-time"
+          },
+          "deploymentType" : {
+            "type" : "string",
+            "description" : "The deployment type for the service.",
+            "example" : "HttpRealtimeEndpoint",
+            "enum" : [ "GRPCRealtimeEndpoint", "HttpRealtimeEndpoint", "Batch" ]
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The service description."
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ModelErrorResponse"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The service Id."
+          },
+          "kvTags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The service tag dictionary. Tags are mutable."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The service name."
+          },
+          "operationId" : {
+            "type" : "string",
+            "description" : "The ID of the latest asynchronous operation for this service."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The service property dictionary. Properties are immutable."
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The current state of the service.",
+            "example" : "Healthy",
+            "enum" : [ "Transitioning", "Healthy", "Unhealthy", "Failed" ]
+          },
+          "updatedTime" : {
+            "type" : "string",
+            "description" : "The time the service was updated.",
+            "format" : "date-time"
+          }
+        },
+        "description" : "The base service response. The correct inherited response based on computeType will be returned (ex. ACIServiceResponse)",
+        "discriminator" : {
+          "propertyName" : "computeType"
+        }
+      },
+      "SparkMavenPackage" : {
+        "type" : "object",
+        "properties" : {
+          "artifact" : {
+            "type" : "string"
+          },
+          "group" : {
+            "type" : "string"
+          },
+          "version" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TargetRuntime" : {
+        "type" : "object",
+        "properties" : {
+          "osType" : {
+            "type" : "string",
+            "description" : "The target operating system.",
+            "example" : "linux",
+            "enum" : [ "Linux", "Windows" ]
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The properties dictionary.",
+            "readOnly" : true
+          },
+          "runtimeType" : {
+            "type" : "string",
+            "description" : "The target runtime type.",
+            "example" : "Python",
+            "enum" : [ "SparkPython", "Tlc37", "Tlc38", "Tlc310", "Python", "PythonSlim", "PythonCustom" ]
+          },
+          "targetArchitecture" : {
+            "type" : "string",
+            "description" : "The target architecture.",
+            "example" : "Amd64",
+            "enum" : [ "Amd64", "Arm32v7" ]
+          }
+        },
+        "description" : "The target runtime."
+      },
+      "UnknownServiceResponse" : {
+        "description" : "The response for an unsupported Service\r\nDefines the basic service properties",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ServiceResponseBase"
+        }, {
+          "type" : "object"
+        } ]
+      }
+    },
+    "parameters" : {
+      "resourceGroupParameter" : {
+        "name" : "resourceGroup",
+        "in" : "path",
+        "description" : "The Name of the resource group in which the workspace is located.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "subscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure Subscription ID.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "workspaceParameter" : {
+        "name" : "workspace",
+        "in" : "path",
+        "description" : "The name of the workspace.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2"
+      }
+    }
+  }
+}

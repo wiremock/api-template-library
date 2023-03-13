@@ -1,1 +1,576 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2020-01-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}":{"get":{"tags":["Assessments"],"description":"Get a security assessment on your scanned resource","operationId":"Assessments_Get","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"resourceId","in":"path","description":"The identifier of the resource.","required":true,"schema":{"type":"string"}},{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}},{"name":"$expand","in":"query","description":"OData expand. Optional.","schema":{"type":"string","enum":["links","metadata"]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessment"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}},"put":{"tags":["Assessments"],"description":"Create a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result","operationId":"Assessments_CreateOrUpdate","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"resourceId","in":"path","description":"The identifier of the resource.","required":true,"schema":{"type":"string"}},{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Calculated assessment on a pre-defined assessment metadata","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessment"}}},"required":true},"responses":{"200":{"description":"OK - Updated","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessment"}}}},"201":{"description":"Created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessment"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}},"delete":{"tags":["Assessments"],"description":"Delete a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result","operationId":"Assessments_Delete","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"resourceId","in":"path","description":"The identifier of the resource.","required":true,"schema":{"type":"string"}},{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Assessment was deleted"},"204":{"description":"No Content - Assessment does not exist"},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/{scope}/providers/Microsoft.Security/assessments":{"get":{"tags":["Assessments"],"description":"Get security assessments on all your scanned resources inside a scope","operationId":"Assessments_List","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessmentList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"AssessmentLinks":{"type":"object","properties":{"azurePortalUri":{"type":"string","description":"Link to assessment in Azure Portal","readOnly":true}},"description":"Links relevant to the assessment"},"AssessmentStatus":{"required":["code"],"type":"object","properties":{"cause":{"type":"string","description":"Programmatic code for the cause of the assessment status"},"code":{"type":"string","description":"Programmatic code for the status of the assessment","enum":["Healthy","Unhealthy","NotApplicable"]},"description":{"type":"string","description":"Human readable description of the assessment status"}},"description":"The result of the assessment"},"SecurityAssessment":{"properties":{"properties":{"$ref":"#/components/schemas/SecurityAssessmentProperties"}},"description":"Security assessment on a resource","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."}]},"SecurityAssessmentList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URI to fetch the next page.","readOnly":true},"value":{"type":"array","description":"Collection of security assessments in this page","readOnly":true,"items":{"$ref":"#/components/schemas/SecurityAssessment"}}},"description":"Page of a security assessments list"},"SecurityAssessmentPartnerData":{"type":"object","properties":{"secret":{"type":"string","description":"secret to authenticate the partner - write only"}},"description":"Data regarding 3rd party partner integration"},"SecurityAssessmentProperties":{"required":["resourceDetails","status"],"type":"object","properties":{"additionalData":{"type":"object","additionalProperties":{"type":"string"},"description":"Additional data regarding the assessment"},"displayName":{"type":"string","description":"User friendly display name of the assessment","readOnly":true},"links":{"$ref":"#/components/schemas/AssessmentLinks"},"metadata":{"required":["assessmentType","displayName","severity"],"type":"object","properties":{"assessmentType":{"type":"string","description":"BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition","enum":["BuiltIn","CustomPolicy","CustomerManaged","VerifiedPartner"]},"category":{"type":"array","items":{"type":"string","description":"The category of resource that is at risk when the assessment is unhealthy","enum":["Compute","Networking","Data","IdentityAndAccess","IoT"]}},"description":{"type":"string","description":"Human readable description of the assessment"},"displayName":{"type":"string","description":"User friendly display name of the assessment"},"implementationEffort":{"type":"string","description":"The implementation effort required to remediate this assessment","enum":["Low","Moderate","High"]},"partnerData":{"type":"object","properties":{"partnerName":{"type":"string","description":"Name of the company of the partner","readOnly":true},"productName":{"type":"string","description":"Name of the product of the partner that created the assessment"},"secret":{"type":"string","description":"Secret to authenticate the partner and verify it created the assessment - write only"}},"description":"Describes the partner that created the assessment"},"policyDefinitionId":{"type":"string","description":"Azure resource ID of the policy definition that turns this assessment calculation on","readOnly":true},"preview":{"type":"boolean","description":"True if this assessment is in preview release status"},"remediationDescription":{"type":"string","description":"Human readable description of what you should do to mitigate this security issue"},"severity":{"type":"string","description":"The severity level of the assessment","enum":["Low","Medium","High"]},"threats":{"type":"array","items":{"type":"string","description":"Threats impact of the assessment","enum":["accountBreach","dataExfiltration","dataSpillage","maliciousInsider","elevationOfPrivilege","threatResistance","missingCoverage","denialOfService"]}},"userImpact":{"type":"string","description":"The user impact of the assessment","enum":["Low","Moderate","High"]}},"description":"Describes properties of an assessment metadata."},"partnersData":{"$ref":"#/components/schemas/SecurityAssessmentPartnerData"},"resourceDetails":{"required":["source"],"type":"object","properties":{"source":{"type":"string","description":"The platform where the assessed resource resides","enum":["Azure","OnPremise"]}},"description":"Details of the resource that was assessed"},"status":{"$ref":"#/components/schemas/AssessmentStatus"}},"description":"Describes properties of an assessment."}},"parameters":{"AssessmentName":{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}},"ExpandAssessments":{"name":"$expand","in":"query","description":"OData expand. Optional.","schema":{"type":"string","enum":["links","metadata"]}}},"requestBodies":{"AssessmentBody":{"description":"Calculated assessment on a pre-defined assessment metadata","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecurityAssessment"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2020-01-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}" : {
+      "get" : {
+        "tags" : [ "Assessments" ],
+        "description" : "Get a security assessment on your scanned resource",
+        "operationId" : "Assessments_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceId",
+          "in" : "path",
+          "description" : "The identifier of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assessmentName",
+          "in" : "path",
+          "description" : "The Assessment Key - Unique key for the assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$expand",
+          "in" : "query",
+          "description" : "OData expand. Optional.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "links", "metadata" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecurityAssessment"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Assessments" ],
+        "description" : "Create a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result",
+        "operationId" : "Assessments_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceId",
+          "in" : "path",
+          "description" : "The identifier of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assessmentName",
+          "in" : "path",
+          "description" : "The Assessment Key - Unique key for the assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Calculated assessment on a pre-defined assessment metadata",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SecurityAssessment"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK - Updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecurityAssessment"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecurityAssessment"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Assessments" ],
+        "description" : "Delete a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result",
+        "operationId" : "Assessments_Delete",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceId",
+          "in" : "path",
+          "description" : "The identifier of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assessmentName",
+          "in" : "path",
+          "description" : "The Assessment Key - Unique key for the assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Assessment was deleted"
+          },
+          "204" : {
+            "description" : "No Content - Assessment does not exist"
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Security/assessments" : {
+      "get" : {
+        "tags" : [ "Assessments" ],
+        "description" : "Get security assessments on all your scanned resources inside a scope",
+        "operationId" : "Assessments_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecurityAssessmentList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AssessmentLinks" : {
+        "type" : "object",
+        "properties" : {
+          "azurePortalUri" : {
+            "type" : "string",
+            "description" : "Link to assessment in Azure Portal",
+            "readOnly" : true
+          }
+        },
+        "description" : "Links relevant to the assessment"
+      },
+      "AssessmentStatus" : {
+        "required" : [ "code" ],
+        "type" : "object",
+        "properties" : {
+          "cause" : {
+            "type" : "string",
+            "description" : "Programmatic code for the cause of the assessment status"
+          },
+          "code" : {
+            "type" : "string",
+            "description" : "Programmatic code for the status of the assessment",
+            "enum" : [ "Healthy", "Unhealthy", "NotApplicable" ]
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Human readable description of the assessment status"
+          }
+        },
+        "description" : "The result of the assessment"
+      },
+      "SecurityAssessment" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/SecurityAssessmentProperties"
+          }
+        },
+        "description" : "Security assessment on a resource",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        } ]
+      },
+      "SecurityAssessmentList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Collection of security assessments in this page",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/SecurityAssessment"
+            }
+          }
+        },
+        "description" : "Page of a security assessments list"
+      },
+      "SecurityAssessmentPartnerData" : {
+        "type" : "object",
+        "properties" : {
+          "secret" : {
+            "type" : "string",
+            "description" : "secret to authenticate the partner - write only"
+          }
+        },
+        "description" : "Data regarding 3rd party partner integration"
+      },
+      "SecurityAssessmentProperties" : {
+        "required" : [ "resourceDetails", "status" ],
+        "type" : "object",
+        "properties" : {
+          "additionalData" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Additional data regarding the assessment"
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "User friendly display name of the assessment",
+            "readOnly" : true
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/AssessmentLinks"
+          },
+          "metadata" : {
+            "required" : [ "assessmentType", "displayName", "severity" ],
+            "type" : "object",
+            "properties" : {
+              "assessmentType" : {
+                "type" : "string",
+                "description" : "BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition",
+                "enum" : [ "BuiltIn", "CustomPolicy", "CustomerManaged", "VerifiedPartner" ]
+              },
+              "category" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "description" : "The category of resource that is at risk when the assessment is unhealthy",
+                  "enum" : [ "Compute", "Networking", "Data", "IdentityAndAccess", "IoT" ]
+                }
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "Human readable description of the assessment"
+              },
+              "displayName" : {
+                "type" : "string",
+                "description" : "User friendly display name of the assessment"
+              },
+              "implementationEffort" : {
+                "type" : "string",
+                "description" : "The implementation effort required to remediate this assessment",
+                "enum" : [ "Low", "Moderate", "High" ]
+              },
+              "partnerData" : {
+                "type" : "object",
+                "properties" : {
+                  "partnerName" : {
+                    "type" : "string",
+                    "description" : "Name of the company of the partner",
+                    "readOnly" : true
+                  },
+                  "productName" : {
+                    "type" : "string",
+                    "description" : "Name of the product of the partner that created the assessment"
+                  },
+                  "secret" : {
+                    "type" : "string",
+                    "description" : "Secret to authenticate the partner and verify it created the assessment - write only"
+                  }
+                },
+                "description" : "Describes the partner that created the assessment"
+              },
+              "policyDefinitionId" : {
+                "type" : "string",
+                "description" : "Azure resource ID of the policy definition that turns this assessment calculation on",
+                "readOnly" : true
+              },
+              "preview" : {
+                "type" : "boolean",
+                "description" : "True if this assessment is in preview release status"
+              },
+              "remediationDescription" : {
+                "type" : "string",
+                "description" : "Human readable description of what you should do to mitigate this security issue"
+              },
+              "severity" : {
+                "type" : "string",
+                "description" : "The severity level of the assessment",
+                "enum" : [ "Low", "Medium", "High" ]
+              },
+              "threats" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "description" : "Threats impact of the assessment",
+                  "enum" : [ "accountBreach", "dataExfiltration", "dataSpillage", "maliciousInsider", "elevationOfPrivilege", "threatResistance", "missingCoverage", "denialOfService" ]
+                }
+              },
+              "userImpact" : {
+                "type" : "string",
+                "description" : "The user impact of the assessment",
+                "enum" : [ "Low", "Moderate", "High" ]
+              }
+            },
+            "description" : "Describes properties of an assessment metadata."
+          },
+          "partnersData" : {
+            "$ref" : "#/components/schemas/SecurityAssessmentPartnerData"
+          },
+          "resourceDetails" : {
+            "required" : [ "source" ],
+            "type" : "object",
+            "properties" : {
+              "source" : {
+                "type" : "string",
+                "description" : "The platform where the assessed resource resides",
+                "enum" : [ "Azure", "OnPremise" ]
+              }
+            },
+            "description" : "Details of the resource that was assessed"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/AssessmentStatus"
+          }
+        },
+        "description" : "Describes properties of an assessment."
+      }
+    },
+    "parameters" : {
+      "AssessmentName" : {
+        "name" : "assessmentName",
+        "in" : "path",
+        "description" : "The Assessment Key - Unique key for the assessment type",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ExpandAssessments" : {
+        "name" : "$expand",
+        "in" : "query",
+        "description" : "OData expand. Optional.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "links", "metadata" ]
+        }
+      }
+    },
+    "requestBodies" : {
+      "AssessmentBody" : {
+        "description" : "Calculated assessment on a pre-defined assessment metadata",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/SecurityAssessment"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

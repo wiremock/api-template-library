@@ -1,1 +1,406 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2017-08-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{scope}/providers/Microsoft.Security/informationProtectionPolicies":{"get":{"tags":["InformationProtectionPolicies"],"description":"Information protection policies of a specific management group.","operationId":"InformationProtectionPolicies_List","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/InformationProtectionPolicyList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}":{"get":{"tags":["InformationProtectionPolicies"],"description":"Details of the information protection policy.","operationId":"InformationProtectionPolicies_Get","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}},{"name":"informationProtectionPolicyName","in":"path","description":"Name of the information protection policy.","required":true,"schema":{"type":"string","enum":["effective","custom"]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/InformationProtectionPolicy"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}},"put":{"tags":["InformationProtectionPolicies"],"description":"Details of the information protection policy.","operationId":"InformationProtectionPolicies_CreateOrUpdate","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}},{"name":"informationProtectionPolicyName","in":"path","description":"Name of the information protection policy.","required":true,"schema":{"type":"string","enum":["effective","custom"]}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/InformationProtectionPolicy"}}}},"201":{"description":"Created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/InformationProtectionPolicy"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"InformationProtectionKeyword":{"type":"object","properties":{"canBeNumeric":{"type":"boolean","description":"Indicates whether the keyword can be applied on numeric types or not."},"custom":{"type":"boolean","description":"Indicates whether the keyword is custom or not."},"excluded":{"type":"boolean","description":"Indicates whether the keyword is excluded or not."},"pattern":{"type":"string","description":"The keyword pattern."}},"description":"The information type keyword."},"InformationProtectionPolicy":{"properties":{"properties":{"$ref":"#/components/schemas/InformationProtectionPolicyProperties"}},"description":"Information protection policy.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."}]},"InformationProtectionPolicyList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URI to fetch the next page.","readOnly":true},"value":{"type":"array","description":"List of information protection policies.","items":{"$ref":"#/components/schemas/InformationProtectionPolicy"}}},"description":"Information protection policies response."},"InformationProtectionPolicyProperties":{"type":"object","properties":{"informationTypes":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/InformationType"},"description":"The sensitivity information types."},"labels":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/SensitivityLabel"},"description":"Dictionary of sensitivity labels."},"lastModifiedUtc":{"type":"string","description":"Describes the last UTC time the policy was modified.","format":"date-time","readOnly":true}},"description":"describes properties of an information protection policy."},"InformationType":{"type":"object","properties":{"custom":{"type":"boolean","description":"Indicates whether the information type is custom or not."},"displayName":{"type":"string","description":"The name of the information type."},"enabled":{"type":"boolean","description":"Indicates whether the information type is enabled or not."},"keywords":{"type":"array","description":"The information type keywords.","items":{"$ref":"#/components/schemas/InformationProtectionKeyword"}},"order":{"type":"number","description":"The order of the information type."},"recommendedLabelId":{"type":"string","description":"The recommended label id to be associated with this information type.","format":"uuid"}},"description":"The information type."},"SensitivityLabel":{"type":"object","properties":{"displayName":{"type":"string","description":"The name of the sensitivity label."},"enabled":{"type":"boolean","description":"Indicates whether the label is enabled or not."},"order":{"type":"number","description":"The order of the sensitivity label."}},"description":"The sensitivity label."}},"parameters":{"InformationProtectionPolicyName":{"name":"informationProtectionPolicyName","in":"path","description":"Name of the information protection policy.","required":true,"schema":{"type":"string","enum":["effective","custom"]}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2017-08-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{scope}/providers/Microsoft.Security/informationProtectionPolicies" : {
+      "get" : {
+        "tags" : [ "InformationProtectionPolicies" ],
+        "description" : "Information protection policies of a specific management group.",
+        "operationId" : "InformationProtectionPolicies_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InformationProtectionPolicyList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}" : {
+      "get" : {
+        "tags" : [ "InformationProtectionPolicies" ],
+        "description" : "Details of the information protection policy.",
+        "operationId" : "InformationProtectionPolicies_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "informationProtectionPolicyName",
+          "in" : "path",
+          "description" : "Name of the information protection policy.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "effective", "custom" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InformationProtectionPolicy"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "InformationProtectionPolicies" ],
+        "description" : "Details of the information protection policy.",
+        "operationId" : "InformationProtectionPolicies_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "informationProtectionPolicyName",
+          "in" : "path",
+          "description" : "Name of the information protection policy.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "effective", "custom" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InformationProtectionPolicy"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InformationProtectionPolicy"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "InformationProtectionKeyword" : {
+        "type" : "object",
+        "properties" : {
+          "canBeNumeric" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the keyword can be applied on numeric types or not."
+          },
+          "custom" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the keyword is custom or not."
+          },
+          "excluded" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the keyword is excluded or not."
+          },
+          "pattern" : {
+            "type" : "string",
+            "description" : "The keyword pattern."
+          }
+        },
+        "description" : "The information type keyword."
+      },
+      "InformationProtectionPolicy" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/InformationProtectionPolicyProperties"
+          }
+        },
+        "description" : "Information protection policy.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        } ]
+      },
+      "InformationProtectionPolicyList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of information protection policies.",
+            "items" : {
+              "$ref" : "#/components/schemas/InformationProtectionPolicy"
+            }
+          }
+        },
+        "description" : "Information protection policies response."
+      },
+      "InformationProtectionPolicyProperties" : {
+        "type" : "object",
+        "properties" : {
+          "informationTypes" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/InformationType"
+            },
+            "description" : "The sensitivity information types."
+          },
+          "labels" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/SensitivityLabel"
+            },
+            "description" : "Dictionary of sensitivity labels."
+          },
+          "lastModifiedUtc" : {
+            "type" : "string",
+            "description" : "Describes the last UTC time the policy was modified.",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "describes properties of an information protection policy."
+      },
+      "InformationType" : {
+        "type" : "object",
+        "properties" : {
+          "custom" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the information type is custom or not."
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "The name of the information type."
+          },
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the information type is enabled or not."
+          },
+          "keywords" : {
+            "type" : "array",
+            "description" : "The information type keywords.",
+            "items" : {
+              "$ref" : "#/components/schemas/InformationProtectionKeyword"
+            }
+          },
+          "order" : {
+            "type" : "number",
+            "description" : "The order of the information type."
+          },
+          "recommendedLabelId" : {
+            "type" : "string",
+            "description" : "The recommended label id to be associated with this information type.",
+            "format" : "uuid"
+          }
+        },
+        "description" : "The information type."
+      },
+      "SensitivityLabel" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "The name of the sensitivity label."
+          },
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the label is enabled or not."
+          },
+          "order" : {
+            "type" : "number",
+            "description" : "The order of the sensitivity label."
+          }
+        },
+        "description" : "The sensitivity label."
+      }
+    },
+    "parameters" : {
+      "InformationProtectionPolicyName" : {
+        "name" : "informationProtectionPolicyName",
+        "in" : "path",
+        "description" : "Name of the information protection policy.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "effective", "custom" ]
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

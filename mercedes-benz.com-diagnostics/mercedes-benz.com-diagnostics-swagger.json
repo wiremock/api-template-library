@@ -1,1 +1,1101 @@
-{"openapi":"3.0.1","info":{"title":"Remote Diagnostic Support","description":"The Remote Diagnostic Support API will provide the possibility for 3rd party applications (e.g. ADAC, ATU, etc.) to access vehicle diagnostics data remotely on behalf of the Daimler customer. To use the endpoints you need a valid vin/fin (vehicleId).","contact":{"name":"The open API platform by Mercedes-Benz"},"version":"1.0"},"servers":[{"url":"https://api.mercedes-benz.com/remotediagnostic_tryout/v1"}],"tags":[{"name":"Resources","description":"Remote Diagnostic Support service for view all resources."},{"name":"Electronical Control Units (ECU's)","description":"Remote Diagnostic Support services for view ecu List."},{"name":"Diagnostic Trouble Codes (DTC's)","description":"Remote Diagnostic Support service for view dtc List."},{"name":"Diagnostic Trouble Code (DTC) Snapshots","description":"Remote Diagnostic Support service for view dtc snapshot List."}],"paths":{"/vehicles/{vehicleId}/dtcReadouts":{"post":{"tags":["Diagnostic Trouble Codes (DTC's)"],"summary":"View the List of DTCs for specific vehicleId.","description":"This API creates a readout of DTCs for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the DTC readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!","operationId":"getDtcDataListByEcuUsingPOST","parameters":[{"name":"vehicleId","in":"path","description":"The vehicle identifier of the vehicle to read from.","required":true,"schema":{"type":"string"},"example":"WDD111111PKW01000"},{"name":"ecuId","in":"query","description":"Return DTCs from this ECU id only. Default: Return DTCs from all ECUs.","schema":{"type":"string"}},{"name":"dtcStatus","in":"query","description":"Returns DTCs with this statuses only. Default: Return DTCs with all statuses.","schema":{"type":"string"}}],"responses":{"201":{"description":"Returns a DTC List","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/DtcDataContainer"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/DtcDataContainer"}}}},"202":{"description":"The request has been accepted for processing, but not completed."},"400":{"description":"Bad Request","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"401":{"description":"Unauthorized","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"402":{"description":"Payment required","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"403":{"description":"Forbidden","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"404":{"description":"Resource Not Found","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"406":{"description":"Not Acceptable","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"429":{"description":"Quota limit is exceeded."},"500":{"description":"Internal server error","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"501":{"description":"Not Implemented","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"503":{"description":"Service Unavailable","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"505":{"description":"Version not supported","content":{"application/x.exve.org.dtcreadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/vehicles/{vehicleId}/ecuId/{ecuId}/dtcId/{dtcId}/dtcSnapshotReadouts":{"post":{"tags":["Diagnostic Trouble Code (DTC) Snapshots"],"summary":"View the List of DTC Snapshot for specific vehicleId.","description":"This API creates a readout of a DTC snapshot from one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the DTC snapshot readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!","operationId":"getDtcSnapshotReadoutsUsingPOST","parameters":[{"name":"vehicleId","in":"path","description":"The vehicle identifier of the vehicle to read from","required":true,"schema":{"type":"string"},"example":"WDD111111PKW01000"},{"name":"ecuId","in":"path","description":"The id of the ECU to read from","required":true,"schema":{"type":"string"},"example":"DTR212"},{"name":"dtcId","in":"path","description":"The id of the DTC associated with the snapshot","required":true,"schema":{"type":"string"},"example":"C163AFA"}],"responses":{"201":{"description":"Returns a DTC Snapshot List","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/DtcSnapshotDataContainer"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/DtcSnapshotDataContainer"}}}},"202":{"description":"The request has been accepted for processing, but not completed."},"204":{"description":"The request has been accepted for processing, but no content is available."},"400":{"description":"Bad Request","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"401":{"description":"Unauthorized","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"402":{"description":"Payment required","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"403":{"description":"Forbidden","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"404":{"description":"Resource Not Found","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"406":{"description":"Not Acceptable","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"429":{"description":"Quota limit is exceeded."},"500":{"description":"Internal server error","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"501":{"description":"Not Implemented","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"503":{"description":"Service Unavailable","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"505":{"description":"Version not supported","content":{"application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/vehicles/{vehicleId}/ecuReadouts":{"post":{"tags":["Electronical Control Units (ECU's)"],"summary":"View the List of ECU for specific vehicleId.","description":"This API creates a readout of ECUs for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the ECU readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!","operationId":"getEcuDataListByVehicleIdUsingPOST","parameters":[{"name":"vehicleId","in":"path","description":"The vehicle identifier of the vehicle to read from","required":true,"schema":{"type":"string"},"example":"WDD111111PKW01000"},{"name":"ecuId","in":"query","description":"Return this ECU id only. Default: Return all ECUs.","schema":{"type":"string"}}],"responses":{"201":{"description":"Returns an ECU List","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/EcuDataContainer"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/EcuDataContainer"}}}},"202":{"description":"The request has been accepted for processing, but not completed."},"400":{"description":"Bad Request","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"401":{"description":"Unauthorized","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"402":{"description":"Payment required","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"403":{"description":"Forbidden","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"404":{"description":"Resource Not Found","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"406":{"description":"Not Acceptable","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"429":{"description":"Quota limit is exceeded."},"500":{"description":"Internal server error","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"501":{"description":"Not Implemented","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"503":{"description":"Service Unavailable","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"505":{"description":"Version not supported","content":{"application/x.exve.org.ecureadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/vehicles/{vehicleId}/resourceReadouts":{"post":{"tags":["Resources"],"summary":"View the List of resources","description":"This API creates a readout of available resources to the accessing party for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the resource readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!","operationId":"getResourceReadoutsUsingPOST","parameters":[{"name":"vehicleId","in":"path","description":"vehicleId of the resources to be viewed","required":true,"schema":{"type":"string"},"example":"WDD111111PKW01000"}],"responses":{"201":{"description":"Returns a resource to the accessing party","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ResourceDataContainer"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ResourceDataContainer"}}}},"202":{"description":"The request has been accepted for processing, but not completed."},"400":{"description":"Bad Request","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"401":{"description":"Unauthorized","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"402":{"description":"Payment required","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"403":{"description":"Forbidden","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"404":{"description":"Resource Not Found","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"406":{"description":"Not Acceptable","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"429":{"description":"Quota limit is exceeded."},"500":{"description":"Internal server error","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"501":{"description":"Not Implemented","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"503":{"description":"Service Unavailable","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}},"505":{"description":"Version not supported","content":{"application/x.exve.org.resourceReadout.v1+json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}},"application/json;charset=utf-8":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"CommonType":{"required":["asyncStatus","id","messageTimestamp","vehicleId"],"type":"object","properties":{"asyncEstimatedComplete":{"type":"string","description":"Not Implemented. Estimated completion time of the readout","format":"date-time"},"asyncProgress":{"type":"integer","description":"Not Implemented. Progress of the readout in percent.","format":"int32"},"asyncStatus":{"type":"string","description":"Reflects the status of the readouts","enum":["Pending","InProgress","Complete","Fail"]},"asyncWait":{"type":"integer","description":"Not Implemented. Recommended waiting time in milliseconds until next request for status.","format":"int64"},"exveErrorId":{"type":"string","description":"The id of the error in case something failed"},"exveErrorMsg":{"type":"string","description":"The error message in case something failed"},"exveErrorRef":{"type":"string","description":"A unique reference to the error. Can be used in communication with the offering party to help in resolving problems."},"exveNote":{"type":"string","description":"A message regarding the result of the request. Can be filled both when the request was completed and failed."},"id":{"type":"string","description":"Id unique for this readout."},"messageTimestamp":{"type":"string","description":"Timestamp when this message was created.","format":"date-time"},"receivedTimestamp":{"type":"string","description":"Timestamp when the data in the message was received by the ExVe backend from the vehicle.","format":"date-time"},"vehicleId":{"type":"string","description":"The vehicle identifier of the extended vehicle, e.g VIN"}}},"DtcDataContainer":{"type":"object","properties":{"dtcReadout":{"$ref":"#/components/schemas/DtcDataType"}}},"DtcDataItem":{"required":["dtcId","ecuId","status"],"type":"object","properties":{"dtcId":{"type":"string","description":"Identifier of the DTC."},"dtcTimestamp":{"type":"string","description":"Date and time when the DTC occurred"},"ecuId":{"type":"string","description":"Identifier of the ECU where the DTC occurred"},"occurrenceCounter":{"type":"integer","description":"Counter of how many times this DTC has occurred","format":"int32"},"status":{"type":"string","description":"Reflects the status of the DTC","enum":["ACTIVE","PENDING","PREVIOUSLY_ACTIVE"]}}},"DtcDataType":{"allOf":[{"$ref":"#/components/schemas/CommonType"},{"type":"object","properties":{"dtcs":{"type":"array","description":"List of DTCs","items":{"$ref":"#/components/schemas/DtcDataItem"}}}}]},"DtcSnapshotDataContainer":{"type":"object","properties":{"dtcSnapshotReadout":{"$ref":"#/components/schemas/DtcSnapshotDataType"}}},"DtcSnapshotDataItem":{"required":["id","value"],"type":"object","properties":{"id":{"type":"string","description":"Name of snapshot parameter"},"value":{"type":"string","description":"Value of snapshot parameter"}}},"DtcSnapshotDataType":{"allOf":[{"$ref":"#/components/schemas/CommonType"},{"required":["dtcId","ecuId"],"type":"object","properties":{"dtcId":{"type":"string","description":"Identifier of the DTC"},"dtcSnapshotParameters":{"type":"array","description":"List of dtcSnapshotParameters.","items":{"$ref":"#/components/schemas/DtcSnapshotDataItem"}},"ecuId":{"type":"string","description":"Identifier of the ECU"}}}]},"EcuDataContainer":{"type":"object","properties":{"ecuReadout":{"$ref":"#/components/schemas/EcuDataType"}}},"EcuDataItem":{"required":["ecuId","hardwareIds","softwareIds"],"type":"object","properties":{"ecuId":{"type":"string","description":"Identifier of the ECU"},"hardwareIds":{"type":"array","description":"Identifier(s) of the hardware unit(s) in this ECU","items":{"type":"string"}},"softwareIds":{"type":"array","description":"Identifier(s) of the software unit(s) in this ECU","items":{"type":"string"}}}},"EcuDataType":{"allOf":[{"$ref":"#/components/schemas/CommonType"},{"type":"object","properties":{"ecus":{"type":"array","description":"List of ECUs","items":{"$ref":"#/components/schemas/EcuDataItem"}}}}]},"ErrorResponse":{"type":"object","properties":{"errorCode":{"type":"string","description":"Error Code"},"errorMessage":{"type":"string","description":"Error Message"}}},"ResourceDataContainer":{"type":"object","properties":{"resourceReadout":{"$ref":"#/components/schemas/ResourceDataType"}}},"ResourceDataItem":{"required":["api","name","version"],"type":"object","properties":{"api":{"type":"string","description":"URI to API exposing resource"},"name":{"type":"string","description":"Name of resource"},"version":{"type":"string","description":"Version of resource in API"}}},"ResourceDataType":{"allOf":[{"$ref":"#/components/schemas/CommonType"},{"type":"object","properties":{"resources":{"type":"array","description":"List of resources.","items":{"$ref":"#/components/schemas/ResourceDataItem"}}}}]}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Remote Diagnostic Support",
+    "description" : "The Remote Diagnostic Support API will provide the possibility for 3rd party applications (e.g. ADAC, ATU, etc.) to access vehicle diagnostics data remotely on behalf of the Daimler customer. To use the endpoints you need a valid vin/fin (vehicleId).",
+    "contact" : {
+      "name" : "The open API platform by Mercedes-Benz"
+    },
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.mercedes-benz.com/remotediagnostic_tryout/v1"
+  } ],
+  "tags" : [ {
+    "name" : "Resources",
+    "description" : "Remote Diagnostic Support service for view all resources."
+  }, {
+    "name" : "Electronical Control Units (ECU's)",
+    "description" : "Remote Diagnostic Support services for view ecu List."
+  }, {
+    "name" : "Diagnostic Trouble Codes (DTC's)",
+    "description" : "Remote Diagnostic Support service for view dtc List."
+  }, {
+    "name" : "Diagnostic Trouble Code (DTC) Snapshots",
+    "description" : "Remote Diagnostic Support service for view dtc snapshot List."
+  } ],
+  "paths" : {
+    "/vehicles/{vehicleId}/dtcReadouts" : {
+      "post" : {
+        "tags" : [ "Diagnostic Trouble Codes (DTC's)" ],
+        "summary" : "View the List of DTCs for specific vehicleId.",
+        "description" : "This API creates a readout of DTCs for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the DTC readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!",
+        "operationId" : "getDtcDataListByEcuUsingPOST",
+        "parameters" : [ {
+          "name" : "vehicleId",
+          "in" : "path",
+          "description" : "The vehicle identifier of the vehicle to read from.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "WDD111111PKW01000"
+        }, {
+          "name" : "ecuId",
+          "in" : "query",
+          "description" : "Return DTCs from this ECU id only. Default: Return DTCs from all ECUs.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "dtcStatus",
+          "in" : "query",
+          "description" : "Returns DTCs with this statuses only. Default: Return DTCs with all statuses.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Returns a DTC List",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DtcDataContainer"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DtcDataContainer"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The request has been accepted for processing, but not completed."
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Payment required",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Not Found",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "Not Acceptable",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Quota limit is exceeded."
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Not Implemented",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "505" : {
+            "description" : "Version not supported",
+            "content" : {
+              "application/x.exve.org.dtcreadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/ecuId/{ecuId}/dtcId/{dtcId}/dtcSnapshotReadouts" : {
+      "post" : {
+        "tags" : [ "Diagnostic Trouble Code (DTC) Snapshots" ],
+        "summary" : "View the List of DTC Snapshot for specific vehicleId.",
+        "description" : "This API creates a readout of a DTC snapshot from one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the DTC snapshot readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!",
+        "operationId" : "getDtcSnapshotReadoutsUsingPOST",
+        "parameters" : [ {
+          "name" : "vehicleId",
+          "in" : "path",
+          "description" : "The vehicle identifier of the vehicle to read from",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "WDD111111PKW01000"
+        }, {
+          "name" : "ecuId",
+          "in" : "path",
+          "description" : "The id of the ECU to read from",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "DTR212"
+        }, {
+          "name" : "dtcId",
+          "in" : "path",
+          "description" : "The id of the DTC associated with the snapshot",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "C163AFA"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Returns a DTC Snapshot List",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DtcSnapshotDataContainer"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DtcSnapshotDataContainer"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The request has been accepted for processing, but not completed."
+          },
+          "204" : {
+            "description" : "The request has been accepted for processing, but no content is available."
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Payment required",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Not Found",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "Not Acceptable",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Quota limit is exceeded."
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Not Implemented",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "505" : {
+            "description" : "Version not supported",
+            "content" : {
+              "application/x.exve.org.dtcSnapshotReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/ecuReadouts" : {
+      "post" : {
+        "tags" : [ "Electronical Control Units (ECU's)" ],
+        "summary" : "View the List of ECU for specific vehicleId.",
+        "description" : "This API creates a readout of ECUs for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the ECU readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!",
+        "operationId" : "getEcuDataListByVehicleIdUsingPOST",
+        "parameters" : [ {
+          "name" : "vehicleId",
+          "in" : "path",
+          "description" : "The vehicle identifier of the vehicle to read from",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "WDD111111PKW01000"
+        }, {
+          "name" : "ecuId",
+          "in" : "query",
+          "description" : "Return this ECU id only. Default: Return all ECUs.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Returns an ECU List",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EcuDataContainer"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EcuDataContainer"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The request has been accepted for processing, but not completed."
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Payment required",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Not Found",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "Not Acceptable",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Quota limit is exceeded."
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Not Implemented",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "505" : {
+            "description" : "Version not supported",
+            "content" : {
+              "application/x.exve.org.ecureadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/resourceReadouts" : {
+      "post" : {
+        "tags" : [ "Resources" ],
+        "summary" : "View the List of resources",
+        "description" : "This API creates a readout of available resources to the accessing party for one vehicle. If the result is available immediately, the result is returned. If the result isn't available, a location to the resource readout is returned. This location shall be polled until the result is available. INFO: GET Requests are not yet supported!",
+        "operationId" : "getResourceReadoutsUsingPOST",
+        "parameters" : [ {
+          "name" : "vehicleId",
+          "in" : "path",
+          "description" : "vehicleId of the resources to be viewed",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "WDD111111PKW01000"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Returns a resource to the accessing party",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceDataContainer"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceDataContainer"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The request has been accepted for processing, but not completed."
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Payment required",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Not Found",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "Not Acceptable",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Quota limit is exceeded."
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Not Implemented",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "505" : {
+            "description" : "Version not supported",
+            "content" : {
+              "application/x.exve.org.resourceReadout.v1+json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CommonType" : {
+        "required" : [ "asyncStatus", "id", "messageTimestamp", "vehicleId" ],
+        "type" : "object",
+        "properties" : {
+          "asyncEstimatedComplete" : {
+            "type" : "string",
+            "description" : "Not Implemented. Estimated completion time of the readout",
+            "format" : "date-time"
+          },
+          "asyncProgress" : {
+            "type" : "integer",
+            "description" : "Not Implemented. Progress of the readout in percent.",
+            "format" : "int32"
+          },
+          "asyncStatus" : {
+            "type" : "string",
+            "description" : "Reflects the status of the readouts",
+            "enum" : [ "Pending", "InProgress", "Complete", "Fail" ]
+          },
+          "asyncWait" : {
+            "type" : "integer",
+            "description" : "Not Implemented. Recommended waiting time in milliseconds until next request for status.",
+            "format" : "int64"
+          },
+          "exveErrorId" : {
+            "type" : "string",
+            "description" : "The id of the error in case something failed"
+          },
+          "exveErrorMsg" : {
+            "type" : "string",
+            "description" : "The error message in case something failed"
+          },
+          "exveErrorRef" : {
+            "type" : "string",
+            "description" : "A unique reference to the error. Can be used in communication with the offering party to help in resolving problems."
+          },
+          "exveNote" : {
+            "type" : "string",
+            "description" : "A message regarding the result of the request. Can be filled both when the request was completed and failed."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Id unique for this readout."
+          },
+          "messageTimestamp" : {
+            "type" : "string",
+            "description" : "Timestamp when this message was created.",
+            "format" : "date-time"
+          },
+          "receivedTimestamp" : {
+            "type" : "string",
+            "description" : "Timestamp when the data in the message was received by the ExVe backend from the vehicle.",
+            "format" : "date-time"
+          },
+          "vehicleId" : {
+            "type" : "string",
+            "description" : "The vehicle identifier of the extended vehicle, e.g VIN"
+          }
+        }
+      },
+      "DtcDataContainer" : {
+        "type" : "object",
+        "properties" : {
+          "dtcReadout" : {
+            "$ref" : "#/components/schemas/DtcDataType"
+          }
+        }
+      },
+      "DtcDataItem" : {
+        "required" : [ "dtcId", "ecuId", "status" ],
+        "type" : "object",
+        "properties" : {
+          "dtcId" : {
+            "type" : "string",
+            "description" : "Identifier of the DTC."
+          },
+          "dtcTimestamp" : {
+            "type" : "string",
+            "description" : "Date and time when the DTC occurred"
+          },
+          "ecuId" : {
+            "type" : "string",
+            "description" : "Identifier of the ECU where the DTC occurred"
+          },
+          "occurrenceCounter" : {
+            "type" : "integer",
+            "description" : "Counter of how many times this DTC has occurred",
+            "format" : "int32"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Reflects the status of the DTC",
+            "enum" : [ "ACTIVE", "PENDING", "PREVIOUSLY_ACTIVE" ]
+          }
+        }
+      },
+      "DtcDataType" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CommonType"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "dtcs" : {
+              "type" : "array",
+              "description" : "List of DTCs",
+              "items" : {
+                "$ref" : "#/components/schemas/DtcDataItem"
+              }
+            }
+          }
+        } ]
+      },
+      "DtcSnapshotDataContainer" : {
+        "type" : "object",
+        "properties" : {
+          "dtcSnapshotReadout" : {
+            "$ref" : "#/components/schemas/DtcSnapshotDataType"
+          }
+        }
+      },
+      "DtcSnapshotDataItem" : {
+        "required" : [ "id", "value" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Name of snapshot parameter"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "Value of snapshot parameter"
+          }
+        }
+      },
+      "DtcSnapshotDataType" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CommonType"
+        }, {
+          "required" : [ "dtcId", "ecuId" ],
+          "type" : "object",
+          "properties" : {
+            "dtcId" : {
+              "type" : "string",
+              "description" : "Identifier of the DTC"
+            },
+            "dtcSnapshotParameters" : {
+              "type" : "array",
+              "description" : "List of dtcSnapshotParameters.",
+              "items" : {
+                "$ref" : "#/components/schemas/DtcSnapshotDataItem"
+              }
+            },
+            "ecuId" : {
+              "type" : "string",
+              "description" : "Identifier of the ECU"
+            }
+          }
+        } ]
+      },
+      "EcuDataContainer" : {
+        "type" : "object",
+        "properties" : {
+          "ecuReadout" : {
+            "$ref" : "#/components/schemas/EcuDataType"
+          }
+        }
+      },
+      "EcuDataItem" : {
+        "required" : [ "ecuId", "hardwareIds", "softwareIds" ],
+        "type" : "object",
+        "properties" : {
+          "ecuId" : {
+            "type" : "string",
+            "description" : "Identifier of the ECU"
+          },
+          "hardwareIds" : {
+            "type" : "array",
+            "description" : "Identifier(s) of the hardware unit(s) in this ECU",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "softwareIds" : {
+            "type" : "array",
+            "description" : "Identifier(s) of the software unit(s) in this ECU",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "EcuDataType" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CommonType"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "ecus" : {
+              "type" : "array",
+              "description" : "List of ECUs",
+              "items" : {
+                "$ref" : "#/components/schemas/EcuDataItem"
+              }
+            }
+          }
+        } ]
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "string",
+            "description" : "Error Code"
+          },
+          "errorMessage" : {
+            "type" : "string",
+            "description" : "Error Message"
+          }
+        }
+      },
+      "ResourceDataContainer" : {
+        "type" : "object",
+        "properties" : {
+          "resourceReadout" : {
+            "$ref" : "#/components/schemas/ResourceDataType"
+          }
+        }
+      },
+      "ResourceDataItem" : {
+        "required" : [ "api", "name", "version" ],
+        "type" : "object",
+        "properties" : {
+          "api" : {
+            "type" : "string",
+            "description" : "URI to API exposing resource"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of resource"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "Version of resource in API"
+          }
+        }
+      },
+      "ResourceDataType" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CommonType"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "resources" : {
+              "type" : "array",
+              "description" : "List of resources.",
+              "items" : {
+                "$ref" : "#/components/schemas/ResourceDataItem"
+              }
+            }
+          }
+        } ]
+      }
+    }
+  }
+}

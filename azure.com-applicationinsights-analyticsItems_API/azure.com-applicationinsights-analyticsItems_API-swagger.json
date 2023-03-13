@@ -1,1 +1,478 @@
-{"openapi":"3.0.1","info":{"title":"ApplicationInsightsManagementClient","description":"Azure Application Insights client for saved items.","version":"2015-05-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/{scopePath}":{"get":{"description":"Gets a list of Analytics Items defined within an Application Insights component.","operationId":"AnalyticsItems_List","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"resourceName","in":"path","description":"The name of the Application Insights component resource.","required":true,"schema":{"type":"string"}},{"name":"scopePath","in":"path","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","required":true,"schema":{"type":"string","enum":["analyticsItems","myanalyticsItems"]}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"scope","in":"query","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","schema":{"type":"string","default":"shared","enum":["shared","user"]}},{"name":"type","in":"query","description":"Enum indicating the type of the Analytics item.","schema":{"type":"string","default":"none","enum":["none","query","function","folder","recent"]}},{"name":"includeContent","in":"query","description":"Flag indicating whether or not to return the content of each applicable item. If false, only return the item information.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"A list containing 0 or more items associated with the Application Insights component.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ApplicationInsightsComponentAnalyticsItem"}}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/{scopePath}/item":{"get":{"description":"Gets a specific Analytics Items defined within an Application Insights component.","operationId":"AnalyticsItems_Get","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"resourceName","in":"path","description":"The name of the Application Insights component resource.","required":true,"schema":{"type":"string"}},{"name":"scopePath","in":"path","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","required":true,"schema":{"type":"string","enum":["analyticsItems","myanalyticsItems"]}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"id","in":"query","description":"The Id of a specific item defined in the Application Insights component","schema":{"type":"string"}},{"name":"name","in":"query","description":"The name of a specific item defined in the Application Insights component","schema":{"type":"string"}}],"responses":{"200":{"description":"A single item associated with the Application Insights component.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApplicationInsightsComponentAnalyticsItem"}}}}}},"put":{"description":"Adds or Updates a specific Analytics Item within an Application Insights component.","operationId":"AnalyticsItems_Put","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"resourceName","in":"path","description":"The name of the Application Insights component resource.","required":true,"schema":{"type":"string"}},{"name":"scopePath","in":"path","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","required":true,"schema":{"type":"string","enum":["analyticsItems","myanalyticsItems"]}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"overrideItem","in":"query","description":"Flag indicating whether or not to force save an item. This allows overriding an item if it already exists.","schema":{"type":"boolean"}}],"requestBody":{"description":"Properties that need to be specified to create a new item and add it to an Application Insights component.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApplicationInsightsComponentAnalyticsItem"}}},"required":true},"responses":{"200":{"description":"The new or updated item associated with the Application Insights component.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApplicationInsightsComponentAnalyticsItem"}}}}}},"delete":{"description":"Deletes a specific Analytics Items defined within an Application Insights component.","operationId":"AnalyticsItems_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"resourceName","in":"path","description":"The name of the Application Insights component resource.","required":true,"schema":{"type":"string"}},{"name":"scopePath","in":"path","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","required":true,"schema":{"type":"string","enum":["analyticsItems","myanalyticsItems"]}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"minLength":1,"type":"string"}},{"name":"id","in":"query","description":"The Id of a specific item defined in the Application Insights component","schema":{"type":"string"}},{"name":"name","in":"query","description":"The name of a specific item defined in the Application Insights component","schema":{"type":"string"}}],"responses":{"200":{"description":"The item has been successfully removed from the Application Insights component"}}}}},"components":{"schemas":{"ApplicationInsightsComponentAnalyticsItem":{"type":"object","properties":{"Content":{"type":"string","description":"The content of this item"},"Id":{"type":"string","description":"Internally assigned unique id of the item definition."},"Name":{"type":"string","description":"The user-defined name of the item."},"Properties":{"$ref":"#/components/schemas/ApplicationInsightsComponentAnalyticsItemProperties"},"Scope":{"type":"string","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","enum":["shared","user"]},"TimeCreated":{"type":"string","description":"Date and time in UTC when this item was created.","readOnly":true},"TimeModified":{"type":"string","description":"Date and time in UTC of the last modification that was made to this item.","readOnly":true},"Type":{"type":"string","description":"Enum indicating the type of the Analytics item.","enum":["query","function","folder","recent"]},"Version":{"type":"string","description":"This instance's version of the data model. This can change as new features are added.","readOnly":true}},"description":"Properties that define an Analytics item that is associated to an Application Insights component."},"ApplicationInsightsComponentAnalyticsItemProperties":{"type":"object","properties":{"functionAlias":{"type":"string","description":"A function alias, used when the type of the item is Function"}},"description":"A set of properties that can be defined in the context of a specific item type. Each type may have its own properties."}},"parameters":{"IncludeContentParameter":{"name":"includeContent","in":"query","description":"Flag indicating whether or not to return the content of each applicable item. If false, only return the item information.","schema":{"type":"boolean"}},"ItemIdParameter":{"name":"id","in":"query","description":"The Id of a specific item defined in the Application Insights component","schema":{"type":"string"}},"ItemNameParameter":{"name":"name","in":"query","description":"The name of a specific item defined in the Application Insights component","schema":{"type":"string"}},"ItemScopeParameter":{"name":"scope","in":"query","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","schema":{"type":"string","default":"shared","enum":["shared","user"]}},"ItemScopePathParameter":{"name":"scopePath","in":"path","description":"Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.","required":true,"schema":{"type":"string","enum":["analyticsItems","myanalyticsItems"]}},"ItemTypeParameter":{"name":"type","in":"query","description":"Enum indicating the type of the Analytics item.","schema":{"type":"string","default":"none","enum":["none","query","function","folder","recent"]}},"OverrideItemParameter":{"name":"overrideItem","in":"query","description":"Flag indicating whether or not to force save an item. This allows overriding an item if it already exists.","schema":{"type":"boolean"}},"ResourceNameParameter":{"name":"resourceName","in":"path","description":"The name of the Application Insights component resource.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ApplicationInsightsManagementClient",
+    "description" : "Azure Application Insights client for saved items.",
+    "version" : "2015-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/{scopePath}" : {
+      "get" : {
+        "description" : "Gets a list of Analytics Items defined within an Application Insights component.",
+        "operationId" : "AnalyticsItems_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the Application Insights component resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scopePath",
+          "in" : "path",
+          "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "analyticsItems", "myanalyticsItems" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "query",
+          "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+          "schema" : {
+            "type" : "string",
+            "default" : "shared",
+            "enum" : [ "shared", "user" ]
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "Enum indicating the type of the Analytics item.",
+          "schema" : {
+            "type" : "string",
+            "default" : "none",
+            "enum" : [ "none", "query", "function", "folder", "recent" ]
+          }
+        }, {
+          "name" : "includeContent",
+          "in" : "query",
+          "description" : "Flag indicating whether or not to return the content of each applicable item. If false, only return the item information.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list containing 0 or more items associated with the Application Insights component.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationInsightsComponentAnalyticsItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/{scopePath}/item" : {
+      "get" : {
+        "description" : "Gets a specific Analytics Items defined within an Application Insights component.",
+        "operationId" : "AnalyticsItems_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the Application Insights component resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scopePath",
+          "in" : "path",
+          "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "analyticsItems", "myanalyticsItems" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "description" : "The Id of a specific item defined in the Application Insights component",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The name of a specific item defined in the Application Insights component",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A single item associated with the Application Insights component.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApplicationInsightsComponentAnalyticsItem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "Adds or Updates a specific Analytics Item within an Application Insights component.",
+        "operationId" : "AnalyticsItems_Put",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the Application Insights component resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scopePath",
+          "in" : "path",
+          "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "analyticsItems", "myanalyticsItems" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "overrideItem",
+          "in" : "query",
+          "description" : "Flag indicating whether or not to force save an item. This allows overriding an item if it already exists.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Properties that need to be specified to create a new item and add it to an Application Insights component.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ApplicationInsightsComponentAnalyticsItem"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The new or updated item associated with the Application Insights component.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApplicationInsightsComponentAnalyticsItem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "Deletes a specific Analytics Items defined within an Application Insights component.",
+        "operationId" : "AnalyticsItems_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the Application Insights component resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scopePath",
+          "in" : "path",
+          "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "analyticsItems", "myanalyticsItems" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "description" : "The Id of a specific item defined in the Application Insights component",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The name of a specific item defined in the Application Insights component",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The item has been successfully removed from the Application Insights component"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApplicationInsightsComponentAnalyticsItem" : {
+        "type" : "object",
+        "properties" : {
+          "Content" : {
+            "type" : "string",
+            "description" : "The content of this item"
+          },
+          "Id" : {
+            "type" : "string",
+            "description" : "Internally assigned unique id of the item definition."
+          },
+          "Name" : {
+            "type" : "string",
+            "description" : "The user-defined name of the item."
+          },
+          "Properties" : {
+            "$ref" : "#/components/schemas/ApplicationInsightsComponentAnalyticsItemProperties"
+          },
+          "Scope" : {
+            "type" : "string",
+            "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+            "enum" : [ "shared", "user" ]
+          },
+          "TimeCreated" : {
+            "type" : "string",
+            "description" : "Date and time in UTC when this item was created.",
+            "readOnly" : true
+          },
+          "TimeModified" : {
+            "type" : "string",
+            "description" : "Date and time in UTC of the last modification that was made to this item.",
+            "readOnly" : true
+          },
+          "Type" : {
+            "type" : "string",
+            "description" : "Enum indicating the type of the Analytics item.",
+            "enum" : [ "query", "function", "folder", "recent" ]
+          },
+          "Version" : {
+            "type" : "string",
+            "description" : "This instance's version of the data model. This can change as new features are added.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Properties that define an Analytics item that is associated to an Application Insights component."
+      },
+      "ApplicationInsightsComponentAnalyticsItemProperties" : {
+        "type" : "object",
+        "properties" : {
+          "functionAlias" : {
+            "type" : "string",
+            "description" : "A function alias, used when the type of the item is Function"
+          }
+        },
+        "description" : "A set of properties that can be defined in the context of a specific item type. Each type may have its own properties."
+      }
+    },
+    "parameters" : {
+      "IncludeContentParameter" : {
+        "name" : "includeContent",
+        "in" : "query",
+        "description" : "Flag indicating whether or not to return the content of each applicable item. If false, only return the item information.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      },
+      "ItemIdParameter" : {
+        "name" : "id",
+        "in" : "query",
+        "description" : "The Id of a specific item defined in the Application Insights component",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ItemNameParameter" : {
+        "name" : "name",
+        "in" : "query",
+        "description" : "The name of a specific item defined in the Application Insights component",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ItemScopeParameter" : {
+        "name" : "scope",
+        "in" : "query",
+        "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+        "schema" : {
+          "type" : "string",
+          "default" : "shared",
+          "enum" : [ "shared", "user" ]
+        }
+      },
+      "ItemScopePathParameter" : {
+        "name" : "scopePath",
+        "in" : "path",
+        "description" : "Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "analyticsItems", "myanalyticsItems" ]
+        }
+      },
+      "ItemTypeParameter" : {
+        "name" : "type",
+        "in" : "query",
+        "description" : "Enum indicating the type of the Analytics item.",
+        "schema" : {
+          "type" : "string",
+          "default" : "none",
+          "enum" : [ "none", "query", "function", "folder", "recent" ]
+        }
+      },
+      "OverrideItemParameter" : {
+        "name" : "overrideItem",
+        "in" : "query",
+        "description" : "Flag indicating whether or not to force save an item. This allows overriding an item if it already exists.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      },
+      "ResourceNameParameter" : {
+        "name" : "resourceName",
+        "in" : "path",
+        "description" : "The name of the Application Insights component resource.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

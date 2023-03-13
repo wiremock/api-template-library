@@ -1,1 +1,315 @@
-{"openapi":"3.0.1","info":{"title":"Trip Purpose Prediction","description":"\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.","version":"1.1.4"},"servers":[{"url":"https://test.api.amadeus.com/v1"}],"paths":{"/travel/predictions/trip-purpose":{"get":{"tags":["trip-purpose-prediction"],"summary":"Returns the forecast purpose of a trip","operationId":"getTripPurposePrediction","parameters":[{"name":"originLocationCode","in":"query","description":"city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler will depart, e.g. BOS for Boston","required":true,"schema":{"pattern":"[A-Z]{3}","type":"string"},"example":"NYC"},{"name":"destinationLocationCode","in":"query","description":"city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris","required":true,"schema":{"pattern":"[A-Z]{3}","type":"string"},"example":"MAD"},{"name":"departureDate","in":"query","description":"the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2017-12-25","required":true,"schema":{"type":"string"},"example":"2023-12-01"},{"name":"returnDate","in":"query","description":"the date on which the traveler will depart from the destination to return to the origin. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28","required":true,"schema":{"type":"string"},"example":"2023-12-12"},{"name":"searchDate","in":"query","description":"the date on which the traveler is performing the search. If this parameter is not specified, current date will be used. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28","schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Prediction"}}}},"400":{"description":"code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"default":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}}}}}},"components":{"schemas":{"Defaults":{"type":"object","properties":{"searchDate":{"type":"string","description":"the date on which the traveler is performing the search.","example":"2019-06-11"}},"description":"the query parameters for which default values were used are returned here"},"Error_400":{"required":["errors"],"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/Issue"}}},"example":{"errors":[{"code":477,"detail":"invalid query parameter format","source":{"example":"CDG","parameter":"airport"},"status":400,"title":"INVALID FORMAT"}]}},"Error_500":{"required":["errors"],"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/Issue"}}},"example":{"errors":[{"code":141,"status":500,"title":"SYSTEM ERROR HAS OCCURRED"}]}},"Issue":{"type":"object","properties":{"code":{"type":"integer","description":"an application-specific error code","format":"int64"},"detail":{"type":"string","description":"explanation of the error"},"source":{"title":"Issue_Source","type":"object","properties":{"example":{"type":"string","description":"a string indicating an example of the right value"},"parameter":{"type":"string","description":"a string indicating which URI query parameter caused the issue"},"pointer":{"type":"string","description":"a JSON Pointer [RFC6901] to the associated entity in the request document"}},"description":"an object containing references to the source of the error"},"status":{"type":"integer","description":"the HTTP status code applicable to this error"},"title":{"type":"string","description":"a short summary of the error"}}},"Links":{"type":"object","properties":{"related":{"type":"string","format":"uri"},"self":{"type":"string","format":"uri"},"type":{"type":"string"}}},"Meta":{"type":"object","properties":{"defaults":{"$ref":"#/components/schemas/Defaults"},"links":{"$ref":"#/components/schemas/Links"}}},"Prediction":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/Purpose_Prediction"},"meta":{"$ref":"#/components/schemas/Meta"}},"example":{"data":{"id":"NYCMAD20231201","probability":"0.9995216","result":"LEISURE","subType":"trip-purpose","type":"prediction"},"meta":{"defaults":{"searchDate":"2023-01-12"},"links":{"self":"https://test.api.amadeus.com/v1/travel/predictions/trip-purpose?originLocationCode=NYC&destinationLocationCode=MAD&departureDate=2023-12-01&returnDate=2023-12-12&searchDate=2023-01-12"}}}},"PredictionResultType":{"type":"string","description":"forecast description","example":"BUSINESS","enum":["BUSINESS","LEISURE"]},"Purpose_Prediction":{"type":"object","properties":{"id":{"type":"string","description":"item identifier","readOnly":true},"probability":{"type":"string","description":"probability of the forecast (between 0 and 1)"},"result":{"$ref":"#/components/schemas/PredictionResultType"},"subType":{"type":"string","example":"trip-purpose"},"type":{"type":"string","description":"the resource name (`prediction`)"}}}},"responses":{"200":{"description":"Success","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Prediction"}}}},"400":{"description":"code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"500":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Trip Purpose Prediction",
+    "description" : "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.",
+    "version" : "1.1.4"
+  },
+  "servers" : [ {
+    "url" : "https://test.api.amadeus.com/v1"
+  } ],
+  "paths" : {
+    "/travel/predictions/trip-purpose" : {
+      "get" : {
+        "tags" : [ "trip-purpose-prediction" ],
+        "summary" : "Returns the forecast purpose of a trip",
+        "operationId" : "getTripPurposePrediction",
+        "parameters" : [ {
+          "name" : "originLocationCode",
+          "in" : "query",
+          "description" : "city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler will depart, e.g. BOS for Boston",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[A-Z]{3}",
+            "type" : "string"
+          },
+          "example" : "NYC"
+        }, {
+          "name" : "destinationLocationCode",
+          "in" : "query",
+          "description" : "city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[A-Z]{3}",
+            "type" : "string"
+          },
+          "example" : "MAD"
+        }, {
+          "name" : "departureDate",
+          "in" : "query",
+          "description" : "the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2017-12-25",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "2023-12-01"
+        }, {
+          "name" : "returnDate",
+          "in" : "query",
+          "description" : "the date on which the traveler will depart from the destination to return to the origin. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "2023-12-12"
+        }, {
+          "name" : "searchDate",
+          "in" : "query",
+          "description" : "the date on which the traveler is performing the search. If this parameter is not specified, current date will be used. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Prediction"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_400"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_500"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Defaults" : {
+        "type" : "object",
+        "properties" : {
+          "searchDate" : {
+            "type" : "string",
+            "description" : "the date on which the traveler is performing the search.",
+            "example" : "2019-06-11"
+          }
+        },
+        "description" : "the query parameters for which default values were used are returned here"
+      },
+      "Error_400" : {
+        "required" : [ "errors" ],
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Issue"
+            }
+          }
+        },
+        "example" : {
+          "errors" : [ {
+            "code" : 477,
+            "detail" : "invalid query parameter format",
+            "source" : {
+              "example" : "CDG",
+              "parameter" : "airport"
+            },
+            "status" : 400,
+            "title" : "INVALID FORMAT"
+          } ]
+        }
+      },
+      "Error_500" : {
+        "required" : [ "errors" ],
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Issue"
+            }
+          }
+        },
+        "example" : {
+          "errors" : [ {
+            "code" : 141,
+            "status" : 500,
+            "title" : "SYSTEM ERROR HAS OCCURRED"
+          } ]
+        }
+      },
+      "Issue" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "an application-specific error code",
+            "format" : "int64"
+          },
+          "detail" : {
+            "type" : "string",
+            "description" : "explanation of the error"
+          },
+          "source" : {
+            "title" : "Issue_Source",
+            "type" : "object",
+            "properties" : {
+              "example" : {
+                "type" : "string",
+                "description" : "a string indicating an example of the right value"
+              },
+              "parameter" : {
+                "type" : "string",
+                "description" : "a string indicating which URI query parameter caused the issue"
+              },
+              "pointer" : {
+                "type" : "string",
+                "description" : "a JSON Pointer [RFC6901] to the associated entity in the request document"
+              }
+            },
+            "description" : "an object containing references to the source of the error"
+          },
+          "status" : {
+            "type" : "integer",
+            "description" : "the HTTP status code applicable to this error"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "a short summary of the error"
+          }
+        }
+      },
+      "Links" : {
+        "type" : "object",
+        "properties" : {
+          "related" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "self" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Meta" : {
+        "type" : "object",
+        "properties" : {
+          "defaults" : {
+            "$ref" : "#/components/schemas/Defaults"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/Links"
+          }
+        }
+      },
+      "Prediction" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Purpose_Prediction"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/Meta"
+          }
+        },
+        "example" : {
+          "data" : {
+            "id" : "NYCMAD20231201",
+            "probability" : "0.9995216",
+            "result" : "LEISURE",
+            "subType" : "trip-purpose",
+            "type" : "prediction"
+          },
+          "meta" : {
+            "defaults" : {
+              "searchDate" : "2023-01-12"
+            },
+            "links" : {
+              "self" : "https://test.api.amadeus.com/v1/travel/predictions/trip-purpose?originLocationCode=NYC&destinationLocationCode=MAD&departureDate=2023-12-01&returnDate=2023-12-12&searchDate=2023-01-12"
+            }
+          }
+        }
+      },
+      "PredictionResultType" : {
+        "type" : "string",
+        "description" : "forecast description",
+        "example" : "BUSINESS",
+        "enum" : [ "BUSINESS", "LEISURE" ]
+      },
+      "Purpose_Prediction" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "item identifier",
+            "readOnly" : true
+          },
+          "probability" : {
+            "type" : "string",
+            "description" : "probability of the forecast (between 0 and 1)"
+          },
+          "result" : {
+            "$ref" : "#/components/schemas/PredictionResultType"
+          },
+          "subType" : {
+            "type" : "string",
+            "example" : "trip-purpose"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "the resource name (`prediction`)"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "200" : {
+        "description" : "Success",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Prediction"
+            }
+          }
+        }
+      },
+      "400" : {
+        "description" : "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_400"
+            }
+          }
+        }
+      },
+      "500" : {
+        "description" : "Unexpected Error",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_500"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,429 @@
-{"openapi":"3.0.1","info":{"title":"Azure SQL Database","description":"Provides create, read, update and delete functionality for Azure SQL Database resources including servers, databases, elastic pools, recommendations, operations, and usage metrics.","version":"2014-04-01"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries":{"get":{"tags":["Queries"],"description":"Gets a list of top queries by database.","operationId":"Queries_ListByDatabase","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TopQueriesListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries/{queryId}/queryText":{"get":{"tags":["Queries"],"description":"Gets a query's text.","operationId":"QueryTexts_ListByQuery","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"queryId","in":"path","description":"The id of the query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/QueryTextListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries/{queryId}/statistics":{"get":{"tags":["Queries"],"description":"Lists a query's statistics.","operationId":"QueryStatistics_ListByQuery","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"queryId","in":"path","description":"The id of the query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/QueryStatisticListResult"}}}}}}}},"components":{"schemas":{"QueryInterval":{"type":"object","properties":{"executionCount":{"type":"number","description":"The number of times the query was executed during this interval.","format":"int32","readOnly":true},"intervalStartTime":{"type":"string","description":"The start time of the measurement interval (ISO8601 format).","format":"date-time","readOnly":true},"metrics":{"type":"array","description":"The list of query metrics during this interval.","readOnly":true,"items":{"$ref":"#/components/schemas/QueryMetric"}}},"description":"A database query."},"QueryMetric":{"type":"object","properties":{"displayName":{"type":"string","description":"The name of the metric for display in user interface","readOnly":true},"name":{"type":"string","description":"The name of the metric","readOnly":true},"unit":{"type":"string","description":"The unit of measurement","readOnly":true,"enum":["percentage","KB","microseconds"]},"value":{"type":"number","description":"The measured value","format":"double","readOnly":true}},"description":"A database query."},"QueryStatistic":{"type":"object","properties":{"intervals":{"type":"array","description":"The list of query intervals.","readOnly":true,"items":{"$ref":"#/components/schemas/QueryInterval"}},"queryId":{"type":"string","description":"The id of the query","readOnly":true}},"description":"A database query."},"QueryStatisticListResult":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"The query.","items":{"$ref":"#/components/schemas/QueryStatistic"}}},"description":"Represents the response to a get query request."},"QueryText":{"type":"object","properties":{"name":{"type":"string","description":"Resource name.","readOnly":true},"queryText":{"type":"string","description":"Query text.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}}},"QueryTextListResult":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"The query text.","items":{"$ref":"#/components/schemas/QueryText"}}},"description":"Represents the response to a get query text request."},"TopQueries":{"type":"object","properties":{"aggregationFunction":{"type":"string","description":"The function that is used to aggregate each query's metrics.","readOnly":true,"enum":["min","max","avg","sum"]},"executionType":{"type":"string","description":"The execution type that is used to filter the query instances that are returned.","readOnly":true,"enum":["any","regular","irregular","aborted","exception"]},"intervalType":{"type":"string","description":"The duration of the interval (ISO8601 duration format).","readOnly":true},"numberOfTopQueries":{"type":"number","description":"The number of requested queries.","format":"int32","readOnly":true},"observationEndTime":{"type":"string","description":"The end time for queries that are returned (ISO8601 format)","format":"date-time","readOnly":true},"observationStartTime":{"type":"string","description":"The start time for queries that are returned (ISO8601 format)","format":"date-time","readOnly":true},"observedMetric":{"type":"string","description":"The type of metric to use for ordering the top metrics.","readOnly":true,"enum":["cpu","io","logio","duration","executionCount"]},"queries":{"type":"array","description":"The list of queries.","readOnly":true,"items":{"$ref":"#/components/schemas/QueryStatistic"}}},"description":"A database query."},"TopQueriesListResult":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"The list of top queries.","items":{"$ref":"#/components/schemas/TopQueries"}}},"description":"Represents the response to a get top queries request."}},"parameters":{"DatabaseNameParameter":{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure SQL Database",
+    "description" : "Provides create, read, update and delete functionality for Azure SQL Database resources including servers, databases, elastic pools, recommendations, operations, and usage metrics.",
+    "version" : "2014-04-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries" : {
+      "get" : {
+        "tags" : [ "Queries" ],
+        "description" : "Gets a list of top queries by database.",
+        "operationId" : "Queries_ListByDatabase",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TopQueriesListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries/{queryId}/queryText" : {
+      "get" : {
+        "tags" : [ "Queries" ],
+        "description" : "Gets a query's text.",
+        "operationId" : "QueryTexts_ListByQuery",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryId",
+          "in" : "path",
+          "description" : "The id of the query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QueryTextListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/topQueries/{queryId}/statistics" : {
+      "get" : {
+        "tags" : [ "Queries" ],
+        "description" : "Lists a query's statistics.",
+        "operationId" : "QueryStatistics_ListByQuery",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryId",
+          "in" : "path",
+          "description" : "The id of the query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QueryStatisticListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "QueryInterval" : {
+        "type" : "object",
+        "properties" : {
+          "executionCount" : {
+            "type" : "number",
+            "description" : "The number of times the query was executed during this interval.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "intervalStartTime" : {
+            "type" : "string",
+            "description" : "The start time of the measurement interval (ISO8601 format).",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "metrics" : {
+            "type" : "array",
+            "description" : "The list of query metrics during this interval.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/QueryMetric"
+            }
+          }
+        },
+        "description" : "A database query."
+      },
+      "QueryMetric" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "The name of the metric for display in user interface",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the metric",
+            "readOnly" : true
+          },
+          "unit" : {
+            "type" : "string",
+            "description" : "The unit of measurement",
+            "readOnly" : true,
+            "enum" : [ "percentage", "KB", "microseconds" ]
+          },
+          "value" : {
+            "type" : "number",
+            "description" : "The measured value",
+            "format" : "double",
+            "readOnly" : true
+          }
+        },
+        "description" : "A database query."
+      },
+      "QueryStatistic" : {
+        "type" : "object",
+        "properties" : {
+          "intervals" : {
+            "type" : "array",
+            "description" : "The list of query intervals.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/QueryInterval"
+            }
+          },
+          "queryId" : {
+            "type" : "string",
+            "description" : "The id of the query",
+            "readOnly" : true
+          }
+        },
+        "description" : "A database query."
+      },
+      "QueryStatisticListResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The query.",
+            "items" : {
+              "$ref" : "#/components/schemas/QueryStatistic"
+            }
+          }
+        },
+        "description" : "Represents the response to a get query request."
+      },
+      "QueryText" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name.",
+            "readOnly" : true
+          },
+          "queryText" : {
+            "type" : "string",
+            "description" : "Query text.",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type.",
+            "readOnly" : true
+          }
+        }
+      },
+      "QueryTextListResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The query text.",
+            "items" : {
+              "$ref" : "#/components/schemas/QueryText"
+            }
+          }
+        },
+        "description" : "Represents the response to a get query text request."
+      },
+      "TopQueries" : {
+        "type" : "object",
+        "properties" : {
+          "aggregationFunction" : {
+            "type" : "string",
+            "description" : "The function that is used to aggregate each query's metrics.",
+            "readOnly" : true,
+            "enum" : [ "min", "max", "avg", "sum" ]
+          },
+          "executionType" : {
+            "type" : "string",
+            "description" : "The execution type that is used to filter the query instances that are returned.",
+            "readOnly" : true,
+            "enum" : [ "any", "regular", "irregular", "aborted", "exception" ]
+          },
+          "intervalType" : {
+            "type" : "string",
+            "description" : "The duration of the interval (ISO8601 duration format).",
+            "readOnly" : true
+          },
+          "numberOfTopQueries" : {
+            "type" : "number",
+            "description" : "The number of requested queries.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "observationEndTime" : {
+            "type" : "string",
+            "description" : "The end time for queries that are returned (ISO8601 format)",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "observationStartTime" : {
+            "type" : "string",
+            "description" : "The start time for queries that are returned (ISO8601 format)",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "observedMetric" : {
+            "type" : "string",
+            "description" : "The type of metric to use for ordering the top metrics.",
+            "readOnly" : true,
+            "enum" : [ "cpu", "io", "logio", "duration", "executionCount" ]
+          },
+          "queries" : {
+            "type" : "array",
+            "description" : "The list of queries.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/QueryStatistic"
+            }
+          }
+        },
+        "description" : "A database query."
+      },
+      "TopQueriesListResult" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The list of top queries.",
+            "items" : {
+              "$ref" : "#/components/schemas/TopQueries"
+            }
+          }
+        },
+        "description" : "Represents the response to a get top queries request."
+      }
+    },
+    "parameters" : {
+      "DatabaseNameParameter" : {
+        "name" : "databaseName",
+        "in" : "path",
+        "description" : "The name of the database.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

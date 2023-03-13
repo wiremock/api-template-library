@@ -1,1 +1,515 @@
-{"openapi":"3.0.1","info":{"title":"Smartphone Test Farm","description":"Control and manages real Smartphone devices from browser and restful apis","contact":{"name":"STF Team","url":"http://openstf.io/","email":"contact@openstf.io"},"license":{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0"},"version":"2.3.0"},"servers":[{"url":"http://openstf.local/api/v1"},{"url":"https://openstf.local/api/v1"}],"tags":[{"name":"user","description":"User Operations"},{"name":"devices","description":"Device Operations"}],"paths":{"/devices":{"get":{"tags":["devices"],"summary":"Device List","description":"The devices endpoint return list of all the STF devices including Disconnected and Offline","operationId":"getDevices","parameters":[{"name":"fields","in":"query","description":"Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response","schema":{"type":"string"}}],"responses":{"200":{"description":"List of Devices","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeviceListResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/devices/{serial}":{"get":{"tags":["devices"],"summary":"Device Information","description":"The device enpoint return information about a single device","operationId":"getDeviceBySerial","parameters":[{"name":"serial","in":"path","description":"Device Serial","required":true,"schema":{"type":"string"}},{"name":"fields","in":"query","description":"Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response","schema":{"type":"string"}}],"responses":{"200":{"description":"Device Information","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeviceResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/swagger.json":null,"/user":{"get":{"tags":["user"],"summary":"User Profile","description":"The User Profile endpoint returns information about current authorized user","operationId":"getUser","responses":{"200":{"description":"Current User Profile information","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/user/accessTokens":{"get":{"tags":["user"],"summary":"Access Tokens","description":"The Access Tokens endpoints returns titles of all the valid access tokens","operationId":"getUserAccessTokens","responses":{"200":{"description":"Access Tokens titles","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AccessTokensResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/user/devices":{"get":{"tags":["user"],"summary":"User Devices","description":"The User Devices endpoint returns device list owner by current authorized user","operationId":"getUserDevices","parameters":[{"name":"fields","in":"query","description":"Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response","schema":{"type":"string"}}],"responses":{"200":{"description":"Current User Devices List","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeviceListResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]},"post":{"tags":["user"],"summary":"Add a device to a user","description":"The User Devices endpoint will request stf server for a new device.","operationId":"addUserDevice","requestBody":{"description":"Device to add","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AddUserDevicePayload"}},"application/octet-stream":{"schema":{"$ref":"#/components/schemas/AddUserDevicePayload"}}},"required":true},"responses":{"200":{"description":"Add User Device Status"},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/user/devices/{serial}":{"get":{"tags":["user"],"summary":"User Device","description":"The devices enpoint return information about device owned by user","operationId":"getUserDeviceBySerial","parameters":[{"name":"serial","in":"path","description":"Device Serial","required":true,"schema":{"type":"string"}},{"name":"fields","in":"query","description":"Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response","schema":{"type":"string"}}],"responses":{"200":{"description":"Device Information owned by user","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeviceResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]},"delete":{"tags":["user"],"summary":"Delete User Device","description":"The User Devices endpoint will request for device release from stf server. It will return request accepted if device is being used by current user","operationId":"deleteUserDeviceBySerial","parameters":[{"name":"serial","in":"path","description":"Device Serial","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Delete User Device Status"},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}},"/user/devices/{serial}/remoteConnect":{"post":{"tags":["user"],"summary":"Remote Connect","description":"The device connect endpoint will request stf server to connect remotely","operationId":"remoteConnectUserDeviceBySerial","parameters":[{"name":"serial","in":"path","description":"Device Serial","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Remote Connect User Device Request Status","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RemoteConnectUserDeviceResponse"}}}},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]},"delete":{"tags":["user"],"summary":"Remote Disconnect","description":"The device connect endpoint will request stf server to disconnect remotely","operationId":"remoteDisconnectUserDeviceBySerial","parameters":[{"name":"serial","in":"path","description":"Device Serial","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Remote Disonnect User Device Request Status"},"default":{"description":"Unexpected Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"accessTokenAuth":null}]}}},"components":{"schemas":{"AccessTokensResponse":{"required":["tokens"],"type":"object","properties":{"tokens":{"type":"array","items":{"type":"string"}}}},"AddUserDevicePayload":{"required":["serial"],"type":"object","properties":{"serial":{"type":"string","description":"Device Serial"},"timeout":{"type":"integer","description":"Device timeout in ms. If device is kept idle for this period, it will be automatically disconnected. Default is provider group timeout"}},"description":"payload object for adding device to user"},"DeviceListResponse":{"required":["devices"],"type":"object","properties":{"devices":{"type":"array","items":{"type":"object"}}}},"DeviceResponse":{"required":["device"],"type":"object","properties":{"device":{"type":"object"}}},"ErrorResponse":{"required":["message"],"type":"object","properties":{"message":{"type":"string"}}},"RemoteConnectUserDeviceResponse":{"required":["remoteConnectUrl","serial"],"type":"object","properties":{"remoteConnectUrl":{"type":"string"},"serial":{"type":"string"}}},"UserResponse":{"required":["user"],"type":"object","properties":{"user":{"type":"object"}}}},"securitySchemes":{"accessTokenAuth":{"type":"apiKey","name":"authorization","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Smartphone Test Farm",
+    "description" : "Control and manages real Smartphone devices from browser and restful apis",
+    "contact" : {
+      "name" : "STF Team",
+      "url" : "http://openstf.io/",
+      "email" : "contact@openstf.io"
+    },
+    "license" : {
+      "name" : "Apache-2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version" : "2.3.0"
+  },
+  "servers" : [ {
+    "url" : "http://openstf.local/api/v1"
+  }, {
+    "url" : "https://openstf.local/api/v1"
+  } ],
+  "tags" : [ {
+    "name" : "user",
+    "description" : "User Operations"
+  }, {
+    "name" : "devices",
+    "description" : "Device Operations"
+  } ],
+  "paths" : {
+    "/devices" : {
+      "get" : {
+        "tags" : [ "devices" ],
+        "summary" : "Device List",
+        "description" : "The devices endpoint return list of all the STF devices including Disconnected and Offline",
+        "operationId" : "getDevices",
+        "parameters" : [ {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of Devices",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeviceListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/devices/{serial}" : {
+      "get" : {
+        "tags" : [ "devices" ],
+        "summary" : "Device Information",
+        "description" : "The device enpoint return information about a single device",
+        "operationId" : "getDeviceBySerial",
+        "parameters" : [ {
+          "name" : "serial",
+          "in" : "path",
+          "description" : "Device Serial",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Device Information",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeviceResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/swagger.json" : null,
+    "/user" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "User Profile",
+        "description" : "The User Profile endpoint returns information about current authorized user",
+        "operationId" : "getUser",
+        "responses" : {
+          "200" : {
+            "description" : "Current User Profile information",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/user/accessTokens" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Access Tokens",
+        "description" : "The Access Tokens endpoints returns titles of all the valid access tokens",
+        "operationId" : "getUserAccessTokens",
+        "responses" : {
+          "200" : {
+            "description" : "Access Tokens titles",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccessTokensResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/user/devices" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "User Devices",
+        "description" : "The User Devices endpoint returns device list owner by current authorized user",
+        "operationId" : "getUserDevices",
+        "parameters" : [ {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Current User Devices List",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeviceListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Add a device to a user",
+        "description" : "The User Devices endpoint will request stf server for a new device.",
+        "operationId" : "addUserDevice",
+        "requestBody" : {
+          "description" : "Device to add",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddUserDevicePayload"
+              }
+            },
+            "application/octet-stream" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddUserDevicePayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Add User Device Status"
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/user/devices/{serial}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "User Device",
+        "description" : "The devices enpoint return information about device owned by user",
+        "operationId" : "getUserDeviceBySerial",
+        "parameters" : [ {
+          "name" : "serial",
+          "in" : "path",
+          "description" : "Device Serial",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields query parameter takes a comma seperated list of fields. Only listed field will be return in response",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Device Information owned by user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeviceResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete User Device",
+        "description" : "The User Devices endpoint will request for device release from stf server. It will return request accepted if device is being used by current user",
+        "operationId" : "deleteUserDeviceBySerial",
+        "parameters" : [ {
+          "name" : "serial",
+          "in" : "path",
+          "description" : "Device Serial",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Delete User Device Status"
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    },
+    "/user/devices/{serial}/remoteConnect" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Remote Connect",
+        "description" : "The device connect endpoint will request stf server to connect remotely",
+        "operationId" : "remoteConnectUserDeviceBySerial",
+        "parameters" : [ {
+          "name" : "serial",
+          "in" : "path",
+          "description" : "Device Serial",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Remote Connect User Device Request Status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RemoteConnectUserDeviceResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Remote Disconnect",
+        "description" : "The device connect endpoint will request stf server to disconnect remotely",
+        "operationId" : "remoteDisconnectUserDeviceBySerial",
+        "parameters" : [ {
+          "name" : "serial",
+          "in" : "path",
+          "description" : "Device Serial",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Remote Disonnect User Device Request Status"
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessTokenAuth" : null
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AccessTokensResponse" : {
+        "required" : [ "tokens" ],
+        "type" : "object",
+        "properties" : {
+          "tokens" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "AddUserDevicePayload" : {
+        "required" : [ "serial" ],
+        "type" : "object",
+        "properties" : {
+          "serial" : {
+            "type" : "string",
+            "description" : "Device Serial"
+          },
+          "timeout" : {
+            "type" : "integer",
+            "description" : "Device timeout in ms. If device is kept idle for this period, it will be automatically disconnected. Default is provider group timeout"
+          }
+        },
+        "description" : "payload object for adding device to user"
+      },
+      "DeviceListResponse" : {
+        "required" : [ "devices" ],
+        "type" : "object",
+        "properties" : {
+          "devices" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "DeviceResponse" : {
+        "required" : [ "device" ],
+        "type" : "object",
+        "properties" : {
+          "device" : {
+            "type" : "object"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "required" : [ "message" ],
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RemoteConnectUserDeviceResponse" : {
+        "required" : [ "remoteConnectUrl", "serial" ],
+        "type" : "object",
+        "properties" : {
+          "remoteConnectUrl" : {
+            "type" : "string"
+          },
+          "serial" : {
+            "type" : "string"
+          }
+        }
+      },
+      "UserResponse" : {
+        "required" : [ "user" ],
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "accessTokenAuth" : {
+        "type" : "apiKey",
+        "name" : "authorization",
+        "in" : "header"
+      }
+    }
+  }
+}

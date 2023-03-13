@@ -1,1 +1,323 @@
-{"openapi":"3.0.1","info":{"title":"City Context","description":"City Context provides a straightforward API to access UK Open Data: crime statistics, schools, demographics and more.","version":"1.0.0"},"servers":[{"url":"http://api.citycontext.com/v1"}],"security":[{"user_key":null}],"tags":[{"name":"citycontext","description":"Core City Context API"}],"paths":{"/@{lat},{lon}":{"get":{"tags":["citycontext"],"summary":"Query by coordinates (SRID 4326 - decimal degrees)","operationId":"byPoint","parameters":[{"name":"lat","in":"path","description":"Latitude","required":true,"schema":{"type":"number","format":"float"}},{"name":"lon","in":"path","description":"Longitude","required":true,"schema":{"type":"number","format":"float"}},{"name":"school_search_radius","in":"query","description":"Search radius for schools, in metres, between 100 and 4000","schema":{"type":"integer"}},{"name":"park_search_radius","in":"query","description":"Search radius for parks, in metres, between 100 and 2000","schema":{"type":"integer"}}],"responses":{"200":{"description":"No response was specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PointInfo"}}}}}}},"/postcodes/{postcode}":{"get":{"tags":["citycontext"],"summary":"Query by postcode","operationId":"byPostcode","parameters":[{"name":"postcode","in":"path","description":"Postcode","required":true,"schema":{"type":"string"}},{"name":"school_search_radius","in":"query","description":"Search radius for schools, in metres, between 100 and 4000","schema":{"type":"integer"}},{"name":"park_search_radius","in":"query","description":"Search radius for parks, in metres, between 100 and 2000","schema":{"type":"integer"}}],"responses":{"200":{"description":"No response was specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PointInfo"}}}}}}},"/usage":{"get":{"tags":["citycontext"],"summary":"Get usage in current month","operationId":"usage","responses":{"200":{"description":"No response was specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Usage"}}}}}}}},"components":{"schemas":{"Latlon":{"type":"object"},"Location":{"required":["lat","lon"],"type":"object","properties":{"lat":{"maximum":85,"minimum":-85,"type":"number","format":"float"},"lon":{"maximum":180,"minimum":-180,"type":"number","format":"float"},"withinLondonCCZ":{"type":"boolean","description":"Boolean flag indicating whether this point is located within London's Congestion Charge zone"}},"description":"Latitude, Longitude and other info related to the given point"},"PointInfo":{"required":["location","parks","schools"],"type":"object","properties":{"location":{"$ref":"#/components/schemas/Location"},"lsoa":{"required":["name"],"type":"object","properties":{"crimes":{"type":"object"},"name":{"type":"string"},"population":{"required":["allUsualResidents","communalEstablishmentResidents","householdResidents","households","personsPerHectare","personsPerHousehold"],"type":"object","properties":{"allUsualResidents":{"type":"integer"},"communalEstablishmentResidents":{"type":"integer"},"householdResidents":{"type":"integer"},"households":{"type":"integer"},"personsPerHectare":{"type":"integer"},"personsPerHousehold":{"type":"integer"}}}},"description":"Statistics for lower layer super output areas (LSOA)"},"parks":{"type":"array","description":"Parks within 1km of the point of interest, sorted by descending area","items":{"required":["areaSqm","centroid","distanceMeters"],"type":"object","properties":{"areaSqm":{"type":"integer"},"centroid":{"$ref":"#/components/schemas/Latlon"},"distanceMeters":{"type":"integer"},"name":{"type":"string"}}}},"schools":{"type":"array","description":"Schools within 1km of the point of interest, sorted by ascending distance from the POI","items":{"required":["distanceMeters","lastInpectionUrl","lastInspectionDate","leadershipAndManagement","location","overallEffectiveness","phase","qualityOfTeaching","schoolName","typeOfEstablishment","urn"],"type":"object","properties":{"distanceMeters":{"type":"integer"},"lastInpectionUrl":{"type":"string","description":"URL to the last inspection report"},"lastInspectionDate":{"type":"string","description":"Date of the last Ofsted inspection","format":"date-time"},"leadershipAndManagement":{"maximum":4,"minimum":1,"type":"integer","description":"Leadership and management grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"},"location":{"$ref":"#/components/schemas/Latlon"},"overallEffectiveness":{"maximum":4,"minimum":1,"type":"integer","description":"Overall effectiveness grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"},"phase":{"type":"string"},"qualityOfTeaching":{"maximum":4,"minimum":1,"type":"integer","description":"Quality of teaching grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"},"schoolName":{"type":"string"},"typeOfEstablishment":{"type":"string"},"urn":{"type":"integer","description":"Unique school identifier"}}}}},"description":"Contextual information around a given point"},"Usage":{"required":["period","periodEnd","periodStart","plan","usage"],"type":"object","properties":{"allowance":{"type":"integer"},"period":{"type":"string"},"periodEnd":{"type":"string","format":"date-time"},"periodStart":{"type":"string","format":"date-time"},"plan":{"type":"string"},"usage":{"type":"integer"}},"description":"User plan monthly API quota and usage"}},"securitySchemes":{"user_key":{"type":"apiKey","description":"City context user key","name":"user_key","in":"query"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "City Context",
+    "description" : "City Context provides a straightforward API to access UK Open Data: crime statistics, schools, demographics and more.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://api.citycontext.com/v1"
+  } ],
+  "security" : [ {
+    "user_key" : null
+  } ],
+  "tags" : [ {
+    "name" : "citycontext",
+    "description" : "Core City Context API"
+  } ],
+  "paths" : {
+    "/@{lat},{lon}" : {
+      "get" : {
+        "tags" : [ "citycontext" ],
+        "summary" : "Query by coordinates (SRID 4326 - decimal degrees)",
+        "operationId" : "byPoint",
+        "parameters" : [ {
+          "name" : "lat",
+          "in" : "path",
+          "description" : "Latitude",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        }, {
+          "name" : "lon",
+          "in" : "path",
+          "description" : "Longitude",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        }, {
+          "name" : "school_search_radius",
+          "in" : "query",
+          "description" : "Search radius for schools, in metres, between 100 and 4000",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "park_search_radius",
+          "in" : "query",
+          "description" : "Search radius for parks, in metres, between 100 and 2000",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "No response was specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PointInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/postcodes/{postcode}" : {
+      "get" : {
+        "tags" : [ "citycontext" ],
+        "summary" : "Query by postcode",
+        "operationId" : "byPostcode",
+        "parameters" : [ {
+          "name" : "postcode",
+          "in" : "path",
+          "description" : "Postcode",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "school_search_radius",
+          "in" : "query",
+          "description" : "Search radius for schools, in metres, between 100 and 4000",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "park_search_radius",
+          "in" : "query",
+          "description" : "Search radius for parks, in metres, between 100 and 2000",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "No response was specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PointInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage" : {
+      "get" : {
+        "tags" : [ "citycontext" ],
+        "summary" : "Get usage in current month",
+        "operationId" : "usage",
+        "responses" : {
+          "200" : {
+            "description" : "No response was specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Usage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Latlon" : {
+        "type" : "object"
+      },
+      "Location" : {
+        "required" : [ "lat", "lon" ],
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "maximum" : 85,
+            "minimum" : -85,
+            "type" : "number",
+            "format" : "float"
+          },
+          "lon" : {
+            "maximum" : 180,
+            "minimum" : -180,
+            "type" : "number",
+            "format" : "float"
+          },
+          "withinLondonCCZ" : {
+            "type" : "boolean",
+            "description" : "Boolean flag indicating whether this point is located within London's Congestion Charge zone"
+          }
+        },
+        "description" : "Latitude, Longitude and other info related to the given point"
+      },
+      "PointInfo" : {
+        "required" : [ "location", "parks", "schools" ],
+        "type" : "object",
+        "properties" : {
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "lsoa" : {
+            "required" : [ "name" ],
+            "type" : "object",
+            "properties" : {
+              "crimes" : {
+                "type" : "object"
+              },
+              "name" : {
+                "type" : "string"
+              },
+              "population" : {
+                "required" : [ "allUsualResidents", "communalEstablishmentResidents", "householdResidents", "households", "personsPerHectare", "personsPerHousehold" ],
+                "type" : "object",
+                "properties" : {
+                  "allUsualResidents" : {
+                    "type" : "integer"
+                  },
+                  "communalEstablishmentResidents" : {
+                    "type" : "integer"
+                  },
+                  "householdResidents" : {
+                    "type" : "integer"
+                  },
+                  "households" : {
+                    "type" : "integer"
+                  },
+                  "personsPerHectare" : {
+                    "type" : "integer"
+                  },
+                  "personsPerHousehold" : {
+                    "type" : "integer"
+                  }
+                }
+              }
+            },
+            "description" : "Statistics for lower layer super output areas (LSOA)"
+          },
+          "parks" : {
+            "type" : "array",
+            "description" : "Parks within 1km of the point of interest, sorted by descending area",
+            "items" : {
+              "required" : [ "areaSqm", "centroid", "distanceMeters" ],
+              "type" : "object",
+              "properties" : {
+                "areaSqm" : {
+                  "type" : "integer"
+                },
+                "centroid" : {
+                  "$ref" : "#/components/schemas/Latlon"
+                },
+                "distanceMeters" : {
+                  "type" : "integer"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "schools" : {
+            "type" : "array",
+            "description" : "Schools within 1km of the point of interest, sorted by ascending distance from the POI",
+            "items" : {
+              "required" : [ "distanceMeters", "lastInpectionUrl", "lastInspectionDate", "leadershipAndManagement", "location", "overallEffectiveness", "phase", "qualityOfTeaching", "schoolName", "typeOfEstablishment", "urn" ],
+              "type" : "object",
+              "properties" : {
+                "distanceMeters" : {
+                  "type" : "integer"
+                },
+                "lastInpectionUrl" : {
+                  "type" : "string",
+                  "description" : "URL to the last inspection report"
+                },
+                "lastInspectionDate" : {
+                  "type" : "string",
+                  "description" : "Date of the last Ofsted inspection",
+                  "format" : "date-time"
+                },
+                "leadershipAndManagement" : {
+                  "maximum" : 4,
+                  "minimum" : 1,
+                  "type" : "integer",
+                  "description" : "Leadership and management grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"
+                },
+                "location" : {
+                  "$ref" : "#/components/schemas/Latlon"
+                },
+                "overallEffectiveness" : {
+                  "maximum" : 4,
+                  "minimum" : 1,
+                  "type" : "integer",
+                  "description" : "Overall effectiveness grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"
+                },
+                "phase" : {
+                  "type" : "string"
+                },
+                "qualityOfTeaching" : {
+                  "maximum" : 4,
+                  "minimum" : 1,
+                  "type" : "integer",
+                  "description" : "Quality of teaching grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)"
+                },
+                "schoolName" : {
+                  "type" : "string"
+                },
+                "typeOfEstablishment" : {
+                  "type" : "string"
+                },
+                "urn" : {
+                  "type" : "integer",
+                  "description" : "Unique school identifier"
+                }
+              }
+            }
+          }
+        },
+        "description" : "Contextual information around a given point"
+      },
+      "Usage" : {
+        "required" : [ "period", "periodEnd", "periodStart", "plan", "usage" ],
+        "type" : "object",
+        "properties" : {
+          "allowance" : {
+            "type" : "integer"
+          },
+          "period" : {
+            "type" : "string"
+          },
+          "periodEnd" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "periodStart" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "plan" : {
+            "type" : "string"
+          },
+          "usage" : {
+            "type" : "integer"
+          }
+        },
+        "description" : "User plan monthly API quota and usage"
+      }
+    },
+    "securitySchemes" : {
+      "user_key" : {
+        "type" : "apiKey",
+        "description" : "City context user key",
+        "name" : "user_key",
+        "in" : "query"
+      }
+    }
+  }
+}

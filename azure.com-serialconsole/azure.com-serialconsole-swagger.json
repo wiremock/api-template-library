@@ -1,1 +1,335 @@
-{"openapi":"3.0.1","info":{"title":"MicrosoftSerialConsoleClient","description":"The Azure Serial Console allows you to access the serial console of a Virtual Machine or VM scale set instance","version":"2018-05-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.SerialConsole/operations":{"get":{"tags":["SerialConsole"],"description":"Gets a list of Serial Console API operations.","operationId":"ListOperations","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - returns a JSON object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SerialConsoleOperations"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}":{"get":{"tags":["SerialConsole"],"summary":"Get the disabled status for a subscription","description":"Gets whether or not Serial Console is disabled for a given subscription","operationId":"GetConsoleStatus","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.","required":true,"schema":{"type":"string"}},{"name":"default","in":"path","description":"Default parameter. Leave the value as \"default\".","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns a JSON object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SerialConsoleStatus"}}}},"404":{"description":"Subscription not found - returns a JSON object with error details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GetSerialConsoleSubscriptionNotFound"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/disableConsole":{"post":{"tags":["SerialConsole"],"summary":"Disable Serial Console for a subscription","description":"Disables the Serial Console service for all VMs and VM scale sets in the provided subscription","operationId":"DisableConsole","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.","required":true,"schema":{"type":"string"}},{"name":"default","in":"path","description":"Default parameter. Leave the value as \"default\".","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns a JSON object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DisableSerialConsoleResult"}}}},"404":{"description":"Subscription not found - returns a JSON object with error details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GetSerialConsoleSubscriptionNotFound"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/enableConsole":{"post":{"tags":["SerialConsole"],"summary":"Enable Serial Console for a subscription","description":"Enables the Serial Console service for all VMs and VM scale sets in the provided subscription","operationId":"EnableConsole","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.","required":true,"schema":{"type":"string"}},{"name":"default","in":"path","description":"Default parameter. Leave the value as \"default\".","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Serial Console disabled","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EnableSerialConsoleResult"}}}},"404":{"description":"Subscription not found - returns a JSON object with error details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GetSerialConsoleSubscriptionNotFound"}}}}}}}},"components":{"schemas":{"DisableSerialConsoleResult":{"title":"Serial Console Disable Result","type":"object","properties":{"disabled":{"type":"boolean","description":"Whether or not Serial Console is disabled."}},"description":"Returns whether or not Serial Console is disabled."},"EnableSerialConsoleResult":{"title":"Serial Console Enable Result","type":"object","properties":{"disabled":{"type":"boolean","description":"Whether or not Serial Console is disabled (enabled)."}},"description":"Returns whether or not Serial Console is disabled (enabled)."},"GetSerialConsoleSubscriptionNotFound":{"title":"Serial Console subscription not found","type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Subscription not found message"}},"description":"Error saying that the provided subscription could not be found"},"SerialConsoleOperations":{"title":"Serial Console operations","type":"object","properties":{"value":{"type":"array","description":"A list of Serial Console operations","items":{"type":"object","properties":{"display":{"type":"object","properties":{"description":{"type":"string"},"operation":{"type":"string"},"provider":{"type":"string"},"resource":{"type":"string"}}},"isDataAction":{"type":"string"},"name":{"type":"string"}}}}},"description":"Serial Console operations"},"SerialConsoleStatus":{"title":"Serial Console GET Result","type":"object","properties":{"disabled":{"type":"boolean","description":"Whether or not Serial Console is disabled."}},"description":"Returns whether or not Serial Console is disabled."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.","required":true,"schema":{"type":"string"}},"defaultParameter":{"name":"default","in":"path","description":"Default parameter. Leave the value as \"default\".","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MicrosoftSerialConsoleClient",
+    "description" : "The Azure Serial Console allows you to access the serial console of a Virtual Machine or VM scale set instance",
+    "version" : "2018-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.SerialConsole/operations" : {
+      "get" : {
+        "tags" : [ "SerialConsole" ],
+        "description" : "Gets a list of Serial Console API operations.",
+        "operationId" : "ListOperations",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - returns a JSON object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SerialConsoleOperations"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}" : {
+      "get" : {
+        "tags" : [ "SerialConsole" ],
+        "summary" : "Get the disabled status for a subscription",
+        "description" : "Gets whether or not Serial Console is disabled for a given subscription",
+        "operationId" : "GetConsoleStatus",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "default",
+          "in" : "path",
+          "description" : "Default parameter. Leave the value as \"default\".",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns a JSON object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SerialConsoleStatus"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found - returns a JSON object with error details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetSerialConsoleSubscriptionNotFound"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/disableConsole" : {
+      "post" : {
+        "tags" : [ "SerialConsole" ],
+        "summary" : "Disable Serial Console for a subscription",
+        "description" : "Disables the Serial Console service for all VMs and VM scale sets in the provided subscription",
+        "operationId" : "DisableConsole",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "default",
+          "in" : "path",
+          "description" : "Default parameter. Leave the value as \"default\".",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns a JSON object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DisableSerialConsoleResult"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found - returns a JSON object with error details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetSerialConsoleSubscriptionNotFound"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/enableConsole" : {
+      "post" : {
+        "tags" : [ "SerialConsole" ],
+        "summary" : "Enable Serial Console for a subscription",
+        "description" : "Enables the Serial Console service for all VMs and VM scale sets in the provided subscription",
+        "operationId" : "EnableConsole",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "default",
+          "in" : "path",
+          "description" : "Default parameter. Leave the value as \"default\".",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Serial Console disabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EnableSerialConsoleResult"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found - returns a JSON object with error details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetSerialConsoleSubscriptionNotFound"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "DisableSerialConsoleResult" : {
+        "title" : "Serial Console Disable Result",
+        "type" : "object",
+        "properties" : {
+          "disabled" : {
+            "type" : "boolean",
+            "description" : "Whether or not Serial Console is disabled."
+          }
+        },
+        "description" : "Returns whether or not Serial Console is disabled."
+      },
+      "EnableSerialConsoleResult" : {
+        "title" : "Serial Console Enable Result",
+        "type" : "object",
+        "properties" : {
+          "disabled" : {
+            "type" : "boolean",
+            "description" : "Whether or not Serial Console is disabled (enabled)."
+          }
+        },
+        "description" : "Returns whether or not Serial Console is disabled (enabled)."
+      },
+      "GetSerialConsoleSubscriptionNotFound" : {
+        "title" : "Serial Console subscription not found",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Subscription not found message"
+          }
+        },
+        "description" : "Error saying that the provided subscription could not be found"
+      },
+      "SerialConsoleOperations" : {
+        "title" : "Serial Console operations",
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "A list of Serial Console operations",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "display" : {
+                  "type" : "object",
+                  "properties" : {
+                    "description" : {
+                      "type" : "string"
+                    },
+                    "operation" : {
+                      "type" : "string"
+                    },
+                    "provider" : {
+                      "type" : "string"
+                    },
+                    "resource" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "isDataAction" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "description" : "Serial Console operations"
+      },
+      "SerialConsoleStatus" : {
+        "title" : "Serial Console GET Result",
+        "type" : "object",
+        "properties" : {
+          "disabled" : {
+            "type" : "boolean",
+            "description" : "Whether or not Serial Console is disabled."
+          }
+        },
+        "description" : "Returns whether or not Serial Console is disabled."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for this operation.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "Subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call requiring it.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "defaultParameter" : {
+        "name" : "default",
+        "in" : "path",
+        "description" : "Default parameter. Leave the value as \"default\".",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,225 @@
-{"openapi":"3.0.1","info":{"title":"CodeScan API","description":"Manage your Hosted CodeScan Service","termsOfService":"https://app.code-scan.com/site/terms","contact":{"name":"VillageChief Support","url":"http://www.code-scan.com","email":"support@villagechief.com"},"license":{"name":"Commercial","url":"https://app.code-scan.com/site/terms"},"version":"1.0.0"},"servers":[{"url":"https://app.code-scan.com/api"}],"paths":{"/job":{"get":{"summary":"Get the status of a job","description":"Fetches the status of a job","parameters":[{"name":"jobId","in":"query","description":"Id of the Job to retrieve","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Profile information for a user","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Job"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}},"security":[{"codescan_auth":null}]},"post":{"summary":"Queues a job","description":"Creates a new job","requestBody":{"description":"Id of the Job to retrieve","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NewJob"}}},"required":true},"responses":{"200":{"description":"Profile information for a user","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Job"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}},"security":[{"codescan_auth":null}]}}},"components":{"schemas":{"Error":{"type":"object","properties":{"error":{"type":"number","description":"generally set to 1"},"message":{"type":"string","description":"Message of the error"}}},"Job":{"type":"object","properties":{"alert":{"type":"string","description":"Quality Gate status of a completed job"},"alertDescription":{"type":"string","description":"Quality Gate errors of a completed job"},"analysisMode":{"type":"string","description":"When set to preview, analysis is not added to the database"},"commit":{"type":"string","description":"The git commit that this job is evaluating"},"created":{"type":"string","description":"DateTime that this job was queued","format":"dateTime"},"emailReportTo":{"type":"string","description":"List of usernames to email the report to"},"finished":{"type":"string","description":"If the job has finished, then the datetime that the job finished processing","format":"dateTime"},"jobId":{"type":"string","description":"The jobId of this job"},"projectBranch":{"type":"string","description":"The project branch that this job is evaluating"},"projectKey":{"type":"string","description":"The projectKey that this job is running"},"started":{"type":"string","description":"If the job has started, then the datetime that the job started processing","format":"dateTime"},"status":{"type":"string","description":"The status of the job"},"url":{"type":"string","description":"The url to view the output report"},"version":{"type":"string","description":"The project version that this job is evaluating"},"warnings":{"type":"string","description":"When creating a new job, any warnings will be listed here."}}},"NewJob":{"required":["projectKey"],"type":"object","properties":{"analysisMode":{"type":"string","description":"When set to preview, analysis is not added to the database"},"commitOverride":{"type":"string","description":"When the project is based on git, the git commit that this job should run. Leave blank to use the project's default"},"emailReportTo":{"type":"string","description":"List of usernames to email the report to"},"projectBranch":{"type":"string","description":"he project branch that this job is evaluating"},"projectKey":{"type":"string","description":"The key of the project to start"},"version":{"type":"string","description":"Use this as the analysis' version. On success the Project's default version will be set to this"}}}},"securitySchemes":{"codescan_auth":{"type":"http","description":"CodeScan uses Basic Authentication. The username should be your Subscription Id and the Password your api_key available on the subscription page.","scheme":"basic"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "CodeScan API",
+    "description" : "Manage your Hosted CodeScan Service",
+    "termsOfService" : "https://app.code-scan.com/site/terms",
+    "contact" : {
+      "name" : "VillageChief Support",
+      "url" : "http://www.code-scan.com",
+      "email" : "support@villagechief.com"
+    },
+    "license" : {
+      "name" : "Commercial",
+      "url" : "https://app.code-scan.com/site/terms"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://app.code-scan.com/api"
+  } ],
+  "paths" : {
+    "/job" : {
+      "get" : {
+        "summary" : "Get the status of a job",
+        "description" : "Fetches the status of a job",
+        "parameters" : [ {
+          "name" : "jobId",
+          "in" : "query",
+          "description" : "Id of the Job to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Profile information for a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "codescan_auth" : null
+        } ]
+      },
+      "post" : {
+        "summary" : "Queues a job",
+        "description" : "Creates a new job",
+        "requestBody" : {
+          "description" : "Id of the Job to retrieve",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewJob"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Profile information for a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "codescan_auth" : null
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "number",
+            "description" : "generally set to 1"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Message of the error"
+          }
+        }
+      },
+      "Job" : {
+        "type" : "object",
+        "properties" : {
+          "alert" : {
+            "type" : "string",
+            "description" : "Quality Gate status of a completed job"
+          },
+          "alertDescription" : {
+            "type" : "string",
+            "description" : "Quality Gate errors of a completed job"
+          },
+          "analysisMode" : {
+            "type" : "string",
+            "description" : "When set to preview, analysis is not added to the database"
+          },
+          "commit" : {
+            "type" : "string",
+            "description" : "The git commit that this job is evaluating"
+          },
+          "created" : {
+            "type" : "string",
+            "description" : "DateTime that this job was queued",
+            "format" : "dateTime"
+          },
+          "emailReportTo" : {
+            "type" : "string",
+            "description" : "List of usernames to email the report to"
+          },
+          "finished" : {
+            "type" : "string",
+            "description" : "If the job has finished, then the datetime that the job finished processing",
+            "format" : "dateTime"
+          },
+          "jobId" : {
+            "type" : "string",
+            "description" : "The jobId of this job"
+          },
+          "projectBranch" : {
+            "type" : "string",
+            "description" : "The project branch that this job is evaluating"
+          },
+          "projectKey" : {
+            "type" : "string",
+            "description" : "The projectKey that this job is running"
+          },
+          "started" : {
+            "type" : "string",
+            "description" : "If the job has started, then the datetime that the job started processing",
+            "format" : "dateTime"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The status of the job"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The url to view the output report"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The project version that this job is evaluating"
+          },
+          "warnings" : {
+            "type" : "string",
+            "description" : "When creating a new job, any warnings will be listed here."
+          }
+        }
+      },
+      "NewJob" : {
+        "required" : [ "projectKey" ],
+        "type" : "object",
+        "properties" : {
+          "analysisMode" : {
+            "type" : "string",
+            "description" : "When set to preview, analysis is not added to the database"
+          },
+          "commitOverride" : {
+            "type" : "string",
+            "description" : "When the project is based on git, the git commit that this job should run. Leave blank to use the project's default"
+          },
+          "emailReportTo" : {
+            "type" : "string",
+            "description" : "List of usernames to email the report to"
+          },
+          "projectBranch" : {
+            "type" : "string",
+            "description" : "he project branch that this job is evaluating"
+          },
+          "projectKey" : {
+            "type" : "string",
+            "description" : "The key of the project to start"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "Use this as the analysis' version. On success the Project's default version will be set to this"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "codescan_auth" : {
+        "type" : "http",
+        "description" : "CodeScan uses Basic Authentication. The username should be your Subscription Id and the Password your api_key available on the subscription page.",
+        "scheme" : "basic"
+      }
+    }
+  }
+}

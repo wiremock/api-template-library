@@ -1,1 +1,816 @@
-{"openapi":"3.0.1","info":{"title":"SqlManagementClient","description":"The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.","version":"2018-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels":{"get":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Gets the sensitivity labels of a given database","operationId":"ManagedDatabaseSensitivityLabels_ListCurrentByDatabase","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"$filter","in":"query","description":"An OData filter expression that filters elements in the collection.","schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the sensitivity labels.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabelListResult"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelsInvalidODataQuery - The specified OData query is either not valid or not supported\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels":{"get":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Gets the sensitivity labels of a given database","operationId":"ManagedDatabaseSensitivityLabels_ListRecommendedByDatabase","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"includeDisabledRecommendations","in":"query","description":"Specifies whether to include disabled recommendations or not.","schema":{"type":"boolean"}},{"name":"$skipToken","in":"query","schema":{"type":"string"}},{"name":"$filter","in":"query","description":"An OData filter expression that filters elements in the collection.","schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the sensitivity labels.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabelListResult"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelsInvalidODataQuery - The specified OData query is either not valid or not supported\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}":{"get":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Gets the sensitivity label of a given column","operationId":"ManagedDatabaseSensitivityLabels_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"schemaName","in":"path","description":"The name of the schema.","required":true,"schema":{"type":"string"}},{"name":"tableName","in":"path","description":"The name of the table.","required":true,"schema":{"type":"string"}},{"name":"columnName","in":"path","description":"The name of the column.","required":true,"schema":{"type":"string"}},{"name":"sensitivityLabelSource","in":"path","description":"The source of the sensitivity label.","required":true,"schema":{"type":"string","enum":["current","recommended"]}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the sensitivity label.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabel"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"}}},"put":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Creates or updates the sensitivity label of a given column","operationId":"ManagedDatabaseSensitivityLabels_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"schemaName","in":"path","description":"The name of the schema.","required":true,"schema":{"type":"string"}},{"name":"tableName","in":"path","description":"The name of the table.","required":true,"schema":{"type":"string"}},{"name":"columnName","in":"path","description":"The name of the column.","required":true,"schema":{"type":"string"}},{"name":"sensitivityLabelSource","in":"path","description":"The source of the sensitivity label.","required":true,"schema":{"type":"string","enum":["current"]}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The column sensitivity label resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabel"}}},"required":true},"responses":{"200":{"description":"Successfully updated the sensitivity label.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabel"}}}},"201":{"description":"Successfully created the sensitivity label.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SensitivityLabel"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 400 InvalidSensitivityLabelResource - The specified sensitivity label resource is not valid\n\n * 400 SensitivityLabelLabelNameAndInfoTypeNotProvided - At least one of LabelName and InformationType must be specified\n\n * 400 LabelNameTooLong - Label name cannot exceed {0} characters\n\n * 400 InformationTypeTooLong - Information type cannot exceed {0} characters\n\n * 400 LabelIdMustBeGuid - Label ID must be a GUID\n\n * 400 InformationTypeIdMustBeGuid - Information type ID must be a GUID\n\n * 400 LabelMissing - Label is missing\n\n * 400 InformationTypeMissing - Information Type is missing\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"}}},"delete":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Deletes the sensitivity label of a given column","operationId":"ManagedDatabaseSensitivityLabels_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"schemaName","in":"path","description":"The name of the schema.","required":true,"schema":{"type":"string"}},{"name":"tableName","in":"path","description":"The name of the table.","required":true,"schema":{"type":"string"}},{"name":"columnName","in":"path","description":"The name of the column.","required":true,"schema":{"type":"string"}},{"name":"sensitivityLabelSource","in":"path","description":"The source of the sensitivity label.","required":true,"schema":{"type":"string","enum":["current"]}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully deleted the sensitivity label."},"default":{"description":"*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/disable":{"post":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Disables sensitivity recommendations on a given column","operationId":"ManagedDatabaseSensitivityLabels_DisableRecommendation","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"schemaName","in":"path","description":"The name of the schema.","required":true,"schema":{"type":"string"}},{"name":"tableName","in":"path","description":"The name of the table.","required":true,"schema":{"type":"string"}},{"name":"columnName","in":"path","description":"The name of the column.","required":true,"schema":{"type":"string"}},{"name":"sensitivityLabelSource","in":"path","required":true,"schema":{"type":"string","enum":["recommended"]}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully disabled the sensitivity recommendations on the given column."},"default":{"description":"*** Error Responses: ***\n\n * 404 SensitivityLabelsColumnNotFound - The specified column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/enable":{"post":{"tags":["ManagedDatabaseSensitivityLabels"],"description":"Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns)","operationId":"ManagedDatabaseSensitivityLabels_EnableRecommendation","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},{"name":"schemaName","in":"path","description":"The name of the schema.","required":true,"schema":{"type":"string"}},{"name":"tableName","in":"path","description":"The name of the table.","required":true,"schema":{"type":"string"}},{"name":"columnName","in":"path","description":"The name of the column.","required":true,"schema":{"type":"string"}},{"name":"sensitivityLabelSource","in":"path","required":true,"schema":{"type":"string","enum":["recommended"]}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully enabled the sensitivity recommendations on the given column."},"default":{"description":"*** Error Responses: ***\n\n * 404 SensitivityLabelsColumnNotFound - The specified column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."}}}}},"components":{"schemas":{"SensitivityLabel":{"properties":{"properties":{"$ref":"#/components/schemas/SensitivityLabelProperties"}},"description":"A sensitivity label.","allOf":[{"description":"ARM proxy resource.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."}]}]},"SensitivityLabelListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"Link to retrieve next page of results.","readOnly":true},"value":{"type":"array","description":"Array of results.","readOnly":true,"items":{"$ref":"#/components/schemas/SensitivityLabel"}}},"description":"A list of sensitivity labels."},"SensitivityLabelProperties":{"type":"object","properties":{"informationType":{"type":"string","description":"The information type."},"informationTypeId":{"type":"string","description":"The information type ID."},"isDisabled":{"type":"boolean","description":"Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not.","readOnly":true},"labelId":{"type":"string","description":"The label ID."},"labelName":{"type":"string","description":"The label name."},"rank":{"type":"string","enum":["None","Low","Medium","High","Critical"]}},"description":"Properties of a sensitivity label."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},"BlobAuditingPolicyNameParameter":{"name":"blobAuditingPolicyName","in":"path","description":"The name of the blob auditing policy.","required":true,"schema":{"type":"string","enum":["default"]}},"DatabaseNameParameter":{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},"ManagedInstanceNameParameter":{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},"ResourceGroupParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineContainerNameParameter":{"name":"sqlVirtualMachineContainerName","in":"path","description":"The name of the SqlVirtualMachineContainer.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineInstanceNameParameter":{"name":"sqlVirtualMachineInstanceName","in":"path","description":"The name of the SqlVirtualMachineInstance.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},"VirtualClusterNameParameter":{"name":"virtualClusterName","in":"path","description":"The name of the virtual cluster.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SqlManagementClient",
+    "description" : "The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.",
+    "version" : "2018-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels" : {
+      "get" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Gets the sensitivity labels of a given database",
+        "operationId" : "ManagedDatabaseSensitivityLabels_ListCurrentByDatabase",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "An OData filter expression that filters elements in the collection.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the sensitivity labels.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SensitivityLabelListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelsInvalidODataQuery - The specified OData query is either not valid or not supported\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels" : {
+      "get" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Gets the sensitivity labels of a given database",
+        "operationId" : "ManagedDatabaseSensitivityLabels_ListRecommendedByDatabase",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeDisabledRecommendations",
+          "in" : "query",
+          "description" : "Specifies whether to include disabled recommendations or not.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "$skipToken",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "An OData filter expression that filters elements in the collection.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the sensitivity labels.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SensitivityLabelListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelsInvalidODataQuery - The specified OData query is either not valid or not supported\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}" : {
+      "get" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Gets the sensitivity label of a given column",
+        "operationId" : "ManagedDatabaseSensitivityLabels_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "schemaName",
+          "in" : "path",
+          "description" : "The name of the schema.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tableName",
+          "in" : "path",
+          "description" : "The name of the table.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "columnName",
+          "in" : "path",
+          "description" : "The name of the column.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivityLabelSource",
+          "in" : "path",
+          "description" : "The source of the sensitivity label.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "current", "recommended" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the sensitivity label.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SensitivityLabel"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Creates or updates the sensitivity label of a given column",
+        "operationId" : "ManagedDatabaseSensitivityLabels_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "schemaName",
+          "in" : "path",
+          "description" : "The name of the schema.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tableName",
+          "in" : "path",
+          "description" : "The name of the table.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "columnName",
+          "in" : "path",
+          "description" : "The name of the column.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivityLabelSource",
+          "in" : "path",
+          "description" : "The source of the sensitivity label.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "current" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The column sensitivity label resource.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SensitivityLabel"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the sensitivity label.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SensitivityLabel"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Successfully created the sensitivity label.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SensitivityLabel"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 400 InvalidSensitivityLabelResource - The specified sensitivity label resource is not valid\n\n * 400 SensitivityLabelLabelNameAndInfoTypeNotProvided - At least one of LabelName and InformationType must be specified\n\n * 400 LabelNameTooLong - Label name cannot exceed {0} characters\n\n * 400 InformationTypeTooLong - Information type cannot exceed {0} characters\n\n * 400 LabelIdMustBeGuid - Label ID must be a GUID\n\n * 400 InformationTypeIdMustBeGuid - Information type ID must be a GUID\n\n * 400 LabelMissing - Label is missing\n\n * 400 InformationTypeMissing - Information Type is missing\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Deletes the sensitivity label of a given column",
+        "operationId" : "ManagedDatabaseSensitivityLabels_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "schemaName",
+          "in" : "path",
+          "description" : "The name of the schema.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tableName",
+          "in" : "path",
+          "description" : "The name of the table.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "columnName",
+          "in" : "path",
+          "description" : "The name of the column.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivityLabelSource",
+          "in" : "path",
+          "description" : "The source of the sensitivity label.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "current" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully deleted the sensitivity label."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 DatawarehouseDatabaseIsDeactivated - Could not execute Data Classification operation because the database is paused. Please resume it.\n\n * 400 SensitivityLabelSourceNameNotSupported - The specified sensitivity label source is not valid\n\n * 404 SensitivityLabelsColumnNotFound - The specified schema/table/column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance.\n\n * 404 SensitivityLabelsLabelNotFound - The specified sensitivity label could not be found\n\n * 501 SensitivityLabelRecommendedSourceNameNotSupported - 'Recommended' sensitivity label source is not supported yet"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/disable" : {
+      "post" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Disables sensitivity recommendations on a given column",
+        "operationId" : "ManagedDatabaseSensitivityLabels_DisableRecommendation",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "schemaName",
+          "in" : "path",
+          "description" : "The name of the schema.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tableName",
+          "in" : "path",
+          "description" : "The name of the table.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "columnName",
+          "in" : "path",
+          "description" : "The name of the column.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivityLabelSource",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "recommended" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully disabled the sensitivity recommendations on the given column."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SensitivityLabelsColumnNotFound - The specified column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/enable" : {
+      "post" : {
+        "tags" : [ "ManagedDatabaseSensitivityLabels" ],
+        "description" : "Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns)",
+        "operationId" : "ManagedDatabaseSensitivityLabels_EnableRecommendation",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "databaseName",
+          "in" : "path",
+          "description" : "The name of the database.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "schemaName",
+          "in" : "path",
+          "description" : "The name of the schema.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tableName",
+          "in" : "path",
+          "description" : "The name of the table.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "columnName",
+          "in" : "path",
+          "description" : "The name of the column.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sensitivityLabelSource",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "recommended" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully enabled the sensitivity recommendations on the given column."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SensitivityLabelsColumnNotFound - The specified column could not be found\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 DatabaseDoesNotExist - User has specified a database name that does not exist on this server instance."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "SensitivityLabel" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/SensitivityLabelProperties"
+          }
+        },
+        "description" : "A sensitivity label.",
+        "allOf" : [ {
+          "description" : "ARM proxy resource.",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Resource ID.",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Resource name.",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "Resource type.",
+                "readOnly" : true
+              }
+            },
+            "description" : "ARM resource."
+          } ]
+        } ]
+      },
+      "SensitivityLabelListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Link to retrieve next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Array of results.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/SensitivityLabel"
+            }
+          }
+        },
+        "description" : "A list of sensitivity labels."
+      },
+      "SensitivityLabelProperties" : {
+        "type" : "object",
+        "properties" : {
+          "informationType" : {
+            "type" : "string",
+            "description" : "The information type."
+          },
+          "informationTypeId" : {
+            "type" : "string",
+            "description" : "The information type ID."
+          },
+          "isDisabled" : {
+            "type" : "boolean",
+            "description" : "Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not.",
+            "readOnly" : true
+          },
+          "labelId" : {
+            "type" : "string",
+            "description" : "The label ID."
+          },
+          "labelName" : {
+            "type" : "string",
+            "description" : "The label name."
+          },
+          "rank" : {
+            "type" : "string",
+            "enum" : [ "None", "Low", "Medium", "High", "Critical" ]
+          }
+        },
+        "description" : "Properties of a sensitivity label."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for the request.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "BlobAuditingPolicyNameParameter" : {
+        "name" : "blobAuditingPolicyName",
+        "in" : "path",
+        "description" : "The name of the blob auditing policy.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "default" ]
+        }
+      },
+      "DatabaseNameParameter" : {
+        "name" : "databaseName",
+        "in" : "path",
+        "description" : "The name of the database.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ManagedInstanceNameParameter" : {
+        "name" : "managedInstanceName",
+        "in" : "path",
+        "description" : "The name of the managed instance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineContainerNameParameter" : {
+        "name" : "sqlVirtualMachineContainerName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineContainer.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineInstanceNameParameter" : {
+        "name" : "sqlVirtualMachineInstanceName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineInstance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The subscription ID that identifies an Azure subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "VirtualClusterNameParameter" : {
+        "name" : "virtualClusterName",
+        "in" : "path",
+        "description" : "The name of the virtual cluster.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

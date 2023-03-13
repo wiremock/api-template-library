@@ -1,1 +1,201 @@
-{"openapi":"3.0.1","info":{"title":"VM Insights Onboarding","description":"API to manage VM Insights Onboarding","version":"2018-11-27-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default":{"get":{"tags":["VM Insights Onboarding"],"description":"Retrieves the VM Insights onboarding status for the specified resource or resource scope.","operationId":"VMInsights_GetOnboardingStatus","parameters":[{"name":"api-version","in":"query","description":"API version.","required":true,"schema":{"type":"string"}},{"name":"resourceUri","in":"path","description":"The fully qualified Azure Resource manager identifier of the resource, or scope, whose status to retrieve.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation completed successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/VMInsightsOnboardingStatus"}}}},"default":{"description":"An error occurred while processing the request. See the error.code parameter to identify the specific error.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseWithError"}}}}}}}},"components":{"schemas":{"DataContainer":{"required":["workspace"],"type":"object","properties":{"workspace":{"$ref":"#/components/schemas/WorkspaceInfo"}},"description":"Information about a container with data for a given resource."},"Error":{"required":["code"],"type":"object","properties":{"code":{"type":"string","description":"Error code identifying the specific error."},"message":{"type":"string","description":"Error message in the caller's locale."}},"description":"Error details."},"ProxyResource":{"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"name":{"type":"string","description":"Azure resource name","readOnly":true},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"ResponseWithError":{"required":["error"],"type":"object","properties":{"error":{"$ref":"#/components/schemas/Error"}},"description":"An error response from the API."},"VMInsightsOnboardingStatus":{"properties":{"properties":{"required":["dataStatus","onboardingStatus","resourceId"],"type":"object","properties":{"data":{"type":"array","description":"Containers that currently store VM Insights data for the specified resource.","items":{"$ref":"#/components/schemas/DataContainer"}},"dataStatus":{"type":"string","description":"The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed.","enum":["present","notPresent"]},"onboardingStatus":{"type":"string","description":"The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded.","enum":["onboarded","notOnboarded","unknown"]},"resourceId":{"type":"string","description":"Azure Resource Manager identifier of the resource whose onboarding status is being represented."}},"description":"Resource properties."}},"description":"VM Insights onboarding status for a resource.","allOf":[{"$ref":"#/components/schemas/ProxyResource"}]},"WorkspaceInfo":{"required":["id","location","properties"],"type":"object","properties":{"id":{"type":"string","description":"Azure Resource Manager identifier of the Log Analytics Workspace."},"location":{"type":"string","description":"Location of the Log Analytics workspace."},"properties":{"required":["customerId"],"type":"object","properties":{"customerId":{"type":"string","description":"Log Analytics workspace identifier."}},"description":"Resource properties."}},"description":"Information about a Log Analytics Workspace."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"API version.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "VM Insights Onboarding",
+    "description" : "API to manage VM Insights Onboarding",
+    "version" : "2018-11-27-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default" : {
+      "get" : {
+        "tags" : [ "VM Insights Onboarding" ],
+        "description" : "Retrieves the VM Insights onboarding status for the specified resource or resource scope.",
+        "operationId" : "VMInsights_GetOnboardingStatus",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceUri",
+          "in" : "path",
+          "description" : "The fully qualified Azure Resource manager identifier of the resource, or scope, whose status to retrieve.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation completed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VMInsightsOnboardingStatus"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred while processing the request. See the error.code parameter to identify the specific error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResponseWithError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "DataContainer" : {
+        "required" : [ "workspace" ],
+        "type" : "object",
+        "properties" : {
+          "workspace" : {
+            "$ref" : "#/components/schemas/WorkspaceInfo"
+          }
+        },
+        "description" : "Information about a container with data for a given resource."
+      },
+      "Error" : {
+        "required" : [ "code" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code identifying the specific error."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message in the caller's locale."
+          }
+        },
+        "description" : "Error details."
+      },
+      "ProxyResource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "ResponseWithError" : {
+        "required" : [ "error" ],
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/Error"
+          }
+        },
+        "description" : "An error response from the API."
+      },
+      "VMInsightsOnboardingStatus" : {
+        "properties" : {
+          "properties" : {
+            "required" : [ "dataStatus", "onboardingStatus", "resourceId" ],
+            "type" : "object",
+            "properties" : {
+              "data" : {
+                "type" : "array",
+                "description" : "Containers that currently store VM Insights data for the specified resource.",
+                "items" : {
+                  "$ref" : "#/components/schemas/DataContainer"
+                }
+              },
+              "dataStatus" : {
+                "type" : "string",
+                "description" : "The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed.",
+                "enum" : [ "present", "notPresent" ]
+              },
+              "onboardingStatus" : {
+                "type" : "string",
+                "description" : "The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded.",
+                "enum" : [ "onboarded", "notOnboarded", "unknown" ]
+              },
+              "resourceId" : {
+                "type" : "string",
+                "description" : "Azure Resource Manager identifier of the resource whose onboarding status is being represented."
+              }
+            },
+            "description" : "Resource properties."
+          }
+        },
+        "description" : "VM Insights onboarding status for a resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProxyResource"
+        } ]
+      },
+      "WorkspaceInfo" : {
+        "required" : [ "id", "location", "properties" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure Resource Manager identifier of the Log Analytics Workspace."
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Location of the Log Analytics workspace."
+          },
+          "properties" : {
+            "required" : [ "customerId" ],
+            "type" : "object",
+            "properties" : {
+              "customerId" : {
+                "type" : "string",
+                "description" : "Log Analytics workspace identifier."
+              }
+            },
+            "description" : "Resource properties."
+          }
+        },
+        "description" : "Information about a Log Analytics Workspace."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "API version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,1769 @@
-{"openapi":"3.0.1","info":{"title":"GoToTraining","description":"The GoToTraining API enables developers to use the stable and robust GoToTraining functionality as the basis for online trainings in a proprietary learning management system. The GoToTraining APIs provide the ability to access the scheduling, registration, management, and reporting functions of GoToTraining from external applications. With the ability to tightly integrate GoToTraining into your learning infrastructure, you can offer your learners a seamless user experience and provide them with a market leading virtual classroom environment.","termsOfService":"https://goto-developer.logmein.com/terms-use","contact":{"name":"Developer Support","url":"https://goto-developer.logmein.com","email":"developer-support@logmein.com"},"version":"1.0.0"},"servers":[{"url":"https://api.getgo.com/G2T/rest"}],"tags":[{"name":"Organizers","description":"Operations available for training organizers."},{"name":"Trainings","description":"Operations available for trainings."},{"name":"Registrations","description":"Operations available for registrants of a given training."},{"name":"Reports","description":"Operations available for training reports."},{"name":"Recordings","description":"Operations available for online recordings."}],"paths":{"/accounts/{accountKey}/organizers":{"get":{"tags":["Organizers"],"summary":"DEPRECATED: Get Organizers","description":"DEPRECATED: Please use the Admin API call 'Get all users' instead. For details see https://goto-developer.logmein.com/get-all-users.","operationId":"getAllOrganisers","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"accountKey","in":"path","description":"The key of the multi-user account","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Organizer"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"}},"deprecated":true}},"/organizers/{organizerKey}/trainings":{"get":{"tags":["Trainings"],"summary":"Get Trainings","description":"This call retrieves information on all scheduled trainings for a given organizer. The trainings are returned in the order in which they were created. Completed trainings are not included; ongoing trainings with past sessions are included along with the past sessions. If the organizer does not have any scheduled trainings, the response will be empty.","operationId":"getAllTrainings","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Training"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"}}},"post":{"tags":["Trainings"],"summary":"Create Training","description":"Schedules a training of one or more sessions. The call requires a training's name, at least one start and end time, and optionally may include additional sessions, a description, additional organizers (presenters), and registration settings. You can only add organizers to a training if you have a multi-user account. Once a training has been created with this method, you can accept registrations to the training. Registration is for the entire training - all sessions. (The GoToTraining admin site enables you to create trainings that allow participants to register for individual sessions as well as automatically create weekly or monthly events.) Registration settings controls whether you allow web registration for this training, and whether a confirmation email is sent to the registrant following registration. Disabling the confirmation email is an API-only setting. If the user registers through the GoToTraining website, a confirmation email is sent. If the user is manually approved by the training administrator through the GoToTraining web site, the confirmation email is sent. It is recommended that you disable web registration if you disable confirmation emails. The response contains a trainingKey for the scheduled training.","operationId":"scheduleTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The details of the training to create","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrainingReqCreate"}}},"required":true},"responses":{"201":{"description":"Created","content":{"application/json":{"schema":{"type":"string"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}":{"get":{"tags":["Trainings"],"summary":"Get Training","description":"Uses the organizer key and training key to retrieve information on a scheduled training.","operationId":"getTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Training"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"delete":{"tags":["Trainings"],"summary":"Delete Training","description":"Deletes a scheduled or completed training. For scheduled trainings, it deletes all scheduled sessions of the training. For completed trainings, the sessions remain in the database. No email is sent to organizers or registrants, but when participants attempt to start or join the training, they are directed to a page that states: Training Not Found: The training you are trying to join is no longer available.","operationId":"cancelTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"204":{"description":"No Content"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/manageUrl":{"get":{"tags":["Trainings"],"summary":"Get Management URL for Training","description":"A request for a direct URL to the admin portal for a specific training. The request identifies the organizer and the training; the response provides a link the organizer can use to manage or launch the training in the admin portal. The training organizer will be required to log in. You can schedule and manage the training (e.g., add tests, polls and training materials) from the URL provided in the response.","operationId":"getManageTrainingURL","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"string"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/nameDescription":{"put":{"tags":["Trainings"],"summary":"Update Training Name and Description","description":"Request to update a scheduled training name and description.","operationId":"updateTrainingNameDescription","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The new name and description for the training","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrainingNameDescription"}}},"required":true},"responses":{"204":{"description":"No Content"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/organizers":{"get":{"tags":["Trainings"],"summary":"Get Training Organizers","description":"Retrieves organizer details for a specific training. This is only applicable to multi-user accounts with sharing enabled (co-organizers).","operationId":"getOrganisersForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Organizer"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"put":{"tags":["Trainings"],"summary":"Update Training Organizers","description":"Replaces the co-organizers for a specific training. The scheduling organizer cannot be unassigned. Organizers will be notified via email if the notifyOrganizers parameter is set to true. Replaced organizers are not notified. This method is only applicable to multi-user accounts with sharing enabled (co-organizers).","operationId":"updateOrganisersForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The details of the training to create","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrainingOrganizers"}}},"required":true},"responses":{"204":{"description":"No Content"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/registrants":{"get":{"tags":["Registrations"],"summary":"Get Training Registrants","description":"Retrieves details on all registrants for a specific training. Registrants can be:<br>WAITING - registrant registered and is awaiting approval (where organizer has required approval)<br>APPROVED - registrant registered and is approved<br>DENIED - registrant registered and was not approved.<br><br>IMPORTANT: The registrant data caches are typically updated immediately and the data will be returned in the response. However, the update can take as long as two hours.","operationId":"getRegistrants","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Registrant"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"post":{"tags":["Registrations"],"summary":"Register for Training","description":"Registers one person, identified by a unique email address, for a training. Approval is automatic unless payment or approval is required. The response contains the Confirmation page URL and Join URL for the registrant. NOTE: If some registrants do not receive a confirmation email, the emails could be getting blocked by their email server due to spam filtering or a grey-listing setting.","operationId":"registerForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The details of the registrant to create","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegistrantReqCreate"}}},"required":true},"responses":{"201":{"description":"Created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegistrantCreated"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"},"409":{"description":"Conflict"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/registrants/{registrantKey}":{"get":{"tags":["Registrations"],"summary":"Get Registrant","description":"Retrieves details for specific registrant in a specific training. Registrants can be:<br>WAITING - registrant registered and is awaiting approval (where organizer has required approval)<br>APPROVED - registrant registered and is approved<br>DENIED - registrant registered and was not approved.<br><br>IMPORTANT: The registrant data caches are typically updated immediately and the data will be returned in the response. However, the update can take as long as two hours.","operationId":"getRegistrant","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"registrantKey","in":"path","description":"The key of the registrant","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Registrant"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"delete":{"tags":["Registrations"],"summary":"Cancel Registration","description":"This call cancels a registration in a scheduled training for a specific registrant. If the registrant has paid for the training, a cancellation cannot be completed with this method; it must be completed on the external admin site. No notification is sent to the registrant or the organizer by default. The registrant can re-register if needed.","operationId":"cancelRegistration","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"registrantKey","in":"path","description":"The key of the registrant","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"204":{"description":"No Content"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/registrationSettings":{"put":{"tags":["Trainings"],"summary":"Update Training Registration Settings","description":"An API request to automatically enable or disable web registrations and confirmation emails to registrants.","operationId":"updateRegistrationSettingsForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The new registration settings for the training","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegistrationSettings"}}},"required":true},"responses":{"204":{"description":"No Content"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/startUrl":{"get":{"tags":["Trainings"],"summary":"Get Start Url","description":"Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start after the organizer logs in with its credentials.","operationId":"getStartUrl","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"string"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/organizers/{organizerKey}/trainings/{trainingKey}/times":{"put":{"tags":["Trainings"],"summary":"Update Training Times","description":" A request to update a scheduled training's start and end times. If the request contains 'notifyTrainers = true' and 'notifyRegistrants = true', both organizers and registrants are notified. The response provides the number of notified trainers and registrants.","operationId":"updateTrainingTimes","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The new start and end times for the scheduled training","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrainingTimes"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NotifiedParties"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/reports/organizers/{organizerKey}/sessions":{"post":{"tags":["Reports"],"summary":"Get Sessions by Date Range","description":"This call returns all session details over a given date range for a given organizer. A session is a completed training event.","operationId":"getSessionDetailsForDateRange","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"description":"The start and end times for the time range over which to retrieve training sessions","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DateTimeRange"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Session"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"}}}},"/reports/organizers/{organizerKey}/sessions/{sessionKey}/attendees":{"get":{"tags":["Reports"],"summary":"Get Attendance Details","description":"This call retrieves a list of registrants from a specific completed training session. The response includes the registrants' email addresses, and if they attended, it includes the duration of each period of their attendance in minutes, and the times at which they joined and left. If a registrant does not attend, they appear at the bottom of the listing with timeInSession = 0.","operationId":"getAttendanceDetails","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"sessionKey","in":"path","description":"The key of the training session","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Attendee"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/reports/organizers/{organizerKey}/trainings/{trainingKey}":{"get":{"tags":["Reports"],"summary":"Get Sessions By Training","description":"This call returns session details for a given training. A session is a completed training event. Each training may contain one or more sessions.","operationId":"getSessionDetailsForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Session"}}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/trainings/{trainingKey}/recordings":{"get":{"tags":["Recordings"],"summary":"Get Online Recordings for Training","description":"This call retrieves information on all online recordings for a given training. If there are none, it returns an empty list.","operationId":"getRecordingsForTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RecordingsListForTraining"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/trainings/{trainingKey}/recordings/{recordingId}":{"get":{"tags":["Recordings"],"summary":"Get Download for Online Recordings","description":"This call provides the download for the given recording by returning a 302 redirect to the original file.","operationId":"getRecordingDownloadById","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"recordingId","in":"path","description":"the unique id of the recording","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"302":{"description":"Redirected to download"},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/trainings/{trainingKey}/start":{"get":{"tags":["Trainings"],"summary":"Start Training","description":"Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start. A login of the organizer is not required.","operationId":"startTraining","parameters":[{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HostUrl"}}}},"400":{"description":"Bad Request"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}}},"components":{"schemas":{"Attendance":{"required":["joinTime","leaveTime","timeInPartOfSession"],"type":"object","properties":{"joinTime":{"type":"string","description":"The time the attendee joined a part of a training session","format":"date-time"},"leaveTime":{"type":"string","description":"The time the attendee left a part of a training session","format":"date-time"},"timeInPartOfSession":{"type":"integer","description":"The time in minutes the attendee spent at a part of a training session","format":"int32"}},"description":"Describes the times the attendee joined and left a part of a training session."},"Attendee":{"required":["email","givenName","inSessionTimes","surname","timeInSession"],"type":"object","properties":{"email":{"type":"string","description":"The attendee's email address"},"givenName":{"type":"string","description":"The attendee's first name"},"inSessionTimes":{"type":"array","description":"List of the parts of the training session the attendee joined","items":{"$ref":"#/components/schemas/Attendance"}},"surname":{"type":"string","description":"The attendee's surname"},"timeInSession":{"type":"integer","description":"The total time in minutes spent at all the parts of the training session the attendee joined","format":"int32"}},"description":"Describes the attendee of a training session."},"DateTimeRange":{"required":["endDate","startDate"],"type":"object","properties":{"endDate":{"type":"string","description":"The ending time of an interval","format":"date-time"},"startDate":{"type":"string","description":"The starting time of an interval","format":"date-time"}},"description":"A pair of DateTime values, the first of which serves as a start time and the second as an end time of an interval"},"HostUrl":{"required":["hostURL"],"type":"object","properties":{"hostURL":{"type":"string","description":"The host URL that can be used to start a training"}},"description":"Host URL that can be used to start a training"},"NotifiedParties":{"required":["notifiedRegistrants","notifiedTrainers"],"type":"object","properties":{"notifiedRegistrants":{"type":"integer","description":"Number of registrants notified of changes to a training","format":"int32"},"notifiedTrainers":{"type":"integer","description":"Number of trainers notified of changes to a training","format":"int32"}},"description":"Number of parties notified of a change to a training session times"},"Organizer":{"required":["email","givenName","organizerKey","surname"],"type":"object","properties":{"email":{"type":"string","description":"The email address of the training (co-)organizer"},"givenName":{"type":"string","description":"The (co-)organizer's first name"},"organizerKey":{"type":"string","description":"The key of the training (co-)organizer"},"surname":{"type":"string","description":"The (co-)organizer's surname"}},"description":"Describes a training organizer."},"Recording":{"required":["endDate","name","recordingId","startDate"],"type":"object","properties":{"description":{"type":"string","description":"The description of the recording"},"downloadUrl":{"type":"string","description":"The url used to download the recording to the local device"},"endDate":{"type":"string","description":"The time the recording was ended","format":"date-time"},"name":{"type":"string","description":"The title of the recording"},"recordingId":{"type":"integer","description":"The unique id of the recording","format":"int64"},"registrationUrl":{"type":"string","description":"The url where attendees can register to view the recording"},"startDate":{"type":"string","description":"The time the recording was started","format":"date-time"}},"description":"Describes an online recording of a training"},"RecordingsListForTraining":{"required":["recordingList","trainingKey"],"type":"object","properties":{"recordingList":{"type":"array","description":"The list of online recordings for the training","items":{"$ref":"#/components/schemas/Recording"}},"trainingKey":{"type":"integer","description":"The training's unique key","format":"int64"}},"description":"Contains a list of recordings for the training."},"Registrant":{"required":["confirmationUrl","email","givenName","joinUrl","registrantKey","registrationDate","status","surname"],"type":"object","properties":{"confirmationUrl":{"type":"string","description":"The URL where the confirmation for the registration can be found"},"email":{"type":"string","description":"The registrant's email address"},"givenName":{"type":"string","description":"The registrant's first name"},"joinUrl":{"type":"string","description":"The URL the registrant will use to join the training"},"registrantKey":{"type":"string","description":"The registrant's key"},"registrationDate":{"type":"string","description":"The date and time the registration took place","format":"date-time"},"status":{"type":"string","description":"The registrant's status","enum":["WAITING","APPROVED","DENIED"]},"surname":{"type":"string","description":"The registrant's surname"}},"description":"Describes a training registrant."},"RegistrantCreated":{"required":["confirmationUrl","joinUrl","registrantKey"],"type":"object","properties":{"confirmationUrl":{"type":"string","description":"The URL where confirmation for the registration can be found"},"joinUrl":{"type":"string","description":"The URL the registrant will use to join the training"},"registrantKey":{"type":"string","description":"The registrant's key"}},"description":"Describes a newly created training registrant"},"RegistrantReqCreate":{"required":["email","givenName","surname"],"type":"object","properties":{"email":{"type":"string","description":"The registrant's email address"},"givenName":{"type":"string","description":"The registrant's first name"},"surname":{"type":"string","description":"The registrant's surname"}},"description":"Details required to make a new training registration."},"RegistrationSettings":{"required":["disableConfirmationEmail","disableWebRegistration"],"type":"object","properties":{"disableConfirmationEmail":{"type":"boolean","description":"Indicates whether confirmation emails to the training registrants are disabled"},"disableWebRegistration":{"type":"boolean","description":"Indicates whether the web registration for the training is disabled"}},"description":"Training settings, namely availability of web registration and confirmation emails to the training registrants"},"Session":{"required":["attendanceCount","duration","organizers","sessionEndTime","sessionKey","sessionStartTime","trainingName"],"type":"object","properties":{"attendanceCount":{"type":"integer","description":"The number of attendees at the training session","format":"int32"},"duration":{"type":"integer","description":"The duration of the training session in minutes","format":"int32"},"organizers":{"type":"array","description":"The organizers of the training session.","items":{"$ref":"#/components/schemas/Organizer"}},"sessionEndTime":{"type":"string","description":"The time the training session finished","format":"date-time"},"sessionKey":{"type":"string","description":"The key of the training session"},"sessionStartTime":{"type":"string","description":"The time the training session started","format":"date-time"},"trainingName":{"type":"string","description":"The subject of the training"}},"description":"Describes a completed training session."},"Training":{"required":["description","name","organizers","registrationSettings","timeZone","times","trainingId","trainingKey"],"type":"object","properties":{"description":{"type":"string","description":"The training's description"},"name":{"type":"string","description":"The training's subject"},"organizers":{"type":"array","description":"The list of (co-)organizers for the training","items":{"$ref":"#/components/schemas/Organizer"}},"registrationSettings":{"$ref":"#/components/schemas/RegistrationSettings"},"timeZone":{"type":"string","description":"The time zone where the training takes place"},"times":{"type":"array","description":"Array with startDate and endDate for the training sessions","items":{"$ref":"#/components/schemas/DateTimeRange"}},"trainingId":{"type":"string","description":"The 9-digit training's ID"},"trainingKey":{"type":"string","description":"The training's unique key"}},"description":"Describes a scheduled training."},"TrainingNameDescription":{"required":["name"],"type":"object","properties":{"description":{"type":"string","description":"The training's description"},"name":{"type":"string","description":"The training's name"}},"description":"Details required to update a training's name and description."},"TrainingOrganizers":{"required":["organizers"],"type":"object","properties":{"notifyOrganizers":{"type":"boolean","description":"Specifies whether an email should be sent notifying of the change to the training's organizers."},"organizers":{"type":"array","description":"List of keys of the organizers for the training.","items":{"type":"integer","format":"int64"}}},"description":"Details required to update the list of organizers for a training."},"TrainingReqCreate":{"required":["name","timeZone","times"],"type":"object","properties":{"description":{"type":"string","description":"Description of the training"},"name":{"type":"string","description":"Name of the training"},"organizers":{"type":"array","description":"List of keys of the co-organizers for this training","items":{"type":"integer","format":"int64"}},"registrationSettings":{"$ref":"#/components/schemas/RegistrationSettings"},"timeZone":{"type":"string","description":"Time zone of the training. (Must be a valid time zone ID, see https://goto-developer.logmein.com/time-zones)"},"times":{"type":"array","description":"Array with startDate and endDate for the training sessions","items":{"$ref":"#/components/schemas/DateTimeRange"}}},"description":"Describes the details used to create a new training."},"TrainingTimes":{"required":["timeZone","times"],"type":"object","properties":{"notifyRegistrants":{"type":"boolean","description":"Notify registrants via email of change to training. Default is true"},"notifyTrainers":{"type":"boolean","description":"Notify trainers via email of change to training. Default is true"},"timeZone":{"type":"string","description":"Time zone of the training. Must be a valid time zone ID, see https://goto-developer.logmein.com/time-zones"},"times":{"type":"array","description":"Start and end times for the training sessions","items":{"$ref":"#/components/schemas/DateTimeRange"}}},"description":"Details required to update the session times of a training."}},"parameters":{"Authorization":{"name":"Authorization","in":"header","description":"Access token","required":true,"schema":{"type":"string"}},"organizerKey":{"name":"organizerKey","in":"path","description":"The key of the training organizer","required":true,"schema":{"type":"integer","format":"int64"}},"registrantKey":{"name":"registrantKey","in":"path","description":"The key of the registrant","required":true,"schema":{"type":"integer","format":"int64"}},"trainingKey":{"name":"trainingKey","in":"path","description":"The key of the training","required":true,"schema":{"type":"integer","format":"int64"}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "GoToTraining",
+    "description" : "The GoToTraining API enables developers to use the stable and robust GoToTraining functionality as the basis for online trainings in a proprietary learning management system. The GoToTraining APIs provide the ability to access the scheduling, registration, management, and reporting functions of GoToTraining from external applications. With the ability to tightly integrate GoToTraining into your learning infrastructure, you can offer your learners a seamless user experience and provide them with a market leading virtual classroom environment.",
+    "termsOfService" : "https://goto-developer.logmein.com/terms-use",
+    "contact" : {
+      "name" : "Developer Support",
+      "url" : "https://goto-developer.logmein.com",
+      "email" : "developer-support@logmein.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.getgo.com/G2T/rest"
+  } ],
+  "tags" : [ {
+    "name" : "Organizers",
+    "description" : "Operations available for training organizers."
+  }, {
+    "name" : "Trainings",
+    "description" : "Operations available for trainings."
+  }, {
+    "name" : "Registrations",
+    "description" : "Operations available for registrants of a given training."
+  }, {
+    "name" : "Reports",
+    "description" : "Operations available for training reports."
+  }, {
+    "name" : "Recordings",
+    "description" : "Operations available for online recordings."
+  } ],
+  "paths" : {
+    "/accounts/{accountKey}/organizers" : {
+      "get" : {
+        "tags" : [ "Organizers" ],
+        "summary" : "DEPRECATED: Get Organizers",
+        "description" : "DEPRECATED: Please use the Admin API call 'Get all users' instead. For details see https://goto-developer.logmein.com/get-all-users.",
+        "operationId" : "getAllOrganisers",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountKey",
+          "in" : "path",
+          "description" : "The key of the multi-user account",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organizer"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/organizers/{organizerKey}/trainings" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Get Trainings",
+        "description" : "This call retrieves information on all scheduled trainings for a given organizer. The trainings are returned in the order in which they were created. Completed trainings are not included; ongoing trainings with past sessions are included along with the past sessions. If the organizer does not have any scheduled trainings, the response will be empty.",
+        "operationId" : "getAllTrainings",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Training"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Create Training",
+        "description" : "Schedules a training of one or more sessions. The call requires a training's name, at least one start and end time, and optionally may include additional sessions, a description, additional organizers (presenters), and registration settings. You can only add organizers to a training if you have a multi-user account. Once a training has been created with this method, you can accept registrations to the training. Registration is for the entire training - all sessions. (The GoToTraining admin site enables you to create trainings that allow participants to register for individual sessions as well as automatically create weekly or monthly events.) Registration settings controls whether you allow web registration for this training, and whether a confirmation email is sent to the registrant following registration. Disabling the confirmation email is an API-only setting. If the user registers through the GoToTraining website, a confirmation email is sent. If the user is manually approved by the training administrator through the GoToTraining web site, the confirmation email is sent. It is recommended that you disable web registration if you disable confirmation emails. The response contains a trainingKey for the scheduled training.",
+        "operationId" : "scheduleTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The details of the training to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TrainingReqCreate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Get Training",
+        "description" : "Uses the organizer key and training key to retrieve information on a scheduled training.",
+        "operationId" : "getTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Training"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Delete Training",
+        "description" : "Deletes a scheduled or completed training. For scheduled trainings, it deletes all scheduled sessions of the training. For completed trainings, the sessions remain in the database. No email is sent to organizers or registrants, but when participants attempt to start or join the training, they are directed to a page that states: Training Not Found: The training you are trying to join is no longer available.",
+        "operationId" : "cancelTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/manageUrl" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Get Management URL for Training",
+        "description" : "A request for a direct URL to the admin portal for a specific training. The request identifies the organizer and the training; the response provides a link the organizer can use to manage or launch the training in the admin portal. The training organizer will be required to log in. You can schedule and manage the training (e.g., add tests, polls and training materials) from the URL provided in the response.",
+        "operationId" : "getManageTrainingURL",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/nameDescription" : {
+      "put" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Update Training Name and Description",
+        "description" : "Request to update a scheduled training name and description.",
+        "operationId" : "updateTrainingNameDescription",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The new name and description for the training",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TrainingNameDescription"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/organizers" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Get Training Organizers",
+        "description" : "Retrieves organizer details for a specific training. This is only applicable to multi-user accounts with sharing enabled (co-organizers).",
+        "operationId" : "getOrganisersForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organizer"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Update Training Organizers",
+        "description" : "Replaces the co-organizers for a specific training. The scheduling organizer cannot be unassigned. Organizers will be notified via email if the notifyOrganizers parameter is set to true. Replaced organizers are not notified. This method is only applicable to multi-user accounts with sharing enabled (co-organizers).",
+        "operationId" : "updateOrganisersForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The details of the training to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TrainingOrganizers"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/registrants" : {
+      "get" : {
+        "tags" : [ "Registrations" ],
+        "summary" : "Get Training Registrants",
+        "description" : "Retrieves details on all registrants for a specific training. Registrants can be:<br>WAITING - registrant registered and is awaiting approval (where organizer has required approval)<br>APPROVED - registrant registered and is approved<br>DENIED - registrant registered and was not approved.<br><br>IMPORTANT: The registrant data caches are typically updated immediately and the data will be returned in the response. However, the update can take as long as two hours.",
+        "operationId" : "getRegistrants",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Registrant"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Registrations" ],
+        "summary" : "Register for Training",
+        "description" : "Registers one person, identified by a unique email address, for a training. Approval is automatic unless payment or approval is required. The response contains the Confirmation page URL and Join URL for the registrant. NOTE: If some registrants do not receive a confirmation email, the emails could be getting blocked by their email server due to spam filtering or a grey-listing setting.",
+        "operationId" : "registerForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The details of the registrant to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RegistrantReqCreate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RegistrantCreated"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/registrants/{registrantKey}" : {
+      "get" : {
+        "tags" : [ "Registrations" ],
+        "summary" : "Get Registrant",
+        "description" : "Retrieves details for specific registrant in a specific training. Registrants can be:<br>WAITING - registrant registered and is awaiting approval (where organizer has required approval)<br>APPROVED - registrant registered and is approved<br>DENIED - registrant registered and was not approved.<br><br>IMPORTANT: The registrant data caches are typically updated immediately and the data will be returned in the response. However, the update can take as long as two hours.",
+        "operationId" : "getRegistrant",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "registrantKey",
+          "in" : "path",
+          "description" : "The key of the registrant",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Registrant"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Registrations" ],
+        "summary" : "Cancel Registration",
+        "description" : "This call cancels a registration in a scheduled training for a specific registrant. If the registrant has paid for the training, a cancellation cannot be completed with this method; it must be completed on the external admin site. No notification is sent to the registrant or the organizer by default. The registrant can re-register if needed.",
+        "operationId" : "cancelRegistration",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "registrantKey",
+          "in" : "path",
+          "description" : "The key of the registrant",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/registrationSettings" : {
+      "put" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Update Training Registration Settings",
+        "description" : "An API request to automatically enable or disable web registrations and confirmation emails to registrants.",
+        "operationId" : "updateRegistrationSettingsForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The new registration settings for the training",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RegistrationSettings"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/startUrl" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Get Start Url",
+        "description" : "Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start after the organizer logs in with its credentials.",
+        "operationId" : "getStartUrl",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/organizers/{organizerKey}/trainings/{trainingKey}/times" : {
+      "put" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Update Training Times",
+        "description" : " A request to update a scheduled training's start and end times. If the request contains 'notifyTrainers = true' and 'notifyRegistrants = true', both organizers and registrants are notified. The response provides the number of notified trainers and registrants.",
+        "operationId" : "updateTrainingTimes",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The new start and end times for the scheduled training",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TrainingTimes"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NotifiedParties"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/reports/organizers/{organizerKey}/sessions" : {
+      "post" : {
+        "tags" : [ "Reports" ],
+        "summary" : "Get Sessions by Date Range",
+        "description" : "This call returns all session details over a given date range for a given organizer. A session is a completed training event.",
+        "operationId" : "getSessionDetailsForDateRange",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The start and end times for the time range over which to retrieve training sessions",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DateTimeRange"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Session"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          }
+        }
+      }
+    },
+    "/reports/organizers/{organizerKey}/sessions/{sessionKey}/attendees" : {
+      "get" : {
+        "tags" : [ "Reports" ],
+        "summary" : "Get Attendance Details",
+        "description" : "This call retrieves a list of registrants from a specific completed training session. The response includes the registrants' email addresses, and if they attended, it includes the duration of each period of their attendance in minutes, and the times at which they joined and left. If a registrant does not attend, they appear at the bottom of the listing with timeInSession = 0.",
+        "operationId" : "getAttendanceDetails",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sessionKey",
+          "in" : "path",
+          "description" : "The key of the training session",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Attendee"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/reports/organizers/{organizerKey}/trainings/{trainingKey}" : {
+      "get" : {
+        "tags" : [ "Reports" ],
+        "summary" : "Get Sessions By Training",
+        "description" : "This call returns session details for a given training. A session is a completed training event. Each training may contain one or more sessions.",
+        "operationId" : "getSessionDetailsForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "organizerKey",
+          "in" : "path",
+          "description" : "The key of the training organizer",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Session"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/trainings/{trainingKey}/recordings" : {
+      "get" : {
+        "tags" : [ "Recordings" ],
+        "summary" : "Get Online Recordings for Training",
+        "description" : "This call retrieves information on all online recordings for a given training. If there are none, it returns an empty list.",
+        "operationId" : "getRecordingsForTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RecordingsListForTraining"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/trainings/{trainingKey}/recordings/{recordingId}" : {
+      "get" : {
+        "tags" : [ "Recordings" ],
+        "summary" : "Get Download for Online Recordings",
+        "description" : "This call provides the download for the given recording by returning a 302 redirect to the original file.",
+        "operationId" : "getRecordingDownloadById",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "recordingId",
+          "in" : "path",
+          "description" : "the unique id of the recording",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "302" : {
+            "description" : "Redirected to download"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/trainings/{trainingKey}/start" : {
+      "get" : {
+        "tags" : [ "Trainings" ],
+        "summary" : "Start Training",
+        "description" : "Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start. A login of the organizer is not required.",
+        "operationId" : "startTraining",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Access token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "trainingKey",
+          "in" : "path",
+          "description" : "The key of the training",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HostUrl"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Attendance" : {
+        "required" : [ "joinTime", "leaveTime", "timeInPartOfSession" ],
+        "type" : "object",
+        "properties" : {
+          "joinTime" : {
+            "type" : "string",
+            "description" : "The time the attendee joined a part of a training session",
+            "format" : "date-time"
+          },
+          "leaveTime" : {
+            "type" : "string",
+            "description" : "The time the attendee left a part of a training session",
+            "format" : "date-time"
+          },
+          "timeInPartOfSession" : {
+            "type" : "integer",
+            "description" : "The time in minutes the attendee spent at a part of a training session",
+            "format" : "int32"
+          }
+        },
+        "description" : "Describes the times the attendee joined and left a part of a training session."
+      },
+      "Attendee" : {
+        "required" : [ "email", "givenName", "inSessionTimes", "surname", "timeInSession" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "The attendee's email address"
+          },
+          "givenName" : {
+            "type" : "string",
+            "description" : "The attendee's first name"
+          },
+          "inSessionTimes" : {
+            "type" : "array",
+            "description" : "List of the parts of the training session the attendee joined",
+            "items" : {
+              "$ref" : "#/components/schemas/Attendance"
+            }
+          },
+          "surname" : {
+            "type" : "string",
+            "description" : "The attendee's surname"
+          },
+          "timeInSession" : {
+            "type" : "integer",
+            "description" : "The total time in minutes spent at all the parts of the training session the attendee joined",
+            "format" : "int32"
+          }
+        },
+        "description" : "Describes the attendee of a training session."
+      },
+      "DateTimeRange" : {
+        "required" : [ "endDate", "startDate" ],
+        "type" : "object",
+        "properties" : {
+          "endDate" : {
+            "type" : "string",
+            "description" : "The ending time of an interval",
+            "format" : "date-time"
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "The starting time of an interval",
+            "format" : "date-time"
+          }
+        },
+        "description" : "A pair of DateTime values, the first of which serves as a start time and the second as an end time of an interval"
+      },
+      "HostUrl" : {
+        "required" : [ "hostURL" ],
+        "type" : "object",
+        "properties" : {
+          "hostURL" : {
+            "type" : "string",
+            "description" : "The host URL that can be used to start a training"
+          }
+        },
+        "description" : "Host URL that can be used to start a training"
+      },
+      "NotifiedParties" : {
+        "required" : [ "notifiedRegistrants", "notifiedTrainers" ],
+        "type" : "object",
+        "properties" : {
+          "notifiedRegistrants" : {
+            "type" : "integer",
+            "description" : "Number of registrants notified of changes to a training",
+            "format" : "int32"
+          },
+          "notifiedTrainers" : {
+            "type" : "integer",
+            "description" : "Number of trainers notified of changes to a training",
+            "format" : "int32"
+          }
+        },
+        "description" : "Number of parties notified of a change to a training session times"
+      },
+      "Organizer" : {
+        "required" : [ "email", "givenName", "organizerKey", "surname" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "The email address of the training (co-)organizer"
+          },
+          "givenName" : {
+            "type" : "string",
+            "description" : "The (co-)organizer's first name"
+          },
+          "organizerKey" : {
+            "type" : "string",
+            "description" : "The key of the training (co-)organizer"
+          },
+          "surname" : {
+            "type" : "string",
+            "description" : "The (co-)organizer's surname"
+          }
+        },
+        "description" : "Describes a training organizer."
+      },
+      "Recording" : {
+        "required" : [ "endDate", "name", "recordingId", "startDate" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the recording"
+          },
+          "downloadUrl" : {
+            "type" : "string",
+            "description" : "The url used to download the recording to the local device"
+          },
+          "endDate" : {
+            "type" : "string",
+            "description" : "The time the recording was ended",
+            "format" : "date-time"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The title of the recording"
+          },
+          "recordingId" : {
+            "type" : "integer",
+            "description" : "The unique id of the recording",
+            "format" : "int64"
+          },
+          "registrationUrl" : {
+            "type" : "string",
+            "description" : "The url where attendees can register to view the recording"
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "The time the recording was started",
+            "format" : "date-time"
+          }
+        },
+        "description" : "Describes an online recording of a training"
+      },
+      "RecordingsListForTraining" : {
+        "required" : [ "recordingList", "trainingKey" ],
+        "type" : "object",
+        "properties" : {
+          "recordingList" : {
+            "type" : "array",
+            "description" : "The list of online recordings for the training",
+            "items" : {
+              "$ref" : "#/components/schemas/Recording"
+            }
+          },
+          "trainingKey" : {
+            "type" : "integer",
+            "description" : "The training's unique key",
+            "format" : "int64"
+          }
+        },
+        "description" : "Contains a list of recordings for the training."
+      },
+      "Registrant" : {
+        "required" : [ "confirmationUrl", "email", "givenName", "joinUrl", "registrantKey", "registrationDate", "status", "surname" ],
+        "type" : "object",
+        "properties" : {
+          "confirmationUrl" : {
+            "type" : "string",
+            "description" : "The URL where the confirmation for the registration can be found"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "The registrant's email address"
+          },
+          "givenName" : {
+            "type" : "string",
+            "description" : "The registrant's first name"
+          },
+          "joinUrl" : {
+            "type" : "string",
+            "description" : "The URL the registrant will use to join the training"
+          },
+          "registrantKey" : {
+            "type" : "string",
+            "description" : "The registrant's key"
+          },
+          "registrationDate" : {
+            "type" : "string",
+            "description" : "The date and time the registration took place",
+            "format" : "date-time"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The registrant's status",
+            "enum" : [ "WAITING", "APPROVED", "DENIED" ]
+          },
+          "surname" : {
+            "type" : "string",
+            "description" : "The registrant's surname"
+          }
+        },
+        "description" : "Describes a training registrant."
+      },
+      "RegistrantCreated" : {
+        "required" : [ "confirmationUrl", "joinUrl", "registrantKey" ],
+        "type" : "object",
+        "properties" : {
+          "confirmationUrl" : {
+            "type" : "string",
+            "description" : "The URL where confirmation for the registration can be found"
+          },
+          "joinUrl" : {
+            "type" : "string",
+            "description" : "The URL the registrant will use to join the training"
+          },
+          "registrantKey" : {
+            "type" : "string",
+            "description" : "The registrant's key"
+          }
+        },
+        "description" : "Describes a newly created training registrant"
+      },
+      "RegistrantReqCreate" : {
+        "required" : [ "email", "givenName", "surname" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "The registrant's email address"
+          },
+          "givenName" : {
+            "type" : "string",
+            "description" : "The registrant's first name"
+          },
+          "surname" : {
+            "type" : "string",
+            "description" : "The registrant's surname"
+          }
+        },
+        "description" : "Details required to make a new training registration."
+      },
+      "RegistrationSettings" : {
+        "required" : [ "disableConfirmationEmail", "disableWebRegistration" ],
+        "type" : "object",
+        "properties" : {
+          "disableConfirmationEmail" : {
+            "type" : "boolean",
+            "description" : "Indicates whether confirmation emails to the training registrants are disabled"
+          },
+          "disableWebRegistration" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the web registration for the training is disabled"
+          }
+        },
+        "description" : "Training settings, namely availability of web registration and confirmation emails to the training registrants"
+      },
+      "Session" : {
+        "required" : [ "attendanceCount", "duration", "organizers", "sessionEndTime", "sessionKey", "sessionStartTime", "trainingName" ],
+        "type" : "object",
+        "properties" : {
+          "attendanceCount" : {
+            "type" : "integer",
+            "description" : "The number of attendees at the training session",
+            "format" : "int32"
+          },
+          "duration" : {
+            "type" : "integer",
+            "description" : "The duration of the training session in minutes",
+            "format" : "int32"
+          },
+          "organizers" : {
+            "type" : "array",
+            "description" : "The organizers of the training session.",
+            "items" : {
+              "$ref" : "#/components/schemas/Organizer"
+            }
+          },
+          "sessionEndTime" : {
+            "type" : "string",
+            "description" : "The time the training session finished",
+            "format" : "date-time"
+          },
+          "sessionKey" : {
+            "type" : "string",
+            "description" : "The key of the training session"
+          },
+          "sessionStartTime" : {
+            "type" : "string",
+            "description" : "The time the training session started",
+            "format" : "date-time"
+          },
+          "trainingName" : {
+            "type" : "string",
+            "description" : "The subject of the training"
+          }
+        },
+        "description" : "Describes a completed training session."
+      },
+      "Training" : {
+        "required" : [ "description", "name", "organizers", "registrationSettings", "timeZone", "times", "trainingId", "trainingKey" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The training's description"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The training's subject"
+          },
+          "organizers" : {
+            "type" : "array",
+            "description" : "The list of (co-)organizers for the training",
+            "items" : {
+              "$ref" : "#/components/schemas/Organizer"
+            }
+          },
+          "registrationSettings" : {
+            "$ref" : "#/components/schemas/RegistrationSettings"
+          },
+          "timeZone" : {
+            "type" : "string",
+            "description" : "The time zone where the training takes place"
+          },
+          "times" : {
+            "type" : "array",
+            "description" : "Array with startDate and endDate for the training sessions",
+            "items" : {
+              "$ref" : "#/components/schemas/DateTimeRange"
+            }
+          },
+          "trainingId" : {
+            "type" : "string",
+            "description" : "The 9-digit training's ID"
+          },
+          "trainingKey" : {
+            "type" : "string",
+            "description" : "The training's unique key"
+          }
+        },
+        "description" : "Describes a scheduled training."
+      },
+      "TrainingNameDescription" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The training's description"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The training's name"
+          }
+        },
+        "description" : "Details required to update a training's name and description."
+      },
+      "TrainingOrganizers" : {
+        "required" : [ "organizers" ],
+        "type" : "object",
+        "properties" : {
+          "notifyOrganizers" : {
+            "type" : "boolean",
+            "description" : "Specifies whether an email should be sent notifying of the change to the training's organizers."
+          },
+          "organizers" : {
+            "type" : "array",
+            "description" : "List of keys of the organizers for the training.",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        },
+        "description" : "Details required to update the list of organizers for a training."
+      },
+      "TrainingReqCreate" : {
+        "required" : [ "name", "timeZone", "times" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the training"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the training"
+          },
+          "organizers" : {
+            "type" : "array",
+            "description" : "List of keys of the co-organizers for this training",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          },
+          "registrationSettings" : {
+            "$ref" : "#/components/schemas/RegistrationSettings"
+          },
+          "timeZone" : {
+            "type" : "string",
+            "description" : "Time zone of the training. (Must be a valid time zone ID, see https://goto-developer.logmein.com/time-zones)"
+          },
+          "times" : {
+            "type" : "array",
+            "description" : "Array with startDate and endDate for the training sessions",
+            "items" : {
+              "$ref" : "#/components/schemas/DateTimeRange"
+            }
+          }
+        },
+        "description" : "Describes the details used to create a new training."
+      },
+      "TrainingTimes" : {
+        "required" : [ "timeZone", "times" ],
+        "type" : "object",
+        "properties" : {
+          "notifyRegistrants" : {
+            "type" : "boolean",
+            "description" : "Notify registrants via email of change to training. Default is true"
+          },
+          "notifyTrainers" : {
+            "type" : "boolean",
+            "description" : "Notify trainers via email of change to training. Default is true"
+          },
+          "timeZone" : {
+            "type" : "string",
+            "description" : "Time zone of the training. Must be a valid time zone ID, see https://goto-developer.logmein.com/time-zones"
+          },
+          "times" : {
+            "type" : "array",
+            "description" : "Start and end times for the training sessions",
+            "items" : {
+              "$ref" : "#/components/schemas/DateTimeRange"
+            }
+          }
+        },
+        "description" : "Details required to update the session times of a training."
+      }
+    },
+    "parameters" : {
+      "Authorization" : {
+        "name" : "Authorization",
+        "in" : "header",
+        "description" : "Access token",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "organizerKey" : {
+        "name" : "organizerKey",
+        "in" : "path",
+        "description" : "The key of the training organizer",
+        "required" : true,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      },
+      "registrantKey" : {
+        "name" : "registrantKey",
+        "in" : "path",
+        "description" : "The key of the registrant",
+        "required" : true,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      },
+      "trainingKey" : {
+        "name" : "trainingKey",
+        "in" : "path",
+        "description" : "The key of the training",
+        "required" : true,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    }
+  }
+}

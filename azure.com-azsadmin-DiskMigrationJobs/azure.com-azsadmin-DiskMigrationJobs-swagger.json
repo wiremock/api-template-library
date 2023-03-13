@@ -1,1 +1,1189 @@
-{"openapi":"3.0.1","info":{"title":"ComputeDiskAdminManagementClient","description":"The Admin Compute Disk Management Client.","version":"2018-07-30-preview"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs":{"get":{"tags":["DiskMigrationJobs"],"description":"Returns a list of disk migration jobs.","operationId":"DiskMigrationJobs_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"status","in":"query","description":"The parameters of disk migration job status.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2018-07-30-preview"}}],"responses":{"200":{"description":"OK -- The list of disk migration jobs has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of disk migration jobs.","items":{"type":"object","properties":{"properties":{"type":"object","properties":{"creationTime":{"type":"string","description":"The job creation time.","format":"date-time","readOnly":true},"endTime":{"type":"string","description":"The job end time.","format":"date-time","readOnly":true},"migrationId":{"type":"string","description":"The disk migration id."},"startTime":{"type":"string","description":"The job start time.","format":"date-time","readOnly":true},"status":{"type":"string","description":"Migration job status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending"]},"subtasks":{"type":"array","description":"List of disk migration tasks.","items":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."}},"targetShare":{"type":"string","description":"The target share of migration job.","readOnly":true}},"description":"Disk migration job properties."}},"description":"Disk migration job."}}},"description":"List of disk migration jobs."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs/{migrationId}":{"get":{"tags":["DiskMigrationJobs"],"description":"Returns the requested disk migration job.","operationId":"DiskMigrationJobs_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"migrationId","in":"path","description":"The migration job guid name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2018-07-30-preview"}}],"responses":{"200":{"description":"OK -- The disk migration job has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","description":"ID of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"type":{"type":"string","description":"Type of Resource.","readOnly":true}},"description":"Disk migration job."}}}}}},"put":{"tags":["DiskMigrationJobs"],"description":"Create a disk migration job.","operationId":"DiskMigrationJobs_Create","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"migrationId","in":"path","description":"The migration job guid name.","required":true,"schema":{"type":"string"}},{"name":"targetShare","in":"query","description":"The target share name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2018-07-30-preview"}}],"requestBody":{"description":"The parameters of disk list.","content":{"application/json":{"schema":{"type":"array","description":"List of disks.","items":{"type":"object","properties":{"properties":{"type":"object","properties":{"actualSizeGB":{"type":"integer","description":"The actual size of disk in GB.","format":"int64","readOnly":true},"diskId":{"type":"string","description":"The disk id."},"diskSku":{"type":"string","description":"Disk Sku.","enum":["Standard_LRS","Standard_ZRS","Standard_GRS","Standard_RAGRS","Premium_LRS","StandardSSD_LRS","UltraSSD_LRS"]},"diskType":{"type":"string","description":"Disk resource type.","enum":["Undefined","Disk","Snapshot","RestorePoint","ManagedBlob"]},"managedBy":{"type":"string","description":"Compute resource Uri which owns this disk.","readOnly":true},"provisionSizeGB":{"type":"integer","description":"The provision size of disk in GB.","format":"int64","readOnly":true},"sharePath":{"type":"string","description":"The disk share path."},"status":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"userResourceId":{"type":"string","description":"The disk resource Uri from user view.","readOnly":true}},"description":"Managed disk properties."}},"description":"Managed Disk."}}}},"required":true},"responses":{"200":{"description":"OK --  Disk migration job is created successfully.","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","description":"ID of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"type":{"type":"string","description":"Type of Resource.","readOnly":true}},"description":"Disk migration job."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs/{migrationId}/Cancel":{"post":{"tags":["DiskMigrationJobs"],"description":"Cancel a disk migration job.","operationId":"DiskMigrationJobs_Cancel","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"migrationId","in":"path","description":"The migration job guid name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2018-07-30-preview"}}],"responses":{"200":{"description":"OK --  Disk migration job cancellation is called.","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","description":"ID of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"type":{"type":"string","description":"Type of Resource.","readOnly":true}},"description":"Disk migration job."}}}}}}}},"components":{"schemas":{"DiskListInput":{"type":"array","description":"List of disks.","items":{"type":"object","properties":{"properties":{"type":"object","properties":{"actualSizeGB":{"type":"integer","description":"The actual size of disk in GB.","format":"int64","readOnly":true},"diskId":{"type":"string","description":"The disk id."},"diskSku":{"type":"string","description":"Disk Sku.","enum":["Standard_LRS","Standard_ZRS","Standard_GRS","Standard_RAGRS","Premium_LRS","StandardSSD_LRS","UltraSSD_LRS"]},"diskType":{"type":"string","description":"Disk resource type.","enum":["Undefined","Disk","Snapshot","RestorePoint","ManagedBlob"]},"managedBy":{"type":"string","description":"Compute resource Uri which owns this disk.","readOnly":true},"provisionSizeGB":{"type":"integer","description":"The provision size of disk in GB.","format":"int64","readOnly":true},"sharePath":{"type":"string","description":"The disk share path."},"status":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"userResourceId":{"type":"string","description":"The disk resource Uri from user view.","readOnly":true}},"description":"Managed disk properties."}},"description":"Managed Disk."}},"DiskMigrationJob":{"properties":{"properties":{"type":"object","properties":{"creationTime":{"type":"string","description":"The job creation time.","format":"date-time","readOnly":true},"endTime":{"type":"string","description":"The job end time.","format":"date-time","readOnly":true},"migrationId":{"type":"string","description":"The disk migration id."},"startTime":{"type":"string","description":"The job start time.","format":"date-time","readOnly":true},"status":{"type":"string","description":"Migration job status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending"]},"subtasks":{"type":"array","description":"List of disk migration tasks.","items":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."}},"targetShare":{"type":"string","description":"The target share of migration job.","readOnly":true}},"description":"Disk migration job properties."}},"description":"Disk migration job.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"ID of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"type":{"type":"string","description":"Type of Resource.","readOnly":true}},"description":"Base resource object."}]},"DiskMigrationJobList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of disk migration jobs.","items":{"type":"object","properties":{"properties":{"type":"object","properties":{"creationTime":{"type":"string","description":"The job creation time.","format":"date-time","readOnly":true},"endTime":{"type":"string","description":"The job end time.","format":"date-time","readOnly":true},"migrationId":{"type":"string","description":"The disk migration id."},"startTime":{"type":"string","description":"The job start time.","format":"date-time","readOnly":true},"status":{"type":"string","description":"Migration job status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending"]},"subtasks":{"type":"array","description":"List of disk migration tasks.","items":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."}},"targetShare":{"type":"string","description":"The target share of migration job.","readOnly":true}},"description":"Disk migration job properties."}},"description":"Disk migration job."}}},"description":"List of disk migration jobs."},"DiskMigrationJobProperties":{"type":"object","properties":{"creationTime":{"type":"string","description":"The job creation time.","format":"date-time","readOnly":true},"endTime":{"type":"string","description":"The job end time.","format":"date-time","readOnly":true},"migrationId":{"type":"string","description":"The disk migration id."},"startTime":{"type":"string","description":"The job start time.","format":"date-time","readOnly":true},"status":{"type":"string","description":"Migration job status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending"]},"subtasks":{"type":"array","description":"List of disk migration tasks.","items":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."}},"targetShare":{"type":"string","description":"The target share of migration job.","readOnly":true}},"description":"Disk migration job properties."},"MigrationJobStatus":{"type":"string","description":"Migration job status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending"]},"MigrationSubTask":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."},"MigrationSubTaskList":{"type":"array","description":"List of disk migration tasks.","items":{"type":"object","properties":{"migrationSubTaskId":{"type":"string","description":"The id of migration child task.","readOnly":true},"properties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."}},"description":"Disk migration child task."}},"MigrationSubTaskProperties":{"type":"object","properties":{"diskId":{"type":"string","description":"The id of disk.","readOnly":true},"endTime":{"type":"string","description":"The task end time.","format":"date-time","readOnly":true},"migrationSubtaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]},"reason":{"type":"string","description":"The reason of task failure.","readOnly":true},"sourceShare":{"type":"string","description":"The source share of migration task.","readOnly":true},"startTime":{"type":"string","description":"The task start time.","format":"date-time","readOnly":true},"targetDiskStateForMigration":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"targetShare":{"type":"string","description":"The target share of migration task.","readOnly":true}},"description":"Disk migration child task properties."},"MigrationSubTaskStatus":{"type":"string","description":"Migration child task status.","enum":["Undefined","Running","Succeeded","Failed","Canceled","Pending","Skipped"]}},"parameters":{"MigrationIdParameter":{"name":"migrationId","in":"path","description":"The migration job guid name.","required":true,"schema":{"type":"string"}},"MigrationJobStatusParameter":{"name":"status","in":"query","description":"The parameters of disk migration job status.","schema":{"type":"string"}},"TargetShareParameter":{"name":"targetShare","in":"query","description":"The target share name.","required":true,"schema":{"type":"string"}}},"requestBodies":{"DiskListParameter":{"description":"The parameters of disk list.","content":{"application/json":{"schema":{"type":"array","description":"List of disks.","items":{"type":"object","properties":{"properties":{"type":"object","properties":{"actualSizeGB":{"type":"integer","description":"The actual size of disk in GB.","format":"int64","readOnly":true},"diskId":{"type":"string","description":"The disk id."},"diskSku":{"type":"string","description":"Disk Sku.","enum":["Standard_LRS","Standard_ZRS","Standard_GRS","Standard_RAGRS","Premium_LRS","StandardSSD_LRS","UltraSSD_LRS"]},"diskType":{"type":"string","description":"Disk resource type.","enum":["Undefined","Disk","Snapshot","RestorePoint","ManagedBlob"]},"managedBy":{"type":"string","description":"Compute resource Uri which owns this disk.","readOnly":true},"provisionSizeGB":{"type":"integer","description":"The provision size of disk in GB.","format":"int64","readOnly":true},"sharePath":{"type":"string","description":"The disk share path."},"status":{"type":"string","description":"Disk State.","enum":["Undefined","Unattached","Attached","Reserved","ActiveSAS","Unknown","All","Recommended","OfflineMigration","OnlineMigration"]},"userResourceId":{"type":"string","description":"The disk resource Uri from user view.","readOnly":true}},"description":"Managed disk properties."}},"description":"Managed Disk."}}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ComputeDiskAdminManagementClient",
+    "description" : "The Admin Compute Disk Management Client.",
+    "version" : "2018-07-30-preview"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs" : {
+      "get" : {
+        "tags" : [ "DiskMigrationJobs" ],
+        "description" : "Returns a list of disk migration jobs.",
+        "operationId" : "DiskMigrationJobs_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "description" : "The parameters of disk migration job status.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-07-30-preview"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of disk migration jobs has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "URI to the next page."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "List of disk migration jobs.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "type" : "object",
+                            "properties" : {
+                              "creationTime" : {
+                                "type" : "string",
+                                "description" : "The job creation time.",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "endTime" : {
+                                "type" : "string",
+                                "description" : "The job end time.",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "migrationId" : {
+                                "type" : "string",
+                                "description" : "The disk migration id."
+                              },
+                              "startTime" : {
+                                "type" : "string",
+                                "description" : "The job start time.",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "status" : {
+                                "type" : "string",
+                                "description" : "Migration job status.",
+                                "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending" ]
+                              },
+                              "subtasks" : {
+                                "type" : "array",
+                                "description" : "List of disk migration tasks.",
+                                "items" : {
+                                  "type" : "object",
+                                  "properties" : {
+                                    "migrationSubTaskId" : {
+                                      "type" : "string",
+                                      "description" : "The id of migration child task.",
+                                      "readOnly" : true
+                                    },
+                                    "properties" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                        "diskId" : {
+                                          "type" : "string",
+                                          "description" : "The id of disk.",
+                                          "readOnly" : true
+                                        },
+                                        "endTime" : {
+                                          "type" : "string",
+                                          "description" : "The task end time.",
+                                          "format" : "date-time",
+                                          "readOnly" : true
+                                        },
+                                        "migrationSubtaskStatus" : {
+                                          "type" : "string",
+                                          "description" : "Migration child task status.",
+                                          "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+                                        },
+                                        "reason" : {
+                                          "type" : "string",
+                                          "description" : "The reason of task failure.",
+                                          "readOnly" : true
+                                        },
+                                        "sourceShare" : {
+                                          "type" : "string",
+                                          "description" : "The source share of migration task.",
+                                          "readOnly" : true
+                                        },
+                                        "startTime" : {
+                                          "type" : "string",
+                                          "description" : "The task start time.",
+                                          "format" : "date-time",
+                                          "readOnly" : true
+                                        },
+                                        "targetDiskStateForMigration" : {
+                                          "type" : "string",
+                                          "description" : "Disk State.",
+                                          "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                                        },
+                                        "targetShare" : {
+                                          "type" : "string",
+                                          "description" : "The target share of migration task.",
+                                          "readOnly" : true
+                                        }
+                                      },
+                                      "description" : "Disk migration child task properties."
+                                    }
+                                  },
+                                  "description" : "Disk migration child task."
+                                }
+                              },
+                              "targetShare" : {
+                                "type" : "string",
+                                "description" : "The target share of migration job.",
+                                "readOnly" : true
+                              }
+                            },
+                            "description" : "Disk migration job properties."
+                          }
+                        },
+                        "description" : "Disk migration job."
+                      }
+                    }
+                  },
+                  "description" : "List of disk migration jobs."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs/{migrationId}" : {
+      "get" : {
+        "tags" : [ "DiskMigrationJobs" ],
+        "description" : "Returns the requested disk migration job.",
+        "operationId" : "DiskMigrationJobs_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "migrationId",
+          "in" : "path",
+          "description" : "The migration job guid name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-07-30-preview"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The disk migration job has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "ID of the resource.",
+                      "readOnly" : true
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "Location of the resource."
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Name of the resource.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Type of Resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Disk migration job."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "DiskMigrationJobs" ],
+        "description" : "Create a disk migration job.",
+        "operationId" : "DiskMigrationJobs_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "migrationId",
+          "in" : "path",
+          "description" : "The migration job guid name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "targetShare",
+          "in" : "query",
+          "description" : "The target share name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-07-30-preview"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters of disk list.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "description" : "List of disks.",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "properties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "actualSizeGB" : {
+                          "type" : "integer",
+                          "description" : "The actual size of disk in GB.",
+                          "format" : "int64",
+                          "readOnly" : true
+                        },
+                        "diskId" : {
+                          "type" : "string",
+                          "description" : "The disk id."
+                        },
+                        "diskSku" : {
+                          "type" : "string",
+                          "description" : "Disk Sku.",
+                          "enum" : [ "Standard_LRS", "Standard_ZRS", "Standard_GRS", "Standard_RAGRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS" ]
+                        },
+                        "diskType" : {
+                          "type" : "string",
+                          "description" : "Disk resource type.",
+                          "enum" : [ "Undefined", "Disk", "Snapshot", "RestorePoint", "ManagedBlob" ]
+                        },
+                        "managedBy" : {
+                          "type" : "string",
+                          "description" : "Compute resource Uri which owns this disk.",
+                          "readOnly" : true
+                        },
+                        "provisionSizeGB" : {
+                          "type" : "integer",
+                          "description" : "The provision size of disk in GB.",
+                          "format" : "int64",
+                          "readOnly" : true
+                        },
+                        "sharePath" : {
+                          "type" : "string",
+                          "description" : "The disk share path."
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "description" : "Disk State.",
+                          "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                        },
+                        "userResourceId" : {
+                          "type" : "string",
+                          "description" : "The disk resource Uri from user view.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Managed disk properties."
+                    }
+                  },
+                  "description" : "Managed Disk."
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK --  Disk migration job is created successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "ID of the resource.",
+                      "readOnly" : true
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "Location of the resource."
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Name of the resource.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Type of Resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Disk migration job."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/diskmigrationjobs/{migrationId}/Cancel" : {
+      "post" : {
+        "tags" : [ "DiskMigrationJobs" ],
+        "description" : "Cancel a disk migration job.",
+        "operationId" : "DiskMigrationJobs_Cancel",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "migrationId",
+          "in" : "path",
+          "description" : "The migration job guid name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-07-30-preview"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK --  Disk migration job cancellation is called.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "ID of the resource.",
+                      "readOnly" : true
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "Location of the resource."
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Name of the resource.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Type of Resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Disk migration job."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "DiskListInput" : {
+        "type" : "array",
+        "description" : "List of disks.",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "properties" : {
+              "type" : "object",
+              "properties" : {
+                "actualSizeGB" : {
+                  "type" : "integer",
+                  "description" : "The actual size of disk in GB.",
+                  "format" : "int64",
+                  "readOnly" : true
+                },
+                "diskId" : {
+                  "type" : "string",
+                  "description" : "The disk id."
+                },
+                "diskSku" : {
+                  "type" : "string",
+                  "description" : "Disk Sku.",
+                  "enum" : [ "Standard_LRS", "Standard_ZRS", "Standard_GRS", "Standard_RAGRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS" ]
+                },
+                "diskType" : {
+                  "type" : "string",
+                  "description" : "Disk resource type.",
+                  "enum" : [ "Undefined", "Disk", "Snapshot", "RestorePoint", "ManagedBlob" ]
+                },
+                "managedBy" : {
+                  "type" : "string",
+                  "description" : "Compute resource Uri which owns this disk.",
+                  "readOnly" : true
+                },
+                "provisionSizeGB" : {
+                  "type" : "integer",
+                  "description" : "The provision size of disk in GB.",
+                  "format" : "int64",
+                  "readOnly" : true
+                },
+                "sharePath" : {
+                  "type" : "string",
+                  "description" : "The disk share path."
+                },
+                "status" : {
+                  "type" : "string",
+                  "description" : "Disk State.",
+                  "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                },
+                "userResourceId" : {
+                  "type" : "string",
+                  "description" : "The disk resource Uri from user view.",
+                  "readOnly" : true
+                }
+              },
+              "description" : "Managed disk properties."
+            }
+          },
+          "description" : "Managed Disk."
+        }
+      },
+      "DiskMigrationJob" : {
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "properties" : {
+              "creationTime" : {
+                "type" : "string",
+                "description" : "The job creation time.",
+                "format" : "date-time",
+                "readOnly" : true
+              },
+              "endTime" : {
+                "type" : "string",
+                "description" : "The job end time.",
+                "format" : "date-time",
+                "readOnly" : true
+              },
+              "migrationId" : {
+                "type" : "string",
+                "description" : "The disk migration id."
+              },
+              "startTime" : {
+                "type" : "string",
+                "description" : "The job start time.",
+                "format" : "date-time",
+                "readOnly" : true
+              },
+              "status" : {
+                "type" : "string",
+                "description" : "Migration job status.",
+                "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending" ]
+              },
+              "subtasks" : {
+                "type" : "array",
+                "description" : "List of disk migration tasks.",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "migrationSubTaskId" : {
+                      "type" : "string",
+                      "description" : "The id of migration child task.",
+                      "readOnly" : true
+                    },
+                    "properties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "diskId" : {
+                          "type" : "string",
+                          "description" : "The id of disk.",
+                          "readOnly" : true
+                        },
+                        "endTime" : {
+                          "type" : "string",
+                          "description" : "The task end time.",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "migrationSubtaskStatus" : {
+                          "type" : "string",
+                          "description" : "Migration child task status.",
+                          "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+                        },
+                        "reason" : {
+                          "type" : "string",
+                          "description" : "The reason of task failure.",
+                          "readOnly" : true
+                        },
+                        "sourceShare" : {
+                          "type" : "string",
+                          "description" : "The source share of migration task.",
+                          "readOnly" : true
+                        },
+                        "startTime" : {
+                          "type" : "string",
+                          "description" : "The task start time.",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "targetDiskStateForMigration" : {
+                          "type" : "string",
+                          "description" : "Disk State.",
+                          "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                        },
+                        "targetShare" : {
+                          "type" : "string",
+                          "description" : "The target share of migration task.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Disk migration child task properties."
+                    }
+                  },
+                  "description" : "Disk migration child task."
+                }
+              },
+              "targetShare" : {
+                "type" : "string",
+                "description" : "The target share of migration job.",
+                "readOnly" : true
+              }
+            },
+            "description" : "Disk migration job properties."
+          }
+        },
+        "description" : "Disk migration job.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "ID of the resource.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Location of the resource."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Name of the resource.",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Type of Resource.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "DiskMigrationJobList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of disk migration jobs.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "properties" : {
+                  "type" : "object",
+                  "properties" : {
+                    "creationTime" : {
+                      "type" : "string",
+                      "description" : "The job creation time.",
+                      "format" : "date-time",
+                      "readOnly" : true
+                    },
+                    "endTime" : {
+                      "type" : "string",
+                      "description" : "The job end time.",
+                      "format" : "date-time",
+                      "readOnly" : true
+                    },
+                    "migrationId" : {
+                      "type" : "string",
+                      "description" : "The disk migration id."
+                    },
+                    "startTime" : {
+                      "type" : "string",
+                      "description" : "The job start time.",
+                      "format" : "date-time",
+                      "readOnly" : true
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Migration job status.",
+                      "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending" ]
+                    },
+                    "subtasks" : {
+                      "type" : "array",
+                      "description" : "List of disk migration tasks.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "migrationSubTaskId" : {
+                            "type" : "string",
+                            "description" : "The id of migration child task.",
+                            "readOnly" : true
+                          },
+                          "properties" : {
+                            "type" : "object",
+                            "properties" : {
+                              "diskId" : {
+                                "type" : "string",
+                                "description" : "The id of disk.",
+                                "readOnly" : true
+                              },
+                              "endTime" : {
+                                "type" : "string",
+                                "description" : "The task end time.",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "migrationSubtaskStatus" : {
+                                "type" : "string",
+                                "description" : "Migration child task status.",
+                                "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+                              },
+                              "reason" : {
+                                "type" : "string",
+                                "description" : "The reason of task failure.",
+                                "readOnly" : true
+                              },
+                              "sourceShare" : {
+                                "type" : "string",
+                                "description" : "The source share of migration task.",
+                                "readOnly" : true
+                              },
+                              "startTime" : {
+                                "type" : "string",
+                                "description" : "The task start time.",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "targetDiskStateForMigration" : {
+                                "type" : "string",
+                                "description" : "Disk State.",
+                                "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                              },
+                              "targetShare" : {
+                                "type" : "string",
+                                "description" : "The target share of migration task.",
+                                "readOnly" : true
+                              }
+                            },
+                            "description" : "Disk migration child task properties."
+                          }
+                        },
+                        "description" : "Disk migration child task."
+                      }
+                    },
+                    "targetShare" : {
+                      "type" : "string",
+                      "description" : "The target share of migration job.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Disk migration job properties."
+                }
+              },
+              "description" : "Disk migration job."
+            }
+          }
+        },
+        "description" : "List of disk migration jobs."
+      },
+      "DiskMigrationJobProperties" : {
+        "type" : "object",
+        "properties" : {
+          "creationTime" : {
+            "type" : "string",
+            "description" : "The job creation time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "The job end time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "migrationId" : {
+            "type" : "string",
+            "description" : "The disk migration id."
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The job start time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Migration job status.",
+            "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending" ]
+          },
+          "subtasks" : {
+            "type" : "array",
+            "description" : "List of disk migration tasks.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "migrationSubTaskId" : {
+                  "type" : "string",
+                  "description" : "The id of migration child task.",
+                  "readOnly" : true
+                },
+                "properties" : {
+                  "type" : "object",
+                  "properties" : {
+                    "diskId" : {
+                      "type" : "string",
+                      "description" : "The id of disk.",
+                      "readOnly" : true
+                    },
+                    "endTime" : {
+                      "type" : "string",
+                      "description" : "The task end time.",
+                      "format" : "date-time",
+                      "readOnly" : true
+                    },
+                    "migrationSubtaskStatus" : {
+                      "type" : "string",
+                      "description" : "Migration child task status.",
+                      "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+                    },
+                    "reason" : {
+                      "type" : "string",
+                      "description" : "The reason of task failure.",
+                      "readOnly" : true
+                    },
+                    "sourceShare" : {
+                      "type" : "string",
+                      "description" : "The source share of migration task.",
+                      "readOnly" : true
+                    },
+                    "startTime" : {
+                      "type" : "string",
+                      "description" : "The task start time.",
+                      "format" : "date-time",
+                      "readOnly" : true
+                    },
+                    "targetDiskStateForMigration" : {
+                      "type" : "string",
+                      "description" : "Disk State.",
+                      "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                    },
+                    "targetShare" : {
+                      "type" : "string",
+                      "description" : "The target share of migration task.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Disk migration child task properties."
+                }
+              },
+              "description" : "Disk migration child task."
+            }
+          },
+          "targetShare" : {
+            "type" : "string",
+            "description" : "The target share of migration job.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Disk migration job properties."
+      },
+      "MigrationJobStatus" : {
+        "type" : "string",
+        "description" : "Migration job status.",
+        "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending" ]
+      },
+      "MigrationSubTask" : {
+        "type" : "object",
+        "properties" : {
+          "migrationSubTaskId" : {
+            "type" : "string",
+            "description" : "The id of migration child task.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "type" : "object",
+            "properties" : {
+              "diskId" : {
+                "type" : "string",
+                "description" : "The id of disk.",
+                "readOnly" : true
+              },
+              "endTime" : {
+                "type" : "string",
+                "description" : "The task end time.",
+                "format" : "date-time",
+                "readOnly" : true
+              },
+              "migrationSubtaskStatus" : {
+                "type" : "string",
+                "description" : "Migration child task status.",
+                "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+              },
+              "reason" : {
+                "type" : "string",
+                "description" : "The reason of task failure.",
+                "readOnly" : true
+              },
+              "sourceShare" : {
+                "type" : "string",
+                "description" : "The source share of migration task.",
+                "readOnly" : true
+              },
+              "startTime" : {
+                "type" : "string",
+                "description" : "The task start time.",
+                "format" : "date-time",
+                "readOnly" : true
+              },
+              "targetDiskStateForMigration" : {
+                "type" : "string",
+                "description" : "Disk State.",
+                "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+              },
+              "targetShare" : {
+                "type" : "string",
+                "description" : "The target share of migration task.",
+                "readOnly" : true
+              }
+            },
+            "description" : "Disk migration child task properties."
+          }
+        },
+        "description" : "Disk migration child task."
+      },
+      "MigrationSubTaskList" : {
+        "type" : "array",
+        "description" : "List of disk migration tasks.",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "migrationSubTaskId" : {
+              "type" : "string",
+              "description" : "The id of migration child task.",
+              "readOnly" : true
+            },
+            "properties" : {
+              "type" : "object",
+              "properties" : {
+                "diskId" : {
+                  "type" : "string",
+                  "description" : "The id of disk.",
+                  "readOnly" : true
+                },
+                "endTime" : {
+                  "type" : "string",
+                  "description" : "The task end time.",
+                  "format" : "date-time",
+                  "readOnly" : true
+                },
+                "migrationSubtaskStatus" : {
+                  "type" : "string",
+                  "description" : "Migration child task status.",
+                  "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+                },
+                "reason" : {
+                  "type" : "string",
+                  "description" : "The reason of task failure.",
+                  "readOnly" : true
+                },
+                "sourceShare" : {
+                  "type" : "string",
+                  "description" : "The source share of migration task.",
+                  "readOnly" : true
+                },
+                "startTime" : {
+                  "type" : "string",
+                  "description" : "The task start time.",
+                  "format" : "date-time",
+                  "readOnly" : true
+                },
+                "targetDiskStateForMigration" : {
+                  "type" : "string",
+                  "description" : "Disk State.",
+                  "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                },
+                "targetShare" : {
+                  "type" : "string",
+                  "description" : "The target share of migration task.",
+                  "readOnly" : true
+                }
+              },
+              "description" : "Disk migration child task properties."
+            }
+          },
+          "description" : "Disk migration child task."
+        }
+      },
+      "MigrationSubTaskProperties" : {
+        "type" : "object",
+        "properties" : {
+          "diskId" : {
+            "type" : "string",
+            "description" : "The id of disk.",
+            "readOnly" : true
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "The task end time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "migrationSubtaskStatus" : {
+            "type" : "string",
+            "description" : "Migration child task status.",
+            "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "The reason of task failure.",
+            "readOnly" : true
+          },
+          "sourceShare" : {
+            "type" : "string",
+            "description" : "The source share of migration task.",
+            "readOnly" : true
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The task start time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "targetDiskStateForMigration" : {
+            "type" : "string",
+            "description" : "Disk State.",
+            "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+          },
+          "targetShare" : {
+            "type" : "string",
+            "description" : "The target share of migration task.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Disk migration child task properties."
+      },
+      "MigrationSubTaskStatus" : {
+        "type" : "string",
+        "description" : "Migration child task status.",
+        "enum" : [ "Undefined", "Running", "Succeeded", "Failed", "Canceled", "Pending", "Skipped" ]
+      }
+    },
+    "parameters" : {
+      "MigrationIdParameter" : {
+        "name" : "migrationId",
+        "in" : "path",
+        "description" : "The migration job guid name.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "MigrationJobStatusParameter" : {
+        "name" : "status",
+        "in" : "query",
+        "description" : "The parameters of disk migration job status.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "TargetShareParameter" : {
+        "name" : "targetShare",
+        "in" : "query",
+        "description" : "The target share name.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "DiskListParameter" : {
+        "description" : "The parameters of disk list.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "array",
+              "description" : "List of disks.",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "properties" : {
+                    "type" : "object",
+                    "properties" : {
+                      "actualSizeGB" : {
+                        "type" : "integer",
+                        "description" : "The actual size of disk in GB.",
+                        "format" : "int64",
+                        "readOnly" : true
+                      },
+                      "diskId" : {
+                        "type" : "string",
+                        "description" : "The disk id."
+                      },
+                      "diskSku" : {
+                        "type" : "string",
+                        "description" : "Disk Sku.",
+                        "enum" : [ "Standard_LRS", "Standard_ZRS", "Standard_GRS", "Standard_RAGRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS" ]
+                      },
+                      "diskType" : {
+                        "type" : "string",
+                        "description" : "Disk resource type.",
+                        "enum" : [ "Undefined", "Disk", "Snapshot", "RestorePoint", "ManagedBlob" ]
+                      },
+                      "managedBy" : {
+                        "type" : "string",
+                        "description" : "Compute resource Uri which owns this disk.",
+                        "readOnly" : true
+                      },
+                      "provisionSizeGB" : {
+                        "type" : "integer",
+                        "description" : "The provision size of disk in GB.",
+                        "format" : "int64",
+                        "readOnly" : true
+                      },
+                      "sharePath" : {
+                        "type" : "string",
+                        "description" : "The disk share path."
+                      },
+                      "status" : {
+                        "type" : "string",
+                        "description" : "Disk State.",
+                        "enum" : [ "Undefined", "Unattached", "Attached", "Reserved", "ActiveSAS", "Unknown", "All", "Recommended", "OfflineMigration", "OnlineMigration" ]
+                      },
+                      "userResourceId" : {
+                        "type" : "string",
+                        "description" : "The disk resource Uri from user view.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "Managed disk properties."
+                  }
+                },
+                "description" : "Managed Disk."
+              }
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

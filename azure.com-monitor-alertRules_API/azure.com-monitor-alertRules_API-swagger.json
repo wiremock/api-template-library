@@ -1,1 +1,753 @@
-{"openapi":"3.0.1","info":{"title":"MonitorManagementClient","version":"2016-03-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/microsoft.insights/alertrules":{"get":{"tags":["AlertRules"],"description":"List the alert rules within a subscription.","operationId":"AlertRules_ListBySubscription","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request for a list of alert rules","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResourceCollection"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules":{"get":{"tags":["AlertRules"],"description":"List the alert rules within a resource group.","operationId":"AlertRules_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request for a list of alert rules","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResourceCollection"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}":{"get":{"tags":["AlertRules"],"description":"Gets an alert rule","operationId":"AlertRules_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"ruleName","in":"path","description":"The name of the rule.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to get an alert rule","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}}}}},"put":{"tags":["AlertRules"],"description":"Creates or updates an alert rule.","operationId":"AlertRules_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"ruleName","in":"path","description":"The name of the rule.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters of the rule to create or update.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}},"required":true},"responses":{"200":{"description":"Successful request to update an alert rule","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}}},"201":{"description":"Created alert rule","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"delete":{"tags":["AlertRules"],"description":"Deletes an alert rule","operationId":"AlertRules_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"ruleName","in":"path","description":"The name of the rule.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to delete an alert rule"},"204":{"description":"No content: the request was successful, but the response is empty"}}},"patch":{"description":"Updates an existing AlertRuleResource. To update other fields use the CreateOrUpdate method.","operationId":"AlertRules_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"ruleName","in":"path","description":"The name of the rule.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResourcePatch"}}},"required":true},"responses":{"200":{"description":"Successful request to update an alert rule","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}}},"201":{"description":"Successful request to update an alert rule that resulted in a creation of the alert rule","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AlertRuleResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"AlertRule":{"required":["condition","isEnabled","name"],"type":"object","properties":{"actions":{"type":"array","description":"the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.","items":{"$ref":"#/components/schemas/RuleAction"}},"condition":{"$ref":"#/components/schemas/RuleCondition"},"description":{"type":"string","description":"the description of the alert rule that will be included in the alert email."},"isEnabled":{"type":"boolean","description":"the flag that indicates whether the alert rule is enabled."},"lastUpdatedTime":{"type":"string","description":"Last time the rule was updated in ISO8601 format.","format":"date-time","readOnly":true},"name":{"type":"string","description":"the name of the alert rule."}},"description":"An alert rule."},"AlertRuleResource":{"properties":{"properties":{"$ref":"#/components/schemas/AlertRule"}},"description":"The alert rule resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"AlertRuleResourceCollection":{"type":"object","properties":{"value":{"type":"array","description":"the values for the alert rule resources.","items":{"$ref":"#/components/schemas/AlertRuleResource"}}},"description":"Represents a collection of alert rule resources."},"AlertRuleResourcePatch":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/AlertRule"},"tags":{"type":"object","description":"Resource tags"}},"description":"The alert rule object for patch operations."},"ConditionOperator":{"type":"string","description":"Operators allowed in the rule condition.","enum":["GreaterThan","GreaterThanOrEqual","LessThan","LessThanOrEqual"]},"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"LocationThresholdRuleCondition":{"properties":{"failedLocationCount":{"minimum":0,"type":"integer","description":"the number of locations that must fail to activate the alert.","format":"int32"},"windowSize":{"type":"string","description":"the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.","format":"duration"}},"description":"A rule condition based on a certain number of locations failing.","allOf":[{"$ref":"#/components/schemas/RuleCondition"}]},"ManagementEventAggregationCondition":{"type":"object","properties":{"operator":{"$ref":"#/components/schemas/ConditionOperator"},"threshold":{"type":"number","description":"The threshold value that activates the alert.","format":"double"},"windowSize":{"type":"string","description":"the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.","format":"duration"}},"description":"How the data that is collected should be combined over time."},"ManagementEventRuleCondition":{"properties":{"aggregation":{"$ref":"#/components/schemas/ManagementEventAggregationCondition"}},"description":"A management event rule condition.","allOf":[{"$ref":"#/components/schemas/RuleCondition"}]},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Azure resource name","readOnly":true},"tags":{"type":"object","description":"Resource tags"},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"RuleAction":{"required":["odata.type"],"type":"object","properties":{"odata.type":{"type":"string","description":"specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction."}},"description":"The action that is performed when the alert rule becomes active, and when an alert condition is resolved.","discriminator":{"propertyName":"odata.type"}},"RuleCondition":{"required":["odata.type"],"type":"object","properties":{"dataSource":{"$ref":"#/components/schemas/RuleDataSource"},"odata.type":{"type":"string","description":"specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric)."}},"description":"The condition that results in the alert rule being activated.","discriminator":{"propertyName":"odata.type"}},"RuleDataSource":{"required":["odata.type"],"type":"object","properties":{"odata.type":{"type":"string","description":"specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource"},"resourceUri":{"type":"string","description":"the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."}},"description":"The resource from which the rule collects its data.","discriminator":{"propertyName":"odata.type"}},"RuleEmailAction":{"properties":{"customEmails":{"type":"array","description":"the list of administrator's custom email addresses to notify of the activation of the alert.","items":{"type":"string"}},"sendToServiceOwners":{"type":"boolean","description":"Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated."}},"description":"Specifies the action to send email when the rule condition is evaluated. The discriminator is always RuleEmailAction in this case.","allOf":[{"$ref":"#/components/schemas/RuleAction"}]},"RuleManagementEventClaimsDataSource":{"type":"object","properties":{"emailAddress":{"type":"string","description":"the email address."}},"description":"The claims for a rule management event data source."},"RuleManagementEventDataSource":{"properties":{"claims":{"$ref":"#/components/schemas/RuleManagementEventClaimsDataSource"},"eventName":{"type":"string","description":"the event name."},"eventSource":{"type":"string","description":"the event source."},"level":{"type":"string","description":"the level."},"operationName":{"type":"string","description":"The name of the operation that should be checked for. If no name is provided, any operation will match."},"resourceGroupName":{"type":"string","description":"the resource group name."},"resourceProviderName":{"type":"string","description":"the resource provider name."},"status":{"type":"string","description":"The status of the operation that should be checked for. If no status is provided, any status will match."},"subStatus":{"type":"string","description":"the substatus."}},"description":"A rule management event data source. The discriminator fields is always RuleManagementEventDataSource in this case.","allOf":[{"$ref":"#/components/schemas/RuleDataSource"}]},"RuleMetricDataSource":{"properties":{"metricName":{"type":"string","description":"the name of the metric that defines what the rule monitors."}},"description":"A rule metric data source. The discriminator value is always RuleMetricDataSource in this case.","allOf":[{"$ref":"#/components/schemas/RuleDataSource"}]},"RuleWebhookAction":{"properties":{"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload."},"serviceUri":{"type":"string","description":"the service uri to Post the notification when the alert activates or resolves."}},"description":"Specifies the action to post to service when the rule condition is evaluated. The discriminator is always RuleWebhookAction in this case.","allOf":[{"$ref":"#/components/schemas/RuleAction"}]},"ThresholdRuleCondition":{"properties":{"operator":{"$ref":"#/components/schemas/ConditionOperator"},"threshold":{"type":"number","description":"the threshold value that activates the alert.","format":"double"},"timeAggregation":{"$ref":"#/components/schemas/TimeAggregationOperator"},"windowSize":{"type":"string","description":"the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.","format":"duration"}},"description":"A rule condition based on a metric crossing a threshold.","allOf":[{"$ref":"#/components/schemas/RuleCondition"}]},"TimeAggregationOperator":{"type":"string","description":"Aggregation operators allowed in a rule.","enum":["Average","Minimum","Maximum","Total","Last"]}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"RuleNameParameter":{"name":"ruleName","in":"path","description":"The name of the rule.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MonitorManagementClient",
+    "version" : "2016-03-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/microsoft.insights/alertrules" : {
+      "get" : {
+        "tags" : [ "AlertRules" ],
+        "description" : "List the alert rules within a subscription.",
+        "operationId" : "AlertRules_ListBySubscription",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request for a list of alert rules",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResourceCollection"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules" : {
+      "get" : {
+        "tags" : [ "AlertRules" ],
+        "description" : "List the alert rules within a resource group.",
+        "operationId" : "AlertRules_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request for a list of alert rules",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResourceCollection"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}" : {
+      "get" : {
+        "tags" : [ "AlertRules" ],
+        "description" : "Gets an alert rule",
+        "operationId" : "AlertRules_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ruleName",
+          "in" : "path",
+          "description" : "The name of the rule.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to get an alert rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "AlertRules" ],
+        "description" : "Creates or updates an alert rule.",
+        "operationId" : "AlertRules_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ruleName",
+          "in" : "path",
+          "description" : "The name of the rule.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters of the rule to create or update.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AlertRuleResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to update an alert rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResource"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created alert rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "AlertRules" ],
+        "description" : "Deletes an alert rule",
+        "operationId" : "AlertRules_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ruleName",
+          "in" : "path",
+          "description" : "The name of the rule.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to delete an alert rule"
+          },
+          "204" : {
+            "description" : "No content: the request was successful, but the response is empty"
+          }
+        }
+      },
+      "patch" : {
+        "description" : "Updates an existing AlertRuleResource. To update other fields use the CreateOrUpdate method.",
+        "operationId" : "AlertRules_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ruleName",
+          "in" : "path",
+          "description" : "The name of the rule.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AlertRuleResourcePatch"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to update an alert rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResource"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Successful request to update an alert rule that resulted in a creation of the alert rule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AlertRuleResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AlertRule" : {
+        "required" : [ "condition", "isEnabled", "name" ],
+        "type" : "object",
+        "properties" : {
+          "actions" : {
+            "type" : "array",
+            "description" : "the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.",
+            "items" : {
+              "$ref" : "#/components/schemas/RuleAction"
+            }
+          },
+          "condition" : {
+            "$ref" : "#/components/schemas/RuleCondition"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "the description of the alert rule that will be included in the alert email."
+          },
+          "isEnabled" : {
+            "type" : "boolean",
+            "description" : "the flag that indicates whether the alert rule is enabled."
+          },
+          "lastUpdatedTime" : {
+            "type" : "string",
+            "description" : "Last time the rule was updated in ISO8601 format.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "the name of the alert rule."
+          }
+        },
+        "description" : "An alert rule."
+      },
+      "AlertRuleResource" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AlertRule"
+          }
+        },
+        "description" : "The alert rule resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "AlertRuleResourceCollection" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "the values for the alert rule resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/AlertRuleResource"
+            }
+          }
+        },
+        "description" : "Represents a collection of alert rule resources."
+      },
+      "AlertRuleResourcePatch" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AlertRule"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "The alert rule object for patch operations."
+      },
+      "ConditionOperator" : {
+        "type" : "string",
+        "description" : "Operators allowed in the rule condition.",
+        "enum" : [ "GreaterThan", "GreaterThanOrEqual", "LessThan", "LessThanOrEqual" ]
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "LocationThresholdRuleCondition" : {
+        "properties" : {
+          "failedLocationCount" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "the number of locations that must fail to activate the alert.",
+            "format" : "int32"
+          },
+          "windowSize" : {
+            "type" : "string",
+            "description" : "the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.",
+            "format" : "duration"
+          }
+        },
+        "description" : "A rule condition based on a certain number of locations failing.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleCondition"
+        } ]
+      },
+      "ManagementEventAggregationCondition" : {
+        "type" : "object",
+        "properties" : {
+          "operator" : {
+            "$ref" : "#/components/schemas/ConditionOperator"
+          },
+          "threshold" : {
+            "type" : "number",
+            "description" : "The threshold value that activates the alert.",
+            "format" : "double"
+          },
+          "windowSize" : {
+            "type" : "string",
+            "description" : "the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.",
+            "format" : "duration"
+          }
+        },
+        "description" : "How the data that is collected should be combined over time."
+      },
+      "ManagementEventRuleCondition" : {
+        "properties" : {
+          "aggregation" : {
+            "$ref" : "#/components/schemas/ManagementEventAggregationCondition"
+          }
+        },
+        "description" : "A management event rule condition.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleCondition"
+        } ]
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "RuleAction" : {
+        "required" : [ "odata.type" ],
+        "type" : "object",
+        "properties" : {
+          "odata.type" : {
+            "type" : "string",
+            "description" : "specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction."
+          }
+        },
+        "description" : "The action that is performed when the alert rule becomes active, and when an alert condition is resolved.",
+        "discriminator" : {
+          "propertyName" : "odata.type"
+        }
+      },
+      "RuleCondition" : {
+        "required" : [ "odata.type" ],
+        "type" : "object",
+        "properties" : {
+          "dataSource" : {
+            "$ref" : "#/components/schemas/RuleDataSource"
+          },
+          "odata.type" : {
+            "type" : "string",
+            "description" : "specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric)."
+          }
+        },
+        "description" : "The condition that results in the alert rule being activated.",
+        "discriminator" : {
+          "propertyName" : "odata.type"
+        }
+      },
+      "RuleDataSource" : {
+        "required" : [ "odata.type" ],
+        "type" : "object",
+        "properties" : {
+          "odata.type" : {
+            "type" : "string",
+            "description" : "specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource"
+          },
+          "resourceUri" : {
+            "type" : "string",
+            "description" : "the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
+          }
+        },
+        "description" : "The resource from which the rule collects its data.",
+        "discriminator" : {
+          "propertyName" : "odata.type"
+        }
+      },
+      "RuleEmailAction" : {
+        "properties" : {
+          "customEmails" : {
+            "type" : "array",
+            "description" : "the list of administrator's custom email addresses to notify of the activation of the alert.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "sendToServiceOwners" : {
+            "type" : "boolean",
+            "description" : "Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated."
+          }
+        },
+        "description" : "Specifies the action to send email when the rule condition is evaluated. The discriminator is always RuleEmailAction in this case.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleAction"
+        } ]
+      },
+      "RuleManagementEventClaimsDataSource" : {
+        "type" : "object",
+        "properties" : {
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "the email address."
+          }
+        },
+        "description" : "The claims for a rule management event data source."
+      },
+      "RuleManagementEventDataSource" : {
+        "properties" : {
+          "claims" : {
+            "$ref" : "#/components/schemas/RuleManagementEventClaimsDataSource"
+          },
+          "eventName" : {
+            "type" : "string",
+            "description" : "the event name."
+          },
+          "eventSource" : {
+            "type" : "string",
+            "description" : "the event source."
+          },
+          "level" : {
+            "type" : "string",
+            "description" : "the level."
+          },
+          "operationName" : {
+            "type" : "string",
+            "description" : "The name of the operation that should be checked for. If no name is provided, any operation will match."
+          },
+          "resourceGroupName" : {
+            "type" : "string",
+            "description" : "the resource group name."
+          },
+          "resourceProviderName" : {
+            "type" : "string",
+            "description" : "the resource provider name."
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The status of the operation that should be checked for. If no status is provided, any status will match."
+          },
+          "subStatus" : {
+            "type" : "string",
+            "description" : "the substatus."
+          }
+        },
+        "description" : "A rule management event data source. The discriminator fields is always RuleManagementEventDataSource in this case.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleDataSource"
+        } ]
+      },
+      "RuleMetricDataSource" : {
+        "properties" : {
+          "metricName" : {
+            "type" : "string",
+            "description" : "the name of the metric that defines what the rule monitors."
+          }
+        },
+        "description" : "A rule metric data source. The discriminator value is always RuleMetricDataSource in this case.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleDataSource"
+        } ]
+      },
+      "RuleWebhookAction" : {
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload."
+          },
+          "serviceUri" : {
+            "type" : "string",
+            "description" : "the service uri to Post the notification when the alert activates or resolves."
+          }
+        },
+        "description" : "Specifies the action to post to service when the rule condition is evaluated. The discriminator is always RuleWebhookAction in this case.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleAction"
+        } ]
+      },
+      "ThresholdRuleCondition" : {
+        "properties" : {
+          "operator" : {
+            "$ref" : "#/components/schemas/ConditionOperator"
+          },
+          "threshold" : {
+            "type" : "number",
+            "description" : "the threshold value that activates the alert.",
+            "format" : "double"
+          },
+          "timeAggregation" : {
+            "$ref" : "#/components/schemas/TimeAggregationOperator"
+          },
+          "windowSize" : {
+            "type" : "string",
+            "description" : "the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day.",
+            "format" : "duration"
+          }
+        },
+        "description" : "A rule condition based on a metric crossing a threshold.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RuleCondition"
+        } ]
+      },
+      "TimeAggregationOperator" : {
+        "type" : "string",
+        "description" : "Aggregation operators allowed in a rule.",
+        "enum" : [ "Average", "Minimum", "Maximum", "Total", "Last" ]
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "RuleNameParameter" : {
+        "name" : "ruleName",
+        "in" : "path",
+        "description" : "The name of the rule.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription Id.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,463 @@
-{"openapi":"3.0.1","info":{"title":"BackupManagementClient","description":"The Admin Backup Management Client.","version":"2018-09-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations":{"get":{"tags":["BackupLocations"],"description":"Returns the list of backup locations.","operationId":"BackupLocations_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","default":"2018-09-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocationList"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations/{location}":{"get":{"tags":["BackupLocations"],"description":"Returns a specific backup location based on name.","operationId":"BackupLocations_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the backup location.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","default":"2018-09-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocation"}}}}}},"put":{"tags":["BackupLocations"],"description":"Update a backup location.","operationId":"BackupLocations_Update","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the backup location.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","default":"2018-09-01"}}],"requestBody":{"description":"Backup location object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocation"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocation"}}}},"202":{"description":"ACCEPTED","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocation"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations/{location}/createBackup":{"post":{"tags":["BackupLocations"],"description":"Back up a specific location.","operationId":"BackupLocations_CreateBackup","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Name of the backup location.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","default":"2018-09-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key value pairs."},"type":{"type":"string","description":"Type of resource.","readOnly":true}},"description":"Information related to a backup."}}}},"202":{"description":"ACCEPTED","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key value pairs."},"type":{"type":"string","description":"Type of resource.","readOnly":true}},"description":"Information related to a backup."}}}}}}}},"components":{"schemas":{"BackupLocation":{"properties":{"properties":{"$ref":"#/components/schemas/BackupLocationModel"}},"description":"Information about the backup location.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key value pairs."},"type":{"type":"string","description":"Type of resource.","readOnly":true}},"description":"Base Resource Object"}]},"BackupLocationList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of backup locations.","items":{"$ref":"#/components/schemas/BackupLocation"}}},"description":"List of backup locations."},"BackupLocationModel":{"type":"object","properties":{"externalStoreDefault":{"$ref":"#/components/schemas/ExternalStore"}},"description":"Properties of a backup location."},"ExternalStore":{"type":"object","properties":{"availableCapacity":{"type":"string","description":"Free space at the backup location.","readOnly":true},"backupFrequencyInHours":{"type":"integer","description":"The interval, in hours, for the frequency that the scheduler takes a backup."},"backupRetentionPeriodInDays":{"type":"integer","description":"The retention period, in days, for backs in the storage location."},"encryptionCertBase64":{"type":"string","description":"The base64 raw data for the backup encryption certificate."},"encryptionCertThumbprint":{"type":"string","description":"The thumbprint of the encryption certificate.","readOnly":true},"isBackupSchedulerEnabled":{"type":"boolean","description":"True if the backup scheduler is enabled."},"lastBackupTime":{"type":"string","description":"Time of backup.","format":"date-time","readOnly":true},"nextBackupTime":{"type":"string","description":"The scheduled time of the next backup.","format":"date-time","readOnly":true},"password":{"type":"string","description":"Password to access the location."},"path":{"type":"string","description":"Path to the update location"},"userName":{"type":"string","description":"Username to access the location."}},"description":"Information about an external storage location."}},"parameters":{"BackupLocationParameter":{"name":"location","in":"path","description":"Name of the backup location.","required":true,"schema":{"type":"string"}}},"requestBodies":{"BackupLocationObjectParameter":{"description":"Backup location object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BackupLocation"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "BackupManagementClient",
+    "description" : "The Admin Backup Management Client.",
+    "version" : "2018-09-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations" : {
+      "get" : {
+        "tags" : [ "BackupLocations" ],
+        "description" : "Returns the list of backup locations.",
+        "operationId" : "BackupLocations_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-09-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BackupLocationList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations/{location}" : {
+      "get" : {
+        "tags" : [ "BackupLocations" ],
+        "description" : "Returns a specific backup location based on name.",
+        "operationId" : "BackupLocations_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the backup location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-09-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BackupLocation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "BackupLocations" ],
+        "description" : "Update a backup location.",
+        "operationId" : "BackupLocations_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the backup location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-09-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Backup location object.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/BackupLocation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BackupLocation"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "ACCEPTED",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BackupLocation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Backup.Admin/backupLocations/{location}/createBackup" : {
+      "post" : {
+        "tags" : [ "BackupLocations" ],
+        "description" : "Back up a specific location.",
+        "operationId" : "BackupLocations_CreateBackup",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Name of the backup location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2018-09-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "URI of the resource.",
+                      "readOnly" : true
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "Location of the resource."
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Name of the resource.",
+                      "readOnly" : true
+                    },
+                    "tags" : {
+                      "type" : "object",
+                      "additionalProperties" : {
+                        "type" : "string"
+                      },
+                      "description" : "List of key value pairs."
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Type of resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Information related to a backup."
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "ACCEPTED",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "URI of the resource.",
+                      "readOnly" : true
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "Location of the resource."
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Name of the resource.",
+                      "readOnly" : true
+                    },
+                    "tags" : {
+                      "type" : "object",
+                      "additionalProperties" : {
+                        "type" : "string"
+                      },
+                      "description" : "List of key value pairs."
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Type of resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "Information related to a backup."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BackupLocation" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/BackupLocationModel"
+          }
+        },
+        "description" : "Information about the backup location.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "URI of the resource.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Location of the resource."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Name of the resource.",
+              "readOnly" : true
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "List of key value pairs."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Type of resource.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base Resource Object"
+        } ]
+      },
+      "BackupLocationList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of backup locations.",
+            "items" : {
+              "$ref" : "#/components/schemas/BackupLocation"
+            }
+          }
+        },
+        "description" : "List of backup locations."
+      },
+      "BackupLocationModel" : {
+        "type" : "object",
+        "properties" : {
+          "externalStoreDefault" : {
+            "$ref" : "#/components/schemas/ExternalStore"
+          }
+        },
+        "description" : "Properties of a backup location."
+      },
+      "ExternalStore" : {
+        "type" : "object",
+        "properties" : {
+          "availableCapacity" : {
+            "type" : "string",
+            "description" : "Free space at the backup location.",
+            "readOnly" : true
+          },
+          "backupFrequencyInHours" : {
+            "type" : "integer",
+            "description" : "The interval, in hours, for the frequency that the scheduler takes a backup."
+          },
+          "backupRetentionPeriodInDays" : {
+            "type" : "integer",
+            "description" : "The retention period, in days, for backs in the storage location."
+          },
+          "encryptionCertBase64" : {
+            "type" : "string",
+            "description" : "The base64 raw data for the backup encryption certificate."
+          },
+          "encryptionCertThumbprint" : {
+            "type" : "string",
+            "description" : "The thumbprint of the encryption certificate.",
+            "readOnly" : true
+          },
+          "isBackupSchedulerEnabled" : {
+            "type" : "boolean",
+            "description" : "True if the backup scheduler is enabled."
+          },
+          "lastBackupTime" : {
+            "type" : "string",
+            "description" : "Time of backup.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "nextBackupTime" : {
+            "type" : "string",
+            "description" : "The scheduled time of the next backup.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "Password to access the location."
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "Path to the update location"
+          },
+          "userName" : {
+            "type" : "string",
+            "description" : "Username to access the location."
+          }
+        },
+        "description" : "Information about an external storage location."
+      }
+    },
+    "parameters" : {
+      "BackupLocationParameter" : {
+        "name" : "location",
+        "in" : "path",
+        "description" : "Name of the backup location.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "BackupLocationObjectParameter" : {
+        "description" : "Backup location object.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/BackupLocation"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

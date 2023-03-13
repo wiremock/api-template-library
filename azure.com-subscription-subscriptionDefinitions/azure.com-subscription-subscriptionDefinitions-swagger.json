@@ -1,1 +1,409 @@
-{"openapi":"3.0.1","info":{"title":"SubscriptionDefinitionsClient","description":"Subscription definitions client provides an interface to create, modify and retrieve azure subscriptions programmatically.","version":"2017-11-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.Subscription/operations":{"get":{"tags":["SubscriptionDefinitions"],"description":"Lists all of the available Microsoft.Subscription API operations.","operationId":"SubscriptionDefinitionsOperationMetadata_list","parameters":[{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/providers/Microsoft.Subscription/subscriptionDefinitions":{"get":{"tags":["SubscriptionDefinitions"],"description":"List an Azure subscription definition by subscriptionId.","operationId":"SubscriptionDefinitions_List","parameters":[{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionDefinitionList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/providers/Microsoft.Subscription/subscriptionDefinitions/{subscriptionDefinitionName}":{"get":{"tags":["SubscriptionDefinitions"],"description":"Get an Azure subscription definition.","operationId":"SubscriptionDefinitions_Get","parameters":[{"name":"subscriptionDefinitionName","in":"path","description":"The name of the Azure subscription definition.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionDefinition"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"tags":["SubscriptionDefinitions"],"description":"Create an Azure subscription definition.","operationId":"SubscriptionDefinitions_Create","parameters":[{"name":"subscriptionDefinitionName","in":"path","description":"The name of the Azure subscription definition.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The subscription definition creation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionDefinition"}}},"required":true},"responses":{"200":{"description":"Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionDefinition"}}}},"202":{"description":"Accepted. Subscription creation is in progress.","headers":{"Retry-After":{"description":"The amount of delay to use while the status of the operation is checked. The value is expressed in seconds.","schema":{"type":"string"}},"Location":{"description":"GET this URL to retrieve the status of the asynchronous operation.","schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/providers/Microsoft.Subscription/subscriptionOperations/{operationId}":{"get":{"tags":["SubscriptionDefinitions"],"description":"Retrieves the status of the subscription definition PUT operation. The URI of this API is returned in the Location field of the response header.","operationId":"SubscriptionDefinitions_GetOperationStatus","parameters":[{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}},{"name":"operationId","in":"path","description":"The operation ID, which can be found from the Location field in the generate recommendation response header.","required":true,"schema":{"type":"string","format":"uuid"}}],"responses":{"200":{"description":"Successful completion of the asynchronous operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionDefinition"}}}},"202":{"description":"Accepted. Subscription update is in progress.","headers":{"Retry-After":{"description":"The amount of delay to use while the status of the operation is checked. The value is expressed in seconds.","schema":{"type":"string"}},"Location":{"description":"The URL where the status of the asynchronous operation can be checked.","schema":{"type":"string"}}}}},"deprecated":false}}},"components":{"schemas":{"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"Operation":{"type":"object","properties":{"display":{"type":"object","properties":{"operation":{"type":"string","description":"Operation type: Read, write, delete, etc."},"provider":{"type":"string","description":"Service provider: Microsoft.Subscription"},"resource":{"type":"string","description":"Resource on which the operation is performed: Profile, endpoint, etc."}},"description":"The object that represents the operation."},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}"}},"description":"REST API operation"},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any."},"value":{"type":"array","description":"List of operations.","items":{"$ref":"#/components/schemas/Operation"}}},"description":"Result of the request to list operations. It contains a list of operations and a URL link to get the next set of results."},"SubscriptionDefinition":{"type":"object","properties":{"id":{"type":"string","description":"The resource ID.","readOnly":true},"name":{"type":"string","description":"The name of the resource.","readOnly":true},"properties":{"$ref":"#/components/schemas/SubscriptionDefinitionProperties"},"type":{"type":"string","description":"The type of the resource.","readOnly":true}},"description":"The subscription definition used to create the subscription."},"SubscriptionDefinitionList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any."},"value":{"type":"array","description":"An array of subscriptionDefinitions","items":{"$ref":"#/components/schemas/SubscriptionDefinition"}}},"description":"Subscription Definition List operation response."},"SubscriptionDefinitionProperties":{"type":"object","properties":{"etag":{"type":"string","description":"The etag the subscription definition."},"offerType":{"type":"string","description":"The offer type of the subscription. For example, MS-AZR-0017P (EnterpriseAgreement) and MS-AZR-0148P (EnterpriseAgreement devTest) are available."},"subscriptionDisplayName":{"type":"string","description":"The display name of the subscription."},"subscriptionId":{"type":"string","description":"The ID of the subscription.","readOnly":true}},"description":"The subscription definition properties."}},"parameters":{"apiVersionParameter":{"name":"api-version","in":"query","description":"Version of the API to be used with the client request. Current version is 2015-06-01","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SubscriptionDefinitionsClient",
+    "description" : "Subscription definitions client provides an interface to create, modify and retrieve azure subscriptions programmatically.",
+    "version" : "2017-11-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.Subscription/operations" : {
+      "get" : {
+        "tags" : [ "SubscriptionDefinitions" ],
+        "description" : "Lists all of the available Microsoft.Subscription API operations.",
+        "operationId" : "SubscriptionDefinitionsOperationMetadata_list",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Subscription/subscriptionDefinitions" : {
+      "get" : {
+        "tags" : [ "SubscriptionDefinitions" ],
+        "description" : "List an Azure subscription definition by subscriptionId.",
+        "operationId" : "SubscriptionDefinitions_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubscriptionDefinitionList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Subscription/subscriptionDefinitions/{subscriptionDefinitionName}" : {
+      "get" : {
+        "tags" : [ "SubscriptionDefinitions" ],
+        "description" : "Get an Azure subscription definition.",
+        "operationId" : "SubscriptionDefinitions_Get",
+        "parameters" : [ {
+          "name" : "subscriptionDefinitionName",
+          "in" : "path",
+          "description" : "The name of the Azure subscription definition.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubscriptionDefinition"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "SubscriptionDefinitions" ],
+        "description" : "Create an Azure subscription definition.",
+        "operationId" : "SubscriptionDefinitions_Create",
+        "parameters" : [ {
+          "name" : "subscriptionDefinitionName",
+          "in" : "path",
+          "description" : "The name of the Azure subscription definition.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The subscription definition creation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SubscriptionDefinition"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Normal response for a successful query. The response body will contain the data that matches the filters specified in the query parameters.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubscriptionDefinition"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted. Subscription creation is in progress.",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "The amount of delay to use while the status of the operation is checked. The value is expressed in seconds.",
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Location" : {
+                "description" : "GET this URL to retrieve the status of the asynchronous operation.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Subscription/subscriptionOperations/{operationId}" : {
+      "get" : {
+        "tags" : [ "SubscriptionDefinitions" ],
+        "description" : "Retrieves the status of the subscription definition PUT operation. The URI of this API is returned in the Location field of the response header.",
+        "operationId" : "SubscriptionDefinitions_GetOperationStatus",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "The operation ID, which can be found from the Location field in the generate recommendation response header.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful completion of the asynchronous operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubscriptionDefinition"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted. Subscription update is in progress.",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "The amount of delay to use while the status of the operation is checked. The value is expressed in seconds.",
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Location" : {
+                "description" : "The URL where the status of the asynchronous operation can be checked.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation type: Read, write, delete, etc."
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Service provider: Microsoft.Subscription"
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed: Profile, endpoint, etc."
+              }
+            },
+            "description" : "The object that represents the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}"
+          }
+        },
+        "description" : "REST API operation"
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of operations.",
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Result of the request to list operations. It contains a list of operations and a URL link to get the next set of results."
+      },
+      "SubscriptionDefinition" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The resource ID.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/SubscriptionDefinitionProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The subscription definition used to create the subscription."
+      },
+      "SubscriptionDefinitionList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of subscriptionDefinitions",
+            "items" : {
+              "$ref" : "#/components/schemas/SubscriptionDefinition"
+            }
+          }
+        },
+        "description" : "Subscription Definition List operation response."
+      },
+      "SubscriptionDefinitionProperties" : {
+        "type" : "object",
+        "properties" : {
+          "etag" : {
+            "type" : "string",
+            "description" : "The etag the subscription definition."
+          },
+          "offerType" : {
+            "type" : "string",
+            "description" : "The offer type of the subscription. For example, MS-AZR-0017P (EnterpriseAgreement) and MS-AZR-0148P (EnterpriseAgreement devTest) are available."
+          },
+          "subscriptionDisplayName" : {
+            "type" : "string",
+            "description" : "The display name of the subscription."
+          },
+          "subscriptionId" : {
+            "type" : "string",
+            "description" : "The ID of the subscription.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The subscription definition properties."
+      }
+    },
+    "parameters" : {
+      "apiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Version of the API to be used with the client request. Current version is 2015-06-01",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

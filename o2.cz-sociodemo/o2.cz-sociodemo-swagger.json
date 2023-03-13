@@ -1,1 +1,271 @@
-{"openapi":"3.0.1","info":{"title":"Socio-demo API","description":"Socio-demo API can be used to obtain time-aggregated data representing groups of people on the given location in the Czech Republic. Having a location, the API can return count of people belonging to age group or gender aggregated by hours. The socio-demo data is based on presence of mobile stations in O2 mobile network.","contact":{"name":"libertyapi@o2.cz"},"license":{"name":"O2 Czech Republic a.s.","url":"https://developer.o2.cz/portal/vop"},"version":"1.2.0"},"servers":[{"url":"https://developer.o2.cz/sociodemo/sandbox/api"}],"tags":[{"name":"info"},{"name":"sociodemo"}],"paths":{"/age/{location}":{"get":{"tags":["sociodemo"],"summary":"Presence in a location aggregated by age","description":"Get count of people in a given location and an hour, aggregated by age.","operationId":"age","parameters":[{"name":"location","in":"path","description":"basic residential unit","required":true,"schema":{"type":"string"},"example":"127752"},{"name":"ageGroup","in":"query","description":"age-group specification (1: 8-18, 2: 19-25, 3: 26-35, 4: 36-55, 5: 56+)","required":true,"schema":{"type":"string"},"example":"2"},{"name":"occurenceType","in":"query","description":"occurence type in the basic residential unit (1 - transit, 2 - visit)","required":true,"schema":{"type":"string"},"example":"1"},{"name":"hour","in":"query","description":"time interval for the count aggregation (from 0 to 23)","required":true,"schema":{"type":"string"},"example":"10"}],"responses":{"200":{"description":"Response with the requested content.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CountResult"}}}},"204":{"description":"The request is valid, but the platform is not able to serve the data. The reason may be restriction (e.g. differential privacy) or no data were found."},"400":{"description":"Invalid request provided, missing or invalid parameter.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResult"}}}},"500":{"description":"Internal server error.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResult"}}}}}}},"/gender/{location}":{"get":{"tags":["sociodemo"],"summary":"Presence in a location aggregated by gender","description":"Get count of people in a given location and an hour, aggregated by gender.","operationId":"gender","parameters":[{"name":"location","in":"path","description":"basic residential unit","required":true,"schema":{"type":"string"},"example":"127752"},{"name":"g","in":"query","description":"gender specification (1 - male, 2 - female)","required":true,"schema":{"type":"string"},"example":"1"},{"name":"occurenceType","in":"query","description":"occurence type in the basic residential unit (1 - transit, 2 - visit)","required":true,"schema":{"type":"string"},"example":"1"},{"name":"hour","in":"query","description":"time interval for the count aggregation (from 0 to 23)","required":true,"schema":{"type":"string"},"example":"10"}],"responses":{"200":{"description":"Response with the requested content.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CountResult"}}}},"204":{"description":"The request is valid, but the platform is not able to serve the data. The reason may be restriction (e.g. differential privacy) or no data were found."},"400":{"description":"Invalid request provided, missing or invalid parameter.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResult"}}}},"500":{"description":"Internal server error.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResult"}}}}}}},"/info":{"get":{"tags":["info"],"summary":"Information about versions of application and data.","operationId":"getInfo","responses":{"200":{"description":"Response with the requested content.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/InfoResult"}}}}}}}},"components":{"schemas":{"CountResult":{"type":"object","properties":{"count":{"type":"string","description":"Final count as the result of the request","example":"62984"}},"description":"Response with the result"},"ErrorResult":{"type":"object","properties":{"message":{"type":"string","description":"Error response message content","example":"Error message example."}},"description":"Response with error message"},"InfoResult":{"type":"object","properties":{"appName":{"type":"string","description":"Application name","example":"Mobility API Frontend"},"appVendor":{"type":"string","description":"Application vendor","example":"O2 Czech Republic a.s."},"appVersion":{"type":"string","description":"Application version","example":"1.0-M6-SNAPSHOT"},"backendAppName":{"type":"string","description":"Backend application name","example":"Mobility API Backend"},"backendAppVendor":{"type":"string","description":"Backend application vendor","example":"O2 Czech Republic a.s."},"backendAppVersion":{"type":"string","description":"Backend application version","example":"1.0-M6-SNAPSHOT"},"backendDataFrom":{"type":"string","description":"For which day are data valid","example":"2017-07-31"}},"description":"Response to the info request"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Socio-demo API",
+    "description" : "Socio-demo API can be used to obtain time-aggregated data representing groups of people on the given location in the Czech Republic. Having a location, the API can return count of people belonging to age group or gender aggregated by hours. The socio-demo data is based on presence of mobile stations in O2 mobile network.",
+    "contact" : {
+      "name" : "libertyapi@o2.cz"
+    },
+    "license" : {
+      "name" : "O2 Czech Republic a.s.",
+      "url" : "https://developer.o2.cz/portal/vop"
+    },
+    "version" : "1.2.0"
+  },
+  "servers" : [ {
+    "url" : "https://developer.o2.cz/sociodemo/sandbox/api"
+  } ],
+  "tags" : [ {
+    "name" : "info"
+  }, {
+    "name" : "sociodemo"
+  } ],
+  "paths" : {
+    "/age/{location}" : {
+      "get" : {
+        "tags" : [ "sociodemo" ],
+        "summary" : "Presence in a location aggregated by age",
+        "description" : "Get count of people in a given location and an hour, aggregated by age.",
+        "operationId" : "age",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "description" : "basic residential unit",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "127752"
+        }, {
+          "name" : "ageGroup",
+          "in" : "query",
+          "description" : "age-group specification (1: 8-18, 2: 19-25, 3: 26-35, 4: 36-55, 5: 56+)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "2"
+        }, {
+          "name" : "occurenceType",
+          "in" : "query",
+          "description" : "occurence type in the basic residential unit (1 - transit, 2 - visit)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "hour",
+          "in" : "query",
+          "description" : "time interval for the count aggregation (from 0 to 23)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "10"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Response with the requested content.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CountResult"
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "The request is valid, but the platform is not able to serve the data. The reason may be restriction (e.g. differential privacy) or no data were found."
+          },
+          "400" : {
+            "description" : "Invalid request provided, missing or invalid parameter.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gender/{location}" : {
+      "get" : {
+        "tags" : [ "sociodemo" ],
+        "summary" : "Presence in a location aggregated by gender",
+        "description" : "Get count of people in a given location and an hour, aggregated by gender.",
+        "operationId" : "gender",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "description" : "basic residential unit",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "127752"
+        }, {
+          "name" : "g",
+          "in" : "query",
+          "description" : "gender specification (1 - male, 2 - female)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "occurenceType",
+          "in" : "query",
+          "description" : "occurence type in the basic residential unit (1 - transit, 2 - visit)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "hour",
+          "in" : "query",
+          "description" : "time interval for the count aggregation (from 0 to 23)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "10"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Response with the requested content.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CountResult"
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "The request is valid, but the platform is not able to serve the data. The reason may be restriction (e.g. differential privacy) or no data were found."
+          },
+          "400" : {
+            "description" : "Invalid request provided, missing or invalid parameter.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/info" : {
+      "get" : {
+        "tags" : [ "info" ],
+        "summary" : "Information about versions of application and data.",
+        "operationId" : "getInfo",
+        "responses" : {
+          "200" : {
+            "description" : "Response with the requested content.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InfoResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CountResult" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "string",
+            "description" : "Final count as the result of the request",
+            "example" : "62984"
+          }
+        },
+        "description" : "Response with the result"
+      },
+      "ErrorResult" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "Error response message content",
+            "example" : "Error message example."
+          }
+        },
+        "description" : "Response with error message"
+      },
+      "InfoResult" : {
+        "type" : "object",
+        "properties" : {
+          "appName" : {
+            "type" : "string",
+            "description" : "Application name",
+            "example" : "Mobility API Frontend"
+          },
+          "appVendor" : {
+            "type" : "string",
+            "description" : "Application vendor",
+            "example" : "O2 Czech Republic a.s."
+          },
+          "appVersion" : {
+            "type" : "string",
+            "description" : "Application version",
+            "example" : "1.0-M6-SNAPSHOT"
+          },
+          "backendAppName" : {
+            "type" : "string",
+            "description" : "Backend application name",
+            "example" : "Mobility API Backend"
+          },
+          "backendAppVendor" : {
+            "type" : "string",
+            "description" : "Backend application vendor",
+            "example" : "O2 Czech Republic a.s."
+          },
+          "backendAppVersion" : {
+            "type" : "string",
+            "description" : "Backend application version",
+            "example" : "1.0-M6-SNAPSHOT"
+          },
+          "backendDataFrom" : {
+            "type" : "string",
+            "description" : "For which day are data valid",
+            "example" : "2017-07-31"
+          }
+        },
+        "description" : "Response to the info request"
+      }
+    }
+  }
+}

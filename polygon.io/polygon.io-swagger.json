@@ -1,1 +1,994 @@
-{"openapi":"3.0.1","info":{"title":"Polygon","description":"The future of fintech.","version":"1.0.0"},"servers":[{"url":"https://api.polygon.io/"}],"security":[{"apiKey":null}],"paths":{"/v1/companies":{"get":{"tags":["Stocks"],"summary":"Available Companies","description":"Get a list of the traded companies that polygon.io streams. Company includes some details about the company which we hope to add more to soon.\n","parameters":[{"name":"sort","in":"query","description":"Which field to sort by. For desc place a `-` in front of the field name. eg `?sort=-marketcap`","schema":{"type":"string"}},{"name":"perpage","in":"query","description":"How many items to be on each page during pagination","schema":{"type":"number"}},{"name":"page","in":"query","description":"Which page of results to return","schema":{"type":"number","default":1.0}}],"responses":{"200":{"description":"An array of companies","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Company"}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/currencies":{"get":{"tags":["Currencies"],"summary":"Available Currencies","description":"Get a list of the currencies that polygon.io streams.\n","responses":{"200":{"description":"An array of currencies","content":{"application/json":{"schema":{"type":"array","items":{"type":"string"}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/historic/agg/{size}/{symbol}/{date}":{"get":{"tags":["Stocks"],"summary":"Historic Aggregates","description":"Get historic aggregations for a symbol.\n","parameters":[{"name":"size","in":"path","description":"Size of the aggregation. `second` or `minute`","required":true,"schema":{"type":"string","enum":["second","minute"]}},{"name":"symbol","in":"path","description":"Symbol of the company to retrieve","required":true,"schema":{"type":"string"}},{"name":"date","in":"path","description":"Date/Day of the historic ticks to retreive","required":true,"schema":{"type":"string","format":"date"}},{"name":"offset","in":"query","description":"Timestamp offset, used for pagination","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Limit the size of response, max: 10000","schema":{"type":"integer","default":100}}],"responses":{"200":{"description":"An array of aggregates","content":{"application/json":{"schema":{"type":"object","properties":{"day":{"type":"string","description":"Date that was evaluated from the request","format":"date"},"msLatency":{"type":"integer","description":"Milliseconds of latency for the query results"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"},"ticks":{"type":"array","items":{"$ref":"#/components/schemas/Aggregate"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/historic/forex/{from}/{to}/{date}":{"get":{"tags":["Currencies"],"summary":"Historic Forex Ticks","description":"Get historic ticks for a currency pair. Example for **USD/JPY** the from would be **USD** and to would be **JPY**. The date formatted like **2017-6-22**\n","parameters":[{"name":"from","in":"path","description":"From Symbol of the currency pair","required":true,"schema":{"type":"string"}},{"name":"to","in":"path","description":"To Symbol of the currency pair","required":true,"schema":{"type":"string"}},{"name":"date","in":"path","description":"Date/Day of the historic ticks to retreive","required":true,"schema":{"type":"string","format":"date"}},{"name":"offset","in":"query","description":"Timestamp offset, used for pagination","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Limit the size of response, max: 10000","schema":{"type":"integer","default":100}}],"responses":{"200":{"description":"An array of forex ticks","content":{"application/json":{"schema":{"type":"object","properties":{"day":{"type":"string","description":"Date that was evaluated from the request","format":"date"},"msLatency":{"type":"integer","description":"Milliseconds of latency for the query results"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"},"ticks":{"type":"array","items":{"$ref":"#/components/schemas/Forex"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/historic/quotes/{symbol}/{date}":{"get":{"tags":["Stocks"],"summary":"Historic Quotes","description":"Get historic quotes for a symbol.\n","parameters":[{"name":"symbol","in":"path","description":"Symbol of the company to retrieve","required":true,"schema":{"type":"string"}},{"name":"date","in":"path","description":"Date/Day of the historic ticks to retreive","required":true,"schema":{"type":"string","format":"date"}},{"name":"offset","in":"query","description":"Timestamp offset, used for pagination","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Limit the size of response, max: 10000","schema":{"type":"integer","default":100}}],"responses":{"200":{"description":"An array of quotes","content":{"application/json":{"schema":{"type":"object","properties":{"day":{"type":"string","description":"Date that was evaluated from the request","format":"date"},"msLatency":{"type":"integer","description":"Milliseconds of latency for the query results"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"},"ticks":{"type":"array","items":{"$ref":"#/components/schemas/Quote"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/historic/trades/{symbol}/{date}":{"get":{"tags":["Stocks"],"summary":"Historic Trades","description":"Get historic trades for a symbol.\n","parameters":[{"name":"symbol","in":"path","description":"Symbol of the company to retrieve","required":true,"schema":{"type":"string"}},{"name":"date","in":"path","description":"Date/Day of the historic ticks to retreive","required":true,"schema":{"type":"string","format":"date"}},{"name":"offset","in":"query","description":"Timestamp offset, used for pagination","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Limit the size of response, max: 10000","schema":{"type":"integer","default":100}}],"responses":{"200":{"description":"An array of trades","content":{"application/json":{"schema":{"type":"object","properties":{"day":{"type":"string","description":"Date that was evaluated from the request","format":"date"},"msLatency":{"type":"integer","description":"Milliseconds of latency for the query results"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"},"ticks":{"type":"array","items":{"$ref":"#/components/schemas/Trade"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/last/currencies/{from}/{to}":{"get":{"tags":["Currencies"],"summary":"Last Trade for a Currency Pair","description":"Get Last Trade Tick for a Currency Pair.\n","parameters":[{"name":"from","in":"path","description":"From Symbol of the pair","required":true,"schema":{"type":"string"}},{"name":"to","in":"path","description":"To Symbol of the pair","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Last tick for this currency pair","content":{"application/json":{"schema":{"type":"object","properties":{"last":{"$ref":"#/components/schemas/LastForexTrade"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol Pair that was evaluated from the request"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/last/stocks/{symbol}":{"get":{"tags":["Stocks"],"summary":"Last Trade for a Symbol","description":"Get the last trade for a given stock.\n","parameters":[{"name":"symbol","in":"path","description":"Symbol of the stock to get","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Last trade for this stock","content":{"application/json":{"schema":{"type":"object","properties":{"last":{"$ref":"#/components/schemas/LastTrade"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/last_quote/currencies/{from}/{to}":{"get":{"tags":["Currencies"],"summary":"Last Quote for a Currency Pair","description":"Get Last Quote Tick for a Currency Pair.\n","parameters":[{"name":"from","in":"path","description":"From Symbol of the pair","required":true,"schema":{"type":"string"}},{"name":"to","in":"path","description":"To Symbol of the pair","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Last quote tick for this currency pair","content":{"application/json":{"schema":{"type":"object","properties":{"last":{"$ref":"#/components/schemas/LastForexQuote"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol Pair that was evaluated from the request"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/v1/last_quote/stocks/{symbol}":{"get":{"tags":["Stocks"],"summary":"Last Quote for a Symbol","description":"Get the last quote tick for a given stock.\n","parameters":[{"name":"symbol","in":"path","description":"Symbol of the stock to get","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Last quote tick for this stock","content":{"application/json":{"schema":{"type":"object","properties":{"last":{"$ref":"#/components/schemas/LastQuote"},"status":{"type":"string","description":"Status of this requests response"},"symbol":{"type":"string","description":"Symbol that was evaluated from the request"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}}},"components":{"schemas":{"Aggregate":{"type":"object","properties":{"c":{"type":"integer","description":"Close price"},"h":{"type":"integer","description":"High price"},"k":{"type":"integer","description":"Transactions ( 1 transaction contains X shares exchanged )"},"l":{"type":"integer","description":"Low price"},"o":{"type":"integer","description":"Open price"},"t":{"type":"integer","description":"Timestamp of this aggregation"},"v":{"type":"integer","description":"Total Volume of all trades ( total shares exchanged )"}}},"Company":{"type":"object","properties":{"country":{"type":"string","description":"Country in which this country is based."},"exchange":{"type":"string","description":"Exchange this company is traded on."},"industry":{"type":"string","description":"Industry this country operated/produces in."},"marketcap":{"type":"number","description":"Market cap as of the last updated timestamp.","format":"double"},"name":{"type":"string","description":"Name of the company."},"sector":{"type":"string","description":"Sector that this company is traded in."},"symbol":{"type":"string","description":"The actual exchange symbol this company is traded under."},"updated":{"type":"string","description":"Last time this company record was updated.","format":"date-time"}}},"Error":{"type":"object","properties":{"code":{"type":"integer","format":"int32"},"fields":{"type":"string"},"message":{"type":"string"}}},"Forex":{"type":"object","properties":{"a":{"type":"integer","description":"Ask price"},"b":{"type":"integer","description":"Bid price"},"t":{"type":"integer","description":"Timestamp of this trade"}}},"LastForexQuote":{"type":"object","properties":{"askprice":{"type":"number","description":"Ask Price","format":"double"},"bidprice":{"type":"number","description":"Bid Price","format":"double"},"timestamp":{"type":"integer","description":"Timestamp of this trade"}}},"LastForexTrade":{"type":"object","properties":{"exchange":{"type":"integer","description":"Exchange this trade happened on"},"price":{"type":"number","description":"Price of the trade","format":"double"},"timestamp":{"type":"integer","description":"Timestamp of this trade"}}},"LastQuote":{"type":"object","properties":{"askexchange":{"type":"integer","description":"Exchange the ask happened on"},"askprice":{"type":"number","description":"Ask Price","format":"double"},"asksize":{"type":"integer","description":"Ask Size"},"bidexchange":{"type":"integer","description":"Exchange the bid happened on"},"bidprice":{"type":"number","description":"Bid Price","format":"double"},"bidsize":{"type":"integer","description":"Bid Size"},"cond":{"type":"integer","description":"Condition of the quote"},"timestamp":{"type":"integer","description":"Timestamp of this trade"}}},"LastTrade":{"type":"object","properties":{"cond1":{"type":"integer","description":"Condition 1 of the trade"},"cond2":{"type":"integer","description":"Condition 2 of the trade"},"cond3":{"type":"integer","description":"Condition 3 of the trade"},"cond4":{"type":"integer","description":"Condition 4 of the trade"},"exchange":{"type":"integer","description":"Exchange this trade happened on"},"price":{"type":"number","description":"Price of the trade","format":"double"},"size":{"type":"integer","description":"Size of this trade"},"timestamp":{"type":"integer","description":"Timestamp of this trade"}}},"Quote":{"type":"object","properties":{"aE":{"type":"string","description":"Ask Exchange"},"aP":{"type":"number","description":"Ask Price","format":"double"},"aS":{"type":"integer","description":"Ask Size"},"bE":{"type":"string","description":"Bid Exchange"},"bP":{"type":"number","description":"Bid Price","format":"double"},"bS":{"type":"integer","description":"Bid Size"},"c":{"type":"integer","description":"Condition of this quote"},"t":{"type":"integer","description":"Timestamp of this trade"}}},"Trade":{"type":"object","properties":{"c1":{"type":"integer","description":"Condition 1 of this trade"},"c2":{"type":"integer","description":"Condition 2 of this trade"},"c3":{"type":"integer","description":"Condition 3 of this trade"},"c4":{"type":"integer","description":"Condition 4 of this trade"},"e":{"type":"string","description":"The exchange this trade happened on"},"p":{"type":"number","description":"Price of this trade","format":"double"},"s":{"type":"integer","description":"Size of the trade"},"t":{"type":"integer","description":"Timestamp of this trade"}}}},"securitySchemes":{"apiKey":{"type":"apiKey","name":"apiKey","in":"query"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Polygon",
+    "description" : "The future of fintech.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.polygon.io/"
+  } ],
+  "security" : [ {
+    "apiKey" : null
+  } ],
+  "paths" : {
+    "/v1/companies" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Available Companies",
+        "description" : "Get a list of the traded companies that polygon.io streams. Company includes some details about the company which we hope to add more to soon.\n",
+        "parameters" : [ {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Which field to sort by. For desc place a `-` in front of the field name. eg `?sort=-marketcap`",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "perpage",
+          "in" : "query",
+          "description" : "How many items to be on each page during pagination",
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Which page of results to return",
+          "schema" : {
+            "type" : "number",
+            "default" : 1.0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of companies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Company"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/currencies" : {
+      "get" : {
+        "tags" : [ "Currencies" ],
+        "summary" : "Available Currencies",
+        "description" : "Get a list of the currencies that polygon.io streams.\n",
+        "responses" : {
+          "200" : {
+            "description" : "An array of currencies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/historic/agg/{size}/{symbol}/{date}" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Historic Aggregates",
+        "description" : "Get historic aggregations for a symbol.\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "path",
+          "description" : "Size of the aggregation. `second` or `minute`",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "second", "minute" ]
+          }
+        }, {
+          "name" : "symbol",
+          "in" : "path",
+          "description" : "Symbol of the company to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "path",
+          "description" : "Date/Day of the historic ticks to retreive",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Timestamp offset, used for pagination",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit the size of response, max: 10000",
+          "schema" : {
+            "type" : "integer",
+            "default" : 100
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of aggregates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "day" : {
+                      "type" : "string",
+                      "description" : "Date that was evaluated from the request",
+                      "format" : "date"
+                    },
+                    "msLatency" : {
+                      "type" : "integer",
+                      "description" : "Milliseconds of latency for the query results"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    },
+                    "ticks" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Aggregate"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/historic/forex/{from}/{to}/{date}" : {
+      "get" : {
+        "tags" : [ "Currencies" ],
+        "summary" : "Historic Forex Ticks",
+        "description" : "Get historic ticks for a currency pair. Example for **USD/JPY** the from would be **USD** and to would be **JPY**. The date formatted like **2017-6-22**\n",
+        "parameters" : [ {
+          "name" : "from",
+          "in" : "path",
+          "description" : "From Symbol of the currency pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to",
+          "in" : "path",
+          "description" : "To Symbol of the currency pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "path",
+          "description" : "Date/Day of the historic ticks to retreive",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Timestamp offset, used for pagination",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit the size of response, max: 10000",
+          "schema" : {
+            "type" : "integer",
+            "default" : 100
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of forex ticks",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "day" : {
+                      "type" : "string",
+                      "description" : "Date that was evaluated from the request",
+                      "format" : "date"
+                    },
+                    "msLatency" : {
+                      "type" : "integer",
+                      "description" : "Milliseconds of latency for the query results"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    },
+                    "ticks" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Forex"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/historic/quotes/{symbol}/{date}" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Historic Quotes",
+        "description" : "Get historic quotes for a symbol.\n",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "path",
+          "description" : "Symbol of the company to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "path",
+          "description" : "Date/Day of the historic ticks to retreive",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Timestamp offset, used for pagination",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit the size of response, max: 10000",
+          "schema" : {
+            "type" : "integer",
+            "default" : 100
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of quotes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "day" : {
+                      "type" : "string",
+                      "description" : "Date that was evaluated from the request",
+                      "format" : "date"
+                    },
+                    "msLatency" : {
+                      "type" : "integer",
+                      "description" : "Milliseconds of latency for the query results"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    },
+                    "ticks" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Quote"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/historic/trades/{symbol}/{date}" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Historic Trades",
+        "description" : "Get historic trades for a symbol.\n",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "path",
+          "description" : "Symbol of the company to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "path",
+          "description" : "Date/Day of the historic ticks to retreive",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Timestamp offset, used for pagination",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit the size of response, max: 10000",
+          "schema" : {
+            "type" : "integer",
+            "default" : 100
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of trades",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "day" : {
+                      "type" : "string",
+                      "description" : "Date that was evaluated from the request",
+                      "format" : "date"
+                    },
+                    "msLatency" : {
+                      "type" : "integer",
+                      "description" : "Milliseconds of latency for the query results"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    },
+                    "ticks" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Trade"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/last/currencies/{from}/{to}" : {
+      "get" : {
+        "tags" : [ "Currencies" ],
+        "summary" : "Last Trade for a Currency Pair",
+        "description" : "Get Last Trade Tick for a Currency Pair.\n",
+        "parameters" : [ {
+          "name" : "from",
+          "in" : "path",
+          "description" : "From Symbol of the pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to",
+          "in" : "path",
+          "description" : "To Symbol of the pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Last tick for this currency pair",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "last" : {
+                      "$ref" : "#/components/schemas/LastForexTrade"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol Pair that was evaluated from the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/last/stocks/{symbol}" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Last Trade for a Symbol",
+        "description" : "Get the last trade for a given stock.\n",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "path",
+          "description" : "Symbol of the stock to get",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Last trade for this stock",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "last" : {
+                      "$ref" : "#/components/schemas/LastTrade"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/last_quote/currencies/{from}/{to}" : {
+      "get" : {
+        "tags" : [ "Currencies" ],
+        "summary" : "Last Quote for a Currency Pair",
+        "description" : "Get Last Quote Tick for a Currency Pair.\n",
+        "parameters" : [ {
+          "name" : "from",
+          "in" : "path",
+          "description" : "From Symbol of the pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to",
+          "in" : "path",
+          "description" : "To Symbol of the pair",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Last quote tick for this currency pair",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "last" : {
+                      "$ref" : "#/components/schemas/LastForexQuote"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol Pair that was evaluated from the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/last_quote/stocks/{symbol}" : {
+      "get" : {
+        "tags" : [ "Stocks" ],
+        "summary" : "Last Quote for a Symbol",
+        "description" : "Get the last quote tick for a given stock.\n",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "path",
+          "description" : "Symbol of the stock to get",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Last quote tick for this stock",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "last" : {
+                      "$ref" : "#/components/schemas/LastQuote"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "description" : "Status of this requests response"
+                    },
+                    "symbol" : {
+                      "type" : "string",
+                      "description" : "Symbol that was evaluated from the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Aggregate" : {
+        "type" : "object",
+        "properties" : {
+          "c" : {
+            "type" : "integer",
+            "description" : "Close price"
+          },
+          "h" : {
+            "type" : "integer",
+            "description" : "High price"
+          },
+          "k" : {
+            "type" : "integer",
+            "description" : "Transactions ( 1 transaction contains X shares exchanged )"
+          },
+          "l" : {
+            "type" : "integer",
+            "description" : "Low price"
+          },
+          "o" : {
+            "type" : "integer",
+            "description" : "Open price"
+          },
+          "t" : {
+            "type" : "integer",
+            "description" : "Timestamp of this aggregation"
+          },
+          "v" : {
+            "type" : "integer",
+            "description" : "Total Volume of all trades ( total shares exchanged )"
+          }
+        }
+      },
+      "Company" : {
+        "type" : "object",
+        "properties" : {
+          "country" : {
+            "type" : "string",
+            "description" : "Country in which this country is based."
+          },
+          "exchange" : {
+            "type" : "string",
+            "description" : "Exchange this company is traded on."
+          },
+          "industry" : {
+            "type" : "string",
+            "description" : "Industry this country operated/produces in."
+          },
+          "marketcap" : {
+            "type" : "number",
+            "description" : "Market cap as of the last updated timestamp.",
+            "format" : "double"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the company."
+          },
+          "sector" : {
+            "type" : "string",
+            "description" : "Sector that this company is traded in."
+          },
+          "symbol" : {
+            "type" : "string",
+            "description" : "The actual exchange symbol this company is traded under."
+          },
+          "updated" : {
+            "type" : "string",
+            "description" : "Last time this company record was updated.",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "fields" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Forex" : {
+        "type" : "object",
+        "properties" : {
+          "a" : {
+            "type" : "integer",
+            "description" : "Ask price"
+          },
+          "b" : {
+            "type" : "integer",
+            "description" : "Bid price"
+          },
+          "t" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "LastForexQuote" : {
+        "type" : "object",
+        "properties" : {
+          "askprice" : {
+            "type" : "number",
+            "description" : "Ask Price",
+            "format" : "double"
+          },
+          "bidprice" : {
+            "type" : "number",
+            "description" : "Bid Price",
+            "format" : "double"
+          },
+          "timestamp" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "LastForexTrade" : {
+        "type" : "object",
+        "properties" : {
+          "exchange" : {
+            "type" : "integer",
+            "description" : "Exchange this trade happened on"
+          },
+          "price" : {
+            "type" : "number",
+            "description" : "Price of the trade",
+            "format" : "double"
+          },
+          "timestamp" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "LastQuote" : {
+        "type" : "object",
+        "properties" : {
+          "askexchange" : {
+            "type" : "integer",
+            "description" : "Exchange the ask happened on"
+          },
+          "askprice" : {
+            "type" : "number",
+            "description" : "Ask Price",
+            "format" : "double"
+          },
+          "asksize" : {
+            "type" : "integer",
+            "description" : "Ask Size"
+          },
+          "bidexchange" : {
+            "type" : "integer",
+            "description" : "Exchange the bid happened on"
+          },
+          "bidprice" : {
+            "type" : "number",
+            "description" : "Bid Price",
+            "format" : "double"
+          },
+          "bidsize" : {
+            "type" : "integer",
+            "description" : "Bid Size"
+          },
+          "cond" : {
+            "type" : "integer",
+            "description" : "Condition of the quote"
+          },
+          "timestamp" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "LastTrade" : {
+        "type" : "object",
+        "properties" : {
+          "cond1" : {
+            "type" : "integer",
+            "description" : "Condition 1 of the trade"
+          },
+          "cond2" : {
+            "type" : "integer",
+            "description" : "Condition 2 of the trade"
+          },
+          "cond3" : {
+            "type" : "integer",
+            "description" : "Condition 3 of the trade"
+          },
+          "cond4" : {
+            "type" : "integer",
+            "description" : "Condition 4 of the trade"
+          },
+          "exchange" : {
+            "type" : "integer",
+            "description" : "Exchange this trade happened on"
+          },
+          "price" : {
+            "type" : "number",
+            "description" : "Price of the trade",
+            "format" : "double"
+          },
+          "size" : {
+            "type" : "integer",
+            "description" : "Size of this trade"
+          },
+          "timestamp" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "Quote" : {
+        "type" : "object",
+        "properties" : {
+          "aE" : {
+            "type" : "string",
+            "description" : "Ask Exchange"
+          },
+          "aP" : {
+            "type" : "number",
+            "description" : "Ask Price",
+            "format" : "double"
+          },
+          "aS" : {
+            "type" : "integer",
+            "description" : "Ask Size"
+          },
+          "bE" : {
+            "type" : "string",
+            "description" : "Bid Exchange"
+          },
+          "bP" : {
+            "type" : "number",
+            "description" : "Bid Price",
+            "format" : "double"
+          },
+          "bS" : {
+            "type" : "integer",
+            "description" : "Bid Size"
+          },
+          "c" : {
+            "type" : "integer",
+            "description" : "Condition of this quote"
+          },
+          "t" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      },
+      "Trade" : {
+        "type" : "object",
+        "properties" : {
+          "c1" : {
+            "type" : "integer",
+            "description" : "Condition 1 of this trade"
+          },
+          "c2" : {
+            "type" : "integer",
+            "description" : "Condition 2 of this trade"
+          },
+          "c3" : {
+            "type" : "integer",
+            "description" : "Condition 3 of this trade"
+          },
+          "c4" : {
+            "type" : "integer",
+            "description" : "Condition 4 of this trade"
+          },
+          "e" : {
+            "type" : "string",
+            "description" : "The exchange this trade happened on"
+          },
+          "p" : {
+            "type" : "number",
+            "description" : "Price of this trade",
+            "format" : "double"
+          },
+          "s" : {
+            "type" : "integer",
+            "description" : "Size of the trade"
+          },
+          "t" : {
+            "type" : "integer",
+            "description" : "Timestamp of this trade"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "apiKey" : {
+        "type" : "apiKey",
+        "name" : "apiKey",
+        "in" : "query"
+      }
+    }
+  }
+}

@@ -1,1 +1,328 @@
-{"openapi":"3.0.1","info":{"title":"API for the Settlement Currency Rate converter","description":"This API provides a range of functions to get back currency conversion rates and amounts based on current Mastercard currency conversion values.","version":"1.0.0"},"servers":[{"url":"//api.mastercard.com/mcapi/settlement/currencyrate"}],"tags":[{"name":"Conversion Rate","description":"Conversion Rate"},{"name":"Rate Issued","description":"Rate Issued"},{"name":"Currencies","description":"Currencies"}],"paths":{"/conversion-rate":{"get":{"tags":["Conversion Rate"],"summary":"Get the currency conversion rate details.","description":"Get the currency conversion rate details.","operationId":"getConversionDetailUsingGET","parameters":[{"name":"fxDate","in":"query","description":"Date of the requested FX rates.","required":true,"schema":{"type":"string"}},{"name":"transCurr","in":"query","description":"Currency of the transaction.","required":true,"schema":{"type":"string"}},{"name":"crdhldBillCurr","in":"query","description":"Cardholder billing currency.","required":true,"schema":{"type":"string"}},{"name":"bankFee","in":"query","description":"Additional fees imposed by the bank.","schema":{"type":"number","format":"double"}},{"name":"transAmt","in":"query","description":"Amount in the transaction currency.","required":true,"schema":{"type":"number","format":"double"}}],"responses":{"200":{"description":"OK","content":{"application/json;charset=UTF-8":{"schema":{"$ref":"#/components/schemas/ConversionRateRequest"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/conversion-rate-issued":{"get":{"tags":["Rate Issued"],"summary":"Determine if the settlement rate has been issued.","description":"Determine if the settlement rate has been issued.","operationId":"isRateIssuedUsingGET","parameters":[{"name":"date","in":"query","description":"The date by which the rate would have been issued.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json;charset=UTF-8":{"schema":{"$ref":"#/components/schemas/SettlementRateIssuedRequest"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/settlement-currencies":{"get":{"tags":["Currencies"],"summary":"getCurrencyRateData","description":"List of supported currencies.","operationId":"getCurrencyRateDataUsingGET","responses":{"200":{"description":"OK","content":{"application/json;charset=UTF-8":{"schema":{"$ref":"#/components/schemas/SettlementCurrencyRequest"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}}},"components":{"schemas":{"Conversion":{"type":"object","properties":{"bankFee":{"type":"number","description":"Additional fees imposed by the bank.","format":"double","example":5.0},"conversionRate":{"type":"number","description":"Rate applied to the transaction to convert from Transaction Currency to Cardholder Billing Currency.","format":"double","example":0.943078},"crdhldBillAmt":{"type":"number","description":"Amount in the cardholder billing currency.","format":"double","example":21.690798},"crdhldBillCurr":{"type":"string","description":"Cardholder billing currency.","example":"DZD"},"errorCode":{"type":"string","description":"The error code associated with the error being returned.","example":"104"},"errorMessage":{"type":"string","description":"The reason for the error.","example":"Not Found , The calculated cross rates for the selected date is not available."},"fxDate":{"type":"string","description":"Date of the requested FX rates.","example":"2016-09-30"},"transAmt":{"type":"number","description":"Amount in the transaction currency.","format":"double","example":23.0},"transCurr":{"type":"string","description":"Currency of the transaction.","example":"ALL"}}},"ConversionRateRequest":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/Conversion"},"date":{"type":"string","description":"The date and time the API is being called in GMT.","example":"2019-08-08 16:43:27"},"description":{"type":"string","description":"The description of the API being called.","example":"Settlement conversion rate and billing amount"},"name":{"type":"string","description":"The name of the service being requested.","example":"settlement-conversion-rate"},"type":{"type":"string","description":"The type of response being returned by the API.","example":"error"}}},"Currency":{"type":"object","properties":{"alphaCd":{"type":"string","description":"The Alpha code for the currency.","example":"AOA"},"currNam":{"type":"string","description":"The full name of the currency.","example":"ANGOLAN KWANZA"}}},"SettlementCurrency":{"type":"object","properties":{"currencies":{"type":"array","items":{"$ref":"#/components/schemas/Currency"}}}},"SettlementCurrencyRequest":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/SettlementCurrency"},"date":{"type":"string","description":"The date and time the API is being called in GMT.","example":"2019-08-08 16:22:31"},"description":{"type":"string","description":"The description of the API being called.","example":"A list of settlement active currencies"},"name":{"type":"string","description":"The name of the service being requested.","example":"settlement-currency"}}},"SettlementRateIssued":{"type":"object","properties":{"rateIssued":{"type":"string","description":"The requested foreign exchange rate.","example":"NO"}}},"SettlementRateIssuedRequest":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/SettlementRateIssued"},"date":{"type":"string","description":"The date and time the API is being called in GMT.","example":"2019-08-08 16:22:31"},"description":{"type":"string","description":"The description of the API being called.","example":"Is settlement conversion rate issued"},"name":{"type":"string","description":"The name of the service being requested.","example":"settlement-conversion-rate-issued"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "API for the Settlement Currency Rate converter",
+    "description" : "This API provides a range of functions to get back currency conversion rates and amounts based on current Mastercard currency conversion values.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "//api.mastercard.com/mcapi/settlement/currencyrate"
+  } ],
+  "tags" : [ {
+    "name" : "Conversion Rate",
+    "description" : "Conversion Rate"
+  }, {
+    "name" : "Rate Issued",
+    "description" : "Rate Issued"
+  }, {
+    "name" : "Currencies",
+    "description" : "Currencies"
+  } ],
+  "paths" : {
+    "/conversion-rate" : {
+      "get" : {
+        "tags" : [ "Conversion Rate" ],
+        "summary" : "Get the currency conversion rate details.",
+        "description" : "Get the currency conversion rate details.",
+        "operationId" : "getConversionDetailUsingGET",
+        "parameters" : [ {
+          "name" : "fxDate",
+          "in" : "query",
+          "description" : "Date of the requested FX rates.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transCurr",
+          "in" : "query",
+          "description" : "Currency of the transaction.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "crdhldBillCurr",
+          "in" : "query",
+          "description" : "Cardholder billing currency.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bankFee",
+          "in" : "query",
+          "description" : "Additional fees imposed by the bank.",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "transAmt",
+          "in" : "query",
+          "description" : "Amount in the transaction currency.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ConversionRateRequest"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/conversion-rate-issued" : {
+      "get" : {
+        "tags" : [ "Rate Issued" ],
+        "summary" : "Determine if the settlement rate has been issued.",
+        "description" : "Determine if the settlement rate has been issued.",
+        "operationId" : "isRateIssuedUsingGET",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "description" : "The date by which the rate would have been issued.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SettlementRateIssuedRequest"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/settlement-currencies" : {
+      "get" : {
+        "tags" : [ "Currencies" ],
+        "summary" : "getCurrencyRateData",
+        "description" : "List of supported currencies.",
+        "operationId" : "getCurrencyRateDataUsingGET",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SettlementCurrencyRequest"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Conversion" : {
+        "type" : "object",
+        "properties" : {
+          "bankFee" : {
+            "type" : "number",
+            "description" : "Additional fees imposed by the bank.",
+            "format" : "double",
+            "example" : 5.0
+          },
+          "conversionRate" : {
+            "type" : "number",
+            "description" : "Rate applied to the transaction to convert from Transaction Currency to Cardholder Billing Currency.",
+            "format" : "double",
+            "example" : 0.943078
+          },
+          "crdhldBillAmt" : {
+            "type" : "number",
+            "description" : "Amount in the cardholder billing currency.",
+            "format" : "double",
+            "example" : 21.690798
+          },
+          "crdhldBillCurr" : {
+            "type" : "string",
+            "description" : "Cardholder billing currency.",
+            "example" : "DZD"
+          },
+          "errorCode" : {
+            "type" : "string",
+            "description" : "The error code associated with the error being returned.",
+            "example" : "104"
+          },
+          "errorMessage" : {
+            "type" : "string",
+            "description" : "The reason for the error.",
+            "example" : "Not Found , The calculated cross rates for the selected date is not available."
+          },
+          "fxDate" : {
+            "type" : "string",
+            "description" : "Date of the requested FX rates.",
+            "example" : "2016-09-30"
+          },
+          "transAmt" : {
+            "type" : "number",
+            "description" : "Amount in the transaction currency.",
+            "format" : "double",
+            "example" : 23.0
+          },
+          "transCurr" : {
+            "type" : "string",
+            "description" : "Currency of the transaction.",
+            "example" : "ALL"
+          }
+        }
+      },
+      "ConversionRateRequest" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Conversion"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "The date and time the API is being called in GMT.",
+            "example" : "2019-08-08 16:43:27"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the API being called.",
+            "example" : "Settlement conversion rate and billing amount"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the service being requested.",
+            "example" : "settlement-conversion-rate"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of response being returned by the API.",
+            "example" : "error"
+          }
+        }
+      },
+      "Currency" : {
+        "type" : "object",
+        "properties" : {
+          "alphaCd" : {
+            "type" : "string",
+            "description" : "The Alpha code for the currency.",
+            "example" : "AOA"
+          },
+          "currNam" : {
+            "type" : "string",
+            "description" : "The full name of the currency.",
+            "example" : "ANGOLAN KWANZA"
+          }
+        }
+      },
+      "SettlementCurrency" : {
+        "type" : "object",
+        "properties" : {
+          "currencies" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Currency"
+            }
+          }
+        }
+      },
+      "SettlementCurrencyRequest" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/SettlementCurrency"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "The date and time the API is being called in GMT.",
+            "example" : "2019-08-08 16:22:31"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the API being called.",
+            "example" : "A list of settlement active currencies"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the service being requested.",
+            "example" : "settlement-currency"
+          }
+        }
+      },
+      "SettlementRateIssued" : {
+        "type" : "object",
+        "properties" : {
+          "rateIssued" : {
+            "type" : "string",
+            "description" : "The requested foreign exchange rate.",
+            "example" : "NO"
+          }
+        }
+      },
+      "SettlementRateIssuedRequest" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/SettlementRateIssued"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "The date and time the API is being called in GMT.",
+            "example" : "2019-08-08 16:22:31"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the API being called.",
+            "example" : "Is settlement conversion rate issued"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the service being requested.",
+            "example" : "settlement-conversion-rate-issued"
+          }
+        }
+      }
+    }
+  }
+}

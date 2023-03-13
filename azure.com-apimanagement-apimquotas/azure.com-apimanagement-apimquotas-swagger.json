@@ -1,1 +1,376 @@
-{"openapi":"3.0.1","info":{"title":"ApiManagementClient","description":"Use these REST APIs for performing operations on Quota entity associated with your Azure API Management deployment. To configure call rate limit and quota policies refer to [how to configure call rate limit and quota](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies).","version":"2019-01-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/quotas/{quotaCounterKey}":{"get":{"tags":["QuotaByCounterKeys"],"description":"Lists a collection of current quota counter periods associated with the counter-key configured in the policy on the specified service instance. The api does not support paging yet.","externalDocs":{"description":"Document describing how to configure the quota policies.","url":"https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies"},"operationId":"QuotaByCounterKeys_ListByService","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"quotaCounterKey","in":"path","description":"Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Lists a collection of the quota counter values.","content":{"application/json":{"schema":{"type":"object","description":"Paged Quota Counter list representation."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"patch":{"tags":["QuotaByCounterKeys"],"description":"Updates all the quota counter values specified with the existing quota counter key to a value in the specified service instance. This should be used for reset of the quota counter values.","operationId":"QuotaByCounterKeys_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"quotaCounterKey","in":"path","description":"Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The value of the quota counter to be applied to all quota counter periods.","content":{"application/json":{"schema":{"type":"object","properties":{"callsCount":{"type":"integer","description":"Number of times Counter was called.","format":"int32"},"kbTransferred":{"type":"number","description":"Data Transferred in KiloBytes.","format":"double"}},"description":"Quota counter value details."}}},"required":true},"responses":{"204":{"description":"Quota counter period was successfully updated."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/quotas/{quotaCounterKey}/periods/{quotaPeriodKey}":{"get":{"tags":["QuotaByPeriodKeys"],"description":"Gets the value of the quota counter associated with the counter-key in the policy for the specific period in service instance.","externalDocs":{"description":"Document describing how to configure the quota policies.","url":"https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies"},"operationId":"QuotaByPeriodKeys_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"quotaCounterKey","in":"path","description":"Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key","required":true,"schema":{"type":"string"}},{"name":"quotaPeriodKey","in":"path","description":"Quota period key identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The response body contains the Quota counter details for the specified period.","content":{"application/json":{"schema":{"type":"object","description":"Quota counter details."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"patch":{"tags":["QuotaByPeriodKeys"],"description":"Updates an existing quota counter value in the specified service instance.","operationId":"QuotaByPeriodKeys_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"quotaCounterKey","in":"path","description":"Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key","required":true,"schema":{"type":"string"}},{"name":"quotaPeriodKey","in":"path","description":"Quota period key identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The value of the Quota counter to be applied on the specified period.","content":{"application/json":{"schema":{"type":"object","properties":{"callsCount":{"type":"integer","description":"Number of times Counter was called.","format":"int32"},"kbTransferred":{"type":"number","description":"Data Transferred in KiloBytes.","format":"double"}},"description":"Quota counter value details."}}},"required":true},"responses":{"204":{"description":"The quota counter value was successfully updated."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}}},"components":{"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ApiManagementClient",
+    "description" : "Use these REST APIs for performing operations on Quota entity associated with your Azure API Management deployment. To configure call rate limit and quota policies refer to [how to configure call rate limit and quota](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies).",
+    "version" : "2019-01-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/quotas/{quotaCounterKey}" : {
+      "get" : {
+        "tags" : [ "QuotaByCounterKeys" ],
+        "description" : "Lists a collection of current quota counter periods associated with the counter-key configured in the policy on the specified service instance. The api does not support paging yet.",
+        "externalDocs" : {
+          "description" : "Document describing how to configure the quota policies.",
+          "url" : "https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies"
+        },
+        "operationId" : "QuotaByCounterKeys_ListByService",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaCounterKey",
+          "in" : "path",
+          "description" : "Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Lists a collection of the quota counter values.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Paged Quota Counter list representation."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "QuotaByCounterKeys" ],
+        "description" : "Updates all the quota counter values specified with the existing quota counter key to a value in the specified service instance. This should be used for reset of the quota counter values.",
+        "operationId" : "QuotaByCounterKeys_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaCounterKey",
+          "in" : "path",
+          "description" : "Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The value of the quota counter to be applied to all quota counter periods.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "callsCount" : {
+                    "type" : "integer",
+                    "description" : "Number of times Counter was called.",
+                    "format" : "int32"
+                  },
+                  "kbTransferred" : {
+                    "type" : "number",
+                    "description" : "Data Transferred in KiloBytes.",
+                    "format" : "double"
+                  }
+                },
+                "description" : "Quota counter value details."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Quota counter period was successfully updated."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/quotas/{quotaCounterKey}/periods/{quotaPeriodKey}" : {
+      "get" : {
+        "tags" : [ "QuotaByPeriodKeys" ],
+        "description" : "Gets the value of the quota counter associated with the counter-key in the policy for the specific period in service instance.",
+        "externalDocs" : {
+          "description" : "Document describing how to configure the quota policies.",
+          "url" : "https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-product-with-rules#a-namepolicies-ato-configure-call-rate-limit-and-quota-policies"
+        },
+        "operationId" : "QuotaByPeriodKeys_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaCounterKey",
+          "in" : "path",
+          "description" : "Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaPeriodKey",
+          "in" : "path",
+          "description" : "Quota period key identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The response body contains the Quota counter details for the specified period.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Quota counter details."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "QuotaByPeriodKeys" ],
+        "description" : "Updates an existing quota counter value in the specified service instance.",
+        "operationId" : "QuotaByPeriodKeys_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaCounterKey",
+          "in" : "path",
+          "description" : "Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=\"boo\" in the policy, then it’s accessible by \"boo\" counter key. But if it’s defined as counter-key=\"@(\"b\"+\"a\")\" then it will be accessible by \"ba\" key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "quotaPeriodKey",
+          "in" : "path",
+          "description" : "Quota period key identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The value of the Quota counter to be applied on the specified period.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "callsCount" : {
+                    "type" : "integer",
+                    "description" : "Number of times Counter was called.",
+                    "format" : "int32"
+                  },
+                  "kbTransferred" : {
+                    "type" : "number",
+                    "description" : "Data Transferred in KiloBytes.",
+                    "format" : "double"
+                  }
+                },
+                "description" : "Quota counter value details."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "The quota counter value was successfully updated."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

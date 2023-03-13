@@ -1,1 +1,658 @@
-{"openapi":"3.0.1","info":{"title":"ApiManagementClient","description":"Use these REST APIs for performing operations on logger entity Azure API Management deployment.The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure EventHub.","version":"2019-12-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers":{"get":{"tags":["Logger"],"description":"Lists a collection of loggers in the specified service instance.","externalDocs":{"url":"https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-log-event-hubs"},"operationId":"Logger_ListByService","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"$filter","in":"query","description":"|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| loggerType | filter | eq |     | </br>| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>","schema":{"type":"string"}},{"name":"$top","in":"query","description":"Number of records to return.","schema":{"minimum":1,"type":"integer","format":"int32"}},{"name":"$skip","in":"query","description":"Number of records to skip.","schema":{"minimum":0,"type":"integer","format":"int32"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Lists a collection of Logger entities.","content":{"application/json":{"schema":{"type":"object","description":"Paged Logger list representation."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}":{"get":{"tags":["Logger"],"description":"Gets the details of the logger specified by its identifier.","operationId":"Logger_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"loggerId","in":"path","description":"Logger identifier. Must be unique in the API Management service instance.","required":true,"schema":{"maxLength":256,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The response body contains the specified Logger entity.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Logger details."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"put":{"tags":["Logger"],"description":"Creates or Updates a logger.","operationId":"Logger_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"loggerId","in":"path","description":"Logger identifier. Must be unique in the API Management service instance.","required":true,"schema":{"maxLength":256,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. Not required when creating an entity, but required when updating an entity.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Create parameters.","content":{"application/json":{"schema":{"properties":{"properties":{"required":["credentials","loggerType"],"type":"object","properties":{"credentials":{"type":"object","additionalProperties":{"type":"string"},"description":"The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.","example":{"connectionString":"Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...","name":"apim"}},"description":{"maxLength":256,"type":"string","description":"Logger description."},"isBuffered":{"type":"boolean","description":"Whether records are buffered in the logger before publishing. Default is assumed to be true."},"loggerType":{"type":"string","description":"Logger type.","enum":["azureEventHub","applicationInsights"]},"resourceId":{"type":"string","description":"Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."}},"description":"The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."}},"description":"Logger details.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type for API Management resource.","readOnly":true}},"description":"The Resource definition."}]}}},"required":true},"responses":{"200":{"description":"The existing logger was successfully updated.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Logger details."}}}},"201":{"description":"Logger was successfully created.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"Logger details."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"delete":{"tags":["Logger"],"description":"Deletes the specified logger.","operationId":"Logger_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"loggerId","in":"path","description":"Logger identifier. Must be unique in the API Management service instance.","required":true,"schema":{"maxLength":256,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"force","in":"query","description":"Force deletion even if diagnostic is attached.","schema":{"type":"boolean"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The logger was successfully deleted."},"204":{"description":"The logger was successfully deleted."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"head":{"tags":["Logger"],"description":"Gets the entity state (Etag) version of the logger specified by its identifier.","operationId":"Logger_GetEntityTag","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"loggerId","in":"path","description":"Logger identifier. Must be unique in the API Management service instance.","required":true,"schema":{"maxLength":256,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Specified logger entity exists and current entity state version is present in the ETag header.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"patch":{"tags":["Logger"],"description":"Updates an existing logger.","operationId":"Logger_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"loggerId","in":"path","description":"Logger identifier. Must be unique in the API Management service instance.","required":true,"schema":{"maxLength":256,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Update parameters.","content":{"application/json":{"schema":{"type":"object","properties":{"properties":{"type":"object","properties":{"credentials":{"type":"object","additionalProperties":{"type":"string"},"description":"Logger credentials."},"description":{"type":"string","description":"Logger description."},"isBuffered":{"type":"boolean","description":"Whether records are buffered in the logger before publishing. Default is assumed to be true."},"loggerType":{"type":"string","description":"Logger type.","enum":["azureEventHub","applicationInsights"]}},"description":"Parameters supplied to the Update Logger operation."}},"description":"Logger update contract."}}},"required":true},"responses":{"204":{"description":"The existing logger was successfully updated."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}}},"components":{"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ApiManagementClient",
+    "description" : "Use these REST APIs for performing operations on logger entity Azure API Management deployment.The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure EventHub.",
+    "version" : "2019-12-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers" : {
+      "get" : {
+        "tags" : [ "Logger" ],
+        "description" : "Lists a collection of loggers in the specified service instance.",
+        "externalDocs" : {
+          "url" : "https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-log-event-hubs"
+        },
+        "operationId" : "Logger_ListByService",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| loggerType | filter | eq |     | </br>| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Number of records to return.",
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Number of records to skip.",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Lists a collection of Logger entities.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Paged Logger list representation."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}" : {
+      "get" : {
+        "tags" : [ "Logger" ],
+        "description" : "Gets the details of the logger specified by its identifier.",
+        "operationId" : "Logger_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "loggerId",
+          "in" : "path",
+          "description" : "Logger identifier. Must be unique in the API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 256,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The response body contains the specified Logger entity.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Logger details."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Logger" ],
+        "description" : "Creates or Updates a logger.",
+        "operationId" : "Logger_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "loggerId",
+          "in" : "path",
+          "description" : "Logger identifier. Must be unique in the API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 256,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Create parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "properties" : {
+                    "required" : [ "credentials", "loggerType" ],
+                    "type" : "object",
+                    "properties" : {
+                      "credentials" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.",
+                        "example" : {
+                          "connectionString" : "Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...",
+                          "name" : "apim"
+                        }
+                      },
+                      "description" : {
+                        "maxLength" : 256,
+                        "type" : "string",
+                        "description" : "Logger description."
+                      },
+                      "isBuffered" : {
+                        "type" : "boolean",
+                        "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                      },
+                      "loggerType" : {
+                        "type" : "string",
+                        "description" : "Logger type.",
+                        "enum" : [ "azureEventHub", "applicationInsights" ]
+                      },
+                      "resourceId" : {
+                        "type" : "string",
+                        "description" : "Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."
+                      }
+                    },
+                    "description" : "The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."
+                  }
+                },
+                "description" : "Logger details.",
+                "allOf" : [ {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "Resource ID.",
+                      "readOnly" : true
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Resource name.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Resource type for API Management resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The Resource definition."
+                } ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The existing logger was successfully updated.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Logger details."
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Logger was successfully created.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Logger details."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Logger" ],
+        "description" : "Deletes the specified logger.",
+        "operationId" : "Logger_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "loggerId",
+          "in" : "path",
+          "description" : "Logger identifier. Must be unique in the API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 256,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "force",
+          "in" : "query",
+          "description" : "Force deletion even if diagnostic is attached.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The logger was successfully deleted."
+          },
+          "204" : {
+            "description" : "The logger was successfully deleted."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "head" : {
+        "tags" : [ "Logger" ],
+        "description" : "Gets the entity state (Etag) version of the logger specified by its identifier.",
+        "operationId" : "Logger_GetEntityTag",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "loggerId",
+          "in" : "path",
+          "description" : "Logger identifier. Must be unique in the API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 256,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Specified logger entity exists and current entity state version is present in the ETag header.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Logger" ],
+        "description" : "Updates an existing logger.",
+        "operationId" : "Logger_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "loggerId",
+          "in" : "path",
+          "description" : "Logger identifier. Must be unique in the API Management service instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 256,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Update parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "properties" : {
+                    "type" : "object",
+                    "properties" : {
+                      "credentials" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Logger credentials."
+                      },
+                      "description" : {
+                        "type" : "string",
+                        "description" : "Logger description."
+                      },
+                      "isBuffered" : {
+                        "type" : "boolean",
+                        "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                      },
+                      "loggerType" : {
+                        "type" : "string",
+                        "description" : "Logger type.",
+                        "enum" : [ "azureEventHub", "applicationInsights" ]
+                      }
+                    },
+                    "description" : "Parameters supplied to the Update Logger operation."
+                  }
+                },
+                "description" : "Logger update contract."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "The existing logger was successfully updated."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

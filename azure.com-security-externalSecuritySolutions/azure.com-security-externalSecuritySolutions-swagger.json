@@ -1,1 +1,438 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2015-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions":{"get":{"tags":["ExternalSecuritySolutions"],"description":"Gets a list of external security solutions for the subscription.","operationId":"ExternalSecuritySolutions_List","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExternalSecuritySolutionList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions":{"get":{"tags":["ExternalSecuritySolutions"],"description":"Gets a list of external Security Solutions for the subscription and location.","operationId":"ExternalSecuritySolutions_ListByHomeRegion","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExternalSecuritySolutionList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}":{"get":{"tags":["ExternalSecuritySolutions"],"description":"Gets a specific external Security Solution.","operationId":"ExternalSecuritySolutions_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group within the user's subscription. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"externalSecuritySolutionsName","in":"path","description":"Name of an external security solution.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExternalSecuritySolution"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"AadConnectivityState":{"type":"object","properties":{"connectivityState":{"title":"The connectivity state of the external AAD solution ","type":"string","enum":["Discovered","NotLicensed","Connected"]}},"description":"Describes an Azure resource with kind"},"AadExternalSecuritySolution":{"properties":{"properties":{"$ref":"#/components/schemas/AadSolutionProperties"}},"description":"Represents an AAD identity protection solution which sends logs to an OMS workspace.","allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolution"}]},"AadSolutionProperties":{"title":"The external security solution properties for AAD solutions","allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolutionProperties"},{"$ref":"#/components/schemas/AadConnectivityState"}]},"AtaExternalSecuritySolution":{"properties":{"properties":{"$ref":"#/components/schemas/AtaSolutionProperties"}},"description":"Represents an ATA security solution which sends logs to an OMS workspace","allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolution"}]},"AtaSolutionProperties":{"title":"The external security solution properties for ATA solutions","properties":{"lastEventReceived":{"type":"string"}},"allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolutionProperties"}]},"CefExternalSecuritySolution":{"properties":{"properties":{"$ref":"#/components/schemas/CefSolutionProperties"}},"description":"Represents a security solution which sends CEF logs to an OMS workspace","allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolution"}]},"CefSolutionProperties":{"title":"The external security solution properties for CEF solutions","properties":{"agent":{"type":"string"},"hostname":{"type":"string"},"lastEventReceived":{"type":"string"}},"allOf":[{"$ref":"#/components/schemas/ExternalSecuritySolutionProperties"}]},"ConnectedWorkspace":{"title":"Represents an OMS workspace to which the solution is connected","type":"object","properties":{"id":{"type":"string","description":"Azure resource ID of the connected OMS workspace"}}},"ExternalSecuritySolution":{"description":"Represents a security solution external to Azure Security Center which sends information to an OMS workspace and whose data is displayed by Azure Security Center.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."},{"$ref":"#/components/schemas/ExternalSecuritySolutionKind"},{"type":"object","properties":{"location":{"type":"string","description":"Location where the resource is stored","readOnly":true}},"description":"Describes an Azure resource with location"}]},"ExternalSecuritySolutionKind":{"type":"object","properties":{"kind":{"type":"string","description":"The kind of the external solution","enum":["CEF","ATA","AAD"]}},"description":"Describes an Azure resource with kind"},"ExternalSecuritySolutionList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URI to fetch the next page.","readOnly":true},"value":{"type":"array","items":{"$ref":"#/components/schemas/ExternalSecuritySolution"}}}},"ExternalSecuritySolutionProperties":{"type":"object","properties":{"deviceType":{"type":"string"},"deviceVendor":{"type":"string"},"workspace":{"$ref":"#/components/schemas/ConnectedWorkspace"}},"description":"The solution properties (correspond to the solution kind)"}},"parameters":{"ExternalSecuritySolutionsName":{"name":"externalSecuritySolutionsName","in":"path","description":"Name of an external security solution.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2015-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions" : {
+      "get" : {
+        "tags" : [ "ExternalSecuritySolutions" ],
+        "description" : "Gets a list of external security solutions for the subscription.",
+        "operationId" : "ExternalSecuritySolutions_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExternalSecuritySolutionList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions" : {
+      "get" : {
+        "tags" : [ "ExternalSecuritySolutions" ],
+        "description" : "Gets a list of external Security Solutions for the subscription and location.",
+        "operationId" : "ExternalSecuritySolutions_ListByHomeRegion",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExternalSecuritySolutionList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}" : {
+      "get" : {
+        "tags" : [ "ExternalSecuritySolutions" ],
+        "description" : "Gets a specific external Security Solution.",
+        "operationId" : "ExternalSecuritySolutions_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group within the user's subscription. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "externalSecuritySolutionsName",
+          "in" : "path",
+          "description" : "Name of an external security solution.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExternalSecuritySolution"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AadConnectivityState" : {
+        "type" : "object",
+        "properties" : {
+          "connectivityState" : {
+            "title" : "The connectivity state of the external AAD solution ",
+            "type" : "string",
+            "enum" : [ "Discovered", "NotLicensed", "Connected" ]
+          }
+        },
+        "description" : "Describes an Azure resource with kind"
+      },
+      "AadExternalSecuritySolution" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AadSolutionProperties"
+          }
+        },
+        "description" : "Represents an AAD identity protection solution which sends logs to an OMS workspace.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolution"
+        } ]
+      },
+      "AadSolutionProperties" : {
+        "title" : "The external security solution properties for AAD solutions",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolutionProperties"
+        }, {
+          "$ref" : "#/components/schemas/AadConnectivityState"
+        } ]
+      },
+      "AtaExternalSecuritySolution" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AtaSolutionProperties"
+          }
+        },
+        "description" : "Represents an ATA security solution which sends logs to an OMS workspace",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolution"
+        } ]
+      },
+      "AtaSolutionProperties" : {
+        "title" : "The external security solution properties for ATA solutions",
+        "properties" : {
+          "lastEventReceived" : {
+            "type" : "string"
+          }
+        },
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolutionProperties"
+        } ]
+      },
+      "CefExternalSecuritySolution" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/CefSolutionProperties"
+          }
+        },
+        "description" : "Represents a security solution which sends CEF logs to an OMS workspace",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolution"
+        } ]
+      },
+      "CefSolutionProperties" : {
+        "title" : "The external security solution properties for CEF solutions",
+        "properties" : {
+          "agent" : {
+            "type" : "string"
+          },
+          "hostname" : {
+            "type" : "string"
+          },
+          "lastEventReceived" : {
+            "type" : "string"
+          }
+        },
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ExternalSecuritySolutionProperties"
+        } ]
+      },
+      "ConnectedWorkspace" : {
+        "title" : "Represents an OMS workspace to which the solution is connected",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource ID of the connected OMS workspace"
+          }
+        }
+      },
+      "ExternalSecuritySolution" : {
+        "description" : "Represents a security solution external to Azure Security Center which sends information to an OMS workspace and whose data is displayed by Azure Security Center.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        }, {
+          "$ref" : "#/components/schemas/ExternalSecuritySolutionKind"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "location" : {
+              "type" : "string",
+              "description" : "Location where the resource is stored",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource with location"
+        } ]
+      },
+      "ExternalSecuritySolutionKind" : {
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string",
+            "description" : "The kind of the external solution",
+            "enum" : [ "CEF", "ATA", "AAD" ]
+          }
+        },
+        "description" : "Describes an Azure resource with kind"
+      },
+      "ExternalSecuritySolutionList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ExternalSecuritySolution"
+            }
+          }
+        }
+      },
+      "ExternalSecuritySolutionProperties" : {
+        "type" : "object",
+        "properties" : {
+          "deviceType" : {
+            "type" : "string"
+          },
+          "deviceVendor" : {
+            "type" : "string"
+          },
+          "workspace" : {
+            "$ref" : "#/components/schemas/ConnectedWorkspace"
+          }
+        },
+        "description" : "The solution properties (correspond to the solution kind)"
+      }
+    },
+    "parameters" : {
+      "ExternalSecuritySolutionsName" : {
+        "name" : "externalSecuritySolutionsName",
+        "in" : "path",
+        "description" : "Name of an external security solution.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

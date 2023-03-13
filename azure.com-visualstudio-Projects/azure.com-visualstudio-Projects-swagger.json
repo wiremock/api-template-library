@@ -1,1 +1,656 @@
-{"openapi":"3.0.1","info":{"title":"Visual Studio Projects Resource Provider Client","description":"Use these APIs to manage Visual Studio Team Services resources through the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol specification and each operation returns an x-ms-request-id header that can be used to obtain information about the request. You must make sure that requests made to these resources are secure. For more information, see https://docs.microsoft.com/en-us/rest/api/index.","version":"2018-08-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project":{"get":{"tags":["Projects"],"summary":"Projects_ListByAccountResource","description":"Gets all Visual Studio Team Services project resources created in the specified Team Services account.","operationId":"Projects_ListByAccountResource","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the Visual Studio Team Services project resources created in the specified Team Services account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResourceListResult"}}}}},"deprecated":true}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project/{resourceName}":{"get":{"tags":["Projects"],"summary":"Projects_Get","description":"Gets the details of a Team Services project resource.","operationId":"Projects_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}},"404":{"description":"The project or Azure subscription was not found."}},"deprecated":true},"put":{"tags":["Projects"],"summary":"Projects_CreateOrUpdate","description":"Creates or updates a Team Services project in the collection with the specified name. 'VersionControlOption' and 'ProcessTemplateId' must be specified in the resource properties. Valid values for VersionControlOption: Git, Tfvc. Valid values for ProcessTemplateId: 6B724908-EF14-45CF-84F8-768B5384DA45, ADCC42AB-9882-485E-A3ED-7678F01F66BC, 27450541-8E31-4150-9947-DC59F998FC01 (these IDs correspond to Scrum, Agile, and CMMI process templates).","operationId":"Projects_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}},{"name":"validating","in":"query","description":"This parameter is ignored and should be set to an empty string.","schema":{"type":"string"}}],"requestBody":{"description":"The request data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The response contains the details of the created or updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}},"202":{"description":"The operation succeeded. A job to create/update the team project resource has been queued. The URI to monitor the status of the job is provided in the 'location' header."}},"deprecated":true},"patch":{"tags":["Projects"],"summary":"Projects_Update","description":"Updates the tags of the specified Team Services project.","operationId":"Projects_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The request data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResourceUpdateParameters"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The response contains the details of the updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}}},"deprecated":true}}},"components":{"schemas":{"ApplicationSource":{"required":["applicationType","sourceType"],"type":"object","properties":{"applicationConfiguration":{"type":"object","additionalProperties":{"type":"string"},"description":"Application specific properties."},"applicationType":{"type":"string","description":"Type of application.","enum":["AspDotNet","AspDotNetCore","NodeJs"]},"sourceType":{"type":"string","description":"Type of application source.","enum":["CodeTemplate","CodeRepository"]}},"description":"Defines the source application for a VSTS pipeline.","discriminator":{"propertyName":"sourceType"}},"ApplicationTarget":{"required":["resources","targetType"],"type":"object","properties":{"resources":{"type":"array","description":"List of target resources.","items":{"$ref":"#/components/schemas/TargetResource"}},"targetType":{"type":"string","description":"Type of target.","enum":["WindowsAppService"]}},"description":"Defines the target resources for a VSTS pipeline."},"Authorization":{"required":["authorizationType"],"type":"object","properties":{"authorizationType":{"type":"string","description":"Type of authorization.","enum":["authorizationToken","personalAccessToken"]},"parameters":{"type":"object","additionalProperties":{"type":"string"},"description":"Authorization parameters corresponding to the authorization type."}},"description":"Defines the authorization type and its parameters."},"CodeRepository":{"required":["defaultBranch","id","repositoryType"],"type":"object","properties":{"authorization":{"$ref":"#/components/schemas/Authorization"},"defaultBranch":{"type":"string","description":"Default branch for which continuous integration should be configured in the VSTS pipeline."},"id":{"type":"string","description":"Unique identifier of the code repository."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Repository-specific properties."},"repositoryType":{"type":"string","description":"Type of code repository.","enum":["gitHub","vstsGit"]}},"description":"Defines a code repository."},"CodeRepositoryApplicationSource":{"properties":{"repository":{"$ref":"#/components/schemas/CodeRepositoryLegacy"}},"description":"Defines the source application, when it resides in a code repository.","allOf":[{"$ref":"#/components/schemas/ApplicationSource"}]},"CodeRepositoryLegacy":{"required":["defaultBranch","id","repositoryType"],"type":"object","properties":{"authorizationReference":{"type":"string","description":"Reference to the authorization info used to access the code repository. This value is used as a key into the global authorization details dictionary."},"defaultBranch":{"type":"string","description":"Default branch for which continuous integration should be configured in the VSTS pipeline."},"id":{"type":"string","description":"Unique identifier of the code repository."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Repository-specific properties."},"repositoryType":{"type":"string","description":"Type of code repository.","enum":["gitHub","vstsGit"]}},"description":"Defines a code repository."},"CodeTemplateApplicationSource":{"description":"Defines the source application template.","allOf":[{"$ref":"#/components/schemas/ApplicationSource"}]},"PipelineBootstrapConfiguration":{"required":["name","templateId"],"type":"object","properties":{"name":{"type":"string","description":"Name of the bootstrap configuration."},"repository":{"$ref":"#/components/schemas/CodeRepository"},"templateId":{"type":"string","description":"Identifier of the pipeline template used for configuring pipeline."},"templateParameters":{"type":"object","additionalProperties":{"type":"string"},"description":"Dictionary of inputs used for configuring pipeline. The keys for inputs are defined by pipeline template."}},"description":"Defines bootstrap configuration for a CI/CD pipeline."},"PipelineTemplateLegacy":{"required":["applicationSource","applicationTarget","authorizationDetails"],"type":"object","properties":{"applicationSource":{"$ref":"#/components/schemas/ApplicationSource"},"applicationTarget":{"$ref":"#/components/schemas/ApplicationTarget"},"authorizationDetails":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/Authorization"},"description":"Global dictionary of authorization details used by the pipeline, with a friendly name as key. Individual resource in the pipeline can reference to a specific authorization info using the friendly name."}},"description":"Defines a VSTS pipeline template."},"ProjectResource":{"properties":{"kind":{"type":"string","description":"Kind of project resource. A bootStrappedProject is a project which has additional bootstrap information to create a CI/CD pipeline in the project.","enum":["project","bootstrappedProject"]},"properties":{"$ref":"#/components/schemas/ProjectResourceProperties"}},"description":"A Visual Studio Team Services project resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"ProjectResourceListResult":{"type":"object","properties":{"value":{"type":"array","description":"List of project resource details.","items":{"$ref":"#/components/schemas/ProjectResource"}}},"description":"The response to a request to list Team Services project resources in a resource group/account."},"ProjectResourceProperties":{"type":"object","properties":{"bootstrapPipelineTemplate":{"$ref":"#/components/schemas/PipelineTemplateLegacy"},"ownerUpn":{"type":"string","description":"Optional UPN of the owner, on-behalf-of whom the project is being created."},"pipelineBootstrapConfigurations":{"type":"array","description":"Bootstrap configuration for pipelines in Team Project.","items":{"$ref":"#/components/schemas/PipelineBootstrapConfiguration"}},"processTemplateId":{"type":"string","description":"Process template to use in the project.","enum":["Scrum","Agile","Cmmi"]},"tfsUniqueIdentifier":{"type":"string","description":"Unique identifier of the VSTS project.","readOnly":true},"versionControlOption":{"type":"string","description":"Version control to use for the default repo created in the project.","enum":["Git","Tfvc"]}},"description":"Defines the custom properties of project resource."},"ProjectResourceUpdateParameters":{"type":"object","properties":{"properties":{"type":"object","properties":{"pipelineBootstrapConfigurations":{"type":"array","description":"Bootstrap configurations for pipelines in Team Project.","items":{"$ref":"#/components/schemas/PipelineBootstrapConfiguration"}}},"description":"Custom properties of project resource."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The custom tags to be set on the resource."}},"description":"The parameters to update a project resource."},"Resource":{"type":"object","properties":{"id":{"type":"string","description":"Unique identifier of the resource.","readOnly":true},"location":{"type":"string","description":"Resource location.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"A generic Azure Resource Manager resource."},"TargetResource":{"required":["id","role"],"type":"object","properties":{"authorizationReference":{"type":"string","description":"Reference to the authorization info used to access the target resource. This value is used as a key into the global authorization details dictionary."},"id":{"type":"string","description":"Unique identifier of the target resource."},"role":{"type":"string","description":"Role of the target resource."}},"description":"Defines a single resource used as target for a VSTS pipeline."}},"parameters":{"apiVersionParameter":{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},"resourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},"subscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Visual Studio Projects Resource Provider Client",
+    "description" : "Use these APIs to manage Visual Studio Team Services resources through the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol specification and each operation returns an x-ms-request-id header that can be used to obtain information about the request. You must make sure that requests made to these resources are secure. For more information, see https://docs.microsoft.com/en-us/rest/api/index.",
+    "version" : "2018-08-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_ListByAccountResource",
+        "description" : "Gets all Visual Studio Team Services project resources created in the specified Team Services account.",
+        "operationId" : "Projects_ListByAccountResource",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the Visual Studio Team Services project resources created in the specified Team Services account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResourceListResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project/{resourceName}" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_Get",
+        "description" : "Gets the details of a Team Services project resource.",
+        "operationId" : "Projects_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The project or Azure subscription was not found."
+          }
+        },
+        "deprecated" : true
+      },
+      "put" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_CreateOrUpdate",
+        "description" : "Creates or updates a Team Services project in the collection with the specified name. 'VersionControlOption' and 'ProcessTemplateId' must be specified in the resource properties. Valid values for VersionControlOption: Git, Tfvc. Valid values for ProcessTemplateId: 6B724908-EF14-45CF-84F8-768B5384DA45, ADCC42AB-9882-485E-A3ED-7678F01F66BC, 27450541-8E31-4150-9947-DC59F998FC01 (these IDs correspond to Scrum, Agile, and CMMI process templates).",
+        "operationId" : "Projects_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "validating",
+          "in" : "query",
+          "description" : "This parameter is ignored and should be set to an empty string.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The request data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProjectResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the created or updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The operation succeeded. A job to create/update the team project resource has been queued. The URI to monitor the status of the job is provided in the 'location' header."
+          }
+        },
+        "deprecated" : true
+      },
+      "patch" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_Update",
+        "description" : "Updates the tags of the specified Team Services project.",
+        "operationId" : "Projects_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The request data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProjectResourceUpdateParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApplicationSource" : {
+        "required" : [ "applicationType", "sourceType" ],
+        "type" : "object",
+        "properties" : {
+          "applicationConfiguration" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Application specific properties."
+          },
+          "applicationType" : {
+            "type" : "string",
+            "description" : "Type of application.",
+            "enum" : [ "AspDotNet", "AspDotNetCore", "NodeJs" ]
+          },
+          "sourceType" : {
+            "type" : "string",
+            "description" : "Type of application source.",
+            "enum" : [ "CodeTemplate", "CodeRepository" ]
+          }
+        },
+        "description" : "Defines the source application for a VSTS pipeline.",
+        "discriminator" : {
+          "propertyName" : "sourceType"
+        }
+      },
+      "ApplicationTarget" : {
+        "required" : [ "resources", "targetType" ],
+        "type" : "object",
+        "properties" : {
+          "resources" : {
+            "type" : "array",
+            "description" : "List of target resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/TargetResource"
+            }
+          },
+          "targetType" : {
+            "type" : "string",
+            "description" : "Type of target.",
+            "enum" : [ "WindowsAppService" ]
+          }
+        },
+        "description" : "Defines the target resources for a VSTS pipeline."
+      },
+      "Authorization" : {
+        "required" : [ "authorizationType" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationType" : {
+            "type" : "string",
+            "description" : "Type of authorization.",
+            "enum" : [ "authorizationToken", "personalAccessToken" ]
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Authorization parameters corresponding to the authorization type."
+          }
+        },
+        "description" : "Defines the authorization type and its parameters."
+      },
+      "CodeRepository" : {
+        "required" : [ "defaultBranch", "id", "repositoryType" ],
+        "type" : "object",
+        "properties" : {
+          "authorization" : {
+            "$ref" : "#/components/schemas/Authorization"
+          },
+          "defaultBranch" : {
+            "type" : "string",
+            "description" : "Default branch for which continuous integration should be configured in the VSTS pipeline."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the code repository."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Repository-specific properties."
+          },
+          "repositoryType" : {
+            "type" : "string",
+            "description" : "Type of code repository.",
+            "enum" : [ "gitHub", "vstsGit" ]
+          }
+        },
+        "description" : "Defines a code repository."
+      },
+      "CodeRepositoryApplicationSource" : {
+        "properties" : {
+          "repository" : {
+            "$ref" : "#/components/schemas/CodeRepositoryLegacy"
+          }
+        },
+        "description" : "Defines the source application, when it resides in a code repository.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ApplicationSource"
+        } ]
+      },
+      "CodeRepositoryLegacy" : {
+        "required" : [ "defaultBranch", "id", "repositoryType" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationReference" : {
+            "type" : "string",
+            "description" : "Reference to the authorization info used to access the code repository. This value is used as a key into the global authorization details dictionary."
+          },
+          "defaultBranch" : {
+            "type" : "string",
+            "description" : "Default branch for which continuous integration should be configured in the VSTS pipeline."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the code repository."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Repository-specific properties."
+          },
+          "repositoryType" : {
+            "type" : "string",
+            "description" : "Type of code repository.",
+            "enum" : [ "gitHub", "vstsGit" ]
+          }
+        },
+        "description" : "Defines a code repository."
+      },
+      "CodeTemplateApplicationSource" : {
+        "description" : "Defines the source application template.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ApplicationSource"
+        } ]
+      },
+      "PipelineBootstrapConfiguration" : {
+        "required" : [ "name", "templateId" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the bootstrap configuration."
+          },
+          "repository" : {
+            "$ref" : "#/components/schemas/CodeRepository"
+          },
+          "templateId" : {
+            "type" : "string",
+            "description" : "Identifier of the pipeline template used for configuring pipeline."
+          },
+          "templateParameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Dictionary of inputs used for configuring pipeline. The keys for inputs are defined by pipeline template."
+          }
+        },
+        "description" : "Defines bootstrap configuration for a CI/CD pipeline."
+      },
+      "PipelineTemplateLegacy" : {
+        "required" : [ "applicationSource", "applicationTarget", "authorizationDetails" ],
+        "type" : "object",
+        "properties" : {
+          "applicationSource" : {
+            "$ref" : "#/components/schemas/ApplicationSource"
+          },
+          "applicationTarget" : {
+            "$ref" : "#/components/schemas/ApplicationTarget"
+          },
+          "authorizationDetails" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Authorization"
+            },
+            "description" : "Global dictionary of authorization details used by the pipeline, with a friendly name as key. Individual resource in the pipeline can reference to a specific authorization info using the friendly name."
+          }
+        },
+        "description" : "Defines a VSTS pipeline template."
+      },
+      "ProjectResource" : {
+        "properties" : {
+          "kind" : {
+            "type" : "string",
+            "description" : "Kind of project resource. A bootStrappedProject is a project which has additional bootstrap information to create a CI/CD pipeline in the project.",
+            "enum" : [ "project", "bootstrappedProject" ]
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ProjectResourceProperties"
+          }
+        },
+        "description" : "A Visual Studio Team Services project resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "ProjectResourceListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "List of project resource details.",
+            "items" : {
+              "$ref" : "#/components/schemas/ProjectResource"
+            }
+          }
+        },
+        "description" : "The response to a request to list Team Services project resources in a resource group/account."
+      },
+      "ProjectResourceProperties" : {
+        "type" : "object",
+        "properties" : {
+          "bootstrapPipelineTemplate" : {
+            "$ref" : "#/components/schemas/PipelineTemplateLegacy"
+          },
+          "ownerUpn" : {
+            "type" : "string",
+            "description" : "Optional UPN of the owner, on-behalf-of whom the project is being created."
+          },
+          "pipelineBootstrapConfigurations" : {
+            "type" : "array",
+            "description" : "Bootstrap configuration for pipelines in Team Project.",
+            "items" : {
+              "$ref" : "#/components/schemas/PipelineBootstrapConfiguration"
+            }
+          },
+          "processTemplateId" : {
+            "type" : "string",
+            "description" : "Process template to use in the project.",
+            "enum" : [ "Scrum", "Agile", "Cmmi" ]
+          },
+          "tfsUniqueIdentifier" : {
+            "type" : "string",
+            "description" : "Unique identifier of the VSTS project.",
+            "readOnly" : true
+          },
+          "versionControlOption" : {
+            "type" : "string",
+            "description" : "Version control to use for the default repo created in the project.",
+            "enum" : [ "Git", "Tfvc" ]
+          }
+        },
+        "description" : "Defines the custom properties of project resource."
+      },
+      "ProjectResourceUpdateParameters" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "properties" : {
+              "pipelineBootstrapConfigurations" : {
+                "type" : "array",
+                "description" : "Bootstrap configurations for pipelines in Team Project.",
+                "items" : {
+                  "$ref" : "#/components/schemas/PipelineBootstrapConfiguration"
+                }
+              }
+            },
+            "description" : "Custom properties of project resource."
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The custom tags to be set on the resource."
+          }
+        },
+        "description" : "The parameters to update a project resource."
+      },
+      "Resource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the resource.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type.",
+            "readOnly" : true
+          }
+        },
+        "description" : "A generic Azure Resource Manager resource."
+      },
+      "TargetResource" : {
+        "required" : [ "id", "role" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationReference" : {
+            "type" : "string",
+            "description" : "Reference to the authorization info used to access the target resource. This value is used as a key into the global authorization details dictionary."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the target resource."
+          },
+          "role" : {
+            "type" : "string",
+            "description" : "Role of the target resource."
+          }
+        },
+        "description" : "Defines a single resource used as target for a VSTS pipeline."
+      }
+    },
+    "parameters" : {
+      "apiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "API Version",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "resourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "Name of the resource group within the Azure subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "subscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription identifier.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,816 @@
-{"openapi":"3.0.1","info":{"title":"Open Skills API","description":"A complete and standard data store for canonical and emerging skills, knowledge, abilities, tools, technolgies, and how they relate to jobs.","contact":{"name":"Work Data Initiative","url":"http://www.dataatwork.org"},"version":"1.0"},"servers":[{"url":"http://api.dataatwork.org/v1"}],"paths":{"/jobs":{"get":{"summary":"Job Titles and Descriptions","description":"Retrieves the names, descriptions, and UUIDs of all job titles.","parameters":[{"name":"offset","in":"query","description":"Pagination offset. Default is 0.","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Maximum number of items per page. Default is 20 and cannot exceed 500.","schema":{"type":"integer"}}],"responses":{"200":{"description":"A collection of jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Jobs"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/jobs/autocomplete":{"get":{"summary":"Job Title Autocomplete","description":"Retrieves the names, descriptions, and UUIDs of all job titles matching a given search criteria.","parameters":[{"name":"begins_with","in":"query","description":"Find job titles beginning with the given text fragment","schema":{"type":"string"}},{"name":"contains","in":"query","description":"Find job titles containing the given text fragment","schema":{"type":"string"}},{"name":"ends_with","in":"query","description":"Find job titles ending with the given text fragment","schema":{"type":"string"}}],"responses":{"200":{"description":"A collection of jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Jobs"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/jobs/normalize":{"get":{"summary":"Job Title Normalization","description":"Retrieves the canonical job title for a synonymous job title","parameters":[{"name":"job_title","in":"query","description":"Find the canonical job title(s) for jobs matching the given text fragment","required":true,"schema":{"type":"string"}},{"name":"limit","in":"query","description":"Maximumn number of job title synonyms to return. Default is 1 and cannot exceed 10.","schema":{"type":"integer"}}],"responses":{"200":{"description":"A collection of normalized jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NormalizedJobs"}}}}}}},"/jobs/unusual_titles":{"get":{"summary":"Unusual Job Titles","description":"Retrieves a list of unusual job titles and the UUIDs of their canonical jobs.","responses":{"200":{"description":"A collection of normalized jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NormalizedJobs"}}}}}}},"/jobs/{id}":{"get":{"summary":"Job Title and Description","description":"Retrieves the name, description, and UUID of a job by specifying its O*NET SOC Code or UUID.","parameters":[{"name":"id","in":"path","description":"The O*NET SOC Code or UUID of the job title to retrieve","required":true,"schema":{"type":"string"}},{"name":"fips","in":"query","description":"The FIPS Code of a Core-Based Statistical Area. Only return the job if present in this area","schema":{"type":"string"}}],"responses":{"200":{"description":"A job","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Job"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/jobs/{id}/related_jobs":{"get":{"summary":"Jobs Associated with a Job","description":"Retrieves a collection of jobs associated with a specified job.","parameters":[{"name":"id","in":"path","description":"The UUID of the job to retrieve related jobs for","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A job and its related jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobRelatedJobs"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/jobs/{id}/related_skills":{"get":{"summary":"Skills Associated with a Job","description":"Retrieves a collection of skills associated with a specified job.","parameters":[{"name":"id","in":"path","description":"The UUID of the job to retrieve skills for","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A job and its related skills","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobSkills"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/skills":{"get":{"summary":"Skill Names and Descriptions","description":"Retrieve the names, descriptions, and UUIDs of all skills.","parameters":[{"name":"offset","in":"query","description":"Pagination offset. Default is 0.","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Maximum number of items per page. Default is 20 and cannot exceed 500.","schema":{"type":"integer"}}],"responses":{"200":{"description":"A collection of skills","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Skills"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/skills/autocomplete":{"get":{"summary":"Skill Name Autocomplete","description":"Retrieves the names, descriptions, and UUIDs of all skills matching a given search criteria.","parameters":[{"name":"begins_with","in":"query","description":"Find skill names beginning with the given text fragment","schema":{"type":"string"}},{"name":"contains","in":"query","description":"Find skill names containing the given text fragment","schema":{"type":"string"}},{"name":"ends_with","in":"query","description":"Find skill names ending with the given text fragment","schema":{"type":"string"}}],"responses":{"200":{"description":"A collection of skills","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SkillJobs"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/skills/normalize":{"get":{"summary":"Skill Name Normalization","description":"Retrieves the canonical skill name for a synonymous skill name","parameters":[{"name":"skill_name","in":"query","description":"Find the canonical skill name(s) for skills matching the given text fragment","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A collection of normalized skills","content":{"application/json":{"schema":{"$ref":"#/components/schemas/NormalizedSkills"}}}}}}},"/skills/{id}":{"get":{"summary":"Skill Name and Description","description":"Retrieves the name, description, and UUID of a job by specifying its UUID.","parameters":[{"name":"id","in":"path","description":"The UUID of the skill name to retrieve","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A skill","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Skill"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/skills/{id}/related_jobs":{"get":{"summary":"Jobs Associated with a Skill","description":"Retrieves a collection of jobs associated with a specified skill.","parameters":[{"name":"id","in":"path","description":"The UUID of the skill to retrieve jobs for","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A skill and its related jobs","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SkillJobs"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/skills/{id}/related_skills":{"get":{"summary":"Skills Associated with a Skill","description":"Retrieves a collection of skills associated with a specified skill.","parameters":[{"name":"id","in":"path","description":"The UUID of the skill to retrieve related skills for","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A skill and its related skills","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SkillRelatedSkills"}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}}},"components":{"schemas":{"Error":{"type":"object","properties":{"code":{"type":"integer","format":"int32"},"message":{"type":"string"}}},"Job":{"type":"object","properties":{"normalized_job_title":{"type":"string","description":"Normalized job title"},"parent_uuid":{"type":"string","description":"UUID for the job's parent job category"},"title":{"type":"string","description":"Job title"},"uuid":{"type":"string","description":"Universally Unique Identifier for the job"}}},"JobRelatedJob":{"type":"object","properties":{"parent_uuid":{"type":"string","description":"Universally Unique Identifier for the job's canonical job title"},"title":{"type":"string","description":"Job title"},"uuid":{"type":"string","description":"Universally Unique Identifier for the job"}}},"JobRelatedJobs":{"type":"object","properties":{"related_job_titles":{"type":"array","items":{"$ref":"#/components/schemas/JobRelatedJob"}},"uuid":{"type":"string","description":"Universally Unique Identifier for the job"}}},"JobSkill":{"type":"object","properties":{"importance":{"type":"number","description":"O*NET importance score indicating how important skill is to job."},"job_title":{"type":"string","description":"Job title"},"job_uuid":{"type":"string","description":"Universally Unique Identifier for the job"},"level":{"type":"number","description":"O*NET level score indicating the skill level required for the job."},"normalized_job_title":{"type":"string","description":"Normalized job title"}}},"JobSkills":{"type":"object","properties":{"job_title":{"type":"string","description":"Title of the job associated with the UUID"},"job_uuid":{"type":"string","description":"Universally Unique Identifier for the job"},"normalized_job_title":{"type":"string","description":"Normalized title of the job associated with the UUID"},"skills":{"type":"array","items":{"$ref":"#/components/schemas/SkillJob"}}}},"Jobs":{"type":"array","properties":{"links":{"type":"array","items":{"$ref":"#/components/schemas/PageLink"}}},"items":{"$ref":"#/components/schemas/Job"}},"NormalizedJob":{"type":"object","properties":{"parent_uuid":{"type":"string","description":"Universal Unique Identifier for the canonical job title"},"relevance_score":{"type":"string","description":"Relevance score for job title."},"title":{"type":"string","description":"Job title for the synonymous job title"},"uuid":{"type":"string","description":"Universally Unique Identifier for the synonymous job title"}}},"NormalizedJobs":{"type":"array","items":{"$ref":"#/components/schemas/NormalizedJob"}},"NormalizedSkill":{"type":"object","properties":{"skill_name":{"type":"string","description":"Canonical skill name"},"uuid":{"type":"string","description":"Universally Unique Identifier for the canonical skill name"}}},"NormalizedSkills":{"type":"array","items":{"$ref":"#/components/schemas/NormalizedSkill"}},"PageLink":{"type":"object","properties":{"href":{"type":"string","description":"Link URI"},"rel":{"type":"string","description":"Link descriptor (e.g. self, first, prev, next, last)"}}},"Skill":{"type":"object","properties":{"name":{"type":"string","description":"Skill name"},"normalized_skill_name":{"type":"string","description":"Normalized skill name"},"onet_element_id":{"type":"string","description":"O*NET Element Identifier"},"uuid":{"type":"string","description":"Universally Unique Identifier for the skill"}}},"SkillJob":{"type":"object","properties":{"description":{"type":"string","description":"Description of the skill"},"importance":{"type":"number","description":"O*NET importance score"},"level":{"type":"number","description":"O*NET level score"},"normalized_skill_name":{"type":"string","description":"Normalized skill name"},"skill_name":{"type":"string","description":"Name of the skill"},"skill_uuid":{"type":"string","description":"Universally Unique Identifier for the skill"}}},"SkillJobs":{"type":"object","properties":{"jobs":{"type":"array","items":{"$ref":"#/components/schemas/JobSkill"}},"normalized_job_title":{"type":"string","description":"Normalized title of the job associated with the UUID"},"skill_name":{"type":"string","description":"Title of the job associated with the UUID"},"skill_uuid":{"type":"string","description":"Universally Unique Identifier for the job"}}},"SkillRelatedSkill":{"type":"object","properties":{"skill_name":{"type":"string","description":"Skill name"},"uuid":{"type":"string","description":"Universally Unique Identifier for the skill"}}},"SkillRelatedSkills":{"type":"object","properties":{"related_skill_name":{"type":"array","items":{"$ref":"#/components/schemas/SkillRelatedSkill"}},"uuid":{"type":"string","description":"Universally Unique Identifier for the skills"}}},"Skills":{"type":"array","properties":{"links":{"type":"array","items":{"$ref":"#/components/schemas/PageLink"}}},"items":{"$ref":"#/components/schemas/Skill"}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Open Skills API",
+    "description" : "A complete and standard data store for canonical and emerging skills, knowledge, abilities, tools, technolgies, and how they relate to jobs.",
+    "contact" : {
+      "name" : "Work Data Initiative",
+      "url" : "http://www.dataatwork.org"
+    },
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "http://api.dataatwork.org/v1"
+  } ],
+  "paths" : {
+    "/jobs" : {
+      "get" : {
+        "summary" : "Job Titles and Descriptions",
+        "description" : "Retrieves the names, descriptions, and UUIDs of all job titles.",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Pagination offset. Default is 0.",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Maximum number of items per page. Default is 20 and cannot exceed 500.",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Jobs"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/autocomplete" : {
+      "get" : {
+        "summary" : "Job Title Autocomplete",
+        "description" : "Retrieves the names, descriptions, and UUIDs of all job titles matching a given search criteria.",
+        "parameters" : [ {
+          "name" : "begins_with",
+          "in" : "query",
+          "description" : "Find job titles beginning with the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "contains",
+          "in" : "query",
+          "description" : "Find job titles containing the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ends_with",
+          "in" : "query",
+          "description" : "Find job titles ending with the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Jobs"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/normalize" : {
+      "get" : {
+        "summary" : "Job Title Normalization",
+        "description" : "Retrieves the canonical job title for a synonymous job title",
+        "parameters" : [ {
+          "name" : "job_title",
+          "in" : "query",
+          "description" : "Find the canonical job title(s) for jobs matching the given text fragment",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Maximumn number of job title synonyms to return. Default is 1 and cannot exceed 10.",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of normalized jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NormalizedJobs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/unusual_titles" : {
+      "get" : {
+        "summary" : "Unusual Job Titles",
+        "description" : "Retrieves a list of unusual job titles and the UUIDs of their canonical jobs.",
+        "responses" : {
+          "200" : {
+            "description" : "A collection of normalized jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NormalizedJobs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{id}" : {
+      "get" : {
+        "summary" : "Job Title and Description",
+        "description" : "Retrieves the name, description, and UUID of a job by specifying its O*NET SOC Code or UUID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The O*NET SOC Code or UUID of the job title to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fips",
+          "in" : "query",
+          "description" : "The FIPS Code of a Core-Based Statistical Area. Only return the job if present in this area",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A job",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{id}/related_jobs" : {
+      "get" : {
+        "summary" : "Jobs Associated with a Job",
+        "description" : "Retrieves a collection of jobs associated with a specified job.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The UUID of the job to retrieve related jobs for",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A job and its related jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobRelatedJobs"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{id}/related_skills" : {
+      "get" : {
+        "summary" : "Skills Associated with a Job",
+        "description" : "Retrieves a collection of skills associated with a specified job.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The UUID of the job to retrieve skills for",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A job and its related skills",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobSkills"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills" : {
+      "get" : {
+        "summary" : "Skill Names and Descriptions",
+        "description" : "Retrieve the names, descriptions, and UUIDs of all skills.",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Pagination offset. Default is 0.",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Maximum number of items per page. Default is 20 and cannot exceed 500.",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of skills",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Skills"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/autocomplete" : {
+      "get" : {
+        "summary" : "Skill Name Autocomplete",
+        "description" : "Retrieves the names, descriptions, and UUIDs of all skills matching a given search criteria.",
+        "parameters" : [ {
+          "name" : "begins_with",
+          "in" : "query",
+          "description" : "Find skill names beginning with the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "contains",
+          "in" : "query",
+          "description" : "Find skill names containing the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ends_with",
+          "in" : "query",
+          "description" : "Find skill names ending with the given text fragment",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of skills",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SkillJobs"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/normalize" : {
+      "get" : {
+        "summary" : "Skill Name Normalization",
+        "description" : "Retrieves the canonical skill name for a synonymous skill name",
+        "parameters" : [ {
+          "name" : "skill_name",
+          "in" : "query",
+          "description" : "Find the canonical skill name(s) for skills matching the given text fragment",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A collection of normalized skills",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NormalizedSkills"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/{id}" : {
+      "get" : {
+        "summary" : "Skill Name and Description",
+        "description" : "Retrieves the name, description, and UUID of a job by specifying its UUID.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The UUID of the skill name to retrieve",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A skill",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Skill"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/{id}/related_jobs" : {
+      "get" : {
+        "summary" : "Jobs Associated with a Skill",
+        "description" : "Retrieves a collection of jobs associated with a specified skill.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The UUID of the skill to retrieve jobs for",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A skill and its related jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SkillJobs"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/{id}/related_skills" : {
+      "get" : {
+        "summary" : "Skills Associated with a Skill",
+        "description" : "Retrieves a collection of skills associated with a specified skill.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The UUID of the skill to retrieve related skills for",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A skill and its related skills",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SkillRelatedSkills"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Job" : {
+        "type" : "object",
+        "properties" : {
+          "normalized_job_title" : {
+            "type" : "string",
+            "description" : "Normalized job title"
+          },
+          "parent_uuid" : {
+            "type" : "string",
+            "description" : "UUID for the job's parent job category"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Job title"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          }
+        }
+      },
+      "JobRelatedJob" : {
+        "type" : "object",
+        "properties" : {
+          "parent_uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job's canonical job title"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Job title"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          }
+        }
+      },
+      "JobRelatedJobs" : {
+        "type" : "object",
+        "properties" : {
+          "related_job_titles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/JobRelatedJob"
+            }
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          }
+        }
+      },
+      "JobSkill" : {
+        "type" : "object",
+        "properties" : {
+          "importance" : {
+            "type" : "number",
+            "description" : "O*NET importance score indicating how important skill is to job."
+          },
+          "job_title" : {
+            "type" : "string",
+            "description" : "Job title"
+          },
+          "job_uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          },
+          "level" : {
+            "type" : "number",
+            "description" : "O*NET level score indicating the skill level required for the job."
+          },
+          "normalized_job_title" : {
+            "type" : "string",
+            "description" : "Normalized job title"
+          }
+        }
+      },
+      "JobSkills" : {
+        "type" : "object",
+        "properties" : {
+          "job_title" : {
+            "type" : "string",
+            "description" : "Title of the job associated with the UUID"
+          },
+          "job_uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          },
+          "normalized_job_title" : {
+            "type" : "string",
+            "description" : "Normalized title of the job associated with the UUID"
+          },
+          "skills" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SkillJob"
+            }
+          }
+        }
+      },
+      "Jobs" : {
+        "type" : "array",
+        "properties" : {
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PageLink"
+            }
+          }
+        },
+        "items" : {
+          "$ref" : "#/components/schemas/Job"
+        }
+      },
+      "NormalizedJob" : {
+        "type" : "object",
+        "properties" : {
+          "parent_uuid" : {
+            "type" : "string",
+            "description" : "Universal Unique Identifier for the canonical job title"
+          },
+          "relevance_score" : {
+            "type" : "string",
+            "description" : "Relevance score for job title."
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Job title for the synonymous job title"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the synonymous job title"
+          }
+        }
+      },
+      "NormalizedJobs" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/NormalizedJob"
+        }
+      },
+      "NormalizedSkill" : {
+        "type" : "object",
+        "properties" : {
+          "skill_name" : {
+            "type" : "string",
+            "description" : "Canonical skill name"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the canonical skill name"
+          }
+        }
+      },
+      "NormalizedSkills" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/NormalizedSkill"
+        }
+      },
+      "PageLink" : {
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string",
+            "description" : "Link URI"
+          },
+          "rel" : {
+            "type" : "string",
+            "description" : "Link descriptor (e.g. self, first, prev, next, last)"
+          }
+        }
+      },
+      "Skill" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Skill name"
+          },
+          "normalized_skill_name" : {
+            "type" : "string",
+            "description" : "Normalized skill name"
+          },
+          "onet_element_id" : {
+            "type" : "string",
+            "description" : "O*NET Element Identifier"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the skill"
+          }
+        }
+      },
+      "SkillJob" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the skill"
+          },
+          "importance" : {
+            "type" : "number",
+            "description" : "O*NET importance score"
+          },
+          "level" : {
+            "type" : "number",
+            "description" : "O*NET level score"
+          },
+          "normalized_skill_name" : {
+            "type" : "string",
+            "description" : "Normalized skill name"
+          },
+          "skill_name" : {
+            "type" : "string",
+            "description" : "Name of the skill"
+          },
+          "skill_uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the skill"
+          }
+        }
+      },
+      "SkillJobs" : {
+        "type" : "object",
+        "properties" : {
+          "jobs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/JobSkill"
+            }
+          },
+          "normalized_job_title" : {
+            "type" : "string",
+            "description" : "Normalized title of the job associated with the UUID"
+          },
+          "skill_name" : {
+            "type" : "string",
+            "description" : "Title of the job associated with the UUID"
+          },
+          "skill_uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the job"
+          }
+        }
+      },
+      "SkillRelatedSkill" : {
+        "type" : "object",
+        "properties" : {
+          "skill_name" : {
+            "type" : "string",
+            "description" : "Skill name"
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the skill"
+          }
+        }
+      },
+      "SkillRelatedSkills" : {
+        "type" : "object",
+        "properties" : {
+          "related_skill_name" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SkillRelatedSkill"
+            }
+          },
+          "uuid" : {
+            "type" : "string",
+            "description" : "Universally Unique Identifier for the skills"
+          }
+        }
+      },
+      "Skills" : {
+        "type" : "array",
+        "properties" : {
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PageLink"
+            }
+          }
+        },
+        "items" : {
+          "$ref" : "#/components/schemas/Skill"
+        }
+      }
+    }
+  }
+}

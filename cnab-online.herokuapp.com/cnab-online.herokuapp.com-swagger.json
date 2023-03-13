@@ -1,1 +1,423 @@
-{"openapi":"3.0.1","info":{"title":"Cnab Online","description":"Processe arquivos de retorno CNAB","version":"1.0.0"},"servers":[{"url":"https://cnab-online.herokuapp.com/v1"}],"paths":{"/file":{"post":{"tags":["file"],"summary":"Faz o upload de um arquivo","description":"Processa um arquivo CNAB para obter informações sobre o mesmo. Retorna um ID temporário para o mesmo.\n","requestBody":{"content":{"multipart/form-data":{"schema":{"required":["file"],"type":"object","properties":{"file":{"type":"string","description":"Arquivo CNAB","format":"binary"}}}}},"required":true},"responses":{"200":{"description":"Informações básicas do arquivo","content":{"application/json":{"schema":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/File"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/file/{fileId}":{"get":{"tags":["file"],"summary":"Retorna as informações básicas de um arquivo previamente processado","parameters":[{"name":"fileId","in":"path","description":"ID Temporário gerado no endpoint file","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Informações básicas do arquivo","content":{"application/json":{"schema":{"type":"object","properties":{"data":{"$ref":"#/components/schemas/File"}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/file/{fileId}/lines":{"get":{"tags":["file"],"summary":"Retorna todas as linhas e seus respectivos campos (de forma não processada, apenas indicando os campos reconhecidos)","parameters":[{"name":"fileId","in":"path","description":"ID Temporário gerado no endpoint file","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Informações básicas do arquivo","content":{"application/json":{"schema":{"type":"object","properties":{"data":{"type":"array","items":{"$ref":"#/components/schemas/Line"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/file/{fileId}/occurrences":{"get":{"tags":["file"],"summary":"Retorna as informações de baixa de boletos e outros tipos de ocorrências","parameters":[{"name":"fileId","in":"path","description":"ID Temporário gerado no endpoint file","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Informações básicas do arquivo","content":{"application/json":{"schema":{"type":"object","properties":{"data":{"type":"array","items":{"$ref":"#/components/schemas/Occurrence"}}}}}}},"default":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}}},"components":{"schemas":{"Error":{"type":"object","properties":{"errors":{"type":"array","items":{"type":"object","properties":{"detail":{"type":"string"},"title":{"type":"string"}}}}}},"File":{"type":"object","properties":{"attributes":{"type":"object","properties":{"account_number":{"type":"string","description":"Número da conta à qual este arquivo está vinculado"},"bank_code":{"type":"integer","description":"Código do banco"},"bank_name":{"type":"string","description":"Nome do banco"},"company_name":{"type":"string","description":"Nome da empresa a quem pertence este arquivo"},"generation_date":{"type":"string","description":"Data em que este arquivo foi gerado","format":"date"},"name":{"type":"string","description":"Nome do arquivo"}}},"id":{"type":"string","description":"Id temporário gerado para o arquivo"},"type":{"type":"string","description":"Sempre 'files' para seguir a especificação JSON API"}}},"Line":{"type":"object","properties":{"attributes":{"type":"object","properties":{"identified_fields":{"type":"array","items":{"type":"object","properties":{"end":{"type":"integer"},"name":{"type":"string"},"start":{"type":"integer"},"value":{"type":"string"}}}},"raw_text":{"type":"string","description":"Linha completa (em texto)"}}},"id":{"type":"string","description":"Posição desta linha em relação as outras"},"type":{"type":"string","description":"Sempre 'lines' para seguir a especificação JSON API"}}},"Occurrence":{"type":"object","properties":{"attributes":{"type":"object","properties":{"agency":{"type":"string","description":"Retorna o número da agencia"},"bank_tax":{"type":"number","description":"Tarifa bancária"},"charged_agency":{"type":"string","description":"Retorna a agencia cobradora (com o digito)"},"code":{"type":"string","description":"Código de Ocorrência conforme o padrão CNAB"},"code_name":{"type":"string","description":"Nome do código"},"credit_date":{"type":"string","description":"Retorna a data em que o dinheiro caiu na conta"},"discount_value":{"type":"number","description":"Valor de desconto"},"document_number":{"type":"string","description":"Retorna o número do documento do boleto"},"due_date":{"type":"string","description":"Retorna a data de vencimento de boleto"},"iof_tax":{"type":"number","description":"Retorna o valor do Imposto sobre operações financeiras (IOF)"},"is_dda":{"type":"string","description":"Retorna de o boleto foi pago através do Débito Direto Autorizado"},"is_payment":{"type":"boolean","description":"Retorna se é para dar baixa no boleto"},"is_rejected_payment":{"type":"boolean","description":"Retorno se é uma baixa rejeitada (Ex: pedido de baixa foi rejeitado)"},"liquidation_code":{"type":"string","description":"Retorna o código de liquidação, normalmente usado para saber onde o cliente efetuou o pagamento"},"liquidation_description":{"type":"string","description":"Retorna a descrição do código de liquidação"},"mulct_value":{"type":"string","description":"Retorna o valor de juros e mora"},"occurrence_date":{"type":"string","description":"Retorna a data da ocorrencia, o dia do pagamento"},"others_credits_value":{"type":"number","description":"Retorna o valor de outros creditos"},"our_number":{"type":"string","description":"Retorna o nosso número do boleto (sem o digito)"},"payer_allegation":{"type":"string","description":"Retorna a alegação do pagador (para erros)"},"rebate_value":{"type":"number","description":"Retornna o valor dos abatimentos concedidos (depois da emissão)"},"received_value":{"type":"number","description":"Valor recebido"},"sequencial_number":{"type":"number","description":"Retorna o numero sequencial da ocorrência no arquivo"},"title_value":{"type":"number","description":"Valor do título (valor do boleto)"},"wallet":{"type":"string","description":"Retorna o número da carteira do boleto"}}},"id":{"type":"integer","description":"Posição da ocorrência em relação às outras ocorrências processadas neste mesmo arquivo"},"type":{"type":"string","description":"Sempre 'occurrences' para seguir a especificação JSON API"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Cnab Online",
+    "description" : "Processe arquivos de retorno CNAB",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://cnab-online.herokuapp.com/v1"
+  } ],
+  "paths" : {
+    "/file" : {
+      "post" : {
+        "tags" : [ "file" ],
+        "summary" : "Faz o upload de um arquivo",
+        "description" : "Processa um arquivo CNAB para obter informações sobre o mesmo. Retorna um ID temporário para o mesmo.\n",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "file" ],
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "type" : "string",
+                    "description" : "Arquivo CNAB",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Informações básicas do arquivo",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/File"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file/{fileId}" : {
+      "get" : {
+        "tags" : [ "file" ],
+        "summary" : "Retorna as informações básicas de um arquivo previamente processado",
+        "parameters" : [ {
+          "name" : "fileId",
+          "in" : "path",
+          "description" : "ID Temporário gerado no endpoint file",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Informações básicas do arquivo",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/File"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file/{fileId}/lines" : {
+      "get" : {
+        "tags" : [ "file" ],
+        "summary" : "Retorna todas as linhas e seus respectivos campos (de forma não processada, apenas indicando os campos reconhecidos)",
+        "parameters" : [ {
+          "name" : "fileId",
+          "in" : "path",
+          "description" : "ID Temporário gerado no endpoint file",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Informações básicas do arquivo",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Line"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file/{fileId}/occurrences" : {
+      "get" : {
+        "tags" : [ "file" ],
+        "summary" : "Retorna as informações de baixa de boletos e outros tipos de ocorrências",
+        "parameters" : [ {
+          "name" : "fileId",
+          "in" : "path",
+          "description" : "ID Temporário gerado no endpoint file",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Informações básicas do arquivo",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Occurrence"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "detail" : {
+                  "type" : "string"
+                },
+                "title" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "File" : {
+        "type" : "object",
+        "properties" : {
+          "attributes" : {
+            "type" : "object",
+            "properties" : {
+              "account_number" : {
+                "type" : "string",
+                "description" : "Número da conta à qual este arquivo está vinculado"
+              },
+              "bank_code" : {
+                "type" : "integer",
+                "description" : "Código do banco"
+              },
+              "bank_name" : {
+                "type" : "string",
+                "description" : "Nome do banco"
+              },
+              "company_name" : {
+                "type" : "string",
+                "description" : "Nome da empresa a quem pertence este arquivo"
+              },
+              "generation_date" : {
+                "type" : "string",
+                "description" : "Data em que este arquivo foi gerado",
+                "format" : "date"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Nome do arquivo"
+              }
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Id temporário gerado para o arquivo"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Sempre 'files' para seguir a especificação JSON API"
+          }
+        }
+      },
+      "Line" : {
+        "type" : "object",
+        "properties" : {
+          "attributes" : {
+            "type" : "object",
+            "properties" : {
+              "identified_fields" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "end" : {
+                      "type" : "integer"
+                    },
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "start" : {
+                      "type" : "integer"
+                    },
+                    "value" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "raw_text" : {
+                "type" : "string",
+                "description" : "Linha completa (em texto)"
+              }
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Posição desta linha em relação as outras"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Sempre 'lines' para seguir a especificação JSON API"
+          }
+        }
+      },
+      "Occurrence" : {
+        "type" : "object",
+        "properties" : {
+          "attributes" : {
+            "type" : "object",
+            "properties" : {
+              "agency" : {
+                "type" : "string",
+                "description" : "Retorna o número da agencia"
+              },
+              "bank_tax" : {
+                "type" : "number",
+                "description" : "Tarifa bancária"
+              },
+              "charged_agency" : {
+                "type" : "string",
+                "description" : "Retorna a agencia cobradora (com o digito)"
+              },
+              "code" : {
+                "type" : "string",
+                "description" : "Código de Ocorrência conforme o padrão CNAB"
+              },
+              "code_name" : {
+                "type" : "string",
+                "description" : "Nome do código"
+              },
+              "credit_date" : {
+                "type" : "string",
+                "description" : "Retorna a data em que o dinheiro caiu na conta"
+              },
+              "discount_value" : {
+                "type" : "number",
+                "description" : "Valor de desconto"
+              },
+              "document_number" : {
+                "type" : "string",
+                "description" : "Retorna o número do documento do boleto"
+              },
+              "due_date" : {
+                "type" : "string",
+                "description" : "Retorna a data de vencimento de boleto"
+              },
+              "iof_tax" : {
+                "type" : "number",
+                "description" : "Retorna o valor do Imposto sobre operações financeiras (IOF)"
+              },
+              "is_dda" : {
+                "type" : "string",
+                "description" : "Retorna de o boleto foi pago através do Débito Direto Autorizado"
+              },
+              "is_payment" : {
+                "type" : "boolean",
+                "description" : "Retorna se é para dar baixa no boleto"
+              },
+              "is_rejected_payment" : {
+                "type" : "boolean",
+                "description" : "Retorno se é uma baixa rejeitada (Ex: pedido de baixa foi rejeitado)"
+              },
+              "liquidation_code" : {
+                "type" : "string",
+                "description" : "Retorna o código de liquidação, normalmente usado para saber onde o cliente efetuou o pagamento"
+              },
+              "liquidation_description" : {
+                "type" : "string",
+                "description" : "Retorna a descrição do código de liquidação"
+              },
+              "mulct_value" : {
+                "type" : "string",
+                "description" : "Retorna o valor de juros e mora"
+              },
+              "occurrence_date" : {
+                "type" : "string",
+                "description" : "Retorna a data da ocorrencia, o dia do pagamento"
+              },
+              "others_credits_value" : {
+                "type" : "number",
+                "description" : "Retorna o valor de outros creditos"
+              },
+              "our_number" : {
+                "type" : "string",
+                "description" : "Retorna o nosso número do boleto (sem o digito)"
+              },
+              "payer_allegation" : {
+                "type" : "string",
+                "description" : "Retorna a alegação do pagador (para erros)"
+              },
+              "rebate_value" : {
+                "type" : "number",
+                "description" : "Retornna o valor dos abatimentos concedidos (depois da emissão)"
+              },
+              "received_value" : {
+                "type" : "number",
+                "description" : "Valor recebido"
+              },
+              "sequencial_number" : {
+                "type" : "number",
+                "description" : "Retorna o numero sequencial da ocorrência no arquivo"
+              },
+              "title_value" : {
+                "type" : "number",
+                "description" : "Valor do título (valor do boleto)"
+              },
+              "wallet" : {
+                "type" : "string",
+                "description" : "Retorna o número da carteira do boleto"
+              }
+            }
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "Posição da ocorrência em relação às outras ocorrências processadas neste mesmo arquivo"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Sempre 'occurrences' para seguir a especificação JSON API"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,499 @@
-{"openapi":"3.0.1","info":{"title":"TrafficManagerManagementClient","version":"2017-09-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys":{"get":{"tags":["RealUserMetrics"],"description":"Get the subscription-level key used for Real User Metrics collection.","operationId":"TrafficManagerUserMetricsKeys_Get","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The subscription-level Traffic Manager Real User Metrics key.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrafficManagerUserMetricsKeyModel"}}}},"default":{"description":"Default response. It will be deserialized as per the Error definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"put":{"tags":["RealUserMetrics"],"description":"Create or update a subscription-level key used for Real User Metrics collection.","operationId":"TrafficManagerUserMetricsKeys_CreateOrUpdate","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"201":{"description":"A new subscription-level key has been created for Real User Metrics collection.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TrafficManagerUserMetricsKeyModel"}}}},"default":{"description":"Default response. It will be deserialized as per the Error definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"delete":{"tags":["RealUserMetrics"],"description":"Delete a subscription-level key used for Real User Metrics collection.","operationId":"TrafficManagerUserMetricsKeys_Delete","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Traffic Manager Real User Metrics key was deleted successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeleteOperationResult"}}}},"default":{"description":"Default response. It will be deserialized as per the Error definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}":{"get":{"tags":["HeatMaps"],"description":"Gets latest heatmap for Traffic Manager profile.","operationId":"HeatMap_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group containing the Traffic Manager endpoint.","required":true,"schema":{"type":"string"}},{"name":"profileName","in":"path","description":"The name of the Traffic Manager profile.","required":true,"schema":{"type":"string"}},{"name":"heatMapType","in":"path","description":"The type of HeatMap for the Traffic Manager profile.","required":true,"schema":{"type":"string","enum":["default"]}},{"name":"topLeft","in":"query","description":"The top left latitude,longitude pair of the rectangular viewport to query for.","allowEmptyValue":true,"style":"form","explode":false,"schema":{"maxItems":2,"minItems":2,"type":"array","items":{"type":"number","format":"double"}}},{"name":"botRight","in":"query","description":"The bottom right latitude,longitude pair of the rectangular viewport to query for.","allowEmptyValue":true,"style":"form","explode":false,"schema":{"maxItems":2,"minItems":2,"type":"array","items":{"type":"number","format":"double"}}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Traffic Manager heatmap.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HeatMapModel"}}}},"default":{"description":"Default response. It will be deserialized as per the Error definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}}},"components":{"schemas":{"CloudError":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/CloudErrorBody"}},"description":"An error returned by the Azure Resource Manager"},"CloudErrorBody":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"details":{"type":"array","description":"Error details","items":{"$ref":"#/components/schemas/CloudErrorBody"}},"message":{"type":"string","description":"Error message"},"target":{"type":"string","description":"Error target"}},"description":"The content of an error returned by the Azure Resource Manager"},"DeleteOperationResult":{"type":"object","properties":{"boolean":{"type":"boolean","description":"The result of the operation or request.","readOnly":true}},"description":"The result of the request or operation."},"HeatMapEndpoint":{"type":"object","properties":{"endpointId":{"type":"integer","description":"A number uniquely identifying this endpoint in query experiences."},"resourceId":{"type":"string","description":"The ARM Resource ID of this Traffic Manager endpoint."}},"description":"Class which is a sparse representation of a Traffic Manager endpoint."},"HeatMapModel":{"properties":{"properties":{"$ref":"#/components/schemas/HeatMapProperties"}},"description":"Class representing a Traffic Manager HeatMap.","allOf":[{"$ref":"#/components/schemas/ProxyResource"}]},"HeatMapProperties":{"type":"object","properties":{"endTime":{"type":"string","description":"The ending of the time window for this HeatMap, exclusive.","format":"date-time"},"endpoints":{"type":"array","description":"The endpoints used in this HeatMap calculation.","items":{"$ref":"#/components/schemas/HeatMapEndpoint"}},"startTime":{"type":"string","description":"The beginning of the time window for this HeatMap, inclusive.","format":"date-time"},"trafficFlows":{"type":"array","description":"The traffic flows produced in this HeatMap calculation.","items":{"$ref":"#/components/schemas/TrafficFlow"}}},"description":"Class representing a Traffic Manager HeatMap properties."},"ProxyResource":{"description":"The resource model definition for a ARM proxy resource. It will have everything other than required location and tags","allOf":[{"$ref":"#/components/schemas/Resource"}]},"QueryExperience":{"required":["endpointId","queryCount"],"type":"object","properties":{"endpointId":{"type":"integer","description":"The id of the endpoint from the 'endpoints' array which these queries were routed to."},"latency":{"type":"number","description":"The latency experienced by queries originating from this location.","format":"double"},"queryCount":{"type":"integer","description":"The number of queries originating from this location."}},"description":"Class representing a Traffic Manager HeatMap query experience properties."},"Resource":{"type":"object","properties":{"id":{"type":"string","description":"Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}","readOnly":true},"name":{"type":"string","description":"The name of the resource","readOnly":true},"type":{"type":"string","description":"The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles.","readOnly":true}},"description":"The core properties of ARM resources"},"TrackedResource":{"properties":{"location":{"type":"string","description":"The Azure Region where the resource lives"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."}},"description":"The resource model definition for a ARM tracked top level resource","allOf":[{"$ref":"#/components/schemas/Resource"}]},"TrafficFlow":{"type":"object","properties":{"latitude":{"type":"number","description":"The approximate latitude that these queries originated from.","format":"double"},"longitude":{"type":"number","description":"The approximate longitude that these queries originated from.","format":"double"},"queryExperiences":{"type":"array","description":"The query experiences produced in this HeatMap calculation.","items":{"$ref":"#/components/schemas/QueryExperience"}},"sourceIp":{"type":"string","description":"The IP address that this query experience originated from."}},"description":"Class representing a Traffic Manager HeatMap traffic flow properties."},"TrafficManagerUserMetricsKeyModel":{"properties":{"id":{"type":"string","description":"Fully qualified resource Id for the resource. Ex - /providers/Microsoft.Network/trafficManagerUserMetricsKeys"},"key":{"type":"string","description":"The key returned by the Real User Metrics operation."},"name":{"type":"string","description":"The word default."},"type":{"type":"string","description":"The type of the resource. Ex- Microsoft.Network/trafficManagerUserMetricsKeys."}},"description":"Class representing a Traffic Manager Real User Metrics key response.","allOf":[{"$ref":"#/components/schemas/ProxyResource"}]}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "TrafficManagerManagementClient",
+    "version" : "2017-09-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys" : {
+      "get" : {
+        "tags" : [ "RealUserMetrics" ],
+        "description" : "Get the subscription-level key used for Real User Metrics collection.",
+        "operationId" : "TrafficManagerUserMetricsKeys_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The subscription-level Traffic Manager Real User Metrics key.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TrafficManagerUserMetricsKeyModel"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default response. It will be deserialized as per the Error definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "RealUserMetrics" ],
+        "description" : "Create or update a subscription-level key used for Real User Metrics collection.",
+        "operationId" : "TrafficManagerUserMetricsKeys_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "A new subscription-level key has been created for Real User Metrics collection.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TrafficManagerUserMetricsKeyModel"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default response. It will be deserialized as per the Error definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "RealUserMetrics" ],
+        "description" : "Delete a subscription-level key used for Real User Metrics collection.",
+        "operationId" : "TrafficManagerUserMetricsKeys_Delete",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Traffic Manager Real User Metrics key was deleted successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeleteOperationResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default response. It will be deserialized as per the Error definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}" : {
+      "get" : {
+        "tags" : [ "HeatMaps" ],
+        "description" : "Gets latest heatmap for Traffic Manager profile.",
+        "operationId" : "HeatMap_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group containing the Traffic Manager endpoint.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "profileName",
+          "in" : "path",
+          "description" : "The name of the Traffic Manager profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "heatMapType",
+          "in" : "path",
+          "description" : "The type of HeatMap for the Traffic Manager profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default" ]
+          }
+        }, {
+          "name" : "topLeft",
+          "in" : "query",
+          "description" : "The top left latitude,longitude pair of the rectangular viewport to query for.",
+          "allowEmptyValue" : true,
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "maxItems" : 2,
+            "minItems" : 2,
+            "type" : "array",
+            "items" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        }, {
+          "name" : "botRight",
+          "in" : "query",
+          "description" : "The bottom right latitude,longitude pair of the rectangular viewport to query for.",
+          "allowEmptyValue" : true,
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "maxItems" : 2,
+            "minItems" : 2,
+            "type" : "array",
+            "items" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Traffic Manager heatmap.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HeatMapModel"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default response. It will be deserialized as per the Error definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CloudError" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/CloudErrorBody"
+          }
+        },
+        "description" : "An error returned by the Azure Resource Manager"
+      },
+      "CloudErrorBody" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "Error details",
+            "items" : {
+              "$ref" : "#/components/schemas/CloudErrorBody"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message"
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "Error target"
+          }
+        },
+        "description" : "The content of an error returned by the Azure Resource Manager"
+      },
+      "DeleteOperationResult" : {
+        "type" : "object",
+        "properties" : {
+          "boolean" : {
+            "type" : "boolean",
+            "description" : "The result of the operation or request.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The result of the request or operation."
+      },
+      "HeatMapEndpoint" : {
+        "type" : "object",
+        "properties" : {
+          "endpointId" : {
+            "type" : "integer",
+            "description" : "A number uniquely identifying this endpoint in query experiences."
+          },
+          "resourceId" : {
+            "type" : "string",
+            "description" : "The ARM Resource ID of this Traffic Manager endpoint."
+          }
+        },
+        "description" : "Class which is a sparse representation of a Traffic Manager endpoint."
+      },
+      "HeatMapModel" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/HeatMapProperties"
+          }
+        },
+        "description" : "Class representing a Traffic Manager HeatMap.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProxyResource"
+        } ]
+      },
+      "HeatMapProperties" : {
+        "type" : "object",
+        "properties" : {
+          "endTime" : {
+            "type" : "string",
+            "description" : "The ending of the time window for this HeatMap, exclusive.",
+            "format" : "date-time"
+          },
+          "endpoints" : {
+            "type" : "array",
+            "description" : "The endpoints used in this HeatMap calculation.",
+            "items" : {
+              "$ref" : "#/components/schemas/HeatMapEndpoint"
+            }
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The beginning of the time window for this HeatMap, inclusive.",
+            "format" : "date-time"
+          },
+          "trafficFlows" : {
+            "type" : "array",
+            "description" : "The traffic flows produced in this HeatMap calculation.",
+            "items" : {
+              "$ref" : "#/components/schemas/TrafficFlow"
+            }
+          }
+        },
+        "description" : "Class representing a Traffic Manager HeatMap properties."
+      },
+      "ProxyResource" : {
+        "description" : "The resource model definition for a ARM proxy resource. It will have everything other than required location and tags",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "QueryExperience" : {
+        "required" : [ "endpointId", "queryCount" ],
+        "type" : "object",
+        "properties" : {
+          "endpointId" : {
+            "type" : "integer",
+            "description" : "The id of the endpoint from the 'endpoints' array which these queries were routed to."
+          },
+          "latency" : {
+            "type" : "number",
+            "description" : "The latency experienced by queries originating from this location.",
+            "format" : "double"
+          },
+          "queryCount" : {
+            "type" : "integer",
+            "description" : "The number of queries originating from this location."
+          }
+        },
+        "description" : "Class representing a Traffic Manager HeatMap query experience properties."
+      },
+      "Resource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The core properties of ARM resources"
+      },
+      "TrackedResource" : {
+        "properties" : {
+          "location" : {
+            "type" : "string",
+            "description" : "The Azure Region where the resource lives"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags."
+          }
+        },
+        "description" : "The resource model definition for a ARM tracked top level resource",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "TrafficFlow" : {
+        "type" : "object",
+        "properties" : {
+          "latitude" : {
+            "type" : "number",
+            "description" : "The approximate latitude that these queries originated from.",
+            "format" : "double"
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "The approximate longitude that these queries originated from.",
+            "format" : "double"
+          },
+          "queryExperiences" : {
+            "type" : "array",
+            "description" : "The query experiences produced in this HeatMap calculation.",
+            "items" : {
+              "$ref" : "#/components/schemas/QueryExperience"
+            }
+          },
+          "sourceIp" : {
+            "type" : "string",
+            "description" : "The IP address that this query experience originated from."
+          }
+        },
+        "description" : "Class representing a Traffic Manager HeatMap traffic flow properties."
+      },
+      "TrafficManagerUserMetricsKeyModel" : {
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Fully qualified resource Id for the resource. Ex - /providers/Microsoft.Network/trafficManagerUserMetricsKeys"
+          },
+          "key" : {
+            "type" : "string",
+            "description" : "The key returned by the Real User Metrics operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The word default."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the resource. Ex- Microsoft.Network/trafficManagerUserMetricsKeys."
+          }
+        },
+        "description" : "Class representing a Traffic Manager Real User Metrics key response.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProxyResource"
+        } ]
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

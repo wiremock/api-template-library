@@ -1,1 +1,1388 @@
-{"openapi":"3.0.1","info":{"title":"Visual Studio Resource Provider Client","description":"Use these APIs to manage Visual Studio Team Services resources through the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol specification and each operation returns an x-ms-request-id header that can be used to obtain information about the request. You must make sure that requests made to these resources are secure. For more information, see https://docs.microsoft.com/en-us/rest/api/index.","version":"2017-11-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/microsoft.visualstudio/operations":{"get":{"tags":["Operations"],"summary":"Operations_List","description":"Gets the details of all operations possible on the Microsoft.VisualStudio resource provider.","operationId":"Operations_List","responses":{"200":{"description":"The operation succeeded. The response contains the possible operations on the Microsoft.VisualStudio resource provider.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/microsoft.visualstudio/checkNameAvailability":{"post":{"tags":["Accounts"],"summary":"Accounts_CheckNameAvailability","description":"Checks if the specified Visual Studio Team Services account name is available. Resource name can be either an account name or an account name and PUID.","operationId":"Accounts_CheckNameAvailability","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters describing the name to check availability for.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CheckNameAvailabilityParameter"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The response contains the result of the name availability check.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CheckNameAvailabilityResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project":{"get":{"tags":["Projects"],"summary":"Projects_ListByAccountResource","description":"Gets all Visual Studio Team Services project resources created in the specified Team Services account.","operationId":"Project_ListByAccountResource","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the Visual Studio Team Services project resources created in the specified Team Services account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResourceListResult"}}}}},"deprecated":true}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project/{resourceName}":{"get":{"tags":["Projects"],"summary":"Projects_Get","description":"Gets the details of a Team Services project resource.","operationId":"Projects_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}},"404":{"description":"The project or Azure subscription was not found."}},"deprecated":true},"put":{"tags":["Projects"],"summary":"Projects_Create","description":"Creates a Team Services project in the collection with the specified name. 'VersionControlOption' and 'ProcessTemplateId' must be specified in the resource properties. Valid values for VersionControlOption: Git, Tfvc. Valid values for ProcessTemplateId: 6B724908-EF14-45CF-84F8-768B5384DA45, ADCC42AB-9882-485E-A3ED-7678F01F66BC, 27450541-8E31-4150-9947-DC59F998FC01 (these IDs correspond to Scrum, Agile, and CMMI process templates).","operationId":"Projects_Create","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}},{"name":"validating","in":"query","description":"This parameter is ignored and should be set to an empty string.","schema":{"type":"string"}}],"requestBody":{"description":"The request data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The response contains the details of the created or updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}},"202":{"description":"The operation succeeded. A job to create the team project resource has been queued. The URI to monitor the status of the job is provided in the 'location' header."}},"deprecated":true},"patch":{"tags":["Projects"],"summary":"Projects_Update","description":"Updates the tags of the specified Team Services project.","operationId":"Projects_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"rootResourceName","in":"path","description":"Name of the Team Services account.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the Team Services project.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The request data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResourceUpdateParameters"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The response contains the details of the updated team project resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProjectResource"}}}}},"deprecated":true}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account":{"get":{"tags":["Accounts"],"summary":"Accounts_ListByResourceGroup","description":"Gets all Visual Studio Team Services account resources under the resource group linked to the specified Azure subscription.","operationId":"Accounts_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the Visual Studio Team Services account resources linked to the Azure subscription.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AccountResourceListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{accountResourceName}/extension":{"get":{"tags":["Extensions"],"summary":"Extensions_ListByAccount","description":"Gets the details of the extension resources created within the resource group.","operationId":"Extensions_ListByAccount","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"accountResourceName","in":"path","description":"The name of the Visual Studio Team Services account resource.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains all extension resource details for the specified account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResourceListResult"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{accountResourceName}/extension/{extensionResourceName}":{"get":{"tags":["Extensions"],"summary":"Extensions_Get","description":"Gets the details of an extension associated with a Visual Studio Team Services account resource.","operationId":"Extensions_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"accountResourceName","in":"path","description":"The name of the Visual Studio Team Services account resource.","required":true,"schema":{"type":"string"}},{"name":"extensionResourceName","in":"path","description":"The name of the extension.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the extension resource details for the specified account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResource"}}}},"404":{"description":"The specified extension has no plans defined."}}},"put":{"tags":["Extensions"],"summary":"Extensions_Create","description":"Registers the extension with a Visual Studio Team Services account.","operationId":"Extensions_Create","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"accountResourceName","in":"path","description":"The name of the Visual Studio Team Services account resource.","required":true,"schema":{"type":"string"}},{"name":"extensionResourceName","in":"path","description":"The name of the extension.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"An object containing additional information related to the extension request.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResourceRequest"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The extension resource was created for the specified account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResource"}}}}}},"delete":{"tags":["Extensions"],"summary":"Extensions_Delete","description":"Removes an extension resource registration for a Visual Studio Team Services account.","operationId":"Extensions_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"accountResourceName","in":"path","description":"The name of the Visual Studio Team Services account resource.","required":true,"schema":{"type":"string"}},{"name":"extensionResourceName","in":"path","description":"The name of the extension.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The extension resource has been deleted for the specified account."}}},"patch":{"tags":["Extensions"],"summary":"Extensions_Update","description":"Updates an existing extension registration for the Visual Studio Team Services account.","operationId":"Extensions_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"accountResourceName","in":"path","description":"The name of the Visual Studio Team Services account resource.","required":true,"schema":{"type":"string"}},{"name":"extensionResourceName","in":"path","description":"The name of the extension.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"An object containing additional information related to the extension request.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResourceRequest"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The extension resource was updated for the specified account.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ExtensionResource"}}}}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{resourceName}":{"get":{"tags":["Accounts"],"summary":"Accounts_Get","description":"Gets the Visual Studio Team Services account resource details.","operationId":"Accounts_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the resource.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The response contains the details of the Visual Studio Team Services account resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AccountResource"}}}},"404":{"description":"The Visual Studio Team Services account does not exist."}}},"put":{"tags":["Accounts"],"summary":"Accounts_CreateOrUpdate","description":"Creates or updates a Visual Studio Team Services account resource.","operationId":"Accounts_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the resource.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The request data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AccountResourceRequest"}}},"required":true},"responses":{"200":{"description":"The operation succeeded. The Visual Studio Team Services account resource was created or updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AccountResource"}}}},"404":{"description":"The Visual Studio Team Services account does not exist."}}},"delete":{"tags":["Accounts"],"summary":"Accounts_Delete","description":"Deletes a Visual Studio Team Services account resource.","operationId":"Accounts_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"Name of the resource.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation succeeded. The Visual Studio Team Services account resource was deleted."}}}}},"components":{"schemas":{"AccountResource":{"properties":{"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource properties."}},"description":"The response to an account resource GET request.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"AccountResourceListResult":{"type":"object","properties":{"value":{"type":"array","description":"Array of resource details.","items":{"$ref":"#/components/schemas/AccountResource"}}},"description":"The response to an account resource list GET request."},"AccountResourceRequest":{"type":"object","properties":{"accountName":{"type":"string","description":"The account name."},"location":{"type":"string","description":"The Azure instance location."},"operationType":{"type":"string","description":"The type of the operation.","enum":["unknown","create","update","link"]},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"The custom properties of the resource."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The custom tags of the resource."}},"description":"The body of a PUT request to modify a Visual Studio account resource."},"ApplicationSource":{"required":["applicationType","sourceType"],"type":"object","properties":{"applicationConfiguration":{"type":"object","additionalProperties":{"type":"string"},"description":"Application specific properties."},"applicationType":{"type":"string","description":"Type of application.","enum":["AspDotNet","AspDotNetCore","NodeJs"]},"sourceType":{"type":"string","description":"Type of application source.","enum":["CodeTemplate","CodeRepository"]}},"description":"Defines the source application for a VSTS pipeline.","discriminator":{"propertyName":"sourceType"}},"ApplicationTarget":{"required":["resources","targetType"],"type":"object","properties":{"resources":{"type":"array","description":"List of target resources.","items":{"$ref":"#/components/schemas/TargetResource"}},"targetType":{"type":"string","description":"Type of target.","enum":["WindowsAppService"]}},"description":"Defines the target resources for a VSTS pipeline."},"Authorization":{"required":["authorizationType"],"type":"object","properties":{"authorizationType":{"type":"string","description":"Type of authorization.","enum":["authorizationToken","personalAccessToken"]},"parameters":{"type":"object","additionalProperties":{"type":"string"},"description":"Authorization parameters corresponding to the authorization type."}},"description":"Defines the authorization type and its parameters."},"CheckNameAvailabilityParameter":{"type":"object","properties":{"resourceName":{"type":"string","description":"The name of the resource to check availability for."},"resourceType":{"type":"string","description":"The type of resource to check availability for."}},"description":"The body of a POST request to check name availability."},"CheckNameAvailabilityResult":{"type":"object","properties":{"message":{"type":"string","description":"The message describing the detailed reason."},"nameAvailable":{"type":"boolean","description":"The value which indicates whether the provided name is available."}},"description":"The response to a name availability request."},"CodeRepository":{"required":["defaultBranch","id","repositoryType"],"type":"object","properties":{"authorizationReference":{"type":"string","description":"Reference to the authorization info used to access the code repository. This value is used as a key into the global authorization details dictionary."},"defaultBranch":{"type":"string","description":"Default branch for which continuous integration should be configured in the VSTS pipeline."},"id":{"type":"string","description":"Unique identifier of the code repository."},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Repository-specific properties."},"repositoryType":{"type":"string","description":"Type of code repository.","enum":["gitHub","vstsGit"]}},"description":"Defines a code repository."},"CodeRepositoryApplicationSource":{"properties":{"repository":{"$ref":"#/components/schemas/CodeRepository"}},"description":"Defines the source application, when it resides in a code repository.","allOf":[{"$ref":"#/components/schemas/ApplicationSource"}]},"CodeTemplateApplicationSource":{"description":"Defines the source application template.","allOf":[{"$ref":"#/components/schemas/ApplicationSource"}]},"ExtensionResource":{"properties":{"plan":{"$ref":"#/components/schemas/ExtensionResourcePlan"},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource properties."}},"description":"The response to an extension resource GET request.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"ExtensionResourceListResult":{"type":"object","properties":{"value":{"type":"array","description":"Array of extension resource details.","items":{"$ref":"#/components/schemas/ExtensionResource"}}},"description":"The response to an extension resource list GET request."},"ExtensionResourcePlan":{"type":"object","properties":{"name":{"type":"string","description":"Name of the plan."},"product":{"type":"string","description":"Product name."},"promotionCode":{"type":"string","description":"Optional: the promotion code associated with the plan."},"publisher":{"type":"string","description":"Name of the extension publisher."},"version":{"type":"string","description":"A string that uniquely identifies the plan version."}},"description":"Plan data for an extension resource."},"ExtensionResourceRequest":{"type":"object","properties":{"location":{"type":"string","description":"The Azure region of the Visual Studio account associated with this request (i.e 'southcentralus'.)"},"plan":{"$ref":"#/components/schemas/ExtensionResourcePlan"},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"A dictionary of extended properties. This property is currently unused."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"A dictionary of user-defined tags to be stored with the extension resource."}},"description":"The body of an extension resource PUT request."},"Operation":{"type":"object","properties":{"display":{"$ref":"#/components/schemas/OperationProperties"},"name":{"type":"string","description":"The name of the resource operation."}},"description":"Properties of an operation supported by the resource provider."},"OperationListResult":{"type":"object","properties":{"value":{"type":"array","description":"A list of operations supported by a resource provider.","items":{"$ref":"#/components/schemas/Operation"}}},"description":"Container for a list of operations supported by a resource provider."},"OperationProperties":{"type":"object","properties":{"description":{"type":"string","description":"The description of the resource operation."},"operation":{"type":"string","description":"The operation name."},"provider":{"type":"string","description":"The provider name."},"resource":{"type":"string","description":"The resource name."}},"description":"Properties of an operation supported by the resource provider."},"PipelineTemplate":{"required":["applicationSource","applicationTarget","authorizationDetails"],"type":"object","properties":{"applicationSource":{"$ref":"#/components/schemas/ApplicationSource"},"applicationTarget":{"$ref":"#/components/schemas/ApplicationTarget"},"authorizationDetails":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/Authorization"},"description":"Global dictionary of authorization details used by the pipeline, with a friendly name as key. Individual resource in the pipeline can reference to a specific authorization info using the friendly name."}},"description":"Defines a VSTS pipeline template."},"ProjectResource":{"properties":{"kind":{"type":"string","description":"Kind of project resource","enum":["project","bootstrappedProject"]},"properties":{"$ref":"#/components/schemas/ProjectResourceProperties"}},"description":"A Visual Studio Team Services project resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"ProjectResourceListResult":{"type":"object","properties":{"value":{"type":"array","description":"List of project resource details.","items":{"$ref":"#/components/schemas/ProjectResource"}}},"description":"The response to a request to list Team Services project resources in a resource group/account."},"ProjectResourceProperties":{"type":"object","properties":{"bootstrapPipelineTemplate":{"$ref":"#/components/schemas/PipelineTemplate"},"ownerUpn":{"type":"string","description":"Optional UPN of the owner, on-behalf-of whom the project is being created."},"processTemplateId":{"type":"string","description":"Process template to use in the project.","enum":["Scrum","Agile","Cmmi"]},"tfsUniqueIdentifier":{"type":"string","description":"Unique identifier of the VSTS project.","readOnly":true},"versionControlOption":{"type":"string","description":"Version control to use for the default repo created in the project.","enum":["Git","Tfvc"]}},"description":"Defines the custom properties of project resource."},"ProjectResourceUpdateParameters":{"type":"object","properties":{"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The custom tags to be set on the resource."}},"description":"The parameters to update a project resource."},"Resource":{"type":"object","properties":{"id":{"type":"string","description":"Unique identifier of the resource.","readOnly":true},"location":{"type":"string","description":"Resource location."},"name":{"type":"string","description":"Resource name.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"A generic Azure Resource Manager resource."},"TargetResource":{"required":["id","role"],"type":"object","properties":{"authorizationReference":{"type":"string","description":"Reference to the authorization info used to access the target resource. This value is used as a key into the global authorization details dictionary."},"id":{"type":"string","description":"Unique identifier of the target resource."},"role":{"type":"string","description":"Role of the target resource."}},"description":"Defines a single resource used as target for a VSTS pipeline."}},"parameters":{"apiVersionParameter":{"name":"api-version","in":"query","description":"API Version","required":true,"schema":{"type":"string"}},"resourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"Name of the resource group within the Azure subscription.","required":true,"schema":{"type":"string"}},"subscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription identifier.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Visual Studio Resource Provider Client",
+    "description" : "Use these APIs to manage Visual Studio Team Services resources through the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol specification and each operation returns an x-ms-request-id header that can be used to obtain information about the request. You must make sure that requests made to these resources are secure. For more information, see https://docs.microsoft.com/en-us/rest/api/index.",
+    "version" : "2017-11-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/microsoft.visualstudio/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "summary" : "Operations_List",
+        "description" : "Gets the details of all operations possible on the Microsoft.VisualStudio resource provider.",
+        "operationId" : "Operations_List",
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the possible operations on the Microsoft.VisualStudio resource provider.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/microsoft.visualstudio/checkNameAvailability" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Accounts_CheckNameAvailability",
+        "description" : "Checks if the specified Visual Studio Team Services account name is available. Resource name can be either an account name or an account name and PUID.",
+        "operationId" : "Accounts_CheckNameAvailability",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters describing the name to check availability for.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CheckNameAvailabilityParameter"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the result of the name availability check.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CheckNameAvailabilityResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_ListByAccountResource",
+        "description" : "Gets all Visual Studio Team Services project resources created in the specified Team Services account.",
+        "operationId" : "Project_ListByAccountResource",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the Visual Studio Team Services project resources created in the specified Team Services account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResourceListResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{rootResourceName}/project/{resourceName}" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_Get",
+        "description" : "Gets the details of a Team Services project resource.",
+        "operationId" : "Projects_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The project or Azure subscription was not found."
+          }
+        },
+        "deprecated" : true
+      },
+      "put" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_Create",
+        "description" : "Creates a Team Services project in the collection with the specified name. 'VersionControlOption' and 'ProcessTemplateId' must be specified in the resource properties. Valid values for VersionControlOption: Git, Tfvc. Valid values for ProcessTemplateId: 6B724908-EF14-45CF-84F8-768B5384DA45, ADCC42AB-9882-485E-A3ED-7678F01F66BC, 27450541-8E31-4150-9947-DC59F998FC01 (these IDs correspond to Scrum, Agile, and CMMI process templates).",
+        "operationId" : "Projects_Create",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "validating",
+          "in" : "query",
+          "description" : "This parameter is ignored and should be set to an empty string.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The request data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProjectResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the created or updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "The operation succeeded. A job to create the team project resource has been queued. The URI to monitor the status of the job is provided in the 'location' header."
+          }
+        },
+        "deprecated" : true
+      },
+      "patch" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Projects_Update",
+        "description" : "Updates the tags of the specified Team Services project.",
+        "operationId" : "Projects_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "rootResourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the Team Services project.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The request data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProjectResourceUpdateParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the updated team project resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProjectResource"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Accounts_ListByResourceGroup",
+        "description" : "Gets all Visual Studio Team Services account resources under the resource group linked to the specified Azure subscription.",
+        "operationId" : "Accounts_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the Visual Studio Team Services account resources linked to the Azure subscription.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountResourceListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{accountResourceName}/extension" : {
+      "get" : {
+        "tags" : [ "Extensions" ],
+        "summary" : "Extensions_ListByAccount",
+        "description" : "Gets the details of the extension resources created within the resource group.",
+        "operationId" : "Extensions_ListByAccount",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountResourceName",
+          "in" : "path",
+          "description" : "The name of the Visual Studio Team Services account resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains all extension resource details for the specified account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtensionResourceListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{accountResourceName}/extension/{extensionResourceName}" : {
+      "get" : {
+        "tags" : [ "Extensions" ],
+        "summary" : "Extensions_Get",
+        "description" : "Gets the details of an extension associated with a Visual Studio Team Services account resource.",
+        "operationId" : "Extensions_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountResourceName",
+          "in" : "path",
+          "description" : "The name of the Visual Studio Team Services account resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extensionResourceName",
+          "in" : "path",
+          "description" : "The name of the extension.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the extension resource details for the specified account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtensionResource"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The specified extension has no plans defined."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Extensions" ],
+        "summary" : "Extensions_Create",
+        "description" : "Registers the extension with a Visual Studio Team Services account.",
+        "operationId" : "Extensions_Create",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountResourceName",
+          "in" : "path",
+          "description" : "The name of the Visual Studio Team Services account resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extensionResourceName",
+          "in" : "path",
+          "description" : "The name of the extension.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "An object containing additional information related to the extension request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtensionResourceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The extension resource was created for the specified account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtensionResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Extensions" ],
+        "summary" : "Extensions_Delete",
+        "description" : "Removes an extension resource registration for a Visual Studio Team Services account.",
+        "operationId" : "Extensions_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountResourceName",
+          "in" : "path",
+          "description" : "The name of the Visual Studio Team Services account resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extensionResourceName",
+          "in" : "path",
+          "description" : "The name of the extension.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The extension resource has been deleted for the specified account."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Extensions" ],
+        "summary" : "Extensions_Update",
+        "description" : "Updates an existing extension registration for the Visual Studio Team Services account.",
+        "operationId" : "Extensions_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountResourceName",
+          "in" : "path",
+          "description" : "The name of the Visual Studio Team Services account resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extensionResourceName",
+          "in" : "path",
+          "description" : "The name of the extension.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "An object containing additional information related to the extension request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtensionResourceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The extension resource was updated for the specified account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtensionResource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.visualstudio/account/{resourceName}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Accounts_Get",
+        "description" : "Gets the Visual Studio Team Services account resource details.",
+        "operationId" : "Accounts_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The response contains the details of the Visual Studio Team Services account resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountResource"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The Visual Studio Team Services account does not exist."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Accounts_CreateOrUpdate",
+        "description" : "Creates or updates a Visual Studio Team Services account resource.",
+        "operationId" : "Accounts_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The request data.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AccountResourceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The Visual Studio Team Services account resource was created or updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountResource"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The Visual Studio Team Services account does not exist."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Accounts_Delete",
+        "description" : "Deletes a Visual Studio Team Services account resource.",
+        "operationId" : "Accounts_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group within the Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API Version",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "Name of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation succeeded. The Visual Studio Team Services account resource was deleted."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AccountResource" : {
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource properties."
+          }
+        },
+        "description" : "The response to an account resource GET request.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "AccountResourceListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "Array of resource details.",
+            "items" : {
+              "$ref" : "#/components/schemas/AccountResource"
+            }
+          }
+        },
+        "description" : "The response to an account resource list GET request."
+      },
+      "AccountResourceRequest" : {
+        "type" : "object",
+        "properties" : {
+          "accountName" : {
+            "type" : "string",
+            "description" : "The account name."
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "The Azure instance location."
+          },
+          "operationType" : {
+            "type" : "string",
+            "description" : "The type of the operation.",
+            "enum" : [ "unknown", "create", "update", "link" ]
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The custom properties of the resource."
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The custom tags of the resource."
+          }
+        },
+        "description" : "The body of a PUT request to modify a Visual Studio account resource."
+      },
+      "ApplicationSource" : {
+        "required" : [ "applicationType", "sourceType" ],
+        "type" : "object",
+        "properties" : {
+          "applicationConfiguration" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Application specific properties."
+          },
+          "applicationType" : {
+            "type" : "string",
+            "description" : "Type of application.",
+            "enum" : [ "AspDotNet", "AspDotNetCore", "NodeJs" ]
+          },
+          "sourceType" : {
+            "type" : "string",
+            "description" : "Type of application source.",
+            "enum" : [ "CodeTemplate", "CodeRepository" ]
+          }
+        },
+        "description" : "Defines the source application for a VSTS pipeline.",
+        "discriminator" : {
+          "propertyName" : "sourceType"
+        }
+      },
+      "ApplicationTarget" : {
+        "required" : [ "resources", "targetType" ],
+        "type" : "object",
+        "properties" : {
+          "resources" : {
+            "type" : "array",
+            "description" : "List of target resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/TargetResource"
+            }
+          },
+          "targetType" : {
+            "type" : "string",
+            "description" : "Type of target.",
+            "enum" : [ "WindowsAppService" ]
+          }
+        },
+        "description" : "Defines the target resources for a VSTS pipeline."
+      },
+      "Authorization" : {
+        "required" : [ "authorizationType" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationType" : {
+            "type" : "string",
+            "description" : "Type of authorization.",
+            "enum" : [ "authorizationToken", "personalAccessToken" ]
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Authorization parameters corresponding to the authorization type."
+          }
+        },
+        "description" : "Defines the authorization type and its parameters."
+      },
+      "CheckNameAvailabilityParameter" : {
+        "type" : "object",
+        "properties" : {
+          "resourceName" : {
+            "type" : "string",
+            "description" : "The name of the resource to check availability for."
+          },
+          "resourceType" : {
+            "type" : "string",
+            "description" : "The type of resource to check availability for."
+          }
+        },
+        "description" : "The body of a POST request to check name availability."
+      },
+      "CheckNameAvailabilityResult" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "The message describing the detailed reason."
+          },
+          "nameAvailable" : {
+            "type" : "boolean",
+            "description" : "The value which indicates whether the provided name is available."
+          }
+        },
+        "description" : "The response to a name availability request."
+      },
+      "CodeRepository" : {
+        "required" : [ "defaultBranch", "id", "repositoryType" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationReference" : {
+            "type" : "string",
+            "description" : "Reference to the authorization info used to access the code repository. This value is used as a key into the global authorization details dictionary."
+          },
+          "defaultBranch" : {
+            "type" : "string",
+            "description" : "Default branch for which continuous integration should be configured in the VSTS pipeline."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the code repository."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Repository-specific properties."
+          },
+          "repositoryType" : {
+            "type" : "string",
+            "description" : "Type of code repository.",
+            "enum" : [ "gitHub", "vstsGit" ]
+          }
+        },
+        "description" : "Defines a code repository."
+      },
+      "CodeRepositoryApplicationSource" : {
+        "properties" : {
+          "repository" : {
+            "$ref" : "#/components/schemas/CodeRepository"
+          }
+        },
+        "description" : "Defines the source application, when it resides in a code repository.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ApplicationSource"
+        } ]
+      },
+      "CodeTemplateApplicationSource" : {
+        "description" : "Defines the source application template.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ApplicationSource"
+        } ]
+      },
+      "ExtensionResource" : {
+        "properties" : {
+          "plan" : {
+            "$ref" : "#/components/schemas/ExtensionResourcePlan"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource properties."
+          }
+        },
+        "description" : "The response to an extension resource GET request.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "ExtensionResourceListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "Array of extension resource details.",
+            "items" : {
+              "$ref" : "#/components/schemas/ExtensionResource"
+            }
+          }
+        },
+        "description" : "The response to an extension resource list GET request."
+      },
+      "ExtensionResourcePlan" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the plan."
+          },
+          "product" : {
+            "type" : "string",
+            "description" : "Product name."
+          },
+          "promotionCode" : {
+            "type" : "string",
+            "description" : "Optional: the promotion code associated with the plan."
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "Name of the extension publisher."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "A string that uniquely identifies the plan version."
+          }
+        },
+        "description" : "Plan data for an extension resource."
+      },
+      "ExtensionResourceRequest" : {
+        "type" : "object",
+        "properties" : {
+          "location" : {
+            "type" : "string",
+            "description" : "The Azure region of the Visual Studio account associated with this request (i.e 'southcentralus'.)"
+          },
+          "plan" : {
+            "$ref" : "#/components/schemas/ExtensionResourcePlan"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "A dictionary of extended properties. This property is currently unused."
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "A dictionary of user-defined tags to be stored with the extension resource."
+          }
+        },
+        "description" : "The body of an extension resource PUT request."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "$ref" : "#/components/schemas/OperationProperties"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource operation."
+          }
+        },
+        "description" : "Properties of an operation supported by the resource provider."
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "A list of operations supported by a resource provider.",
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Container for a list of operations supported by a resource provider."
+      },
+      "OperationProperties" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the resource operation."
+          },
+          "operation" : {
+            "type" : "string",
+            "description" : "The operation name."
+          },
+          "provider" : {
+            "type" : "string",
+            "description" : "The provider name."
+          },
+          "resource" : {
+            "type" : "string",
+            "description" : "The resource name."
+          }
+        },
+        "description" : "Properties of an operation supported by the resource provider."
+      },
+      "PipelineTemplate" : {
+        "required" : [ "applicationSource", "applicationTarget", "authorizationDetails" ],
+        "type" : "object",
+        "properties" : {
+          "applicationSource" : {
+            "$ref" : "#/components/schemas/ApplicationSource"
+          },
+          "applicationTarget" : {
+            "$ref" : "#/components/schemas/ApplicationTarget"
+          },
+          "authorizationDetails" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Authorization"
+            },
+            "description" : "Global dictionary of authorization details used by the pipeline, with a friendly name as key. Individual resource in the pipeline can reference to a specific authorization info using the friendly name."
+          }
+        },
+        "description" : "Defines a VSTS pipeline template."
+      },
+      "ProjectResource" : {
+        "properties" : {
+          "kind" : {
+            "type" : "string",
+            "description" : "Kind of project resource",
+            "enum" : [ "project", "bootstrappedProject" ]
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ProjectResourceProperties"
+          }
+        },
+        "description" : "A Visual Studio Team Services project resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "ProjectResourceListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "List of project resource details.",
+            "items" : {
+              "$ref" : "#/components/schemas/ProjectResource"
+            }
+          }
+        },
+        "description" : "The response to a request to list Team Services project resources in a resource group/account."
+      },
+      "ProjectResourceProperties" : {
+        "type" : "object",
+        "properties" : {
+          "bootstrapPipelineTemplate" : {
+            "$ref" : "#/components/schemas/PipelineTemplate"
+          },
+          "ownerUpn" : {
+            "type" : "string",
+            "description" : "Optional UPN of the owner, on-behalf-of whom the project is being created."
+          },
+          "processTemplateId" : {
+            "type" : "string",
+            "description" : "Process template to use in the project.",
+            "enum" : [ "Scrum", "Agile", "Cmmi" ]
+          },
+          "tfsUniqueIdentifier" : {
+            "type" : "string",
+            "description" : "Unique identifier of the VSTS project.",
+            "readOnly" : true
+          },
+          "versionControlOption" : {
+            "type" : "string",
+            "description" : "Version control to use for the default repo created in the project.",
+            "enum" : [ "Git", "Tfvc" ]
+          }
+        },
+        "description" : "Defines the custom properties of project resource."
+      },
+      "ProjectResourceUpdateParameters" : {
+        "type" : "object",
+        "properties" : {
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The custom tags to be set on the resource."
+          }
+        },
+        "description" : "The parameters to update a project resource."
+      },
+      "Resource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the resource.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type.",
+            "readOnly" : true
+          }
+        },
+        "description" : "A generic Azure Resource Manager resource."
+      },
+      "TargetResource" : {
+        "required" : [ "id", "role" ],
+        "type" : "object",
+        "properties" : {
+          "authorizationReference" : {
+            "type" : "string",
+            "description" : "Reference to the authorization info used to access the target resource. This value is used as a key into the global authorization details dictionary."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the target resource."
+          },
+          "role" : {
+            "type" : "string",
+            "description" : "Role of the target resource."
+          }
+        },
+        "description" : "Defines a single resource used as target for a VSTS pipeline."
+      }
+    },
+    "parameters" : {
+      "apiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "API Version",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "resourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "Name of the resource group within the Azure subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "subscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription identifier.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

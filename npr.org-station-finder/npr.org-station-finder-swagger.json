@@ -1,1 +1,1321 @@
-{"openapi":"3.0.1","info":{"title":"NPR Station Finder Service","description":"Allows clients to look up NPR member station information","termsOfService":"https://dev.npr.org/guide/prerequisites/terms-of-use","contact":{"name":"NPR One Enterprise Team","url":"https://dev.npr.org","email":"NPROneEnterprise@npr.org"},"version":"3"},"externalDocs":{"description":"Learn more at the NPR One Developer Center","url":"https://dev.npr.org/guide/services/station-finder"},"servers":[{"url":"https://station.api.npr.org/"}],"paths":{"/v3/stations":{"get":{"tags":["stationfinder"],"summary":"List stations close to you or filter by search criteria","description":"This endpoint has two main use cases:\n\n- If no query parameters passed in, it returns a list of stations that are geographically closest to the calling client (based on GeoIP information)\n- If one or more query parameters are passed in, it performs a search of NPR stations that match those search criteria (not taking into account the client's physical location)\n\nClients wanting to implement a 'Change Station' UI should use this endpoint to power their search. In most cases, you'll want to build a search interface that uses one of the 3 provided schemas: `lat` and `lon` (using e.g. the HTML5 Geolocation API), `city` and `state`, _or_ the generic `q` query which can accept a station name, call letters, network name, or zip code. Technically speaking, `q` can also take in either a city name or a state name, but using the `city` and `state` parameters together will yield more accurate geographic search results than `q={cityName}`.\n\nThe `lat` and `lon` query parameters should always be passed in together (otherwise the API will return a 400 error), and if included in the query, they will take precedence over any other search criteria; that is, `lat` and `lon` will do a purely geographic search and not take into account `q`, `city` or `state`.\n\nSimilarly, `city` and/or `state` will take precedence over (and ignore) `q`.\n\nIf clients want to be able to offer multiple types of searches (e.g. 'Search for a station name, city or zipcode') using a *single* search input form, `q` should be used. But again, be aware that using `city` and `state` together will yield more accurate search results than `q={cityName}`.","operationId":"searchStations","parameters":[{"name":"Authorization","in":"header","description":"Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.","required":true,"schema":{"type":"string"}},{"name":"q","in":"query","description":"Search terms to search on; can be a station name, network name, call letters, or zipcode","schema":{"type":"string"}},{"name":"city","in":"query","description":"A city to look for stations from; intended to be paired with `state`","schema":{"pattern":"^[A-Za-z '\\.]+$","type":"string"}},{"name":"state","in":"query","description":"A state to look for stations from (using the 2-letter abbreviation); intended to be paired with `city`","schema":{"pattern":"^[A-Z]{2}$","type":"string"}},{"name":"lat","in":"query","description":"A latitude value from a geographic coordinate system; only works if paired with `lon`","schema":{"type":"number","format":"float"}},{"name":"lon","in":"query","description":"A longitude value from a geographic coordinate system; only works if paired with `lat`","schema":{"type":"number","format":"float"}}],"responses":{"200":{"description":"A list of one or more stations matching the search query","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/StationListDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/StationListDocument"}}}},"400":{"description":"A bad request; generally, one or more parameters passed in were incorrect or missing","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"401":{"description":"The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"429":{"description":"The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"500":{"description":"A server error","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"503":{"description":"The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.","headers":{"Retry-After":{"description":"The predicted time the system will be back up","schema":{"type":"string","format":"date-time"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}}}}},"/v3/stations/{stationId}":{"get":{"tags":["stationfinder"],"summary":"Retrieve metadata for the station with the given numeric ID","description":"This endpoint retrieves information about a given station, based on its numeric ID, which is consistent across all of NPR's APIs.\n\nA typical use case for this data is for clients who want to create a dropdown menu, modal/pop-up or dedicated page displaying more information about the station the client is localized to, including, for example, links to the station's homepage and donation (pledge) page.","operationId":"getStationById","parameters":[{"name":"Authorization","in":"header","description":"Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.","required":true,"schema":{"type":"string"}},{"name":"stationId","in":"path","description":"The numeric ID of a station","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"A document describing the station with the given ID","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/StationDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/StationDocument"}}}},"400":{"description":"A bad request; generally, one or more parameters passed in were incorrect or missing","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"401":{"description":"The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"404":{"description":"The resource with the requested ID could not be found, and the server was unable to complete the request.","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"429":{"description":"The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"500":{"description":"A server error","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"503":{"description":"The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.","headers":{"Retry-After":{"description":"The predicted time the system will be back up","schema":{"type":"string","format":"date-time"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}}}}}},"components":{"schemas":{"AbstractCDocLink":{"allOf":[{"$ref":"#/components/schemas/AbstractLink"},{"required":["content-type"],"type":"object","properties":{"content-type":{"type":"string","description":"The MIME type of the response of this link"}}}]},"AbstractLink":{"required":["href"],"type":"object","properties":{"href":{"type":"string","description":"The link to be followed","format":"uri"}}},"Affiliation":{"required":["following","href","id"],"type":"object","properties":{"daysSinceLastListen":{"type":"integer","description":"The number of days since a user last listened to a story from this aggregation. Absent if user never listened to the aggregation.","format":"int32"},"following":{"type":"boolean","description":"Whether or not the user is following the aggregation. When changing affiliation status, the client is expected to toggle this value and then send the entire object back.","default":false},"href":{"type":"string","description":"A link to more details about the program from the NPR Story API"},"id":{"type":"string","description":"A unique identifier for the aggregation (program)"},"notif_following":{"type":"array","description":"The topic in Firebase Cloud Messaging to which the device should subscribe if it supports notifications and the user wants notifications about the podcasts they follow.","items":{"type":"string"}},"notif_rated":{"type":"array","description":"The topic in Firebase Cloud Messaging to which the device should subscribe if it supports notifications and the user wants notifications about the podcasts they have highly rated.","items":{"type":"string"}},"rating":{"type":"number","description":"The user's average rating for this affiliation on a scale of 0-1. Absent if user never listened to the aggregation.","format":"float"},"title":{"type":"string","description":"The title for the aggregation (program)"}},"description":"A program (aggregation) that a given user has shown an affiliation with"},"CollectionDocument":{"required":["attributes","errors","href","items","links","version"],"type":"object","properties":{"attributes":{"type":"object"},"errors":{"type":"array","description":"A list of encountered errors, ignored on POST, PUT","items":{"type":"object"}},"href":{"type":"string","description":"A URL representation of the resource; should generally be ignored by clients unless noted otherwise"},"items":{"type":"array","items":{"type":"object"}},"links":{"type":"object"},"version":{"type":"string","description":"The version of the Collection.Doc+JSON spec being used","default":"1.0"}},"description":"Base Collection.Doc+JSON output"},"Error":{"required":["code"],"type":"object","properties":{"code":{"type":"integer","description":"The error code","format":"int32"},"debug":{"type":"string","description":"Additional debug information if debug mode is turned on"},"text":{"type":"string","description":"The error description"}},"description":"A serialized version of any error encountered when processing this request"},"ErrorDocument":{"description":"A Collection.doc+JSON representation of an error result from an API call","allOf":[{"$ref":"#/components/schemas/CollectionDocument"},{"type":"object","properties":{"attributes":{"type":"object","description":"Ignore; will be empty for errors"},"errors":{"type":"array","description":"A list of encountered errors, ignored on POST, PUT","items":{"$ref":"#/components/schemas/Error"}},"items":{"type":"array","description":"Ignore; will be empty for errors","items":{"type":"object"}},"links":{"type":"object","description":"Ignore; will be empty for errors"}}}]},"StationBrandData":{"required":["marketCity","marketState","name","tagline"],"type":"object","properties":{"band":{"type":"string","description":"The subsection of the radio spectrum -- 'AM' or 'FM' -- where this station can be heard","default":"FM","enum":["FM","AM"]},"call":{"pattern":"^(W|K)[A-Z]{2,3}$","type":"string","description":"The three-to-four-letter identifying code for this station. Please use this with caution; most stations prefer to be identified by their `name` in client applications instead of `call`."},"frequency":{"pattern":"^\\d{2,3}\\.?\\d$","type":"string","description":"Where on the radio dial the station can be heard. If the `band` is AM, the frequency will be between 540 and 1600. If the `band` is FM, the frequency will be between 87.8 and 108.0."},"marketCity":{"pattern":"^[A-Za-z '\\.]+$","type":"string","description":"The city that the station is most closely associated with. This may or may not be the city the station is licensed in and it may or may not be the city that the station or the station's antenna is located in."},"marketState":{"pattern":"^[A-Z]{2}$","type":"string","description":"The state that the station is most closely associated with. This may or may not be the state the station is licensed in and it may or may not be the state that the station or the station's antenna is located in."},"name":{"type":"string","description":"The display name for the station. In most cases, this will be the same as `call` letters combined with band. When returning networks, it will return the network name (e.g. Minnesota Public Radio)."},"tagline":{"type":"string","description":"A short text-logo for the station","default":""}},"description":"An associative array of brand-related metadata for this station"},"StationBrandLink":{"description":"A link to a web page, logo, or audio file related to the branding of the station","allOf":[{"$ref":"#/components/schemas/AbstractCDocLink"},{"required":["rel"],"type":"object","properties":{"rel":{"type":"string","description":"A short string identifier describing the way the way the link relates to the document","default":"homepage","enum":["homepage","logo","small-logo","hello-id-audio","station-message-audio","twitter","facebook"]}}}]},"StationData":{"required":["brand","eligibility","guid","network","orgId"],"type":"object","properties":{"brand":{"$ref":"#/components/schemas/StationBrandData"},"eligibility":{"$ref":"#/components/schemas/StationEligibilityData"},"guid":{"pattern":"^[0-9a-f]{32}$","type":"string","description":"The system's internal unique identifier for a station, not typically used by other APIs or consumers"},"network":{"$ref":"#/components/schemas/StationNetworkData"},"newscast":{"$ref":"#/components/schemas/StationNewscastData"},"orgId":{"pattern":"^\\d{1,4}$","type":"string","description":"The system's unique ID for this station, used across NPR One Microservices and NPR's other APIs"}}},"StationDocument":{"allOf":[{"$ref":"#/components/schemas/CollectionDocument"},{"type":"object","properties":{"attributes":{"$ref":"#/components/schemas/StationData"},"items":{"type":"array","description":"Not used","items":{"type":"object"}},"links":{"$ref":"#/components/schemas/StationLinks"}}}]},"StationDonationLink":{"description":"A link to a pledge page for the station","allOf":[{"$ref":"#/components/schemas/StationLink"},{"required":["typeId"],"type":"object","properties":{"typeId":{"type":"string","description":"An identifier for the type of link; '4' denotes a generic pledge page, while '27' is an NPR One-specific pledge page","default":"4","enum":["4","27","28","29"]}}}]},"StationEligibilityData":{"required":["format","musicOnly","nprOne","status"],"type":"object","properties":{"format":{"type":"string","description":"The format of the programming on this station","default":"Public Radio"},"localization":{"type":"string","description":"Whether or not this station should be shown in search for news context, any context or no context","default":"Show everywhere"},"musicOnly":{"type":"boolean","description":"Whether or not this station only plays music.  Deprecated.","default":false},"nprOne":{"type":"boolean","description":"Whether or not this station is considered an NPR One station","default":true},"status":{"type":"string","description":"The status of the station within NPR's system, not typically used by consumers","default":"1","enum":["1","9","10","12","15"]}},"description":"An associative array of eligibility-related metadata for this station"},"StationLink":{"description":"A link related to the station","allOf":[{"$ref":"#/components/schemas/AbstractLink"},{"required":["typeName"],"type":"object","properties":{"guid":{"pattern":"^[0-9a-f]{32}$","type":"string","description":"The system's internal unique identifier for a link, not typically used by consumers"},"title":{"type":"string","description":"The link text, provided by the station, for the URL","default":""},"typeName":{"type":"string","description":"The semantic name corresponding to the `typeId`"}}}]},"StationLinks":{"required":["brand"],"type":"object","properties":{"brand":{"type":"array","description":"One or more links to a web page for the station","items":{"$ref":"#/components/schemas/StationBrandLink"}},"donation":{"type":"array","description":"One or more links to audio files related to this station","items":{"$ref":"#/components/schemas/StationDonationLink"}},"podcasts":{"type":"array","description":"One or more links to podcasts related to this station","items":{"$ref":"#/components/schemas/StationPodcastsLink"}},"related":{"type":"array","description":"One or more links to miscellaneous related content for the station; these typically are not present, and clients should generally not need to use any of these","items":{"$ref":"#/components/schemas/StationRelatedLink"}},"streams":{"type":"array","description":"One or more links to audio streams related to the station","items":{"$ref":"#/components/schemas/StationStreamsLink"}}}},"StationListDocument":{"description":"A collection of stations close to you or filtered by search criteria","allOf":[{"$ref":"#/components/schemas/CollectionDocument"},{"type":"object","properties":{"attributes":{"$ref":"#/components/schemas/StationSearchMetaData"},"items":{"type":"array","description":"A list of stations","items":{"$ref":"#/components/schemas/StationDocument"}},"links":{"type":"object","description":"Not used"}}}]},"StationNetworkData":{"required":["currentOrgId","usesInheritance"],"type":"object","properties":{"currentOrgId":{"pattern":"^\\d{1,4}$","type":"string","description":"The current station being viewed. Client applications should generally ignore this field."},"tier1":{"$ref":"#/components/schemas/StationNetworkTierOneData"},"usesInheritance":{"type":"boolean","description":"Whether or not the current station inherits from a parent organization, also referred to as a network"}},"description":"Metadata about the network, if this station is part of a network"},"StationNetworkTierOneData":{"required":["id","name","usesInheritance"],"type":"object","properties":{"id":{"pattern":"^\\d{1,4}$","type":"string","description":"The unique identifier of the top-level organization in the network"},"name":{"type":"string","description":"The display name for the top-level organization in the network"},"status":{"type":"string","description":"The status of the top-level organization within NPR's system, not typically used by consumers","default":"10","enum":["1","9","10","12","15"]},"tier2":{"type":"array","description":"One or more stations that are hierarchical children of this organization","items":{"$ref":"#/components/schemas/StationNetworkTierTwoData"}},"usesInheritance":{"type":"boolean","description":"Whether or not this station inherits from a parent organization, also referred to as a network"}},"description":"Metadata about the top-level organization in the network, if this station is part of a network"},"StationNetworkTierThreeData":{"required":["id","name","usesInheritance"],"type":"object","properties":{"id":{"pattern":"^\\d{1,4}$","type":"string","description":"The unique identifier of a tier 3 organization in the network"},"name":{"type":"string","description":"The display name for a tier 3 organization in the network"},"usesInheritance":{"type":"boolean","description":"Whether or not this station inherits from a parent organization, also referred to as a network"}},"description":"Metadata about a tier 3 organization in the network, if this station is part of a network"},"StationNetworkTierTwoData":{"required":["id","name","usesInheritance"],"type":"object","properties":{"id":{"pattern":"^\\d{1,4}$","type":"string","description":"The unique identifier of a tier 2 organization in the network"},"name":{"type":"string","description":"The display name for a tier 2 organization in the network"},"tier3":{"type":"array","description":"One or more stations that are hierarchical children of this organization","items":{"$ref":"#/components/schemas/StationNetworkTierThreeData"}},"usesInheritance":{"type":"boolean","description":"Whether or not this station inherits from a parent organization, also referred to as a network"}},"description":"Metadata about a tier 2 organization in the network, if this station is part of a network"},"StationNewscastData":{"required":["id","recency"],"type":"object","properties":{"id":{"pattern":"^\\d{1,4}$","type":"string","description":"The ID of the newscast that should be played for this station; this is handled internally by other microservices such as the NPR One Listening Service, so this field should typically not be used by consumers"},"recency":{"type":"integer","description":"How often the newscast should be played, in minutes; a value of `null` implies no information is available, and sensible defaults should be used","format":"int32"}},"description":"Metadata about the newscast for this station; newscasts are handled internally by other microservices such as the NPR One Listening Service, so this data should typically not be used by consumers"},"StationPodcastsLink":{"description":"A link to an audio podcast or podcast feed related to the station","allOf":[{"$ref":"#/components/schemas/StationLink"},{"required":["typeId"],"type":"object","properties":{"typeId":{"type":"string","description":"An identifier for the type of link","default":"9","enum":["9"]}}}]},"StationRelatedLink":{"description":"A link to miscellaneous related content for the station; these typically are not present, and clients should generally not need to use these","allOf":[{"$ref":"#/components/schemas/StationLink"},{"required":["typeId"],"type":"object","properties":{"typeId":{"type":"string","description":"An identifier for the type of link"}}}]},"StationSearchMetaData":{"type":"object","properties":{"city":{"type":"string","description":"The city searched for in the original request"},"countryCode":{"type":"string","description":"The country where the original request originated, as determined by geolocation. The countryCode is in ISO 3166-1 numeric format"},"lat":{"type":"number","description":"The latitude parameter used in the original request","format":"float"},"lon":{"type":"number","description":"The longitude parameter in the original request","format":"float"},"query":{"type":"string","description":"The search terms used in the original request"},"state":{"type":"string","description":"The state searched for in the original request"}}},"StationStreamsLink":{"description":"A link to an audio stream related to the station","allOf":[{"$ref":"#/components/schemas/StationLink"},{"required":["typeId"],"type":"object","properties":{"isPrimaryStream":{"type":"boolean","description":"Whether or not this stream is considered the station's primary stream","default":true},"typeId":{"type":"string","description":"An identifier for the type of stream","default":"10","enum":["10","11","12","13"]}}}]}},"responses":{"400WithDocument":{"description":"A bad request; generally, one or more parameters passed in were incorrect or missing","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"401WithDocument":{"description":"The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"404WithDocument":{"description":"The resource with the requested ID could not be found, and the server was unable to complete the request.","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"429WithDocument":{"description":"The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"500WithDocument":{"description":"A server error","headers":{"X-RateLimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}},"X-RateLimit-Reset":{"description":"The number of seconds left in the current period","schema":{"type":"integer"}},"X-RateLimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}},"503WithDocument":{"description":"The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.","headers":{"Retry-After":{"description":"The predicted time the system will be back up","schema":{"type":"string","format":"date-time"}}},"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}},"application/vnd.collection.doc+json":{"schema":{"$ref":"#/components/schemas/ErrorDocument"}}}}},"parameters":{"Authorization":{"name":"Authorization","in":"header","description":"Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.","required":true,"schema":{"type":"string"}},"X-Advertising-ID":{"name":"X-Advertising-ID","in":"header","description":"A device-specific advertising identifier, if possible. Apple's IDFA is an example.","schema":{"type":"string"}}},"securitySchemes":{"oauth2":{"type":"oauth2"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "NPR Station Finder Service",
+    "description" : "Allows clients to look up NPR member station information",
+    "termsOfService" : "https://dev.npr.org/guide/prerequisites/terms-of-use",
+    "contact" : {
+      "name" : "NPR One Enterprise Team",
+      "url" : "https://dev.npr.org",
+      "email" : "NPROneEnterprise@npr.org"
+    },
+    "version" : "3"
+  },
+  "externalDocs" : {
+    "description" : "Learn more at the NPR One Developer Center",
+    "url" : "https://dev.npr.org/guide/services/station-finder"
+  },
+  "servers" : [ {
+    "url" : "https://station.api.npr.org/"
+  } ],
+  "paths" : {
+    "/v3/stations" : {
+      "get" : {
+        "tags" : [ "stationfinder" ],
+        "summary" : "List stations close to you or filter by search criteria",
+        "description" : "This endpoint has two main use cases:\n\n- If no query parameters passed in, it returns a list of stations that are geographically closest to the calling client (based on GeoIP information)\n- If one or more query parameters are passed in, it performs a search of NPR stations that match those search criteria (not taking into account the client's physical location)\n\nClients wanting to implement a 'Change Station' UI should use this endpoint to power their search. In most cases, you'll want to build a search interface that uses one of the 3 provided schemas: `lat` and `lon` (using e.g. the HTML5 Geolocation API), `city` and `state`, _or_ the generic `q` query which can accept a station name, call letters, network name, or zip code. Technically speaking, `q` can also take in either a city name or a state name, but using the `city` and `state` parameters together will yield more accurate geographic search results than `q={cityName}`.\n\nThe `lat` and `lon` query parameters should always be passed in together (otherwise the API will return a 400 error), and if included in the query, they will take precedence over any other search criteria; that is, `lat` and `lon` will do a purely geographic search and not take into account `q`, `city` or `state`.\n\nSimilarly, `city` and/or `state` will take precedence over (and ignore) `q`.\n\nIf clients want to be able to offer multiple types of searches (e.g. 'Search for a station name, city or zipcode') using a *single* search input form, `q` should be used. But again, be aware that using `city` and `state` together will yield more accurate search results than `q={cityName}`.",
+        "operationId" : "searchStations",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Search terms to search on; can be a station name, network name, call letters, or zipcode",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "city",
+          "in" : "query",
+          "description" : "A city to look for stations from; intended to be paired with `state`",
+          "schema" : {
+            "pattern" : "^[A-Za-z '\\.]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "state",
+          "in" : "query",
+          "description" : "A state to look for stations from (using the 2-letter abbreviation); intended to be paired with `city`",
+          "schema" : {
+            "pattern" : "^[A-Z]{2}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "A latitude value from a geographic coordinate system; only works if paired with `lon`",
+          "schema" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        }, {
+          "name" : "lon",
+          "in" : "query",
+          "description" : "A longitude value from a geographic coordinate system; only works if paired with `lat`",
+          "schema" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of one or more stations matching the search query",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StationListDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StationListDocument"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "A bad request; generally, one or more parameters passed in were incorrect or missing",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "A server error",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "The predicted time the system will be back up",
+                "schema" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/stations/{stationId}" : {
+      "get" : {
+        "tags" : [ "stationfinder" ],
+        "summary" : "Retrieve metadata for the station with the given numeric ID",
+        "description" : "This endpoint retrieves information about a given station, based on its numeric ID, which is consistent across all of NPR's APIs.\n\nA typical use case for this data is for clients who want to create a dropdown menu, modal/pop-up or dedicated page displaying more information about the station the client is localized to, including, for example, links to the station's homepage and donation (pledge) page.",
+        "operationId" : "getStationById",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "stationId",
+          "in" : "path",
+          "description" : "The numeric ID of a station",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A document describing the station with the given ID",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StationDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StationDocument"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "A bad request; generally, one or more parameters passed in were incorrect or missing",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource with the requested ID could not be found, and the server was unable to complete the request.",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "A server error",
+            "headers" : {
+              "X-RateLimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Reset" : {
+                "description" : "The number of seconds left in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-RateLimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "The predicted time the system will be back up",
+                "schema" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              },
+              "application/vnd.collection.doc+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AbstractCDocLink" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AbstractLink"
+        }, {
+          "required" : [ "content-type" ],
+          "type" : "object",
+          "properties" : {
+            "content-type" : {
+              "type" : "string",
+              "description" : "The MIME type of the response of this link"
+            }
+          }
+        } ]
+      },
+      "AbstractLink" : {
+        "required" : [ "href" ],
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string",
+            "description" : "The link to be followed",
+            "format" : "uri"
+          }
+        }
+      },
+      "Affiliation" : {
+        "required" : [ "following", "href", "id" ],
+        "type" : "object",
+        "properties" : {
+          "daysSinceLastListen" : {
+            "type" : "integer",
+            "description" : "The number of days since a user last listened to a story from this aggregation. Absent if user never listened to the aggregation.",
+            "format" : "int32"
+          },
+          "following" : {
+            "type" : "boolean",
+            "description" : "Whether or not the user is following the aggregation. When changing affiliation status, the client is expected to toggle this value and then send the entire object back.",
+            "default" : false
+          },
+          "href" : {
+            "type" : "string",
+            "description" : "A link to more details about the program from the NPR Story API"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "A unique identifier for the aggregation (program)"
+          },
+          "notif_following" : {
+            "type" : "array",
+            "description" : "The topic in Firebase Cloud Messaging to which the device should subscribe if it supports notifications and the user wants notifications about the podcasts they follow.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "notif_rated" : {
+            "type" : "array",
+            "description" : "The topic in Firebase Cloud Messaging to which the device should subscribe if it supports notifications and the user wants notifications about the podcasts they have highly rated.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "rating" : {
+            "type" : "number",
+            "description" : "The user's average rating for this affiliation on a scale of 0-1. Absent if user never listened to the aggregation.",
+            "format" : "float"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "The title for the aggregation (program)"
+          }
+        },
+        "description" : "A program (aggregation) that a given user has shown an affiliation with"
+      },
+      "CollectionDocument" : {
+        "required" : [ "attributes", "errors", "href", "items", "links", "version" ],
+        "type" : "object",
+        "properties" : {
+          "attributes" : {
+            "type" : "object"
+          },
+          "errors" : {
+            "type" : "array",
+            "description" : "A list of encountered errors, ignored on POST, PUT",
+            "items" : {
+              "type" : "object"
+            }
+          },
+          "href" : {
+            "type" : "string",
+            "description" : "A URL representation of the resource; should generally be ignored by clients unless noted otherwise"
+          },
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          },
+          "links" : {
+            "type" : "object"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The version of the Collection.Doc+JSON spec being used",
+            "default" : "1.0"
+          }
+        },
+        "description" : "Base Collection.Doc+JSON output"
+      },
+      "Error" : {
+        "required" : [ "code" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "The error code",
+            "format" : "int32"
+          },
+          "debug" : {
+            "type" : "string",
+            "description" : "Additional debug information if debug mode is turned on"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The error description"
+          }
+        },
+        "description" : "A serialized version of any error encountered when processing this request"
+      },
+      "ErrorDocument" : {
+        "description" : "A Collection.doc+JSON representation of an error result from an API call",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CollectionDocument"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "attributes" : {
+              "type" : "object",
+              "description" : "Ignore; will be empty for errors"
+            },
+            "errors" : {
+              "type" : "array",
+              "description" : "A list of encountered errors, ignored on POST, PUT",
+              "items" : {
+                "$ref" : "#/components/schemas/Error"
+              }
+            },
+            "items" : {
+              "type" : "array",
+              "description" : "Ignore; will be empty for errors",
+              "items" : {
+                "type" : "object"
+              }
+            },
+            "links" : {
+              "type" : "object",
+              "description" : "Ignore; will be empty for errors"
+            }
+          }
+        } ]
+      },
+      "StationBrandData" : {
+        "required" : [ "marketCity", "marketState", "name", "tagline" ],
+        "type" : "object",
+        "properties" : {
+          "band" : {
+            "type" : "string",
+            "description" : "The subsection of the radio spectrum -- 'AM' or 'FM' -- where this station can be heard",
+            "default" : "FM",
+            "enum" : [ "FM", "AM" ]
+          },
+          "call" : {
+            "pattern" : "^(W|K)[A-Z]{2,3}$",
+            "type" : "string",
+            "description" : "The three-to-four-letter identifying code for this station. Please use this with caution; most stations prefer to be identified by their `name` in client applications instead of `call`."
+          },
+          "frequency" : {
+            "pattern" : "^\\d{2,3}\\.?\\d$",
+            "type" : "string",
+            "description" : "Where on the radio dial the station can be heard. If the `band` is AM, the frequency will be between 540 and 1600. If the `band` is FM, the frequency will be between 87.8 and 108.0."
+          },
+          "marketCity" : {
+            "pattern" : "^[A-Za-z '\\.]+$",
+            "type" : "string",
+            "description" : "The city that the station is most closely associated with. This may or may not be the city the station is licensed in and it may or may not be the city that the station or the station's antenna is located in."
+          },
+          "marketState" : {
+            "pattern" : "^[A-Z]{2}$",
+            "type" : "string",
+            "description" : "The state that the station is most closely associated with. This may or may not be the state the station is licensed in and it may or may not be the state that the station or the station's antenna is located in."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The display name for the station. In most cases, this will be the same as `call` letters combined with band. When returning networks, it will return the network name (e.g. Minnesota Public Radio)."
+          },
+          "tagline" : {
+            "type" : "string",
+            "description" : "A short text-logo for the station",
+            "default" : ""
+          }
+        },
+        "description" : "An associative array of brand-related metadata for this station"
+      },
+      "StationBrandLink" : {
+        "description" : "A link to a web page, logo, or audio file related to the branding of the station",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AbstractCDocLink"
+        }, {
+          "required" : [ "rel" ],
+          "type" : "object",
+          "properties" : {
+            "rel" : {
+              "type" : "string",
+              "description" : "A short string identifier describing the way the way the link relates to the document",
+              "default" : "homepage",
+              "enum" : [ "homepage", "logo", "small-logo", "hello-id-audio", "station-message-audio", "twitter", "facebook" ]
+            }
+          }
+        } ]
+      },
+      "StationData" : {
+        "required" : [ "brand", "eligibility", "guid", "network", "orgId" ],
+        "type" : "object",
+        "properties" : {
+          "brand" : {
+            "$ref" : "#/components/schemas/StationBrandData"
+          },
+          "eligibility" : {
+            "$ref" : "#/components/schemas/StationEligibilityData"
+          },
+          "guid" : {
+            "pattern" : "^[0-9a-f]{32}$",
+            "type" : "string",
+            "description" : "The system's internal unique identifier for a station, not typically used by other APIs or consumers"
+          },
+          "network" : {
+            "$ref" : "#/components/schemas/StationNetworkData"
+          },
+          "newscast" : {
+            "$ref" : "#/components/schemas/StationNewscastData"
+          },
+          "orgId" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The system's unique ID for this station, used across NPR One Microservices and NPR's other APIs"
+          }
+        }
+      },
+      "StationDocument" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CollectionDocument"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "attributes" : {
+              "$ref" : "#/components/schemas/StationData"
+            },
+            "items" : {
+              "type" : "array",
+              "description" : "Not used",
+              "items" : {
+                "type" : "object"
+              }
+            },
+            "links" : {
+              "$ref" : "#/components/schemas/StationLinks"
+            }
+          }
+        } ]
+      },
+      "StationDonationLink" : {
+        "description" : "A link to a pledge page for the station",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/StationLink"
+        }, {
+          "required" : [ "typeId" ],
+          "type" : "object",
+          "properties" : {
+            "typeId" : {
+              "type" : "string",
+              "description" : "An identifier for the type of link; '4' denotes a generic pledge page, while '27' is an NPR One-specific pledge page",
+              "default" : "4",
+              "enum" : [ "4", "27", "28", "29" ]
+            }
+          }
+        } ]
+      },
+      "StationEligibilityData" : {
+        "required" : [ "format", "musicOnly", "nprOne", "status" ],
+        "type" : "object",
+        "properties" : {
+          "format" : {
+            "type" : "string",
+            "description" : "The format of the programming on this station",
+            "default" : "Public Radio"
+          },
+          "localization" : {
+            "type" : "string",
+            "description" : "Whether or not this station should be shown in search for news context, any context or no context",
+            "default" : "Show everywhere"
+          },
+          "musicOnly" : {
+            "type" : "boolean",
+            "description" : "Whether or not this station only plays music.  Deprecated.",
+            "default" : false
+          },
+          "nprOne" : {
+            "type" : "boolean",
+            "description" : "Whether or not this station is considered an NPR One station",
+            "default" : true
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The status of the station within NPR's system, not typically used by consumers",
+            "default" : "1",
+            "enum" : [ "1", "9", "10", "12", "15" ]
+          }
+        },
+        "description" : "An associative array of eligibility-related metadata for this station"
+      },
+      "StationLink" : {
+        "description" : "A link related to the station",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AbstractLink"
+        }, {
+          "required" : [ "typeName" ],
+          "type" : "object",
+          "properties" : {
+            "guid" : {
+              "pattern" : "^[0-9a-f]{32}$",
+              "type" : "string",
+              "description" : "The system's internal unique identifier for a link, not typically used by consumers"
+            },
+            "title" : {
+              "type" : "string",
+              "description" : "The link text, provided by the station, for the URL",
+              "default" : ""
+            },
+            "typeName" : {
+              "type" : "string",
+              "description" : "The semantic name corresponding to the `typeId`"
+            }
+          }
+        } ]
+      },
+      "StationLinks" : {
+        "required" : [ "brand" ],
+        "type" : "object",
+        "properties" : {
+          "brand" : {
+            "type" : "array",
+            "description" : "One or more links to a web page for the station",
+            "items" : {
+              "$ref" : "#/components/schemas/StationBrandLink"
+            }
+          },
+          "donation" : {
+            "type" : "array",
+            "description" : "One or more links to audio files related to this station",
+            "items" : {
+              "$ref" : "#/components/schemas/StationDonationLink"
+            }
+          },
+          "podcasts" : {
+            "type" : "array",
+            "description" : "One or more links to podcasts related to this station",
+            "items" : {
+              "$ref" : "#/components/schemas/StationPodcastsLink"
+            }
+          },
+          "related" : {
+            "type" : "array",
+            "description" : "One or more links to miscellaneous related content for the station; these typically are not present, and clients should generally not need to use any of these",
+            "items" : {
+              "$ref" : "#/components/schemas/StationRelatedLink"
+            }
+          },
+          "streams" : {
+            "type" : "array",
+            "description" : "One or more links to audio streams related to the station",
+            "items" : {
+              "$ref" : "#/components/schemas/StationStreamsLink"
+            }
+          }
+        }
+      },
+      "StationListDocument" : {
+        "description" : "A collection of stations close to you or filtered by search criteria",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CollectionDocument"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "attributes" : {
+              "$ref" : "#/components/schemas/StationSearchMetaData"
+            },
+            "items" : {
+              "type" : "array",
+              "description" : "A list of stations",
+              "items" : {
+                "$ref" : "#/components/schemas/StationDocument"
+              }
+            },
+            "links" : {
+              "type" : "object",
+              "description" : "Not used"
+            }
+          }
+        } ]
+      },
+      "StationNetworkData" : {
+        "required" : [ "currentOrgId", "usesInheritance" ],
+        "type" : "object",
+        "properties" : {
+          "currentOrgId" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The current station being viewed. Client applications should generally ignore this field."
+          },
+          "tier1" : {
+            "$ref" : "#/components/schemas/StationNetworkTierOneData"
+          },
+          "usesInheritance" : {
+            "type" : "boolean",
+            "description" : "Whether or not the current station inherits from a parent organization, also referred to as a network"
+          }
+        },
+        "description" : "Metadata about the network, if this station is part of a network"
+      },
+      "StationNetworkTierOneData" : {
+        "required" : [ "id", "name", "usesInheritance" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The unique identifier of the top-level organization in the network"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The display name for the top-level organization in the network"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The status of the top-level organization within NPR's system, not typically used by consumers",
+            "default" : "10",
+            "enum" : [ "1", "9", "10", "12", "15" ]
+          },
+          "tier2" : {
+            "type" : "array",
+            "description" : "One or more stations that are hierarchical children of this organization",
+            "items" : {
+              "$ref" : "#/components/schemas/StationNetworkTierTwoData"
+            }
+          },
+          "usesInheritance" : {
+            "type" : "boolean",
+            "description" : "Whether or not this station inherits from a parent organization, also referred to as a network"
+          }
+        },
+        "description" : "Metadata about the top-level organization in the network, if this station is part of a network"
+      },
+      "StationNetworkTierThreeData" : {
+        "required" : [ "id", "name", "usesInheritance" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The unique identifier of a tier 3 organization in the network"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The display name for a tier 3 organization in the network"
+          },
+          "usesInheritance" : {
+            "type" : "boolean",
+            "description" : "Whether or not this station inherits from a parent organization, also referred to as a network"
+          }
+        },
+        "description" : "Metadata about a tier 3 organization in the network, if this station is part of a network"
+      },
+      "StationNetworkTierTwoData" : {
+        "required" : [ "id", "name", "usesInheritance" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The unique identifier of a tier 2 organization in the network"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The display name for a tier 2 organization in the network"
+          },
+          "tier3" : {
+            "type" : "array",
+            "description" : "One or more stations that are hierarchical children of this organization",
+            "items" : {
+              "$ref" : "#/components/schemas/StationNetworkTierThreeData"
+            }
+          },
+          "usesInheritance" : {
+            "type" : "boolean",
+            "description" : "Whether or not this station inherits from a parent organization, also referred to as a network"
+          }
+        },
+        "description" : "Metadata about a tier 2 organization in the network, if this station is part of a network"
+      },
+      "StationNewscastData" : {
+        "required" : [ "id", "recency" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^\\d{1,4}$",
+            "type" : "string",
+            "description" : "The ID of the newscast that should be played for this station; this is handled internally by other microservices such as the NPR One Listening Service, so this field should typically not be used by consumers"
+          },
+          "recency" : {
+            "type" : "integer",
+            "description" : "How often the newscast should be played, in minutes; a value of `null` implies no information is available, and sensible defaults should be used",
+            "format" : "int32"
+          }
+        },
+        "description" : "Metadata about the newscast for this station; newscasts are handled internally by other microservices such as the NPR One Listening Service, so this data should typically not be used by consumers"
+      },
+      "StationPodcastsLink" : {
+        "description" : "A link to an audio podcast or podcast feed related to the station",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/StationLink"
+        }, {
+          "required" : [ "typeId" ],
+          "type" : "object",
+          "properties" : {
+            "typeId" : {
+              "type" : "string",
+              "description" : "An identifier for the type of link",
+              "default" : "9",
+              "enum" : [ "9" ]
+            }
+          }
+        } ]
+      },
+      "StationRelatedLink" : {
+        "description" : "A link to miscellaneous related content for the station; these typically are not present, and clients should generally not need to use these",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/StationLink"
+        }, {
+          "required" : [ "typeId" ],
+          "type" : "object",
+          "properties" : {
+            "typeId" : {
+              "type" : "string",
+              "description" : "An identifier for the type of link"
+            }
+          }
+        } ]
+      },
+      "StationSearchMetaData" : {
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string",
+            "description" : "The city searched for in the original request"
+          },
+          "countryCode" : {
+            "type" : "string",
+            "description" : "The country where the original request originated, as determined by geolocation. The countryCode is in ISO 3166-1 numeric format"
+          },
+          "lat" : {
+            "type" : "number",
+            "description" : "The latitude parameter used in the original request",
+            "format" : "float"
+          },
+          "lon" : {
+            "type" : "number",
+            "description" : "The longitude parameter in the original request",
+            "format" : "float"
+          },
+          "query" : {
+            "type" : "string",
+            "description" : "The search terms used in the original request"
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The state searched for in the original request"
+          }
+        }
+      },
+      "StationStreamsLink" : {
+        "description" : "A link to an audio stream related to the station",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/StationLink"
+        }, {
+          "required" : [ "typeId" ],
+          "type" : "object",
+          "properties" : {
+            "isPrimaryStream" : {
+              "type" : "boolean",
+              "description" : "Whether or not this stream is considered the station's primary stream",
+              "default" : true
+            },
+            "typeId" : {
+              "type" : "string",
+              "description" : "An identifier for the type of stream",
+              "default" : "10",
+              "enum" : [ "10", "11", "12", "13" ]
+            }
+          }
+        } ]
+      }
+    },
+    "responses" : {
+      "400WithDocument" : {
+        "description" : "A bad request; generally, one or more parameters passed in were incorrect or missing",
+        "headers" : {
+          "X-RateLimit-Remaining" : {
+            "description" : "The number of remaining requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Reset" : {
+            "description" : "The number of seconds left in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Limit" : {
+            "description" : "The number of allowed requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      },
+      "401WithDocument" : {
+        "description" : "The client is not authorized to complete this request. Check to ensure a valid access token was passed in the headers.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      },
+      "404WithDocument" : {
+        "description" : "The resource with the requested ID could not be found, and the server was unable to complete the request.",
+        "headers" : {
+          "X-RateLimit-Remaining" : {
+            "description" : "The number of remaining requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Reset" : {
+            "description" : "The number of seconds left in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Limit" : {
+            "description" : "The number of allowed requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      },
+      "429WithDocument" : {
+        "description" : "The client has exceeded the number of daily calls as per their rate limit. For now, this only applies to prototype applications and untrusted clients. Trusted clients will never be rate-limited, nor will any production apps.",
+        "headers" : {
+          "X-RateLimit-Remaining" : {
+            "description" : "The number of remaining requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Reset" : {
+            "description" : "The number of seconds left in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Limit" : {
+            "description" : "The number of allowed requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      },
+      "500WithDocument" : {
+        "description" : "A server error",
+        "headers" : {
+          "X-RateLimit-Remaining" : {
+            "description" : "The number of remaining requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Reset" : {
+            "description" : "The number of seconds left in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          },
+          "X-RateLimit-Limit" : {
+            "description" : "The number of allowed requests in the current period",
+            "schema" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      },
+      "503WithDocument" : {
+        "description" : "The system is undergoing maintenance and we are unable to fulfill this request. Look for a `Retry-After` header to see the predicted time the system will be back up.",
+        "headers" : {
+          "Retry-After" : {
+            "description" : "The predicted time the system will be back up",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          },
+          "application/vnd.collection.doc+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorDocument"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "Authorization" : {
+        "name" : "Authorization",
+        "in" : "header",
+        "description" : "Your access token from the Authorization Service. Should start with `Bearer`, followed by a space, followed by the token.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "X-Advertising-ID" : {
+        "name" : "X-Advertising-ID",
+        "in" : "header",
+        "description" : "A device-specific advertising identifier, if possible. Apple's IDFA is an example.",
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "oauth2" : {
+        "type" : "oauth2"
+      }
+    }
+  }
+}

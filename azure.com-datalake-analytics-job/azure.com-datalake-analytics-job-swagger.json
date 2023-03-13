@@ -1,1 +1,1891 @@
-{"openapi":"3.0.1","info":{"title":"DataLakeAnalyticsJobManagementClient","description":"Creates an Azure Data Lake Analytics job client.","version":"2017-09-01-preview"},"servers":[{"url":"https://azure.local/"}],"paths":{"/buildJob":{"post":{"tags":["Job"],"description":"Builds (compiles) the specified job in the specified Data Lake Analytics account for job correctness and validation.","operationId":"Job_Build","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters to build a job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BuildJobParameters"}}},"required":true},"responses":{"200":{"description":"Successfully built the job script.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobInformation"}}}}}}},"/jobs":{"get":{"tags":["Job"],"description":"Lists the jobs, if any, associated with the specified Data Lake Analytics account. The response includes a link to the next page of results, if any.","operationId":"Job_List","parameters":[{"name":"$filter","in":"query","description":"OData filter. Optional.","schema":{"type":"string"}},{"name":"$top","in":"query","description":"The number of items to return. Optional.","schema":{"minimum":1,"type":"integer","format":"int32"}},{"name":"$skip","in":"query","description":"The number of items to skip over before returning elements. Optional.","schema":{"minimum":1,"type":"integer","format":"int32"}},{"name":"$select","in":"query","description":"OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional.","schema":{"type":"string"}},{"name":"$orderby","in":"query","description":"OrderBy clause. One or more comma-separated expressions with an optional \"asc\" (the default) or \"desc\" depending on the order you'd like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.","schema":{"type":"string"}},{"name":"$count","in":"query","description":"The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional.","schema":{"type":"boolean"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the list of jobs.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobInfoListResult"}}}}}}},"/jobs/{jobIdentity}":{"get":{"tags":["Job"],"description":"Gets the job information for the specified job ID.","operationId":"Job_Get","parameters":[{"name":"jobIdentity","in":"path","description":"JobInfo ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved details of the specified job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobInformation"}}}}}},"put":{"tags":["Job"],"description":"Submits a job to the specified Data Lake Analytics account.","operationId":"Job_Create","parameters":[{"name":"jobIdentity","in":"path","description":"Job identifier. Uniquely identifies the job across all jobs submitted to the service.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters to submit a job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateJobParameters"}}},"required":true},"responses":{"200":{"description":"Successfully submitted the job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobInformation"}}}}}},"patch":{"tags":["Job"],"description":"Updates the job information for the specified job ID. (Only for use internally with Scope job type.)","operationId":"Job_Update","parameters":[{"name":"jobIdentity","in":"path","description":"Job identifier. Uniquely identifies the job across all jobs submitted to the service.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters to update a job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UpdateJobParameters"}}},"required":false},"responses":{"200":{"description":"Successfully updated the details of the specified job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobInformation"}}}},"201":{"description":"Successfully initiated an update of the specified job."},"202":{"description":"Successfully initiated an update of the specified job."}}}},"/jobs/{jobIdentity}/CancelJob":{"post":{"tags":["Job"],"description":"Cancels the running job specified by the job ID.","operationId":"Job_Cancel","parameters":[{"name":"jobIdentity","in":"path","description":"Job identifier. Uniquely identifies the job across all jobs submitted to the service.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully cancelled the job."},"202":{"description":"Successfully initiated the cancellation of the specified job."},"204":{"description":"The specified job was not found."}}}},"/jobs/{jobIdentity}/GetDebugDataPath":{"get":{"tags":["Job"],"description":"Gets the job debug data information specified by the job ID.","operationId":"Job_GetDebugDataPath","parameters":[{"name":"jobIdentity","in":"path","description":"Job identifier. Uniquely identifies the job across all jobs submitted to the service.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved debug data paths of the specified job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobDataPath"}}}}}}},"/jobs/{jobIdentity}/GetStatistics":{"get":{"tags":["Job"],"description":"Gets statistics of the specified job.","operationId":"Job_GetStatistics","parameters":[{"name":"jobIdentity","in":"path","description":"Job Information ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved job statistics of the specified job.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobStatistics"}}}}}}},"/jobs/{jobIdentity}/YieldJob":{"post":{"tags":["Job"],"description":"Pauses the specified job and places it back in the job queue, behind other jobs of equal or higher importance, based on priority. (Only for use internally with Scope job type.)","operationId":"Job_Yield","parameters":[{"name":"jobIdentity","in":"path","description":"Job identifier. Uniquely identifies the job across all jobs submitted to the service.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully yielded the specified job."},"202":{"description":"Successfully initiated the yielding of the specified job."},"204":{"description":"The specified job was not found."}}}},"/pipelines":{"get":{"tags":["Pipeline"],"description":"Lists all pipelines.","operationId":"Pipeline_List","parameters":[{"name":"startDateTime","in":"query","description":"The start date for when to get the list of pipelines. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"endDateTime","in":"query","description":"The end date for when to get the list of pipelines. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the list of pipelines.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobPipelineInformationListResult"}}}}}}},"/pipelines/{pipelineIdentity}":{"get":{"tags":["Pipeline"],"description":"Gets the Pipeline information for the specified pipeline ID.","operationId":"Pipeline_Get","parameters":[{"name":"pipelineIdentity","in":"path","description":"Pipeline ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"startDateTime","in":"query","description":"The start date for when to get the pipeline and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"endDateTime","in":"query","description":"The end date for when to get the pipeline and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved details of the specified pipeline.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobPipelineInformation"}}}}}}},"/recurrences":{"get":{"tags":["Recurrence"],"description":"Lists all recurrences.","operationId":"Recurrence_List","parameters":[{"name":"startDateTime","in":"query","description":"The start date for when to get the list of recurrences. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"endDateTime","in":"query","description":"The end date for when to get the list of recurrences. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the list of recurrences.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobRecurrenceInformationListResult"}}}}}}},"/recurrences/{recurrenceIdentity}":{"get":{"tags":["Recurrence"],"description":"Gets the recurrence information for the specified recurrence ID.","operationId":"Recurrence_Get","parameters":[{"name":"recurrenceIdentity","in":"path","description":"Recurrence ID.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"startDateTime","in":"query","description":"The start date for when to get the recurrence and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"endDateTime","in":"query","description":"The end date for when to get recurrence and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.","schema":{"type":"string","format":"date-time"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved details of the specified pipeline.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/JobRecurrenceInformation"}}}}}}}},"components":{"schemas":{"BaseJobParameters":{"required":["properties","type"],"type":"object","properties":{"properties":{"$ref":"#/components/schemas/CreateJobProperties"},"type":{"type":"string","description":"The job type of the current job (Hive, USql, or Scope (for internal use only)).","enum":["USql","Hive","Scope"]}},"description":"Data Lake Analytics Job Parameters base class for build and submit."},"BuildJobParameters":{"properties":{"name":{"type":"string","description":"The friendly name of the job to build."}},"description":"The parameters used to build a new Data Lake Analytics job.","allOf":[{"$ref":"#/components/schemas/BaseJobParameters"}]},"CreateJobParameters":{"properties":{"degreeOfParallelism":{"type":"integer","description":"The degree of parallelism to use for this job. At most one of degreeOfParallelism and degreeOfParallelismPercent should be specified. If none, a default value of 1 will be used for degreeOfParallelism.","format":"int32","default":1},"degreeOfParallelismPercent":{"type":"number","description":"the degree of parallelism in percentage used for this job. At most one of degreeOfParallelism and degreeOfParallelismPercent should be specified. If none, a default value of 1 will be used for degreeOfParallelism.","format":"double"},"logFilePatterns":{"type":"array","description":"The list of log file name patterns to find in the logFolder. '*' is the only matching character allowed. Example format: jobExecution*.log or *mylog*.txt","items":{"type":"string"}},"name":{"type":"string","description":"The friendly name of the job to submit."},"priority":{"type":"integer","description":"The priority value to use for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.","format":"int32"},"related":{"$ref":"#/components/schemas/JobRelationshipProperties"}},"description":"The parameters used to submit a new Data Lake Analytics job.","allOf":[{"$ref":"#/components/schemas/BaseJobParameters"}]},"CreateJobProperties":{"required":["script","type"],"type":"object","properties":{"runtimeVersion":{"type":"string","description":"The runtime version of the Data Lake Analytics engine to use for the specific type of job being run."},"script":{"type":"string","description":"The script to run. Please note that the maximum script size is 3 MB."},"type":{"type":"string","description":"The job type of the current job (Hive, USql, or Scope (for internal use only))."}},"description":"The common Data Lake Analytics job properties for job submission.","discriminator":{"propertyName":"type"}},"CreateScopeJobParameters":{"properties":{"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The key-value pairs used to add additional metadata to the job information."}},"description":"The parameters used to submit a new Data Lake Analytics Scope job. (Only for use internally with Scope job type.)","allOf":[{"$ref":"#/components/schemas/CreateJobParameters"}]},"CreateScopeJobProperties":{"properties":{"notifier":{"type":"string","description":"The list of email addresses, separated by semi-colons, to notify when the job reaches a terminal state."},"resources":{"type":"array","description":"The list of resources that are required by the job.","items":{"$ref":"#/components/schemas/ScopeJobResource"}}},"description":"Scope job properties used when submitting Scope jobs. (Only for use internally with Scope job type.)","allOf":[{"$ref":"#/components/schemas/CreateJobProperties"}]},"CreateUSqlJobProperties":{"properties":{"compileMode":{"type":"string","description":"The specific compilation mode for the job used during execution. If this is not specified during submission, the server will determine the optimal compilation mode.","enum":["Semantic","Full","SingleBox"]}},"description":"U-SQL job properties used when submitting U-SQL jobs.","allOf":[{"$ref":"#/components/schemas/CreateJobProperties"}]},"Diagnostics":{"type":"object","properties":{"columnNumber":{"type":"integer","description":"The column where the error occurred.","format":"int32","readOnly":true},"end":{"type":"integer","description":"The ending index of the error.","format":"int32","readOnly":true},"lineNumber":{"type":"integer","description":"The line number the error occurred on.","format":"int32","readOnly":true},"message":{"type":"string","description":"The error message.","readOnly":true},"severity":{"type":"string","description":"The severity of the error.","readOnly":true,"enum":["Warning","Error","Info","SevereWarning","Deprecated","UserWarning"]},"start":{"type":"integer","description":"The starting index of the error.","format":"int32","readOnly":true}},"description":"Error diagnostic information for failed jobs."},"HiveJobProperties":{"properties":{"executedStatementCount":{"type":"integer","description":"The number of statements that have been run based on the script.","format":"int32","readOnly":true},"logsLocation":{"type":"string","description":"The Hive logs location.","readOnly":true},"outputLocation":{"type":"string","description":"The location of Hive job output files (both execution output and results).","readOnly":true},"statementCount":{"type":"integer","description":"The number of statements that will be run based on the script.","format":"int32","readOnly":true}},"description":"Hive job properties used when retrieving Hive jobs.","allOf":[{"$ref":"#/components/schemas/JobProperties"}]},"JobDataPath":{"type":"object","properties":{"command":{"type":"string","description":"The command that this job data relates to.","readOnly":true},"jobId":{"type":"string","description":"The ID of the job this data is for.","format":"uuid","readOnly":true},"paths":{"type":"array","description":"The list of paths to all of the job data.","readOnly":true,"items":{"type":"string"}}},"description":"A Data Lake Analytics job data path item."},"JobErrorDetails":{"type":"object","properties":{"description":{"type":"string","description":"The error message description.","readOnly":true},"details":{"type":"string","description":"The details of the error message.","readOnly":true},"endOffset":{"type":"integer","description":"The end offset in the job where the error was found.","format":"int32","readOnly":true},"errorId":{"type":"string","description":"The specific identifier for the type of error encountered in the job.","readOnly":true},"filePath":{"type":"string","description":"The path to any supplemental error files, if any.","readOnly":true},"helpLink":{"type":"string","description":"The link to MSDN or Azure help for this type of error, if any.","readOnly":true},"innerError":{"$ref":"#/components/schemas/JobInnerError"},"internalDiagnostics":{"type":"string","description":"The internal diagnostic stack trace if the user requesting the job error details has sufficient permissions it will be retrieved, otherwise it will be empty.","readOnly":true},"lineNumber":{"type":"integer","description":"The specific line number in the job where the error occurred.","format":"int32","readOnly":true},"message":{"type":"string","description":"The user friendly error message for the failure.","readOnly":true},"resolution":{"type":"string","description":"The recommended resolution for the failure, if any.","readOnly":true},"severity":{"type":"string","description":"The severity level of the failure.","readOnly":true,"enum":["Warning","Error","Info","SevereWarning","Deprecated","UserWarning"]},"source":{"type":"string","description":"The ultimate source of the failure (usually either SYSTEM or USER).","readOnly":true},"startOffset":{"type":"integer","description":"The start offset in the job where the error was found","format":"int32","readOnly":true}},"description":"The Data Lake Analytics job error details."},"JobInfoListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of JobInfo items.","readOnly":true,"items":{"$ref":"#/components/schemas/JobInformationBasic"}}},"description":"List of JobInfo items."},"JobInformation":{"properties":{"errorMessage":{"type":"array","description":"The error message details for the job, if the job failed.","readOnly":true,"items":{"$ref":"#/components/schemas/JobErrorDetails"}},"properties":{"$ref":"#/components/schemas/JobProperties"},"stateAuditRecords":{"type":"array","description":"The job state audit records, indicating when various operations have been performed on this job.","readOnly":true,"items":{"$ref":"#/components/schemas/JobStateAuditRecord"}}},"description":"The extended Data Lake Analytics job information properties returned when retrieving a specific job.","allOf":[{"$ref":"#/components/schemas/JobInformationBasic"}]},"JobInformationBasic":{"required":["name","type"],"type":"object","properties":{"degreeOfParallelism":{"type":"integer","description":"The degree of parallelism used for this job.","format":"int32","default":1},"degreeOfParallelismPercent":{"type":"number","description":"the degree of parallelism in percentage used for this job.","format":"double","readOnly":true},"endTime":{"type":"string","description":"The completion time of the job.","format":"date-time","readOnly":true},"hierarchyQueueNode":{"type":"string","description":"the name of hierarchy queue node this job is assigned to, Null if job has not been assigned yet or the account doesn't have hierarchy queue.","readOnly":true},"jobId":{"type":"string","description":"The job's unique identifier (a GUID).","format":"uuid","readOnly":true},"logFilePatterns":{"type":"array","description":"The list of log file name patterns to find in the logFolder. '*' is the only matching character allowed. Example format: jobExecution*.log or *mylog*.txt","items":{"type":"string"}},"logFolder":{"type":"string","description":"The log folder path to use in the following format: adl://<accountName>.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.","readOnly":true},"name":{"type":"string","description":"The friendly name of the job."},"priority":{"type":"integer","description":"The priority value for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.","format":"int32"},"related":{"$ref":"#/components/schemas/JobRelationshipProperties"},"result":{"type":"string","description":"The result of job execution or the current result of the running job.","readOnly":true,"enum":["None","Succeeded","Cancelled","Failed"]},"startTime":{"type":"string","description":"The start time of the job.","format":"date-time","readOnly":true},"state":{"type":"string","description":"The job state. When the job is in the Ended state, refer to Result and ErrorMessage for details.","readOnly":true,"enum":["Accepted","Compiling","Ended","New","Queued","Running","Scheduling","Starting","Paused","WaitingForCapacity","Yielded","Finalizing"]},"submitTime":{"type":"string","description":"The time the job was submitted to the service.","format":"date-time","readOnly":true},"submitter":{"type":"string","description":"The user or account that submitted the job.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The key-value pairs used to add additional metadata to the job information. (Only for use internally with Scope job type.)"},"type":{"type":"string","description":"The job type of the current job (Hive, USql, or Scope (for internal use only)).","enum":["USql","Hive","Scope"]}},"description":"The common Data Lake Analytics job information properties."},"JobInnerError":{"type":"object","properties":{"component":{"type":"string","description":"The component that failed.","readOnly":true},"description":{"type":"string","description":"The error message description.","readOnly":true},"details":{"type":"string","description":"The details of the error message.","readOnly":true},"diagnosticCode":{"type":"integer","description":"The diagnostic error code.","format":"int32","readOnly":true},"errorId":{"type":"string","description":"The specific identifier for the type of error encountered in the job.","readOnly":true},"helpLink":{"type":"string","description":"The link to MSDN or Azure help for this type of error, if any.","readOnly":true},"innerError":{"$ref":"#/components/schemas/JobInnerError"},"internalDiagnostics":{"type":"string","description":"The internal diagnostic stack trace if the user requesting the job error details has sufficient permissions it will be retrieved, otherwise it will be empty.","readOnly":true},"message":{"type":"string","description":"The user friendly error message for the failure.","readOnly":true},"resolution":{"type":"string","description":"The recommended resolution for the failure, if any.","readOnly":true},"severity":{"type":"string","description":"The severity level of the failure.","readOnly":true,"enum":["Warning","Error","Info","SevereWarning","Deprecated","UserWarning"]},"source":{"type":"string","description":"The ultimate source of the failure (usually either SYSTEM or USER).","readOnly":true}},"description":"The Data Lake Analytics job error details."},"JobPipelineInformation":{"type":"object","properties":{"auHoursCanceled":{"type":"number","description":"The number of job execution hours that resulted in canceled jobs.","format":"double","readOnly":true},"auHoursFailed":{"type":"number","description":"The number of job execution hours that resulted in failed jobs.","format":"double","readOnly":true},"auHoursSucceeded":{"type":"number","description":"The number of job execution hours that resulted in successful jobs.","format":"double","readOnly":true},"lastSubmitTime":{"type":"string","description":"The last time a job in this pipeline was submitted.","format":"date-time","readOnly":true},"numJobsCanceled":{"type":"integer","description":"The number of jobs in this pipeline that have been canceled.","format":"int32","readOnly":true},"numJobsFailed":{"type":"integer","description":"The number of jobs in this pipeline that have failed.","format":"int32","readOnly":true},"numJobsSucceeded":{"type":"integer","description":"The number of jobs in this pipeline that have succeeded.","format":"int32","readOnly":true},"pipelineId":{"type":"string","description":"The job relationship pipeline identifier (a GUID).","format":"uuid","readOnly":true},"pipelineName":{"maxLength":260,"type":"string","description":"The friendly name of the job relationship pipeline, which does not need to be unique.","readOnly":true},"pipelineUri":{"type":"string","description":"The pipeline uri, unique, links to the originating service for this pipeline.","readOnly":true},"recurrences":{"type":"array","description":"The list of recurrence identifiers representing each run of this pipeline.","readOnly":true,"items":{"type":"string","format":"uuid"}},"runs":{"type":"array","description":"The list of recurrence identifiers representing each run of this pipeline.","readOnly":true,"items":{"$ref":"#/components/schemas/JobPipelineRunInformation"}}},"description":"Job Pipeline Information, showing the relationship of jobs and recurrences of those jobs in a pipeline."},"JobPipelineInformationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of job pipeline information items.","readOnly":true,"items":{"$ref":"#/components/schemas/JobPipelineInformation"}}},"description":"List of job pipeline information items."},"JobPipelineRunInformation":{"type":"object","properties":{"lastSubmitTime":{"type":"string","description":"The time this instance was last submitted.","format":"date-time","readOnly":true},"runId":{"type":"string","description":"The run identifier of an instance of pipeline executions (a GUID).","format":"uuid","readOnly":true}},"description":"Run info for a specific job pipeline."},"JobProperties":{"required":["script","type"],"type":"object","properties":{"runtimeVersion":{"type":"string","description":"The runtime version of the Data Lake Analytics engine to use for the specific type of job being run."},"script":{"type":"string","description":"The script to run. Please note that the maximum script size is 3 MB."},"type":{"type":"string","description":"The job type of the current job (Hive, USql, or Scope (for internal use only))."}},"description":"The common Data Lake Analytics job properties.","discriminator":{"propertyName":"type"}},"JobRecurrenceInformation":{"type":"object","properties":{"auHoursCanceled":{"type":"number","description":"The number of job execution hours that resulted in canceled jobs.","format":"double","readOnly":true},"auHoursFailed":{"type":"number","description":"The number of job execution hours that resulted in failed jobs.","format":"double","readOnly":true},"auHoursSucceeded":{"type":"number","description":"The number of job execution hours that resulted in successful jobs.","format":"double","readOnly":true},"lastSubmitTime":{"type":"string","description":"The last time a job in this recurrence was submitted.","format":"date-time","readOnly":true},"numJobsCanceled":{"type":"integer","description":"The number of jobs in this recurrence that have been canceled.","format":"int32","readOnly":true},"numJobsFailed":{"type":"integer","description":"The number of jobs in this recurrence that have failed.","format":"int32","readOnly":true},"numJobsSucceeded":{"type":"integer","description":"The number of jobs in this recurrence that have succeeded.","format":"int32","readOnly":true},"recurrenceId":{"type":"string","description":"The recurrence identifier (a GUID), unique per activity/script, regardless of iterations. This is something to link different occurrences of the same job together.","format":"uuid","readOnly":true},"recurrenceName":{"type":"string","description":"The recurrence name, user friendly name for the correlation between jobs.","readOnly":true}},"description":"Recurrence job information for a specific recurrence."},"JobRecurrenceInformationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of job recurrence information items.","readOnly":true,"items":{"$ref":"#/components/schemas/JobRecurrenceInformation"}}},"description":"List of job recurrence information items."},"JobRelationshipProperties":{"required":["recurrenceId"],"type":"object","properties":{"pipelineId":{"type":"string","description":"The job relationship pipeline identifier (a GUID).","format":"uuid"},"pipelineName":{"maxLength":260,"type":"string","description":"The friendly name of the job relationship pipeline, which does not need to be unique."},"pipelineUri":{"type":"string","description":"The pipeline uri, unique, links to the originating service for this pipeline."},"recurrenceId":{"type":"string","description":"The recurrence identifier (a GUID), unique per activity/script, regardless of iterations. This is something to link different occurrences of the same job together.","format":"uuid"},"recurrenceName":{"maxLength":260,"type":"string","description":"The recurrence name, user friendly name for the correlation between jobs."},"runId":{"type":"string","description":"The run identifier (a GUID), unique identifier of the iteration of this pipeline.","format":"uuid"}},"description":"Job relationship information properties including pipeline information, correlation information, etc."},"JobResource":{"type":"object","properties":{"name":{"type":"string","description":"The name of the resource."},"resourcePath":{"type":"string","description":"The path to the resource."},"type":{"type":"string","description":"The job resource type.","enum":["VertexResource","JobManagerResource","StatisticsResource","VertexResourceInUserFolder","JobManagerResourceInUserFolder","StatisticsResourceInUserFolder"]}},"description":"The Data Lake Analytics job resources."},"JobStateAuditRecord":{"type":"object","properties":{"details":{"type":"string","description":"The details of the audit log.","readOnly":true},"newState":{"type":"string","description":"The new state the job is in.","readOnly":true},"requestedByUser":{"type":"string","description":"The user who requests the change.","readOnly":true},"timeStamp":{"type":"string","description":"The time stamp that the state change took place.","format":"date-time","readOnly":true}},"description":"The Data Lake Analytics job state audit records for tracking the lifecycle of a job."},"JobStatistics":{"type":"object","properties":{"finalizingTimeUtc":{"type":"string","description":"The job finalizing start time.","format":"date-time","readOnly":true},"lastUpdateTimeUtc":{"type":"string","description":"The last update time for the statistics.","format":"date-time","readOnly":true},"stages":{"type":"array","description":"The list of stages for the job.","readOnly":true,"items":{"$ref":"#/components/schemas/JobStatisticsVertexStage"}}},"description":"The Data Lake Analytics job execution statistics."},"JobStatisticsVertex":{"type":"object","properties":{"dataRead":{"type":"integer","description":"The amount of data read of the vertex, in bytes.","format":"int64","readOnly":true},"executionTime":{"type":"string","description":"The amount of execution time of the vertex.","format":"duration","readOnly":true},"name":{"type":"string","description":"The name of the vertex.","readOnly":true},"peakMemUsage":{"type":"integer","description":"The amount of peak memory usage of the vertex, in bytes.","format":"int64","readOnly":true},"vertexId":{"type":"string","description":"The id of the vertex.","format":"uuid","readOnly":true}},"description":"The detailed information for a vertex."},"JobStatisticsVertexStage":{"type":"object","properties":{"allocatedContainerCpuCoreCount":{"$ref":"#/components/schemas/ResourceUsageStatistics"},"allocatedContainerMemSize":{"$ref":"#/components/schemas/ResourceUsageStatistics"},"dataRead":{"type":"integer","description":"The amount of data read, in bytes.","format":"int64","readOnly":true},"dataReadCrossPod":{"type":"integer","description":"The amount of data read across multiple pods, in bytes.","format":"int64","readOnly":true},"dataReadIntraPod":{"type":"integer","description":"The amount of data read in one pod, in bytes.","format":"int64","readOnly":true},"dataToRead":{"type":"integer","description":"The amount of data remaining to be read, in bytes.","format":"int64","readOnly":true},"dataWritten":{"type":"integer","description":"The amount of data written, in bytes.","format":"int64","readOnly":true},"duplicateDiscardCount":{"type":"integer","description":"The number of duplicates that were discarded.","format":"int32","readOnly":true},"estimatedVertexCpuCoreCount":{"type":"integer","description":"The estimated vertex CPU core count.","format":"int32","readOnly":true},"estimatedVertexMemSize":{"type":"integer","description":"The estimated vertex memory size, in bytes.","format":"int64","readOnly":true},"estimatedVertexPeakCpuCoreCount":{"type":"integer","description":"The estimated vertex peak CPU core count.","format":"int32","readOnly":true},"failedCount":{"type":"integer","description":"The number of failures that occurred in this stage.","format":"int32","readOnly":true},"maxDataReadVertex":{"$ref":"#/components/schemas/JobStatisticsVertex"},"maxExecutionTimeVertex":{"$ref":"#/components/schemas/JobStatisticsVertex"},"maxPeakMemUsageVertex":{"$ref":"#/components/schemas/JobStatisticsVertex"},"maxVertexDataRead":{"type":"integer","description":"The maximum amount of data read in a single vertex, in bytes.","format":"int64","readOnly":true},"minVertexDataRead":{"type":"integer","description":"The minimum amount of data read in a single vertex, in bytes.","format":"int64","readOnly":true},"readFailureCount":{"type":"integer","description":"The number of read failures in this stage.","format":"int32","readOnly":true},"revocationCount":{"type":"integer","description":"The number of vertices that were revoked during this stage.","format":"int32","readOnly":true},"runningCount":{"type":"integer","description":"The number of currently running vertices in this stage.","format":"int32","readOnly":true},"scheduledCount":{"type":"integer","description":"The number of currently scheduled vertices in this stage.","format":"int32","readOnly":true},"stageName":{"type":"string","description":"The name of this stage in job execution.","readOnly":true},"succeededCount":{"type":"integer","description":"The number of vertices that succeeded in this stage.","format":"int32","readOnly":true},"tempDataWritten":{"type":"integer","description":"The amount of temporary data written, in bytes.","format":"int64","readOnly":true},"totalCount":{"type":"integer","description":"The total vertex count for this stage.","format":"int32","readOnly":true},"totalExecutionTime":{"type":"string","description":"The sum of the total execution time of all the vertices in the stage.","format":"duration","readOnly":true},"totalFailedTime":{"type":"string","description":"The amount of time that failed vertices took up in this stage.","format":"duration","readOnly":true},"totalPeakMemUsage":{"type":"integer","description":"The sum of the peak memory usage of all the vertices in the stage, in bytes.","format":"int64","readOnly":true},"totalProgress":{"type":"integer","description":"The current progress of this stage, as a percentage.","format":"int32","readOnly":true},"totalSucceededTime":{"type":"string","description":"The amount of time all successful vertices took in this stage.","format":"duration","readOnly":true},"usedVertexCpuCoreCount":{"$ref":"#/components/schemas/ResourceUsageStatistics"},"usedVertexPeakMemSize":{"$ref":"#/components/schemas/ResourceUsageStatistics"}},"description":"The Data Lake Analytics job statistics vertex stage information."},"ResourceUsageStatistics":{"type":"object","properties":{"average":{"type":"number","description":"The average value.","format":"double","readOnly":true},"maximum":{"type":"integer","description":"The maximum value.","format":"int64","readOnly":true},"minimum":{"type":"integer","description":"The minimum value.","format":"int64","readOnly":true}},"description":"The statistics information for resource usage."},"ScopeJobProperties":{"properties":{"notifier":{"type":"string","description":"The list of email addresses, separated by semi-colons, to notify when the job reaches a terminal state."},"resources":{"type":"array","description":"The list of resources that are required by the job.","readOnly":true,"items":{"$ref":"#/components/schemas/ScopeJobResource"}},"rootProcessNodeId":{"type":"string","description":"The ID used to identify the job manager coordinating job execution. This value should not be set by the user and will be ignored if it is.","readOnly":true},"totalCompilationTime":{"type":"string","description":"The total time this job spent compiling. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalPausedTime":{"type":"string","description":"The total time this job spent paused. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalQueuedTime":{"type":"string","description":"The total time this job spent queued. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalRunningTime":{"type":"string","description":"The total time this job spent executing. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"userAlgebraPath":{"type":"string","description":"The algebra file path after the job has completed.","readOnly":true},"yarnApplicationId":{"type":"string","description":"The ID used to identify the yarn application executing the job. This value should not be set by the user and will be ignored if it is.","readOnly":true}},"description":"Scope job properties used when submitting and retrieving Scope jobs. (Only for use internally with Scope job type.)","allOf":[{"$ref":"#/components/schemas/JobProperties"}]},"ScopeJobResource":{"type":"object","properties":{"name":{"type":"string","description":"The name of the resource."},"path":{"type":"string","description":"The path to the resource."}},"description":"The Scope job resources. (Only for use internally with Scope job type.)"},"USqlJobProperties":{"properties":{"algebraFilePath":{"type":"string","description":"The algebra file path after the job has completed.","readOnly":true},"compileMode":{"type":"string","description":"The specific compilation mode for the job used during execution. If this is not specified during submission, the server will determine the optimal compilation mode.","readOnly":true,"enum":["Semantic","Full","SingleBox"]},"debugData":{"$ref":"#/components/schemas/JobDataPath"},"diagnostics":{"type":"array","description":"The diagnostics for the job.","readOnly":true,"items":{"$ref":"#/components/schemas/Diagnostics"}},"resources":{"type":"array","description":"The list of resources that are required by the job.","readOnly":true,"items":{"$ref":"#/components/schemas/JobResource"}},"rootProcessNodeId":{"type":"string","description":"The ID used to identify the job manager coordinating job execution. This value should not be set by the user and will be ignored if it is.","readOnly":true},"statistics":{"$ref":"#/components/schemas/JobStatistics"},"totalCompilationTime":{"type":"string","description":"The total time this job spent compiling. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalPausedTime":{"type":"string","description":"The total time this job spent paused. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalQueuedTime":{"type":"string","description":"The total time this job spent queued. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"totalRunningTime":{"type":"string","description":"The total time this job spent executing. This value should not be set by the user and will be ignored if it is.","format":"duration","readOnly":true},"yarnApplicationId":{"type":"string","description":"The ID used to identify the yarn application executing the job. This value should not be set by the user and will be ignored if it is.","readOnly":true},"yarnApplicationTimeStamp":{"type":"integer","description":"The timestamp (in ticks) for the yarn application executing the job. This value should not be set by the user and will be ignored if it is.","format":"int64","readOnly":true}},"description":"U-SQL job properties used when retrieving U-SQL jobs.","allOf":[{"$ref":"#/components/schemas/JobProperties"}]},"UpdateJobParameters":{"type":"object","properties":{"degreeOfParallelism":{"type":"integer","description":"The degree of parallelism used for this job.","format":"int32"},"degreeOfParallelismPercent":{"type":"number","description":"the degree of parallelism in percentage used for this job.","format":"double"},"priority":{"type":"integer","description":"The priority value for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.","format":"int32"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The key-value pairs used to add additional metadata to the job information."}},"description":"The parameters that can be used to update existing Data Lake Analytics job information properties. (Only for use internally with Scope job type.)"}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"adlaJobDnsSuffixInPath":{"name":"adlaJobDnsSuffix","in":"path","description":"The DNS suffix used as the base for all Azure Data Lake Analytics Job service requests.","required":true,"schema":{"type":"string","default":"azuredatalakeanalytics.net"}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "DataLakeAnalyticsJobManagementClient",
+    "description" : "Creates an Azure Data Lake Analytics job client.",
+    "version" : "2017-09-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://azure.local/"
+  } ],
+  "paths" : {
+    "/buildJob" : {
+      "post" : {
+        "tags" : [ "Job" ],
+        "description" : "Builds (compiles) the specified job in the specified Data Lake Analytics account for job correctness and validation.",
+        "operationId" : "Job_Build",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters to build a job.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/BuildJobParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully built the job script.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobInformation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs" : {
+      "get" : {
+        "tags" : [ "Job" ],
+        "description" : "Lists the jobs, if any, associated with the specified Data Lake Analytics account. The response includes a link to the next page of results, if any.",
+        "operationId" : "Job_List",
+        "parameters" : [ {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter. Optional.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "The number of items to return. Optional.",
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "The number of items to skip over before returning elements. Optional.",
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$select",
+          "in" : "query",
+          "description" : "OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$orderby",
+          "in" : "query",
+          "description" : "OrderBy clause. One or more comma-separated expressions with an optional \"asc\" (the default) or \"desc\" depending on the order you'd like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$count",
+          "in" : "query",
+          "description" : "The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the list of jobs.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobInfoListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobIdentity}" : {
+      "get" : {
+        "tags" : [ "Job" ],
+        "description" : "Gets the job information for the specified job ID.",
+        "operationId" : "Job_Get",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "JobInfo ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved details of the specified job.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobInformation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Job" ],
+        "description" : "Submits a job to the specified Data Lake Analytics account.",
+        "operationId" : "Job_Create",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job identifier. Uniquely identifies the job across all jobs submitted to the service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters to submit a job.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateJobParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully submitted the job.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobInformation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Job" ],
+        "description" : "Updates the job information for the specified job ID. (Only for use internally with Scope job type.)",
+        "operationId" : "Job_Update",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job identifier. Uniquely identifies the job across all jobs submitted to the service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters to update a job.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateJobParameters"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the details of the specified job.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobInformation"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Successfully initiated an update of the specified job."
+          },
+          "202" : {
+            "description" : "Successfully initiated an update of the specified job."
+          }
+        }
+      }
+    },
+    "/jobs/{jobIdentity}/CancelJob" : {
+      "post" : {
+        "tags" : [ "Job" ],
+        "description" : "Cancels the running job specified by the job ID.",
+        "operationId" : "Job_Cancel",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job identifier. Uniquely identifies the job across all jobs submitted to the service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully cancelled the job."
+          },
+          "202" : {
+            "description" : "Successfully initiated the cancellation of the specified job."
+          },
+          "204" : {
+            "description" : "The specified job was not found."
+          }
+        }
+      }
+    },
+    "/jobs/{jobIdentity}/GetDebugDataPath" : {
+      "get" : {
+        "tags" : [ "Job" ],
+        "description" : "Gets the job debug data information specified by the job ID.",
+        "operationId" : "Job_GetDebugDataPath",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job identifier. Uniquely identifies the job across all jobs submitted to the service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved debug data paths of the specified job.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobDataPath"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobIdentity}/GetStatistics" : {
+      "get" : {
+        "tags" : [ "Job" ],
+        "description" : "Gets statistics of the specified job.",
+        "operationId" : "Job_GetStatistics",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job Information ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved job statistics of the specified job.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobStatistics"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobIdentity}/YieldJob" : {
+      "post" : {
+        "tags" : [ "Job" ],
+        "description" : "Pauses the specified job and places it back in the job queue, behind other jobs of equal or higher importance, based on priority. (Only for use internally with Scope job type.)",
+        "operationId" : "Job_Yield",
+        "parameters" : [ {
+          "name" : "jobIdentity",
+          "in" : "path",
+          "description" : "Job identifier. Uniquely identifies the job across all jobs submitted to the service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully yielded the specified job."
+          },
+          "202" : {
+            "description" : "Successfully initiated the yielding of the specified job."
+          },
+          "204" : {
+            "description" : "The specified job was not found."
+          }
+        }
+      }
+    },
+    "/pipelines" : {
+      "get" : {
+        "tags" : [ "Pipeline" ],
+        "description" : "Lists all pipelines.",
+        "operationId" : "Pipeline_List",
+        "parameters" : [ {
+          "name" : "startDateTime",
+          "in" : "query",
+          "description" : "The start date for when to get the list of pipelines. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDateTime",
+          "in" : "query",
+          "description" : "The end date for when to get the list of pipelines. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the list of pipelines.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobPipelineInformationListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pipelines/{pipelineIdentity}" : {
+      "get" : {
+        "tags" : [ "Pipeline" ],
+        "description" : "Gets the Pipeline information for the specified pipeline ID.",
+        "operationId" : "Pipeline_Get",
+        "parameters" : [ {
+          "name" : "pipelineIdentity",
+          "in" : "path",
+          "description" : "Pipeline ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "startDateTime",
+          "in" : "query",
+          "description" : "The start date for when to get the pipeline and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDateTime",
+          "in" : "query",
+          "description" : "The end date for when to get the pipeline and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved details of the specified pipeline.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobPipelineInformation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recurrences" : {
+      "get" : {
+        "tags" : [ "Recurrence" ],
+        "description" : "Lists all recurrences.",
+        "operationId" : "Recurrence_List",
+        "parameters" : [ {
+          "name" : "startDateTime",
+          "in" : "query",
+          "description" : "The start date for when to get the list of recurrences. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDateTime",
+          "in" : "query",
+          "description" : "The end date for when to get the list of recurrences. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the list of recurrences.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobRecurrenceInformationListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recurrences/{recurrenceIdentity}" : {
+      "get" : {
+        "tags" : [ "Recurrence" ],
+        "description" : "Gets the recurrence information for the specified recurrence ID.",
+        "operationId" : "Recurrence_Get",
+        "parameters" : [ {
+          "name" : "recurrenceIdentity",
+          "in" : "path",
+          "description" : "Recurrence ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "startDateTime",
+          "in" : "query",
+          "description" : "The start date for when to get the recurrence and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDateTime",
+          "in" : "query",
+          "description" : "The end date for when to get recurrence and aggregate its data. The startDateTime and endDateTime can be no more than 30 days apart.",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved details of the specified pipeline.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JobRecurrenceInformation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BaseJobParameters" : {
+        "required" : [ "properties", "type" ],
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/CreateJobProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The job type of the current job (Hive, USql, or Scope (for internal use only)).",
+            "enum" : [ "USql", "Hive", "Scope" ]
+          }
+        },
+        "description" : "Data Lake Analytics Job Parameters base class for build and submit."
+      },
+      "BuildJobParameters" : {
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The friendly name of the job to build."
+          }
+        },
+        "description" : "The parameters used to build a new Data Lake Analytics job.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseJobParameters"
+        } ]
+      },
+      "CreateJobParameters" : {
+        "properties" : {
+          "degreeOfParallelism" : {
+            "type" : "integer",
+            "description" : "The degree of parallelism to use for this job. At most one of degreeOfParallelism and degreeOfParallelismPercent should be specified. If none, a default value of 1 will be used for degreeOfParallelism.",
+            "format" : "int32",
+            "default" : 1
+          },
+          "degreeOfParallelismPercent" : {
+            "type" : "number",
+            "description" : "the degree of parallelism in percentage used for this job. At most one of degreeOfParallelism and degreeOfParallelismPercent should be specified. If none, a default value of 1 will be used for degreeOfParallelism.",
+            "format" : "double"
+          },
+          "logFilePatterns" : {
+            "type" : "array",
+            "description" : "The list of log file name patterns to find in the logFolder. '*' is the only matching character allowed. Example format: jobExecution*.log or *mylog*.txt",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The friendly name of the job to submit."
+          },
+          "priority" : {
+            "type" : "integer",
+            "description" : "The priority value to use for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.",
+            "format" : "int32"
+          },
+          "related" : {
+            "$ref" : "#/components/schemas/JobRelationshipProperties"
+          }
+        },
+        "description" : "The parameters used to submit a new Data Lake Analytics job.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseJobParameters"
+        } ]
+      },
+      "CreateJobProperties" : {
+        "required" : [ "script", "type" ],
+        "type" : "object",
+        "properties" : {
+          "runtimeVersion" : {
+            "type" : "string",
+            "description" : "The runtime version of the Data Lake Analytics engine to use for the specific type of job being run."
+          },
+          "script" : {
+            "type" : "string",
+            "description" : "The script to run. Please note that the maximum script size is 3 MB."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The job type of the current job (Hive, USql, or Scope (for internal use only))."
+          }
+        },
+        "description" : "The common Data Lake Analytics job properties for job submission.",
+        "discriminator" : {
+          "propertyName" : "type"
+        }
+      },
+      "CreateScopeJobParameters" : {
+        "properties" : {
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The key-value pairs used to add additional metadata to the job information."
+          }
+        },
+        "description" : "The parameters used to submit a new Data Lake Analytics Scope job. (Only for use internally with Scope job type.)",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateJobParameters"
+        } ]
+      },
+      "CreateScopeJobProperties" : {
+        "properties" : {
+          "notifier" : {
+            "type" : "string",
+            "description" : "The list of email addresses, separated by semi-colons, to notify when the job reaches a terminal state."
+          },
+          "resources" : {
+            "type" : "array",
+            "description" : "The list of resources that are required by the job.",
+            "items" : {
+              "$ref" : "#/components/schemas/ScopeJobResource"
+            }
+          }
+        },
+        "description" : "Scope job properties used when submitting Scope jobs. (Only for use internally with Scope job type.)",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateJobProperties"
+        } ]
+      },
+      "CreateUSqlJobProperties" : {
+        "properties" : {
+          "compileMode" : {
+            "type" : "string",
+            "description" : "The specific compilation mode for the job used during execution. If this is not specified during submission, the server will determine the optimal compilation mode.",
+            "enum" : [ "Semantic", "Full", "SingleBox" ]
+          }
+        },
+        "description" : "U-SQL job properties used when submitting U-SQL jobs.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateJobProperties"
+        } ]
+      },
+      "Diagnostics" : {
+        "type" : "object",
+        "properties" : {
+          "columnNumber" : {
+            "type" : "integer",
+            "description" : "The column where the error occurred.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "end" : {
+            "type" : "integer",
+            "description" : "The ending index of the error.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "lineNumber" : {
+            "type" : "integer",
+            "description" : "The line number the error occurred on.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The error message.",
+            "readOnly" : true
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "The severity of the error.",
+            "readOnly" : true,
+            "enum" : [ "Warning", "Error", "Info", "SevereWarning", "Deprecated", "UserWarning" ]
+          },
+          "start" : {
+            "type" : "integer",
+            "description" : "The starting index of the error.",
+            "format" : "int32",
+            "readOnly" : true
+          }
+        },
+        "description" : "Error diagnostic information for failed jobs."
+      },
+      "HiveJobProperties" : {
+        "properties" : {
+          "executedStatementCount" : {
+            "type" : "integer",
+            "description" : "The number of statements that have been run based on the script.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "logsLocation" : {
+            "type" : "string",
+            "description" : "The Hive logs location.",
+            "readOnly" : true
+          },
+          "outputLocation" : {
+            "type" : "string",
+            "description" : "The location of Hive job output files (both execution output and results).",
+            "readOnly" : true
+          },
+          "statementCount" : {
+            "type" : "integer",
+            "description" : "The number of statements that will be run based on the script.",
+            "format" : "int32",
+            "readOnly" : true
+          }
+        },
+        "description" : "Hive job properties used when retrieving Hive jobs.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/JobProperties"
+        } ]
+      },
+      "JobDataPath" : {
+        "type" : "object",
+        "properties" : {
+          "command" : {
+            "type" : "string",
+            "description" : "The command that this job data relates to.",
+            "readOnly" : true
+          },
+          "jobId" : {
+            "type" : "string",
+            "description" : "The ID of the job this data is for.",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "paths" : {
+            "type" : "array",
+            "description" : "The list of paths to all of the job data.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "A Data Lake Analytics job data path item."
+      },
+      "JobErrorDetails" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The error message description.",
+            "readOnly" : true
+          },
+          "details" : {
+            "type" : "string",
+            "description" : "The details of the error message.",
+            "readOnly" : true
+          },
+          "endOffset" : {
+            "type" : "integer",
+            "description" : "The end offset in the job where the error was found.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "errorId" : {
+            "type" : "string",
+            "description" : "The specific identifier for the type of error encountered in the job.",
+            "readOnly" : true
+          },
+          "filePath" : {
+            "type" : "string",
+            "description" : "The path to any supplemental error files, if any.",
+            "readOnly" : true
+          },
+          "helpLink" : {
+            "type" : "string",
+            "description" : "The link to MSDN or Azure help for this type of error, if any.",
+            "readOnly" : true
+          },
+          "innerError" : {
+            "$ref" : "#/components/schemas/JobInnerError"
+          },
+          "internalDiagnostics" : {
+            "type" : "string",
+            "description" : "The internal diagnostic stack trace if the user requesting the job error details has sufficient permissions it will be retrieved, otherwise it will be empty.",
+            "readOnly" : true
+          },
+          "lineNumber" : {
+            "type" : "integer",
+            "description" : "The specific line number in the job where the error occurred.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The user friendly error message for the failure.",
+            "readOnly" : true
+          },
+          "resolution" : {
+            "type" : "string",
+            "description" : "The recommended resolution for the failure, if any.",
+            "readOnly" : true
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "The severity level of the failure.",
+            "readOnly" : true,
+            "enum" : [ "Warning", "Error", "Info", "SevereWarning", "Deprecated", "UserWarning" ]
+          },
+          "source" : {
+            "type" : "string",
+            "description" : "The ultimate source of the failure (usually either SYSTEM or USER).",
+            "readOnly" : true
+          },
+          "startOffset" : {
+            "type" : "integer",
+            "description" : "The start offset in the job where the error was found",
+            "format" : "int32",
+            "readOnly" : true
+          }
+        },
+        "description" : "The Data Lake Analytics job error details."
+      },
+      "JobInfoListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of JobInfo items.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobInformationBasic"
+            }
+          }
+        },
+        "description" : "List of JobInfo items."
+      },
+      "JobInformation" : {
+        "properties" : {
+          "errorMessage" : {
+            "type" : "array",
+            "description" : "The error message details for the job, if the job failed.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobErrorDetails"
+            }
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/JobProperties"
+          },
+          "stateAuditRecords" : {
+            "type" : "array",
+            "description" : "The job state audit records, indicating when various operations have been performed on this job.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobStateAuditRecord"
+            }
+          }
+        },
+        "description" : "The extended Data Lake Analytics job information properties returned when retrieving a specific job.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/JobInformationBasic"
+        } ]
+      },
+      "JobInformationBasic" : {
+        "required" : [ "name", "type" ],
+        "type" : "object",
+        "properties" : {
+          "degreeOfParallelism" : {
+            "type" : "integer",
+            "description" : "The degree of parallelism used for this job.",
+            "format" : "int32",
+            "default" : 1
+          },
+          "degreeOfParallelismPercent" : {
+            "type" : "number",
+            "description" : "the degree of parallelism in percentage used for this job.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "endTime" : {
+            "type" : "string",
+            "description" : "The completion time of the job.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "hierarchyQueueNode" : {
+            "type" : "string",
+            "description" : "the name of hierarchy queue node this job is assigned to, Null if job has not been assigned yet or the account doesn't have hierarchy queue.",
+            "readOnly" : true
+          },
+          "jobId" : {
+            "type" : "string",
+            "description" : "The job's unique identifier (a GUID).",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "logFilePatterns" : {
+            "type" : "array",
+            "description" : "The list of log file name patterns to find in the logFolder. '*' is the only matching character allowed. Example format: jobExecution*.log or *mylog*.txt",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "logFolder" : {
+            "type" : "string",
+            "description" : "The log folder path to use in the following format: adl://<accountName>.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The friendly name of the job."
+          },
+          "priority" : {
+            "type" : "integer",
+            "description" : "The priority value for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.",
+            "format" : "int32"
+          },
+          "related" : {
+            "$ref" : "#/components/schemas/JobRelationshipProperties"
+          },
+          "result" : {
+            "type" : "string",
+            "description" : "The result of job execution or the current result of the running job.",
+            "readOnly" : true,
+            "enum" : [ "None", "Succeeded", "Cancelled", "Failed" ]
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The start time of the job.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The job state. When the job is in the Ended state, refer to Result and ErrorMessage for details.",
+            "readOnly" : true,
+            "enum" : [ "Accepted", "Compiling", "Ended", "New", "Queued", "Running", "Scheduling", "Starting", "Paused", "WaitingForCapacity", "Yielded", "Finalizing" ]
+          },
+          "submitTime" : {
+            "type" : "string",
+            "description" : "The time the job was submitted to the service.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "submitter" : {
+            "type" : "string",
+            "description" : "The user or account that submitted the job.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The key-value pairs used to add additional metadata to the job information. (Only for use internally with Scope job type.)"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The job type of the current job (Hive, USql, or Scope (for internal use only)).",
+            "enum" : [ "USql", "Hive", "Scope" ]
+          }
+        },
+        "description" : "The common Data Lake Analytics job information properties."
+      },
+      "JobInnerError" : {
+        "type" : "object",
+        "properties" : {
+          "component" : {
+            "type" : "string",
+            "description" : "The component that failed.",
+            "readOnly" : true
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The error message description.",
+            "readOnly" : true
+          },
+          "details" : {
+            "type" : "string",
+            "description" : "The details of the error message.",
+            "readOnly" : true
+          },
+          "diagnosticCode" : {
+            "type" : "integer",
+            "description" : "The diagnostic error code.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "errorId" : {
+            "type" : "string",
+            "description" : "The specific identifier for the type of error encountered in the job.",
+            "readOnly" : true
+          },
+          "helpLink" : {
+            "type" : "string",
+            "description" : "The link to MSDN or Azure help for this type of error, if any.",
+            "readOnly" : true
+          },
+          "innerError" : {
+            "$ref" : "#/components/schemas/JobInnerError"
+          },
+          "internalDiagnostics" : {
+            "type" : "string",
+            "description" : "The internal diagnostic stack trace if the user requesting the job error details has sufficient permissions it will be retrieved, otherwise it will be empty.",
+            "readOnly" : true
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The user friendly error message for the failure.",
+            "readOnly" : true
+          },
+          "resolution" : {
+            "type" : "string",
+            "description" : "The recommended resolution for the failure, if any.",
+            "readOnly" : true
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "The severity level of the failure.",
+            "readOnly" : true,
+            "enum" : [ "Warning", "Error", "Info", "SevereWarning", "Deprecated", "UserWarning" ]
+          },
+          "source" : {
+            "type" : "string",
+            "description" : "The ultimate source of the failure (usually either SYSTEM or USER).",
+            "readOnly" : true
+          }
+        },
+        "description" : "The Data Lake Analytics job error details."
+      },
+      "JobPipelineInformation" : {
+        "type" : "object",
+        "properties" : {
+          "auHoursCanceled" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in canceled jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "auHoursFailed" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in failed jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "auHoursSucceeded" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in successful jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "lastSubmitTime" : {
+            "type" : "string",
+            "description" : "The last time a job in this pipeline was submitted.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "numJobsCanceled" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this pipeline that have been canceled.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "numJobsFailed" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this pipeline that have failed.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "numJobsSucceeded" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this pipeline that have succeeded.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "pipelineId" : {
+            "type" : "string",
+            "description" : "The job relationship pipeline identifier (a GUID).",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "pipelineName" : {
+            "maxLength" : 260,
+            "type" : "string",
+            "description" : "The friendly name of the job relationship pipeline, which does not need to be unique.",
+            "readOnly" : true
+          },
+          "pipelineUri" : {
+            "type" : "string",
+            "description" : "The pipeline uri, unique, links to the originating service for this pipeline.",
+            "readOnly" : true
+          },
+          "recurrences" : {
+            "type" : "array",
+            "description" : "The list of recurrence identifiers representing each run of this pipeline.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "string",
+              "format" : "uuid"
+            }
+          },
+          "runs" : {
+            "type" : "array",
+            "description" : "The list of recurrence identifiers representing each run of this pipeline.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobPipelineRunInformation"
+            }
+          }
+        },
+        "description" : "Job Pipeline Information, showing the relationship of jobs and recurrences of those jobs in a pipeline."
+      },
+      "JobPipelineInformationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of job pipeline information items.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobPipelineInformation"
+            }
+          }
+        },
+        "description" : "List of job pipeline information items."
+      },
+      "JobPipelineRunInformation" : {
+        "type" : "object",
+        "properties" : {
+          "lastSubmitTime" : {
+            "type" : "string",
+            "description" : "The time this instance was last submitted.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "runId" : {
+            "type" : "string",
+            "description" : "The run identifier of an instance of pipeline executions (a GUID).",
+            "format" : "uuid",
+            "readOnly" : true
+          }
+        },
+        "description" : "Run info for a specific job pipeline."
+      },
+      "JobProperties" : {
+        "required" : [ "script", "type" ],
+        "type" : "object",
+        "properties" : {
+          "runtimeVersion" : {
+            "type" : "string",
+            "description" : "The runtime version of the Data Lake Analytics engine to use for the specific type of job being run."
+          },
+          "script" : {
+            "type" : "string",
+            "description" : "The script to run. Please note that the maximum script size is 3 MB."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The job type of the current job (Hive, USql, or Scope (for internal use only))."
+          }
+        },
+        "description" : "The common Data Lake Analytics job properties.",
+        "discriminator" : {
+          "propertyName" : "type"
+        }
+      },
+      "JobRecurrenceInformation" : {
+        "type" : "object",
+        "properties" : {
+          "auHoursCanceled" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in canceled jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "auHoursFailed" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in failed jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "auHoursSucceeded" : {
+            "type" : "number",
+            "description" : "The number of job execution hours that resulted in successful jobs.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "lastSubmitTime" : {
+            "type" : "string",
+            "description" : "The last time a job in this recurrence was submitted.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "numJobsCanceled" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this recurrence that have been canceled.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "numJobsFailed" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this recurrence that have failed.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "numJobsSucceeded" : {
+            "type" : "integer",
+            "description" : "The number of jobs in this recurrence that have succeeded.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "recurrenceId" : {
+            "type" : "string",
+            "description" : "The recurrence identifier (a GUID), unique per activity/script, regardless of iterations. This is something to link different occurrences of the same job together.",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "recurrenceName" : {
+            "type" : "string",
+            "description" : "The recurrence name, user friendly name for the correlation between jobs.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Recurrence job information for a specific recurrence."
+      },
+      "JobRecurrenceInformationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of job recurrence information items.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobRecurrenceInformation"
+            }
+          }
+        },
+        "description" : "List of job recurrence information items."
+      },
+      "JobRelationshipProperties" : {
+        "required" : [ "recurrenceId" ],
+        "type" : "object",
+        "properties" : {
+          "pipelineId" : {
+            "type" : "string",
+            "description" : "The job relationship pipeline identifier (a GUID).",
+            "format" : "uuid"
+          },
+          "pipelineName" : {
+            "maxLength" : 260,
+            "type" : "string",
+            "description" : "The friendly name of the job relationship pipeline, which does not need to be unique."
+          },
+          "pipelineUri" : {
+            "type" : "string",
+            "description" : "The pipeline uri, unique, links to the originating service for this pipeline."
+          },
+          "recurrenceId" : {
+            "type" : "string",
+            "description" : "The recurrence identifier (a GUID), unique per activity/script, regardless of iterations. This is something to link different occurrences of the same job together.",
+            "format" : "uuid"
+          },
+          "recurrenceName" : {
+            "maxLength" : 260,
+            "type" : "string",
+            "description" : "The recurrence name, user friendly name for the correlation between jobs."
+          },
+          "runId" : {
+            "type" : "string",
+            "description" : "The run identifier (a GUID), unique identifier of the iteration of this pipeline.",
+            "format" : "uuid"
+          }
+        },
+        "description" : "Job relationship information properties including pipeline information, correlation information, etc."
+      },
+      "JobResource" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource."
+          },
+          "resourcePath" : {
+            "type" : "string",
+            "description" : "The path to the resource."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The job resource type.",
+            "enum" : [ "VertexResource", "JobManagerResource", "StatisticsResource", "VertexResourceInUserFolder", "JobManagerResourceInUserFolder", "StatisticsResourceInUserFolder" ]
+          }
+        },
+        "description" : "The Data Lake Analytics job resources."
+      },
+      "JobStateAuditRecord" : {
+        "type" : "object",
+        "properties" : {
+          "details" : {
+            "type" : "string",
+            "description" : "The details of the audit log.",
+            "readOnly" : true
+          },
+          "newState" : {
+            "type" : "string",
+            "description" : "The new state the job is in.",
+            "readOnly" : true
+          },
+          "requestedByUser" : {
+            "type" : "string",
+            "description" : "The user who requests the change.",
+            "readOnly" : true
+          },
+          "timeStamp" : {
+            "type" : "string",
+            "description" : "The time stamp that the state change took place.",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "The Data Lake Analytics job state audit records for tracking the lifecycle of a job."
+      },
+      "JobStatistics" : {
+        "type" : "object",
+        "properties" : {
+          "finalizingTimeUtc" : {
+            "type" : "string",
+            "description" : "The job finalizing start time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "lastUpdateTimeUtc" : {
+            "type" : "string",
+            "description" : "The last update time for the statistics.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "stages" : {
+            "type" : "array",
+            "description" : "The list of stages for the job.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobStatisticsVertexStage"
+            }
+          }
+        },
+        "description" : "The Data Lake Analytics job execution statistics."
+      },
+      "JobStatisticsVertex" : {
+        "type" : "object",
+        "properties" : {
+          "dataRead" : {
+            "type" : "integer",
+            "description" : "The amount of data read of the vertex, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "executionTime" : {
+            "type" : "string",
+            "description" : "The amount of execution time of the vertex.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the vertex.",
+            "readOnly" : true
+          },
+          "peakMemUsage" : {
+            "type" : "integer",
+            "description" : "The amount of peak memory usage of the vertex, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "vertexId" : {
+            "type" : "string",
+            "description" : "The id of the vertex.",
+            "format" : "uuid",
+            "readOnly" : true
+          }
+        },
+        "description" : "The detailed information for a vertex."
+      },
+      "JobStatisticsVertexStage" : {
+        "type" : "object",
+        "properties" : {
+          "allocatedContainerCpuCoreCount" : {
+            "$ref" : "#/components/schemas/ResourceUsageStatistics"
+          },
+          "allocatedContainerMemSize" : {
+            "$ref" : "#/components/schemas/ResourceUsageStatistics"
+          },
+          "dataRead" : {
+            "type" : "integer",
+            "description" : "The amount of data read, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "dataReadCrossPod" : {
+            "type" : "integer",
+            "description" : "The amount of data read across multiple pods, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "dataReadIntraPod" : {
+            "type" : "integer",
+            "description" : "The amount of data read in one pod, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "dataToRead" : {
+            "type" : "integer",
+            "description" : "The amount of data remaining to be read, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "dataWritten" : {
+            "type" : "integer",
+            "description" : "The amount of data written, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "duplicateDiscardCount" : {
+            "type" : "integer",
+            "description" : "The number of duplicates that were discarded.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "estimatedVertexCpuCoreCount" : {
+            "type" : "integer",
+            "description" : "The estimated vertex CPU core count.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "estimatedVertexMemSize" : {
+            "type" : "integer",
+            "description" : "The estimated vertex memory size, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "estimatedVertexPeakCpuCoreCount" : {
+            "type" : "integer",
+            "description" : "The estimated vertex peak CPU core count.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "failedCount" : {
+            "type" : "integer",
+            "description" : "The number of failures that occurred in this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "maxDataReadVertex" : {
+            "$ref" : "#/components/schemas/JobStatisticsVertex"
+          },
+          "maxExecutionTimeVertex" : {
+            "$ref" : "#/components/schemas/JobStatisticsVertex"
+          },
+          "maxPeakMemUsageVertex" : {
+            "$ref" : "#/components/schemas/JobStatisticsVertex"
+          },
+          "maxVertexDataRead" : {
+            "type" : "integer",
+            "description" : "The maximum amount of data read in a single vertex, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "minVertexDataRead" : {
+            "type" : "integer",
+            "description" : "The minimum amount of data read in a single vertex, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "readFailureCount" : {
+            "type" : "integer",
+            "description" : "The number of read failures in this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "revocationCount" : {
+            "type" : "integer",
+            "description" : "The number of vertices that were revoked during this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "runningCount" : {
+            "type" : "integer",
+            "description" : "The number of currently running vertices in this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "scheduledCount" : {
+            "type" : "integer",
+            "description" : "The number of currently scheduled vertices in this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "stageName" : {
+            "type" : "string",
+            "description" : "The name of this stage in job execution.",
+            "readOnly" : true
+          },
+          "succeededCount" : {
+            "type" : "integer",
+            "description" : "The number of vertices that succeeded in this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "tempDataWritten" : {
+            "type" : "integer",
+            "description" : "The amount of temporary data written, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "totalCount" : {
+            "type" : "integer",
+            "description" : "The total vertex count for this stage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "totalExecutionTime" : {
+            "type" : "string",
+            "description" : "The sum of the total execution time of all the vertices in the stage.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalFailedTime" : {
+            "type" : "string",
+            "description" : "The amount of time that failed vertices took up in this stage.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalPeakMemUsage" : {
+            "type" : "integer",
+            "description" : "The sum of the peak memory usage of all the vertices in the stage, in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "totalProgress" : {
+            "type" : "integer",
+            "description" : "The current progress of this stage, as a percentage.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "totalSucceededTime" : {
+            "type" : "string",
+            "description" : "The amount of time all successful vertices took in this stage.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "usedVertexCpuCoreCount" : {
+            "$ref" : "#/components/schemas/ResourceUsageStatistics"
+          },
+          "usedVertexPeakMemSize" : {
+            "$ref" : "#/components/schemas/ResourceUsageStatistics"
+          }
+        },
+        "description" : "The Data Lake Analytics job statistics vertex stage information."
+      },
+      "ResourceUsageStatistics" : {
+        "type" : "object",
+        "properties" : {
+          "average" : {
+            "type" : "number",
+            "description" : "The average value.",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "maximum" : {
+            "type" : "integer",
+            "description" : "The maximum value.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "minimum" : {
+            "type" : "integer",
+            "description" : "The minimum value.",
+            "format" : "int64",
+            "readOnly" : true
+          }
+        },
+        "description" : "The statistics information for resource usage."
+      },
+      "ScopeJobProperties" : {
+        "properties" : {
+          "notifier" : {
+            "type" : "string",
+            "description" : "The list of email addresses, separated by semi-colons, to notify when the job reaches a terminal state."
+          },
+          "resources" : {
+            "type" : "array",
+            "description" : "The list of resources that are required by the job.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ScopeJobResource"
+            }
+          },
+          "rootProcessNodeId" : {
+            "type" : "string",
+            "description" : "The ID used to identify the job manager coordinating job execution. This value should not be set by the user and will be ignored if it is.",
+            "readOnly" : true
+          },
+          "totalCompilationTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent compiling. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalPausedTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent paused. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalQueuedTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent queued. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalRunningTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent executing. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "userAlgebraPath" : {
+            "type" : "string",
+            "description" : "The algebra file path after the job has completed.",
+            "readOnly" : true
+          },
+          "yarnApplicationId" : {
+            "type" : "string",
+            "description" : "The ID used to identify the yarn application executing the job. This value should not be set by the user and will be ignored if it is.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Scope job properties used when submitting and retrieving Scope jobs. (Only for use internally with Scope job type.)",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/JobProperties"
+        } ]
+      },
+      "ScopeJobResource" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the resource."
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "The path to the resource."
+          }
+        },
+        "description" : "The Scope job resources. (Only for use internally with Scope job type.)"
+      },
+      "USqlJobProperties" : {
+        "properties" : {
+          "algebraFilePath" : {
+            "type" : "string",
+            "description" : "The algebra file path after the job has completed.",
+            "readOnly" : true
+          },
+          "compileMode" : {
+            "type" : "string",
+            "description" : "The specific compilation mode for the job used during execution. If this is not specified during submission, the server will determine the optimal compilation mode.",
+            "readOnly" : true,
+            "enum" : [ "Semantic", "Full", "SingleBox" ]
+          },
+          "debugData" : {
+            "$ref" : "#/components/schemas/JobDataPath"
+          },
+          "diagnostics" : {
+            "type" : "array",
+            "description" : "The diagnostics for the job.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Diagnostics"
+            }
+          },
+          "resources" : {
+            "type" : "array",
+            "description" : "The list of resources that are required by the job.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/JobResource"
+            }
+          },
+          "rootProcessNodeId" : {
+            "type" : "string",
+            "description" : "The ID used to identify the job manager coordinating job execution. This value should not be set by the user and will be ignored if it is.",
+            "readOnly" : true
+          },
+          "statistics" : {
+            "$ref" : "#/components/schemas/JobStatistics"
+          },
+          "totalCompilationTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent compiling. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalPausedTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent paused. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalQueuedTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent queued. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "totalRunningTime" : {
+            "type" : "string",
+            "description" : "The total time this job spent executing. This value should not be set by the user and will be ignored if it is.",
+            "format" : "duration",
+            "readOnly" : true
+          },
+          "yarnApplicationId" : {
+            "type" : "string",
+            "description" : "The ID used to identify the yarn application executing the job. This value should not be set by the user and will be ignored if it is.",
+            "readOnly" : true
+          },
+          "yarnApplicationTimeStamp" : {
+            "type" : "integer",
+            "description" : "The timestamp (in ticks) for the yarn application executing the job. This value should not be set by the user and will be ignored if it is.",
+            "format" : "int64",
+            "readOnly" : true
+          }
+        },
+        "description" : "U-SQL job properties used when retrieving U-SQL jobs.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/JobProperties"
+        } ]
+      },
+      "UpdateJobParameters" : {
+        "type" : "object",
+        "properties" : {
+          "degreeOfParallelism" : {
+            "type" : "integer",
+            "description" : "The degree of parallelism used for this job.",
+            "format" : "int32"
+          },
+          "degreeOfParallelismPercent" : {
+            "type" : "number",
+            "description" : "the degree of parallelism in percentage used for this job.",
+            "format" : "double"
+          },
+          "priority" : {
+            "type" : "integer",
+            "description" : "The priority value for the current job. Lower numbers have a higher priority. By default, a job has a priority of 1000. This must be greater than 0.",
+            "format" : "int32"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The key-value pairs used to add additional metadata to the job information."
+          }
+        },
+        "description" : "The parameters that can be used to update existing Data Lake Analytics job information properties. (Only for use internally with Scope job type.)"
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "adlaJobDnsSuffixInPath" : {
+        "name" : "adlaJobDnsSuffix",
+        "in" : "path",
+        "description" : "The DNS suffix used as the base for all Azure Data Lake Analytics Job service requests.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "default" : "azuredatalakeanalytics.net"
+        }
+      }
+    }
+  }
+}

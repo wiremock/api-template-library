@@ -1,1 +1,1326 @@
-{"openapi":"3.0.1","info":{"title":"Azure ML Web Services Management Client","description":"These APIs allow end users to operate on Azure Machine Learning Web Services resources. They support the following operations:<ul><li>Create or update a web service</li><li>Get a web service</li><li>Patch a web service</li><li>Delete a web service</li><li>Get All Web Services in a Resource Group </li><li>Get All Web Services in a Subscription</li><li>Get Web Services Keys</li></ul>","version":"2017-01-01"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/providers/Microsoft.MachineLearning/operations":{"get":{"description":"Lists all the available REST API operations.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationEntityListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearning/webServices":{"get":{"tags":["WebServices"],"description":"Gets the web services in the specified subscription.","operationId":"WebServices_ListBySubscriptionId","parameters":[{"name":"$skiptoken","in":"query","description":"Continuation token for pagination.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success. The response includes a paginated array of web service objects and a URI to the next set of results, if any. Note that the web service objects are sparsely populated to conserve space in the response content. To get the full web service object, call the GET operation on the web service.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedWebServicesList"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices":{"get":{"tags":["WebServices"],"description":"Gets the web services in the specified resource group.","operationId":"WebServices_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"$skiptoken","in":"query","description":"Continuation token for pagination.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success. The response includes a paginated array of web service objects and a URI to the next set of results, if any. For the more information the limits of the number of items in a resource group, see https://azure.microsoft.com/en-us/documentation/articles/azure-subscription-service-limits/. Note that the web service objects are sparsely populated to conserve space in the response content. To get the full web service object, call the GET operation on the web service.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaginatedWebServicesList"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}":{"get":{"tags":["WebServices"],"description":"Gets the Web Service Definition as specified by a subscription, resource group, and name. Note that the storage credentials and web service keys are not returned by this call. To get the web service access keys, call List Keys.","operationId":"WebServices_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"region","in":"query","description":"The region for which encrypted credential parameters are valid.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success.  The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more informationFor more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebService"}}}}}},"put":{"tags":["WebServices"],"description":"Create or update a web service. This call will overwrite an existing web service. Note that there is no warning or confirmation. This is a nonrecoverable operation. If your intent is to create a new web service, call the Get operation first to verify that it does not exist.","operationId":"WebServices_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload that is used to create or update the web service.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebService"}}},"required":true},"responses":{"200":{"description":"Success. This response is returned for an update web service operation. The response payload is identical to the response payload that is returned by the GET operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebService"}}}},"201":{"description":"Created. This response is returned for a create web service operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebService"}}}}}},"delete":{"tags":["WebServices"],"description":"Deletes the specified web service.","operationId":"WebServices_Remove","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"202":{"description":"Accepted. Note that a 202 status is returned even if the service did not exist."},"204":{"description":"No Content."}}},"patch":{"tags":["WebServices"],"description":"Modifies an existing web service resource. The PATCH API call is an asynchronous operation. To determine whether it has completed successfully, you must perform a Get operation.","operationId":"WebServices_Patch","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The payload to use to patch the web service.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PatchedWebService"}}},"required":true},"responses":{"200":{"description":"Success. The response payload is identical to the response payload that is returned by the GET operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebService"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/CreateRegionalBlob":{"post":{"tags":["WebServices"],"description":"Creates an encrypted credentials parameter blob for the specified region. To get the web service from a region other than the region in which it has been created, you must first call Create Regional Web Services Properties to create a copy of the encrypted credential parameter blob in that region. You only need to do this before the first time that you get the web service in the new region.","operationId":"WebServices_CreateRegionalProperties","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"region","in":"query","description":"The region for which encrypted credential parameters are created.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. Internal use only. Used for SDK return values.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AsyncOperationStatus"}}}},"202":{"description":"Accepted.  The response includes the Azure-AsyncOperation header. To get the progress of the operation, call the GET operation on the URL in the Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/listKeys":{"get":{"tags":["WebServices"],"description":"Gets the access keys for the specified web service.","operationId":"WebServices_ListKeys","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/WebServiceKeys"}}}}}}}},"components":{"schemas":{"AssetItem":{"required":["locationInfo","name","type"],"type":"object","properties":{"id":{"type":"string","description":"Asset's Id."},"inputPorts":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/InputPort"},"description":"Information about the asset's input ports."},"locationInfo":{"$ref":"#/components/schemas/BlobLocation"},"metadata":{"type":"object","additionalProperties":{"type":"string"},"description":"If the asset is a custom module, this holds the module's metadata."},"name":{"type":"string","description":"Asset's friendly name."},"outputPorts":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/OutputPort"},"description":"Information about the asset's output ports."},"parameters":{"type":"array","description":"If the asset is a custom module, this holds the module's parameters.","items":{"$ref":"#/components/schemas/ModuleAssetParameter"}},"type":{"type":"string","description":"Asset's type.","enum":["Module","Resource"]}},"description":"Information about an asset associated with the web service."},"AsyncOperationErrorInfo":{"type":"object","properties":{"code":{"type":"string","description":"The error code.","readOnly":true},"details":{"type":"array","description":"An array containing error information.","readOnly":true,"items":{"$ref":"#/components/schemas/AsyncOperationErrorInfo"}},"message":{"type":"string","description":"The error message.","readOnly":true},"target":{"type":"string","description":"The error target.","readOnly":true}},"description":"The error detail information for async operation"},"AsyncOperationStatus":{"type":"object","properties":{"endTime":{"type":"string","description":"The date time that the async operation finished.","format":"date-time","readOnly":true},"errorInfo":{"$ref":"#/components/schemas/AsyncOperationErrorInfo"},"id":{"type":"string","description":"Async operation id.","readOnly":true},"name":{"type":"string","description":"Async operation name.","readOnly":true},"percentComplete":{"type":"number","description":"Async operation progress.","readOnly":true},"provisioningState":{"type":"string","description":"Read Only: The provisioning state of the web service. Valid values are Unknown, Provisioning, Succeeded, and Failed.","readOnly":true,"enum":["Unknown","Provisioning","Succeeded","Failed"]},"startTime":{"type":"string","description":"The date time that the async operation started.","format":"date-time","readOnly":true}},"description":"Azure async operation status."},"BlobLocation":{"required":["uri"],"type":"object","properties":{"credentials":{"type":"string","description":"Access credentials for the blob, if applicable (e.g. blob specified by storage account connection string + blob URI)"},"uri":{"type":"string","description":"The URI from which the blob is accessible from. For example, aml://abc for system assets or https://xyz for user assets or payload."}},"description":"Describes the access location for a blob."},"ColumnSpecification":{"required":["type"],"type":"object","properties":{"enum":{"type":"array","description":"If the data type is categorical, this provides the list of accepted categories.","items":{"type":"object"}},"format":{"type":"string","description":"Additional format information for the data type.","enum":["Byte","Char","Complex64","Complex128","Date-time","Date-timeOffset","Double","Duration","Float","Int8","Int16","Int32","Int64","Uint8","Uint16","Uint32","Uint64"]},"type":{"type":"string","description":"Data type of the column.","enum":["Boolean","Integer","Number","String"]},"x-ms-isnullable":{"type":"boolean","description":"Flag indicating if the type supports null values or not."},"x-ms-isordered":{"type":"boolean","description":"Flag indicating whether the categories are treated as an ordered set or not, if this is a categorical column."}},"description":"Swagger 2.0 schema for a column within the data table representing a web service input or output. See Swagger specification: http://swagger.io/specification/"},"CommitmentPlan":{"required":["id"],"type":"object","properties":{"id":{"type":"string","description":"Specifies the Azure Resource Manager ID of the commitment plan associated with the web service."}},"description":"Information about the machine learning commitment plan associated with the web service."},"DiagnosticsConfiguration":{"required":["level"],"type":"object","properties":{"expiry":{"type":"string","description":"Specifies the date and time when the logging will cease. If null, diagnostic collection is not time limited.","format":"date-time"},"level":{"type":"string","description":"Specifies the verbosity of the diagnostic output. Valid values are: None - disables tracing; Error - collects only error (stderr) traces; All - collects all traces (stdout and stderr).","enum":["None","Error","All"]}},"description":"Diagnostics settings for an Azure ML web service."},"ExampleRequest":{"type":"object","properties":{"globalParameters":{"type":"object","additionalProperties":{"type":"object"},"description":"Sample input data for the web service's global parameters"},"inputs":{"type":"object","additionalProperties":{"type":"array","items":{"type":"array","items":{"type":"object"}}},"description":"Sample input data for the web service's input(s) given as an input name to sample input values matrix map."}},"description":"Sample input data for the service's input(s)."},"GraphEdge":{"type":"object","properties":{"sourceNodeId":{"type":"string","description":"The source graph node's identifier."},"sourcePortId":{"type":"string","description":"The identifier of the source node's port that the edge connects from."},"targetNodeId":{"type":"string","description":"The destination graph node's identifier."},"targetPortId":{"type":"string","description":"The identifier of the destination node's port that the edge connects into."}},"description":"Defines an edge within the web service's graph."},"GraphNode":{"type":"object","properties":{"assetId":{"type":"string","description":"The id of the asset represented by this node."},"inputId":{"type":"string","description":"The id of the input element represented by this node."},"outputId":{"type":"string","description":"The id of the output element represented by this node."},"parameters":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/WebServiceParameter"},"description":"If applicable, parameters of the node. Global graph parameters map into these, with values set at runtime."}},"description":"Specifies a node in the web service graph. The node can either be an input, output or asset node, so only one of the corresponding id properties is populated at any given time."},"GraphPackage":{"type":"object","properties":{"edges":{"type":"array","description":"The list of edges making up the graph.","items":{"$ref":"#/components/schemas/GraphEdge"}},"graphParameters":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/GraphParameter"},"description":"The collection of global parameters for the graph, given as a global parameter name to GraphParameter map. Each parameter here has a 1:1 match with the global parameters values map declared at the WebServiceProperties level."},"nodes":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/GraphNode"},"description":"The set of nodes making up the graph, provided as a nodeId to GraphNode map"}},"description":"Defines the graph of modules making up the machine learning solution."},"GraphParameter":{"required":["links","type"],"type":"object","properties":{"description":{"type":"string","description":"Description of this graph parameter."},"links":{"type":"array","description":"Association links for this parameter to nodes in the graph.","items":{"$ref":"#/components/schemas/GraphParameterLink"}},"type":{"type":"string","description":"Graph parameter's type.","enum":["String","Int","Float","Enumerated","Script","Mode","Credential","Boolean","Double","ColumnPicker","ParameterRange","DataGatewayName"]}},"description":"Defines a global parameter in the graph."},"GraphParameterLink":{"required":["nodeId","parameterKey"],"type":"object","properties":{"nodeId":{"type":"string","description":"The graph node's identifier"},"parameterKey":{"type":"string","description":"The identifier of the node parameter that the global parameter maps to."}},"description":"Association link for a graph global parameter to a node in the graph."},"InputPort":{"type":"object","properties":{"type":{"type":"string","description":"Port data type.","default":"Dataset","enum":["Dataset"]}},"description":"Asset input port"},"MachineLearningWorkspace":{"required":["id"],"type":"object","properties":{"id":{"type":"string","description":"Specifies the workspace ID of the machine learning workspace associated with the web service"}},"description":"Information about the machine learning workspace containing the experiment that is source for the web service."},"ModeValueInfo":{"type":"object","properties":{"interfaceString":{"type":"string","description":"The interface string name for the nested parameter."},"parameters":{"type":"array","description":"The definition of the parameter.","items":{"$ref":"#/components/schemas/ModuleAssetParameter"}}},"description":"Nested parameter definition."},"ModuleAssetParameter":{"type":"object","properties":{"modeValuesInfo":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/ModeValueInfo"},"description":"Definitions for nested interface parameters if this is a complex module parameter."},"name":{"type":"string","description":"Parameter name."},"parameterType":{"type":"string","description":"Parameter type."}},"description":"Parameter definition for a module asset."},"OperationDisplayInfo":{"type":"object","properties":{"description":{"type":"string","description":"The description of the operation.","readOnly":true},"operation":{"type":"string","description":"The action that users can perform, based on their permission level.","readOnly":true},"provider":{"type":"string","description":"The service provider.","readOnly":true},"resource":{"type":"string","description":"The resource on which the operation is performed.","readOnly":true}},"description":"The API operation info."},"OperationEntity":{"type":"object","properties":{"display":{"$ref":"#/components/schemas/OperationDisplayInfo"},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}.","readOnly":true}},"description":"An API operation."},"OperationEntityListResult":{"type":"object","properties":{"value":{"type":"array","description":"The list of operations.","readOnly":true,"items":{"$ref":"#/components/schemas/OperationEntity"}}},"description":"The list of REST API operations."},"OutputPort":{"type":"object","properties":{"type":{"type":"string","description":"Port data type.","default":"Dataset","enum":["Dataset"]}},"description":"Asset output port"},"PaginatedWebServicesList":{"type":"object","properties":{"nextLink":{"type":"string","description":"A continuation link (absolute URI) to the next page of results in the list."},"value":{"type":"array","description":"An array of web service objects.","items":{"$ref":"#/components/schemas/WebService"}}},"description":"Paginated list of web services."},"PatchedResource":{"type":"object","properties":{"id":{"type":"string","description":"Specifies the resource ID.","readOnly":true},"location":{"type":"string","description":"Specifies the location of the resource.","readOnly":true},"name":{"type":"string","description":"Specifies the name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Contains resource tags defined as key/value pairs."},"type":{"type":"string","description":"Specifies the type of the resource.","readOnly":true}},"description":"Azure resource."},"PatchedWebService":{"properties":{"properties":{"$ref":"#/components/schemas/WebServiceProperties"}},"description":"Instance of an Patched Azure ML web service resource.","allOf":[{"$ref":"#/components/schemas/PatchedResource"}]},"RealtimeConfiguration":{"type":"object","properties":{"maxConcurrentCalls":{"maximum":200,"minimum":4,"type":"integer","description":"Specifies the maximum concurrent calls that can be made to the web service. Minimum value: 4, Maximum value: 200."}},"description":"Holds the available configuration options for an Azure ML web service endpoint."},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Specifies the resource ID.","readOnly":true},"location":{"type":"string","description":"Specifies the location of the resource."},"name":{"type":"string","description":"Specifies the name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Contains resource tags defined as key/value pairs."},"type":{"type":"string","description":"Specifies the type of the resource.","readOnly":true}},"description":"Azure resource."},"ServiceInputOutputSpecification":{"required":["properties","type"],"type":"object","properties":{"description":{"type":"string","description":"The description of the Swagger schema."},"properties":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/TableSpecification"},"description":"Specifies a collection that contains the column schema for each input or output of the web service. For more information, see the Swagger specification."},"title":{"type":"string","description":"The title of your Swagger schema."},"type":{"type":"string","description":"The type of the entity described in swagger. Always 'object'.","default":"object"}},"description":"The swagger 2.0 schema describing the service's inputs or outputs. See Swagger specification: http://swagger.io/specification/"},"StorageAccount":{"type":"object","properties":{"key":{"type":"string","description":"Specifies the key used to access the storage account."},"name":{"type":"string","description":"Specifies the name of the storage account."}},"description":"Access information for a storage account."},"TableSpecification":{"required":["type"],"type":"object","properties":{"description":{"type":"string","description":"Swagger schema description."},"format":{"type":"string","description":"The format, if 'type' is not 'object'"},"properties":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/ColumnSpecification"},"description":"The set of columns within the data table."},"title":{"type":"string","description":"Swagger schema title."},"type":{"type":"string","description":"The type of the entity described in swagger.","default":"object"}},"description":"The swagger 2.0 schema describing a single service input or output. See Swagger specification: http://swagger.io/specification/"},"WebService":{"properties":{"properties":{"$ref":"#/components/schemas/WebServiceProperties"}},"description":"Instance of an Azure ML web service resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"WebServiceKeys":{"type":"object","properties":{"primary":{"type":"string","description":"The primary access key."},"secondary":{"type":"string","description":"The secondary access key."}},"description":"Access keys for the web service calls."},"WebServiceParameter":{"type":"object","properties":{"certificateThumbprint":{"type":"string","description":"If the parameter value in 'value' field is encrypted, the thumbprint of the certificate should be put here."},"value":{"type":"object","description":"The parameter value"}},"description":"Web Service Parameter object for node and global parameter"},"WebServiceProperties":{"required":["packageType"],"type":"object","properties":{"assets":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/AssetItem"},"description":"Contains user defined properties describing web service assets. Properties are expressed as Key/Value pairs."},"commitmentPlan":{"$ref":"#/components/schemas/CommitmentPlan"},"createdOn":{"type":"string","description":"Read Only: The date and time when the web service was created.","format":"date-time","readOnly":true},"description":{"type":"string","description":"The description of the web service."},"diagnostics":{"$ref":"#/components/schemas/DiagnosticsConfiguration"},"exampleRequest":{"$ref":"#/components/schemas/ExampleRequest"},"exposeSampleData":{"type":"boolean","description":"When set to true, sample data is included in the web service's swagger definition. The default value is true."},"input":{"$ref":"#/components/schemas/ServiceInputOutputSpecification"},"keys":{"$ref":"#/components/schemas/WebServiceKeys"},"machineLearningWorkspace":{"$ref":"#/components/schemas/MachineLearningWorkspace"},"modifiedOn":{"type":"string","description":"Read Only: The date and time when the web service was last modified.","format":"date-time","readOnly":true},"output":{"$ref":"#/components/schemas/ServiceInputOutputSpecification"},"packageType":{"type":"string","description":"Specifies the package type. Valid values are Graph (Specifies a web service published through the Machine Learning Studio) and Code (Specifies a web service published using code such as Python). Note: Code is not supported at this time.","enum":["Graph"]},"parameters":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/WebServiceParameter"},"description":"The set of global parameters values defined for the web service, given as a global parameter name to default value map. If no default value is specified, the parameter is considered to be required."},"payloadsInBlobStorage":{"type":"boolean","description":"When set to true, indicates that the payload size is larger than 3 MB. Otherwise false. If the payload size exceed 3 MB, the payload is stored in a blob and the PayloadsLocation parameter contains the URI of the blob. Otherwise, this will be set to false and Assets, Input, Output, Package, Parameters, ExampleRequest are inline. The Payload sizes is determined by adding the size of the Assets, Input, Output, Package, Parameters, and the ExampleRequest."},"payloadsLocation":{"$ref":"#/components/schemas/BlobLocation"},"provisioningState":{"type":"string","description":"Read Only: The provision state of the web service. Valid values are Unknown, Provisioning, Succeeded, and Failed.","readOnly":true,"enum":["Unknown","Provisioning","Succeeded","Failed"]},"readOnly":{"type":"boolean","description":"When set to true, indicates that the web service is read-only and can no longer be updated or patched, only removed. Default, is false. Note: Once set to true, you cannot change its value."},"realtimeConfiguration":{"$ref":"#/components/schemas/RealtimeConfiguration"},"storageAccount":{"$ref":"#/components/schemas/StorageAccount"},"swaggerLocation":{"type":"string","description":"Read Only: Contains the URI of the swagger spec associated with this web service.","readOnly":true},"title":{"type":"string","description":"The title of the web service."}},"description":"The set of properties specific to the Azure ML web service resource.","discriminator":{"propertyName":"packageType"}},"WebServicePropertiesForGraph":{"properties":{"package":{"$ref":"#/components/schemas/GraphPackage"}},"description":"Properties specific to a Graph based web service.","allOf":[{"$ref":"#/components/schemas/WebServiceProperties"}]}},"parameters":{"APIVersionParameter":{"name":"api-version","in":"query","description":"The version of the Microsoft.MachineLearning resource provider API to use.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"Name of the resource group in which the web service is located.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription ID.","required":true,"schema":{"type":"string"}},"WebServiceNameParameter":{"name":"webServiceName","in":"path","description":"The name of the web service.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure ML Web Services Management Client",
+    "description" : "These APIs allow end users to operate on Azure Machine Learning Web Services resources. They support the following operations:<ul><li>Create or update a web service</li><li>Get a web service</li><li>Patch a web service</li><li>Delete a web service</li><li>Get All Web Services in a Resource Group </li><li>Get All Web Services in a Subscription</li><li>Get Web Services Keys</li></ul>",
+    "version" : "2017-01-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/providers/Microsoft.MachineLearning/operations" : {
+      "get" : {
+        "description" : "Lists all the available REST API operations.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationEntityListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearning/webServices" : {
+      "get" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Gets the web services in the specified subscription.",
+        "operationId" : "WebServices_ListBySubscriptionId",
+        "parameters" : [ {
+          "name" : "$skiptoken",
+          "in" : "query",
+          "description" : "Continuation token for pagination.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success. The response includes a paginated array of web service objects and a URI to the next set of results, if any. Note that the web service objects are sparsely populated to conserve space in the response content. To get the full web service object, call the GET operation on the web service.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedWebServicesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices" : {
+      "get" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Gets the web services in the specified resource group.",
+        "operationId" : "WebServices_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$skiptoken",
+          "in" : "query",
+          "description" : "Continuation token for pagination.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success. The response includes a paginated array of web service objects and a URI to the next set of results, if any. For the more information the limits of the number of items in a resource group, see https://azure.microsoft.com/en-us/documentation/articles/azure-subscription-service-limits/. Note that the web service objects are sparsely populated to conserve space in the response content. To get the full web service object, call the GET operation on the web service.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginatedWebServicesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}" : {
+      "get" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Gets the Web Service Definition as specified by a subscription, resource group, and name. Note that the storage credentials and web service keys are not returned by this call. To get the web service access keys, call List Keys.",
+        "operationId" : "WebServices_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "description" : "The region for which encrypted credential parameters are valid.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success.  The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more informationFor more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WebService"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Create or update a web service. This call will overwrite an existing web service. Note that there is no warning or confirmation. This is a nonrecoverable operation. If your intent is to create a new web service, call the Get operation first to verify that it does not exist.",
+        "operationId" : "WebServices_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload that is used to create or update the web service.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WebService"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success. This response is returned for an update web service operation. The response payload is identical to the response payload that is returned by the GET operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WebService"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created. This response is returned for a create web service operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WebService"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Deletes the specified web service.",
+        "operationId" : "WebServices_Remove",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted. Note that a 202 status is returned even if the service did not exist."
+          },
+          "204" : {
+            "description" : "No Content."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Modifies an existing web service resource. The PATCH API call is an asynchronous operation. To determine whether it has completed successfully, you must perform a Get operation.",
+        "operationId" : "WebServices_Patch",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The payload to use to patch the web service.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchedWebService"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success. The response payload is identical to the response payload that is returned by the GET operation. The response includes the Provisioning State and the Azure-AsyncOperation header. To get the progress of the operation, call GET operation on the URL in Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WebService"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/CreateRegionalBlob" : {
+      "post" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Creates an encrypted credentials parameter blob for the specified region. To get the web service from a region other than the region in which it has been created, you must first call Create Regional Web Services Properties to create a copy of the encrypted credential parameter blob in that region. You only need to do this before the first time that you get the web service in the new region.",
+        "operationId" : "WebServices_CreateRegionalProperties",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "description" : "The region for which encrypted credential parameters are created.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Internal use only. Used for SDK return values.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AsyncOperationStatus"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted.  The response includes the Azure-AsyncOperation header. To get the progress of the operation, call the GET operation on the URL in the Azure-AsyncOperation header field. For more information about Asynchronous Operations, see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-async-operations."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/listKeys" : {
+      "get" : {
+        "tags" : [ "WebServices" ],
+        "description" : "Gets the access keys for the specified web service.",
+        "operationId" : "WebServices_ListKeys",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group in which the web service is located.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "webServiceName",
+          "in" : "path",
+          "description" : "The name of the web service.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WebServiceKeys"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AssetItem" : {
+        "required" : [ "locationInfo", "name", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Asset's Id."
+          },
+          "inputPorts" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/InputPort"
+            },
+            "description" : "Information about the asset's input ports."
+          },
+          "locationInfo" : {
+            "$ref" : "#/components/schemas/BlobLocation"
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "If the asset is a custom module, this holds the module's metadata."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Asset's friendly name."
+          },
+          "outputPorts" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/OutputPort"
+            },
+            "description" : "Information about the asset's output ports."
+          },
+          "parameters" : {
+            "type" : "array",
+            "description" : "If the asset is a custom module, this holds the module's parameters.",
+            "items" : {
+              "$ref" : "#/components/schemas/ModuleAssetParameter"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Asset's type.",
+            "enum" : [ "Module", "Resource" ]
+          }
+        },
+        "description" : "Information about an asset associated with the web service."
+      },
+      "AsyncOperationErrorInfo" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code.",
+            "readOnly" : true
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "An array containing error information.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/AsyncOperationErrorInfo"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The error message.",
+            "readOnly" : true
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "The error target.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The error detail information for async operation"
+      },
+      "AsyncOperationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "endTime" : {
+            "type" : "string",
+            "description" : "The date time that the async operation finished.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "errorInfo" : {
+            "$ref" : "#/components/schemas/AsyncOperationErrorInfo"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Async operation id.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Async operation name.",
+            "readOnly" : true
+          },
+          "percentComplete" : {
+            "type" : "number",
+            "description" : "Async operation progress.",
+            "readOnly" : true
+          },
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "Read Only: The provisioning state of the web service. Valid values are Unknown, Provisioning, Succeeded, and Failed.",
+            "readOnly" : true,
+            "enum" : [ "Unknown", "Provisioning", "Succeeded", "Failed" ]
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The date time that the async operation started.",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "Azure async operation status."
+      },
+      "BlobLocation" : {
+        "required" : [ "uri" ],
+        "type" : "object",
+        "properties" : {
+          "credentials" : {
+            "type" : "string",
+            "description" : "Access credentials for the blob, if applicable (e.g. blob specified by storage account connection string + blob URI)"
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "The URI from which the blob is accessible from. For example, aml://abc for system assets or https://xyz for user assets or payload."
+          }
+        },
+        "description" : "Describes the access location for a blob."
+      },
+      "ColumnSpecification" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "enum" : {
+            "type" : "array",
+            "description" : "If the data type is categorical, this provides the list of accepted categories.",
+            "items" : {
+              "type" : "object"
+            }
+          },
+          "format" : {
+            "type" : "string",
+            "description" : "Additional format information for the data type.",
+            "enum" : [ "Byte", "Char", "Complex64", "Complex128", "Date-time", "Date-timeOffset", "Double", "Duration", "Float", "Int8", "Int16", "Int32", "Int64", "Uint8", "Uint16", "Uint32", "Uint64" ]
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Data type of the column.",
+            "enum" : [ "Boolean", "Integer", "Number", "String" ]
+          },
+          "x-ms-isnullable" : {
+            "type" : "boolean",
+            "description" : "Flag indicating if the type supports null values or not."
+          },
+          "x-ms-isordered" : {
+            "type" : "boolean",
+            "description" : "Flag indicating whether the categories are treated as an ordered set or not, if this is a categorical column."
+          }
+        },
+        "description" : "Swagger 2.0 schema for a column within the data table representing a web service input or output. See Swagger specification: http://swagger.io/specification/"
+      },
+      "CommitmentPlan" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Specifies the Azure Resource Manager ID of the commitment plan associated with the web service."
+          }
+        },
+        "description" : "Information about the machine learning commitment plan associated with the web service."
+      },
+      "DiagnosticsConfiguration" : {
+        "required" : [ "level" ],
+        "type" : "object",
+        "properties" : {
+          "expiry" : {
+            "type" : "string",
+            "description" : "Specifies the date and time when the logging will cease. If null, diagnostic collection is not time limited.",
+            "format" : "date-time"
+          },
+          "level" : {
+            "type" : "string",
+            "description" : "Specifies the verbosity of the diagnostic output. Valid values are: None - disables tracing; Error - collects only error (stderr) traces; All - collects all traces (stdout and stderr).",
+            "enum" : [ "None", "Error", "All" ]
+          }
+        },
+        "description" : "Diagnostics settings for an Azure ML web service."
+      },
+      "ExampleRequest" : {
+        "type" : "object",
+        "properties" : {
+          "globalParameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "Sample input data for the web service's global parameters"
+          },
+          "inputs" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "array",
+              "items" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Sample input data for the web service's input(s) given as an input name to sample input values matrix map."
+          }
+        },
+        "description" : "Sample input data for the service's input(s)."
+      },
+      "GraphEdge" : {
+        "type" : "object",
+        "properties" : {
+          "sourceNodeId" : {
+            "type" : "string",
+            "description" : "The source graph node's identifier."
+          },
+          "sourcePortId" : {
+            "type" : "string",
+            "description" : "The identifier of the source node's port that the edge connects from."
+          },
+          "targetNodeId" : {
+            "type" : "string",
+            "description" : "The destination graph node's identifier."
+          },
+          "targetPortId" : {
+            "type" : "string",
+            "description" : "The identifier of the destination node's port that the edge connects into."
+          }
+        },
+        "description" : "Defines an edge within the web service's graph."
+      },
+      "GraphNode" : {
+        "type" : "object",
+        "properties" : {
+          "assetId" : {
+            "type" : "string",
+            "description" : "The id of the asset represented by this node."
+          },
+          "inputId" : {
+            "type" : "string",
+            "description" : "The id of the input element represented by this node."
+          },
+          "outputId" : {
+            "type" : "string",
+            "description" : "The id of the output element represented by this node."
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/WebServiceParameter"
+            },
+            "description" : "If applicable, parameters of the node. Global graph parameters map into these, with values set at runtime."
+          }
+        },
+        "description" : "Specifies a node in the web service graph. The node can either be an input, output or asset node, so only one of the corresponding id properties is populated at any given time."
+      },
+      "GraphPackage" : {
+        "type" : "object",
+        "properties" : {
+          "edges" : {
+            "type" : "array",
+            "description" : "The list of edges making up the graph.",
+            "items" : {
+              "$ref" : "#/components/schemas/GraphEdge"
+            }
+          },
+          "graphParameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/GraphParameter"
+            },
+            "description" : "The collection of global parameters for the graph, given as a global parameter name to GraphParameter map. Each parameter here has a 1:1 match with the global parameters values map declared at the WebServiceProperties level."
+          },
+          "nodes" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/GraphNode"
+            },
+            "description" : "The set of nodes making up the graph, provided as a nodeId to GraphNode map"
+          }
+        },
+        "description" : "Defines the graph of modules making up the machine learning solution."
+      },
+      "GraphParameter" : {
+        "required" : [ "links", "type" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Description of this graph parameter."
+          },
+          "links" : {
+            "type" : "array",
+            "description" : "Association links for this parameter to nodes in the graph.",
+            "items" : {
+              "$ref" : "#/components/schemas/GraphParameterLink"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Graph parameter's type.",
+            "enum" : [ "String", "Int", "Float", "Enumerated", "Script", "Mode", "Credential", "Boolean", "Double", "ColumnPicker", "ParameterRange", "DataGatewayName" ]
+          }
+        },
+        "description" : "Defines a global parameter in the graph."
+      },
+      "GraphParameterLink" : {
+        "required" : [ "nodeId", "parameterKey" ],
+        "type" : "object",
+        "properties" : {
+          "nodeId" : {
+            "type" : "string",
+            "description" : "The graph node's identifier"
+          },
+          "parameterKey" : {
+            "type" : "string",
+            "description" : "The identifier of the node parameter that the global parameter maps to."
+          }
+        },
+        "description" : "Association link for a graph global parameter to a node in the graph."
+      },
+      "InputPort" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Port data type.",
+            "default" : "Dataset",
+            "enum" : [ "Dataset" ]
+          }
+        },
+        "description" : "Asset input port"
+      },
+      "MachineLearningWorkspace" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Specifies the workspace ID of the machine learning workspace associated with the web service"
+          }
+        },
+        "description" : "Information about the machine learning workspace containing the experiment that is source for the web service."
+      },
+      "ModeValueInfo" : {
+        "type" : "object",
+        "properties" : {
+          "interfaceString" : {
+            "type" : "string",
+            "description" : "The interface string name for the nested parameter."
+          },
+          "parameters" : {
+            "type" : "array",
+            "description" : "The definition of the parameter.",
+            "items" : {
+              "$ref" : "#/components/schemas/ModuleAssetParameter"
+            }
+          }
+        },
+        "description" : "Nested parameter definition."
+      },
+      "ModuleAssetParameter" : {
+        "type" : "object",
+        "properties" : {
+          "modeValuesInfo" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/ModeValueInfo"
+            },
+            "description" : "Definitions for nested interface parameters if this is a complex module parameter."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Parameter name."
+          },
+          "parameterType" : {
+            "type" : "string",
+            "description" : "Parameter type."
+          }
+        },
+        "description" : "Parameter definition for a module asset."
+      },
+      "OperationDisplayInfo" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the operation.",
+            "readOnly" : true
+          },
+          "operation" : {
+            "type" : "string",
+            "description" : "The action that users can perform, based on their permission level.",
+            "readOnly" : true
+          },
+          "provider" : {
+            "type" : "string",
+            "description" : "The service provider.",
+            "readOnly" : true
+          },
+          "resource" : {
+            "type" : "string",
+            "description" : "The resource on which the operation is performed.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The API operation info."
+      },
+      "OperationEntity" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "$ref" : "#/components/schemas/OperationDisplayInfo"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}.",
+            "readOnly" : true
+          }
+        },
+        "description" : "An API operation."
+      },
+      "OperationEntityListResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The list of operations.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/OperationEntity"
+            }
+          }
+        },
+        "description" : "The list of REST API operations."
+      },
+      "OutputPort" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Port data type.",
+            "default" : "Dataset",
+            "enum" : [ "Dataset" ]
+          }
+        },
+        "description" : "Asset output port"
+      },
+      "PaginatedWebServicesList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "A continuation link (absolute URI) to the next page of results in the list."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "An array of web service objects.",
+            "items" : {
+              "$ref" : "#/components/schemas/WebService"
+            }
+          }
+        },
+        "description" : "Paginated list of web services."
+      },
+      "PatchedResource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Specifies the resource ID.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Specifies the location of the resource.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Specifies the name of the resource.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Contains resource tags defined as key/value pairs."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Specifies the type of the resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Azure resource."
+      },
+      "PatchedWebService" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/WebServiceProperties"
+          }
+        },
+        "description" : "Instance of an Patched Azure ML web service resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchedResource"
+        } ]
+      },
+      "RealtimeConfiguration" : {
+        "type" : "object",
+        "properties" : {
+          "maxConcurrentCalls" : {
+            "maximum" : 200,
+            "minimum" : 4,
+            "type" : "integer",
+            "description" : "Specifies the maximum concurrent calls that can be made to the web service. Minimum value: 4, Maximum value: 200."
+          }
+        },
+        "description" : "Holds the available configuration options for an Azure ML web service endpoint."
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Specifies the resource ID.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Specifies the location of the resource."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Specifies the name of the resource.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Contains resource tags defined as key/value pairs."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Specifies the type of the resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Azure resource."
+      },
+      "ServiceInputOutputSpecification" : {
+        "required" : [ "properties", "type" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the Swagger schema."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/TableSpecification"
+            },
+            "description" : "Specifies a collection that contains the column schema for each input or output of the web service. For more information, see the Swagger specification."
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "The title of your Swagger schema."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the entity described in swagger. Always 'object'.",
+            "default" : "object"
+          }
+        },
+        "description" : "The swagger 2.0 schema describing the service's inputs or outputs. See Swagger specification: http://swagger.io/specification/"
+      },
+      "StorageAccount" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "description" : "Specifies the key used to access the storage account."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Specifies the name of the storage account."
+          }
+        },
+        "description" : "Access information for a storage account."
+      },
+      "TableSpecification" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Swagger schema description."
+          },
+          "format" : {
+            "type" : "string",
+            "description" : "The format, if 'type' is not 'object'"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/ColumnSpecification"
+            },
+            "description" : "The set of columns within the data table."
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Swagger schema title."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the entity described in swagger.",
+            "default" : "object"
+          }
+        },
+        "description" : "The swagger 2.0 schema describing a single service input or output. See Swagger specification: http://swagger.io/specification/"
+      },
+      "WebService" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/WebServiceProperties"
+          }
+        },
+        "description" : "Instance of an Azure ML web service resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "WebServiceKeys" : {
+        "type" : "object",
+        "properties" : {
+          "primary" : {
+            "type" : "string",
+            "description" : "The primary access key."
+          },
+          "secondary" : {
+            "type" : "string",
+            "description" : "The secondary access key."
+          }
+        },
+        "description" : "Access keys for the web service calls."
+      },
+      "WebServiceParameter" : {
+        "type" : "object",
+        "properties" : {
+          "certificateThumbprint" : {
+            "type" : "string",
+            "description" : "If the parameter value in 'value' field is encrypted, the thumbprint of the certificate should be put here."
+          },
+          "value" : {
+            "type" : "object",
+            "description" : "The parameter value"
+          }
+        },
+        "description" : "Web Service Parameter object for node and global parameter"
+      },
+      "WebServiceProperties" : {
+        "required" : [ "packageType" ],
+        "type" : "object",
+        "properties" : {
+          "assets" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/AssetItem"
+            },
+            "description" : "Contains user defined properties describing web service assets. Properties are expressed as Key/Value pairs."
+          },
+          "commitmentPlan" : {
+            "$ref" : "#/components/schemas/CommitmentPlan"
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "Read Only: The date and time when the web service was created.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the web service."
+          },
+          "diagnostics" : {
+            "$ref" : "#/components/schemas/DiagnosticsConfiguration"
+          },
+          "exampleRequest" : {
+            "$ref" : "#/components/schemas/ExampleRequest"
+          },
+          "exposeSampleData" : {
+            "type" : "boolean",
+            "description" : "When set to true, sample data is included in the web service's swagger definition. The default value is true."
+          },
+          "input" : {
+            "$ref" : "#/components/schemas/ServiceInputOutputSpecification"
+          },
+          "keys" : {
+            "$ref" : "#/components/schemas/WebServiceKeys"
+          },
+          "machineLearningWorkspace" : {
+            "$ref" : "#/components/schemas/MachineLearningWorkspace"
+          },
+          "modifiedOn" : {
+            "type" : "string",
+            "description" : "Read Only: The date and time when the web service was last modified.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "output" : {
+            "$ref" : "#/components/schemas/ServiceInputOutputSpecification"
+          },
+          "packageType" : {
+            "type" : "string",
+            "description" : "Specifies the package type. Valid values are Graph (Specifies a web service published through the Machine Learning Studio) and Code (Specifies a web service published using code such as Python). Note: Code is not supported at this time.",
+            "enum" : [ "Graph" ]
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/WebServiceParameter"
+            },
+            "description" : "The set of global parameters values defined for the web service, given as a global parameter name to default value map. If no default value is specified, the parameter is considered to be required."
+          },
+          "payloadsInBlobStorage" : {
+            "type" : "boolean",
+            "description" : "When set to true, indicates that the payload size is larger than 3 MB. Otherwise false. If the payload size exceed 3 MB, the payload is stored in a blob and the PayloadsLocation parameter contains the URI of the blob. Otherwise, this will be set to false and Assets, Input, Output, Package, Parameters, ExampleRequest are inline. The Payload sizes is determined by adding the size of the Assets, Input, Output, Package, Parameters, and the ExampleRequest."
+          },
+          "payloadsLocation" : {
+            "$ref" : "#/components/schemas/BlobLocation"
+          },
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "Read Only: The provision state of the web service. Valid values are Unknown, Provisioning, Succeeded, and Failed.",
+            "readOnly" : true,
+            "enum" : [ "Unknown", "Provisioning", "Succeeded", "Failed" ]
+          },
+          "readOnly" : {
+            "type" : "boolean",
+            "description" : "When set to true, indicates that the web service is read-only and can no longer be updated or patched, only removed. Default, is false. Note: Once set to true, you cannot change its value."
+          },
+          "realtimeConfiguration" : {
+            "$ref" : "#/components/schemas/RealtimeConfiguration"
+          },
+          "storageAccount" : {
+            "$ref" : "#/components/schemas/StorageAccount"
+          },
+          "swaggerLocation" : {
+            "type" : "string",
+            "description" : "Read Only: Contains the URI of the swagger spec associated with this web service.",
+            "readOnly" : true
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "The title of the web service."
+          }
+        },
+        "description" : "The set of properties specific to the Azure ML web service resource.",
+        "discriminator" : {
+          "propertyName" : "packageType"
+        }
+      },
+      "WebServicePropertiesForGraph" : {
+        "properties" : {
+          "package" : {
+            "$ref" : "#/components/schemas/GraphPackage"
+          }
+        },
+        "description" : "Properties specific to a Graph based web service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/WebServiceProperties"
+        } ]
+      }
+    },
+    "parameters" : {
+      "APIVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The version of the Microsoft.MachineLearning resource provider API to use.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "Name of the resource group in which the web service is located.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription ID.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "WebServiceNameParameter" : {
+        "name" : "webServiceName",
+        "in" : "path",
+        "description" : "The name of the web service.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

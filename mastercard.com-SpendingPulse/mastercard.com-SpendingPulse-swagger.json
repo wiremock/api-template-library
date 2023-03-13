@@ -1,1 +1,804 @@
-{"openapi":"3.0.1","info":{"title":"Spending Pulse","description":"This API will provide monthly data which includes metrics such as sales volume and growth rate.","version":"1.0"},"servers":[{"url":"https://api.mastercard.com/spendingpulse/v1/spulse.svc"}],"paths":{"/gasweekly":{"get":{"tags":["Gas Weekly"],"summary":"Returns the weekly gasoline report. This resource pulls back the report with ProductLine = \"US Weekly Gasoline Demand Report\". Keep in mind that you must be subscribed to the gasoline weekly report to be able to receive data back from this resource.","description":"Returns the weekly gasoline report. This resource pulls back the report with ProductLine = \"US Weekly Gasoline Demand Report\". Keep in mind that you must be subscribed to the gasoline weekly report to be able to receive data back from this resource.\n","parameters":[{"name":"CurrentRow","in":"query","description":"Starting record number to return.","schema":{"type":"string"},"example":"1"},{"name":"Offset","in":"query","description":"Used to restrict the number of records returned if needed to be less than max.","schema":{"type":"string"},"example":"25"}],"responses":{"200":{"description":"A list of subscriptions.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GasWeeklyListResponse"}}}},"default":{"description":"Unexpected errors","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorSchema"}}}}}}},"/parameters":{"get":{"tags":["Parameters"],"summary":"Returns a distinct list of all reports are available and that one is subscribed to.","description":"Returns a distinct list of all reports are available and that one is subscribed to.\n","parameters":[{"name":"CurrentRow","in":"query","description":"Starting record number to return.","schema":{"type":"string"},"example":"1"},{"name":"Offset","in":"query","description":"Used to restrict the number of records returned if needed to be less than max.","schema":{"type":"string"},"example":"25"}],"responses":{"200":{"description":"A List of Parameters","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ParameterListResponse"}}}},"default":{"description":"Unexpected errors","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorSchema"}}}}}}},"/spendingpulse":{"get":{"tags":["SpendingPulse Report"],"summary":"Returns all Spending Pulse reports (with the exception of the gasoline weekly report, which has its own resource), that one is subscribed to.","description":"Returns all Spending Pulse reports (with the exception of the gasoline weekly report, which has its own resource), that one is subscribed to.\n","parameters":[{"name":"CurrentRow","in":"query","description":"Starting record number to return.","schema":{"type":"string"},"example":"1"},{"name":"Offset","in":"query","description":"Used to restrict the number of records returned if needed to be less than max.","schema":{"type":"string"},"example":"25"},{"name":"ProductLine","in":"query","description":"Product Line.  Either ?US Executive Report? or ?Weekly Sales?","schema":{"type":"string"},"example":"Weekly Sales"},{"name":"PublicationCoveragePeriod","in":"query","description":"Publication Coverage Period indicates what period is to be covered, often the current report will include the month prior.","schema":{"type":"string"},"example":"March 2015"},{"name":"Country","in":"query","description":"Country code.","schema":{"type":"string"},"example":"US"},{"name":"ReportType","in":"query","description":"Report type name, today the only report supported is \"monitor\".","schema":{"type":"string"},"example":"reportA"},{"name":"Period","in":"query","description":"Indicates the period covered by the data with possible values of - day, week, month, quarter, annual","schema":{"type":"string"},"example":"Weekly"},{"name":"Sector","in":"query","description":"Sector name.","schema":{"type":"string"},"example":"sectorA"},{"name":"Ecomm","in":"query","description":"Ecommerce indicator.","schema":{"type":"string"},"example":"Y"}],"responses":{"200":{"description":"A List of Spending Pulse Reports.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SpendingPulseListResponse"}}}},"default":{"description":"Unexpected errors","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorSchema"}}}}}}},"/subscription":{"get":{"tags":["Subscription"],"summary":"Returns a list of all reports one is currently subscribed to.","description":"Returns a list of all reports one is currently subscribed to.\n","parameters":[{"name":"CurrentRow","in":"query","description":"Starting record number to return.","schema":{"type":"string"},"example":"1"},{"name":"Offset","in":"query","description":"Used to restrict the number of records returned if needed to be less than max.","schema":{"type":"string"},"example":"25"}],"responses":{"200":{"description":"A list of subscriptions.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubscriptionListResponse"}}}},"default":{"description":"Unexpected errors","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorSchema"}}}}}}}},"components":{"schemas":{"Error":{"type":"object","properties":{"Description":{"type":"string","description":"This is the text description of the error. This is optional and will only be displayed if more information is available than is stored in the data identifier and reason code.","example":"Unauthorized Access"},"ReasonCode":{"type":"string","description":"This will identify the reason for the error.","example":"AUTHENTICATION_FAILED"},"Recoverable":{"type":"boolean","description":"This is a true/false presentation to explain if the transaction was submitted again would it be successful or not.","example":true},"Source":{"type":"string","description":"Unique identifier that attempts to define the field in error when available.  If a specific field can't be identified System will be returned.","example":"System"}}},"ErrorSchema":{"type":"object","properties":{"Errors":{"$ref":"#/components/schemas/Errors"}}},"Errors":{"type":"object","properties":{"Error":{"type":"array","items":{"$ref":"#/components/schemas/Error"}}}},"GasWeeklyArray":{"type":"object","properties":{"GasWeeklyRecord":{"type":"array","items":{"$ref":"#/components/schemas/GasWeeklyRecord"}}}},"GasWeeklyList":{"type":"object","properties":{"Count":{"type":"string","description":"Total number of records returned from the query.","example":"100"},"GasWeeklyArray":{"$ref":"#/components/schemas/GasWeeklyArray"},"Message":{"type":"string","description":"Success/Failure.","example":"Success"}}},"GasWeeklyListResponse":{"type":"object","properties":{"GasWeeklyList":{"$ref":"#/components/schemas/GasWeeklyList"}}},"GasWeeklyRecord":{"type":"object","properties":{"AveragePricePerGalRegularGasoline":{"type":"string","description":"Average price at the pump for all gallons sold during the reporting week.","example":"true"},"Country":{"type":"string","description":"Country Code.","example":"UK"},"PADDCode":{"type":"string","description":"PADD (Petroleum Administration for Defense Districts) are defined by the U.S. Energy Information Administration. The PADD Districts are New England, Central Atlantic, Lower Atlantic, Midwest, Gulf Coast, Rocky Mountain, West Coast.","example":"West Coast"},"PADDMillionsofBarrelsSold":{"type":"string","description":"For the PADD being reported, the estimated number of barrels (42 U.S. gallons) of regular motor gasoline (includes all finished motor gasoline grades and formulations or blends . It does not contain diesel nor aviation fuel.) sold during the week.","example":"12.023"},"PADDPercentChangeInBarrelsFromPriorWeek":{"type":"string","description":"The percent change from one week ago in the PADDMillionsofBarrelsSold.","example":"0.021"},"PADDPercentChangeinBarrelsfrom52WeeksAgo":{"type":"string","description":"The percent change from 52 weeks ago in the PADDMillionsofBarrelsSold.","example":"true"},"Period":{"type":"string","description":"Indicates the period covered by the data with possible values of - day, week, month, quarter, annual","example":"Week"},"ProductLine":{"type":"string","description":"Overall product line that the report belongs to, the only report for this resource is US Weekly Gasoline Demand Report.","example":"US Weekly Gasoline Demand Report"},"PublicationCoveragePeriod":{"type":"string","description":"Publication Coverage Period indicates what period is to be covered.  For this report it will include the gasoline week ending date which will always be a Friday.","example":"20150710"},"ReportType":{"type":"string","description":"Report type name, today the only report supported is \"monitor\".","example":"monitor"},"Sector":{"type":"string","description":"Gas","example":"Gas"},"Segment":{"type":"string","description":"Not used.","example":"true"},"SubSector":{"type":"string","description":"Not used.","example":"true"},"TotalBarrelsChangeFromPriorWeek":{"type":"string","description":"Change in TotalMillionsOfBarrelsSold from one week ago.","example":"1.426"},"TotalMillionsOfBarrels4WeekAverage":{"type":"string","description":"Average millions of barrels of gasoline sold per week during the prior 4 weeks.","example":"66.78"},"TotalMillionsOfBarrelsDailyAverage":{"type":"string","description":"Average millions of barrels of gasoline sold per day during the week being reported.","example":"9.759"},"TotalMillionsOfBarrelsSold":{"type":"string","description":"Estimated number of barrels (42 U.S. Gallons) of regular motor gasoline (includes all finished motor gasoline grades and formulations or blends . IT does not contain diesel nor aviation fuel).","example":"68.313"},"TotalPercentChangeInBarrelsFrom52WeeksAgo":{"type":"string","description":"Percent change from 52 weeks ago in the TotalMillionsOfBarrelsSold.","example":"true"},"TotalPercentChangeInBarrelsFromPriorWeek":{"type":"string","description":"Percent change from one week ago in the TotalMillionsOfBarrelsSold.","example":"0.021"},"TotalPercentChangeInThe4WeekAverageFrom52WeeksAgo":{"type":"string","description":"Percent change from 52 weeks ago in the TotalMillionsOfBarrels4WeekAverage.","example":"true"},"WeekEndDate":{"type":"string","description":"End of week date.","example":"5/1/2015"}}},"Parameter":{"type":"object","properties":{"Country":{"type":"string","description":"Country Code.","example":"UK"},"Ecomm":{"type":"string","description":"Ecommerce indicator. \"yes\" or \"no\" are the options.","example":"yes"},"Period":{"type":"string","description":"Indicates the period covered by the data with possible values of - day, week, month, quarter, annual","example":"Week"},"ProductLine":{"type":"string","description":"Product lines available for the consumer ?US Executive Report? and/or ?US Weekly Gasoline Report?.","example":"US Executive"},"PublicationCoveragePeriod":{"type":"string","description":"Publication Coverage Period indicates what period is to be covered by the current report.","example":"March 2015"},"ReportType":{"type":"string","description":"Report type name, today the only report supported is \"monitor\".","example":"monitor"},"Sector":{"type":"string","description":"Sector name/id.","example":"Petrol"}}},"ParameterArray":{"type":"object","properties":{"Parameter":{"type":"array","items":{"$ref":"#/components/schemas/Parameter"}}}},"ParameterList":{"type":"object","properties":{"Count":{"type":"string","description":"Total number of records returned from the query.","example":"100"},"Message":{"type":"string","description":"Success/Failure.","example":"Success"},"ParameterArray":{"$ref":"#/components/schemas/ParameterArray"}}},"ParameterListResponse":{"type":"object","properties":{"ParameterList":{"$ref":"#/components/schemas/ParameterList"}}},"SpendingPulseArray":{"type":"object","properties":{"SpendingPulseRecord":{"type":"array","items":{"$ref":"#/components/schemas/SpendingPulseRecord"}}}},"SpendingPulseList":{"type":"object","properties":{"Count":{"type":"string","description":"Total number of records returned from the query.","example":"100"},"Message":{"type":"string","description":"Success/Failure.","example":"Success"},"SpendingPulseArray":{"$ref":"#/components/schemas/SpendingPulseArray"}}},"SpendingPulseListResponse":{"type":"object","properties":{"SpendingPulseList":{"$ref":"#/components/schemas/SpendingPulseList"}}},"SpendingPulseRecord":{"type":"object","properties":{"Country":{"type":"string","description":"Country Code.","example":"UK"},"CurrencyOfForSalesValue":{"type":"string","description":"A value to indicate the currency in which the sales value is being reported. For sales index values, this field is not used.","example":"us dollar"},"Ecomm":{"type":"string","description":"Ecommerce indicator. \"yes\" or \"no\" are the options.","example":"Yes"},"ImpliedDeflatorMonthOverMonthChange":{"type":"string","description":"Percent change from one month ago in the implied deflator (the deflator is used in seasonal adjustment calculation).","example":"2"},"ImpliedDeflatorYearOverYearChange":{"type":"string","description":"Percent change from one year ago in the implied deflator (the deflator is used in seasonal adjustment calculation).","example":"1"},"NonGregorianReportingPeriod":{"type":"string","description":"For only those data reported by a non-Gregorian calendar (e.g. US Sectors which are reported based on the National Retail Federation 4-5-4 calendar) this value designates the retail period being reported. As an example, for the US apparel sector, for Period Date = February 2015, the reporting period is 2015-01 (February is the first month of US retail year 2015).","example":"2015-01"},"Period":{"type":"string","description":"Indicates the period covered by the data with possible values of - day, week, month, quarter, annual","example":"Week"},"PeriodEndDate":{"type":"string","description":"Date indicating the end of the period covered by ensuing data.","example":"05/31/2015"},"PeriodStartDate":{"type":"string","description":"Date indicating the beginning of the period covered by ensuing data.","example":"05/01/2015"},"PriceAdjustmentFlag":{"type":"string","description":"Price adjustment indicator.","example":"Yes"},"PriceIndex3MonthMovingAverageChange":{"type":"string","description":"Percent change from one year ago in the three-month moving PriceIndexValue average.","example":"11"},"PriceIndexMonthOverMonthChange":{"type":"string","description":"Percent change from one month ago in the PriceIndexValue.","example":"10"},"PriceIndexValue":{"type":"string","description":"Published price index value for the period being reported. Not a currency value - a decimal index value. The price index takes into account both the average ticket value and the size of the basket. Changes in either will be reflected in the price index changes.","example":"8"},"PriceIndexYearOverYearChange":{"type":"string","description":"Percent change from one year ago in the PriceIndexValue.","example":"9"},"ProductLine":{"type":"string","description":"Product line, either for this resource it will be ?US Executive\".","example":"US Executive"},"PublicationCoveragePeriod":{"type":"string","description":"Publication Coverage Period indicates what period is to be covered, often the current report will include the month prior.","example":"March 2015"},"ReportType":{"type":"string","description":"Report type name, today the only report supported is \"monitor\".","example":"monitor"},"ReportingCalender":{"type":"string","description":"Value indicates calendar used for periodic aggregation (e.g. \"G\" = Gregorian, \"454\" = US Retail, \"445\" = UK ONS, etc.) Please note that some data are reported under more than one calendar. As a result, in order to uniquely identify the data being reported, the reporting calendar must be included.","example":"gregorian"},"Sales3MonthMovingAverageChange":{"type":"string","description":"Percent change from one year ago in the three-month moving SalesIndexValue average.","example":"6"},"SalesMonthOverMonthChange":{"type":"string","description":"Percent change from one month ago in the SalesValueIndex.","example":"5"},"SalesValueIndex":{"type":"string","description":"Aggregated/computed value of sales for the period being reported. This may be an index value (not a currency value - just a decimal value) or it may be a currency value that would typically be in local currency (dollar, pound, yen, etc.)","example":"3"},"SalesYearOverYearChange":{"type":"string","description":"Percent change from one year ago in the SalesValueIndex.","example":"4"},"SalesYearToDateChange":{"type":"string","description":"Percent change from year ago.","example":"7"},"SameStoreSalesIndex3MonthMovingAverageChange":{"type":"string","description":"Percent change from one month ago in the SameStoreSalesIndex.","example":"17"},"SameStoreSalesIndexYearOverYearChange":{"type":"string","description":"Percent change from one year ago in the SameStoreSalesIndex.","example":"16"},"SeasonalAdjustmentFlag":{"type":"string","description":"Seasonal data adjustment indicator.","example":"Yes"},"Sector":{"type":"string","description":"Sector name/id.","example":"Petrol"},"Segment":{"type":"string","description":"Sub unit within a sector e.g. Sector = restaurant; SubSector = Full Service; Segment = Fine Dining.","example":"Fine Dining"},"SubGeographyValue":{"type":"string","description":"For those data reported by sub-geographies (e.g. regions, states, etc.) the sub-geography being reported.","example":"region"},"SubSector":{"type":"string","description":"Sub unit within a sector e.g. Sector = Electronics & Appliances; SubSector = Electronics.","example":"Electronics"},"TransactionIndex3MonthMovingAverageChange":{"type":"string","description":"Percent change from one year ago in the three-month moving TransactionIndexValue average.","example":"3"},"TransactionIndexMonthOverMonthChange":{"type":"string","description":"Percent change from one month ago in the TransactionIndexValue.","example":"14"},"TransactionIndexValue":{"type":"string","description":"Published transaction index value for the period being reported. Not a currency value - a decimal index value. The transaction index is a relative indication of transactions volume in the sector/sub-sector/segment being reported.","example":"12"},"TransactionIndexYearOverYearChange":{"type":"string","description":"Percent change from one year ago in the TransactionIndexValue.","example":"13"}}},"Subscription":{"type":"object","properties":{"Country":{"type":"string","description":"Country Code.","example":"UK"},"Ecomm":{"type":"string","description":"Ecommerce indicator. \"yes\" or \"no\" are the options.","example":"Yes"},"Period":{"type":"string","description":"Indicates the period covered by the data with possible values of - day, week, month, quarter, annual","example":"Week"},"ReportType":{"type":"string","description":"Report type name, today the only report supported is \"monitor\".","example":"monitor"},"Sector":{"type":"string","description":"Sector name.","example":"Sporting Goods"}}},"SubscriptionArray":{"type":"object","properties":{"Subscription":{"type":"array","items":{"$ref":"#/components/schemas/Subscription"}}}},"SubscriptionList":{"type":"object","properties":{"Count":{"type":"string","description":"Total number of records returned from the query.","example":"100"},"Message":{"type":"string","description":"Success/Failure","example":"Success"},"SubscriptionArray":{"$ref":"#/components/schemas/SubscriptionArray"}}},"SubscriptionListResponse":{"type":"object","properties":{"SubscriptionList":{"$ref":"#/components/schemas/SubscriptionList"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Spending Pulse",
+    "description" : "This API will provide monthly data which includes metrics such as sales volume and growth rate.",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.mastercard.com/spendingpulse/v1/spulse.svc"
+  } ],
+  "paths" : {
+    "/gasweekly" : {
+      "get" : {
+        "tags" : [ "Gas Weekly" ],
+        "summary" : "Returns the weekly gasoline report. This resource pulls back the report with ProductLine = \"US Weekly Gasoline Demand Report\". Keep in mind that you must be subscribed to the gasoline weekly report to be able to receive data back from this resource.",
+        "description" : "Returns the weekly gasoline report. This resource pulls back the report with ProductLine = \"US Weekly Gasoline Demand Report\". Keep in mind that you must be subscribed to the gasoline weekly report to be able to receive data back from this resource.\n",
+        "parameters" : [ {
+          "name" : "CurrentRow",
+          "in" : "query",
+          "description" : "Starting record number to return.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "Offset",
+          "in" : "query",
+          "description" : "Used to restrict the number of records returned if needed to be less than max.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of subscriptions.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GasWeeklyListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected errors",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parameters" : {
+      "get" : {
+        "tags" : [ "Parameters" ],
+        "summary" : "Returns a distinct list of all reports are available and that one is subscribed to.",
+        "description" : "Returns a distinct list of all reports are available and that one is subscribed to.\n",
+        "parameters" : [ {
+          "name" : "CurrentRow",
+          "in" : "query",
+          "description" : "Starting record number to return.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "Offset",
+          "in" : "query",
+          "description" : "Used to restrict the number of records returned if needed to be less than max.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of Parameters",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ParameterListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected errors",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spendingpulse" : {
+      "get" : {
+        "tags" : [ "SpendingPulse Report" ],
+        "summary" : "Returns all Spending Pulse reports (with the exception of the gasoline weekly report, which has its own resource), that one is subscribed to.",
+        "description" : "Returns all Spending Pulse reports (with the exception of the gasoline weekly report, which has its own resource), that one is subscribed to.\n",
+        "parameters" : [ {
+          "name" : "CurrentRow",
+          "in" : "query",
+          "description" : "Starting record number to return.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "Offset",
+          "in" : "query",
+          "description" : "Used to restrict the number of records returned if needed to be less than max.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        }, {
+          "name" : "ProductLine",
+          "in" : "query",
+          "description" : "Product Line.  Either ?US Executive Report? or ?Weekly Sales?",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Weekly Sales"
+        }, {
+          "name" : "PublicationCoveragePeriod",
+          "in" : "query",
+          "description" : "Publication Coverage Period indicates what period is to be covered, often the current report will include the month prior.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "March 2015"
+        }, {
+          "name" : "Country",
+          "in" : "query",
+          "description" : "Country code.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "US"
+        }, {
+          "name" : "ReportType",
+          "in" : "query",
+          "description" : "Report type name, today the only report supported is \"monitor\".",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "reportA"
+        }, {
+          "name" : "Period",
+          "in" : "query",
+          "description" : "Indicates the period covered by the data with possible values of - day, week, month, quarter, annual",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Weekly"
+        }, {
+          "name" : "Sector",
+          "in" : "query",
+          "description" : "Sector name.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "sectorA"
+        }, {
+          "name" : "Ecomm",
+          "in" : "query",
+          "description" : "Ecommerce indicator.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Y"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of Spending Pulse Reports.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SpendingPulseListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected errors",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscription" : {
+      "get" : {
+        "tags" : [ "Subscription" ],
+        "summary" : "Returns a list of all reports one is currently subscribed to.",
+        "description" : "Returns a list of all reports one is currently subscribed to.\n",
+        "parameters" : [ {
+          "name" : "CurrentRow",
+          "in" : "query",
+          "description" : "Starting record number to return.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "1"
+        }, {
+          "name" : "Offset",
+          "in" : "query",
+          "description" : "Used to restrict the number of records returned if needed to be less than max.",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of subscriptions.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubscriptionListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected errors",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "Description" : {
+            "type" : "string",
+            "description" : "This is the text description of the error. This is optional and will only be displayed if more information is available than is stored in the data identifier and reason code.",
+            "example" : "Unauthorized Access"
+          },
+          "ReasonCode" : {
+            "type" : "string",
+            "description" : "This will identify the reason for the error.",
+            "example" : "AUTHENTICATION_FAILED"
+          },
+          "Recoverable" : {
+            "type" : "boolean",
+            "description" : "This is a true/false presentation to explain if the transaction was submitted again would it be successful or not.",
+            "example" : true
+          },
+          "Source" : {
+            "type" : "string",
+            "description" : "Unique identifier that attempts to define the field in error when available.  If a specific field can't be identified System will be returned.",
+            "example" : "System"
+          }
+        }
+      },
+      "ErrorSchema" : {
+        "type" : "object",
+        "properties" : {
+          "Errors" : {
+            "$ref" : "#/components/schemas/Errors"
+          }
+        }
+      },
+      "Errors" : {
+        "type" : "object",
+        "properties" : {
+          "Error" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "GasWeeklyArray" : {
+        "type" : "object",
+        "properties" : {
+          "GasWeeklyRecord" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GasWeeklyRecord"
+            }
+          }
+        }
+      },
+      "GasWeeklyList" : {
+        "type" : "object",
+        "properties" : {
+          "Count" : {
+            "type" : "string",
+            "description" : "Total number of records returned from the query.",
+            "example" : "100"
+          },
+          "GasWeeklyArray" : {
+            "$ref" : "#/components/schemas/GasWeeklyArray"
+          },
+          "Message" : {
+            "type" : "string",
+            "description" : "Success/Failure.",
+            "example" : "Success"
+          }
+        }
+      },
+      "GasWeeklyListResponse" : {
+        "type" : "object",
+        "properties" : {
+          "GasWeeklyList" : {
+            "$ref" : "#/components/schemas/GasWeeklyList"
+          }
+        }
+      },
+      "GasWeeklyRecord" : {
+        "type" : "object",
+        "properties" : {
+          "AveragePricePerGalRegularGasoline" : {
+            "type" : "string",
+            "description" : "Average price at the pump for all gallons sold during the reporting week.",
+            "example" : "true"
+          },
+          "Country" : {
+            "type" : "string",
+            "description" : "Country Code.",
+            "example" : "UK"
+          },
+          "PADDCode" : {
+            "type" : "string",
+            "description" : "PADD (Petroleum Administration for Defense Districts) are defined by the U.S. Energy Information Administration. The PADD Districts are New England, Central Atlantic, Lower Atlantic, Midwest, Gulf Coast, Rocky Mountain, West Coast.",
+            "example" : "West Coast"
+          },
+          "PADDMillionsofBarrelsSold" : {
+            "type" : "string",
+            "description" : "For the PADD being reported, the estimated number of barrels (42 U.S. gallons) of regular motor gasoline (includes all finished motor gasoline grades and formulations or blends . It does not contain diesel nor aviation fuel.) sold during the week.",
+            "example" : "12.023"
+          },
+          "PADDPercentChangeInBarrelsFromPriorWeek" : {
+            "type" : "string",
+            "description" : "The percent change from one week ago in the PADDMillionsofBarrelsSold.",
+            "example" : "0.021"
+          },
+          "PADDPercentChangeinBarrelsfrom52WeeksAgo" : {
+            "type" : "string",
+            "description" : "The percent change from 52 weeks ago in the PADDMillionsofBarrelsSold.",
+            "example" : "true"
+          },
+          "Period" : {
+            "type" : "string",
+            "description" : "Indicates the period covered by the data with possible values of - day, week, month, quarter, annual",
+            "example" : "Week"
+          },
+          "ProductLine" : {
+            "type" : "string",
+            "description" : "Overall product line that the report belongs to, the only report for this resource is US Weekly Gasoline Demand Report.",
+            "example" : "US Weekly Gasoline Demand Report"
+          },
+          "PublicationCoveragePeriod" : {
+            "type" : "string",
+            "description" : "Publication Coverage Period indicates what period is to be covered.  For this report it will include the gasoline week ending date which will always be a Friday.",
+            "example" : "20150710"
+          },
+          "ReportType" : {
+            "type" : "string",
+            "description" : "Report type name, today the only report supported is \"monitor\".",
+            "example" : "monitor"
+          },
+          "Sector" : {
+            "type" : "string",
+            "description" : "Gas",
+            "example" : "Gas"
+          },
+          "Segment" : {
+            "type" : "string",
+            "description" : "Not used.",
+            "example" : "true"
+          },
+          "SubSector" : {
+            "type" : "string",
+            "description" : "Not used.",
+            "example" : "true"
+          },
+          "TotalBarrelsChangeFromPriorWeek" : {
+            "type" : "string",
+            "description" : "Change in TotalMillionsOfBarrelsSold from one week ago.",
+            "example" : "1.426"
+          },
+          "TotalMillionsOfBarrels4WeekAverage" : {
+            "type" : "string",
+            "description" : "Average millions of barrels of gasoline sold per week during the prior 4 weeks.",
+            "example" : "66.78"
+          },
+          "TotalMillionsOfBarrelsDailyAverage" : {
+            "type" : "string",
+            "description" : "Average millions of barrels of gasoline sold per day during the week being reported.",
+            "example" : "9.759"
+          },
+          "TotalMillionsOfBarrelsSold" : {
+            "type" : "string",
+            "description" : "Estimated number of barrels (42 U.S. Gallons) of regular motor gasoline (includes all finished motor gasoline grades and formulations or blends . IT does not contain diesel nor aviation fuel).",
+            "example" : "68.313"
+          },
+          "TotalPercentChangeInBarrelsFrom52WeeksAgo" : {
+            "type" : "string",
+            "description" : "Percent change from 52 weeks ago in the TotalMillionsOfBarrelsSold.",
+            "example" : "true"
+          },
+          "TotalPercentChangeInBarrelsFromPriorWeek" : {
+            "type" : "string",
+            "description" : "Percent change from one week ago in the TotalMillionsOfBarrelsSold.",
+            "example" : "0.021"
+          },
+          "TotalPercentChangeInThe4WeekAverageFrom52WeeksAgo" : {
+            "type" : "string",
+            "description" : "Percent change from 52 weeks ago in the TotalMillionsOfBarrels4WeekAverage.",
+            "example" : "true"
+          },
+          "WeekEndDate" : {
+            "type" : "string",
+            "description" : "End of week date.",
+            "example" : "5/1/2015"
+          }
+        }
+      },
+      "Parameter" : {
+        "type" : "object",
+        "properties" : {
+          "Country" : {
+            "type" : "string",
+            "description" : "Country Code.",
+            "example" : "UK"
+          },
+          "Ecomm" : {
+            "type" : "string",
+            "description" : "Ecommerce indicator. \"yes\" or \"no\" are the options.",
+            "example" : "yes"
+          },
+          "Period" : {
+            "type" : "string",
+            "description" : "Indicates the period covered by the data with possible values of - day, week, month, quarter, annual",
+            "example" : "Week"
+          },
+          "ProductLine" : {
+            "type" : "string",
+            "description" : "Product lines available for the consumer ?US Executive Report? and/or ?US Weekly Gasoline Report?.",
+            "example" : "US Executive"
+          },
+          "PublicationCoveragePeriod" : {
+            "type" : "string",
+            "description" : "Publication Coverage Period indicates what period is to be covered by the current report.",
+            "example" : "March 2015"
+          },
+          "ReportType" : {
+            "type" : "string",
+            "description" : "Report type name, today the only report supported is \"monitor\".",
+            "example" : "monitor"
+          },
+          "Sector" : {
+            "type" : "string",
+            "description" : "Sector name/id.",
+            "example" : "Petrol"
+          }
+        }
+      },
+      "ParameterArray" : {
+        "type" : "object",
+        "properties" : {
+          "Parameter" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Parameter"
+            }
+          }
+        }
+      },
+      "ParameterList" : {
+        "type" : "object",
+        "properties" : {
+          "Count" : {
+            "type" : "string",
+            "description" : "Total number of records returned from the query.",
+            "example" : "100"
+          },
+          "Message" : {
+            "type" : "string",
+            "description" : "Success/Failure.",
+            "example" : "Success"
+          },
+          "ParameterArray" : {
+            "$ref" : "#/components/schemas/ParameterArray"
+          }
+        }
+      },
+      "ParameterListResponse" : {
+        "type" : "object",
+        "properties" : {
+          "ParameterList" : {
+            "$ref" : "#/components/schemas/ParameterList"
+          }
+        }
+      },
+      "SpendingPulseArray" : {
+        "type" : "object",
+        "properties" : {
+          "SpendingPulseRecord" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SpendingPulseRecord"
+            }
+          }
+        }
+      },
+      "SpendingPulseList" : {
+        "type" : "object",
+        "properties" : {
+          "Count" : {
+            "type" : "string",
+            "description" : "Total number of records returned from the query.",
+            "example" : "100"
+          },
+          "Message" : {
+            "type" : "string",
+            "description" : "Success/Failure.",
+            "example" : "Success"
+          },
+          "SpendingPulseArray" : {
+            "$ref" : "#/components/schemas/SpendingPulseArray"
+          }
+        }
+      },
+      "SpendingPulseListResponse" : {
+        "type" : "object",
+        "properties" : {
+          "SpendingPulseList" : {
+            "$ref" : "#/components/schemas/SpendingPulseList"
+          }
+        }
+      },
+      "SpendingPulseRecord" : {
+        "type" : "object",
+        "properties" : {
+          "Country" : {
+            "type" : "string",
+            "description" : "Country Code.",
+            "example" : "UK"
+          },
+          "CurrencyOfForSalesValue" : {
+            "type" : "string",
+            "description" : "A value to indicate the currency in which the sales value is being reported. For sales index values, this field is not used.",
+            "example" : "us dollar"
+          },
+          "Ecomm" : {
+            "type" : "string",
+            "description" : "Ecommerce indicator. \"yes\" or \"no\" are the options.",
+            "example" : "Yes"
+          },
+          "ImpliedDeflatorMonthOverMonthChange" : {
+            "type" : "string",
+            "description" : "Percent change from one month ago in the implied deflator (the deflator is used in seasonal adjustment calculation).",
+            "example" : "2"
+          },
+          "ImpliedDeflatorYearOverYearChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the implied deflator (the deflator is used in seasonal adjustment calculation).",
+            "example" : "1"
+          },
+          "NonGregorianReportingPeriod" : {
+            "type" : "string",
+            "description" : "For only those data reported by a non-Gregorian calendar (e.g. US Sectors which are reported based on the National Retail Federation 4-5-4 calendar) this value designates the retail period being reported. As an example, for the US apparel sector, for Period Date = February 2015, the reporting period is 2015-01 (February is the first month of US retail year 2015).",
+            "example" : "2015-01"
+          },
+          "Period" : {
+            "type" : "string",
+            "description" : "Indicates the period covered by the data with possible values of - day, week, month, quarter, annual",
+            "example" : "Week"
+          },
+          "PeriodEndDate" : {
+            "type" : "string",
+            "description" : "Date indicating the end of the period covered by ensuing data.",
+            "example" : "05/31/2015"
+          },
+          "PeriodStartDate" : {
+            "type" : "string",
+            "description" : "Date indicating the beginning of the period covered by ensuing data.",
+            "example" : "05/01/2015"
+          },
+          "PriceAdjustmentFlag" : {
+            "type" : "string",
+            "description" : "Price adjustment indicator.",
+            "example" : "Yes"
+          },
+          "PriceIndex3MonthMovingAverageChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the three-month moving PriceIndexValue average.",
+            "example" : "11"
+          },
+          "PriceIndexMonthOverMonthChange" : {
+            "type" : "string",
+            "description" : "Percent change from one month ago in the PriceIndexValue.",
+            "example" : "10"
+          },
+          "PriceIndexValue" : {
+            "type" : "string",
+            "description" : "Published price index value for the period being reported. Not a currency value - a decimal index value. The price index takes into account both the average ticket value and the size of the basket. Changes in either will be reflected in the price index changes.",
+            "example" : "8"
+          },
+          "PriceIndexYearOverYearChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the PriceIndexValue.",
+            "example" : "9"
+          },
+          "ProductLine" : {
+            "type" : "string",
+            "description" : "Product line, either for this resource it will be ?US Executive\".",
+            "example" : "US Executive"
+          },
+          "PublicationCoveragePeriod" : {
+            "type" : "string",
+            "description" : "Publication Coverage Period indicates what period is to be covered, often the current report will include the month prior.",
+            "example" : "March 2015"
+          },
+          "ReportType" : {
+            "type" : "string",
+            "description" : "Report type name, today the only report supported is \"monitor\".",
+            "example" : "monitor"
+          },
+          "ReportingCalender" : {
+            "type" : "string",
+            "description" : "Value indicates calendar used for periodic aggregation (e.g. \"G\" = Gregorian, \"454\" = US Retail, \"445\" = UK ONS, etc.) Please note that some data are reported under more than one calendar. As a result, in order to uniquely identify the data being reported, the reporting calendar must be included.",
+            "example" : "gregorian"
+          },
+          "Sales3MonthMovingAverageChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the three-month moving SalesIndexValue average.",
+            "example" : "6"
+          },
+          "SalesMonthOverMonthChange" : {
+            "type" : "string",
+            "description" : "Percent change from one month ago in the SalesValueIndex.",
+            "example" : "5"
+          },
+          "SalesValueIndex" : {
+            "type" : "string",
+            "description" : "Aggregated/computed value of sales for the period being reported. This may be an index value (not a currency value - just a decimal value) or it may be a currency value that would typically be in local currency (dollar, pound, yen, etc.)",
+            "example" : "3"
+          },
+          "SalesYearOverYearChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the SalesValueIndex.",
+            "example" : "4"
+          },
+          "SalesYearToDateChange" : {
+            "type" : "string",
+            "description" : "Percent change from year ago.",
+            "example" : "7"
+          },
+          "SameStoreSalesIndex3MonthMovingAverageChange" : {
+            "type" : "string",
+            "description" : "Percent change from one month ago in the SameStoreSalesIndex.",
+            "example" : "17"
+          },
+          "SameStoreSalesIndexYearOverYearChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the SameStoreSalesIndex.",
+            "example" : "16"
+          },
+          "SeasonalAdjustmentFlag" : {
+            "type" : "string",
+            "description" : "Seasonal data adjustment indicator.",
+            "example" : "Yes"
+          },
+          "Sector" : {
+            "type" : "string",
+            "description" : "Sector name/id.",
+            "example" : "Petrol"
+          },
+          "Segment" : {
+            "type" : "string",
+            "description" : "Sub unit within a sector e.g. Sector = restaurant; SubSector = Full Service; Segment = Fine Dining.",
+            "example" : "Fine Dining"
+          },
+          "SubGeographyValue" : {
+            "type" : "string",
+            "description" : "For those data reported by sub-geographies (e.g. regions, states, etc.) the sub-geography being reported.",
+            "example" : "region"
+          },
+          "SubSector" : {
+            "type" : "string",
+            "description" : "Sub unit within a sector e.g. Sector = Electronics & Appliances; SubSector = Electronics.",
+            "example" : "Electronics"
+          },
+          "TransactionIndex3MonthMovingAverageChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the three-month moving TransactionIndexValue average.",
+            "example" : "3"
+          },
+          "TransactionIndexMonthOverMonthChange" : {
+            "type" : "string",
+            "description" : "Percent change from one month ago in the TransactionIndexValue.",
+            "example" : "14"
+          },
+          "TransactionIndexValue" : {
+            "type" : "string",
+            "description" : "Published transaction index value for the period being reported. Not a currency value - a decimal index value. The transaction index is a relative indication of transactions volume in the sector/sub-sector/segment being reported.",
+            "example" : "12"
+          },
+          "TransactionIndexYearOverYearChange" : {
+            "type" : "string",
+            "description" : "Percent change from one year ago in the TransactionIndexValue.",
+            "example" : "13"
+          }
+        }
+      },
+      "Subscription" : {
+        "type" : "object",
+        "properties" : {
+          "Country" : {
+            "type" : "string",
+            "description" : "Country Code.",
+            "example" : "UK"
+          },
+          "Ecomm" : {
+            "type" : "string",
+            "description" : "Ecommerce indicator. \"yes\" or \"no\" are the options.",
+            "example" : "Yes"
+          },
+          "Period" : {
+            "type" : "string",
+            "description" : "Indicates the period covered by the data with possible values of - day, week, month, quarter, annual",
+            "example" : "Week"
+          },
+          "ReportType" : {
+            "type" : "string",
+            "description" : "Report type name, today the only report supported is \"monitor\".",
+            "example" : "monitor"
+          },
+          "Sector" : {
+            "type" : "string",
+            "description" : "Sector name.",
+            "example" : "Sporting Goods"
+          }
+        }
+      },
+      "SubscriptionArray" : {
+        "type" : "object",
+        "properties" : {
+          "Subscription" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Subscription"
+            }
+          }
+        }
+      },
+      "SubscriptionList" : {
+        "type" : "object",
+        "properties" : {
+          "Count" : {
+            "type" : "string",
+            "description" : "Total number of records returned from the query.",
+            "example" : "100"
+          },
+          "Message" : {
+            "type" : "string",
+            "description" : "Success/Failure",
+            "example" : "Success"
+          },
+          "SubscriptionArray" : {
+            "$ref" : "#/components/schemas/SubscriptionArray"
+          }
+        }
+      },
+      "SubscriptionListResponse" : {
+        "type" : "object",
+        "properties" : {
+          "SubscriptionList" : {
+            "$ref" : "#/components/schemas/SubscriptionList"
+          }
+        }
+      }
+    }
+  }
+}

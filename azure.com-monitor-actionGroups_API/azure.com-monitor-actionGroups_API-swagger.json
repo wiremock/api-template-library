@@ -1,1 +1,939 @@
-{"openapi":"3.0.1","info":{"title":"Azure Action Groups","version":"2019-06-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/microsoft.insights/actionGroups":{"get":{"description":"Get a list of all action groups in a subscription.","operationId":"ActionGroups_ListBySubscriptionId","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupList"}}}},"default":{"description":"An error occurred and the list of action groups could not be retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups":{"get":{"description":"Get a list of all action groups in a resource group.","operationId":"ActionGroups_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupList"}}}},"default":{"description":"An error occurred and the list of action groups could not be retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}":{"get":{"description":"Get an action group.","operationId":"ActionGroups_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupResource"}}}},"default":{"description":"An error occurred and the action group could not be retrieved. 404: The action group does not exist.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"description":"Create a new action group or update an existing one.","operationId":"ActionGroups_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The action group to create or use for the update.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupResource"}}},"required":true},"responses":{"200":{"description":"An existing action group was successfully updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupResource"}}}},"201":{"description":"A new action group was successfully created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupResource"}}}},"default":{"description":"An error occurred and the action group could not be created or updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"delete":{"description":"Delete an action group.","operationId":"ActionGroups_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The action group was successfully deleted."},"204":{"description":"The action group does not exist. It may have already been deleted."},"default":{"description":"An error occurred and the action group could not be deleted.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"patch":{"description":"Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.","operationId":"ActionGroups_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupPatchBody"}}},"required":true},"responses":{"200":{"description":"An existing action group was successfully updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ActionGroupResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}/subscribe":{"post":{"description":"Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.","operationId":"ActionGroups_EnableReceiver","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The receiver to re-enable.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EnableRequest"}}},"required":true},"responses":{"200":{"description":"The receiver was successfully enabled."},"409":{"description":"The receiver is already enabled in the action group."},"default":{"description":"An error occurred and the receiver could not be enabled, e.g.: 404: The action group was not found or no matching receiver was found in the action group.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"ActionGroup":{"required":["enabled","groupShortName"],"type":"object","properties":{"armRoleReceivers":{"type":"array","description":"The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.","items":{"$ref":"#/components/schemas/ArmRoleReceiver"}},"automationRunbookReceivers":{"type":"array","description":"The list of AutomationRunbook receivers that are part of this action group.","items":{"$ref":"#/components/schemas/AutomationRunbookReceiver"}},"azureAppPushReceivers":{"type":"array","description":"The list of AzureAppPush receivers that are part of this action group.","items":{"$ref":"#/components/schemas/AzureAppPushReceiver"}},"azureFunctionReceivers":{"type":"array","description":"The list of azure function receivers that are part of this action group.","items":{"$ref":"#/components/schemas/AzureFunctionReceiver"}},"emailReceivers":{"type":"array","description":"The list of email receivers that are part of this action group.","items":{"$ref":"#/components/schemas/EmailReceiver"}},"enabled":{"type":"boolean","description":"Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.","default":true},"groupShortName":{"maxLength":12,"type":"string","description":"The short name of the action group. This will be used in SMS messages."},"itsmReceivers":{"type":"array","description":"The list of ITSM receivers that are part of this action group.","items":{"$ref":"#/components/schemas/ItsmReceiver"}},"logicAppReceivers":{"type":"array","description":"The list of logic app receivers that are part of this action group.","items":{"$ref":"#/components/schemas/LogicAppReceiver"}},"smsReceivers":{"type":"array","description":"The list of SMS receivers that are part of this action group.","items":{"$ref":"#/components/schemas/SmsReceiver"}},"voiceReceivers":{"type":"array","description":"The list of voice receivers that are part of this action group.","items":{"$ref":"#/components/schemas/VoiceReceiver"}},"webhookReceivers":{"type":"array","description":"The list of webhook receivers that are part of this action group.","items":{"$ref":"#/components/schemas/WebhookReceiver"}}},"description":"An Azure action group."},"ActionGroupList":{"type":"object","properties":{"nextLink":{"type":"string","description":"Provides the link to retrieve the next set of elements."},"value":{"type":"array","description":"The list of action groups.","items":{"$ref":"#/components/schemas/ActionGroupResource"}}},"description":"A list of action groups."},"ActionGroupPatch":{"type":"object","properties":{"enabled":{"type":"boolean","description":"Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated.","default":true}},"description":"An Azure action group for patch operations."},"ActionGroupPatchBody":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/ActionGroupPatch"},"tags":{"type":"object","description":"Resource tags"}},"description":"An action group object for the body of patch operations."},"ActionGroupResource":{"properties":{"properties":{"$ref":"#/components/schemas/ActionGroup"}},"description":"An action group resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"ArmRoleReceiver":{"required":["name","roleId","useCommonAlertSchema"],"type":"object","properties":{"name":{"type":"string","description":"The name of the arm role receiver. Names must be unique across all receivers within an action group."},"roleId":{"type":"string","description":"The arm role id."},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."}},"description":"An arm role receiver."},"AutomationRunbookReceiver":{"required":["automationAccountId","isGlobalRunbook","runbookName","useCommonAlertSchema","webhookResourceId"],"type":"object","properties":{"automationAccountId":{"type":"string","description":"The Azure automation account Id which holds this runbook and authenticate to Azure resource."},"isGlobalRunbook":{"type":"boolean","description":"Indicates whether this instance is global runbook."},"name":{"type":"string","description":"Indicates name of the webhook."},"runbookName":{"type":"string","description":"The name for this runbook."},"serviceUri":{"type":"string","description":"The URI where webhooks should be sent."},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."},"webhookResourceId":{"type":"string","description":"The resource id for webhook linked to this runbook."}},"description":"The Azure Automation Runbook notification receiver."},"AzureAppPushReceiver":{"required":["emailAddress","name"],"type":"object","properties":{"emailAddress":{"type":"string","description":"The email address registered for the Azure mobile app."},"name":{"type":"string","description":"The name of the Azure mobile app push receiver. Names must be unique across all receivers within an action group."}},"description":"The Azure mobile App push notification receiver."},"AzureFunctionReceiver":{"required":["functionAppResourceId","functionName","httpTriggerUrl","name","useCommonAlertSchema"],"type":"object","properties":{"functionAppResourceId":{"type":"string","description":"The azure resource id of the function app."},"functionName":{"type":"string","description":"The function name in the function app."},"httpTriggerUrl":{"type":"string","description":"The http trigger url where http request sent to."},"name":{"type":"string","description":"The name of the azure function receiver. Names must be unique across all receivers within an action group."},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."}},"description":"An azure function receiver."},"EmailReceiver":{"required":["emailAddress","name","useCommonAlertSchema"],"type":"object","properties":{"emailAddress":{"type":"string","description":"The email address of this receiver."},"name":{"type":"string","description":"The name of the email receiver. Names must be unique across all receivers within an action group."},"status":{"$ref":"#/components/schemas/ReceiverStatus"},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."}},"description":"An email receiver."},"EnableRequest":{"required":["receiverName"],"type":"object","properties":{"receiverName":{"type":"string","description":"The name of the receiver to resubscribe."}},"description":"Describes a receiver that should be resubscribed."},"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"ItsmReceiver":{"required":["connectionId","name","region","ticketConfiguration","workspaceId"],"type":"object","properties":{"connectionId":{"type":"string","description":"Unique identification of ITSM connection among multiple defined in above workspace."},"name":{"type":"string","description":"The name of the Itsm receiver. Names must be unique across all receivers within an action group."},"region":{"type":"string","description":"Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'"},"ticketConfiguration":{"type":"string","description":"JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well."},"workspaceId":{"type":"string","description":"OMS LA instance identifier."}},"description":"An Itsm receiver."},"LogicAppReceiver":{"required":["callbackUrl","name","resourceId","useCommonAlertSchema"],"type":"object","properties":{"callbackUrl":{"type":"string","description":"The callback url where http request sent to."},"name":{"type":"string","description":"The name of the logic app receiver. Names must be unique across all receivers within an action group."},"resourceId":{"type":"string","description":"The azure resource id of the logic app receiver."},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."}},"description":"A logic app receiver."},"ReceiverStatus":{"type":"string","description":"Indicates the status of the receiver. Receivers that are not Enabled will not receive any communications.","enum":["NotSpecified","Enabled","Disabled"]},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Azure resource name","readOnly":true},"tags":{"type":"object","description":"Resource tags"},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"SmsReceiver":{"required":["countryCode","name","phoneNumber"],"type":"object","properties":{"countryCode":{"type":"string","description":"The country code of the SMS receiver."},"name":{"type":"string","description":"The name of the SMS receiver. Names must be unique across all receivers within an action group."},"phoneNumber":{"type":"string","description":"The phone number of the SMS receiver."},"status":{"$ref":"#/components/schemas/ReceiverStatus"}},"description":"An SMS receiver."},"VoiceReceiver":{"required":["countryCode","name","phoneNumber"],"type":"object","properties":{"countryCode":{"type":"string","description":"The country code of the voice receiver."},"name":{"type":"string","description":"The name of the voice receiver. Names must be unique across all receivers within an action group."},"phoneNumber":{"type":"string","description":"The phone number of the voice receiver."}},"description":"A voice receiver."},"WebhookReceiver":{"required":["name","serviceUri","useCommonAlertSchema"],"type":"object","properties":{"identifierUri":{"type":"string","description":"Indicates the identifier uri for aad auth."},"name":{"type":"string","description":"The name of the webhook receiver. Names must be unique across all receivers within an action group."},"objectId":{"type":"string","description":"Indicates the webhook app object Id for aad auth."},"serviceUri":{"type":"string","description":"The URI where webhooks should be sent."},"tenantId":{"type":"string","description":"Indicates the tenant id for aad auth."},"useAadAuth":{"type":"boolean","description":"Indicates whether or not use AAD authentication.","default":false},"useCommonAlertSchema":{"type":"boolean","description":"Indicates whether to use common alert schema."}},"description":"A webhook receiver."}},"parameters":{"ActionGroupNameParameter":{"name":"actionGroupName","in":"path","description":"The name of the action group.","required":true,"schema":{"type":"string"}},"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Azure Action Groups",
+    "version" : "2019-06-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/microsoft.insights/actionGroups" : {
+      "get" : {
+        "description" : "Get a list of all action groups in a subscription.",
+        "operationId" : "ActionGroups_ListBySubscriptionId",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the list of action groups could not be retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups" : {
+      "get" : {
+        "description" : "Get a list of all action groups in a resource group.",
+        "operationId" : "ActionGroups_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the list of action groups could not be retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}" : {
+      "get" : {
+        "description" : "Get an action group.",
+        "operationId" : "ActionGroups_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroupName",
+          "in" : "path",
+          "description" : "The name of the action group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the action group could not be retrieved. 404: The action group does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "Create a new action group or update an existing one.",
+        "operationId" : "ActionGroups_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroupName",
+          "in" : "path",
+          "description" : "The name of the action group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The action group to create or use for the update.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionGroupResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An existing action group was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupResource"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "A new action group was successfully created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "An error occurred and the action group could not be created or updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "Delete an action group.",
+        "operationId" : "ActionGroups_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroupName",
+          "in" : "path",
+          "description" : "The name of the action group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The action group was successfully deleted."
+          },
+          "204" : {
+            "description" : "The action group does not exist. It may have already been deleted."
+          },
+          "default" : {
+            "description" : "An error occurred and the action group could not be deleted.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "description" : "Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.",
+        "operationId" : "ActionGroups_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroupName",
+          "in" : "path",
+          "description" : "The name of the action group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionGroupPatchBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An existing action group was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActionGroupResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}/subscribe" : {
+      "post" : {
+        "description" : "Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.",
+        "operationId" : "ActionGroups_EnableReceiver",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "actionGroupName",
+          "in" : "path",
+          "description" : "The name of the action group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The receiver to re-enable.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EnableRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The receiver was successfully enabled."
+          },
+          "409" : {
+            "description" : "The receiver is already enabled in the action group."
+          },
+          "default" : {
+            "description" : "An error occurred and the receiver could not be enabled, e.g.: 404: The action group was not found or no matching receiver was found in the action group.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ActionGroup" : {
+        "required" : [ "enabled", "groupShortName" ],
+        "type" : "object",
+        "properties" : {
+          "armRoleReceivers" : {
+            "type" : "array",
+            "description" : "The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.",
+            "items" : {
+              "$ref" : "#/components/schemas/ArmRoleReceiver"
+            }
+          },
+          "automationRunbookReceivers" : {
+            "type" : "array",
+            "description" : "The list of AutomationRunbook receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/AutomationRunbookReceiver"
+            }
+          },
+          "azureAppPushReceivers" : {
+            "type" : "array",
+            "description" : "The list of AzureAppPush receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/AzureAppPushReceiver"
+            }
+          },
+          "azureFunctionReceivers" : {
+            "type" : "array",
+            "description" : "The list of azure function receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/AzureFunctionReceiver"
+            }
+          },
+          "emailReceivers" : {
+            "type" : "array",
+            "description" : "The list of email receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/EmailReceiver"
+            }
+          },
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.",
+            "default" : true
+          },
+          "groupShortName" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "The short name of the action group. This will be used in SMS messages."
+          },
+          "itsmReceivers" : {
+            "type" : "array",
+            "description" : "The list of ITSM receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/ItsmReceiver"
+            }
+          },
+          "logicAppReceivers" : {
+            "type" : "array",
+            "description" : "The list of logic app receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/LogicAppReceiver"
+            }
+          },
+          "smsReceivers" : {
+            "type" : "array",
+            "description" : "The list of SMS receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/SmsReceiver"
+            }
+          },
+          "voiceReceivers" : {
+            "type" : "array",
+            "description" : "The list of voice receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/VoiceReceiver"
+            }
+          },
+          "webhookReceivers" : {
+            "type" : "array",
+            "description" : "The list of webhook receivers that are part of this action group.",
+            "items" : {
+              "$ref" : "#/components/schemas/WebhookReceiver"
+            }
+          }
+        },
+        "description" : "An Azure action group."
+      },
+      "ActionGroupList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Provides the link to retrieve the next set of elements."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of action groups.",
+            "items" : {
+              "$ref" : "#/components/schemas/ActionGroupResource"
+            }
+          }
+        },
+        "description" : "A list of action groups."
+      },
+      "ActionGroupPatch" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated.",
+            "default" : true
+          }
+        },
+        "description" : "An Azure action group for patch operations."
+      },
+      "ActionGroupPatchBody" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ActionGroupPatch"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "An action group object for the body of patch operations."
+      },
+      "ActionGroupResource" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ActionGroup"
+          }
+        },
+        "description" : "An action group resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "ArmRoleReceiver" : {
+        "required" : [ "name", "roleId", "useCommonAlertSchema" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the arm role receiver. Names must be unique across all receivers within an action group."
+          },
+          "roleId" : {
+            "type" : "string",
+            "description" : "The arm role id."
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          }
+        },
+        "description" : "An arm role receiver."
+      },
+      "AutomationRunbookReceiver" : {
+        "required" : [ "automationAccountId", "isGlobalRunbook", "runbookName", "useCommonAlertSchema", "webhookResourceId" ],
+        "type" : "object",
+        "properties" : {
+          "automationAccountId" : {
+            "type" : "string",
+            "description" : "The Azure automation account Id which holds this runbook and authenticate to Azure resource."
+          },
+          "isGlobalRunbook" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this instance is global runbook."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Indicates name of the webhook."
+          },
+          "runbookName" : {
+            "type" : "string",
+            "description" : "The name for this runbook."
+          },
+          "serviceUri" : {
+            "type" : "string",
+            "description" : "The URI where webhooks should be sent."
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          },
+          "webhookResourceId" : {
+            "type" : "string",
+            "description" : "The resource id for webhook linked to this runbook."
+          }
+        },
+        "description" : "The Azure Automation Runbook notification receiver."
+      },
+      "AzureAppPushReceiver" : {
+        "required" : [ "emailAddress", "name" ],
+        "type" : "object",
+        "properties" : {
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "The email address registered for the Azure mobile app."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Azure mobile app push receiver. Names must be unique across all receivers within an action group."
+          }
+        },
+        "description" : "The Azure mobile App push notification receiver."
+      },
+      "AzureFunctionReceiver" : {
+        "required" : [ "functionAppResourceId", "functionName", "httpTriggerUrl", "name", "useCommonAlertSchema" ],
+        "type" : "object",
+        "properties" : {
+          "functionAppResourceId" : {
+            "type" : "string",
+            "description" : "The azure resource id of the function app."
+          },
+          "functionName" : {
+            "type" : "string",
+            "description" : "The function name in the function app."
+          },
+          "httpTriggerUrl" : {
+            "type" : "string",
+            "description" : "The http trigger url where http request sent to."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the azure function receiver. Names must be unique across all receivers within an action group."
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          }
+        },
+        "description" : "An azure function receiver."
+      },
+      "EmailReceiver" : {
+        "required" : [ "emailAddress", "name", "useCommonAlertSchema" ],
+        "type" : "object",
+        "properties" : {
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "The email address of this receiver."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the email receiver. Names must be unique across all receivers within an action group."
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/ReceiverStatus"
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          }
+        },
+        "description" : "An email receiver."
+      },
+      "EnableRequest" : {
+        "required" : [ "receiverName" ],
+        "type" : "object",
+        "properties" : {
+          "receiverName" : {
+            "type" : "string",
+            "description" : "The name of the receiver to resubscribe."
+          }
+        },
+        "description" : "Describes a receiver that should be resubscribed."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "ItsmReceiver" : {
+        "required" : [ "connectionId", "name", "region", "ticketConfiguration", "workspaceId" ],
+        "type" : "object",
+        "properties" : {
+          "connectionId" : {
+            "type" : "string",
+            "description" : "Unique identification of ITSM connection among multiple defined in above workspace."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Itsm receiver. Names must be unique across all receivers within an action group."
+          },
+          "region" : {
+            "type" : "string",
+            "description" : "Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'"
+          },
+          "ticketConfiguration" : {
+            "type" : "string",
+            "description" : "JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well."
+          },
+          "workspaceId" : {
+            "type" : "string",
+            "description" : "OMS LA instance identifier."
+          }
+        },
+        "description" : "An Itsm receiver."
+      },
+      "LogicAppReceiver" : {
+        "required" : [ "callbackUrl", "name", "resourceId", "useCommonAlertSchema" ],
+        "type" : "object",
+        "properties" : {
+          "callbackUrl" : {
+            "type" : "string",
+            "description" : "The callback url where http request sent to."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the logic app receiver. Names must be unique across all receivers within an action group."
+          },
+          "resourceId" : {
+            "type" : "string",
+            "description" : "The azure resource id of the logic app receiver."
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          }
+        },
+        "description" : "A logic app receiver."
+      },
+      "ReceiverStatus" : {
+        "type" : "string",
+        "description" : "Indicates the status of the receiver. Receivers that are not Enabled will not receive any communications.",
+        "enum" : [ "NotSpecified", "Enabled", "Disabled" ]
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "SmsReceiver" : {
+        "required" : [ "countryCode", "name", "phoneNumber" ],
+        "type" : "object",
+        "properties" : {
+          "countryCode" : {
+            "type" : "string",
+            "description" : "The country code of the SMS receiver."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the SMS receiver. Names must be unique across all receivers within an action group."
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "description" : "The phone number of the SMS receiver."
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/ReceiverStatus"
+          }
+        },
+        "description" : "An SMS receiver."
+      },
+      "VoiceReceiver" : {
+        "required" : [ "countryCode", "name", "phoneNumber" ],
+        "type" : "object",
+        "properties" : {
+          "countryCode" : {
+            "type" : "string",
+            "description" : "The country code of the voice receiver."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the voice receiver. Names must be unique across all receivers within an action group."
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "description" : "The phone number of the voice receiver."
+          }
+        },
+        "description" : "A voice receiver."
+      },
+      "WebhookReceiver" : {
+        "required" : [ "name", "serviceUri", "useCommonAlertSchema" ],
+        "type" : "object",
+        "properties" : {
+          "identifierUri" : {
+            "type" : "string",
+            "description" : "Indicates the identifier uri for aad auth."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the webhook receiver. Names must be unique across all receivers within an action group."
+          },
+          "objectId" : {
+            "type" : "string",
+            "description" : "Indicates the webhook app object Id for aad auth."
+          },
+          "serviceUri" : {
+            "type" : "string",
+            "description" : "The URI where webhooks should be sent."
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "Indicates the tenant id for aad auth."
+          },
+          "useAadAuth" : {
+            "type" : "boolean",
+            "description" : "Indicates whether or not use AAD authentication.",
+            "default" : false
+          },
+          "useCommonAlertSchema" : {
+            "type" : "boolean",
+            "description" : "Indicates whether to use common alert schema."
+          }
+        },
+        "description" : "A webhook receiver."
+      }
+    },
+    "parameters" : {
+      "ActionGroupNameParameter" : {
+        "name" : "actionGroupName",
+        "in" : "path",
+        "description" : "The name of the action group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription Id.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,459 @@
-{"openapi":"3.0.1","info":{"title":"Miataru","description":"The Miataru API is very simple and straight forward. Generally you're posting (HTTP POST) a JSON formatted request to a service method locations and you get back a JSON formatted answer. Please take into consideration that this has the request-for-comment status and that it can change while there's work done on client and server applications. Versioning therefore is done by prepending the version number - /v1/ for version 1 - to the method call.","contact":{"name":"Miataru Team","url":"http://miataru.com","email":"info@miataru.com"},"license":{"name":"Public Domain","url":"https://raw.githubusercontent.com/miataru/miataru-protocol-specification/master/LICENSE"},"version":"1.0.0"},"servers":[{"url":"http://service.miataru.com/v1"},{"url":"https://service.miataru.com/v1"}],"paths":{"/GetLocation":{"post":{"tags":["getLocation"],"description":"To retrieve a specific devices latest known location the /GetLocation method is used. Please note that the MiataruConfig portion is optional. RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).","operationId":"getLocation","requestBody":{"description":"the complex JSON formatted datastructure to get the location of one or more devices.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetLocationRequest"}}},"required":true},"responses":{"default":{"description":"successful location responses","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetLocationResponse"}}}}}}},"/GetLocationGeoJSON/{deviceID}":{"get":{"tags":["getLocation"],"description":"Retrieves a devices Location in GeoJSON format.","operationId":"getLocationGeoJSON","parameters":[{"name":"deviceID","in":"path","description":"the unique device ID of the device the location is requested from","required":true,"schema":{"type":"string","default":"7b8e6e0ee5296db345162dc2ef652c1350761823"}}],"responses":{"default":{"description":"geoJSON formatted device location","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetLocationGeoJSONResponse"}}}}}}},"/GetLocationHistory":{"post":{"tags":["getLocation"],"description":"Location History is stored on the server only if the client told the server to do so using the “EnableLocationHistory” setting in the Location Update requests. For transitions of enabling/disabling that functionality - Everytime a Location Update is received by the server with “EnableLocationHistory=false” the server removes all stored Location History till that point. There is a server-side setting that controls up to how many Location Updates the server is storing in the Location History before it removes the oldest one. To request the Location History of a particular device the client sends the following POST request to the GetLocationHistory service URL. Please note that the MiataruConfig portion is optional. RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).","operationId":"getLocationHistory","requestBody":{"description":"the complex JSON formatted datastructure to get the location history of one device","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetLocationHistoryRequest"}}},"required":true},"responses":{"default":{"description":"successful location history response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetLocationHistoryResponse"}}}}}}},"/GetVisitorHistory":{"post":{"tags":["getVisitorHistory"],"description":"Visitor History is stored on the server with every request to the location or location history information of a device. There is a server-side setting that controls up to how many Visitors the server is storing in the Visitor History before it removes the oldest one. To request the Visitor History of a particular device the client sends the following POST request to the GetVisitorHistory service URL.","operationId":"getVisitorHistory","requestBody":{"description":"the complex JSON formatted datastructure to get the visitor history of one device","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetVisitorHistoryRequest"}}},"required":true},"responses":{"default":{"description":"visitor history response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruGetVisitorHistoryResponse"}}}}}}},"/UpdateLocation":{"post":{"tags":["updateLocation"],"description":"This method is used to update the location of a device. The device does not need to be known already to the Miataru server but it rather creates a unique identifier for itself in the client application. This unique identifier, or device ID is then used to address this particular device.","operationId":"updateLocation","requestBody":{"description":"the body of this UpdateLocation POST request contains the JSON formatted parameters.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MiataruUpdateLocationRequest"}}},"required":true},"responses":{"default":{"description":"successful request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ACK"}}}}}}}},"components":{"schemas":{"ACK":{"required":["MiataruResponse","MiataruVerboseResponse"],"type":"object","properties":{"MiataruResponse":{"type":"string","default":"ACK"},"MiataruVerboseResponse":{"type":"string"}}},"MiataruGetLocationDevice":{"required":["Device"],"type":"object","properties":{"Device":{"type":"string","description":"the unique device id of a device.","default":"7b8e6e0ee5296db345162dc2ef652c1350761823"}}},"MiataruGetLocationGeoJSONResponse":{"required":["geometry","properties","type"],"type":"object","properties":{"geometry":{"required":["coordinates","type"],"type":"object","properties":{"coordinates":{"type":"array","items":{"type":"number","format":"float"}},"type":{"type":"string"}}},"properties":{"required":["name"],"type":"object","properties":{"name":{"type":"string"}}},"type":{"type":"string"}}},"MiataruGetLocationHistoryRequest":{"required":["MiataruGetLocationHistory"],"type":"object","properties":{"MiataruConfig":{"required":["RequestMiataruDeviceID"],"type":"object","properties":{"RequestMiataruDeviceID":{"type":"string","description":"RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).","default":"6140c3c0-4a7d-40d2-99ab-39414cac3509"}},"description":"the configuration for this request. please note that it's optional."},"MiataruGetLocationHistory":{"required":["Amount","Device"],"type":"object","properties":{"Amount":{"type":"string","description":"the maximum number of location history entries that are requested.","default":"10"},"Device":{"type":"string","description":"the device id of which the location history shall be requested","default":"7b8e6e0ee5296db345162dc2ef652c1350761823"}},"description":"one device id for which the location history should be retrieved."}}},"MiataruGetLocationHistoryResponse":{"required":["MiataruLocation","MiataruServerConfig"],"type":"object","properties":{"MiataruLocation":{"type":"array","description":"holds all location information of a given device or is an empty array if device not found or no location information is stored.","items":{"$ref":"#/components/schemas/MiataruLocation"}},"MiataruServerConfig":{"required":["AvailableDeviceLocationUpdates","MaximumNumberOfLocationUpdates"],"type":"object","properties":{"AvailableDeviceLocationUpdates":{"type":"string","description":"the number of locations stored for this particular device"},"MaximumNumberOfLocationUpdates":{"type":"string","description":"the amount of locations the server is storing per device at maximum before it will remove the oldest one (FiFo)"}},"description":"holds information about the basic configuration settings on server side."}}},"MiataruGetLocationRequest":{"required":["MiataruGetLocation"],"type":"object","properties":{"MiataruConfig":{"required":["RequestMiataruDeviceID"],"type":"object","properties":{"RequestMiataruDeviceID":{"type":"string","description":"RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).","default":"6140c3c0-4a7d-40d2-99ab-39414cac3509"}},"description":"the configuration for this request. please note that it's optional."},"MiataruGetLocation":{"type":"array","description":"one or more devices in an array for which the location should be retrieved.","items":{"$ref":"#/components/schemas/MiataruGetLocationDevice"}}}},"MiataruGetLocationResponse":{"required":["MiataruLocation"],"type":"object","properties":{"MiataruLocation":{"type":"array","items":{"$ref":"#/components/schemas/MiataruLocation"}}}},"MiataruGetVisitorHistoryRequest":{"required":["MiataruGetVisitorHistory"],"type":"object","properties":{"MiataruGetVisitorHistory":{"required":["Amount","Device"],"type":"object","properties":{"Amount":{"type":"string","description":"the maximum number of visitor history entries to be retrieved","default":"10"},"Device":{"type":"string","description":"the device id of which the visitor history is requested","default":"7b8e6e0ee5296db345162dc2ef652c1350761823"}}}}},"MiataruGetVisitorHistoryResponse":{"required":["MiataruServerConfig","MiataruVisitors"],"type":"object","properties":{"MiataruServerConfig":{"required":["AvailableVisitorHistory","MaximumNumberOfVisitorHistory"],"type":"object","properties":{"AvailableVisitorHistory":{"type":"string","description":"the number of available visitor history entries for this device. If the client requested more Visitor Updates than there are available the server will return those available."},"MaximumNumberOfVisitorHistory":{"type":"string","description":"a server-side setting that controls up to how many Visitors the server is storing in the Visitor History before it removes the oldest one."}},"description":"holds information about the server side settings of the visitor history and about the available device related visitor history."},"MiataruVisitors":{"type":"array","description":"The server will answer back with an Array of MiataruVisitors if there are Visitors, or an empty array when there are none.","items":{"$ref":"#/components/schemas/MiataruVisitors"}}}},"MiataruLocation":{"required":["Device","HorizontalAccuracy","Latitude","Longitude","Timestamp"],"type":"object","properties":{"Device":{"type":"string","description":"the unique id of this device. This needs to be unique as it is the only piece of information directly pointing towards this one device. Generating a GUID per device is recommended.","default":"7b8e6e0ee5296db345162dc2ef652c1350761823"},"HorizontalAccuracy":{"type":"string","description":"the accuracy of this location update in meters","default":"50"},"Latitude":{"type":"string","description":"latitude of the position that is reported","default":"41.079351"},"Longitude":{"type":"string","description":"longitude of the position that is reported","default":"-4.394531"},"Timestamp":{"type":"string","description":"the javascript timestamp of this location update","default":"1441360863"}}},"MiataruUpdateLocationRequest":{"required":["MiataruConfig","MiataruLocation"],"type":"object","properties":{"MiataruConfig":{"required":["EnableLocationHistory","LocationDataRetentionTime"],"type":"object","properties":{"EnableLocationHistory":{"type":"string","description":"If the client tells the server to store a location history the server automatically disables the pre-configured data time-out behavior that removes location data after a given amount of time. Nevertheless the user is limited to the server-side pre-configured amount of location history entries. This is either True or False.","default":"False"},"LocationDataRetentionTime":{"type":"string","description":"The LocationDataRetentionTime is the amount of minutes the server will keep that Location Data before it is removed/deleted automatically.","default":"30"}},"description":"the configuration for this request."},"MiataruLocation":{"type":"array","items":{"$ref":"#/components/schemas/MiataruLocation"}}}},"MiataruVisitors":{"required":["DeviceID","TimeStamp"],"type":"object","properties":{"DeviceID":{"type":"string","description":"the device id of the visiting device. If this is an empty string the deviceID is unknown/was not reported."},"TimeStamp":{"type":"string","description":"the javascript timestamp of the visit"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Miataru",
+    "description" : "The Miataru API is very simple and straight forward. Generally you're posting (HTTP POST) a JSON formatted request to a service method locations and you get back a JSON formatted answer. Please take into consideration that this has the request-for-comment status and that it can change while there's work done on client and server applications. Versioning therefore is done by prepending the version number - /v1/ for version 1 - to the method call.",
+    "contact" : {
+      "name" : "Miataru Team",
+      "url" : "http://miataru.com",
+      "email" : "info@miataru.com"
+    },
+    "license" : {
+      "name" : "Public Domain",
+      "url" : "https://raw.githubusercontent.com/miataru/miataru-protocol-specification/master/LICENSE"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://service.miataru.com/v1"
+  }, {
+    "url" : "https://service.miataru.com/v1"
+  } ],
+  "paths" : {
+    "/GetLocation" : {
+      "post" : {
+        "tags" : [ "getLocation" ],
+        "description" : "To retrieve a specific devices latest known location the /GetLocation method is used. Please note that the MiataruConfig portion is optional. RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).",
+        "operationId" : "getLocation",
+        "requestBody" : {
+          "description" : "the complex JSON formatted datastructure to get the location of one or more devices.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MiataruGetLocationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful location responses",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MiataruGetLocationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetLocationGeoJSON/{deviceID}" : {
+      "get" : {
+        "tags" : [ "getLocation" ],
+        "description" : "Retrieves a devices Location in GeoJSON format.",
+        "operationId" : "getLocationGeoJSON",
+        "parameters" : [ {
+          "name" : "deviceID",
+          "in" : "path",
+          "description" : "the unique device ID of the device the location is requested from",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "7b8e6e0ee5296db345162dc2ef652c1350761823"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "geoJSON formatted device location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MiataruGetLocationGeoJSONResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetLocationHistory" : {
+      "post" : {
+        "tags" : [ "getLocation" ],
+        "description" : "Location History is stored on the server only if the client told the server to do so using the “EnableLocationHistory” setting in the Location Update requests. For transitions of enabling/disabling that functionality - Everytime a Location Update is received by the server with “EnableLocationHistory=false” the server removes all stored Location History till that point. There is a server-side setting that controls up to how many Location Updates the server is storing in the Location History before it removes the oldest one. To request the Location History of a particular device the client sends the following POST request to the GetLocationHistory service URL. Please note that the MiataruConfig portion is optional. RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).",
+        "operationId" : "getLocationHistory",
+        "requestBody" : {
+          "description" : "the complex JSON formatted datastructure to get the location history of one device",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MiataruGetLocationHistoryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful location history response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MiataruGetLocationHistoryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetVisitorHistory" : {
+      "post" : {
+        "tags" : [ "getVisitorHistory" ],
+        "description" : "Visitor History is stored on the server with every request to the location or location history information of a device. There is a server-side setting that controls up to how many Visitors the server is storing in the Visitor History before it removes the oldest one. To request the Visitor History of a particular device the client sends the following POST request to the GetVisitorHistory service URL.",
+        "operationId" : "getVisitorHistory",
+        "requestBody" : {
+          "description" : "the complex JSON formatted datastructure to get the visitor history of one device",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MiataruGetVisitorHistoryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "visitor history response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MiataruGetVisitorHistoryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UpdateLocation" : {
+      "post" : {
+        "tags" : [ "updateLocation" ],
+        "description" : "This method is used to update the location of a device. The device does not need to be known already to the Miataru server but it rather creates a unique identifier for itself in the client application. This unique identifier, or device ID is then used to address this particular device.",
+        "operationId" : "updateLocation",
+        "requestBody" : {
+          "description" : "the body of this UpdateLocation POST request contains the JSON formatted parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MiataruUpdateLocationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ACK"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ACK" : {
+        "required" : [ "MiataruResponse", "MiataruVerboseResponse" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruResponse" : {
+            "type" : "string",
+            "default" : "ACK"
+          },
+          "MiataruVerboseResponse" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MiataruGetLocationDevice" : {
+        "required" : [ "Device" ],
+        "type" : "object",
+        "properties" : {
+          "Device" : {
+            "type" : "string",
+            "description" : "the unique device id of a device.",
+            "default" : "7b8e6e0ee5296db345162dc2ef652c1350761823"
+          }
+        }
+      },
+      "MiataruGetLocationGeoJSONResponse" : {
+        "required" : [ "geometry", "properties", "type" ],
+        "type" : "object",
+        "properties" : {
+          "geometry" : {
+            "required" : [ "coordinates", "type" ],
+            "type" : "object",
+            "properties" : {
+              "coordinates" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "number",
+                  "format" : "float"
+                }
+              },
+              "type" : {
+                "type" : "string"
+              }
+            }
+          },
+          "properties" : {
+            "required" : [ "name" ],
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string"
+              }
+            }
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MiataruGetLocationHistoryRequest" : {
+        "required" : [ "MiataruGetLocationHistory" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruConfig" : {
+            "required" : [ "RequestMiataruDeviceID" ],
+            "type" : "object",
+            "properties" : {
+              "RequestMiataruDeviceID" : {
+                "type" : "string",
+                "description" : "RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).",
+                "default" : "6140c3c0-4a7d-40d2-99ab-39414cac3509"
+              }
+            },
+            "description" : "the configuration for this request. please note that it's optional."
+          },
+          "MiataruGetLocationHistory" : {
+            "required" : [ "Amount", "Device" ],
+            "type" : "object",
+            "properties" : {
+              "Amount" : {
+                "type" : "string",
+                "description" : "the maximum number of location history entries that are requested.",
+                "default" : "10"
+              },
+              "Device" : {
+                "type" : "string",
+                "description" : "the device id of which the location history shall be requested",
+                "default" : "7b8e6e0ee5296db345162dc2ef652c1350761823"
+              }
+            },
+            "description" : "one device id for which the location history should be retrieved."
+          }
+        }
+      },
+      "MiataruGetLocationHistoryResponse" : {
+        "required" : [ "MiataruLocation", "MiataruServerConfig" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruLocation" : {
+            "type" : "array",
+            "description" : "holds all location information of a given device or is an empty array if device not found or no location information is stored.",
+            "items" : {
+              "$ref" : "#/components/schemas/MiataruLocation"
+            }
+          },
+          "MiataruServerConfig" : {
+            "required" : [ "AvailableDeviceLocationUpdates", "MaximumNumberOfLocationUpdates" ],
+            "type" : "object",
+            "properties" : {
+              "AvailableDeviceLocationUpdates" : {
+                "type" : "string",
+                "description" : "the number of locations stored for this particular device"
+              },
+              "MaximumNumberOfLocationUpdates" : {
+                "type" : "string",
+                "description" : "the amount of locations the server is storing per device at maximum before it will remove the oldest one (FiFo)"
+              }
+            },
+            "description" : "holds information about the basic configuration settings on server side."
+          }
+        }
+      },
+      "MiataruGetLocationRequest" : {
+        "required" : [ "MiataruGetLocation" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruConfig" : {
+            "required" : [ "RequestMiataruDeviceID" ],
+            "type" : "object",
+            "properties" : {
+              "RequestMiataruDeviceID" : {
+                "type" : "string",
+                "description" : "RequestMiataruDeviceID should be the ID of the device the request is sent from (or an identifier like an URL).",
+                "default" : "6140c3c0-4a7d-40d2-99ab-39414cac3509"
+              }
+            },
+            "description" : "the configuration for this request. please note that it's optional."
+          },
+          "MiataruGetLocation" : {
+            "type" : "array",
+            "description" : "one or more devices in an array for which the location should be retrieved.",
+            "items" : {
+              "$ref" : "#/components/schemas/MiataruGetLocationDevice"
+            }
+          }
+        }
+      },
+      "MiataruGetLocationResponse" : {
+        "required" : [ "MiataruLocation" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruLocation" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MiataruLocation"
+            }
+          }
+        }
+      },
+      "MiataruGetVisitorHistoryRequest" : {
+        "required" : [ "MiataruGetVisitorHistory" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruGetVisitorHistory" : {
+            "required" : [ "Amount", "Device" ],
+            "type" : "object",
+            "properties" : {
+              "Amount" : {
+                "type" : "string",
+                "description" : "the maximum number of visitor history entries to be retrieved",
+                "default" : "10"
+              },
+              "Device" : {
+                "type" : "string",
+                "description" : "the device id of which the visitor history is requested",
+                "default" : "7b8e6e0ee5296db345162dc2ef652c1350761823"
+              }
+            }
+          }
+        }
+      },
+      "MiataruGetVisitorHistoryResponse" : {
+        "required" : [ "MiataruServerConfig", "MiataruVisitors" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruServerConfig" : {
+            "required" : [ "AvailableVisitorHistory", "MaximumNumberOfVisitorHistory" ],
+            "type" : "object",
+            "properties" : {
+              "AvailableVisitorHistory" : {
+                "type" : "string",
+                "description" : "the number of available visitor history entries for this device. If the client requested more Visitor Updates than there are available the server will return those available."
+              },
+              "MaximumNumberOfVisitorHistory" : {
+                "type" : "string",
+                "description" : "a server-side setting that controls up to how many Visitors the server is storing in the Visitor History before it removes the oldest one."
+              }
+            },
+            "description" : "holds information about the server side settings of the visitor history and about the available device related visitor history."
+          },
+          "MiataruVisitors" : {
+            "type" : "array",
+            "description" : "The server will answer back with an Array of MiataruVisitors if there are Visitors, or an empty array when there are none.",
+            "items" : {
+              "$ref" : "#/components/schemas/MiataruVisitors"
+            }
+          }
+        }
+      },
+      "MiataruLocation" : {
+        "required" : [ "Device", "HorizontalAccuracy", "Latitude", "Longitude", "Timestamp" ],
+        "type" : "object",
+        "properties" : {
+          "Device" : {
+            "type" : "string",
+            "description" : "the unique id of this device. This needs to be unique as it is the only piece of information directly pointing towards this one device. Generating a GUID per device is recommended.",
+            "default" : "7b8e6e0ee5296db345162dc2ef652c1350761823"
+          },
+          "HorizontalAccuracy" : {
+            "type" : "string",
+            "description" : "the accuracy of this location update in meters",
+            "default" : "50"
+          },
+          "Latitude" : {
+            "type" : "string",
+            "description" : "latitude of the position that is reported",
+            "default" : "41.079351"
+          },
+          "Longitude" : {
+            "type" : "string",
+            "description" : "longitude of the position that is reported",
+            "default" : "-4.394531"
+          },
+          "Timestamp" : {
+            "type" : "string",
+            "description" : "the javascript timestamp of this location update",
+            "default" : "1441360863"
+          }
+        }
+      },
+      "MiataruUpdateLocationRequest" : {
+        "required" : [ "MiataruConfig", "MiataruLocation" ],
+        "type" : "object",
+        "properties" : {
+          "MiataruConfig" : {
+            "required" : [ "EnableLocationHistory", "LocationDataRetentionTime" ],
+            "type" : "object",
+            "properties" : {
+              "EnableLocationHistory" : {
+                "type" : "string",
+                "description" : "If the client tells the server to store a location history the server automatically disables the pre-configured data time-out behavior that removes location data after a given amount of time. Nevertheless the user is limited to the server-side pre-configured amount of location history entries. This is either True or False.",
+                "default" : "False"
+              },
+              "LocationDataRetentionTime" : {
+                "type" : "string",
+                "description" : "The LocationDataRetentionTime is the amount of minutes the server will keep that Location Data before it is removed/deleted automatically.",
+                "default" : "30"
+              }
+            },
+            "description" : "the configuration for this request."
+          },
+          "MiataruLocation" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MiataruLocation"
+            }
+          }
+        }
+      },
+      "MiataruVisitors" : {
+        "required" : [ "DeviceID", "TimeStamp" ],
+        "type" : "object",
+        "properties" : {
+          "DeviceID" : {
+            "type" : "string",
+            "description" : "the device id of the visiting device. If this is an empty string the deviceID is unknown/was not reported."
+          },
+          "TimeStamp" : {
+            "type" : "string",
+            "description" : "the javascript timestamp of the visit"
+          }
+        }
+      }
+    }
+  }
+}

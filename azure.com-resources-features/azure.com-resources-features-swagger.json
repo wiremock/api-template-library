@@ -1,1 +1,376 @@
-{"openapi":"3.0.1","info":{"title":"FeatureClient","description":"Azure Feature Exposure Control (AFEC) provides a mechanism for the resource providers to control feature exposure to users. Resource providers typically use this mechanism to provide public/private preview for new features prior to making them generally available. Users need to explicitly register for AFEC features to get access to such functionality.","version":"2015-12-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.Features/operations":{"get":{"tags":["Operations"],"description":"Lists all of the available Microsoft.Features REST API operations.","operationId":"ListOperations","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}},"text/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Features/features":{"get":{"tags":["Features"],"description":"Gets all the preview features that are available through AFEC for the subscription.","operationId":"Features_ListAll","parameters":[{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns an array containing metadata for each feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FeatureOperationsListResult"}},"text/json":{"schema":{"$ref":"#/components/schemas/FeatureOperationsListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features":{"get":{"tags":["Features"],"description":"Gets all the preview features in a provider namespace that are available through AFEC for the subscription.","operationId":"Features_List","parameters":[{"name":"resourceProviderNamespace","in":"path","description":"The namespace of the resource provider for getting features.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns an array containing metadata for each feature in the resource provider. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FeatureOperationsListResult"}},"text/json":{"schema":{"$ref":"#/components/schemas/FeatureOperationsListResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}":{"get":{"tags":["Features"],"description":"Gets the preview feature with the specified name.","operationId":"Features_Get","parameters":[{"name":"resourceProviderNamespace","in":"path","description":"The resource provider namespace for the feature.","required":true,"schema":{"type":"string"}},{"name":"featureName","in":"path","description":"The name of the feature to get.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns metadata about the feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FeatureResult"}},"text/json":{"schema":{"$ref":"#/components/schemas/FeatureResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register":{"post":{"tags":["Features"],"description":"Registers the preview feature for the subscription.","operationId":"Features_Register","parameters":[{"name":"resourceProviderNamespace","in":"path","description":"The namespace of the resource provider.","required":true,"schema":{"type":"string"}},{"name":"featureName","in":"path","description":"The name of the feature to register.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns metadata about the registered feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FeatureResult"}},"text/json":{"schema":{"$ref":"#/components/schemas/FeatureResult"}}}}}}}},"components":{"schemas":{"FeatureOperationsListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to use for getting the next set of results."},"value":{"type":"array","description":"The array of features.","items":{"$ref":"#/components/schemas/FeatureResult"}}},"description":"List of previewed features."},"FeatureProperties":{"type":"object","properties":{"state":{"type":"string","description":"The registration state of the feature for the subscription."}},"description":"Information about feature."},"FeatureResult":{"type":"object","properties":{"id":{"type":"string","description":"The resource ID of the feature."},"name":{"type":"string","description":"The name of the feature."},"properties":{"$ref":"#/components/schemas/FeatureProperties"},"type":{"type":"string","description":"The resource type of the feature."}},"description":"Previewed feature information."},"Operation":{"type":"object","properties":{"display":{"type":"object","properties":{"operation":{"type":"string","description":"Operation type: Read, write, delete, etc."},"provider":{"type":"string","description":"Service provider: Microsoft.Features"},"resource":{"type":"string","description":"Resource on which the operation is performed: Profile, endpoint, etc."}},"description":"The object that represents the operation."},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}"}},"description":"Microsoft.Features operation"},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any."},"value":{"type":"array","description":"List of Microsoft.Features operations.","items":{"$ref":"#/components/schemas/Operation"}}},"description":"Result of the request to list Microsoft.Features operations. It contains a list of operations and a URL link to get the next set of results."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for this operation.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The ID of the target subscription.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "FeatureClient",
+    "description" : "Azure Feature Exposure Control (AFEC) provides a mechanism for the resource providers to control feature exposure to users. Resource providers typically use this mechanism to provide public/private preview for new features prior to making them generally available. Users need to explicitly register for AFEC features to get access to such functionality.",
+    "version" : "2015-12-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.Features/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "description" : "Lists all of the available Microsoft.Features REST API operations.",
+        "operationId" : "ListOperations",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/features" : {
+      "get" : {
+        "tags" : [ "Features" ],
+        "description" : "Gets all the preview features that are available through AFEC for the subscription.",
+        "operationId" : "Features_ListAll",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns an array containing metadata for each feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureOperationsListResult"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureOperationsListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features" : {
+      "get" : {
+        "tags" : [ "Features" ],
+        "description" : "Gets all the preview features in a provider namespace that are available through AFEC for the subscription.",
+        "operationId" : "Features_List",
+        "parameters" : [ {
+          "name" : "resourceProviderNamespace",
+          "in" : "path",
+          "description" : "The namespace of the resource provider for getting features.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns an array containing metadata for each feature in the resource provider. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureOperationsListResult"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureOperationsListResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}" : {
+      "get" : {
+        "tags" : [ "Features" ],
+        "description" : "Gets the preview feature with the specified name.",
+        "operationId" : "Features_Get",
+        "parameters" : [ {
+          "name" : "resourceProviderNamespace",
+          "in" : "path",
+          "description" : "The resource provider namespace for the feature.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "featureName",
+          "in" : "path",
+          "description" : "The name of the feature to get.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns metadata about the feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureResult"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register" : {
+      "post" : {
+        "tags" : [ "Features" ],
+        "description" : "Registers the preview feature for the subscription.",
+        "operationId" : "Features_Register",
+        "parameters" : [ {
+          "name" : "resourceProviderNamespace",
+          "in" : "path",
+          "description" : "The namespace of the resource provider.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "featureName",
+          "in" : "path",
+          "description" : "The name of the feature to register.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for this operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The ID of the target subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns metadata about the registered feature. The metadata includes the name of the feature, the registration state, the resource ID, and resource type.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureResult"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "FeatureOperationsListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to use for getting the next set of results."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The array of features.",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureResult"
+            }
+          }
+        },
+        "description" : "List of previewed features."
+      },
+      "FeatureProperties" : {
+        "type" : "object",
+        "properties" : {
+          "state" : {
+            "type" : "string",
+            "description" : "The registration state of the feature for the subscription."
+          }
+        },
+        "description" : "Information about feature."
+      },
+      "FeatureResult" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The resource ID of the feature."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the feature."
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/FeatureProperties"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The resource type of the feature."
+          }
+        },
+        "description" : "Previewed feature information."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation type: Read, write, delete, etc."
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Service provider: Microsoft.Features"
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed: Profile, endpoint, etc."
+              }
+            },
+            "description" : "The object that represents the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}"
+          }
+        },
+        "description" : "Microsoft.Features operation"
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of Microsoft.Features operations.",
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Result of the request to list Microsoft.Features operations. It contains a list of operations and a URL link to get the next set of results."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for this operation.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The ID of the target subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,1728 @@
-{"openapi":"3.0.1","info":{"title":"SchoolDigger API V1","description":"Get detailed data on over 120,000 schools and 18,500 districts in the U.S.","termsOfService":"https://developer.schooldigger.com/termsofservice","contact":{"name":"SchoolDigger","email":"api@schooldigger.com"},"version":"v1"},"servers":[{"url":"https://api.schooldigger.com/"}],"paths":{"/v1/districts":{"get":{"tags":["Districts"],"summary":"Returns a list of districts","description":"Search the SchoolDigger database for districts. You may use any combination of criteria as query parameters.","operationId":"Districts_GetAllDistricts","parameters":[{"name":"st","in":"query","description":"Two character state (e.g. 'CA') - required","required":true,"schema":{"type":"string"}},{"name":"q","in":"query","description":"Search term - note: will match district name or city (optional)","schema":{"type":"string"}},{"name":"city","in":"query","description":"Search for districts in this city (optional)","schema":{"type":"string"}},{"name":"zip","in":"query","description":"Search for districts in this 5-digit zip code (optional)","schema":{"type":"string"}},{"name":"nearLatitude","in":"query","description":"Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)","schema":{"type":"number","format":"double"}},{"name":"nearLongitude","in":"query","description":"Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)","schema":{"type":"number","format":"double"}},{"name":"boundaryAddress","in":"query","description":"Full U.S. address: flag returned districts that include this address in its attendance boundary. Example: '123 Main St. AnyTown CA 90001' (optional) (Enterprise API level only)","schema":{"type":"string"}},{"name":"distanceMiles","in":"query","description":"Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 50 miles) (optional) (Pro, Enterprise API levels only)","schema":{"type":"integer","format":"int32"}},{"name":"isInBoundaryOnly","in":"query","description":"Return only the districts that include given location (nearLatitude/nearLongitude) or (boundaryAddress) in its attendance boundary (Enterprise API level only)","schema":{"type":"boolean"}},{"name":"boxLatitudeNW","in":"query","description":"Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLongitudeNW","in":"query","description":"Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLatitudeSE","in":"query","description":"Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLongitudeSE","in":"query","description":"Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"page","in":"query","description":"Page number to retrieve (optional, default: 1)","schema":{"type":"integer","format":"int32"}},{"name":"perPage","in":"query","description":"Number of districts to retrieve on a page (50 max) (optional, default: 10)","schema":{"type":"integer","format":"int32"}},{"name":"sortBy","in":"query","description":"Sort list. Values are: districtname, distance, rank. For descending order, precede with '-' i.e. -districtname (optional, default: districtname)","schema":{"type":"string"}},{"name":"includeUnrankedDistrictsInRankSort","in":"query","description":"If sortBy is 'rank', this boolean determines if districts with no rank are included in the result (optional, default: false)","schema":{"type":"boolean"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIDistrictList"}}}}}}},"/v1/districts/{id}":{"get":{"tags":["Districts"],"summary":"Returns a detailed record for one district","description":"Retrieve a single district record from the SchoolDigger database","operationId":"Districts_GetDistrict","parameters":[{"name":"id","in":"path","description":"The 7 digit District ID (e.g. 0642150)","required":true,"schema":{"type":"string"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIDistrict"}}}}}}},"/v1/rankings/districts/{st}":{"get":{"tags":["Rankings"],"summary":"Returns a SchoolDigger district ranking list","operationId":"Rankings_GetRank_District","parameters":[{"name":"st","in":"path","description":"Two character state (e.g. 'CA')","required":true,"schema":{"type":"string"}},{"name":"year","in":"query","description":"The ranking year (leave blank for most recent year)","schema":{"type":"integer","format":"int32"}},{"name":"page","in":"query","description":"Page number to retrieve (optional, default: 1)","schema":{"type":"integer","format":"int32"}},{"name":"perPage","in":"query","description":"Number of districts to retrieve on a page (50 max) (optional, default: 10)","schema":{"type":"integer","format":"int32"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIDistrictListRank"}}}}}}},"/v1/rankings/schools/{st}":{"get":{"tags":["Rankings"],"summary":"Returns a SchoolDigger school ranking list","operationId":"Rankings_GetRank","parameters":[{"name":"st","in":"path","description":"Two character state (e.g. 'CA')","required":true,"schema":{"type":"string"}},{"name":"year","in":"query","description":"The ranking year (leave blank for most recent year)","schema":{"type":"integer","format":"int32"}},{"name":"level","in":"query","description":"Level of ranking: 'Elementary', 'Middle', or 'High'","schema":{"type":"string"}},{"name":"page","in":"query","description":"Page number to retrieve (optional, default: 1)","schema":{"type":"integer","format":"int32"}},{"name":"perPage","in":"query","description":"Number of schools to retrieve on a page (50 max) (optional, default: 10)","schema":{"type":"integer","format":"int32"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APISchoolListRank"}}}}}}},"/v1/schools":{"get":{"tags":["Schools"],"summary":"Returns a list of schools","description":"Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters.","operationId":"Schools_GetAllSchools","parameters":[{"name":"st","in":"query","description":"Two character state (e.g. 'CA') - required","required":true,"schema":{"type":"string"}},{"name":"q","in":"query","description":"Search term - note: will match school name or city (optional)","schema":{"type":"string"}},{"name":"qSearchSchoolNameOnly","in":"query","description":"For parameter 'q', only search school names instead of school and city (optional)","schema":{"type":"boolean"}},{"name":"districtID","in":"query","description":"Search for schools within this district (7 digit district id) (optional)","schema":{"type":"string"}},{"name":"level","in":"query","description":"Search for schools at this level. Valid values: 'Elementary', 'Middle', 'High', 'Alt', 'Public', 'Private' (optional). 'Public' returns all Elementary, Middle, High and Alternative schools","schema":{"type":"string"}},{"name":"city","in":"query","description":"Search for schools in this city (optional)","schema":{"type":"string"}},{"name":"zip","in":"query","description":"Search for schools in this 5-digit zip code (optional)","schema":{"type":"string"}},{"name":"isMagnet","in":"query","description":"True = return only magnet schools, False = return only non-magnet schools (optional) (Pro, Enterprise API levels only)","schema":{"type":"boolean"}},{"name":"isCharter","in":"query","description":"True = return only charter schools, False = return only non-charter schools (optional) (Pro, Enterprise API levels only)","schema":{"type":"boolean"}},{"name":"isVirtual","in":"query","description":"True = return only virtual schools, False = return only non-virtual schools (optional) (Pro, Enterprise API levels only)","schema":{"type":"boolean"}},{"name":"isTitleI","in":"query","description":"True = return only Title I schools, False = return only non-Title I schools (optional) (Pro, Enterprise API levels only)","schema":{"type":"boolean"}},{"name":"isTitleISchoolwide","in":"query","description":"True = return only Title I school-wide schools, False = return only non-Title I school-wide schools (optional) (Pro, Enterprise API levels only)","schema":{"type":"boolean"}},{"name":"nearLatitude","in":"query","description":"Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag schools that include lat/long in its attendance boundary.)","schema":{"type":"number","format":"double"}},{"name":"nearLongitude","in":"query","description":"Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag schools that include lat/long in its attendance boundary.)","schema":{"type":"number","format":"double"}},{"name":"boundaryAddress","in":"query","description":"Full U.S. address: flag returned schools that include this address in its attendance boundary. Example: '123 Main St. AnyTown CA 90001' (optional) (Enterprise API level only) IMPORTANT NOTE: If you have the lat/long of the address, use nearLatitude and nearLongitude instead for much faster response times","schema":{"type":"string"}},{"name":"distanceMiles","in":"query","description":"Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 5 miles) (optional) (Pro, Enterprise API levels only)","schema":{"type":"integer","format":"int32"}},{"name":"isInBoundaryOnly","in":"query","description":"Return only the schools that include given location (nearLatitude/nearLongitude) or (boundaryAddress) in its attendance boundary (Enterprise API level only)","schema":{"type":"boolean"}},{"name":"boxLatitudeNW","in":"query","description":"Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLongitudeNW","in":"query","description":"Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLatitudeSE","in":"query","description":"Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"boxLongitudeSE","in":"query","description":"Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)","schema":{"type":"number","format":"double"}},{"name":"page","in":"query","description":"Page number to retrieve (optional, default: 1)","schema":{"type":"integer","format":"int32"}},{"name":"perPage","in":"query","description":"Number of schools to retrieve on a page (50 max) (optional, default: 10)","schema":{"type":"integer","format":"int32"}},{"name":"sortBy","in":"query","description":"Sort list. Values are: schoolname, distance, rank. For descending order, precede with '-' i.e. -schoolname (optional, default: schoolname)","schema":{"type":"string"}},{"name":"includeUnrankedSchoolsInRankSort","in":"query","description":"If sortBy is 'rank', this boolean determines if schools with no rank are included in the result (optional, default: false)","schema":{"type":"boolean"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APISchoolList"}}}}}}},"/v1/schools/{id}":{"get":{"tags":["Schools"],"summary":"Returns a detailed record for one school","description":"Retrieve a school record from the SchoolDigger database","operationId":"Schools_GetSchool10","parameters":[{"name":"id","in":"path","description":"The 12 digit School ID (e.g. 064215006903)","required":true,"schema":{"type":"string"}},{"name":"appID","in":"query","description":"Your API app id","required":true,"schema":{"type":"string"}},{"name":"appKey","in":"query","description":"Your API app key","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APISchool10Full"}}}}}}}},"components":{"schemas":{"APIBoundary":{"type":"object","properties":{"hasBoundary":{"type":"boolean","description":"States whether there is a boundary available"},"polylineCollection":{"type":"array","description":"Collection of one or more polylines that can be used to create the boundary on a map. NOTE: this value is JSON encoded. Specifically, backslashes will be returned escaped (two backslashes). Make sure to decode the polyline before you use it","items":{"$ref":"#/components/schemas/APIPolyline"}}}},"APICounty":{"type":"object","properties":{"countyName":{"type":"string","description":"County in which the school or district is located"},"countyURL":{"type":"string","description":"SchoolDigger URL for all schools in this county"}}},"APIDistrict":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/APILocation"},"boundary":{"$ref":"#/components/schemas/APIBoundary"},"county":{"$ref":"#/components/schemas/APICounty"},"districtID":{"type":"string","description":"SchoolDigger District ID Number (7 digits)"},"districtName":{"type":"string","description":"District name"},"districtYearlyDetails":{"type":"array","description":"District yearly metrics","items":{"$ref":"#/components/schemas/APILEAYearlyDetail"}},"highGrade":{"type":"string","description":"The high grade served by this district"},"isWithinBoundary":{"type":"boolean","description":"Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude"},"lowGrade":{"type":"string","description":"The low grade served by this district (PK = Prekindergarten, K = Kindergarten)"},"numberAlternativeSchools":{"type":"integer","format":"int32"},"numberHighSchools":{"type":"integer","format":"int32"},"numberMiddleSchools":{"type":"integer","format":"int32"},"numberPrimarySchools":{"type":"integer","format":"int32"},"numberTotalSchools":{"type":"integer","format":"int32"},"phone":{"type":"string","description":"District phone number"},"rankHistory":{"type":"array","description":"SchoolDigger yearly rank history of the district","items":{"$ref":"#/components/schemas/APILEARankHistory"}},"testScores":{"type":"array","description":"Test scores (district and state) -- requires Pro or Enterprise level API subscription","items":{"$ref":"#/components/schemas/APITestScoreWrapper"}},"url":{"type":"string","description":"SchoolDigger URL for this district"}}},"APIDistrict1Summary":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/APILocation"},"county":{"$ref":"#/components/schemas/APICounty"},"distance":{"type":"number","description":"Distance from nearLatitude/nearLongitude (if supplied)","format":"double"},"districtID":{"type":"string","description":"SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the entire district record"},"districtName":{"type":"string","description":"District name"},"districtYearlyDetails":{"type":"array","description":"District yearly metrics","items":{"$ref":"#/components/schemas/APILEAYearlyDetail"}},"hasBoundary":{"type":"boolean","description":"Indicates that an attendance boundary is available for this district. (To retrieve, look up district with /districts/{id})"},"highGrade":{"type":"string","description":"The high grade served by this district"},"isWithinBoundary":{"type":"boolean","description":"Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude"},"locationIsWithinBoundary":{"type":"boolean","description":"Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress (Enterprise API level)"},"lowGrade":{"type":"string","description":"The low grade served by this district (PK = Prekindergarten, K = Kindergarten)"},"numberAlternativeSchools":{"type":"integer","description":"Count of schools designated as other/alternative schools","format":"int32"},"numberHighSchools":{"type":"integer","description":"Count of schools designated as high schools","format":"int32"},"numberMiddleSchools":{"type":"integer","description":"Count of schools designated as middle schools","format":"int32"},"numberPrimarySchools":{"type":"integer","description":"Count of schools designated as primary schools","format":"int32"},"numberTotalSchools":{"type":"integer","description":"Count of schools in the district","format":"int32"},"phone":{"type":"string","description":"District phone number"},"rankHistory":{"type":"array","description":"SchoolDigger yearly rank history of the district","items":{"$ref":"#/components/schemas/APILEARankHistory"}},"url":{"type":"string","description":"SchoolDigger URL for this district"}}},"APIDistrictList":{"type":"object","properties":{"districtList":{"type":"array","items":{"$ref":"#/components/schemas/APIDistrict1Summary"}},"numberOfDistricts":{"type":"integer","description":"The total count of districts that match your query","format":"int32"},"numberOfPages":{"type":"integer","description":"The total count of pages in your query list based on given per_page value","format":"int32"}}},"APIDistrictListRank":{"type":"object","properties":{"districtList":{"type":"array","items":{"$ref":"#/components/schemas/APIDistrict1Summary"}},"numberOfDistricts":{"type":"integer","description":"The total count of districts in the entire rank list","format":"int32"},"numberOfPages":{"type":"integer","description":"The total count of pages in your query list based on given per_page value","format":"int32"},"rankCompareYear":{"type":"integer","format":"int32"},"rankYear":{"type":"integer","description":"Year this ranking list represents (2018 = 2017-18)","format":"int32"},"rankYearCompare":{"type":"integer","description":"Year rankings returned for comparison (2018 = 2017-18)","format":"int32"},"rankYearsAvailable":{"type":"array","description":"The years for which SchoolDigger district rankings are available for this state","items":{"type":"integer","format":"int32"}}}},"APIDistrictSum":{"type":"object","properties":{"districtID":{"type":"string","description":"The 7 digit SchoolDigger District id number"},"districtName":{"type":"string"},"rankURL":{"type":"string","description":"The URL to see the district in the SchoolDigger ranking list"},"url":{"type":"string","description":"The URL to see the district details on SchoolDigger"}},"description":"District Summary"},"APILEARankHistory":{"type":"object","properties":{"rank":{"type":"integer","description":"Statewide rank of this district","format":"int32"},"rankOf":{"type":"integer","description":"Count of district ranked in this state","format":"int32"},"rankScore":{"type":"number","description":"The rank score calculated by SchoolDigger (see https://www.schooldigger.com/aboutranking.aspx)","format":"double"},"rankStars":{"type":"integer","description":"The number of stars SchoolDigger awarded in the ranking of the district (0-5, 5 is best)","format":"int32"},"rankStatewidePercentage":{"type":"number","description":"Percentile of this district's rank (e.g. this district performed better than (x)% of this state's districts)","format":"double"},"year":{"type":"integer","description":"School year (2017 - 2016-17)","format":"int32"}}},"APILEAYearlyDetail":{"type":"object","properties":{"numberOfAids":{"type":"number","description":"Number of full-time equivalent instructional aids employed by the district","format":"double"},"numberOfCoordsSupervisors":{"type":"number","description":"Number of full-time equivalent instructional coordinators/supervisors employed by the district","format":"double"},"numberOfEnglishLanguageLearnerStudents":{"type":"integer","description":"The number of English language learner (ELL) students served in appropriate programs","format":"int32"},"numberOfGuidanceElem":{"type":"number","description":"Number of full-time equivalent elementary guidance counselors employed by the district","format":"double"},"numberOfGuidanceSecondary":{"type":"number","description":"Number of full-time equivalent secondary guidance counselors employed by the district","format":"double"},"numberOfGuidanceTotal":{"type":"number","description":"Total number of full-time equivalent guidance counselors employed by the district","format":"double"},"numberOfLEAAdministrators":{"type":"number","description":"Number of full-time equivalent LEA administrators employed by the district (LEA)","format":"double"},"numberOfLEASupportStaff":{"type":"number","description":"Number of full-time equivalent LEA administrative support staff employed by the district (LEA)","format":"double"},"numberOfLibrarians":{"type":"number","description":"Number of full-time equivalent librarians/media specialists employed by the district","format":"double"},"numberOfLibraryStaff":{"type":"number","description":"Number of full-time equivalent librarians/media support staff employed by the district","format":"double"},"numberOfOtherSupportStaff":{"type":"number","description":"Number of full-time equivalent all other support staff employed by the district (LEA)","format":"double"},"numberOfSchoolAdminSupportStaff":{"type":"number","description":"Number of full-time equivalent school administrative support staff employed by the district (LEA)","format":"double"},"numberOfSchoolAdministrators":{"type":"number","description":"Number of full-time equivalent school administrators employed by the district (LEA)","format":"double"},"numberOfSpecialEdStudents":{"type":"integer","description":"The number of students having a written Individualized Education Program (IEP) under the Individuals With Disabilities Education Act (IDEA)","format":"int32"},"numberOfStudentSupportStaff":{"type":"number","description":"Number of full-time equivalent student support services staff employed by the district (LEA)","format":"double"},"numberOfStudents":{"type":"integer","description":"Number of students enrolled in the district","format":"int32"},"numberOfTeachers":{"type":"number","description":"Number of full-time equivalent teachers employed by the district","format":"double"},"numberOfTeachersElementary":{"type":"number","description":"Number of full-time equivalent elementary teachers employed by the district","format":"double"},"numberOfTeachersK":{"type":"number","description":"Number of full-time equivalent kindergarten teachers employed by the district","format":"double"},"numberOfTeachersPK":{"type":"number","description":"Number of full-time equivalent pre-kindergarten teachers employed by the district","format":"double"},"numberOfTeachersSecondary":{"type":"number","description":"Number of full-time equivalent secondary teachers employed by the district","format":"double"},"year":{"type":"integer","description":"School year (2018 = 2017-18)","format":"int32"}}},"APILatLong":{"type":"object","properties":{"latitude":{"type":"number","format":"double"},"longitude":{"type":"number","format":"double"}}},"APILocation":{"type":"object","properties":{"city":{"type":"string"},"cityURL":{"type":"string","description":"SchoolDigger URL for schools in this city"},"html":{"type":"string","description":"HTML formatted address"},"latLong":{"$ref":"#/components/schemas/APILatLong"},"state":{"type":"string"},"stateFull":{"type":"string","description":"Full state name (WA = Washington)"},"street":{"type":"string"},"zip":{"type":"string"},"zip4":{"type":"string"},"zipURL":{"type":"string","description":"SchoolDigger URL for schools in this zip code"}}},"APIPolyline":{"type":"object","properties":{"numberEncodedPoints":{"type":"integer","description":"Number of encoded points in polyline","format":"int32"},"polylineOverlayEncodedPoints":{"type":"string","description":"Polyline for use with Google Maps or other mapping software. NOTE: this value is JSON encoded. Specifically, backslashes will be returned escaped (two backslashes). Make sure to decode the polyline before you use it"}}},"APIRankHistory":{"type":"object","properties":{"averageStandardScore":{"type":"number","description":"The Average Standard score calculated by SchoolDigger (see: https://www.schooldigger.com/aboutrankingmethodology.aspx)","format":"double"},"rank":{"type":"integer","description":"Statewide rank of this School","format":"int32"},"rankLevel":{"type":"string","description":"The level for which this school is ranked (Elementary, Middle, High)"},"rankOf":{"type":"integer","description":"Count of schools ranked at this state/level","format":"int32"},"rankStars":{"type":"integer","description":"The number of stars SchoolDigger awarded in the ranking of the school (0-5, 5 is best)","format":"int32"},"rankStatewidePercentage":{"type":"number","description":"Percentile of this school's rank (e.g. this school performed better than (x)% of this state's elementary schools)","format":"double"},"year":{"type":"integer","description":"School year (2017 - 2016-17)","format":"int32"}}},"APISchool10Full":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/APILocation"},"boundary":{"$ref":"#/components/schemas/APIBoundary"},"county":{"$ref":"#/components/schemas/APICounty"},"district":{"$ref":"#/components/schemas/APIDistrictSum"},"highGrade":{"type":"string","description":"The high grade served by this school"},"isCharterSchool":{"type":"string","description":"Indicates if school is a charter school (Yes/No/n-a)"},"isMagnetSchool":{"type":"string","description":"Indicates if school is a magnet school (Yes/No/n-a)"},"isPrivate":{"type":"boolean","description":"Indicates if school is a private school (Yes/No)"},"isTitleISchool":{"type":"string","description":"Indicates if school is a Title I school (Yes/No/n-a)"},"isTitleISchoolwideSchool":{"type":"string","description":"Indicates if a school-wide Title I school (Yes/No/n-a)"},"isVirtualSchool":{"type":"string","description":"Indicates if school is a virtual school (Yes/No/n-a)"},"locale":{"type":"string","description":"NCES Locale of school (https://nces.ed.gov/ccd/rural_locales.asp)"},"lowGrade":{"type":"string","description":"The low grade served by this school (PK = Prekindergarten, K = Kindergarten)"},"phone":{"type":"string","description":"School phone number"},"privateCoed":{"type":"string","description":"Coed/Boys/Girls (private schools only)"},"privateDays":{"type":"integer","description":"Days in the school year (private schools only)","format":"int32"},"privateHasLibrary":{"type":"boolean","description":"Indicates if the school has a library (private schools only)"},"privateHours":{"type":"number","description":"Hours in the school day (private schools only)","format":"double"},"privateOrientation":{"type":"string","description":"Affiliation of the school (private schools only)"},"rankHistory":{"type":"array","description":"SchoolDigger yearly rank history of the school","items":{"$ref":"#/components/schemas/APIRankHistory"}},"rankMovement":{"type":"integer","description":"Returns the movement of rank for this school between current and previous year","format":"int32"},"schoolLevel":{"type":"string","description":"The level of school (Elementary, Middle, High, Private, Alternative)"},"schoolName":{"type":"string","description":"School name"},"schoolYearlyDetails":{"type":"array","description":"School Yearly metrics","items":{"$ref":"#/components/schemas/APIYearlyDemographics"}},"schoolid":{"type":"string","description":"SchoolDigger School ID Number (12 digits)"},"testScores":{"type":"array","description":"Test scores (including district and state) -- requires Pro or Enterprise level API subscription","items":{"$ref":"#/components/schemas/APITestScoreWrapper"}},"url":{"type":"string","description":"SchoolDigger URL for this school"},"urlCompare":{"type":"string","description":"SchoolDigger URL for comparing this school to nearby schools"}}},"APISchool1Summary":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/APILocation"},"county":{"$ref":"#/components/schemas/APICounty"},"distance":{"type":"number","description":"Distance from nearLatitude/nearLongitude (if supplied)","format":"double"},"district":{"$ref":"#/components/schemas/APIDistrictSum"},"hasBoundary":{"type":"boolean","description":"Indicates that an attendance boundary is available for this school."},"highGrade":{"type":"string","description":"The high grade served by this school"},"isCharterSchool":{"type":"string","description":"Indicates if school is a charter school (Yes/No/n-a)"},"isMagnetSchool":{"type":"string","description":"Indicates if school is a magnet school (Yes/No/n-a)"},"isPrivate":{"type":"boolean","description":"Indicates if school is a private school (Yes/No)"},"isTitleISchool":{"type":"string","description":"Indicates if school is a Title I school (Yes/No/n-a)"},"isTitleISchoolwideSchool":{"type":"string","description":"Indicates if a school-wide Title I school (Yes/No/n-a)"},"isVirtualSchool":{"type":"string","description":"Indicates if school is a virtual school (Yes/No/n-a)"},"locationIsWithinBoundary":{"type":"boolean","description":"Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress. (Enterprise API level only)"},"lowGrade":{"type":"string","description":"The low grade served by this school (PK = Prekindergarten, K = Kindergarten)"},"phone":{"type":"string","description":"School phone number"},"privateCoed":{"type":"string","description":"Coed/Boys/Girls (private schools only)"},"privateDays":{"type":"integer","description":"Days in the school year (private schools only)","format":"int32"},"privateHasLibrary":{"type":"boolean","description":"Indicates if the school has a library (private schools only)"},"privateHours":{"type":"number","description":"Hours in the school day (private schools only)","format":"double"},"privateOrientation":{"type":"string","description":"Affiliation of the school (private schools only)"},"rankHistory":{"type":"array","description":"SchoolDigger yearly rank history of the school. To retrieve all years, call /schools/{id}.","items":{"$ref":"#/components/schemas/APIRankHistory"}},"rankMovement":{"type":"integer","description":"Returns the movement of rank for this school between current and previous year","format":"int32"},"schoolLevel":{"type":"string","description":"The level of school (Elementary, Middle, High, Private, Alternative)"},"schoolName":{"type":"string","description":"School name"},"schoolYearlyDetails":{"type":"array","description":"School Yearly metrics. To retrieve all years, call /schools/{id}.","items":{"$ref":"#/components/schemas/APIYearlyDemographics"}},"schoolid":{"type":"string","description":"SchoolDigger School ID Number (12 digits). Use /schools/{schoolID} to retrieve the full school record"},"url":{"type":"string","description":"SchoolDigger URL for this school"},"urlCompare":{"type":"string","description":"SchoolDigger URL for comparing this school to others"}},"description":"APISchool1Summary: A summary of a school record. For the full school record, call /schools/{id}"},"APISchoolList":{"type":"object","properties":{"numberOfPages":{"type":"integer","description":"The total count of pages in your query list based on given per_page value","format":"int32"},"numberOfSchools":{"type":"integer","description":"The total count of schools that match your query","format":"int32"},"schoolList":{"type":"array","items":{"$ref":"#/components/schemas/APISchool1Summary"}}}},"APISchoolListRank":{"type":"object","properties":{"numberOfPages":{"type":"integer","description":"The total count of pages this ranking list based on given per_page value","format":"int32"},"numberOfSchools":{"type":"integer","description":"The total count of schools in this ranking list","format":"int32"},"rankYear":{"type":"integer","description":"Year this ranking list represents (2018 = 2017-18)","format":"int32"},"rankYearCompare":{"type":"integer","description":"Year rankings returned for comparison (2018 = 2017-18)","format":"int32"},"rankYearsAvailable":{"type":"array","description":"The years for which SchoolDigger rankings are available for this state and level","items":{"type":"integer","format":"int32"}},"schoolList":{"type":"array","description":"The schools in the ranking list","items":{"$ref":"#/components/schemas/APISchool1Summary"}}}},"APITestScore":{"type":"object","properties":{"meanScaledScore":{"type":"number","description":"Mean scale score","format":"float"},"numTier1":{"type":"integer","description":"Count of students performing at tier 1 (Enterprise API level only)","format":"int32"},"numTier2":{"type":"integer","description":"Count of students performing at tier 2 (Enterprise API level only)","format":"int32"},"numTier3":{"type":"integer","description":"Count of students performing at tier 3 (Enterprise API level only)","format":"int32"},"numTier4":{"type":"integer","description":"Count of students performing at tier 4 (Enterprise API level only)","format":"int32"},"numTier5":{"type":"integer","description":"Count of students performing at tier 5 (Enterprise API level only)","format":"int32"},"numberMetStandard":{"type":"number","description":"Count of students meeting state standard","format":"float"},"percentMetStandard":{"type":"number","description":"Percent of students meeting state standard","format":"float"},"percentTier1":{"type":"number","description":"Percent of students performing at tier 1 (Enterprise API level only)","format":"float"},"percentTier2":{"type":"number","description":"Percent of students performing at tier 2 (Enterprise API level only)","format":"float"},"percentTier3":{"type":"number","description":"Percent of students performing at tier 3 (Enterprise API level only)","format":"float"},"percentTier4":{"type":"number","description":"Percent of students performing at tier 4 (Enterprise API level only)","format":"float"},"percentTier5":{"type":"number","description":"Percent of students performing at tier 5 (Enterprise API level only)","format":"float"},"studentsEligible":{"type":"integer","description":"Count of students eligible to take test","format":"int32"},"studentsTested":{"type":"integer","description":"Count of students tested","format":"int32"}}},"APITestScoreWrapper":{"type":"object","properties":{"districtTestScore":{"$ref":"#/components/schemas/APITestScore"},"grade":{"type":"string"},"schoolTestScore":{"$ref":"#/components/schemas/APITestScore"},"stateTestScore":{"$ref":"#/components/schemas/APITestScore"},"subject":{"type":"string","description":"Test subject"},"test":{"type":"string","description":"The name of the state-administered test"},"tier1":{"type":"string","description":"Tier 1 test score description (Enterprise API level only)"},"tier2":{"type":"string","description":"Tier 2 test score description (Enterprise API level only)"},"tier3":{"type":"string","description":"Tier 3 test score description (Enterprise API level only)"},"tier4":{"type":"string","description":"Tier 4 test score description (Enterprise API level only)"},"tier5":{"type":"string","description":"Tier 5 test score description (Enterprise API level only)"},"year":{"type":"integer","description":"Year test was administered (2018 = 2017-18)","format":"int32"}}},"APIYearlyDemographics":{"type":"object","properties":{"numberOfStudents":{"type":"integer","description":"Count of students attending the school","format":"int32"},"numberofAfricanAmericanStudents":{"type":"integer","description":"NCES definition: A person having origins in any of the black racial groups of Africa.  (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofAsianStudents":{"type":"integer","description":"NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.  (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofHispanicStudents":{"type":"integer","description":"NCES definition: A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofIndianStudents":{"type":"integer","description":"NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam. (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofPacificIslanderStudents":{"type":"integer","description":"NCES definition: A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands. (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofTwoOrMoreRaceStudents":{"type":"integer","description":"NCES definition: Includes any combination of two or more races and not Hispanic/Latino ethnicity. (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"numberofUnspecifiedRaceStudents":{"type":"integer","format":"int32"},"numberofWhiteStudents":{"type":"integer","description":"NCES definition: A person having origins in any of the original peoples of Europe, the Middle East, or North Africa. (https://nces.ed.gov/statprog/2002/std1_5.asp)","format":"int32"},"percentFreeDiscLunch":{"type":"number","description":"Percent of students receiving a free or discounted lunch in the National School Lunch Program","format":"double"},"percentofAfricanAmericanStudents":{"type":"number","format":"double"},"percentofAsianStudents":{"type":"number","format":"double"},"percentofHispanicStudents":{"type":"number","format":"double"},"percentofIndianStudents":{"type":"number","format":"double"},"percentofPacificIslanderStudents":{"type":"number","format":"double"},"percentofTwoOrMoreRaceStudents":{"type":"number","format":"double"},"percentofUnspecifiedRaceStudents":{"type":"number","format":"double"},"percentofWhiteStudents":{"type":"number","format":"double"},"pupilTeacherRatio":{"type":"number","description":"Number of students / number of full-time equivalent teachers","format":"double"},"teachersFulltime":{"type":"number","description":"Number of full-time equivalent teachers employed at the school","format":"double"},"year":{"type":"integer","description":"School year (2018 = 2017-18)","format":"int32"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SchoolDigger API V1",
+    "description" : "Get detailed data on over 120,000 schools and 18,500 districts in the U.S.",
+    "termsOfService" : "https://developer.schooldigger.com/termsofservice",
+    "contact" : {
+      "name" : "SchoolDigger",
+      "email" : "api@schooldigger.com"
+    },
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "https://api.schooldigger.com/"
+  } ],
+  "paths" : {
+    "/v1/districts" : {
+      "get" : {
+        "tags" : [ "Districts" ],
+        "summary" : "Returns a list of districts",
+        "description" : "Search the SchoolDigger database for districts. You may use any combination of criteria as query parameters.",
+        "operationId" : "Districts_GetAllDistricts",
+        "parameters" : [ {
+          "name" : "st",
+          "in" : "query",
+          "description" : "Two character state (e.g. 'CA') - required",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Search term - note: will match district name or city (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "city",
+          "in" : "query",
+          "description" : "Search for districts in this city (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "description" : "Search for districts in this 5-digit zip code (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "nearLatitude",
+          "in" : "query",
+          "description" : "Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "nearLongitude",
+          "in" : "query",
+          "description" : "Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boundaryAddress",
+          "in" : "query",
+          "description" : "Full U.S. address: flag returned districts that include this address in its attendance boundary. Example: '123 Main St. AnyTown CA 90001' (optional) (Enterprise API level only)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "distanceMiles",
+          "in" : "query",
+          "description" : "Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 50 miles) (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "isInBoundaryOnly",
+          "in" : "query",
+          "description" : "Return only the districts that include given location (nearLatitude/nearLongitude) or (boundaryAddress) in its attendance boundary (Enterprise API level only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "boxLatitudeNW",
+          "in" : "query",
+          "description" : "Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLongitudeNW",
+          "in" : "query",
+          "description" : "Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLatitudeSE",
+          "in" : "query",
+          "description" : "Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLongitudeSE",
+          "in" : "query",
+          "description" : "Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number to retrieve (optional, default: 1)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "perPage",
+          "in" : "query",
+          "description" : "Number of districts to retrieve on a page (50 max) (optional, default: 10)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "sortBy",
+          "in" : "query",
+          "description" : "Sort list. Values are: districtname, distance, rank. For descending order, precede with '-' i.e. -districtname (optional, default: districtname)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeUnrankedDistrictsInRankSort",
+          "in" : "query",
+          "description" : "If sortBy is 'rank', this boolean determines if districts with no rank are included in the result (optional, default: false)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIDistrictList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/districts/{id}" : {
+      "get" : {
+        "tags" : [ "Districts" ],
+        "summary" : "Returns a detailed record for one district",
+        "description" : "Retrieve a single district record from the SchoolDigger database",
+        "operationId" : "Districts_GetDistrict",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The 7 digit District ID (e.g. 0642150)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIDistrict"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/rankings/districts/{st}" : {
+      "get" : {
+        "tags" : [ "Rankings" ],
+        "summary" : "Returns a SchoolDigger district ranking list",
+        "operationId" : "Rankings_GetRank_District",
+        "parameters" : [ {
+          "name" : "st",
+          "in" : "path",
+          "description" : "Two character state (e.g. 'CA')",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "year",
+          "in" : "query",
+          "description" : "The ranking year (leave blank for most recent year)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number to retrieve (optional, default: 1)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "perPage",
+          "in" : "query",
+          "description" : "Number of districts to retrieve on a page (50 max) (optional, default: 10)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIDistrictListRank"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/rankings/schools/{st}" : {
+      "get" : {
+        "tags" : [ "Rankings" ],
+        "summary" : "Returns a SchoolDigger school ranking list",
+        "operationId" : "Rankings_GetRank",
+        "parameters" : [ {
+          "name" : "st",
+          "in" : "path",
+          "description" : "Two character state (e.g. 'CA')",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "year",
+          "in" : "query",
+          "description" : "The ranking year (leave blank for most recent year)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "Level of ranking: 'Elementary', 'Middle', or 'High'",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number to retrieve (optional, default: 1)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "perPage",
+          "in" : "query",
+          "description" : "Number of schools to retrieve on a page (50 max) (optional, default: 10)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APISchoolListRank"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/schools" : {
+      "get" : {
+        "tags" : [ "Schools" ],
+        "summary" : "Returns a list of schools",
+        "description" : "Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters.",
+        "operationId" : "Schools_GetAllSchools",
+        "parameters" : [ {
+          "name" : "st",
+          "in" : "query",
+          "description" : "Two character state (e.g. 'CA') - required",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Search term - note: will match school name or city (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "qSearchSchoolNameOnly",
+          "in" : "query",
+          "description" : "For parameter 'q', only search school names instead of school and city (optional)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "districtID",
+          "in" : "query",
+          "description" : "Search for schools within this district (7 digit district id) (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "Search for schools at this level. Valid values: 'Elementary', 'Middle', 'High', 'Alt', 'Public', 'Private' (optional). 'Public' returns all Elementary, Middle, High and Alternative schools",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "city",
+          "in" : "query",
+          "description" : "Search for schools in this city (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "description" : "Search for schools in this 5-digit zip code (optional)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "isMagnet",
+          "in" : "query",
+          "description" : "True = return only magnet schools, False = return only non-magnet schools (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isCharter",
+          "in" : "query",
+          "description" : "True = return only charter schools, False = return only non-charter schools (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isVirtual",
+          "in" : "query",
+          "description" : "True = return only virtual schools, False = return only non-virtual schools (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isTitleI",
+          "in" : "query",
+          "description" : "True = return only Title I schools, False = return only non-Title I schools (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isTitleISchoolwide",
+          "in" : "query",
+          "description" : "True = return only Title I school-wide schools, False = return only non-Title I school-wide schools (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "nearLatitude",
+          "in" : "query",
+          "description" : "Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag schools that include lat/long in its attendance boundary.)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "nearLongitude",
+          "in" : "query",
+          "description" : "Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag schools that include lat/long in its attendance boundary.)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boundaryAddress",
+          "in" : "query",
+          "description" : "Full U.S. address: flag returned schools that include this address in its attendance boundary. Example: '123 Main St. AnyTown CA 90001' (optional) (Enterprise API level only) IMPORTANT NOTE: If you have the lat/long of the address, use nearLatitude and nearLongitude instead for much faster response times",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "distanceMiles",
+          "in" : "query",
+          "description" : "Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 5 miles) (optional) (Pro, Enterprise API levels only)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "isInBoundaryOnly",
+          "in" : "query",
+          "description" : "Return only the schools that include given location (nearLatitude/nearLongitude) or (boundaryAddress) in its attendance boundary (Enterprise API level only)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "boxLatitudeNW",
+          "in" : "query",
+          "description" : "Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLongitudeNW",
+          "in" : "query",
+          "description" : "Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLatitudeSE",
+          "in" : "query",
+          "description" : "Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "boxLongitudeSE",
+          "in" : "query",
+          "description" : "Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number to retrieve (optional, default: 1)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "perPage",
+          "in" : "query",
+          "description" : "Number of schools to retrieve on a page (50 max) (optional, default: 10)",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "sortBy",
+          "in" : "query",
+          "description" : "Sort list. Values are: schoolname, distance, rank. For descending order, precede with '-' i.e. -schoolname (optional, default: schoolname)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeUnrankedSchoolsInRankSort",
+          "in" : "query",
+          "description" : "If sortBy is 'rank', this boolean determines if schools with no rank are included in the result (optional, default: false)",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APISchoolList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/schools/{id}" : {
+      "get" : {
+        "tags" : [ "Schools" ],
+        "summary" : "Returns a detailed record for one school",
+        "description" : "Retrieve a school record from the SchoolDigger database",
+        "operationId" : "Schools_GetSchool10",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The 12 digit School ID (e.g. 064215006903)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appID",
+          "in" : "query",
+          "description" : "Your API app id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appKey",
+          "in" : "query",
+          "description" : "Your API app key",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APISchool10Full"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "APIBoundary" : {
+        "type" : "object",
+        "properties" : {
+          "hasBoundary" : {
+            "type" : "boolean",
+            "description" : "States whether there is a boundary available"
+          },
+          "polylineCollection" : {
+            "type" : "array",
+            "description" : "Collection of one or more polylines that can be used to create the boundary on a map. NOTE: this value is JSON encoded. Specifically, backslashes will be returned escaped (two backslashes). Make sure to decode the polyline before you use it",
+            "items" : {
+              "$ref" : "#/components/schemas/APIPolyline"
+            }
+          }
+        }
+      },
+      "APICounty" : {
+        "type" : "object",
+        "properties" : {
+          "countyName" : {
+            "type" : "string",
+            "description" : "County in which the school or district is located"
+          },
+          "countyURL" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for all schools in this county"
+          }
+        }
+      },
+      "APIDistrict" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/APILocation"
+          },
+          "boundary" : {
+            "$ref" : "#/components/schemas/APIBoundary"
+          },
+          "county" : {
+            "$ref" : "#/components/schemas/APICounty"
+          },
+          "districtID" : {
+            "type" : "string",
+            "description" : "SchoolDigger District ID Number (7 digits)"
+          },
+          "districtName" : {
+            "type" : "string",
+            "description" : "District name"
+          },
+          "districtYearlyDetails" : {
+            "type" : "array",
+            "description" : "District yearly metrics",
+            "items" : {
+              "$ref" : "#/components/schemas/APILEAYearlyDetail"
+            }
+          },
+          "highGrade" : {
+            "type" : "string",
+            "description" : "The high grade served by this district"
+          },
+          "isWithinBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude"
+          },
+          "lowGrade" : {
+            "type" : "string",
+            "description" : "The low grade served by this district (PK = Prekindergarten, K = Kindergarten)"
+          },
+          "numberAlternativeSchools" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberHighSchools" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberMiddleSchools" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberPrimarySchools" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberTotalSchools" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "District phone number"
+          },
+          "rankHistory" : {
+            "type" : "array",
+            "description" : "SchoolDigger yearly rank history of the district",
+            "items" : {
+              "$ref" : "#/components/schemas/APILEARankHistory"
+            }
+          },
+          "testScores" : {
+            "type" : "array",
+            "description" : "Test scores (district and state) -- requires Pro or Enterprise level API subscription",
+            "items" : {
+              "$ref" : "#/components/schemas/APITestScoreWrapper"
+            }
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for this district"
+          }
+        }
+      },
+      "APIDistrict1Summary" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/APILocation"
+          },
+          "county" : {
+            "$ref" : "#/components/schemas/APICounty"
+          },
+          "distance" : {
+            "type" : "number",
+            "description" : "Distance from nearLatitude/nearLongitude (if supplied)",
+            "format" : "double"
+          },
+          "districtID" : {
+            "type" : "string",
+            "description" : "SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the entire district record"
+          },
+          "districtName" : {
+            "type" : "string",
+            "description" : "District name"
+          },
+          "districtYearlyDetails" : {
+            "type" : "array",
+            "description" : "District yearly metrics",
+            "items" : {
+              "$ref" : "#/components/schemas/APILEAYearlyDetail"
+            }
+          },
+          "hasBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates that an attendance boundary is available for this district. (To retrieve, look up district with /districts/{id})"
+          },
+          "highGrade" : {
+            "type" : "string",
+            "description" : "The high grade served by this district"
+          },
+          "isWithinBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude"
+          },
+          "locationIsWithinBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress (Enterprise API level)"
+          },
+          "lowGrade" : {
+            "type" : "string",
+            "description" : "The low grade served by this district (PK = Prekindergarten, K = Kindergarten)"
+          },
+          "numberAlternativeSchools" : {
+            "type" : "integer",
+            "description" : "Count of schools designated as other/alternative schools",
+            "format" : "int32"
+          },
+          "numberHighSchools" : {
+            "type" : "integer",
+            "description" : "Count of schools designated as high schools",
+            "format" : "int32"
+          },
+          "numberMiddleSchools" : {
+            "type" : "integer",
+            "description" : "Count of schools designated as middle schools",
+            "format" : "int32"
+          },
+          "numberPrimarySchools" : {
+            "type" : "integer",
+            "description" : "Count of schools designated as primary schools",
+            "format" : "int32"
+          },
+          "numberTotalSchools" : {
+            "type" : "integer",
+            "description" : "Count of schools in the district",
+            "format" : "int32"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "District phone number"
+          },
+          "rankHistory" : {
+            "type" : "array",
+            "description" : "SchoolDigger yearly rank history of the district",
+            "items" : {
+              "$ref" : "#/components/schemas/APILEARankHistory"
+            }
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for this district"
+          }
+        }
+      },
+      "APIDistrictList" : {
+        "type" : "object",
+        "properties" : {
+          "districtList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/APIDistrict1Summary"
+            }
+          },
+          "numberOfDistricts" : {
+            "type" : "integer",
+            "description" : "The total count of districts that match your query",
+            "format" : "int32"
+          },
+          "numberOfPages" : {
+            "type" : "integer",
+            "description" : "The total count of pages in your query list based on given per_page value",
+            "format" : "int32"
+          }
+        }
+      },
+      "APIDistrictListRank" : {
+        "type" : "object",
+        "properties" : {
+          "districtList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/APIDistrict1Summary"
+            }
+          },
+          "numberOfDistricts" : {
+            "type" : "integer",
+            "description" : "The total count of districts in the entire rank list",
+            "format" : "int32"
+          },
+          "numberOfPages" : {
+            "type" : "integer",
+            "description" : "The total count of pages in your query list based on given per_page value",
+            "format" : "int32"
+          },
+          "rankCompareYear" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "rankYear" : {
+            "type" : "integer",
+            "description" : "Year this ranking list represents (2018 = 2017-18)",
+            "format" : "int32"
+          },
+          "rankYearCompare" : {
+            "type" : "integer",
+            "description" : "Year rankings returned for comparison (2018 = 2017-18)",
+            "format" : "int32"
+          },
+          "rankYearsAvailable" : {
+            "type" : "array",
+            "description" : "The years for which SchoolDigger district rankings are available for this state",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }
+      },
+      "APIDistrictSum" : {
+        "type" : "object",
+        "properties" : {
+          "districtID" : {
+            "type" : "string",
+            "description" : "The 7 digit SchoolDigger District id number"
+          },
+          "districtName" : {
+            "type" : "string"
+          },
+          "rankURL" : {
+            "type" : "string",
+            "description" : "The URL to see the district in the SchoolDigger ranking list"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The URL to see the district details on SchoolDigger"
+          }
+        },
+        "description" : "District Summary"
+      },
+      "APILEARankHistory" : {
+        "type" : "object",
+        "properties" : {
+          "rank" : {
+            "type" : "integer",
+            "description" : "Statewide rank of this district",
+            "format" : "int32"
+          },
+          "rankOf" : {
+            "type" : "integer",
+            "description" : "Count of district ranked in this state",
+            "format" : "int32"
+          },
+          "rankScore" : {
+            "type" : "number",
+            "description" : "The rank score calculated by SchoolDigger (see https://www.schooldigger.com/aboutranking.aspx)",
+            "format" : "double"
+          },
+          "rankStars" : {
+            "type" : "integer",
+            "description" : "The number of stars SchoolDigger awarded in the ranking of the district (0-5, 5 is best)",
+            "format" : "int32"
+          },
+          "rankStatewidePercentage" : {
+            "type" : "number",
+            "description" : "Percentile of this district's rank (e.g. this district performed better than (x)% of this state's districts)",
+            "format" : "double"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "School year (2017 - 2016-17)",
+            "format" : "int32"
+          }
+        }
+      },
+      "APILEAYearlyDetail" : {
+        "type" : "object",
+        "properties" : {
+          "numberOfAids" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent instructional aids employed by the district",
+            "format" : "double"
+          },
+          "numberOfCoordsSupervisors" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent instructional coordinators/supervisors employed by the district",
+            "format" : "double"
+          },
+          "numberOfEnglishLanguageLearnerStudents" : {
+            "type" : "integer",
+            "description" : "The number of English language learner (ELL) students served in appropriate programs",
+            "format" : "int32"
+          },
+          "numberOfGuidanceElem" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent elementary guidance counselors employed by the district",
+            "format" : "double"
+          },
+          "numberOfGuidanceSecondary" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent secondary guidance counselors employed by the district",
+            "format" : "double"
+          },
+          "numberOfGuidanceTotal" : {
+            "type" : "number",
+            "description" : "Total number of full-time equivalent guidance counselors employed by the district",
+            "format" : "double"
+          },
+          "numberOfLEAAdministrators" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent LEA administrators employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfLEASupportStaff" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent LEA administrative support staff employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfLibrarians" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent librarians/media specialists employed by the district",
+            "format" : "double"
+          },
+          "numberOfLibraryStaff" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent librarians/media support staff employed by the district",
+            "format" : "double"
+          },
+          "numberOfOtherSupportStaff" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent all other support staff employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfSchoolAdminSupportStaff" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent school administrative support staff employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfSchoolAdministrators" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent school administrators employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfSpecialEdStudents" : {
+            "type" : "integer",
+            "description" : "The number of students having a written Individualized Education Program (IEP) under the Individuals With Disabilities Education Act (IDEA)",
+            "format" : "int32"
+          },
+          "numberOfStudentSupportStaff" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent student support services staff employed by the district (LEA)",
+            "format" : "double"
+          },
+          "numberOfStudents" : {
+            "type" : "integer",
+            "description" : "Number of students enrolled in the district",
+            "format" : "int32"
+          },
+          "numberOfTeachers" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent teachers employed by the district",
+            "format" : "double"
+          },
+          "numberOfTeachersElementary" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent elementary teachers employed by the district",
+            "format" : "double"
+          },
+          "numberOfTeachersK" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent kindergarten teachers employed by the district",
+            "format" : "double"
+          },
+          "numberOfTeachersPK" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent pre-kindergarten teachers employed by the district",
+            "format" : "double"
+          },
+          "numberOfTeachersSecondary" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent secondary teachers employed by the district",
+            "format" : "double"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "School year (2018 = 2017-18)",
+            "format" : "int32"
+          }
+        }
+      },
+      "APILatLong" : {
+        "type" : "object",
+        "properties" : {
+          "latitude" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "longitude" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "APILocation" : {
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string"
+          },
+          "cityURL" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for schools in this city"
+          },
+          "html" : {
+            "type" : "string",
+            "description" : "HTML formatted address"
+          },
+          "latLong" : {
+            "$ref" : "#/components/schemas/APILatLong"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "stateFull" : {
+            "type" : "string",
+            "description" : "Full state name (WA = Washington)"
+          },
+          "street" : {
+            "type" : "string"
+          },
+          "zip" : {
+            "type" : "string"
+          },
+          "zip4" : {
+            "type" : "string"
+          },
+          "zipURL" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for schools in this zip code"
+          }
+        }
+      },
+      "APIPolyline" : {
+        "type" : "object",
+        "properties" : {
+          "numberEncodedPoints" : {
+            "type" : "integer",
+            "description" : "Number of encoded points in polyline",
+            "format" : "int32"
+          },
+          "polylineOverlayEncodedPoints" : {
+            "type" : "string",
+            "description" : "Polyline for use with Google Maps or other mapping software. NOTE: this value is JSON encoded. Specifically, backslashes will be returned escaped (two backslashes). Make sure to decode the polyline before you use it"
+          }
+        }
+      },
+      "APIRankHistory" : {
+        "type" : "object",
+        "properties" : {
+          "averageStandardScore" : {
+            "type" : "number",
+            "description" : "The Average Standard score calculated by SchoolDigger (see: https://www.schooldigger.com/aboutrankingmethodology.aspx)",
+            "format" : "double"
+          },
+          "rank" : {
+            "type" : "integer",
+            "description" : "Statewide rank of this School",
+            "format" : "int32"
+          },
+          "rankLevel" : {
+            "type" : "string",
+            "description" : "The level for which this school is ranked (Elementary, Middle, High)"
+          },
+          "rankOf" : {
+            "type" : "integer",
+            "description" : "Count of schools ranked at this state/level",
+            "format" : "int32"
+          },
+          "rankStars" : {
+            "type" : "integer",
+            "description" : "The number of stars SchoolDigger awarded in the ranking of the school (0-5, 5 is best)",
+            "format" : "int32"
+          },
+          "rankStatewidePercentage" : {
+            "type" : "number",
+            "description" : "Percentile of this school's rank (e.g. this school performed better than (x)% of this state's elementary schools)",
+            "format" : "double"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "School year (2017 - 2016-17)",
+            "format" : "int32"
+          }
+        }
+      },
+      "APISchool10Full" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/APILocation"
+          },
+          "boundary" : {
+            "$ref" : "#/components/schemas/APIBoundary"
+          },
+          "county" : {
+            "$ref" : "#/components/schemas/APICounty"
+          },
+          "district" : {
+            "$ref" : "#/components/schemas/APIDistrictSum"
+          },
+          "highGrade" : {
+            "type" : "string",
+            "description" : "The high grade served by this school"
+          },
+          "isCharterSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a charter school (Yes/No/n-a)"
+          },
+          "isMagnetSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a magnet school (Yes/No/n-a)"
+          },
+          "isPrivate" : {
+            "type" : "boolean",
+            "description" : "Indicates if school is a private school (Yes/No)"
+          },
+          "isTitleISchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a Title I school (Yes/No/n-a)"
+          },
+          "isTitleISchoolwideSchool" : {
+            "type" : "string",
+            "description" : "Indicates if a school-wide Title I school (Yes/No/n-a)"
+          },
+          "isVirtualSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a virtual school (Yes/No/n-a)"
+          },
+          "locale" : {
+            "type" : "string",
+            "description" : "NCES Locale of school (https://nces.ed.gov/ccd/rural_locales.asp)"
+          },
+          "lowGrade" : {
+            "type" : "string",
+            "description" : "The low grade served by this school (PK = Prekindergarten, K = Kindergarten)"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "School phone number"
+          },
+          "privateCoed" : {
+            "type" : "string",
+            "description" : "Coed/Boys/Girls (private schools only)"
+          },
+          "privateDays" : {
+            "type" : "integer",
+            "description" : "Days in the school year (private schools only)",
+            "format" : "int32"
+          },
+          "privateHasLibrary" : {
+            "type" : "boolean",
+            "description" : "Indicates if the school has a library (private schools only)"
+          },
+          "privateHours" : {
+            "type" : "number",
+            "description" : "Hours in the school day (private schools only)",
+            "format" : "double"
+          },
+          "privateOrientation" : {
+            "type" : "string",
+            "description" : "Affiliation of the school (private schools only)"
+          },
+          "rankHistory" : {
+            "type" : "array",
+            "description" : "SchoolDigger yearly rank history of the school",
+            "items" : {
+              "$ref" : "#/components/schemas/APIRankHistory"
+            }
+          },
+          "rankMovement" : {
+            "type" : "integer",
+            "description" : "Returns the movement of rank for this school between current and previous year",
+            "format" : "int32"
+          },
+          "schoolLevel" : {
+            "type" : "string",
+            "description" : "The level of school (Elementary, Middle, High, Private, Alternative)"
+          },
+          "schoolName" : {
+            "type" : "string",
+            "description" : "School name"
+          },
+          "schoolYearlyDetails" : {
+            "type" : "array",
+            "description" : "School Yearly metrics",
+            "items" : {
+              "$ref" : "#/components/schemas/APIYearlyDemographics"
+            }
+          },
+          "schoolid" : {
+            "type" : "string",
+            "description" : "SchoolDigger School ID Number (12 digits)"
+          },
+          "testScores" : {
+            "type" : "array",
+            "description" : "Test scores (including district and state) -- requires Pro or Enterprise level API subscription",
+            "items" : {
+              "$ref" : "#/components/schemas/APITestScoreWrapper"
+            }
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for this school"
+          },
+          "urlCompare" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for comparing this school to nearby schools"
+          }
+        }
+      },
+      "APISchool1Summary" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/APILocation"
+          },
+          "county" : {
+            "$ref" : "#/components/schemas/APICounty"
+          },
+          "distance" : {
+            "type" : "number",
+            "description" : "Distance from nearLatitude/nearLongitude (if supplied)",
+            "format" : "double"
+          },
+          "district" : {
+            "$ref" : "#/components/schemas/APIDistrictSum"
+          },
+          "hasBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates that an attendance boundary is available for this school."
+          },
+          "highGrade" : {
+            "type" : "string",
+            "description" : "The high grade served by this school"
+          },
+          "isCharterSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a charter school (Yes/No/n-a)"
+          },
+          "isMagnetSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a magnet school (Yes/No/n-a)"
+          },
+          "isPrivate" : {
+            "type" : "boolean",
+            "description" : "Indicates if school is a private school (Yes/No)"
+          },
+          "isTitleISchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a Title I school (Yes/No/n-a)"
+          },
+          "isTitleISchoolwideSchool" : {
+            "type" : "string",
+            "description" : "Indicates if a school-wide Title I school (Yes/No/n-a)"
+          },
+          "isVirtualSchool" : {
+            "type" : "string",
+            "description" : "Indicates if school is a virtual school (Yes/No/n-a)"
+          },
+          "locationIsWithinBoundary" : {
+            "type" : "boolean",
+            "description" : "Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress. (Enterprise API level only)"
+          },
+          "lowGrade" : {
+            "type" : "string",
+            "description" : "The low grade served by this school (PK = Prekindergarten, K = Kindergarten)"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "School phone number"
+          },
+          "privateCoed" : {
+            "type" : "string",
+            "description" : "Coed/Boys/Girls (private schools only)"
+          },
+          "privateDays" : {
+            "type" : "integer",
+            "description" : "Days in the school year (private schools only)",
+            "format" : "int32"
+          },
+          "privateHasLibrary" : {
+            "type" : "boolean",
+            "description" : "Indicates if the school has a library (private schools only)"
+          },
+          "privateHours" : {
+            "type" : "number",
+            "description" : "Hours in the school day (private schools only)",
+            "format" : "double"
+          },
+          "privateOrientation" : {
+            "type" : "string",
+            "description" : "Affiliation of the school (private schools only)"
+          },
+          "rankHistory" : {
+            "type" : "array",
+            "description" : "SchoolDigger yearly rank history of the school. To retrieve all years, call /schools/{id}.",
+            "items" : {
+              "$ref" : "#/components/schemas/APIRankHistory"
+            }
+          },
+          "rankMovement" : {
+            "type" : "integer",
+            "description" : "Returns the movement of rank for this school between current and previous year",
+            "format" : "int32"
+          },
+          "schoolLevel" : {
+            "type" : "string",
+            "description" : "The level of school (Elementary, Middle, High, Private, Alternative)"
+          },
+          "schoolName" : {
+            "type" : "string",
+            "description" : "School name"
+          },
+          "schoolYearlyDetails" : {
+            "type" : "array",
+            "description" : "School Yearly metrics. To retrieve all years, call /schools/{id}.",
+            "items" : {
+              "$ref" : "#/components/schemas/APIYearlyDemographics"
+            }
+          },
+          "schoolid" : {
+            "type" : "string",
+            "description" : "SchoolDigger School ID Number (12 digits). Use /schools/{schoolID} to retrieve the full school record"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for this school"
+          },
+          "urlCompare" : {
+            "type" : "string",
+            "description" : "SchoolDigger URL for comparing this school to others"
+          }
+        },
+        "description" : "APISchool1Summary: A summary of a school record. For the full school record, call /schools/{id}"
+      },
+      "APISchoolList" : {
+        "type" : "object",
+        "properties" : {
+          "numberOfPages" : {
+            "type" : "integer",
+            "description" : "The total count of pages in your query list based on given per_page value",
+            "format" : "int32"
+          },
+          "numberOfSchools" : {
+            "type" : "integer",
+            "description" : "The total count of schools that match your query",
+            "format" : "int32"
+          },
+          "schoolList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/APISchool1Summary"
+            }
+          }
+        }
+      },
+      "APISchoolListRank" : {
+        "type" : "object",
+        "properties" : {
+          "numberOfPages" : {
+            "type" : "integer",
+            "description" : "The total count of pages this ranking list based on given per_page value",
+            "format" : "int32"
+          },
+          "numberOfSchools" : {
+            "type" : "integer",
+            "description" : "The total count of schools in this ranking list",
+            "format" : "int32"
+          },
+          "rankYear" : {
+            "type" : "integer",
+            "description" : "Year this ranking list represents (2018 = 2017-18)",
+            "format" : "int32"
+          },
+          "rankYearCompare" : {
+            "type" : "integer",
+            "description" : "Year rankings returned for comparison (2018 = 2017-18)",
+            "format" : "int32"
+          },
+          "rankYearsAvailable" : {
+            "type" : "array",
+            "description" : "The years for which SchoolDigger rankings are available for this state and level",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "schoolList" : {
+            "type" : "array",
+            "description" : "The schools in the ranking list",
+            "items" : {
+              "$ref" : "#/components/schemas/APISchool1Summary"
+            }
+          }
+        }
+      },
+      "APITestScore" : {
+        "type" : "object",
+        "properties" : {
+          "meanScaledScore" : {
+            "type" : "number",
+            "description" : "Mean scale score",
+            "format" : "float"
+          },
+          "numTier1" : {
+            "type" : "integer",
+            "description" : "Count of students performing at tier 1 (Enterprise API level only)",
+            "format" : "int32"
+          },
+          "numTier2" : {
+            "type" : "integer",
+            "description" : "Count of students performing at tier 2 (Enterprise API level only)",
+            "format" : "int32"
+          },
+          "numTier3" : {
+            "type" : "integer",
+            "description" : "Count of students performing at tier 3 (Enterprise API level only)",
+            "format" : "int32"
+          },
+          "numTier4" : {
+            "type" : "integer",
+            "description" : "Count of students performing at tier 4 (Enterprise API level only)",
+            "format" : "int32"
+          },
+          "numTier5" : {
+            "type" : "integer",
+            "description" : "Count of students performing at tier 5 (Enterprise API level only)",
+            "format" : "int32"
+          },
+          "numberMetStandard" : {
+            "type" : "number",
+            "description" : "Count of students meeting state standard",
+            "format" : "float"
+          },
+          "percentMetStandard" : {
+            "type" : "number",
+            "description" : "Percent of students meeting state standard",
+            "format" : "float"
+          },
+          "percentTier1" : {
+            "type" : "number",
+            "description" : "Percent of students performing at tier 1 (Enterprise API level only)",
+            "format" : "float"
+          },
+          "percentTier2" : {
+            "type" : "number",
+            "description" : "Percent of students performing at tier 2 (Enterprise API level only)",
+            "format" : "float"
+          },
+          "percentTier3" : {
+            "type" : "number",
+            "description" : "Percent of students performing at tier 3 (Enterprise API level only)",
+            "format" : "float"
+          },
+          "percentTier4" : {
+            "type" : "number",
+            "description" : "Percent of students performing at tier 4 (Enterprise API level only)",
+            "format" : "float"
+          },
+          "percentTier5" : {
+            "type" : "number",
+            "description" : "Percent of students performing at tier 5 (Enterprise API level only)",
+            "format" : "float"
+          },
+          "studentsEligible" : {
+            "type" : "integer",
+            "description" : "Count of students eligible to take test",
+            "format" : "int32"
+          },
+          "studentsTested" : {
+            "type" : "integer",
+            "description" : "Count of students tested",
+            "format" : "int32"
+          }
+        }
+      },
+      "APITestScoreWrapper" : {
+        "type" : "object",
+        "properties" : {
+          "districtTestScore" : {
+            "$ref" : "#/components/schemas/APITestScore"
+          },
+          "grade" : {
+            "type" : "string"
+          },
+          "schoolTestScore" : {
+            "$ref" : "#/components/schemas/APITestScore"
+          },
+          "stateTestScore" : {
+            "$ref" : "#/components/schemas/APITestScore"
+          },
+          "subject" : {
+            "type" : "string",
+            "description" : "Test subject"
+          },
+          "test" : {
+            "type" : "string",
+            "description" : "The name of the state-administered test"
+          },
+          "tier1" : {
+            "type" : "string",
+            "description" : "Tier 1 test score description (Enterprise API level only)"
+          },
+          "tier2" : {
+            "type" : "string",
+            "description" : "Tier 2 test score description (Enterprise API level only)"
+          },
+          "tier3" : {
+            "type" : "string",
+            "description" : "Tier 3 test score description (Enterprise API level only)"
+          },
+          "tier4" : {
+            "type" : "string",
+            "description" : "Tier 4 test score description (Enterprise API level only)"
+          },
+          "tier5" : {
+            "type" : "string",
+            "description" : "Tier 5 test score description (Enterprise API level only)"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "Year test was administered (2018 = 2017-18)",
+            "format" : "int32"
+          }
+        }
+      },
+      "APIYearlyDemographics" : {
+        "type" : "object",
+        "properties" : {
+          "numberOfStudents" : {
+            "type" : "integer",
+            "description" : "Count of students attending the school",
+            "format" : "int32"
+          },
+          "numberofAfricanAmericanStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person having origins in any of the black racial groups of Africa.  (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofAsianStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.  (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofHispanicStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofIndianStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofPacificIslanderStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofTwoOrMoreRaceStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: Includes any combination of two or more races and not Hispanic/Latino ethnicity. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "numberofUnspecifiedRaceStudents" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numberofWhiteStudents" : {
+            "type" : "integer",
+            "description" : "NCES definition: A person having origins in any of the original peoples of Europe, the Middle East, or North Africa. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "format" : "int32"
+          },
+          "percentFreeDiscLunch" : {
+            "type" : "number",
+            "description" : "Percent of students receiving a free or discounted lunch in the National School Lunch Program",
+            "format" : "double"
+          },
+          "percentofAfricanAmericanStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofAsianStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofHispanicStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofIndianStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofPacificIslanderStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofTwoOrMoreRaceStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofUnspecifiedRaceStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "percentofWhiteStudents" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "pupilTeacherRatio" : {
+            "type" : "number",
+            "description" : "Number of students / number of full-time equivalent teachers",
+            "format" : "double"
+          },
+          "teachersFulltime" : {
+            "type" : "number",
+            "description" : "Number of full-time equivalent teachers employed at the school",
+            "format" : "double"
+          },
+          "year" : {
+            "type" : "integer",
+            "description" : "School year (2018 = 2017-18)",
+            "format" : "int32"
+          }
+        }
+      }
+    }
+  }
+}

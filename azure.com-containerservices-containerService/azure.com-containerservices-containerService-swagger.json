@@ -1,1 +1,703 @@
-{"openapi":"3.0.1","info":{"title":"ContainerServiceClient","description":"The Container Service Client.","version":"2017-07-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/containerServices":{"get":{"tags":["ContainerServices"],"summary":"Gets a list of container services in the specified subscription.","description":"Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents.","operationId":"ContainerServices_List","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerServiceListResult"}}}}},"deprecated":true}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices":{"get":{"tags":["ContainerServices"],"summary":"Gets a list of container services in the specified resource group.","description":"Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents.","operationId":"ContainerServices_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerServiceListResult"}}}}},"deprecated":true}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices/{containerServiceName}":{"get":{"tags":["ContainerService"],"summary":"Gets the properties of the specified container service.","description":"Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. ","operationId":"ContainerServices_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"containerServiceName","in":"path","description":"The name of the container service in the specified subscription and resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerService"}}}}},"deprecated":true},"put":{"tags":["ContainerService"],"summary":"Creates or updates a container service.","description":"Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.","operationId":"ContainerServices_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"containerServiceName","in":"path","description":"The name of the container service in the specified subscription and resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters supplied to the Create or Update a Container Service operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerService"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerService"}}}},"201":{"description":"Created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerService"}}}},"202":{"description":"Accepted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContainerService"}}}}},"deprecated":true},"delete":{"tags":["ContainerService"],"summary":"Deletes the specified container service.","description":"Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created as part of creating a container service, including storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can be deleted individually.","operationId":"ContainerServices_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"containerServiceName","in":"path","description":"The name of the container service in the specified subscription and resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"202":{"description":"Accepted"},"204":{"description":"Not found"}},"deprecated":true}}},"components":{"schemas":{"ContainerService":{"description":"Container service.","allOf":[{"$ref":"#/components/schemas/Resource"},{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/ContainerServiceProperties"}}}]},"ContainerServiceAgentPoolProfile":{"required":["name","vmSize"],"type":"object","properties":{"count":{"maximum":100,"minimum":1,"type":"integer","description":"Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. ","format":"int32","default":1},"dnsPrefix":{"type":"string","description":"DNS prefix to be used to create the FQDN for the agent pool."},"fqdn":{"type":"string","description":"FQDN for the agent pool.","readOnly":true},"name":{"type":"string","description":"Unique name of the agent pool profile in the context of the subscription and resource group."},"osDiskSizeGB":{"$ref":"#/components/schemas/ContainerServiceOSDisk"},"osType":{"$ref":"#/components/schemas/OSType"},"ports":{"type":"array","description":"Ports number array used to expose on this agent pool. The default opened ports are different based on your choice of orchestrator.","items":{"maximum":65535,"minimum":1,"type":"integer"}},"storageProfile":{"$ref":"#/components/schemas/ContainerServiceStorageProfile"},"vmSize":{"$ref":"#/components/schemas/ContainerServiceVMSize"},"vnetSubnetID":{"$ref":"#/components/schemas/ContainerServiceVnetSubnetID"}},"description":"Profile for the container service agent pool."},"ContainerServiceCustomProfile":{"required":["orchestrator"],"type":"object","properties":{"orchestrator":{"type":"string","description":"The name of the custom orchestrator to use."}},"description":"Properties to configure a custom container service cluster."},"ContainerServiceDiagnosticsProfile":{"required":["vmDiagnostics"],"type":"object","properties":{"vmDiagnostics":{"$ref":"#/components/schemas/ContainerServiceVMDiagnostics"}},"description":"Profile for diagnostics on the container service cluster."},"ContainerServiceLinuxProfile":{"required":["adminUsername","ssh"],"type":"object","properties":{"adminUsername":{"pattern":"^[A-Za-z][-A-Za-z0-9_]*$","type":"string","description":"The administrator username to use for Linux VMs."},"ssh":{"$ref":"#/components/schemas/ContainerServiceSshConfiguration"}},"description":"Profile for Linux VMs in the container service cluster."},"ContainerServiceListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to get the next set of container service results.","readOnly":true},"value":{"type":"array","description":"The list of container services.","items":{"$ref":"#/components/schemas/ContainerService"}}},"description":"The response from the List Container Services operation."},"ContainerServiceMasterProfile":{"required":["dnsPrefix","vmSize"],"type":"object","properties":{"count":{"type":"integer","description":"Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1.","format":"int32","default":1,"enum":[1,3,5]},"dnsPrefix":{"type":"string","description":"DNS prefix to be used to create the FQDN for the master pool."},"firstConsecutiveStaticIP":{"type":"string","description":"FirstConsecutiveStaticIP used to specify the first static ip of masters.","default":"10.240.255.5"},"fqdn":{"type":"string","description":"FQDN for the master pool.","readOnly":true},"osDiskSizeGB":{"$ref":"#/components/schemas/ContainerServiceOSDisk"},"storageProfile":{"$ref":"#/components/schemas/ContainerServiceStorageProfile"},"vmSize":{"$ref":"#/components/schemas/ContainerServiceVMSize"},"vnetSubnetID":{"$ref":"#/components/schemas/ContainerServiceVnetSubnetID"}},"description":"Profile for the container service master."},"ContainerServiceOSDisk":{"maximum":1023,"minimum":0,"type":"integer","description":"OS Disk Size in GB to be used to specify the disk size for every machine in this master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified.","format":"int32"},"ContainerServiceOrchestratorProfile":{"required":["orchestratorType"],"type":"object","properties":{"orchestratorType":{"type":"string","description":"The orchestrator to use to manage container service cluster resources. Valid values are Kubernetes, Swarm, DCOS, DockerCE and Custom.","enum":["Kubernetes","Swarm","DCOS","DockerCE","Custom"]},"orchestratorVersion":{"type":"string","description":"The version of the orchestrator to use. You can specify the major.minor.patch part of the actual version.For example, you can specify version as \"1.6.11\"."}},"description":"Profile for the container service orchestrator."},"ContainerServiceProperties":{"required":["linuxProfile","masterProfile","orchestratorProfile"],"type":"object","properties":{"agentPoolProfiles":{"type":"array","description":"Properties of the agent pool.","items":{"$ref":"#/components/schemas/ContainerServiceAgentPoolProfile"}},"customProfile":{"$ref":"#/components/schemas/ContainerServiceCustomProfile"},"diagnosticsProfile":{"$ref":"#/components/schemas/ContainerServiceDiagnosticsProfile"},"linuxProfile":{"$ref":"#/components/schemas/ContainerServiceLinuxProfile"},"masterProfile":{"$ref":"#/components/schemas/ContainerServiceMasterProfile"},"orchestratorProfile":{"$ref":"#/components/schemas/ContainerServiceOrchestratorProfile"},"provisioningState":{"type":"string","description":"The current deployment or provisioning state, which only appears in the response.","readOnly":true},"servicePrincipalProfile":{"$ref":"#/components/schemas/ContainerServiceServicePrincipalProfile"},"windowsProfile":{"$ref":"#/components/schemas/ContainerServiceWindowsProfile"}},"description":"Properties of the container service."},"ContainerServiceServicePrincipalProfile":{"required":["clientId"],"type":"object","properties":{"clientId":{"type":"string","description":"The ID for the service principal."},"keyVaultSecretRef":{"$ref":"#/components/schemas/KeyVaultSecretRef"},"secret":{"type":"string","description":"The secret password associated with the service principal in plain text."}},"description":"Information about a service principal identity for the cluster to use for manipulating Azure APIs. Either secret or keyVaultSecretRef must be specified."},"ContainerServiceSshConfiguration":{"required":["publicKeys"],"type":"object","properties":{"publicKeys":{"type":"array","description":"The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified.","items":{"$ref":"#/components/schemas/ContainerServiceSshPublicKey"}}},"description":"SSH configuration for Linux-based VMs running on Azure."},"ContainerServiceSshPublicKey":{"required":["keyData"],"type":"object","properties":{"keyData":{"type":"string","description":"Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers."}},"description":"Contains information about SSH certificate public key data."},"ContainerServiceStorageProfile":{"type":"string","description":"Storage profile specifies what kind of storage used. Choose from StorageAccount and ManagedDisks. Leave it empty, we will choose for you based on the orchestrator choice.","enum":["StorageAccount","ManagedDisks"]},"ContainerServiceVMDiagnostics":{"required":["enabled"],"type":"object","properties":{"enabled":{"type":"boolean","description":"Whether the VM diagnostic agent is provisioned on the VM."},"storageUri":{"type":"string","description":"The URI of the storage account where diagnostics are stored.","readOnly":true}},"description":"Profile for diagnostics on the container service VMs."},"ContainerServiceVMSize":{"type":"string","description":"Size of agent VMs.","enum":["Standard_A1","Standard_A10","Standard_A11","Standard_A1_v2","Standard_A2","Standard_A2_v2","Standard_A2m_v2","Standard_A3","Standard_A4","Standard_A4_v2","Standard_A4m_v2","Standard_A5","Standard_A6","Standard_A7","Standard_A8","Standard_A8_v2","Standard_A8m_v2","Standard_A9","Standard_B2ms","Standard_B2s","Standard_B4ms","Standard_B8ms","Standard_D1","Standard_D11","Standard_D11_v2","Standard_D11_v2_Promo","Standard_D12","Standard_D12_v2","Standard_D12_v2_Promo","Standard_D13","Standard_D13_v2","Standard_D13_v2_Promo","Standard_D14","Standard_D14_v2","Standard_D14_v2_Promo","Standard_D15_v2","Standard_D16_v3","Standard_D16s_v3","Standard_D1_v2","Standard_D2","Standard_D2_v2","Standard_D2_v2_Promo","Standard_D2_v3","Standard_D2s_v3","Standard_D3","Standard_D32_v3","Standard_D32s_v3","Standard_D3_v2","Standard_D3_v2_Promo","Standard_D4","Standard_D4_v2","Standard_D4_v2_Promo","Standard_D4_v3","Standard_D4s_v3","Standard_D5_v2","Standard_D5_v2_Promo","Standard_D64_v3","Standard_D64s_v3","Standard_D8_v3","Standard_D8s_v3","Standard_DS1","Standard_DS11","Standard_DS11_v2","Standard_DS11_v2_Promo","Standard_DS12","Standard_DS12_v2","Standard_DS12_v2_Promo","Standard_DS13","Standard_DS13-2_v2","Standard_DS13-4_v2","Standard_DS13_v2","Standard_DS13_v2_Promo","Standard_DS14","Standard_DS14-4_v2","Standard_DS14-8_v2","Standard_DS14_v2","Standard_DS14_v2_Promo","Standard_DS15_v2","Standard_DS1_v2","Standard_DS2","Standard_DS2_v2","Standard_DS2_v2_Promo","Standard_DS3","Standard_DS3_v2","Standard_DS3_v2_Promo","Standard_DS4","Standard_DS4_v2","Standard_DS4_v2_Promo","Standard_DS5_v2","Standard_DS5_v2_Promo","Standard_E16_v3","Standard_E16s_v3","Standard_E2_v3","Standard_E2s_v3","Standard_E32-16s_v3","Standard_E32-8s_v3","Standard_E32_v3","Standard_E32s_v3","Standard_E4_v3","Standard_E4s_v3","Standard_E64-16s_v3","Standard_E64-32s_v3","Standard_E64_v3","Standard_E64s_v3","Standard_E8_v3","Standard_E8s_v3","Standard_F1","Standard_F16","Standard_F16s","Standard_F16s_v2","Standard_F1s","Standard_F2","Standard_F2s","Standard_F2s_v2","Standard_F32s_v2","Standard_F4","Standard_F4s","Standard_F4s_v2","Standard_F64s_v2","Standard_F72s_v2","Standard_F8","Standard_F8s","Standard_F8s_v2","Standard_G1","Standard_G2","Standard_G3","Standard_G4","Standard_G5","Standard_GS1","Standard_GS2","Standard_GS3","Standard_GS4","Standard_GS4-4","Standard_GS4-8","Standard_GS5","Standard_GS5-16","Standard_GS5-8","Standard_H16","Standard_H16m","Standard_H16mr","Standard_H16r","Standard_H8","Standard_H8m","Standard_L16s","Standard_L32s","Standard_L4s","Standard_L8s","Standard_M128-32ms","Standard_M128-64ms","Standard_M128ms","Standard_M128s","Standard_M64-16ms","Standard_M64-32ms","Standard_M64ms","Standard_M64s","Standard_NC12","Standard_NC12s_v2","Standard_NC12s_v3","Standard_NC24","Standard_NC24r","Standard_NC24rs_v2","Standard_NC24rs_v3","Standard_NC24s_v2","Standard_NC24s_v3","Standard_NC6","Standard_NC6s_v2","Standard_NC6s_v3","Standard_ND12s","Standard_ND24rs","Standard_ND24s","Standard_ND6s","Standard_NV12","Standard_NV24","Standard_NV6"]},"ContainerServiceVnetSubnetID":{"type":"string","description":"VNet SubnetID specifies the VNet's subnet identifier."},"ContainerServiceWindowsProfile":{"required":["adminPassword","adminUsername"],"type":"object","properties":{"adminPassword":{"pattern":"^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$","type":"string","description":"The administrator password to use for Windows VMs."},"adminUsername":{"pattern":"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$","type":"string","description":"The administrator username to use for Windows VMs."}},"description":"Profile for Windows VMs in the container service cluster."},"KeyVaultSecretRef":{"required":["secretName","vaultID"],"type":"object","properties":{"secretName":{"type":"string","description":"The secret name."},"vaultID":{"type":"string","description":"Key vault identifier."},"version":{"type":"string","description":"The secret version."}},"description":"Reference to a secret stored in Azure Key Vault."},"OSType":{"type":"string","description":"OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux.","default":"Linux","enum":["Linux","Windows"]},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Resource name","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags"},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"The Resource model definition."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"ResourceGroupParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"ResourceNameParameter":{"name":"resourceName","in":"path","description":"The name of the resource.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ContainerServiceClient",
+    "description" : "The Container Service Client.",
+    "version" : "2017-07-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/containerServices" : {
+      "get" : {
+        "tags" : [ "ContainerServices" ],
+        "summary" : "Gets a list of container services in the specified subscription.",
+        "description" : "Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents.",
+        "operationId" : "ContainerServices_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerServiceListResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices" : {
+      "get" : {
+        "tags" : [ "ContainerServices" ],
+        "summary" : "Gets a list of container services in the specified resource group.",
+        "description" : "Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents.",
+        "operationId" : "ContainerServices_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerServiceListResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices/{containerServiceName}" : {
+      "get" : {
+        "tags" : [ "ContainerService" ],
+        "summary" : "Gets the properties of the specified container service.",
+        "description" : "Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. ",
+        "operationId" : "ContainerServices_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "containerServiceName",
+          "in" : "path",
+          "description" : "The name of the container service in the specified subscription and resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerService"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      },
+      "put" : {
+        "tags" : [ "ContainerService" ],
+        "summary" : "Creates or updates a container service.",
+        "description" : "Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.",
+        "operationId" : "ContainerServices_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "containerServiceName",
+          "in" : "path",
+          "description" : "The name of the container service in the specified subscription and resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the Create or Update a Container Service operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContainerService"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerService"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerService"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContainerService"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      },
+      "delete" : {
+        "tags" : [ "ContainerService" ],
+        "summary" : "Deletes the specified container service.",
+        "description" : "Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created as part of creating a container service, including storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can be deleted individually.",
+        "operationId" : "ContainerServices_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "containerServiceName",
+          "in" : "path",
+          "description" : "The name of the container service in the specified subscription and resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted"
+          },
+          "204" : {
+            "description" : "Not found"
+          }
+        },
+        "deprecated" : true
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ContainerService" : {
+        "description" : "Container service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "properties" : {
+              "$ref" : "#/components/schemas/ContainerServiceProperties"
+            }
+          }
+        } ]
+      },
+      "ContainerServiceAgentPoolProfile" : {
+        "required" : [ "name", "vmSize" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. ",
+            "format" : "int32",
+            "default" : 1
+          },
+          "dnsPrefix" : {
+            "type" : "string",
+            "description" : "DNS prefix to be used to create the FQDN for the agent pool."
+          },
+          "fqdn" : {
+            "type" : "string",
+            "description" : "FQDN for the agent pool.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Unique name of the agent pool profile in the context of the subscription and resource group."
+          },
+          "osDiskSizeGB" : {
+            "$ref" : "#/components/schemas/ContainerServiceOSDisk"
+          },
+          "osType" : {
+            "$ref" : "#/components/schemas/OSType"
+          },
+          "ports" : {
+            "type" : "array",
+            "description" : "Ports number array used to expose on this agent pool. The default opened ports are different based on your choice of orchestrator.",
+            "items" : {
+              "maximum" : 65535,
+              "minimum" : 1,
+              "type" : "integer"
+            }
+          },
+          "storageProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceStorageProfile"
+          },
+          "vmSize" : {
+            "$ref" : "#/components/schemas/ContainerServiceVMSize"
+          },
+          "vnetSubnetID" : {
+            "$ref" : "#/components/schemas/ContainerServiceVnetSubnetID"
+          }
+        },
+        "description" : "Profile for the container service agent pool."
+      },
+      "ContainerServiceCustomProfile" : {
+        "required" : [ "orchestrator" ],
+        "type" : "object",
+        "properties" : {
+          "orchestrator" : {
+            "type" : "string",
+            "description" : "The name of the custom orchestrator to use."
+          }
+        },
+        "description" : "Properties to configure a custom container service cluster."
+      },
+      "ContainerServiceDiagnosticsProfile" : {
+        "required" : [ "vmDiagnostics" ],
+        "type" : "object",
+        "properties" : {
+          "vmDiagnostics" : {
+            "$ref" : "#/components/schemas/ContainerServiceVMDiagnostics"
+          }
+        },
+        "description" : "Profile for diagnostics on the container service cluster."
+      },
+      "ContainerServiceLinuxProfile" : {
+        "required" : [ "adminUsername", "ssh" ],
+        "type" : "object",
+        "properties" : {
+          "adminUsername" : {
+            "pattern" : "^[A-Za-z][-A-Za-z0-9_]*$",
+            "type" : "string",
+            "description" : "The administrator username to use for Linux VMs."
+          },
+          "ssh" : {
+            "$ref" : "#/components/schemas/ContainerServiceSshConfiguration"
+          }
+        },
+        "description" : "Profile for Linux VMs in the container service cluster."
+      },
+      "ContainerServiceListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to get the next set of container service results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of container services.",
+            "items" : {
+              "$ref" : "#/components/schemas/ContainerService"
+            }
+          }
+        },
+        "description" : "The response from the List Container Services operation."
+      },
+      "ContainerServiceMasterProfile" : {
+        "required" : [ "dnsPrefix", "vmSize" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "description" : "Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1.",
+            "format" : "int32",
+            "default" : 1,
+            "enum" : [ 1, 3, 5 ]
+          },
+          "dnsPrefix" : {
+            "type" : "string",
+            "description" : "DNS prefix to be used to create the FQDN for the master pool."
+          },
+          "firstConsecutiveStaticIP" : {
+            "type" : "string",
+            "description" : "FirstConsecutiveStaticIP used to specify the first static ip of masters.",
+            "default" : "10.240.255.5"
+          },
+          "fqdn" : {
+            "type" : "string",
+            "description" : "FQDN for the master pool.",
+            "readOnly" : true
+          },
+          "osDiskSizeGB" : {
+            "$ref" : "#/components/schemas/ContainerServiceOSDisk"
+          },
+          "storageProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceStorageProfile"
+          },
+          "vmSize" : {
+            "$ref" : "#/components/schemas/ContainerServiceVMSize"
+          },
+          "vnetSubnetID" : {
+            "$ref" : "#/components/schemas/ContainerServiceVnetSubnetID"
+          }
+        },
+        "description" : "Profile for the container service master."
+      },
+      "ContainerServiceOSDisk" : {
+        "maximum" : 1023,
+        "minimum" : 0,
+        "type" : "integer",
+        "description" : "OS Disk Size in GB to be used to specify the disk size for every machine in this master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified.",
+        "format" : "int32"
+      },
+      "ContainerServiceOrchestratorProfile" : {
+        "required" : [ "orchestratorType" ],
+        "type" : "object",
+        "properties" : {
+          "orchestratorType" : {
+            "type" : "string",
+            "description" : "The orchestrator to use to manage container service cluster resources. Valid values are Kubernetes, Swarm, DCOS, DockerCE and Custom.",
+            "enum" : [ "Kubernetes", "Swarm", "DCOS", "DockerCE", "Custom" ]
+          },
+          "orchestratorVersion" : {
+            "type" : "string",
+            "description" : "The version of the orchestrator to use. You can specify the major.minor.patch part of the actual version.For example, you can specify version as \"1.6.11\"."
+          }
+        },
+        "description" : "Profile for the container service orchestrator."
+      },
+      "ContainerServiceProperties" : {
+        "required" : [ "linuxProfile", "masterProfile", "orchestratorProfile" ],
+        "type" : "object",
+        "properties" : {
+          "agentPoolProfiles" : {
+            "type" : "array",
+            "description" : "Properties of the agent pool.",
+            "items" : {
+              "$ref" : "#/components/schemas/ContainerServiceAgentPoolProfile"
+            }
+          },
+          "customProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceCustomProfile"
+          },
+          "diagnosticsProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceDiagnosticsProfile"
+          },
+          "linuxProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceLinuxProfile"
+          },
+          "masterProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceMasterProfile"
+          },
+          "orchestratorProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceOrchestratorProfile"
+          },
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "The current deployment or provisioning state, which only appears in the response.",
+            "readOnly" : true
+          },
+          "servicePrincipalProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceServicePrincipalProfile"
+          },
+          "windowsProfile" : {
+            "$ref" : "#/components/schemas/ContainerServiceWindowsProfile"
+          }
+        },
+        "description" : "Properties of the container service."
+      },
+      "ContainerServiceServicePrincipalProfile" : {
+        "required" : [ "clientId" ],
+        "type" : "object",
+        "properties" : {
+          "clientId" : {
+            "type" : "string",
+            "description" : "The ID for the service principal."
+          },
+          "keyVaultSecretRef" : {
+            "$ref" : "#/components/schemas/KeyVaultSecretRef"
+          },
+          "secret" : {
+            "type" : "string",
+            "description" : "The secret password associated with the service principal in plain text."
+          }
+        },
+        "description" : "Information about a service principal identity for the cluster to use for manipulating Azure APIs. Either secret or keyVaultSecretRef must be specified."
+      },
+      "ContainerServiceSshConfiguration" : {
+        "required" : [ "publicKeys" ],
+        "type" : "object",
+        "properties" : {
+          "publicKeys" : {
+            "type" : "array",
+            "description" : "The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified.",
+            "items" : {
+              "$ref" : "#/components/schemas/ContainerServiceSshPublicKey"
+            }
+          }
+        },
+        "description" : "SSH configuration for Linux-based VMs running on Azure."
+      },
+      "ContainerServiceSshPublicKey" : {
+        "required" : [ "keyData" ],
+        "type" : "object",
+        "properties" : {
+          "keyData" : {
+            "type" : "string",
+            "description" : "Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers."
+          }
+        },
+        "description" : "Contains information about SSH certificate public key data."
+      },
+      "ContainerServiceStorageProfile" : {
+        "type" : "string",
+        "description" : "Storage profile specifies what kind of storage used. Choose from StorageAccount and ManagedDisks. Leave it empty, we will choose for you based on the orchestrator choice.",
+        "enum" : [ "StorageAccount", "ManagedDisks" ]
+      },
+      "ContainerServiceVMDiagnostics" : {
+        "required" : [ "enabled" ],
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Whether the VM diagnostic agent is provisioned on the VM."
+          },
+          "storageUri" : {
+            "type" : "string",
+            "description" : "The URI of the storage account where diagnostics are stored.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Profile for diagnostics on the container service VMs."
+      },
+      "ContainerServiceVMSize" : {
+        "type" : "string",
+        "description" : "Size of agent VMs.",
+        "enum" : [ "Standard_A1", "Standard_A10", "Standard_A11", "Standard_A1_v2", "Standard_A2", "Standard_A2_v2", "Standard_A2m_v2", "Standard_A3", "Standard_A4", "Standard_A4_v2", "Standard_A4m_v2", "Standard_A5", "Standard_A6", "Standard_A7", "Standard_A8", "Standard_A8_v2", "Standard_A8m_v2", "Standard_A9", "Standard_B2ms", "Standard_B2s", "Standard_B4ms", "Standard_B8ms", "Standard_D1", "Standard_D11", "Standard_D11_v2", "Standard_D11_v2_Promo", "Standard_D12", "Standard_D12_v2", "Standard_D12_v2_Promo", "Standard_D13", "Standard_D13_v2", "Standard_D13_v2_Promo", "Standard_D14", "Standard_D14_v2", "Standard_D14_v2_Promo", "Standard_D15_v2", "Standard_D16_v3", "Standard_D16s_v3", "Standard_D1_v2", "Standard_D2", "Standard_D2_v2", "Standard_D2_v2_Promo", "Standard_D2_v3", "Standard_D2s_v3", "Standard_D3", "Standard_D32_v3", "Standard_D32s_v3", "Standard_D3_v2", "Standard_D3_v2_Promo", "Standard_D4", "Standard_D4_v2", "Standard_D4_v2_Promo", "Standard_D4_v3", "Standard_D4s_v3", "Standard_D5_v2", "Standard_D5_v2_Promo", "Standard_D64_v3", "Standard_D64s_v3", "Standard_D8_v3", "Standard_D8s_v3", "Standard_DS1", "Standard_DS11", "Standard_DS11_v2", "Standard_DS11_v2_Promo", "Standard_DS12", "Standard_DS12_v2", "Standard_DS12_v2_Promo", "Standard_DS13", "Standard_DS13-2_v2", "Standard_DS13-4_v2", "Standard_DS13_v2", "Standard_DS13_v2_Promo", "Standard_DS14", "Standard_DS14-4_v2", "Standard_DS14-8_v2", "Standard_DS14_v2", "Standard_DS14_v2_Promo", "Standard_DS15_v2", "Standard_DS1_v2", "Standard_DS2", "Standard_DS2_v2", "Standard_DS2_v2_Promo", "Standard_DS3", "Standard_DS3_v2", "Standard_DS3_v2_Promo", "Standard_DS4", "Standard_DS4_v2", "Standard_DS4_v2_Promo", "Standard_DS5_v2", "Standard_DS5_v2_Promo", "Standard_E16_v3", "Standard_E16s_v3", "Standard_E2_v3", "Standard_E2s_v3", "Standard_E32-16s_v3", "Standard_E32-8s_v3", "Standard_E32_v3", "Standard_E32s_v3", "Standard_E4_v3", "Standard_E4s_v3", "Standard_E64-16s_v3", "Standard_E64-32s_v3", "Standard_E64_v3", "Standard_E64s_v3", "Standard_E8_v3", "Standard_E8s_v3", "Standard_F1", "Standard_F16", "Standard_F16s", "Standard_F16s_v2", "Standard_F1s", "Standard_F2", "Standard_F2s", "Standard_F2s_v2", "Standard_F32s_v2", "Standard_F4", "Standard_F4s", "Standard_F4s_v2", "Standard_F64s_v2", "Standard_F72s_v2", "Standard_F8", "Standard_F8s", "Standard_F8s_v2", "Standard_G1", "Standard_G2", "Standard_G3", "Standard_G4", "Standard_G5", "Standard_GS1", "Standard_GS2", "Standard_GS3", "Standard_GS4", "Standard_GS4-4", "Standard_GS4-8", "Standard_GS5", "Standard_GS5-16", "Standard_GS5-8", "Standard_H16", "Standard_H16m", "Standard_H16mr", "Standard_H16r", "Standard_H8", "Standard_H8m", "Standard_L16s", "Standard_L32s", "Standard_L4s", "Standard_L8s", "Standard_M128-32ms", "Standard_M128-64ms", "Standard_M128ms", "Standard_M128s", "Standard_M64-16ms", "Standard_M64-32ms", "Standard_M64ms", "Standard_M64s", "Standard_NC12", "Standard_NC12s_v2", "Standard_NC12s_v3", "Standard_NC24", "Standard_NC24r", "Standard_NC24rs_v2", "Standard_NC24rs_v3", "Standard_NC24s_v2", "Standard_NC24s_v3", "Standard_NC6", "Standard_NC6s_v2", "Standard_NC6s_v3", "Standard_ND12s", "Standard_ND24rs", "Standard_ND24s", "Standard_ND6s", "Standard_NV12", "Standard_NV24", "Standard_NV6" ]
+      },
+      "ContainerServiceVnetSubnetID" : {
+        "type" : "string",
+        "description" : "VNet SubnetID specifies the VNet's subnet identifier."
+      },
+      "ContainerServiceWindowsProfile" : {
+        "required" : [ "adminPassword", "adminUsername" ],
+        "type" : "object",
+        "properties" : {
+          "adminPassword" : {
+            "pattern" : "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$",
+            "type" : "string",
+            "description" : "The administrator password to use for Windows VMs."
+          },
+          "adminUsername" : {
+            "pattern" : "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$",
+            "type" : "string",
+            "description" : "The administrator username to use for Windows VMs."
+          }
+        },
+        "description" : "Profile for Windows VMs in the container service cluster."
+      },
+      "KeyVaultSecretRef" : {
+        "required" : [ "secretName", "vaultID" ],
+        "type" : "object",
+        "properties" : {
+          "secretName" : {
+            "type" : "string",
+            "description" : "The secret name."
+          },
+          "vaultID" : {
+            "type" : "string",
+            "description" : "Key vault identifier."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The secret version."
+          }
+        },
+        "description" : "Reference to a secret stored in Azure Key Vault."
+      },
+      "OSType" : {
+        "type" : "string",
+        "description" : "OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux.",
+        "default" : "Linux",
+        "enum" : [ "Linux", "Windows" ]
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "The Resource model definition."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceNameParameter" : {
+        "name" : "resourceName",
+        "in" : "path",
+        "description" : "The name of the resource.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

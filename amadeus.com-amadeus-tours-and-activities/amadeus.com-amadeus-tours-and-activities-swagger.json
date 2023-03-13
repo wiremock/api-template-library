@@ -1,1 +1,697 @@
-{"openapi":"3.0.1","info":{"title":"Tours and Activities","description":"\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**.","version":"1.0.2"},"servers":[{"url":"https://test.api.amadeus.com/v1"}],"paths":{"/shopping/activities":{"get":{"tags":["Search"],"summary":"Returns Activities around a given location","operationId":"ListActivities","parameters":[{"name":"latitude","in":"query","description":"Latitude (decimal coordinates)","required":true,"schema":{"type":"number"},"example":41.397158},{"name":"longitude","in":"query","description":"Longitude (decimal coordinates)","required":true,"schema":{"type":"number"},"example":2.160873},{"name":"radius","in":"query","description":"radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km.","schema":{"type":"integer","default":1}}],"responses":{"200":{"description":"Successful Operation","content":{"application/vnd.amadeus+json":{"schema":{"title":"Successful Search","type":"object","example":{"data":[{"bookingLink":"https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36","geoCode":{"latitude":"40.414000","longitude":"-3.691000"},"id":"23642","name":"Skip-the-line tickets to the Prado Museum","pictures":["https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"],"price":{"amount":"16.00","currencyCode":"EUR"},"rating":"4.500000","self":{"href":"https://test.api.amadeus.com/v1/shopping/activities/23642","methods":["GET"]},"shortDescription":"Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.","type":"activity"}],"meta":{"count":"1","links":{"self":"https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"}}}}}}},"400":{"description":"Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"default":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}}}}},"/shopping/activities/by-square":{"get":{"tags":["Search"],"summary":"Returns Activities around a given location","operationId":"ListActivitiesBySquare","parameters":[{"name":"north","in":"query","description":"Latitude north of bounding box (decimal coordinates)","required":true,"schema":{"type":"number"},"example":41.397158},{"name":"west","in":"query","description":"Longitude west of bounding box (decimal coordinates)","required":true,"schema":{"type":"number"},"example":2.160873},{"name":"south","in":"query","description":"Latitude south of bounding box (decimal coordinates)","required":true,"schema":{"type":"number"},"example":41.394582},{"name":"east","in":"query","description":"Longitude east of bounding box (decimal coordinates)","required":true,"schema":{"type":"number"},"example":2.177181}],"responses":{"200":{"description":"Successful Operation","content":{"application/vnd.amadeus+json":{"schema":{"title":"Successful Search","type":"object","example":{"data":[{"bookingLink":"https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36","geoCode":{"latitude":"40.414000","longitude":"-3.691000"},"id":"23642","name":"Skip-the-line tickets to the Prado Museum","pictures":["https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"],"price":{"amount":"16.00","currencyCode":"EUR"},"rating":"4.500000","self":{"href":"https://test.api.amadeus.com/v1/shopping/activities/23642","methods":["GET"]},"shortDescription":"Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.","type":"activity"}],"meta":{"count":"1","links":{"self":"https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"}}}}}}},"400":{"description":"Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"default":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}}}}},"/shopping/activities/{activityId}":{"get":{"tags":["Retrieve"],"summary":"Retrieve one activity by its id","operationId":"GETActivity","parameters":[{"name":"activityId","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful Operation","content":{"application/vnd.amadeus+json":{"schema":{"title":"Successful Search","type":"object","example":{"data":{"bookingLink":"https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36","geoCode":{"latitude":"40.414000","longitude":"-3.691000"},"id":"23642","name":"Skip-the-line tickets to the Prado Museum","pictures":["https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"],"price":{"amount":"16.00","currencyCode":"EUR"},"rating":"4.500000","self":{"href":"https://test.api.amadeus.com/v1/shopping/activities/23642","methods":["GET"]},"shortDescription":"Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.","type":"activity"},"meta":{"self":"https://test.api.amadeus.com/v1/shopping/activities/23642"}}}}}},"400":{"description":"Code   | Title\n-------|----------------\n572    | INVALID OPTION\t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"404":{"description":"Not Found","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_404"}}}},"default":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}}}}}},"components":{"schemas":{"Activity":{"title":"Activity","type":"object","properties":{"bookingLink":{"type":"string","description":"url to book the activity"},"description":{"type":"string","description":"full description of the activity"},"geoCode":{"$ref":"#/components/schemas/GeoCode"},"id":{"type":"string","description":"unique id of the ressource","readOnly":true},"minimumDuration":{"type":"string","description":"Minimum recommended duration for the activity"},"name":{"type":"string","description":"activity name"},"pictures":{"type":"array","description":"link to picture related to the activity","items":{"type":"string"}},"price":{"$ref":"#/components/schemas/ElementaryPrice"},"rating":{"type":"string","description":"rating of the activity"},"self":{"$ref":"#/components/schemas/Link"},"shortDescription":{"type":"string","description":"short description of the activity"},"type":{"type":"string","description":"the ressource name","readOnly":true}},"description":"Activity description"},"Collection_Meta":{"title":"Collection_Meta","type":"object","properties":{"count":{"type":"integer","example":1},"links":{"title":"CollectionLinks","type":"object","properties":{"first":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."},"last":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."},"next":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."},"previous":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."},"self":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."},"up":{"type":"string","format":"uri","example":"https://test.api.amadeus.com/v1/area/resources?..."}},"example":{"self":"https://test.api.amadeus.com/v1/area/resources?param=value"}}}},"ElementaryPrice":{"type":"object","properties":{"amount":{"type":"string","description":"Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection."},"currencyCode":{"type":"string","description":"Currency type of the fare."}},"description":"elementaryPrice"},"Error_400":{"required":["errors"],"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/Issue"}}},"example":{"errors":[{"code":477,"detail":"invalid query parameter format","source":{"example":"CDG","parameter":"airport"},"status":400,"title":"INVALID FORMAT"}]}},"Error_404":{"required":["errors"],"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/Issue"}}},"example":{"errors":[{"code":1797,"detail":"no response found for this query parameter","source":{"parameter":"airport"},"status":404,"title":"NOT FOUND"}]}},"Error_500":{"required":["errors"],"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/Issue"}}},"example":{"errors":[{"code":141,"status":500,"title":"SYSTEM ERROR HAS OCCURRED"}]}},"GeoCode":{"type":"object","properties":{"latitude":{"type":"number","description":"latitude of the location","format":"double","example":43.580418},"longitude":{"type":"number","description":"longitude of the location","format":"double","example":7.125102}},"description":"geo position"},"Issue":{"type":"object","properties":{"code":{"type":"integer","description":"an application-specific error code","format":"int64"},"detail":{"type":"string","description":"explanation of the error"},"source":{"title":"Issue_Source","type":"object","properties":{"example":{"type":"string","description":"a string indicating an example of the right value"},"parameter":{"type":"string","description":"a string indicating which URI query parameter caused the issue"},"pointer":{"type":"string","description":"a JSON Pointer [RFC6901] to the associated entity in the request document"}},"description":"an object containing references to the source of the error"},"status":{"type":"integer","description":"the HTTP status code applicable to this error"},"title":{"type":"string","description":"a short summary of the error"}}},"Link":{"type":"object","properties":{"href":{"type":"string","format":"uri"},"methods":{"type":"array","items":{"type":"string","enum":["GET","PUT","DELETE","POST","PATCH"]}}},"example":{"href":"string"}}},"responses":{"404":{"description":"Not Found","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_404"}}}},"500":{"description":"Unexpected Error","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_500"}}}},"400_Retreive":{"description":"Code   | Title\n-------|----------------\n572    | INVALID OPTION\t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"400_Search":{"description":"Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n","content":{"application/vnd.amadeus+json":{"schema":{"$ref":"#/components/schemas/Error_400"}}}},"activities":{"description":"Successful Operation","content":{"application/vnd.amadeus+json":{"schema":{"title":"Successful Search","type":"object","example":{"data":[{"bookingLink":"https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36","geoCode":{"latitude":"40.414000","longitude":"-3.691000"},"id":"23642","name":"Skip-the-line tickets to the Prado Museum","pictures":["https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"],"price":{"amount":"16.00","currencyCode":"EUR"},"rating":"4.500000","self":{"href":"https://test.api.amadeus.com/v1/shopping/activities/23642","methods":["GET"]},"shortDescription":"Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.","type":"activity"}],"meta":{"count":"1","links":{"self":"https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"}}}}}}},"activity":{"description":"Successful Operation","content":{"application/vnd.amadeus+json":{"schema":{"title":"Successful Search","type":"object","example":{"data":{"bookingLink":"https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36","geoCode":{"latitude":"40.414000","longitude":"-3.691000"},"id":"23642","name":"Skip-the-line tickets to the Prado Museum","pictures":["https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"],"price":{"amount":"16.00","currencyCode":"EUR"},"rating":"4.500000","self":{"href":"https://test.api.amadeus.com/v1/shopping/activities/23642","methods":["GET"]},"shortDescription":"Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.","type":"activity"},"meta":{"self":"https://test.api.amadeus.com/v1/shopping/activities/23642"}}}}}}},"parameters":{"activityId":{"name":"activityId","in":"path","required":true,"schema":{"type":"string"},"example":"23642"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Tours and Activities",
+    "description" : "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**.",
+    "version" : "1.0.2"
+  },
+  "servers" : [ {
+    "url" : "https://test.api.amadeus.com/v1"
+  } ],
+  "paths" : {
+    "/shopping/activities" : {
+      "get" : {
+        "tags" : [ "Search" ],
+        "summary" : "Returns Activities around a given location",
+        "operationId" : "ListActivities",
+        "parameters" : [ {
+          "name" : "latitude",
+          "in" : "query",
+          "description" : "Latitude (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 41.397158
+        }, {
+          "name" : "longitude",
+          "in" : "query",
+          "description" : "Longitude (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 2.160873
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km.",
+          "schema" : {
+            "type" : "integer",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Operation",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "title" : "Successful Search",
+                  "type" : "object",
+                  "example" : {
+                    "data" : [ {
+                      "bookingLink" : "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+                      "geoCode" : {
+                        "latitude" : "40.414000",
+                        "longitude" : "-3.691000"
+                      },
+                      "id" : "23642",
+                      "name" : "Skip-the-line tickets to the Prado Museum",
+                      "pictures" : [ "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500" ],
+                      "price" : {
+                        "amount" : "16.00",
+                        "currencyCode" : "EUR"
+                      },
+                      "rating" : "4.500000",
+                      "self" : {
+                        "href" : "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                        "methods" : [ "GET" ]
+                      },
+                      "shortDescription" : "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+                      "type" : "activity"
+                    } ],
+                    "meta" : {
+                      "count" : "1",
+                      "links" : {
+                        "self" : "https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_400"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shopping/activities/by-square" : {
+      "get" : {
+        "tags" : [ "Search" ],
+        "summary" : "Returns Activities around a given location",
+        "operationId" : "ListActivitiesBySquare",
+        "parameters" : [ {
+          "name" : "north",
+          "in" : "query",
+          "description" : "Latitude north of bounding box (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 41.397158
+        }, {
+          "name" : "west",
+          "in" : "query",
+          "description" : "Longitude west of bounding box (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 2.160873
+        }, {
+          "name" : "south",
+          "in" : "query",
+          "description" : "Latitude south of bounding box (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 41.394582
+        }, {
+          "name" : "east",
+          "in" : "query",
+          "description" : "Longitude east of bounding box (decimal coordinates)",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          },
+          "example" : 2.177181
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Operation",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "title" : "Successful Search",
+                  "type" : "object",
+                  "example" : {
+                    "data" : [ {
+                      "bookingLink" : "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+                      "geoCode" : {
+                        "latitude" : "40.414000",
+                        "longitude" : "-3.691000"
+                      },
+                      "id" : "23642",
+                      "name" : "Skip-the-line tickets to the Prado Museum",
+                      "pictures" : [ "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500" ],
+                      "price" : {
+                        "amount" : "16.00",
+                        "currencyCode" : "EUR"
+                      },
+                      "rating" : "4.500000",
+                      "self" : {
+                        "href" : "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                        "methods" : [ "GET" ]
+                      },
+                      "shortDescription" : "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+                      "type" : "activity"
+                    } ],
+                    "meta" : {
+                      "count" : "1",
+                      "links" : {
+                        "self" : "https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_400"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shopping/activities/{activityId}" : {
+      "get" : {
+        "tags" : [ "Retrieve" ],
+        "summary" : "Retrieve one activity by its id",
+        "operationId" : "GETActivity",
+        "parameters" : [ {
+          "name" : "activityId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Operation",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "title" : "Successful Search",
+                  "type" : "object",
+                  "example" : {
+                    "data" : {
+                      "bookingLink" : "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+                      "geoCode" : {
+                        "latitude" : "40.414000",
+                        "longitude" : "-3.691000"
+                      },
+                      "id" : "23642",
+                      "name" : "Skip-the-line tickets to the Prado Museum",
+                      "pictures" : [ "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500" ],
+                      "price" : {
+                        "amount" : "16.00",
+                        "currencyCode" : "EUR"
+                      },
+                      "rating" : "4.500000",
+                      "self" : {
+                        "href" : "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                        "methods" : [ "GET" ]
+                      },
+                      "shortDescription" : "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+                      "type" : "activity"
+                    },
+                    "meta" : {
+                      "self" : "https://test.api.amadeus.com/v1/shopping/activities/23642"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Code   | Title\n-------|----------------\n572    | INVALID OPTION\t     \n",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_400"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_404"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected Error",
+            "content" : {
+              "application/vnd.amadeus+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error_500"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Activity" : {
+        "title" : "Activity",
+        "type" : "object",
+        "properties" : {
+          "bookingLink" : {
+            "type" : "string",
+            "description" : "url to book the activity"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "full description of the activity"
+          },
+          "geoCode" : {
+            "$ref" : "#/components/schemas/GeoCode"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "unique id of the ressource",
+            "readOnly" : true
+          },
+          "minimumDuration" : {
+            "type" : "string",
+            "description" : "Minimum recommended duration for the activity"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "activity name"
+          },
+          "pictures" : {
+            "type" : "array",
+            "description" : "link to picture related to the activity",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "price" : {
+            "$ref" : "#/components/schemas/ElementaryPrice"
+          },
+          "rating" : {
+            "type" : "string",
+            "description" : "rating of the activity"
+          },
+          "self" : {
+            "$ref" : "#/components/schemas/Link"
+          },
+          "shortDescription" : {
+            "type" : "string",
+            "description" : "short description of the activity"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "the ressource name",
+            "readOnly" : true
+          }
+        },
+        "description" : "Activity description"
+      },
+      "Collection_Meta" : {
+        "title" : "Collection_Meta",
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "links" : {
+            "title" : "CollectionLinks",
+            "type" : "object",
+            "properties" : {
+              "first" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              },
+              "last" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              },
+              "next" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              },
+              "previous" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              },
+              "self" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              },
+              "up" : {
+                "type" : "string",
+                "format" : "uri",
+                "example" : "https://test.api.amadeus.com/v1/area/resources?..."
+              }
+            },
+            "example" : {
+              "self" : "https://test.api.amadeus.com/v1/area/resources?param=value"
+            }
+          }
+        }
+      },
+      "ElementaryPrice" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "string",
+            "description" : "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection."
+          },
+          "currencyCode" : {
+            "type" : "string",
+            "description" : "Currency type of the fare."
+          }
+        },
+        "description" : "elementaryPrice"
+      },
+      "Error_400" : {
+        "required" : [ "errors" ],
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Issue"
+            }
+          }
+        },
+        "example" : {
+          "errors" : [ {
+            "code" : 477,
+            "detail" : "invalid query parameter format",
+            "source" : {
+              "example" : "CDG",
+              "parameter" : "airport"
+            },
+            "status" : 400,
+            "title" : "INVALID FORMAT"
+          } ]
+        }
+      },
+      "Error_404" : {
+        "required" : [ "errors" ],
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Issue"
+            }
+          }
+        },
+        "example" : {
+          "errors" : [ {
+            "code" : 1797,
+            "detail" : "no response found for this query parameter",
+            "source" : {
+              "parameter" : "airport"
+            },
+            "status" : 404,
+            "title" : "NOT FOUND"
+          } ]
+        }
+      },
+      "Error_500" : {
+        "required" : [ "errors" ],
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Issue"
+            }
+          }
+        },
+        "example" : {
+          "errors" : [ {
+            "code" : 141,
+            "status" : 500,
+            "title" : "SYSTEM ERROR HAS OCCURRED"
+          } ]
+        }
+      },
+      "GeoCode" : {
+        "type" : "object",
+        "properties" : {
+          "latitude" : {
+            "type" : "number",
+            "description" : "latitude of the location",
+            "format" : "double",
+            "example" : 43.580418
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "longitude of the location",
+            "format" : "double",
+            "example" : 7.125102
+          }
+        },
+        "description" : "geo position"
+      },
+      "Issue" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "an application-specific error code",
+            "format" : "int64"
+          },
+          "detail" : {
+            "type" : "string",
+            "description" : "explanation of the error"
+          },
+          "source" : {
+            "title" : "Issue_Source",
+            "type" : "object",
+            "properties" : {
+              "example" : {
+                "type" : "string",
+                "description" : "a string indicating an example of the right value"
+              },
+              "parameter" : {
+                "type" : "string",
+                "description" : "a string indicating which URI query parameter caused the issue"
+              },
+              "pointer" : {
+                "type" : "string",
+                "description" : "a JSON Pointer [RFC6901] to the associated entity in the request document"
+              }
+            },
+            "description" : "an object containing references to the source of the error"
+          },
+          "status" : {
+            "type" : "integer",
+            "description" : "the HTTP status code applicable to this error"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "a short summary of the error"
+          }
+        }
+      },
+      "Link" : {
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "methods" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "GET", "PUT", "DELETE", "POST", "PATCH" ]
+            }
+          }
+        },
+        "example" : {
+          "href" : "string"
+        }
+      }
+    },
+    "responses" : {
+      "404" : {
+        "description" : "Not Found",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_404"
+            }
+          }
+        }
+      },
+      "500" : {
+        "description" : "Unexpected Error",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_500"
+            }
+          }
+        }
+      },
+      "400_Retreive" : {
+        "description" : "Code   | Title\n-------|----------------\n572    | INVALID OPTION\t     \n",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_400"
+            }
+          }
+        }
+      },
+      "400_Search" : {
+        "description" : "Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error_400"
+            }
+          }
+        }
+      },
+      "activities" : {
+        "description" : "Successful Operation",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "title" : "Successful Search",
+              "type" : "object",
+              "example" : {
+                "data" : [ {
+                  "bookingLink" : "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+                  "geoCode" : {
+                    "latitude" : "40.414000",
+                    "longitude" : "-3.691000"
+                  },
+                  "id" : "23642",
+                  "name" : "Skip-the-line tickets to the Prado Museum",
+                  "pictures" : [ "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500" ],
+                  "price" : {
+                    "amount" : "16.00",
+                    "currencyCode" : "EUR"
+                  },
+                  "rating" : "4.500000",
+                  "self" : {
+                    "href" : "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                    "methods" : [ "GET" ]
+                  },
+                  "shortDescription" : "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+                  "type" : "activity"
+                } ],
+                "meta" : {
+                  "count" : "1",
+                  "links" : {
+                    "self" : "https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "activity" : {
+        "description" : "Successful Operation",
+        "content" : {
+          "application/vnd.amadeus+json" : {
+            "schema" : {
+              "title" : "Successful Search",
+              "type" : "object",
+              "example" : {
+                "data" : {
+                  "bookingLink" : "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+                  "geoCode" : {
+                    "latitude" : "40.414000",
+                    "longitude" : "-3.691000"
+                  },
+                  "id" : "23642",
+                  "name" : "Skip-the-line tickets to the Prado Museum",
+                  "pictures" : [ "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500" ],
+                  "price" : {
+                    "amount" : "16.00",
+                    "currencyCode" : "EUR"
+                  },
+                  "rating" : "4.500000",
+                  "self" : {
+                    "href" : "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                    "methods" : [ "GET" ]
+                  },
+                  "shortDescription" : "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+                  "type" : "activity"
+                },
+                "meta" : {
+                  "self" : "https://test.api.amadeus.com/v1/shopping/activities/23642"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "activityId" : {
+        "name" : "activityId",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "23642"
+      }
+    }
+  }
+}

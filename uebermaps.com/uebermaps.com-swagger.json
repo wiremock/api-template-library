@@ -1,1 +1,2645 @@
-{"openapi":"3.0.1","info":{"title":"uebermaps API endpoints","description":"Enable people to store spots on public and private maps","termsOfService":"https://uebermaps.com/terms/","contact":{"name":"uebermaps API Team"},"version":"2.0"},"servers":[{"url":"//uebermaps.com/api/v2"}],"paths":{"/account":{"patch":{"tags":["Account"],"summary":"Update account","description":"Update account. Wrap map parameters in [user].","requestBody":{"description":"user attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserEditable"}}},"required":false},"responses":{"200":{"description":"Contains user data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/User"}}}}}}},"/attachments/{id}":{"delete":{"tags":["Attachments"],"summary":"Delete attachment","description":"Delete attachment.","parameters":[{"name":"id","in":"path","description":"Attachment id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted attachment.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Attachment"}}}}}}},"/authentication":{"post":{"tags":["Authentication"],"summary":"Sign in user","description":"Sign in user. Wrap authentication parameters in [user].","requestBody":{"description":"user authentication attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserAuthentication"}}},"required":true},"responses":{"200":{"description":"Contains user data including authentication token for subsequent requests","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserFullProfile"}}}}}}},"/collaborator_invitations":{"get":{"tags":["CollaboratorInvitations"],"summary":"List your collaborator invitations","description":"List your collaborator invitations.","responses":{"200":{"description":"Contains list of collaborator invitations.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CollaboratorInvitation"}}}}}}},"post":{"tags":["CollaboratorInvitations"],"summary":"Invite user to collaborate on map","description":"Invite user to collaborate on map.","requestBody":{"description":"Supply map_id and either a comma separated list of user_ids or emails. Optionally you can provide a 'is_admin' parameter with 'true' or 'false' to give the invited users admin privileges.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorInvitationCreate"}}},"required":false},"responses":{"200":{"description":"Contains collaborator invitation data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorInvitation"}}}}}}},"/collaborator_invitations/{id}":{"get":{"tags":["CollaboratorInvitations"],"summary":"Show collaborator invitation","description":"Show collaborator invitation","parameters":[{"name":"id","in":"path","description":"Collaborator invitation id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains collaborator invitation data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorInvitation"}}}}}},"delete":{"tags":["CollaboratorInvitations"],"summary":"Delete collaborator invitation","description":"Delete collaborator invitation.","parameters":[{"name":"id","in":"path","description":"Collaborator invitation id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted collaborator invitation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorInvitation"}}}}}},"patch":{"tags":["CollaboratorInvitations"],"summary":"Accept collaborator invitation.","description":"Accept collaborator invitation.","parameters":[{"name":"id","in":"path","description":"Collaborator invitation id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains collaborator invitation data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorInvitation"}}}}}}},"/comments/{id}":{"delete":{"tags":["Comments"],"summary":"Delete comment","description":"Delete comment.","parameters":[{"name":"id","in":"path","description":"Comment id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted comment.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Comment"}}}}}},"patch":{"tags":["Comments"],"summary":"Update comment","description":"Update comment. Wrap comment parameters in [comment].","parameters":[{"name":"id","in":"path","description":"Comment id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Comment attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CommentEditable"}}},"required":false},"responses":{"200":{"description":"Contains comment data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Comment"}}}}}}},"/events":{"get":{"tags":["Events"],"summary":"List your own events","description":"List your own events.","parameters":[{"name":"timeframe_start","in":"query","description":"Begin of time range of event (ISO 8601 date format).","schema":{"type":"string"}},{"name":"timeframe_end","in":"query","description":"End of time range of event (ISO 8601 date format).","schema":{"type":"string"}},{"name":"bounds","in":"query","description":"To refine your event index request to contain only events within                                                             a geographical box pass the followng bounds parameters.                                                             F. e. to get events within 'Hamburg, St. Pauli':                                                             bounds[sw_lat]=53.54831449741324                                                             bounds[sw_lon]=9.943227767944336                                                             bounds[ne_lat]=53.5571103674878                                                             bounds[ne_lon]=9.9776029586792","schema":{"type":"string"}}],"responses":{"200":{"description":"Contains list of events.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Event"}}}}}}}},"/events/{id}":{"get":{"tags":["Events"],"summary":"Get event","description":"Get basic information about an event","parameters":[{"name":"id","in":"path","description":"Id of event","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains event data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Event"}}}}}},"delete":{"tags":["Events"],"summary":"Delete event","description":"Delete event.","parameters":[{"name":"id","in":"path","description":"Event id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted event.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Event"}}}}}},"patch":{"tags":["Events"],"summary":"Update event","description":"Update event. Wrap event parameters in [event].","parameters":[{"name":"id","in":"path","description":"Event id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Event attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EventEditable"}}},"required":false},"responses":{"200":{"description":"Contains map data, map settings and your relation to this map","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Map"}}}}}}},"/maps":{"get":{"tags":["Maps"],"summary":"List your own maps","description":"List your own maps.","responses":{"200":{"description":"Contains list of maps.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Map"}}}}}}},"post":{"tags":["Maps"],"summary":"Create map","description":"Create map. Wrap map parameters in [map]. To add a map header picture pass a base64 encoded string to [map][picture].","requestBody":{"description":"map attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MapEditable"}}},"required":false},"responses":{"200":{"description":"Contains map data, map settings and your relation to this map","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Map"}}}}}}},"/maps/search":{"get":{"tags":["Search"],"summary":"Search maps","description":"Search maps","parameters":[{"name":"q","in":"query","description":"Query","schema":{"type":"string"}},{"name":"d","in":"query","description":"Distance. Diameter of search radius in meter (default: 2000 meter)","schema":{"type":"integer"}},{"name":"lat","in":"query","description":"Latitude for search radius (default distance: 2000 meter)","schema":{"type":"number"}},{"name":"lon","in":"query","description":"Longitude for search radius (default distance: 2000 meter)","schema":{"type":"number"}}],"responses":{"200":{"description":"Contains map data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Map"}}}}}}},"/maps/{id}":{"get":{"tags":["Maps"],"summary":"Get map","description":"Get basic information about a map","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains map data, map settings and your relation to this map","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MapWithRelation"}}}}}},"delete":{"tags":["Maps"],"summary":"Delete map","description":"Delete map.","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted map.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Map"}}}}}},"patch":{"tags":["Maps"],"summary":"Update map","description":"Update map. Wrap map parameters in [map]. To update the map header picture pass a base64 encoded string to [map][picture].","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"map settings attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MapEditable"}}},"required":false},"responses":{"200":{"description":"Contains map data, map settings and your relation to this map","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Map"}}}}}}},"/maps/{id}/attachments":{"get":{"tags":["Attachments"],"summary":"List attachments for a given map","description":"List attachments for a given map.","parameters":[{"name":"id","in":"path","description":"Map id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of attachments.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Attachment"}}}}}}},"post":{"tags":["Attachments"],"summary":"Upload map attachment","description":"Upload map attachment. Wrap attachment parameters in [attachment]","parameters":[{"name":"id","in":"path","description":"Map id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Base64 encoded image","content":{"application/json":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"Contains attachment data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Attachment"}}}}}}},"/maps/{id}/collaborators/":{"get":{"tags":["Collaborators"],"summary":"List collaborators of a map","description":"List collaborators of a map.","parameters":[{"name":"id","in":"path","description":"Map id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of collaborators.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Collaborator"}}}}}}}},"/maps/{id}/collaborators/{user_id}":{"delete":{"tags":["Collaborators"],"summary":"Delete collaboration","description":"Delete collaboration.","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}},{"name":"user_id","in":"path","description":"user id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted collaborator.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Collaborator"}}}}}},"patch":{"tags":["Collaborators"],"summary":"Update collaborator","description":"Update collaborator. Wrap collaborator parameters in [collaborator]","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}},{"name":"user_id","in":"path","description":"user id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"collaborator attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CollaboratorEditable"}}},"required":false},"responses":{"200":{"description":"Contains collaborator data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Collaborator"}}}}}}},"/maps/{id}/comments":{"get":{"tags":["Comments"],"summary":"List comments for a given map","description":"List comments for a given map.","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of comments.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Comment"}}}}}}},"post":{"tags":["Comments"],"summary":"Create map comment","description":"Create map comment. Wrap comment parameters in [comment].","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"comment attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CommentEditable"}}},"required":false},"responses":{"200":{"description":"Contains comment data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Comment"}}}}}}},"/maps/{id}/respots":{"get":{"tags":["Respots"],"summary":"List respots of a map","description":"List respots of a map.","parameters":[{"name":"id","in":"path","description":"Map Id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of respots.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Respot"}}}}}}}},"/maps/{id}/spots":{"get":{"tags":["Spots"],"summary":"List spots for a given map","description":"List spots for a given map.","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}},{"name":"order","in":"query","description":"Order of spots","schema":{"type":"string","enum":["created_at_asc","created_at_desc","updated_at_asc","updated_at_desc","title_asc","title_desc"]}}],"responses":{"200":{"description":"Contains list of spots.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Spot"}}}}}}},"post":{"tags":["Spots"],"summary":"Create spot","description":"Create spot. Wrap parameters in [spot]. To add a spot picture pass a base64 encoded string to [spot][picture].","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"spot attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SpotEditable"}}},"required":true},"responses":{"200":{"description":"Contains spot data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Spot"}}}}}}},"/maps/{id}/subscriptions":{"get":{"tags":["Subscriptions"],"summary":"List subscriptions for a given map","description":"List subscriptions for a given map.","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of subscriptions.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Subscription"}}}}}}},"delete":{"tags":["Subscriptions"],"summary":"Unsubscribe from map","description":"Unsubscribe from map.","parameters":[{"name":"id","in":"path","description":"map id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted subscription.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Subscription"}}}}}}},"/maps/{map_id}/spots/{id}":{"get":{"tags":["Spots"],"summary":"Get spot","description":"Get basic information about a spot","parameters":[{"name":"id","in":"path","description":"Id of spot","required":true,"schema":{"type":"integer"}},{"name":"map_id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains spot data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Spot"}}}}}}},"/maps/{map_id}/spots/{spot_id}/respot":{"delete":{"tags":["Respots"],"summary":"Delete respot from map by spot id","description":"Delete respot from map by spot id.","parameters":[{"name":"map_id","in":"path","description":"Map Id","required":true,"schema":{"type":"integer"}},{"name":"spot_id","in":"path","description":"Spot Id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted respot.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Respot"}}}}}}},"/respot_maps":{"get":{"tags":["Respots"],"summary":"List maps that user can respot to","description":"List maps that user can respot to.","responses":{"200":{"description":"Contains list of maps.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Map"}}}}}}}},"/respots/{id}":{"get":{"tags":["Respots"],"summary":"Get respot","description":"Get basic information about a respot","parameters":[{"name":"id","in":"path","description":"Id of respot","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains respot data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Respot"}}}}}},"delete":{"tags":["Respots"],"summary":"Delete respot","description":"Delete respot.","parameters":[{"name":"id","in":"path","description":"Respot Id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted respot.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Respot"}}}}}}},"/share/map/{id}":{"get":{"tags":["Share"],"summary":"Get secret access token to share map","description":"Get secret access token of an uebermap with access set to 'Secret link'. Pass the 'token' on every request you make to access this uebermap and its resources. F.e. token=1-x_gqu7eLBe3uKoAGAGXy","parameters":[{"name":"id","in":"path","description":"Id of map","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains map data and a secret token to access this map.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/MapWithAuthToken"}}}}}}},"/spots":{"get":{"tags":["Spots"],"summary":"List your own spots","description":"List your own spots.","parameters":[{"name":"order","in":"query","description":"Order of spots","schema":{"type":"string","enum":["created_at_asc","created_at_desc","updated_at_asc","updated_at_desc","title_asc","title_desc"]}}],"responses":{"200":{"description":"Contains list of spots.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Spot"}}}}}}}},"/spots/search":{"get":{"tags":["Search"],"summary":"Search spots","description":"Search spots","parameters":[{"name":"q","in":"query","description":"Query","schema":{"type":"string"}},{"name":"d","in":"query","description":"Distance. Diameter of search radius in meter (default: 2000 meter)","schema":{"type":"integer"}},{"name":"lat","in":"query","description":"Latitude for search radius (2 km)","schema":{"type":"number"}},{"name":"lon","in":"query","description":"Longitude for search radius (2 km)","schema":{"type":"number"}}],"responses":{"200":{"description":"Contains spot data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Spot"}}}}}}},"/spots/{id}":{"delete":{"tags":["Spots"],"summary":"Delete spot","description":"Delete spot.","parameters":[{"name":"id","in":"path","description":"spot id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains deleted spot.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Spot"}}}}}},"patch":{"tags":["Spots"],"summary":"Update spot","description":"Update spot. Wrap parameters in [spot]. To update the spot picture pass a base64 encoded string to [spot][picture].","parameters":[{"name":"id","in":"path","description":"spot id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"spot attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SpotEditable"}}},"required":false},"responses":{"200":{"description":"Contains spot data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Spot"}}}}}}},"/spots/{id}/attachments":{"get":{"tags":["Attachments"],"summary":"List attachments for a given spot","description":"List attachments for a given spot.","parameters":[{"name":"id","in":"path","description":"Spot id","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of attachments.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Attachment"}}}}}}},"post":{"tags":["Attachments"],"summary":"Upload spot attachment","description":"Upload spot attachment. Wrap attachment parameters in [attachment]","parameters":[{"name":"id","in":"path","description":"Spot id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Base64 encoded image","content":{"application/json":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"Contains attachment data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Attachment"}}}}}}},"/spots/{id}/comments":{"get":{"tags":["Comments"],"summary":"List comments for a given spot","description":"List comments for a given spot.","parameters":[{"name":"id","in":"path","description":"Id of spot","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of comments.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Comment"}}}}}}},"post":{"tags":["Comments"],"summary":"Create spot comment","description":"Create spot comment. Wrap comment parameters in [comment].","parameters":[{"name":"id","in":"path","description":"spot id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"comment attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CommentEditable"}}},"required":false},"responses":{"200":{"description":"Contains comment data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Comment"}}}}}}},"/spots/{id}/events":{"get":{"tags":["Events"],"summary":"List events for a given spot","description":"List maps for a given spot.","parameters":[{"name":"id","in":"path","description":"Id of spot","required":true,"schema":{"type":"integer"}},{"name":"timeframe_start","in":"query","description":"Begin of time range of event (ISO 8601 date format).","schema":{"type":"string"}},{"name":"timeframe_end","in":"query","description":"End of time range of event (ISO 8601 date format).","schema":{"type":"string"}},{"name":"bounds","in":"query","description":"To refine your event index request to contain only events within                                                             a geographical box pass the followng bounds parameters.                                                             F. e. to get events within 'Hamburg, St. Pauli':                                                             bounds[sw_lat]=53.54831449741324                                                             bounds[sw_lon]=9.943227767944336                                                             bounds[ne_lat]=53.5571103674878                                                             bounds[ne_lon]=9.9776029586792","schema":{"type":"string"}}],"responses":{"200":{"description":"Contains list of events.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Event"}}}}}}},"post":{"tags":["Events"],"summary":"Create event","description":"Create event. Wrap map parameters in [event].","parameters":[{"name":"id","in":"path","description":"Spot id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Event attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EventEditable"}}},"required":false},"responses":{"200":{"description":"Contains event data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Event"}}}}}}},"/spots/{id}/respots":{"post":{"tags":["Respots"],"summary":"Respot a spot onto a map","description":"Respot a spot onto a map.","parameters":[{"name":"id","in":"path","description":"Spot Id","required":true,"schema":{"type":"integer"}}],"requestBody":{"description":"Map Id","content":{"application/json":{"schema":{"type":"number","format":"integer"}}},"required":true},"responses":{"200":{"description":"Contains respot data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Respot"}}}}}}},"/subscriptions":{"get":{"tags":["Subscriptions"],"summary":"List subscriptions. Pass no parameters to get own subscriptions","description":"List subscriptions.","parameters":[{"name":"user_id","in":"query","description":"Id of user","schema":{"type":"integer"}},{"name":"map_id","in":"query","description":"Id of map","schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of subscriptions.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Subscription"}}}}}}},"post":{"tags":["Subscriptions"],"summary":"Create map subscription","description":"Create map subscription.","requestBody":{"description":"map id","content":{"application/json":{"schema":{"type":"number","format":"integer"}}},"required":true},"responses":{"200":{"description":"Contains subscription data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Subscription"}}}}}}},"/trends/latest":{"get":{"tags":["Trends"],"summary":"List latest maps","description":"List latest maps.","responses":{"200":{"description":"Contains list of maps.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Map"}}}}}}}},"/trends/recommended":{"get":{"tags":["Trends"],"summary":"List recommended maps","description":"List recommended maps.","responses":{"200":{"description":"Contains list of maps.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Map"}}}}}}}},"/users/search":{"get":{"tags":["Search"],"summary":"Search users","description":"Search users","parameters":[{"name":"q","in":"query","description":"Query","schema":{"type":"string"}}],"responses":{"200":{"description":"Contains users data.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/User"}}}}}}},"/users/{id}":{"get":{"tags":["Users"],"summary":"Get user profile","description":"Get profile a user","parameters":[{"name":"id","in":"path","description":"Id of user","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains user data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/User"}}}}}}},"/users/{user_id}/maps":{"get":{"tags":["Maps"],"summary":"List maps for a given user","description":"List maps for a given user.","parameters":[{"name":"user_id","in":"path","description":"Id of user","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Contains list of maps.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Map"}}}}}}}}},"components":{"schemas":{"Attachment":{"type":"object","properties":{"attachable_id":{"type":"integer","example":7543829},"attachable_type":{"type":"string","example":"Spot"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"This photo was taken in front of the restaurant"},"file_url":{"type":"string","example":"https://..."},"id":{"type":"integer","example":34939432},"map_id":{"type":"integer","example":985732},"sizes":{"type":"object","example":{"large":{"h":860,"w":1024}}},"spot":{"$ref":"#/components/schemas/Spot"},"status":{"type":"string","example":"approved","enum":["approved","unapproved"]},"user":{"$ref":"#/components/schemas/User"}}},"Collaborator":{"type":"object","properties":{"created_at":{"type":"string","format":"date-time"},"group":{"type":"string","example":"editor","enum":["admin","editor"]},"id":{"type":"integer","example":4829504},"is_admin":{"type":"boolean","example":false},"map":{"$ref":"#/components/schemas/Map"},"map_id":{"type":"integer","example":324894},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"},"user_id":{"type":"integer","example":649302}}},"CollaboratorEditable":{"type":"object","properties":{"group":{"type":"string","example":"editor","enum":["admin","editor"]}}},"CollaboratorInvitation":{"type":"object","properties":{"accepted":{"type":"boolean","example":true},"created_at":{"type":"string","format":"date-time"},"email":{"type":"string","example":"a@b.com"},"group":{"type":"string","example":"editor","enum":["admin","editor"]},"id":{"type":"integer","example":8696493},"invited_by_user":{"$ref":"#/components/schemas/User"},"map":{"$ref":"#/components/schemas/Map"},"sent":{"type":"boolean","example":true},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"CollaboratorInvitationCreate":{"type":"object","properties":{"emails":{"type":"string","example":"a@b.com, c@d.com, e@f.com"},"is_admin":{"type":"boolean","example":true},"map_id":{"type":"integer","example":34925783},"user_ids":{"type":"string","example":"5839459, 389423, 89494, 686950"}}},"Comment":{"type":"object","properties":{"body":{"type":"string","example":"Nice photo"},"created_at":{"type":"string","format":"date-time"},"id":{"type":"integer","example":29628358},"status":{"type":"string","example":"approved","enum":["approved","unapproved"]},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"CommentEditable":{"type":"object","properties":{"body":{"type":"string","example":"Nice photo"}}},"Event":{"type":"object","properties":{"counts":{"$ref":"#/components/schemas/EventCounts"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"Very special event"},"ends_at":{"type":"string","format":"date-time"},"id":{"type":"integer","example":482959},"lat":{"type":"number","example":53.293493},"lon":{"type":"number","example":12.394328},"owner_id":{"type":"integer","example":82389429},"picture_url":{"type":"string","example":"https://..."},"spot":{"$ref":"#/components/schemas/Spot"},"starts_at":{"type":"string","format":"date-time"},"time_zone":{"type":"string","example":"Berlin"},"title":{"type":"string","example":"20th anniversary event"},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"EventCounts":{"type":"object","properties":{"attachments":{"type":"integer","example":27},"comments":{"type":"integer","example":284}}},"EventEditable":{"type":"object","properties":{"description":{"type":"string","example":"Very special event"},"ends_at":{"type":"string","format":"date-time"},"lat":{"type":"number","example":53.293493},"lon":{"type":"number","example":12.394328},"picture":{"type":"string","example":"<BASE_64_ENCODED_STRING>"},"starts_at":{"type":"string","format":"date-time"},"time_zone":{"type":"string","example":"Berlin"},"title":{"type":"string","example":"20th anniversary event"},"user_id":{"type":"integer","example":703943}}},"Map":{"type":"object","properties":{"counts":{"$ref":"#/components/schemas/MapCounts"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"},"id":{"type":"integer","example":18234843},"map_settings":{"$ref":"#/components/schemas/MapSettings"},"owner_id":{"type":"integer","example":9829358},"picture_url":{"type":"string","example":"https://..."},"title":{"type":"string","example":"My favourite places in Berlin"},"updated_at":{"type":"string","format":"date-time"},"visibility":{"type":"string","example":"public","enum":["public","link","private"]}}},"MapCounts":{"type":"object","properties":{"attachments":{"type":"integer","example":31},"comments":{"type":"integer","example":234},"impressions":{"type":"integer","example":234332},"respots":{"type":"integer","example":24},"spots":{"type":"integer","example":67},"subscriptions":{"type":"integer","example":3892}}},"MapEditable":{"type":"object","properties":{"description":{"type":"string","example":"A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"},"map_settings":{"$ref":"#/components/schemas/MapSettings"},"picture":{"type":"string","example":"<BASE_64_ENCODED_STRING>"},"title":{"type":"string","example":"My favourite places in Berlin"},"visibility":{"type":"string","example":"public","enum":["public","link","private"]}}},"MapRelation":{"type":"object","properties":{"access":{"type":"string","example":""},"access_group":{"type":"string","example":"owner","enum":["visitor","editor","admin"]},"subscribed":{"type":"boolean","example":true}}},"MapSettings":{"type":"object","properties":{"editor_access":{"type":"string","example":""},"respotting_to_this_map":{"type":"boolean","example":true},"visitor_access":{"type":"string","example":""}}},"MapWithAuthToken":{"type":"object","properties":{"counts":{"$ref":"#/components/schemas/MapCounts"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"},"id":{"type":"integer","example":18234843},"owner_id":{"type":"integer","example":9829358},"picture_url":{"type":"string","example":"https://..."},"title":{"type":"string","example":"My favourite places in Berlin"},"token":{"type":"string","example":"1-x_gqu7eLBe3uKoAGAGXy"},"updated_at":{"type":"string","format":"date-time"},"visibility":{"type":"string","example":"public","enum":["public","link","private"]}}},"MapWithRelation":{"type":"object","properties":{"counts":{"$ref":"#/components/schemas/MapCounts"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"},"id":{"type":"integer","example":18234843},"map_settings":{"$ref":"#/components/schemas/MapSettings"},"owner_id":{"type":"integer","example":9829358},"picture_url":{"type":"string","example":"https://..."},"relation":{"$ref":"#/components/schemas/MapRelation"},"title":{"type":"string","example":"My favourite places in Berlin"},"updated_at":{"type":"string","format":"date-time"},"visibility":{"type":"string","example":"public","enum":["public","link","private"]}}},"Respot":{"type":"object","properties":{"created_at":{"type":"string","format":"date-time"},"id":{"type":"integer","example":589032},"map":{"$ref":"#/components/schemas/Map"},"map_id":{"type":"integer","example":8393450},"spot":{"$ref":"#/components/schemas/Spot"},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"Spot":{"type":"object","properties":{"counts":{"$ref":"#/components/schemas/SpotCounts"},"created_at":{"type":"string","format":"date-time"},"description":{"type":"string","example":"Landed here by accident but look how wonderful this place is in the photos attached"},"id":{"type":"integer","example":5932234},"lat":{"type":"number","example":53.112385},"lon":{"type":"number","example":10.58349},"map_id":{"type":"integer","example":394805},"picture_url":{"type":"string","example":"https://..."},"status":{"type":"string","example":"approved","enum":["approved","unapproved"]},"time_zone":{"type":"string","example":"Berlin"},"title":{"type":"string","example":"Beautiful place out in the country"},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"SpotCounts":{"type":"object","properties":{"attachments":{"type":"integer","example":4},"comments":{"type":"integer","example":24},"respot":{"type":"integer","example":34}}},"SpotEditable":{"type":"object","properties":{"description":{"type":"string","example":"Landed here by accident but look how wonderful this place is in the photos attached"},"lat":{"type":"number","example":53.112385},"lon":{"type":"number","example":10.58349},"picture":{"type":"string","example":"<BASE_64_ENCODED_STRING>"},"time_zone":{"type":"string","example":"Berlin"},"title":{"type":"string","example":"Beautiful place out in the country"}}},"Subscription":{"type":"object","properties":{"created_at":{"type":"string","format":"date-time"},"id":{"type":"integer","example":23950552},"map":{"$ref":"#/components/schemas/Map"},"updated_at":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"},"user_id":{"type":"integer","example":852002}}},"User":{"type":"object","properties":{"about":{"type":"string","example":"The comedian"},"counts":{"type":"object","properties":{"maps":{"type":"integer","example":24}}},"header_picture":{"type":"string","example":"https://..."},"id":{"type":"integer","example":5829035},"location":{"type":"string","example":"Little Rock, Arkansas"},"name":{"type":"string","example":"Bill Hicks"},"picture_url":{"type":"string","example":"https://..."},"screen_name":{"type":"string","example":"billhicks"},"url":{"type":"string","example":"http://www.billhicks.com"}}},"UserAuthentication":{"type":"object","properties":{"email":{"type":"string","example":"a@b.com"},"password":{"type":"string","example":"••••••••"}}},"UserEditable":{"type":"object","properties":{"about":{"type":"string","example":"The comedian"},"header":{"type":"string","example":"<BASE_64_ENCODED_STRING>"},"language":{"type":"string","example":"en"},"location":{"type":"string","example":"Little Rock, Arkansas"},"name":{"type":"string","example":"Bill Hicks"},"picture":{"type":"string","example":"<BASE_64_ENCODED_STRING>"},"screen_name":{"type":"string","example":"billhicks"},"time_zone":{"type":"string","example":"Pacific Time (US & Canada)"},"url":{"type":"string","example":"http://www.billhicks.com"}}},"UserFullProfile":{"properties":{"auth_token":{"type":"string","example":"6g8as82h3kj23h2"},"language":{"type":"string","example":"en"},"time_zone":{"type":"string","example":"Pacific Time (US & Canada)"}},"allOf":[{"$ref":"#/components/schemas/User"}]}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "uebermaps API endpoints",
+    "description" : "Enable people to store spots on public and private maps",
+    "termsOfService" : "https://uebermaps.com/terms/",
+    "contact" : {
+      "name" : "uebermaps API Team"
+    },
+    "version" : "2.0"
+  },
+  "servers" : [ {
+    "url" : "//uebermaps.com/api/v2"
+  } ],
+  "paths" : {
+    "/account" : {
+      "patch" : {
+        "tags" : [ "Account" ],
+        "summary" : "Update account",
+        "description" : "Update account. Wrap map parameters in [user].",
+        "requestBody" : {
+          "description" : "user attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains user data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attachments/{id}" : {
+      "delete" : {
+        "tags" : [ "Attachments" ],
+        "summary" : "Delete attachment",
+        "description" : "Delete attachment.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Attachment id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted attachment.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Attachment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication" : {
+      "post" : {
+        "tags" : [ "Authentication" ],
+        "summary" : "Sign in user",
+        "description" : "Sign in user. Wrap authentication parameters in [user].",
+        "requestBody" : {
+          "description" : "user authentication attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserAuthentication"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains user data including authentication token for subsequent requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserFullProfile"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collaborator_invitations" : {
+      "get" : {
+        "tags" : [ "CollaboratorInvitations" ],
+        "summary" : "List your collaborator invitations",
+        "description" : "List your collaborator invitations.",
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of collaborator invitations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CollaboratorInvitation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "CollaboratorInvitations" ],
+        "summary" : "Invite user to collaborate on map",
+        "description" : "Invite user to collaborate on map.",
+        "requestBody" : {
+          "description" : "Supply map_id and either a comma separated list of user_ids or emails. Optionally you can provide a 'is_admin' parameter with 'true' or 'false' to give the invited users admin privileges.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CollaboratorInvitationCreate"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains collaborator invitation data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CollaboratorInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collaborator_invitations/{id}" : {
+      "get" : {
+        "tags" : [ "CollaboratorInvitations" ],
+        "summary" : "Show collaborator invitation",
+        "description" : "Show collaborator invitation",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Collaborator invitation id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains collaborator invitation data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CollaboratorInvitation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "CollaboratorInvitations" ],
+        "summary" : "Delete collaborator invitation",
+        "description" : "Delete collaborator invitation.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Collaborator invitation id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted collaborator invitation.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CollaboratorInvitation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "CollaboratorInvitations" ],
+        "summary" : "Accept collaborator invitation.",
+        "description" : "Accept collaborator invitation.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Collaborator invitation id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains collaborator invitation data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CollaboratorInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/{id}" : {
+      "delete" : {
+        "tags" : [ "Comments" ],
+        "summary" : "Delete comment",
+        "description" : "Delete comment.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Comment id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted comment.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Comments" ],
+        "summary" : "Update comment",
+        "description" : "Update comment. Wrap comment parameters in [comment].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Comment id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Comment attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CommentEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains comment data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "List your own events",
+        "description" : "List your own events.",
+        "parameters" : [ {
+          "name" : "timeframe_start",
+          "in" : "query",
+          "description" : "Begin of time range of event (ISO 8601 date format).",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeframe_end",
+          "in" : "query",
+          "description" : "End of time range of event (ISO 8601 date format).",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bounds",
+          "in" : "query",
+          "description" : "To refine your event index request to contain only events within                                                             a geographical box pass the followng bounds parameters.                                                             F. e. to get events within 'Hamburg, St. Pauli':                                                             bounds[sw_lat]=53.54831449741324                                                             bounds[sw_lon]=9.943227767944336                                                             bounds[ne_lat]=53.5571103674878                                                             bounds[ne_lon]=9.9776029586792",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of events.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Get event",
+        "description" : "Get basic information about an event",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of event",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains event data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Events" ],
+        "summary" : "Delete event",
+        "description" : "Delete event.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Event id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted event.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Events" ],
+        "summary" : "Update event",
+        "description" : "Update event. Wrap event parameters in [event].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Event id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Event attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EventEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data, map settings and your relation to this map",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Map"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps" : {
+      "get" : {
+        "tags" : [ "Maps" ],
+        "summary" : "List your own maps",
+        "description" : "List your own maps.",
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of maps.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Map"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Maps" ],
+        "summary" : "Create map",
+        "description" : "Create map. Wrap map parameters in [map]. To add a map header picture pass a base64 encoded string to [map][picture].",
+        "requestBody" : {
+          "description" : "map attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MapEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data, map settings and your relation to this map",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Map"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/search" : {
+      "get" : {
+        "tags" : [ "Search" ],
+        "summary" : "Search maps",
+        "description" : "Search maps",
+        "parameters" : [ {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "d",
+          "in" : "query",
+          "description" : "Distance. Diameter of search radius in meter (default: 2000 meter)",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "Latitude for search radius (default distance: 2000 meter)",
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "lon",
+          "in" : "query",
+          "description" : "Longitude for search radius (default distance: 2000 meter)",
+          "schema" : {
+            "type" : "number"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Map"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}" : {
+      "get" : {
+        "tags" : [ "Maps" ],
+        "summary" : "Get map",
+        "description" : "Get basic information about a map",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data, map settings and your relation to this map",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MapWithRelation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Maps" ],
+        "summary" : "Delete map",
+        "description" : "Delete map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted map.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Map"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Maps" ],
+        "summary" : "Update map",
+        "description" : "Update map. Wrap map parameters in [map]. To update the map header picture pass a base64 encoded string to [map][picture].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "map settings attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MapEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data, map settings and your relation to this map",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Map"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/attachments" : {
+      "get" : {
+        "tags" : [ "Attachments" ],
+        "summary" : "List attachments for a given map",
+        "description" : "List attachments for a given map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of attachments.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Attachment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Attachments" ],
+        "summary" : "Upload map attachment",
+        "description" : "Upload map attachment. Wrap attachment parameters in [attachment]",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Base64 encoded image",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains attachment data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Attachment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/collaborators/" : {
+      "get" : {
+        "tags" : [ "Collaborators" ],
+        "summary" : "List collaborators of a map",
+        "description" : "List collaborators of a map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of collaborators.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Collaborator"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/collaborators/{user_id}" : {
+      "delete" : {
+        "tags" : [ "Collaborators" ],
+        "summary" : "Delete collaboration",
+        "description" : "Delete collaboration.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "user id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted collaborator.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Collaborator"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Collaborators" ],
+        "summary" : "Update collaborator",
+        "description" : "Update collaborator. Wrap collaborator parameters in [collaborator]",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "user id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "collaborator attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CollaboratorEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains collaborator data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Collaborator"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/comments" : {
+      "get" : {
+        "tags" : [ "Comments" ],
+        "summary" : "List comments for a given map",
+        "description" : "List comments for a given map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of comments.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Comments" ],
+        "summary" : "Create map comment",
+        "description" : "Create map comment. Wrap comment parameters in [comment].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "comment attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CommentEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains comment data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/respots" : {
+      "get" : {
+        "tags" : [ "Respots" ],
+        "summary" : "List respots of a map",
+        "description" : "List respots of a map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Map Id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of respots.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Respot"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/spots" : {
+      "get" : {
+        "tags" : [ "Spots" ],
+        "summary" : "List spots for a given map",
+        "description" : "List spots for a given map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "Order of spots",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "created_at_asc", "created_at_desc", "updated_at_asc", "updated_at_desc", "title_asc", "title_desc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of spots.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Spot"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Spots" ],
+        "summary" : "Create spot",
+        "description" : "Create spot. Wrap parameters in [spot]. To add a spot picture pass a base64 encoded string to [spot][picture].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "spot attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SpotEditable"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains spot data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Spot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/subscriptions" : {
+      "get" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "List subscriptions for a given map",
+        "description" : "List subscriptions for a given map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of subscriptions.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Subscription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "Unsubscribe from map",
+        "description" : "Unsubscribe from map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "map id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted subscription.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Subscription"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{map_id}/spots/{id}" : {
+      "get" : {
+        "tags" : [ "Spots" ],
+        "summary" : "Get spot",
+        "description" : "Get basic information about a spot",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of spot",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "map_id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains spot data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Spot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{map_id}/spots/{spot_id}/respot" : {
+      "delete" : {
+        "tags" : [ "Respots" ],
+        "summary" : "Delete respot from map by spot id",
+        "description" : "Delete respot from map by spot id.",
+        "parameters" : [ {
+          "name" : "map_id",
+          "in" : "path",
+          "description" : "Map Id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "spot_id",
+          "in" : "path",
+          "description" : "Spot Id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted respot.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Respot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respot_maps" : {
+      "get" : {
+        "tags" : [ "Respots" ],
+        "summary" : "List maps that user can respot to",
+        "description" : "List maps that user can respot to.",
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of maps.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Map"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respots/{id}" : {
+      "get" : {
+        "tags" : [ "Respots" ],
+        "summary" : "Get respot",
+        "description" : "Get basic information about a respot",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of respot",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains respot data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Respot"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Respots" ],
+        "summary" : "Delete respot",
+        "description" : "Delete respot.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Respot Id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted respot.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Respot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/share/map/{id}" : {
+      "get" : {
+        "tags" : [ "Share" ],
+        "summary" : "Get secret access token to share map",
+        "description" : "Get secret access token of an uebermap with access set to 'Secret link'. Pass the 'token' on every request you make to access this uebermap and its resources. F.e. token=1-x_gqu7eLBe3uKoAGAGXy",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of map",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains map data and a secret token to access this map.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MapWithAuthToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots" : {
+      "get" : {
+        "tags" : [ "Spots" ],
+        "summary" : "List your own spots",
+        "description" : "List your own spots.",
+        "parameters" : [ {
+          "name" : "order",
+          "in" : "query",
+          "description" : "Order of spots",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "created_at_asc", "created_at_desc", "updated_at_asc", "updated_at_desc", "title_asc", "title_desc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of spots.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Spot"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/search" : {
+      "get" : {
+        "tags" : [ "Search" ],
+        "summary" : "Search spots",
+        "description" : "Search spots",
+        "parameters" : [ {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "d",
+          "in" : "query",
+          "description" : "Distance. Diameter of search radius in meter (default: 2000 meter)",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "lat",
+          "in" : "query",
+          "description" : "Latitude for search radius (2 km)",
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "lon",
+          "in" : "query",
+          "description" : "Longitude for search radius (2 km)",
+          "schema" : {
+            "type" : "number"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains spot data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Spot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/{id}" : {
+      "delete" : {
+        "tags" : [ "Spots" ],
+        "summary" : "Delete spot",
+        "description" : "Delete spot.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains deleted spot.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Spot"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Spots" ],
+        "summary" : "Update spot",
+        "description" : "Update spot. Wrap parameters in [spot]. To update the spot picture pass a base64 encoded string to [spot][picture].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "spot attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SpotEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains spot data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Spot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/{id}/attachments" : {
+      "get" : {
+        "tags" : [ "Attachments" ],
+        "summary" : "List attachments for a given spot",
+        "description" : "List attachments for a given spot.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of attachments.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Attachment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Attachments" ],
+        "summary" : "Upload spot attachment",
+        "description" : "Upload spot attachment. Wrap attachment parameters in [attachment]",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Base64 encoded image",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains attachment data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Attachment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/{id}/comments" : {
+      "get" : {
+        "tags" : [ "Comments" ],
+        "summary" : "List comments for a given spot",
+        "description" : "List comments for a given spot.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of spot",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of comments.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Comments" ],
+        "summary" : "Create spot comment",
+        "description" : "Create spot comment. Wrap comment parameters in [comment].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "comment attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CommentEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains comment data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/{id}/events" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "List events for a given spot",
+        "description" : "List maps for a given spot.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of spot",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "timeframe_start",
+          "in" : "query",
+          "description" : "Begin of time range of event (ISO 8601 date format).",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeframe_end",
+          "in" : "query",
+          "description" : "End of time range of event (ISO 8601 date format).",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bounds",
+          "in" : "query",
+          "description" : "To refine your event index request to contain only events within                                                             a geographical box pass the followng bounds parameters.                                                             F. e. to get events within 'Hamburg, St. Pauli':                                                             bounds[sw_lat]=53.54831449741324                                                             bounds[sw_lon]=9.943227767944336                                                             bounds[ne_lat]=53.5571103674878                                                             bounds[ne_lon]=9.9776029586792",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of events.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Events" ],
+        "summary" : "Create event",
+        "description" : "Create event. Wrap map parameters in [event].",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Spot id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Event attributes",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EventEditable"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains event data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spots/{id}/respots" : {
+      "post" : {
+        "tags" : [ "Respots" ],
+        "summary" : "Respot a spot onto a map",
+        "description" : "Respot a spot onto a map.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Spot Id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Map Id",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "number",
+                "format" : "integer"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains respot data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Respot"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions" : {
+      "get" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "List subscriptions. Pass no parameters to get own subscriptions",
+        "description" : "List subscriptions.",
+        "parameters" : [ {
+          "name" : "user_id",
+          "in" : "query",
+          "description" : "Id of user",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "map_id",
+          "in" : "query",
+          "description" : "Id of map",
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of subscriptions.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Subscription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "Create map subscription",
+        "description" : "Create map subscription.",
+        "requestBody" : {
+          "description" : "map id",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "number",
+                "format" : "integer"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Contains subscription data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Subscription"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trends/latest" : {
+      "get" : {
+        "tags" : [ "Trends" ],
+        "summary" : "List latest maps",
+        "description" : "List latest maps.",
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of maps.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Map"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trends/recommended" : {
+      "get" : {
+        "tags" : [ "Trends" ],
+        "summary" : "List recommended maps",
+        "description" : "List recommended maps.",
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of maps.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Map"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/search" : {
+      "get" : {
+        "tags" : [ "Search" ],
+        "summary" : "Search users",
+        "description" : "Search users",
+        "parameters" : [ {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains users data.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Get user profile",
+        "description" : "Get profile a user",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of user",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains user data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/maps" : {
+      "get" : {
+        "tags" : [ "Maps" ],
+        "summary" : "List maps for a given user",
+        "description" : "List maps for a given user.",
+        "parameters" : [ {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "Id of user",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Contains list of maps.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Map"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Attachment" : {
+        "type" : "object",
+        "properties" : {
+          "attachable_id" : {
+            "type" : "integer",
+            "example" : 7543829
+          },
+          "attachable_type" : {
+            "type" : "string",
+            "example" : "Spot"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "This photo was taken in front of the restaurant"
+          },
+          "file_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 34939432
+          },
+          "map_id" : {
+            "type" : "integer",
+            "example" : 985732
+          },
+          "sizes" : {
+            "type" : "object",
+            "example" : {
+              "large" : {
+                "h" : 860,
+                "w" : 1024
+              }
+            }
+          },
+          "spot" : {
+            "$ref" : "#/components/schemas/Spot"
+          },
+          "status" : {
+            "type" : "string",
+            "example" : "approved",
+            "enum" : [ "approved", "unapproved" ]
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "Collaborator" : {
+        "type" : "object",
+        "properties" : {
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "group" : {
+            "type" : "string",
+            "example" : "editor",
+            "enum" : [ "admin", "editor" ]
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 4829504
+          },
+          "is_admin" : {
+            "type" : "boolean",
+            "example" : false
+          },
+          "map" : {
+            "$ref" : "#/components/schemas/Map"
+          },
+          "map_id" : {
+            "type" : "integer",
+            "example" : 324894
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "user_id" : {
+            "type" : "integer",
+            "example" : 649302
+          }
+        }
+      },
+      "CollaboratorEditable" : {
+        "type" : "object",
+        "properties" : {
+          "group" : {
+            "type" : "string",
+            "example" : "editor",
+            "enum" : [ "admin", "editor" ]
+          }
+        }
+      },
+      "CollaboratorInvitation" : {
+        "type" : "object",
+        "properties" : {
+          "accepted" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "a@b.com"
+          },
+          "group" : {
+            "type" : "string",
+            "example" : "editor",
+            "enum" : [ "admin", "editor" ]
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 8696493
+          },
+          "invited_by_user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "map" : {
+            "$ref" : "#/components/schemas/Map"
+          },
+          "sent" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "CollaboratorInvitationCreate" : {
+        "type" : "object",
+        "properties" : {
+          "emails" : {
+            "type" : "string",
+            "example" : "a@b.com, c@d.com, e@f.com"
+          },
+          "is_admin" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "map_id" : {
+            "type" : "integer",
+            "example" : 34925783
+          },
+          "user_ids" : {
+            "type" : "string",
+            "example" : "5839459, 389423, 89494, 686950"
+          }
+        }
+      },
+      "Comment" : {
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "type" : "string",
+            "example" : "Nice photo"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 29628358
+          },
+          "status" : {
+            "type" : "string",
+            "example" : "approved",
+            "enum" : [ "approved", "unapproved" ]
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "CommentEditable" : {
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "type" : "string",
+            "example" : "Nice photo"
+          }
+        }
+      },
+      "Event" : {
+        "type" : "object",
+        "properties" : {
+          "counts" : {
+            "$ref" : "#/components/schemas/EventCounts"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Very special event"
+          },
+          "ends_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 482959
+          },
+          "lat" : {
+            "type" : "number",
+            "example" : 53.293493
+          },
+          "lon" : {
+            "type" : "number",
+            "example" : 12.394328
+          },
+          "owner_id" : {
+            "type" : "integer",
+            "example" : 82389429
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "spot" : {
+            "$ref" : "#/components/schemas/Spot"
+          },
+          "starts_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Berlin"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "20th anniversary event"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "EventCounts" : {
+        "type" : "object",
+        "properties" : {
+          "attachments" : {
+            "type" : "integer",
+            "example" : 27
+          },
+          "comments" : {
+            "type" : "integer",
+            "example" : 284
+          }
+        }
+      },
+      "EventEditable" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "example" : "Very special event"
+          },
+          "ends_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "lat" : {
+            "type" : "number",
+            "example" : 53.293493
+          },
+          "lon" : {
+            "type" : "number",
+            "example" : 12.394328
+          },
+          "picture" : {
+            "type" : "string",
+            "example" : "<BASE_64_ENCODED_STRING>"
+          },
+          "starts_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Berlin"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "20th anniversary event"
+          },
+          "user_id" : {
+            "type" : "integer",
+            "example" : 703943
+          }
+        }
+      },
+      "Map" : {
+        "type" : "object",
+        "properties" : {
+          "counts" : {
+            "$ref" : "#/components/schemas/MapCounts"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 18234843
+          },
+          "map_settings" : {
+            "$ref" : "#/components/schemas/MapSettings"
+          },
+          "owner_id" : {
+            "type" : "integer",
+            "example" : 9829358
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "My favourite places in Berlin"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "visibility" : {
+            "type" : "string",
+            "example" : "public",
+            "enum" : [ "public", "link", "private" ]
+          }
+        }
+      },
+      "MapCounts" : {
+        "type" : "object",
+        "properties" : {
+          "attachments" : {
+            "type" : "integer",
+            "example" : 31
+          },
+          "comments" : {
+            "type" : "integer",
+            "example" : 234
+          },
+          "impressions" : {
+            "type" : "integer",
+            "example" : 234332
+          },
+          "respots" : {
+            "type" : "integer",
+            "example" : 24
+          },
+          "spots" : {
+            "type" : "integer",
+            "example" : 67
+          },
+          "subscriptions" : {
+            "type" : "integer",
+            "example" : 3892
+          }
+        }
+      },
+      "MapEditable" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "example" : "A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"
+          },
+          "map_settings" : {
+            "$ref" : "#/components/schemas/MapSettings"
+          },
+          "picture" : {
+            "type" : "string",
+            "example" : "<BASE_64_ENCODED_STRING>"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "My favourite places in Berlin"
+          },
+          "visibility" : {
+            "type" : "string",
+            "example" : "public",
+            "enum" : [ "public", "link", "private" ]
+          }
+        }
+      },
+      "MapRelation" : {
+        "type" : "object",
+        "properties" : {
+          "access" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "access_group" : {
+            "type" : "string",
+            "example" : "owner",
+            "enum" : [ "visitor", "editor", "admin" ]
+          },
+          "subscribed" : {
+            "type" : "boolean",
+            "example" : true
+          }
+        }
+      },
+      "MapSettings" : {
+        "type" : "object",
+        "properties" : {
+          "editor_access" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "respotting_to_this_map" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "visitor_access" : {
+            "type" : "string",
+            "example" : ""
+          }
+        }
+      },
+      "MapWithAuthToken" : {
+        "type" : "object",
+        "properties" : {
+          "counts" : {
+            "$ref" : "#/components/schemas/MapCounts"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 18234843
+          },
+          "owner_id" : {
+            "type" : "integer",
+            "example" : 9829358
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "My favourite places in Berlin"
+          },
+          "token" : {
+            "type" : "string",
+            "example" : "1-x_gqu7eLBe3uKoAGAGXy"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "visibility" : {
+            "type" : "string",
+            "example" : "public",
+            "enum" : [ "public", "link", "private" ]
+          }
+        }
+      },
+      "MapWithRelation" : {
+        "type" : "object",
+        "properties" : {
+          "counts" : {
+            "$ref" : "#/components/schemas/MapCounts"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "A collection of restaurants, cafes, clubs and random spots that I recommend in Berlin"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 18234843
+          },
+          "map_settings" : {
+            "$ref" : "#/components/schemas/MapSettings"
+          },
+          "owner_id" : {
+            "type" : "integer",
+            "example" : 9829358
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "relation" : {
+            "$ref" : "#/components/schemas/MapRelation"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "My favourite places in Berlin"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "visibility" : {
+            "type" : "string",
+            "example" : "public",
+            "enum" : [ "public", "link", "private" ]
+          }
+        }
+      },
+      "Respot" : {
+        "type" : "object",
+        "properties" : {
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 589032
+          },
+          "map" : {
+            "$ref" : "#/components/schemas/Map"
+          },
+          "map_id" : {
+            "type" : "integer",
+            "example" : 8393450
+          },
+          "spot" : {
+            "$ref" : "#/components/schemas/Spot"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "Spot" : {
+        "type" : "object",
+        "properties" : {
+          "counts" : {
+            "$ref" : "#/components/schemas/SpotCounts"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Landed here by accident but look how wonderful this place is in the photos attached"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 5932234
+          },
+          "lat" : {
+            "type" : "number",
+            "example" : 53.112385
+          },
+          "lon" : {
+            "type" : "number",
+            "example" : 10.58349
+          },
+          "map_id" : {
+            "type" : "integer",
+            "example" : 394805
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "status" : {
+            "type" : "string",
+            "example" : "approved",
+            "enum" : [ "approved", "unapproved" ]
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Berlin"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "Beautiful place out in the country"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "SpotCounts" : {
+        "type" : "object",
+        "properties" : {
+          "attachments" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "comments" : {
+            "type" : "integer",
+            "example" : 24
+          },
+          "respot" : {
+            "type" : "integer",
+            "example" : 34
+          }
+        }
+      },
+      "SpotEditable" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "example" : "Landed here by accident but look how wonderful this place is in the photos attached"
+          },
+          "lat" : {
+            "type" : "number",
+            "example" : 53.112385
+          },
+          "lon" : {
+            "type" : "number",
+            "example" : 10.58349
+          },
+          "picture" : {
+            "type" : "string",
+            "example" : "<BASE_64_ENCODED_STRING>"
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Berlin"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "Beautiful place out in the country"
+          }
+        }
+      },
+      "Subscription" : {
+        "type" : "object",
+        "properties" : {
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 23950552
+          },
+          "map" : {
+            "$ref" : "#/components/schemas/Map"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "user_id" : {
+            "type" : "integer",
+            "example" : 852002
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "about" : {
+            "type" : "string",
+            "example" : "The comedian"
+          },
+          "counts" : {
+            "type" : "object",
+            "properties" : {
+              "maps" : {
+                "type" : "integer",
+                "example" : 24
+              }
+            }
+          },
+          "header_picture" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 5829035
+          },
+          "location" : {
+            "type" : "string",
+            "example" : "Little Rock, Arkansas"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Bill Hicks"
+          },
+          "picture_url" : {
+            "type" : "string",
+            "example" : "https://..."
+          },
+          "screen_name" : {
+            "type" : "string",
+            "example" : "billhicks"
+          },
+          "url" : {
+            "type" : "string",
+            "example" : "http://www.billhicks.com"
+          }
+        }
+      },
+      "UserAuthentication" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "a@b.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "••••••••"
+          }
+        }
+      },
+      "UserEditable" : {
+        "type" : "object",
+        "properties" : {
+          "about" : {
+            "type" : "string",
+            "example" : "The comedian"
+          },
+          "header" : {
+            "type" : "string",
+            "example" : "<BASE_64_ENCODED_STRING>"
+          },
+          "language" : {
+            "type" : "string",
+            "example" : "en"
+          },
+          "location" : {
+            "type" : "string",
+            "example" : "Little Rock, Arkansas"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Bill Hicks"
+          },
+          "picture" : {
+            "type" : "string",
+            "example" : "<BASE_64_ENCODED_STRING>"
+          },
+          "screen_name" : {
+            "type" : "string",
+            "example" : "billhicks"
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Pacific Time (US & Canada)"
+          },
+          "url" : {
+            "type" : "string",
+            "example" : "http://www.billhicks.com"
+          }
+        }
+      },
+      "UserFullProfile" : {
+        "properties" : {
+          "auth_token" : {
+            "type" : "string",
+            "example" : "6g8as82h3kj23h2"
+          },
+          "language" : {
+            "type" : "string",
+            "example" : "en"
+          },
+          "time_zone" : {
+            "type" : "string",
+            "example" : "Pacific Time (US & Canada)"
+          }
+        },
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/User"
+        } ]
+      }
+    }
+  }
+}

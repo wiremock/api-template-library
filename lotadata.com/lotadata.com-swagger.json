@@ -1,1 +1,1107 @@
-{"openapi":"3.0.1","info":{"title":"LotaData","description":"Access the most exhaustive, accurate and up-to-date collection of global and hyper-local geocoded events and activities across a wide range of categories and genres","version":"2.0.0"},"servers":[{"url":"https://api2.lotadata.com/v2"}],"security":[{"api_key":null}],"paths":{"/events":{"get":{"tags":["Events"],"summary":"Find event occurrences in the area. Returns results at specific place and time, event groups are expanded for every occurrence.","parameters":[{"name":"category","in":"query","description":"List of required EventCategory ids (Tier 1)","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"activity","in":"query","description":"List of required activity type ids (compliment to category)","schema":{"type":"string"}},{"name":"ambience","in":"query","description":"List of required ambience ids","schema":{"type":"string"}},{"name":"genre","in":"query","description":"List of required genre ids","schema":{"type":"string"}},{"name":"name","in":"query","description":"Matching on event and place names","schema":{"type":"string"}},{"name":"q","in":"query","description":"Text query matching titles, description, various text, tags, category","schema":{"type":"string"}},{"name":"from_day","in":"query","description":"Start on or after date specified (2015-10-16)","schema":{"type":"string"}},{"name":"to_day","in":"query","description":"Start on or before date specified (2015-10-16)","schema":{"type":"string"}},{"name":"capacity_min","in":"query","description":"Min capacity at location","schema":{"type":"number","format":"integer"}},{"name":"capacity_max","in":"query","description":"Min capacity at location","schema":{"type":"number","format":"integer"}},{"name":"center","in":"query","description":"latitude,longitude of the origin point","schema":{"type":"string"}},{"name":"radius","in":"query","description":"Distance from origin in meters","schema":{"type":"integer"}},{"name":"bbox","in":"query","description":"Corner of a bounding box (lat,lng). Requires 0 or 2 pairs","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"polygon","in":"query","description":"Closed custom polygon. Ordered list of lat,lng pairs","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"within","in":"query","description":"Search within specified geopolitical place id","schema":{"type":"string"}},{"name":"offset","in":"query","description":"Return results starting at specified offset","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Max results to return","schema":{"type":"integer"}},{"name":"fieldset","in":"query","description":"Return results starting at specified offset (summary, context, detail)","required":true,"schema":{"type":"string","default":"context","enum":["summary","detail","context","minicontext"]}}],"responses":{"200":{"description":"List of matching events","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EventsSearchResponse"}}}},"400":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/events/{id}":{"get":{"tags":["Events"],"summary":"Get Specific event details.","parameters":[{"name":"id","in":"path","description":"event @id","required":true,"schema":{"type":"string"}},{"name":"fieldset","in":"query","schema":{"type":"string","default":"summary","enum":["summary","detail","context","minicontext"]}}],"responses":{"200":{"description":"Requested event","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EventOccurenceDetail"}}}},"404":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/places":{"get":{"tags":["Places"],"summary":"Venues, landmarks, regions, these are all places to search.","parameters":[{"name":"category","in":"query","description":"List of required PlaceCategory ids (Tier 1)","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"function","in":"query","description":"List of required PlaceFunction ids (Tier 2)","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"ambience","in":"query","description":"List of required ambience ids","style":"form","explode":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"tag","in":"query","description":"List of required tags","style":"form","explode":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"type","in":"query","description":"Specific PlaceType to return","schema":{"type":"string"}},{"name":"name","in":"query","description":"Match on place names","schema":{"type":"string"}},{"name":"exact","in":"query","description":"Require an exact name match","schema":{"type":"boolean"}},{"name":"capacity_min","in":"query","description":"Min capacity at location","schema":{"type":"number","format":"integer"}},{"name":"capacity_max","in":"query","description":"Min capacity at location","schema":{"type":"number","format":"integer"}},{"name":"street","in":"query","description":"Address of the place or street component of the address","schema":{"type":"string"}},{"name":"locality","in":"query","description":"city, town, or neighborhood of the place","schema":{"type":"string"}},{"name":"region","in":"query","description":"region or state","schema":{"type":"string"}},{"name":"postal_code","in":"query","description":"Postal or zip code","schema":{"type":"string"}},{"name":"country","in":"query","description":"country component of the address","schema":{"type":"string"}},{"name":"center","in":"query","description":"latitude,longitude of the origin point","schema":{"type":"string"}},{"name":"radius","in":"query","description":"Distance from origin in meters","schema":{"type":"integer"}},{"name":"bbox","in":"query","description":"Corner of a bounding box (lat,lng). Requires 0 or 2 pairs","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"polygon","in":"query","description":"Closed custom polygon. Ordered list of lat,lng pairs","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"within","in":"query","description":"Search within specified geopolitical place id","schema":{"type":"string"}},{"name":"offset","in":"query","description":"Return results starting at specified offset","schema":{"type":"integer"}},{"name":"limit","in":"query","description":"Max results to return","schema":{"type":"integer"}},{"name":"fieldset","in":"query","description":"Return results starting at specified offset (summary, context, detail)","required":true,"schema":{"type":"string","default":"context","enum":["summary","detail","context"]}}],"responses":{"200":{"description":"List of matching events","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlacesSearchResponse"}}}},"400":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}},"/places/{id}":{"get":{"tags":["Places"],"summary":"Get specific place details","parameters":[{"name":"id","in":"path","description":"place @id","required":true,"schema":{"type":"string"}},{"name":"fieldset","in":"query","schema":{"type":"string","default":"summary","enum":["summary","detail","context","minicontext"]}}],"responses":{"200":{"description":"Requested place","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PlaceDetail"}}}},"404":{"description":"Unexpected error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Error"}}}}}}}},"components":{"schemas":{"Address":{"type":"object","properties":{"country":{"type":"string"},"formatted":{"type":"string","description":"Address formatted for display as a single string"},"locality":{"type":"string","description":"City or town"},"postalCode":{"type":"string"},"region":{"type":"string"},"street":{"type":"string","description":"Street portion of the address, may sometimes be a common name of the place"},"unit":{"type":"string"}},"description":"Physical world addresss"},"ContactDetail":{"type":"object","properties":{"displayPhone":{"type":"string"},"email":{"type":"string"},"facebookUrl":{"type":"string"},"instagramName":{"type":"string"},"lastfmUrl":{"type":"string"},"soundcloudUrl":{"type":"string"},"spotifyUrl":{"type":"string"},"twitterName":{"type":"string"},"url":{"type":"string"},"youtubeUrl":{"type":"string"}}},"Error":{"type":"object","properties":{"cause":{"type":"object","properties":{"expected":{"type":"string"},"path":{"type":"string"},"rule":{"type":"string"},"value":{"type":"string"}}},"message":{"type":"string"},"status":{"type":"integer","format":"int32"},"tracking":{"type":"object","properties":{"id":{"type":"string"},"session":{"type":"string"}}}}},"EventOccurenceDetail":{"type":"object","properties":{"@id":{"type":"string","description":"Unique event id"},"@type":{"type":"string","description":"Type of occurrence. You will usually see Organized as the type for most events. While Virtual events will get their own Virtual type.","enum":["Organized","Screening","Environmental","Virtual"]},"activity":{"type":"array","description":"Associated ActivityType entries","items":{"$ref":"#/components/schemas/FeatureReference"}},"ambience":{"type":"array","description":"expected mood and feel of the event","items":{"$ref":"#/components/schemas/FeatureReference"}},"at":{"$ref":"#/components/schemas/PlaceReference"},"awayTeam":{"$ref":"#/components/schemas/FeatureReference"},"category":{"type":"array","description":"Associated EventCategory. May be multiple, such as Charity Music event","items":{"$ref":"#/components/schemas/FeatureReference"}},"contactPoint":{"$ref":"#/components/schemas/ContactDetail"},"description":{"type":"string","description":"Full description in plain text"},"doorTime":{"type":"string","description":"Time when the admission starts","format":"date-time"},"duration":{"type":"string","description":"Duration of the event in ISO-8601 format (PT45M) - 45 minutes"},"endApprox":{"type":"boolean","description":"endDate is approximated based on historical data"},"endDate":{"type":"string","description":"Time when the event ends, if known","format":"date-time"},"extTaxonomy":{"type":"array","description":"extended taxonomy such as IAB and Google AdWords","items":{"$ref":"#/components/schemas/FeatureReference"}},"genre":{"type":"array","description":"applicable Genres. (Tier 2 taxonomy). May include related genres from categories, not deemed as primary","items":{"$ref":"#/components/schemas/FeatureReference"}},"headline":{"type":"string","description":"Optional short description in plain text"},"homeTeam":{"$ref":"#/components/schemas/FeatureReference"},"htmlDescription":{"type":"string","description":"Full description with HTML formatting, where available"},"image":{"$ref":"#/components/schemas/ImageMeta"},"inLanguage":{"$ref":"#/components/schemas/FeatureReference"},"name":{"type":"string","description":"Name of the event in plain text"},"noTime":{"type":"boolean","description":"Specific time of the event is unknown. (shown only when true)"},"offers":{"type":"array","description":"Ticketing options","items":{"$ref":"#/components/schemas/TicketOffer"}},"onDemand":{"type":"boolean","description":"This event can start at any time during specified window"},"performer":{"type":"array","description":"List of Personas significant for this event","items":{"$ref":"#/components/schemas/FeatureReference"}},"photo":{"type":"array","description":"Primary image","items":{"$ref":"#/components/schemas/ImageMeta"}},"startDate":{"type":"string","description":"Time when the event starts","format":"date-time"},"superEvent":{"$ref":"#/components/schemas/OccurrenceReference"},"updated":{"type":"string","description":"Timestamp of last modification (UTC)","format":"date-time"},"url":{"type":"string","description":"Primary url for published event"},"workPerformed":{"type":"array","description":"Subject matter of the event","items":{"$ref":"#/components/schemas/FeatureReference"}}},"description":"Event Occurrence Detail limited to requested fieldset."},"EventsQuery":{"type":"object","properties":{"activity":{"type":"array","description":"required activity types","items":{"type":"string"}},"category":{"type":"array","description":"required categories","items":{"type":"string"}},"limit":{"type":"integer","description":"maximum number of matches to return"}},"description":"Specific filters understood and executed for this query. If your parameter is not visible here, then consult the documentation for correct usage."},"EventsSearchResponse":{"type":"object","properties":{"events":{"type":"array","items":{"$ref":"#/components/schemas/EventOccurenceDetail"}},"query":{"$ref":"#/components/schemas/EventsQuery"},"stats":{"$ref":"#/components/schemas/SearchStatsMetaResult"}}},"FeatureReference":{"type":"object","properties":{"@id":{"type":"string","description":"Feature id"},"@type":{"type":"string","description":"Type of specific feature or Taxonomy node such as EventCategory, SportsTeam, Persona."},"name":{"type":"string","description":"Display name of the feature"}},"description":"Identifier for a Feature"},"GeoJsonObject":{"type":"object","description":"Shape defined per GeoJSON spec"},"GeoPt":{"type":"object","properties":{"lat":{"type":"number"},"lon":{"type":"number"}}},"ImageMeta":{"type":"object","properties":{"@id":{"type":"string"},"caption":{"type":"string"},"height":{"type":"integer"},"url":{"type":"string"},"width":{"type":"integer"}},"description":"Image meta data"},"OccurrenceReference":{"type":"object","properties":{"@id":{"type":"string"},"name":{"type":"string"},"startDate":{"type":"string","description":"Time when the event starts","format":"date-time"}}},"PlaceDetail":{"properties":{"ambience":{"type":"array","description":"expected mood and feel of the event","items":{"$ref":"#/components/schemas/FeatureReference"}},"category":{"type":"array","description":"Associated PlaceCategory. May be multiple (Tier 1)","items":{"$ref":"#/components/schemas/FeatureReference"}},"contact":{"$ref":"#/components/schemas/ContactDetail"},"function":{"type":"array","description":"PlaceFunction. (Tier 2 taxonomy)","items":{"$ref":"#/components/schemas/FeatureReference"}},"openingHours":{"type":"array","items":{"$ref":"#/components/schemas/Timeframe"}},"photo":{"type":"array","items":{"$ref":"#/components/schemas/ImageMeta"}}},"allOf":[{"$ref":"#/components/schemas/PlaceReference"}]},"PlaceReference":{"type":"object","properties":{"@id":{"type":"string"},"@type":{"type":"string","description":"Type of place where Place is a physical address, LocalBusiness is any type of comercial property, AdministrativeArea is a political or colloquial area, and Virtual is out of this world","enum":["Place","LocalBusiness","AdministrativeArea","TouristAttraction","Landform","LandmarksOrHistoricalBuildings","Residence","Virtual"]},"address":{"$ref":"#/components/schemas/Address"},"geo":{"$ref":"#/components/schemas/GeoPt"},"geometry":{"$ref":"#/components/schemas/GeoJsonObject"},"location":{"$ref":"#/components/schemas/VirtualLocation"},"logo":{"$ref":"#/components/schemas/ImageMeta"},"name":{"type":"string"},"tag":{"type":"array","items":{"$ref":"#/components/schemas/FeatureReference"}}},"description":"Unique Location"},"PlacesQuery":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/Address"},"category":{"type":"array","description":"required categories","items":{"type":"string"}},"limit":{"type":"integer","description":"maximum number of matches to return"}},"description":"Specific filters understood and executed for this query. If your parameter is not visible here, then consult the documentation for correct usage."},"PlacesSearchResponse":{"type":"object","properties":{"places":{"type":"array","items":{"$ref":"#/components/schemas/PlaceDetail"}},"query":{"$ref":"#/components/schemas/PlacesQuery"},"stats":{"$ref":"#/components/schemas/SearchStatsMetaResult"}}},"SearchStatsMetaResult":{"type":"object","properties":{"count":{"type":"integer","description":"Total matches for the query"},"fieldset":{"type":"string","description":"Specific fields returned by this query"},"runtime":{"type":"integer","description":"Server side run time in msec for this request"}},"description":"Shows invocation details about the query. Running query again, could produce different results"},"TicketOffer":{"type":"object","properties":{"availability":{"type":"string","enum":["Discontinued","InStock","InStoreOnly","LimitedAvailability","OnlineOnly","OutOfStock","PreOrder","SoldOut"]},"category":{"type":"string","enum":["primary","secondary","presale","member","premium","unknown"]},"donation":{"type":"boolean"},"fee":{"type":"number"},"highPrice":{"type":"number"},"inventory":{"type":"object","properties":{"available":{"type":"integer"},"total":{"type":"integer"}}},"name":{"type":"string"},"price":{"type":"number"},"priceCurrency":{"type":"string"},"priceUnknown":{"type":"boolean"},"url":{"type":"string"}}},"Timeframe":{"type":"object","properties":{"closes":{"type":"string","description":"Close time for all days mentioned in the dayOfWeek. If close time is less than open, then it is following day.","format":"date-time"},"dayOfWeek":{"type":"array","description":"ISO day of the week. 1- Monday, 7- Sunday","items":{"type":"integer"}},"open247":{"type":"boolean","description":"Open around the clock"},"opens":{"type":"string","description":"Open time for all days mentioned in the dayOfWeek","format":"date-time"}}},"VirtualLocation":{"type":"object","properties":{"domain":{"type":"string"},"platform":{"type":"string"},"url":{"type":"string"}},"description":"Virtual Address"}},"securitySchemes":{"api_key":{"type":"apiKey","description":"Your API key","name":"api_key","in":"query"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "LotaData",
+    "description" : "Access the most exhaustive, accurate and up-to-date collection of global and hyper-local geocoded events and activities across a wide range of categories and genres",
+    "version" : "2.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api2.lotadata.com/v2"
+  } ],
+  "security" : [ {
+    "api_key" : null
+  } ],
+  "paths" : {
+    "/events" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Find event occurrences in the area. Returns results at specific place and time, event groups are expanded for every occurrence.",
+        "parameters" : [ {
+          "name" : "category",
+          "in" : "query",
+          "description" : "List of required EventCategory ids (Tier 1)",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "activity",
+          "in" : "query",
+          "description" : "List of required activity type ids (compliment to category)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ambience",
+          "in" : "query",
+          "description" : "List of required ambience ids",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "genre",
+          "in" : "query",
+          "description" : "List of required genre ids",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Matching on event and place names",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "q",
+          "in" : "query",
+          "description" : "Text query matching titles, description, various text, tags, category",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "from_day",
+          "in" : "query",
+          "description" : "Start on or after date specified (2015-10-16)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to_day",
+          "in" : "query",
+          "description" : "Start on or before date specified (2015-10-16)",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "capacity_min",
+          "in" : "query",
+          "description" : "Min capacity at location",
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        }, {
+          "name" : "capacity_max",
+          "in" : "query",
+          "description" : "Min capacity at location",
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        }, {
+          "name" : "center",
+          "in" : "query",
+          "description" : "latitude,longitude of the origin point",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "Distance from origin in meters",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "bbox",
+          "in" : "query",
+          "description" : "Corner of a bounding box (lat,lng). Requires 0 or 2 pairs",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "polygon",
+          "in" : "query",
+          "description" : "Closed custom polygon. Ordered list of lat,lng pairs",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "within",
+          "in" : "query",
+          "description" : "Search within specified geopolitical place id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Return results starting at specified offset",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Max results to return",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "fieldset",
+          "in" : "query",
+          "description" : "Return results starting at specified offset (summary, context, detail)",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "context",
+            "enum" : [ "summary", "detail", "context", "minicontext" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of matching events",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventsSearchResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Get Specific event details.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "event @id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fieldset",
+          "in" : "query",
+          "schema" : {
+            "type" : "string",
+            "default" : "summary",
+            "enum" : [ "summary", "detail", "context", "minicontext" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Requested event",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventOccurenceDetail"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/places" : {
+      "get" : {
+        "tags" : [ "Places" ],
+        "summary" : "Venues, landmarks, regions, these are all places to search.",
+        "parameters" : [ {
+          "name" : "category",
+          "in" : "query",
+          "description" : "List of required PlaceCategory ids (Tier 1)",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "function",
+          "in" : "query",
+          "description" : "List of required PlaceFunction ids (Tier 2)",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "ambience",
+          "in" : "query",
+          "description" : "List of required ambience ids",
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "tag",
+          "in" : "query",
+          "description" : "List of required tags",
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "Specific PlaceType to return",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Match on place names",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "exact",
+          "in" : "query",
+          "description" : "Require an exact name match",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "capacity_min",
+          "in" : "query",
+          "description" : "Min capacity at location",
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        }, {
+          "name" : "capacity_max",
+          "in" : "query",
+          "description" : "Min capacity at location",
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        }, {
+          "name" : "street",
+          "in" : "query",
+          "description" : "Address of the place or street component of the address",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "locality",
+          "in" : "query",
+          "description" : "city, town, or neighborhood of the place",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "description" : "region or state",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "postal_code",
+          "in" : "query",
+          "description" : "Postal or zip code",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : "country component of the address",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "center",
+          "in" : "query",
+          "description" : "latitude,longitude of the origin point",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "Distance from origin in meters",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "bbox",
+          "in" : "query",
+          "description" : "Corner of a bounding box (lat,lng). Requires 0 or 2 pairs",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "polygon",
+          "in" : "query",
+          "description" : "Closed custom polygon. Ordered list of lat,lng pairs",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "within",
+          "in" : "query",
+          "description" : "Search within specified geopolitical place id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "Return results starting at specified offset",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Max results to return",
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "fieldset",
+          "in" : "query",
+          "description" : "Return results starting at specified offset (summary, context, detail)",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "context",
+            "enum" : [ "summary", "detail", "context" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of matching events",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlacesSearchResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/places/{id}" : {
+      "get" : {
+        "tags" : [ "Places" ],
+        "summary" : "Get specific place details",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "place @id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fieldset",
+          "in" : "query",
+          "schema" : {
+            "type" : "string",
+            "default" : "summary",
+            "enum" : [ "summary", "detail", "context", "minicontext" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Requested place",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlaceDetail"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "country" : {
+            "type" : "string"
+          },
+          "formatted" : {
+            "type" : "string",
+            "description" : "Address formatted for display as a single string"
+          },
+          "locality" : {
+            "type" : "string",
+            "description" : "City or town"
+          },
+          "postalCode" : {
+            "type" : "string"
+          },
+          "region" : {
+            "type" : "string"
+          },
+          "street" : {
+            "type" : "string",
+            "description" : "Street portion of the address, may sometimes be a common name of the place"
+          },
+          "unit" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Physical world addresss"
+      },
+      "ContactDetail" : {
+        "type" : "object",
+        "properties" : {
+          "displayPhone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "facebookUrl" : {
+            "type" : "string"
+          },
+          "instagramName" : {
+            "type" : "string"
+          },
+          "lastfmUrl" : {
+            "type" : "string"
+          },
+          "soundcloudUrl" : {
+            "type" : "string"
+          },
+          "spotifyUrl" : {
+            "type" : "string"
+          },
+          "twitterName" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          },
+          "youtubeUrl" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "cause" : {
+            "type" : "object",
+            "properties" : {
+              "expected" : {
+                "type" : "string"
+              },
+              "path" : {
+                "type" : "string"
+              },
+              "rule" : {
+                "type" : "string"
+              },
+              "value" : {
+                "type" : "string"
+              }
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "tracking" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "session" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      },
+      "EventOccurenceDetail" : {
+        "type" : "object",
+        "properties" : {
+          "@id" : {
+            "type" : "string",
+            "description" : "Unique event id"
+          },
+          "@type" : {
+            "type" : "string",
+            "description" : "Type of occurrence. You will usually see Organized as the type for most events. While Virtual events will get their own Virtual type.",
+            "enum" : [ "Organized", "Screening", "Environmental", "Virtual" ]
+          },
+          "activity" : {
+            "type" : "array",
+            "description" : "Associated ActivityType entries",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "ambience" : {
+            "type" : "array",
+            "description" : "expected mood and feel of the event",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "at" : {
+            "$ref" : "#/components/schemas/PlaceReference"
+          },
+          "awayTeam" : {
+            "$ref" : "#/components/schemas/FeatureReference"
+          },
+          "category" : {
+            "type" : "array",
+            "description" : "Associated EventCategory. May be multiple, such as Charity Music event",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "contactPoint" : {
+            "$ref" : "#/components/schemas/ContactDetail"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Full description in plain text"
+          },
+          "doorTime" : {
+            "type" : "string",
+            "description" : "Time when the admission starts",
+            "format" : "date-time"
+          },
+          "duration" : {
+            "type" : "string",
+            "description" : "Duration of the event in ISO-8601 format (PT45M) - 45 minutes"
+          },
+          "endApprox" : {
+            "type" : "boolean",
+            "description" : "endDate is approximated based on historical data"
+          },
+          "endDate" : {
+            "type" : "string",
+            "description" : "Time when the event ends, if known",
+            "format" : "date-time"
+          },
+          "extTaxonomy" : {
+            "type" : "array",
+            "description" : "extended taxonomy such as IAB and Google AdWords",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "genre" : {
+            "type" : "array",
+            "description" : "applicable Genres. (Tier 2 taxonomy). May include related genres from categories, not deemed as primary",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "headline" : {
+            "type" : "string",
+            "description" : "Optional short description in plain text"
+          },
+          "homeTeam" : {
+            "$ref" : "#/components/schemas/FeatureReference"
+          },
+          "htmlDescription" : {
+            "type" : "string",
+            "description" : "Full description with HTML formatting, where available"
+          },
+          "image" : {
+            "$ref" : "#/components/schemas/ImageMeta"
+          },
+          "inLanguage" : {
+            "$ref" : "#/components/schemas/FeatureReference"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the event in plain text"
+          },
+          "noTime" : {
+            "type" : "boolean",
+            "description" : "Specific time of the event is unknown. (shown only when true)"
+          },
+          "offers" : {
+            "type" : "array",
+            "description" : "Ticketing options",
+            "items" : {
+              "$ref" : "#/components/schemas/TicketOffer"
+            }
+          },
+          "onDemand" : {
+            "type" : "boolean",
+            "description" : "This event can start at any time during specified window"
+          },
+          "performer" : {
+            "type" : "array",
+            "description" : "List of Personas significant for this event",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "photo" : {
+            "type" : "array",
+            "description" : "Primary image",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageMeta"
+            }
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "Time when the event starts",
+            "format" : "date-time"
+          },
+          "superEvent" : {
+            "$ref" : "#/components/schemas/OccurrenceReference"
+          },
+          "updated" : {
+            "type" : "string",
+            "description" : "Timestamp of last modification (UTC)",
+            "format" : "date-time"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "Primary url for published event"
+          },
+          "workPerformed" : {
+            "type" : "array",
+            "description" : "Subject matter of the event",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          }
+        },
+        "description" : "Event Occurrence Detail limited to requested fieldset."
+      },
+      "EventsQuery" : {
+        "type" : "object",
+        "properties" : {
+          "activity" : {
+            "type" : "array",
+            "description" : "required activity types",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "category" : {
+            "type" : "array",
+            "description" : "required categories",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "limit" : {
+            "type" : "integer",
+            "description" : "maximum number of matches to return"
+          }
+        },
+        "description" : "Specific filters understood and executed for this query. If your parameter is not visible here, then consult the documentation for correct usage."
+      },
+      "EventsSearchResponse" : {
+        "type" : "object",
+        "properties" : {
+          "events" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/EventOccurenceDetail"
+            }
+          },
+          "query" : {
+            "$ref" : "#/components/schemas/EventsQuery"
+          },
+          "stats" : {
+            "$ref" : "#/components/schemas/SearchStatsMetaResult"
+          }
+        }
+      },
+      "FeatureReference" : {
+        "type" : "object",
+        "properties" : {
+          "@id" : {
+            "type" : "string",
+            "description" : "Feature id"
+          },
+          "@type" : {
+            "type" : "string",
+            "description" : "Type of specific feature or Taxonomy node such as EventCategory, SportsTeam, Persona."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Display name of the feature"
+          }
+        },
+        "description" : "Identifier for a Feature"
+      },
+      "GeoJsonObject" : {
+        "type" : "object",
+        "description" : "Shape defined per GeoJSON spec"
+      },
+      "GeoPt" : {
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number"
+          },
+          "lon" : {
+            "type" : "number"
+          }
+        }
+      },
+      "ImageMeta" : {
+        "type" : "object",
+        "properties" : {
+          "@id" : {
+            "type" : "string"
+          },
+          "caption" : {
+            "type" : "string"
+          },
+          "height" : {
+            "type" : "integer"
+          },
+          "url" : {
+            "type" : "string"
+          },
+          "width" : {
+            "type" : "integer"
+          }
+        },
+        "description" : "Image meta data"
+      },
+      "OccurrenceReference" : {
+        "type" : "object",
+        "properties" : {
+          "@id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "Time when the event starts",
+            "format" : "date-time"
+          }
+        }
+      },
+      "PlaceDetail" : {
+        "properties" : {
+          "ambience" : {
+            "type" : "array",
+            "description" : "expected mood and feel of the event",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "category" : {
+            "type" : "array",
+            "description" : "Associated PlaceCategory. May be multiple (Tier 1)",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/ContactDetail"
+          },
+          "function" : {
+            "type" : "array",
+            "description" : "PlaceFunction. (Tier 2 taxonomy)",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          },
+          "openingHours" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Timeframe"
+            }
+          },
+          "photo" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageMeta"
+            }
+          }
+        },
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PlaceReference"
+        } ]
+      },
+      "PlaceReference" : {
+        "type" : "object",
+        "properties" : {
+          "@id" : {
+            "type" : "string"
+          },
+          "@type" : {
+            "type" : "string",
+            "description" : "Type of place where Place is a physical address, LocalBusiness is any type of comercial property, AdministrativeArea is a political or colloquial area, and Virtual is out of this world",
+            "enum" : [ "Place", "LocalBusiness", "AdministrativeArea", "TouristAttraction", "Landform", "LandmarksOrHistoricalBuildings", "Residence", "Virtual" ]
+          },
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "geo" : {
+            "$ref" : "#/components/schemas/GeoPt"
+          },
+          "geometry" : {
+            "$ref" : "#/components/schemas/GeoJsonObject"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/VirtualLocation"
+          },
+          "logo" : {
+            "$ref" : "#/components/schemas/ImageMeta"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "tag" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FeatureReference"
+            }
+          }
+        },
+        "description" : "Unique Location"
+      },
+      "PlacesQuery" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "category" : {
+            "type" : "array",
+            "description" : "required categories",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "limit" : {
+            "type" : "integer",
+            "description" : "maximum number of matches to return"
+          }
+        },
+        "description" : "Specific filters understood and executed for this query. If your parameter is not visible here, then consult the documentation for correct usage."
+      },
+      "PlacesSearchResponse" : {
+        "type" : "object",
+        "properties" : {
+          "places" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PlaceDetail"
+            }
+          },
+          "query" : {
+            "$ref" : "#/components/schemas/PlacesQuery"
+          },
+          "stats" : {
+            "$ref" : "#/components/schemas/SearchStatsMetaResult"
+          }
+        }
+      },
+      "SearchStatsMetaResult" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "description" : "Total matches for the query"
+          },
+          "fieldset" : {
+            "type" : "string",
+            "description" : "Specific fields returned by this query"
+          },
+          "runtime" : {
+            "type" : "integer",
+            "description" : "Server side run time in msec for this request"
+          }
+        },
+        "description" : "Shows invocation details about the query. Running query again, could produce different results"
+      },
+      "TicketOffer" : {
+        "type" : "object",
+        "properties" : {
+          "availability" : {
+            "type" : "string",
+            "enum" : [ "Discontinued", "InStock", "InStoreOnly", "LimitedAvailability", "OnlineOnly", "OutOfStock", "PreOrder", "SoldOut" ]
+          },
+          "category" : {
+            "type" : "string",
+            "enum" : [ "primary", "secondary", "presale", "member", "premium", "unknown" ]
+          },
+          "donation" : {
+            "type" : "boolean"
+          },
+          "fee" : {
+            "type" : "number"
+          },
+          "highPrice" : {
+            "type" : "number"
+          },
+          "inventory" : {
+            "type" : "object",
+            "properties" : {
+              "available" : {
+                "type" : "integer"
+              },
+              "total" : {
+                "type" : "integer"
+              }
+            }
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "priceCurrency" : {
+            "type" : "string"
+          },
+          "priceUnknown" : {
+            "type" : "boolean"
+          },
+          "url" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Timeframe" : {
+        "type" : "object",
+        "properties" : {
+          "closes" : {
+            "type" : "string",
+            "description" : "Close time for all days mentioned in the dayOfWeek. If close time is less than open, then it is following day.",
+            "format" : "date-time"
+          },
+          "dayOfWeek" : {
+            "type" : "array",
+            "description" : "ISO day of the week. 1- Monday, 7- Sunday",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "open247" : {
+            "type" : "boolean",
+            "description" : "Open around the clock"
+          },
+          "opens" : {
+            "type" : "string",
+            "description" : "Open time for all days mentioned in the dayOfWeek",
+            "format" : "date-time"
+          }
+        }
+      },
+      "VirtualLocation" : {
+        "type" : "object",
+        "properties" : {
+          "domain" : {
+            "type" : "string"
+          },
+          "platform" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Virtual Address"
+      }
+    },
+    "securitySchemes" : {
+      "api_key" : {
+        "type" : "apiKey",
+        "description" : "Your API key",
+        "name" : "api_key",
+        "in" : "query"
+      }
+    }
+  }
+}

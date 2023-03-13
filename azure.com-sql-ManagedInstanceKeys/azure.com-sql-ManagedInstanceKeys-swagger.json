@@ -1,1 +1,469 @@
-{"openapi":"3.0.1","info":{"title":"SqlManagementClient","description":"The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.","version":"2017-10-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys":{"get":{"tags":["ManagedInstanceKeys"],"description":"Gets a list of managed instance keys.","operationId":"ManagedInstanceKeys_ListByInstance","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"$filter","in":"query","description":"An OData filter expression that filters elements in the collection.","schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the list of managed instance keys.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedInstanceKeyListResult"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}":{"get":{"tags":["ManagedInstanceKeys"],"description":"Gets a managed instance key.","operationId":"ManagedInstanceKeys_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"keyName","in":"path","description":"The name of the managed instance key to be retrieved.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the specified managed instance key.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedInstanceKey"}}}},"default":{"description":"*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found."}}},"put":{"tags":["ManagedInstanceKeys"],"description":"Creates or updates a managed instance key.","operationId":"ManagedInstanceKeys_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"keyName","in":"path","description":"The name of the managed instance key to be operated on (updated or created).","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The requested managed instance key resource state.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedInstanceKey"}}},"required":true},"responses":{"200":{"description":"Successfully updated the managed instance key.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedInstanceKey"}}}},"201":{"description":"Successfully created the managed instance key.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedInstanceKey"}}}},"202":{"description":"Accepted"},"default":{"description":"*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 400 AzureKeyVaultInvalidExpirationDate - The operation could not be completed because the Azure Key Vault key expiration date is invalid.\n\n * 400 SecurityAzureKeyVaultUrlNullOrEmpty - The operation could not be completed because the Azure Key Vault Uri is null or empty.\n\n * 400 AzureKeyVaultInvalidUri - An invalid response from Azure Key Vault. Please use a valid Azure Key Vault URI.\n\n * 400 SecurityAzureKeyVaultInvalidKeyName - The operation could not be completed because of an invalid Server Key name.\n\n * 400 AzureKeyVaultMalformedVaultUri - The provided Key Vault uri is not valid.\n\n * 400 SecurityAdalPrincipalCertExpiredError - The operation could not be completed because the Azure Key Vault principal certificate has expired.\n\n * 400 SecurityInvalidAzureKeyVaultRecoveryLevel - The provided Key Vault uri is not valid.\n\n * 400 KeyMaterialNotFoundOnRemoteServer - Remote server does not have access to key material used as a TDE protector.\n\n * 400 AzureKeyVaultMismatchError - Unexpected Key Vault region found in the http response.\n\n * 400 AzureKeyVaultRsaKeyNotSupported - The provided key vault uses unsupported RSA Key Size or Key Type. The supported RSA key size is 2048 and Key Type is RSA.\n\n * 401 AzureKeyVaultKeyDisabled - The operation could not be completed on the server because the Azure Key Vault key is disabled.\n\n * 401 AzureKeyVaultNoServerIdentity - The server identity is not correctly configured.\n\n * 401 AzureKeyVaultMissingPermissions - The server is missing required permissions on the Azure Key Vault. \n\n * 401 AdalGenericError - The operation could not be completed because an Azure Active Directory error was encountered.\n\n * 401 AdalServicePrincipalNotFound - The operation could not be completed because an Azure Active Directory library Service Principal not found error was encountered.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found.\n\n * 409 ServerKeyNameAlreadyExists - The server key already exists on the server.\n\n * 409 ServerKeyUriAlreadyExists - The server key URI already exists on the server.\n\n * 409 ServerKeyDoesNotExists - The server key does not exist.\n\n * 409 AzureKeyVaultKeyNameNotFound - The operation could not be completed because the Azure Key Vault Key name does not exist.\n\n * 409 AzureKeyVaultKeyInUse - The key is currently being used by the server.\n\n * 503 AzureKeyVaultConnectionFailed - The operation could not be completed on the server because attempts to connect to Azure Key Vault have failed\n\n * 503 AzureKeyVaultGenericConnectionError - The operation could not be completed because an error was encountered when attempting to retrieve Key Vault information ."}}},"delete":{"tags":["ManagedInstanceKeys"],"description":"Deletes the managed instance key with the given name.","operationId":"ManagedInstanceKeys_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},{"name":"keyName","in":"path","description":"The name of the managed instance key to be deleted.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully deleted the managed instance key."},"202":{"description":"Accepted"},"204":{"description":"The specified managed instance key does not exist."},"default":{"description":"*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 400 AzureKeyVaultInvalidExpirationDate - The operation could not be completed because the Azure Key Vault key expiration date is invalid.\n\n * 400 SecurityAzureKeyVaultUrlNullOrEmpty - The operation could not be completed because the Azure Key Vault Uri is null or empty.\n\n * 400 AzureKeyVaultInvalidUri - An invalid response from Azure Key Vault. Please use a valid Azure Key Vault URI.\n\n * 400 SecurityAzureKeyVaultInvalidKeyName - The operation could not be completed because of an invalid Server Key name.\n\n * 400 AzureKeyVaultMalformedVaultUri - The provided Key Vault uri is not valid.\n\n * 400 SecurityAdalPrincipalCertExpiredError - The operation could not be completed because the Azure Key Vault principal certificate has expired.\n\n * 400 SecurityInvalidAzureKeyVaultRecoveryLevel - The provided Key Vault uri is not valid.\n\n * 400 KeyMaterialNotFoundOnRemoteServer - Remote server does not have access to key material used as a TDE protector.\n\n * 400 AzureKeyVaultMismatchError - Unexpected Key Vault region found in the http response.\n\n * 400 AzureKeyVaultRsaKeyNotSupported - The provided key vault uses unsupported RSA Key Size or Key Type. The supported RSA key size is 2048 and Key Type is RSA.\n\n * 401 AzureKeyVaultKeyDisabled - The operation could not be completed on the server because the Azure Key Vault key is disabled.\n\n * 401 AzureKeyVaultNoServerIdentity - The server identity is not correctly configured.\n\n * 401 AzureKeyVaultMissingPermissions - The server is missing required permissions on the Azure Key Vault. \n\n * 401 AdalGenericError - The operation could not be completed because an Azure Active Directory error was encountered.\n\n * 401 AdalServicePrincipalNotFound - The operation could not be completed because an Azure Active Directory library Service Principal not found error was encountered.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found.\n\n * 409 ServerKeyNameAlreadyExists - The server key already exists on the server.\n\n * 409 ServerKeyUriAlreadyExists - The server key URI already exists on the server.\n\n * 409 ServerKeyDoesNotExists - The server key does not exist.\n\n * 409 AzureKeyVaultKeyNameNotFound - The operation could not be completed because the Azure Key Vault Key name does not exist.\n\n * 409 AzureKeyVaultKeyInUse - The key is currently being used by the server.\n\n * 503 AzureKeyVaultConnectionFailed - The operation could not be completed on the server because attempts to connect to Azure Key Vault have failed\n\n * 503 AzureKeyVaultGenericConnectionError - The operation could not be completed because an error was encountered when attempting to retrieve Key Vault information ."}}}}},"components":{"schemas":{"ManagedInstanceKey":{"properties":{"kind":{"type":"string","description":"Kind of encryption protector. This is metadata used for the Azure portal experience.","readOnly":true},"properties":{"$ref":"#/components/schemas/ManagedInstanceKeyProperties"}},"description":"A managed instance key.","allOf":[{"description":"ARM proxy resource.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."}]}]},"ManagedInstanceKeyListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"Link to retrieve next page of results.","readOnly":true},"value":{"type":"array","description":"Array of results.","readOnly":true,"items":{"$ref":"#/components/schemas/ManagedInstanceKey"}}},"description":"A list of managed instance keys."},"ManagedInstanceKeyProperties":{"required":["serverKeyType"],"type":"object","properties":{"creationDate":{"type":"string","description":"The key creation date.","format":"date-time","readOnly":true},"serverKeyType":{"type":"string","description":"The key type like 'ServiceManaged', 'AzureKeyVault'.","enum":["ServiceManaged","AzureKeyVault"]},"thumbprint":{"type":"string","description":"Thumbprint of the key.","readOnly":true},"uri":{"type":"string","description":"The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required."}},"description":"Properties for a key execution."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},"BlobAuditingPolicyNameParameter":{"name":"blobAuditingPolicyName","in":"path","description":"The name of the blob auditing policy.","required":true,"schema":{"type":"string","enum":["default"]}},"DatabaseNameParameter":{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},"ManagedInstanceNameParameter":{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},"ResourceGroupParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineContainerNameParameter":{"name":"sqlVirtualMachineContainerName","in":"path","description":"The name of the SqlVirtualMachineContainer.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineInstanceNameParameter":{"name":"sqlVirtualMachineInstanceName","in":"path","description":"The name of the SqlVirtualMachineInstance.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},"VirtualClusterNameParameter":{"name":"virtualClusterName","in":"path","description":"The name of the virtual cluster.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SqlManagementClient",
+    "description" : "The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.",
+    "version" : "2017-10-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys" : {
+      "get" : {
+        "tags" : [ "ManagedInstanceKeys" ],
+        "description" : "Gets a list of managed instance keys.",
+        "operationId" : "ManagedInstanceKeys_ListByInstance",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "An OData filter expression that filters elements in the collection.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the list of managed instance keys.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagedInstanceKeyListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}" : {
+      "get" : {
+        "tags" : [ "ManagedInstanceKeys" ],
+        "description" : "Gets a managed instance key.",
+        "operationId" : "ManagedInstanceKeys_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "keyName",
+          "in" : "path",
+          "description" : "The name of the managed instance key to be retrieved.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the specified managed instance key.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagedInstanceKey"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ManagedInstanceKeys" ],
+        "description" : "Creates or updates a managed instance key.",
+        "operationId" : "ManagedInstanceKeys_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "keyName",
+          "in" : "path",
+          "description" : "The name of the managed instance key to be operated on (updated or created).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The requested managed instance key resource state.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ManagedInstanceKey"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the managed instance key.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagedInstanceKey"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Successfully created the managed instance key.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ManagedInstanceKey"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted"
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 400 AzureKeyVaultInvalidExpirationDate - The operation could not be completed because the Azure Key Vault key expiration date is invalid.\n\n * 400 SecurityAzureKeyVaultUrlNullOrEmpty - The operation could not be completed because the Azure Key Vault Uri is null or empty.\n\n * 400 AzureKeyVaultInvalidUri - An invalid response from Azure Key Vault. Please use a valid Azure Key Vault URI.\n\n * 400 SecurityAzureKeyVaultInvalidKeyName - The operation could not be completed because of an invalid Server Key name.\n\n * 400 AzureKeyVaultMalformedVaultUri - The provided Key Vault uri is not valid.\n\n * 400 SecurityAdalPrincipalCertExpiredError - The operation could not be completed because the Azure Key Vault principal certificate has expired.\n\n * 400 SecurityInvalidAzureKeyVaultRecoveryLevel - The provided Key Vault uri is not valid.\n\n * 400 KeyMaterialNotFoundOnRemoteServer - Remote server does not have access to key material used as a TDE protector.\n\n * 400 AzureKeyVaultMismatchError - Unexpected Key Vault region found in the http response.\n\n * 400 AzureKeyVaultRsaKeyNotSupported - The provided key vault uses unsupported RSA Key Size or Key Type. The supported RSA key size is 2048 and Key Type is RSA.\n\n * 401 AzureKeyVaultKeyDisabled - The operation could not be completed on the server because the Azure Key Vault key is disabled.\n\n * 401 AzureKeyVaultNoServerIdentity - The server identity is not correctly configured.\n\n * 401 AzureKeyVaultMissingPermissions - The server is missing required permissions on the Azure Key Vault. \n\n * 401 AdalGenericError - The operation could not be completed because an Azure Active Directory error was encountered.\n\n * 401 AdalServicePrincipalNotFound - The operation could not be completed because an Azure Active Directory library Service Principal not found error was encountered.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found.\n\n * 409 ServerKeyNameAlreadyExists - The server key already exists on the server.\n\n * 409 ServerKeyUriAlreadyExists - The server key URI already exists on the server.\n\n * 409 ServerKeyDoesNotExists - The server key does not exist.\n\n * 409 AzureKeyVaultKeyNameNotFound - The operation could not be completed because the Azure Key Vault Key name does not exist.\n\n * 409 AzureKeyVaultKeyInUse - The key is currently being used by the server.\n\n * 503 AzureKeyVaultConnectionFailed - The operation could not be completed on the server because attempts to connect to Azure Key Vault have failed\n\n * 503 AzureKeyVaultGenericConnectionError - The operation could not be completed because an error was encountered when attempting to retrieve Key Vault information ."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ManagedInstanceKeys" ],
+        "description" : "Deletes the managed instance key with the given name.",
+        "operationId" : "ManagedInstanceKeys_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "managedInstanceName",
+          "in" : "path",
+          "description" : "The name of the managed instance.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "keyName",
+          "in" : "path",
+          "description" : "The name of the managed instance key to be deleted.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully deleted the managed instance key."
+          },
+          "202" : {
+            "description" : "Accepted"
+          },
+          "204" : {
+            "description" : "The specified managed instance key does not exist."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 400 InvalidKeyName - An invalid value was given for the server key name.\n\n * 400 InvalidKeyType - The create server key type is not supported.\n\n * 400 InvalidUpsertKeyType - Service Managed type keys are managed by Azure SQL. This key type does not support create or update by the user.\n\n * 400 InvalidKeyUpsertRequest - The create server key request does not exist or has no properties object.\n\n * 400 AzureKeyVaultInvalidExpirationDate - The operation could not be completed because the Azure Key Vault key expiration date is invalid.\n\n * 400 SecurityAzureKeyVaultUrlNullOrEmpty - The operation could not be completed because the Azure Key Vault Uri is null or empty.\n\n * 400 AzureKeyVaultInvalidUri - An invalid response from Azure Key Vault. Please use a valid Azure Key Vault URI.\n\n * 400 SecurityAzureKeyVaultInvalidKeyName - The operation could not be completed because of an invalid Server Key name.\n\n * 400 AzureKeyVaultMalformedVaultUri - The provided Key Vault uri is not valid.\n\n * 400 SecurityAdalPrincipalCertExpiredError - The operation could not be completed because the Azure Key Vault principal certificate has expired.\n\n * 400 SecurityInvalidAzureKeyVaultRecoveryLevel - The provided Key Vault uri is not valid.\n\n * 400 KeyMaterialNotFoundOnRemoteServer - Remote server does not have access to key material used as a TDE protector.\n\n * 400 AzureKeyVaultMismatchError - Unexpected Key Vault region found in the http response.\n\n * 400 AzureKeyVaultRsaKeyNotSupported - The provided key vault uses unsupported RSA Key Size or Key Type. The supported RSA key size is 2048 and Key Type is RSA.\n\n * 401 AzureKeyVaultKeyDisabled - The operation could not be completed on the server because the Azure Key Vault key is disabled.\n\n * 401 AzureKeyVaultNoServerIdentity - The server identity is not correctly configured.\n\n * 401 AzureKeyVaultMissingPermissions - The server is missing required permissions on the Azure Key Vault. \n\n * 401 AdalGenericError - The operation could not be completed because an Azure Active Directory error was encountered.\n\n * 401 AdalServicePrincipalNotFound - The operation could not be completed because an Azure Active Directory library Service Principal not found error was encountered.\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ResourceNotFound - The requested resource was not found.\n\n * 409 ServerKeyNameAlreadyExists - The server key already exists on the server.\n\n * 409 ServerKeyUriAlreadyExists - The server key URI already exists on the server.\n\n * 409 ServerKeyDoesNotExists - The server key does not exist.\n\n * 409 AzureKeyVaultKeyNameNotFound - The operation could not be completed because the Azure Key Vault Key name does not exist.\n\n * 409 AzureKeyVaultKeyInUse - The key is currently being used by the server.\n\n * 503 AzureKeyVaultConnectionFailed - The operation could not be completed on the server because attempts to connect to Azure Key Vault have failed\n\n * 503 AzureKeyVaultGenericConnectionError - The operation could not be completed because an error was encountered when attempting to retrieve Key Vault information ."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ManagedInstanceKey" : {
+        "properties" : {
+          "kind" : {
+            "type" : "string",
+            "description" : "Kind of encryption protector. This is metadata used for the Azure portal experience.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/ManagedInstanceKeyProperties"
+          }
+        },
+        "description" : "A managed instance key.",
+        "allOf" : [ {
+          "description" : "ARM proxy resource.",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Resource ID.",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Resource name.",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "Resource type.",
+                "readOnly" : true
+              }
+            },
+            "description" : "ARM resource."
+          } ]
+        } ]
+      },
+      "ManagedInstanceKeyListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Link to retrieve next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Array of results.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ManagedInstanceKey"
+            }
+          }
+        },
+        "description" : "A list of managed instance keys."
+      },
+      "ManagedInstanceKeyProperties" : {
+        "required" : [ "serverKeyType" ],
+        "type" : "object",
+        "properties" : {
+          "creationDate" : {
+            "type" : "string",
+            "description" : "The key creation date.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "serverKeyType" : {
+            "type" : "string",
+            "description" : "The key type like 'ServiceManaged', 'AzureKeyVault'.",
+            "enum" : [ "ServiceManaged", "AzureKeyVault" ]
+          },
+          "thumbprint" : {
+            "type" : "string",
+            "description" : "Thumbprint of the key.",
+            "readOnly" : true
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required."
+          }
+        },
+        "description" : "Properties for a key execution."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for the request.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "BlobAuditingPolicyNameParameter" : {
+        "name" : "blobAuditingPolicyName",
+        "in" : "path",
+        "description" : "The name of the blob auditing policy.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "default" ]
+        }
+      },
+      "DatabaseNameParameter" : {
+        "name" : "databaseName",
+        "in" : "path",
+        "description" : "The name of the database.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ManagedInstanceNameParameter" : {
+        "name" : "managedInstanceName",
+        "in" : "path",
+        "description" : "The name of the managed instance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineContainerNameParameter" : {
+        "name" : "sqlVirtualMachineContainerName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineContainer.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineInstanceNameParameter" : {
+        "name" : "sqlVirtualMachineInstanceName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineInstance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The subscription ID that identifies an Azure subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "VirtualClusterNameParameter" : {
+        "name" : "virtualClusterName",
+        "in" : "path",
+        "description" : "The name of the virtual cluster.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

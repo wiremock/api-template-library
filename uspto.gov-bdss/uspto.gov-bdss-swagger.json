@@ -1,1 +1,446 @@
-{"openapi":"3.0.1","info":{"title":"Bulk Data Storage System Services","description":"Bulk Data Storage System (BDSS) allows the public to discover, search, and download patent and trademark data in bulk form.","version":"1.0.0"},"servers":[{"url":"/BDSS-API"}],"tags":[{"name":"products"}],"paths":{"/products/all/latest":{"get":{"tags":["products"],"summary":"Returns all products with Latest Files.","description":"Use this GET to retrieve latest released bulk data products. Note that there is one file per product. The response includes product fields such as title, description, frequency, and level.","operationId":"getProductsWithLatestProductFiles","responses":{"200":{"description":"Successful operation."},"404":{"description":"Unexpected error accessing metadata."},"500":{"description":"Internal server error."}}}},"/products/byname/{productName}":{"get":{"tags":["products"],"summary":"Returns files associated with products (of level PRODUCT) based on their full or partial names.","description":"Use this GET to search for bulk data services by product name or description. An error message will be returned if the product cannot be found by name. Note that product name is not case sensitive. You can enter full or partial name of an existing product to receive bulk data services. Default values for field names are as follows\n- if both years are not defined, toYear will be set equal to current year, fromYear will be set equal to previous year\n- if fromYear is defined, toYear will be set equal to fromYear+1\n- if fromMonth not defined, current month will be used\n- if toMonth not defined, it will be set equal to fromMonth\n- if fromDay is not defined, it will be set equal to current day (today)\n- if toDay is not defined, it will be set to the last day of toMonth/toYear","operationId":"getProductsByName","parameters":[{"name":"productName","in":"path","description":"Name of the product, for example, \"Trademark\"","required":true,"schema":{"type":"string"}},{"name":"fromYear","in":"query","description":"Year from when the product files are needed, for example, 1999.","schema":{"type":"integer","format":"int32"}},{"name":"toYear","in":"query","description":"Year until when the product files are needed, for example, 2000.","schema":{"type":"integer","format":"int32"}},{"name":"fromMonth","in":"query","description":"Month from when the product files are needed, for example, 01.","schema":{"type":"integer","format":"int32"}},{"name":"toMonth","in":"query","description":"Month until when the product files are needed, for example, 12.","schema":{"type":"integer","format":"int32"}},{"name":"fromDay","in":"query","description":"Day from when the product files are needed, for example, 01.","schema":{"type":"integer","format":"int32"}},{"name":"toDay","in":"query","description":"Day until when the product files are needed, for example, 31.","schema":{"type":"integer","format":"int32"}},{"name":"hierarchy","in":"query","description":"Boolean flag to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.","schema":{"type":"string","default":"false"}},{"name":"maxFiles","in":"query","description":"Max. number of files to retrieve, per product. Set value to -1 to get all files","schema":{"type":"integer","format":"int32","default":20}}],"responses":{"200":{"description":"Successful operation."},"404":{"description":"Unexpected error accessing metadata."},"500":{"description":"Internal server error."}}}},"/products/popular":{"get":{"tags":["products"],"summary":"Returns popular products along with latest files.","description":"Use this GET to retrieve these bulk data files by their popularity. The response includes product fields such as title, description, frequency, and level.","operationId":"getPopulartProducts","responses":{"200":{"description":"Successful operation."},"404":{"description":"Unexpected error accessing metadata."},"500":{"description":"Internal server error."}}}},"/products/tree":{"get":{"tags":["products"],"summary":"Returns products' hierarchical tree.","description":"Use this GET to retrieve short name and parent/child relationships for bulk data products. Short names are unique IDs of the products and should be used in other GETs where {shortName} parameter is required\nUse this GET to perform initial exploration of the existing products hierarchy\nShort names are unique IDs of the products and should be used in other GETs where {shortName} parameter is required","operationId":"getProductsTree","responses":{"200":{"description":"Successful operation."},"404":{"description":"Unexpected error accessing metadata."},"500":{"description":"Internal server error."}}}},"/products/tree/{shortName}":{"get":{"tags":["products"],"summary":"Returns products' hierarchical subtree.","description":"Use this GET to search for bulk data products by their short names. This works almost like products/tree GET, the difference is that it returns subtree data starting from a particular tree node (i.e. the GET returns all children if parent short name is entered). If a product cannot be found by its short name (has to be exact match and is not case sensitive), then an error message will appear in response body.","operationId":"getProductSubTree","parameters":[{"name":"shortName","in":"path","description":"Short name of the product, for example, \"PTISSD\"","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful operation."},"404":{"description":"Product not found."},"500":{"description":"Internal server error."}}}},"/products/{shortName}":{"get":{"tags":["products"],"summary":"Returns products along with their associated files by short names.","description":"Use this GET to search for bulk data products by their short names and description. Note that \"From\" and \"To\" dates can be inputted separately as year/month/day values or as a single date string in format \"YYYY-MM-DD\".\nIf all values are entered, single date strings have a higher priority\nFor the list of default values rules, see GET /products/byname/{productName} above","operationId":"getProductsByShortName","parameters":[{"name":"shortName","in":"path","description":"Short name  of the product, for example, \"PTGRSP\"","required":true,"schema":{"type":"string"}},{"name":"fromYear","in":"query","description":"Year from when the product files are needed, for example, 1999.","schema":{"type":"integer","format":"int32"}},{"name":"toYear","in":"query","description":"Year until when the product files are needed, for example, 2000.","schema":{"type":"integer","format":"int32"}},{"name":"fromMonth","in":"query","description":"Month from when the product files are needed, for example, 01.","schema":{"type":"integer","format":"int32"}},{"name":"toMonth","in":"query","description":"Month until when the product files are needed, for example, 12.","schema":{"type":"integer","format":"int32"}},{"name":"fromDay","in":"query","description":"Day from when the product files are needed, for example, 01.","schema":{"type":"integer","format":"int32"}},{"name":"toDay","in":"query","description":"Day until when the product files are needed, for example, 31.","schema":{"type":"integer","format":"int32"}},{"name":"fromDate","in":"query","description":"Year from when the product files are needed, for example, 1999-01-01.","schema":{"type":"string"}},{"name":"toDate","in":"query","description":"Year until when the product files are needed, for example, 2001-12-31.","schema":{"type":"string"}},{"name":"hierarchy","in":"query","description":"Boolean flag (possible values: true and false) to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.","schema":{"type":"string","default":"false"}}],"responses":{"200":{"description":"Successful operation."},"404":{"description":"Product not found."},"500":{"description":"Internal server error."}}}},"/products/{shortName}/latest":{"get":{"tags":["products"],"summary":"Returns products along with their latest files by short names.","description":"Use this GET to search for latest released bulk data products by their short names and release year. The return response will include the latest files within the year specified.  An error message will be returned if product(s) cannot be found for the year specified","operationId":"getLatestProductFilesByProductIdAndTime","parameters":[{"name":"shortName","in":"path","description":"Short name of the product, for example, \"PTGRSP\"","required":true,"schema":{"type":"string"}},{"name":"year","in":"query","description":"Year of the product files  needed, for example, 2001.","schema":{"type":"integer","format":"int32"}},{"name":"hierarchy","in":"query","description":"Boolean flag (possible values: true and false) to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.","schema":{"type":"string","default":"false"}}],"responses":{"200":{"description":"Successful operation."},"404":{"description":"Product not found."},"500":{"description":"Internal server error."}}}}},"components":{"schemas":{"ProductFileModel":{"type":"object","properties":{"fileDownloadUrl":{"type":"string"},"fileFromTime":{"type":"string"},"fileIdentifier":{"type":"integer","format":"int32"},"fileLinkPath":{"type":"string","format":"uri"},"fileName":{"type":"string"},"fileReleaseDate":{"type":"string"},"fileSize":{"type":"integer"},"fileToTime":{"type":"string"},"fileType":{"type":"string"}}},"ProductModel":{"type":"object","properties":{"numberOfFiles":{"type":"integer","format":"int64"},"parentProduct":{"$ref":"#/components/schemas/ProductModel"},"productDesc":{"type":"string"},"productFiles":{"type":"array","items":{"$ref":"#/components/schemas/ProductFileModel"}},"productFrequency":{"type":"string"},"productFromDate":{"type":"string"},"productIdentifier":{"type":"integer","format":"int32"},"productLevel":{"type":"string","description":"Represents the Level in the Product hierarchy.","enum":["available","pending","sold"]},"productLinkPath":{"type":"string","format":"uri"},"productShortName":{"type":"string"},"productTitle":{"type":"string"},"productToDate":{"type":"string"}},"description":"Product Model"},"ProductModelShort":{"type":"object","properties":{"productChildren":{"type":"array","items":{"$ref":"#/components/schemas/ProductModelShort"}},"productLinkPath":{"type":"string","format":"uri"},"productShortName":{"type":"string"},"productTitle":{"type":"string"}},"description":"Product Model, short version, with the list of child products"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Bulk Data Storage System Services",
+    "description" : "Bulk Data Storage System (BDSS) allows the public to discover, search, and download patent and trademark data in bulk form.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "/BDSS-API"
+  } ],
+  "tags" : [ {
+    "name" : "products"
+  } ],
+  "paths" : {
+    "/products/all/latest" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns all products with Latest Files.",
+        "description" : "Use this GET to retrieve latest released bulk data products. Note that there is one file per product. The response includes product fields such as title, description, frequency, and level.",
+        "operationId" : "getProductsWithLatestProductFiles",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Unexpected error accessing metadata."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/byname/{productName}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns files associated with products (of level PRODUCT) based on their full or partial names.",
+        "description" : "Use this GET to search for bulk data services by product name or description. An error message will be returned if the product cannot be found by name. Note that product name is not case sensitive. You can enter full or partial name of an existing product to receive bulk data services. Default values for field names are as follows\n- if both years are not defined, toYear will be set equal to current year, fromYear will be set equal to previous year\n- if fromYear is defined, toYear will be set equal to fromYear+1\n- if fromMonth not defined, current month will be used\n- if toMonth not defined, it will be set equal to fromMonth\n- if fromDay is not defined, it will be set equal to current day (today)\n- if toDay is not defined, it will be set to the last day of toMonth/toYear",
+        "operationId" : "getProductsByName",
+        "parameters" : [ {
+          "name" : "productName",
+          "in" : "path",
+          "description" : "Name of the product, for example, \"Trademark\"",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromYear",
+          "in" : "query",
+          "description" : "Year from when the product files are needed, for example, 1999.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toYear",
+          "in" : "query",
+          "description" : "Year until when the product files are needed, for example, 2000.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "fromMonth",
+          "in" : "query",
+          "description" : "Month from when the product files are needed, for example, 01.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toMonth",
+          "in" : "query",
+          "description" : "Month until when the product files are needed, for example, 12.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "fromDay",
+          "in" : "query",
+          "description" : "Day from when the product files are needed, for example, 01.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toDay",
+          "in" : "query",
+          "description" : "Day until when the product files are needed, for example, 31.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "hierarchy",
+          "in" : "query",
+          "description" : "Boolean flag to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "false"
+          }
+        }, {
+          "name" : "maxFiles",
+          "in" : "query",
+          "description" : "Max. number of files to retrieve, per product. Set value to -1 to get all files",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Unexpected error accessing metadata."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/popular" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns popular products along with latest files.",
+        "description" : "Use this GET to retrieve these bulk data files by their popularity. The response includes product fields such as title, description, frequency, and level.",
+        "operationId" : "getPopulartProducts",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Unexpected error accessing metadata."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/tree" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns products' hierarchical tree.",
+        "description" : "Use this GET to retrieve short name and parent/child relationships for bulk data products. Short names are unique IDs of the products and should be used in other GETs where {shortName} parameter is required\nUse this GET to perform initial exploration of the existing products hierarchy\nShort names are unique IDs of the products and should be used in other GETs where {shortName} parameter is required",
+        "operationId" : "getProductsTree",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Unexpected error accessing metadata."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/tree/{shortName}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns products' hierarchical subtree.",
+        "description" : "Use this GET to search for bulk data products by their short names. This works almost like products/tree GET, the difference is that it returns subtree data starting from a particular tree node (i.e. the GET returns all children if parent short name is entered). If a product cannot be found by its short name (has to be exact match and is not case sensitive), then an error message will appear in response body.",
+        "operationId" : "getProductSubTree",
+        "parameters" : [ {
+          "name" : "shortName",
+          "in" : "path",
+          "description" : "Short name of the product, for example, \"PTISSD\"",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Product not found."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/{shortName}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns products along with their associated files by short names.",
+        "description" : "Use this GET to search for bulk data products by their short names and description. Note that \"From\" and \"To\" dates can be inputted separately as year/month/day values or as a single date string in format \"YYYY-MM-DD\".\nIf all values are entered, single date strings have a higher priority\nFor the list of default values rules, see GET /products/byname/{productName} above",
+        "operationId" : "getProductsByShortName",
+        "parameters" : [ {
+          "name" : "shortName",
+          "in" : "path",
+          "description" : "Short name  of the product, for example, \"PTGRSP\"",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromYear",
+          "in" : "query",
+          "description" : "Year from when the product files are needed, for example, 1999.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toYear",
+          "in" : "query",
+          "description" : "Year until when the product files are needed, for example, 2000.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "fromMonth",
+          "in" : "query",
+          "description" : "Month from when the product files are needed, for example, 01.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toMonth",
+          "in" : "query",
+          "description" : "Month until when the product files are needed, for example, 12.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "fromDay",
+          "in" : "query",
+          "description" : "Day from when the product files are needed, for example, 01.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "toDay",
+          "in" : "query",
+          "description" : "Day until when the product files are needed, for example, 31.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "fromDate",
+          "in" : "query",
+          "description" : "Year from when the product files are needed, for example, 1999-01-01.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "toDate",
+          "in" : "query",
+          "description" : "Year until when the product files are needed, for example, 2001-12-31.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "hierarchy",
+          "in" : "query",
+          "description" : "Boolean flag (possible values: true and false) to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "false"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Product not found."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/products/{shortName}/latest" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns products along with their latest files by short names.",
+        "description" : "Use this GET to search for latest released bulk data products by their short names and release year. The return response will include the latest files within the year specified.  An error message will be returned if product(s) cannot be found for the year specified",
+        "operationId" : "getLatestProductFilesByProductIdAndTime",
+        "parameters" : [ {
+          "name" : "shortName",
+          "in" : "path",
+          "description" : "Short name of the product, for example, \"PTGRSP\"",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "year",
+          "in" : "query",
+          "description" : "Year of the product files  needed, for example, 2001.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "hierarchy",
+          "in" : "query",
+          "description" : "Boolean flag (possible values: true and false) to indicate if product hierarchy needs to be return in the response. By default it doesn't return the hierarchy in the response.",
+          "schema" : {
+            "type" : "string",
+            "default" : "false"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation."
+          },
+          "404" : {
+            "description" : "Product not found."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ProductFileModel" : {
+        "type" : "object",
+        "properties" : {
+          "fileDownloadUrl" : {
+            "type" : "string"
+          },
+          "fileFromTime" : {
+            "type" : "string"
+          },
+          "fileIdentifier" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "fileLinkPath" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "fileReleaseDate" : {
+            "type" : "string"
+          },
+          "fileSize" : {
+            "type" : "integer"
+          },
+          "fileToTime" : {
+            "type" : "string"
+          },
+          "fileType" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ProductModel" : {
+        "type" : "object",
+        "properties" : {
+          "numberOfFiles" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "parentProduct" : {
+            "$ref" : "#/components/schemas/ProductModel"
+          },
+          "productDesc" : {
+            "type" : "string"
+          },
+          "productFiles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductFileModel"
+            }
+          },
+          "productFrequency" : {
+            "type" : "string"
+          },
+          "productFromDate" : {
+            "type" : "string"
+          },
+          "productIdentifier" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "productLevel" : {
+            "type" : "string",
+            "description" : "Represents the Level in the Product hierarchy.",
+            "enum" : [ "available", "pending", "sold" ]
+          },
+          "productLinkPath" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "productShortName" : {
+            "type" : "string"
+          },
+          "productTitle" : {
+            "type" : "string"
+          },
+          "productToDate" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Product Model"
+      },
+      "ProductModelShort" : {
+        "type" : "object",
+        "properties" : {
+          "productChildren" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductModelShort"
+            }
+          },
+          "productLinkPath" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "productShortName" : {
+            "type" : "string"
+          },
+          "productTitle" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Product Model, short version, with the list of child products"
+      }
+    }
+  }
+}

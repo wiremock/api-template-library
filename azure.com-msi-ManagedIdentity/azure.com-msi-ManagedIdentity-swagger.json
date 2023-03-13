@@ -1,1 +1,644 @@
-{"openapi":"3.0.1","info":{"title":"ManagedServiceIdentityClient","description":"The Managed Service Identity Client.","version":"2018-11-30"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.ManagedIdentity/operations":{"get":{"description":"Lists available operations for the Microsoft.ManagedIdentity provider","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The operation was successful. The response contains the list of available operations.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities":{"get":{"description":"Lists all the userAssignedIdentities available under the specified subscription.","operationId":"UserAssignedIdentities_ListBySubscription","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The list of userAssignedIdentities was retrieved and returned successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserAssignedIdentitiesListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities":{"get":{"description":"Lists all the userAssignedIdentities available under the specified ResourceGroup.","operationId":"UserAssignedIdentities_ListByResourceGroup","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The list of userAssignedIdentities was retrieved and returned successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserAssignedIdentitiesListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}":{"get":{"description":"Gets the identity.","operationId":"UserAssignedIdentities_Get","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the identity resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The requested identity.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"put":{"description":"Create or update an identity in the specified subscription and resource group.","operationId":"UserAssignedIdentities_CreateOrUpdate","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the identity resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters to create or update the identity","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}},"required":true},"responses":{"200":{"description":"Updated identity","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}}},"201":{"description":"Created identity","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"delete":{"description":"Deletes the identity.","operationId":"UserAssignedIdentities_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the identity resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. Deleted Identity."},"204":{"description":"The specified identity does not exist."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"patch":{"description":"Update an identity in the specified subscription and resource group.","operationId":"UserAssignedIdentities_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the identity resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters to update the identity","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}},"required":true},"responses":{"200":{"description":"Updated identity","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Identity"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}}},"components":{"schemas":{"CloudError":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/CloudErrorBody"}},"description":"An error response from the ManagedServiceIdentity service."},"CloudErrorBody":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error."},"details":{"type":"array","description":"A list of additional details about the error.","items":{"$ref":"#/components/schemas/CloudErrorBody"}},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface."},"target":{"type":"string","description":"The target of the particular error. For example, the name of the property in error."}},"description":"An error response from the ManagedServiceIdentity service."},"Identity":{"type":"object","properties":{"id":{"type":"string","description":"The id of the created identity.","readOnly":true},"location":{"type":"string","description":"The Azure region where the identity lives."},"name":{"type":"string","description":"The name of the created identity.","readOnly":true},"properties":{"$ref":"#/components/schemas/IdentityProperties"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags"},"type":{"type":"string","description":"The type of resource i.e. Microsoft.ManagedIdentity/userAssignedIdentities","readOnly":true,"enum":["Microsoft.ManagedIdentity/userAssignedIdentities"]}},"description":"Describes an identity resource."},"IdentityProperties":{"title":"Identity properties.","type":"object","properties":{"clientId":{"type":"string","description":"The id of the app associated with the identity. This is a random generated UUID by MSI.","format":"uuid","readOnly":true},"clientSecretUrl":{"type":"string","description":" The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. If identity is user assigned, then the clientSecretUrl will not be present in the response, otherwise it will be present.","readOnly":true},"principalId":{"type":"string","description":"The id of the service principal object associated with the created identity.","format":"uuid","readOnly":true},"tenantId":{"type":"string","description":"The id of the tenant which the identity belongs to.","format":"uuid","readOnly":true}},"description":"The properties associated with the identity."},"Operation":{"title":"Microsoft.ManagedIdentity Operation.","type":"object","properties":{"display":{"$ref":"#/components/schemas/OperationDisplay"},"name":{"title":"Operation Name.","type":"string","description":"The name of the REST Operation. This is of the format {provider}/{resource}/{operation}."}},"description":"Operation supported by the Microsoft.ManagedIdentity REST API."},"OperationDisplay":{"title":"Operation Display.","type":"object","properties":{"description":{"title":"Operation description","type":"string","description":"A description of the operation."},"operation":{"title":"Operation Type.","type":"string","description":"The type of operation. For example: read, write, delete."},"provider":{"title":"Resource Provider Name.","type":"string","description":"Friendly name of the resource provider."},"resource":{"title":"Resource Type.","type":"string","description":"The resource type on which the operation is performed."}},"description":"The object that describes the operation."},"OperationListResult":{"title":"Operations List.","type":"object","properties":{"nextLink":{"title":"Next Link","type":"string","description":"The url to get the next page of results, if any."},"value":{"title":"Operations List.","type":"array","description":"A list of operations supported by Microsoft.ManagedIdentity Resource Provider.","items":{"$ref":"#/components/schemas/Operation"}}},"description":"A list of operations supported by Microsoft.ManagedIdentity Resource Provider."},"UserAssignedIdentitiesListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The url to get the next page of results, if any."},"value":{"type":"array","description":"The collection of userAssignedIdentities returned by the listing operation.","items":{"$ref":"#/components/schemas/Identity"}}},"description":"Values returned by the List operation."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Version of API to invoke.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the Resource Group to which the identity belongs.","required":true,"schema":{"type":"string"}},"ResourceNameParameter":{"name":"resourceName","in":"path","description":"The name of the identity resource.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Id of the Subscription to which the identity belongs.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ManagedServiceIdentityClient",
+    "description" : "The Managed Service Identity Client.",
+    "version" : "2018-11-30"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.ManagedIdentity/operations" : {
+      "get" : {
+        "description" : "Lists available operations for the Microsoft.ManagedIdentity provider",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful. The response contains the list of available operations.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities" : {
+      "get" : {
+        "description" : "Lists all the userAssignedIdentities available under the specified subscription.",
+        "operationId" : "UserAssignedIdentities_ListBySubscription",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The list of userAssignedIdentities was retrieved and returned successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserAssignedIdentitiesListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities" : {
+      "get" : {
+        "description" : "Lists all the userAssignedIdentities available under the specified ResourceGroup.",
+        "operationId" : "UserAssignedIdentities_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Resource Group to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The list of userAssignedIdentities was retrieved and returned successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserAssignedIdentitiesListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}" : {
+      "get" : {
+        "description" : "Gets the identity.",
+        "operationId" : "UserAssignedIdentities_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Resource Group to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the identity resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The requested identity.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Identity"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "Create or update an identity in the specified subscription and resource group.",
+        "operationId" : "UserAssignedIdentities_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Resource Group to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the identity resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters to create or update the identity",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Identity"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Updated identity",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Identity"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created identity",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Identity"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "Deletes the identity.",
+        "operationId" : "UserAssignedIdentities_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Resource Group to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the identity resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Deleted Identity."
+          },
+          "204" : {
+            "description" : "The specified identity does not exist."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "description" : "Update an identity in the specified subscription and resource group.",
+        "operationId" : "UserAssignedIdentities_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Id of the Subscription to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Resource Group to which the identity belongs.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the identity resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of API to invoke.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters to update the identity",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Identity"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Updated identity",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Identity"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CloudError" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/CloudErrorBody"
+          }
+        },
+        "description" : "An error response from the ManagedServiceIdentity service."
+      },
+      "CloudErrorBody" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "An identifier for the error."
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "A list of additional details about the error.",
+            "items" : {
+              "$ref" : "#/components/schemas/CloudErrorBody"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A message describing the error, intended to be suitable for display in a user interface."
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "The target of the particular error. For example, the name of the property in error."
+          }
+        },
+        "description" : "An error response from the ManagedServiceIdentity service."
+      },
+      "Identity" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The id of the created identity.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "The Azure region where the identity lives."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the created identity.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/IdentityProperties"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of resource i.e. Microsoft.ManagedIdentity/userAssignedIdentities",
+            "readOnly" : true,
+            "enum" : [ "Microsoft.ManagedIdentity/userAssignedIdentities" ]
+          }
+        },
+        "description" : "Describes an identity resource."
+      },
+      "IdentityProperties" : {
+        "title" : "Identity properties.",
+        "type" : "object",
+        "properties" : {
+          "clientId" : {
+            "type" : "string",
+            "description" : "The id of the app associated with the identity. This is a random generated UUID by MSI.",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "clientSecretUrl" : {
+            "type" : "string",
+            "description" : " The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. If identity is user assigned, then the clientSecretUrl will not be present in the response, otherwise it will be present.",
+            "readOnly" : true
+          },
+          "principalId" : {
+            "type" : "string",
+            "description" : "The id of the service principal object associated with the created identity.",
+            "format" : "uuid",
+            "readOnly" : true
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "The id of the tenant which the identity belongs to.",
+            "format" : "uuid",
+            "readOnly" : true
+          }
+        },
+        "description" : "The properties associated with the identity."
+      },
+      "Operation" : {
+        "title" : "Microsoft.ManagedIdentity Operation.",
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "$ref" : "#/components/schemas/OperationDisplay"
+          },
+          "name" : {
+            "title" : "Operation Name.",
+            "type" : "string",
+            "description" : "The name of the REST Operation. This is of the format {provider}/{resource}/{operation}."
+          }
+        },
+        "description" : "Operation supported by the Microsoft.ManagedIdentity REST API."
+      },
+      "OperationDisplay" : {
+        "title" : "Operation Display.",
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "title" : "Operation description",
+            "type" : "string",
+            "description" : "A description of the operation."
+          },
+          "operation" : {
+            "title" : "Operation Type.",
+            "type" : "string",
+            "description" : "The type of operation. For example: read, write, delete."
+          },
+          "provider" : {
+            "title" : "Resource Provider Name.",
+            "type" : "string",
+            "description" : "Friendly name of the resource provider."
+          },
+          "resource" : {
+            "title" : "Resource Type.",
+            "type" : "string",
+            "description" : "The resource type on which the operation is performed."
+          }
+        },
+        "description" : "The object that describes the operation."
+      },
+      "OperationListResult" : {
+        "title" : "Operations List.",
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "title" : "Next Link",
+            "type" : "string",
+            "description" : "The url to get the next page of results, if any."
+          },
+          "value" : {
+            "title" : "Operations List.",
+            "type" : "array",
+            "description" : "A list of operations supported by Microsoft.ManagedIdentity Resource Provider.",
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "A list of operations supported by Microsoft.ManagedIdentity Resource Provider."
+      },
+      "UserAssignedIdentitiesListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The url to get the next page of results, if any."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The collection of userAssignedIdentities returned by the listing operation.",
+            "items" : {
+              "$ref" : "#/components/schemas/Identity"
+            }
+          }
+        },
+        "description" : "Values returned by the List operation."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Version of API to invoke.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the Resource Group to which the identity belongs.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceNameParameter" : {
+        "name" : "resourceName",
+        "in" : "path",
+        "description" : "The name of the identity resource.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Id of the Subscription to which the identity belongs.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

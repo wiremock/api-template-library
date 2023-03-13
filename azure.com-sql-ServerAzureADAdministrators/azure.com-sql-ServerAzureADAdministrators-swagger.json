@@ -1,1 +1,437 @@
-{"openapi":"3.0.1","info":{"title":"SqlManagementClient","description":"The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.","version":"2018-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators":{"get":{"tags":["ServerAzureADAdministrators"],"description":"Gets a list of server Administrators.","operationId":"ServerAzureADAdministrators_ListByServer","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully retrieved the list of Azure Active Directory administrators.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AdministratorListResult"}}}},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 ResourceNotFound - The requested resource was not found."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}":{"get":{"tags":["ServerAzureADAdministrators"],"description":"Gets a server Administrator.","operationId":"ServerAzureADAdministrators_Get","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"administratorName","in":"path","description":"The name of server active directory administrator.","required":true,"schema":{"type":"string","enum":["ActiveDirectory"]}}],"responses":{"200":{"description":"Successfully retrieved a specified Azure Active Directory administrator.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ServerAzureADAdministrator"}}}},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 ResourceNotFound - The requested resource was not found."}}},"put":{"tags":["ServerAzureADAdministrators"],"description":"Creates a new Server Active Directory Administrator or updates an existing server Active Directory Administrator.","operationId":"ServerAzureADAdministrators_CreateOrUpdate","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"administratorName","in":"path","required":true,"schema":{"type":"string","enum":["ActiveDirectory"]}}],"requestBody":{"description":"The required parameters for creating or updating an Active Directory Administrator.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ServerAzureADAdministrator"}}},"required":true},"responses":{"200":{"description":"Successfully updated a Azure Active Directory administrator.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ServerAzureADAdministrator"}}}},"201":{"description":"Successfully created a Azure Active Directory administrator.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ServerAzureADAdministrator"}}}},"202":{"description":"Accepted"},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."}}},"delete":{"tags":["ServerAzureADAdministrators"],"description":"Deletes an existing server Active Directory Administrator.","operationId":"ServerAzureADAdministrators_Delete","parameters":[{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"administratorName","in":"path","description":"The name of server active directory administrator.","required":true,"schema":{"type":"string","enum":["ActiveDirectory"]}}],"responses":{"200":{"description":"Successfully deleted the Azure Active Directory administrator."},"202":{"description":"Accepted"},"204":{"description":"The specified Azure Active Directory administrator does not exist."},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."}}}}},"components":{"schemas":{"AdministratorListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"Link to retrieve next page of results.","readOnly":true},"value":{"type":"array","description":"Array of results.","readOnly":true,"items":{"$ref":"#/components/schemas/ServerAzureADAdministrator"}}},"description":"A list of active directory administrators."},"AdministratorProperties":{"required":["administratorType","login","sid"],"type":"object","properties":{"administratorType":{"type":"string","description":"Type of the sever administrator.","enum":["ActiveDirectory"]},"login":{"type":"string","description":"Login name of the server administrator."},"sid":{"type":"string","description":"SID (object ID) of the server administrator.","format":"uuid"},"tenantId":{"type":"string","description":"Tenant ID of the administrator.","format":"uuid"}},"description":"Properties of a active directory administrator."},"ProxyResource":{"description":"ARM proxy resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"Resource":{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."},"ServerAzureADAdministrator":{"properties":{"properties":{"$ref":"#/components/schemas/AdministratorProperties"}},"description":"Azure Active Directory administrator.","allOf":[{"$ref":"#/components/schemas/ProxyResource"}]}},"parameters":{"BlobAuditingPolicyNameParameter":{"name":"blobAuditingPolicyName","in":"path","description":"The name of the blob auditing policy.","required":true,"schema":{"type":"string","enum":["default"]}},"DatabaseNameParameter":{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},"ManagedInstanceNameParameter":{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineContainerNameParameter":{"name":"sqlVirtualMachineContainerName","in":"path","description":"The name of the SqlVirtualMachineContainer.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineInstanceNameParameter":{"name":"sqlVirtualMachineInstanceName","in":"path","description":"The name of the SqlVirtualMachineInstance.","required":true,"schema":{"type":"string"}},"VirtualClusterNameParameter":{"name":"virtualClusterName","in":"path","description":"The name of the virtual cluster.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SqlManagementClient",
+    "description" : "The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.",
+    "version" : "2018-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators" : {
+      "get" : {
+        "tags" : [ "ServerAzureADAdministrators" ],
+        "description" : "Gets a list of server Administrators.",
+        "operationId" : "ServerAzureADAdministrators_ListByServer",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the list of Azure Active Directory administrators.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdministratorListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 ResourceNotFound - The requested resource was not found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}" : {
+      "get" : {
+        "tags" : [ "ServerAzureADAdministrators" ],
+        "description" : "Gets a server Administrator.",
+        "operationId" : "ServerAzureADAdministrators_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "administratorName",
+          "in" : "path",
+          "description" : "The name of server active directory administrator.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "ActiveDirectory" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved a specified Azure Active Directory administrator.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ServerAzureADAdministrator"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 ResourceNotFound - The requested resource was not found."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ServerAzureADAdministrators" ],
+        "description" : "Creates a new Server Active Directory Administrator or updates an existing server Active Directory Administrator.",
+        "operationId" : "ServerAzureADAdministrators_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "administratorName",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "ActiveDirectory" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The required parameters for creating or updating an Active Directory Administrator.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ServerAzureADAdministrator"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated a Azure Active Directory administrator.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ServerAzureADAdministrator"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Successfully created a Azure Active Directory administrator.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ServerAzureADAdministrator"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted"
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ServerAzureADAdministrators" ],
+        "description" : "Deletes an existing server Active Directory Administrator.",
+        "operationId" : "ServerAzureADAdministrators_Delete",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "administratorName",
+          "in" : "path",
+          "description" : "The name of server active directory administrator.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "ActiveDirectory" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully deleted the Azure Active Directory administrator."
+          },
+          "202" : {
+            "description" : "Accepted"
+          },
+          "204" : {
+            "description" : "The specified Azure Active Directory administrator does not exist."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 ServerNotInSubscriptionResourceGroup - Specified server does not exist in the specified resource group and subscription.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AdministratorListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Link to retrieve next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Array of results.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ServerAzureADAdministrator"
+            }
+          }
+        },
+        "description" : "A list of active directory administrators."
+      },
+      "AdministratorProperties" : {
+        "required" : [ "administratorType", "login", "sid" ],
+        "type" : "object",
+        "properties" : {
+          "administratorType" : {
+            "type" : "string",
+            "description" : "Type of the sever administrator.",
+            "enum" : [ "ActiveDirectory" ]
+          },
+          "login" : {
+            "type" : "string",
+            "description" : "Login name of the server administrator."
+          },
+          "sid" : {
+            "type" : "string",
+            "description" : "SID (object ID) of the server administrator.",
+            "format" : "uuid"
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "Tenant ID of the administrator.",
+            "format" : "uuid"
+          }
+        },
+        "description" : "Properties of a active directory administrator."
+      },
+      "ProxyResource" : {
+        "description" : "ARM proxy resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "Resource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Resource ID.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name.",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type.",
+            "readOnly" : true
+          }
+        },
+        "description" : "ARM resource."
+      },
+      "ServerAzureADAdministrator" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AdministratorProperties"
+          }
+        },
+        "description" : "Azure Active Directory administrator.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProxyResource"
+        } ]
+      }
+    },
+    "parameters" : {
+      "BlobAuditingPolicyNameParameter" : {
+        "name" : "blobAuditingPolicyName",
+        "in" : "path",
+        "description" : "The name of the blob auditing policy.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "default" ]
+        }
+      },
+      "DatabaseNameParameter" : {
+        "name" : "databaseName",
+        "in" : "path",
+        "description" : "The name of the database.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ManagedInstanceNameParameter" : {
+        "name" : "managedInstanceName",
+        "in" : "path",
+        "description" : "The name of the managed instance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineContainerNameParameter" : {
+        "name" : "sqlVirtualMachineContainerName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineContainer.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineInstanceNameParameter" : {
+        "name" : "sqlVirtualMachineInstanceName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineInstance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "VirtualClusterNameParameter" : {
+        "name" : "virtualClusterName",
+        "in" : "path",
+        "description" : "The name of the virtual cluster.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

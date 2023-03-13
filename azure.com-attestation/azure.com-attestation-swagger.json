@@ -1,1 +1,471 @@
-{"openapi":"3.0.1","info":{"title":"AttestationClient","description":"Describes the interface for the per-tenant enclave service.","version":"2018-09-01-preview"},"servers":[{"url":"https://azure.local/"}],"paths":{"/.well-known/openid-configuration":{"get":{"tags":["attestation"],"summary":"Retrieves the OpenID Configuration data for the Azure Attestation Service","description":"Retrieves metadata about the attestation signing keys in use by the  attestation service","operationId":"MetadataConfiguration_Get","responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"object"}}}},"400":{"description":"Error processing the request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"default":{"description":"Error response describing why the operation failed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/certs":{"get":{"tags":["attestation"],"summary":"Retrieves the OpenID Configuration data for the Azure Attestation Service","description":"Retrieves attestation signing keys in use by the attestation service","operationId":"Certs_Get","responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"object"}}}},"400":{"description":"Error processing the request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"default":{"description":"Error response describing why the operation failed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/operations/policy/current":{"get":{"tags":["policy"],"summary":"Retrieves the current policy for a given kind of TEE.","operationId":"Policy_Get","parameters":[{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","enum":["2018-09-01-preview"]}},{"name":"tee","in":"query","description":"Specifies the trusted execution environment to be used to validate the evidence","required":true,"schema":{"type":"string","enum":["SgxEnclave","OpenEnclave","CyResComponent","AzureGuest"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AttestationPolicy"}}}},"400":{"description":"Bad request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"401":{"description":"Request is unauthorized","content":{"application/json":{"schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"put":{"tags":["policy"],"summary":"Sets the policy for a given kind of TEE.","operationId":"Policy_Set","parameters":[{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","enum":["2018-09-01-preview"]}},{"name":"tee","in":"query","description":"Specifies the trusted execution environment to be used to validate the evidence","required":true,"schema":{"type":"string","enum":["SgxEnclave","OpenEnclave","CyResComponent","AzureGuest"]}}],"requestBody":{"description":"JWT Expressing the new policy","content":{"text/plain":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"Success"},"400":{"description":"Bad request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"401":{"description":"Request is unauthorized","content":{"application/json":{"schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}},"post":{"tags":["policy"],"summary":"Resets the attestation policy for the specified tenant and reverts to the default policy.","operationId":"Policy_Reset","parameters":[{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","enum":["2018-09-01-preview"]}},{"name":"tee","in":"query","description":"Specifies the trusted execution environment to be used to validate the evidence","required":true,"schema":{"type":"string","enum":["SgxEnclave","OpenEnclave","CyResComponent","AzureGuest"]}}],"requestBody":{"description":"JSON Web Signature with an empty policy document","content":{"text/plain":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"Success - Returns a JWT signed by the metadata signing key that contains the hash of the supplied policy to be set.","content":{"application/json":{"schema":{"type":"string"}}}},"400":{"description":"Bad request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"401":{"description":"Request is unauthorized","content":{"application/json":{"schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}},"/operations/policy/updatepolicy":{"post":{"tags":["policy"],"summary":"Accepts a new policy document and returns a JWT which expresses  used in preparation to set attestation policy.","operationId":"Policy_PrepareToSet","parameters":[{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","enum":["2018-09-01-preview"]}},{"name":"tee","in":"query","description":"Specifies the trusted execution environment to be used to validate the evidence","required":true,"schema":{"type":"string","enum":["SgxEnclave","OpenEnclave","CyResComponent","AzureGuest"]}}],"requestBody":{"description":"JSON Web Signature (See RFC7515) expressing the new policy","content":{"text/plain":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"Success - Returns a JWT signed by the metadata signing key that contains the hash of the supplied policy to be set.","content":{"text/plain":{"schema":{"type":"string"}},"application/json":{"schema":{"type":"string"}}}},"400":{"description":"Bad request","content":{"text/plain":{"schema":{"$ref":"#/components/schemas/CloudError"}},"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}},"401":{"description":"Request is unauthorized","content":{"text/plain":{"schema":{"type":"string"}},"application/json":{"schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed","content":{"text/plain":{"schema":{"$ref":"#/components/schemas/CloudError"}},"application/json":{"schema":{"$ref":"#/components/schemas/CloudError"}}}}}}}},"components":{"schemas":{"AttestationPolicy":{"type":"object","properties":{"policy":{"type":"string","description":"String-encoded attestation policy document."}}},"CloudError":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/CloudErrorBody"}},"description":"An error response from Attestation."},"CloudErrorBody":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically."},"message":{"type":"string","description":"A message describing the error, intended to be suitable for displaying in a user interface."}},"description":"An error response from Attestation."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client API version.","required":true,"schema":{"type":"string","enum":["2018-09-01-preview"]}},"TeeKind":{"name":"tee","in":"query","description":"Specifies the trusted execution environment to be used to validate the evidence","required":true,"schema":{"type":"string","enum":["SgxEnclave","OpenEnclave","CyResComponent","AzureGuest"]}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "AttestationClient",
+    "description" : "Describes the interface for the per-tenant enclave service.",
+    "version" : "2018-09-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://azure.local/"
+  } ],
+  "paths" : {
+    "/.well-known/openid-configuration" : {
+      "get" : {
+        "tags" : [ "attestation" ],
+        "summary" : "Retrieves the OpenID Configuration data for the Azure Attestation Service",
+        "description" : "Retrieves metadata about the attestation signing keys in use by the  attestation service",
+        "operationId" : "MetadataConfiguration_Get",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Error processing the request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certs" : {
+      "get" : {
+        "tags" : [ "attestation" ],
+        "summary" : "Retrieves the OpenID Configuration data for the Azure Attestation Service",
+        "description" : "Retrieves attestation signing keys in use by the attestation service",
+        "operationId" : "Certs_Get",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Error processing the request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/policy/current" : {
+      "get" : {
+        "tags" : [ "policy" ],
+        "summary" : "Retrieves the current policy for a given kind of TEE.",
+        "operationId" : "Policy_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-09-01-preview" ]
+          }
+        }, {
+          "name" : "tee",
+          "in" : "query",
+          "description" : "Specifies the trusted execution environment to be used to validate the evidence",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "SgxEnclave", "OpenEnclave", "CyResComponent", "AzureGuest" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AttestationPolicy"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Request is unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "policy" ],
+        "summary" : "Sets the policy for a given kind of TEE.",
+        "operationId" : "Policy_Set",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-09-01-preview" ]
+          }
+        }, {
+          "name" : "tee",
+          "in" : "query",
+          "description" : "Specifies the trusted execution environment to be used to validate the evidence",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "SgxEnclave", "OpenEnclave", "CyResComponent", "AzureGuest" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JWT Expressing the new policy",
+          "content" : {
+            "text/plain" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Request is unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "policy" ],
+        "summary" : "Resets the attestation policy for the specified tenant and reverts to the default policy.",
+        "operationId" : "Policy_Reset",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-09-01-preview" ]
+          }
+        }, {
+          "name" : "tee",
+          "in" : "query",
+          "description" : "Specifies the trusted execution environment to be used to validate the evidence",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "SgxEnclave", "OpenEnclave", "CyResComponent", "AzureGuest" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JSON Web Signature with an empty policy document",
+          "content" : {
+            "text/plain" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success - Returns a JWT signed by the metadata signing key that contains the hash of the supplied policy to be set.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Request is unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/policy/updatepolicy" : {
+      "post" : {
+        "tags" : [ "policy" ],
+        "summary" : "Accepts a new policy document and returns a JWT which expresses  used in preparation to set attestation policy.",
+        "operationId" : "Policy_PrepareToSet",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "2018-09-01-preview" ]
+          }
+        }, {
+          "name" : "tee",
+          "in" : "query",
+          "description" : "Specifies the trusted execution environment to be used to validate the evidence",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "SgxEnclave", "OpenEnclave", "CyResComponent", "AzureGuest" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JSON Web Signature (See RFC7515) expressing the new policy",
+          "content" : {
+            "text/plain" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success - Returns a JWT signed by the metadata signing key that contains the hash of the supplied policy to be set.",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Request is unauthorized",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CloudError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AttestationPolicy" : {
+        "type" : "object",
+        "properties" : {
+          "policy" : {
+            "type" : "string",
+            "description" : "String-encoded attestation policy document."
+          }
+        }
+      },
+      "CloudError" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/CloudErrorBody"
+          }
+        },
+        "description" : "An error response from Attestation."
+      },
+      "CloudErrorBody" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A message describing the error, intended to be suitable for displaying in a user interface."
+          }
+        },
+        "description" : "An error response from Attestation."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client API version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "2018-09-01-preview" ]
+        }
+      },
+      "TeeKind" : {
+        "name" : "tee",
+        "in" : "query",
+        "description" : "Specifies the trusted execution environment to be used to validate the evidence",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "SgxEnclave", "OpenEnclave", "CyResComponent", "AzureGuest" ]
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

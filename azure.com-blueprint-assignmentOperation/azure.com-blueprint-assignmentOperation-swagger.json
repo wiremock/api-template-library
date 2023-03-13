@@ -1,1 +1,325 @@
-{"openapi":"3.0.1","info":{"title":"BlueprintClient","description":"Azure Blueprints Client provides access to blueprint definitions, assignments, and artifacts, and related blueprint operations.","version":"2018-11-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{scope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations":{"get":{"tags":["AssignmentOperations"],"description":"List operations for given blueprint assignment within a subscription.","operationId":"AssignmentOperations_List","parameters":[{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.","required":true,"schema":{"type":"string"}},{"name":"assignmentName","in":"path","description":"Name of the blueprint assignment.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- all blueprint assignment operations retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AssignmentOperationList"}}}}}}},"/{scope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}":{"get":{"tags":["AssignmentOperations"],"description":"Get a blueprint assignment operation.","operationId":"AssignmentOperations_Get","parameters":[{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.","required":true,"schema":{"type":"string"}},{"name":"assignmentName","in":"path","description":"Name of the blueprint assignment.","required":true,"schema":{"type":"string"}},{"name":"assignmentOperationName","in":"path","description":"Name of the blueprint assignment operation.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- blueprint assignment operation retrieved.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AssignmentOperation"}}}}}}}},"components":{"schemas":{"AssignmentDeploymentJob":{"type":"object","properties":{"action":{"type":"string","description":"Name of the action performed in this job."},"history":{"type":"array","description":"Result of this deployment job for each retry.","items":{"$ref":"#/components/schemas/AssignmentDeploymentJobResult"}},"jobId":{"type":"string","description":"Id of this job."},"jobState":{"type":"string","description":"State of this job."},"kind":{"type":"string","description":"Kind of job."},"requestUri":{"type":"string","description":"Reference to deployment job resource id."},"result":{"$ref":"#/components/schemas/AssignmentDeploymentJobResult"}},"description":"Represents individual job in given blueprint assignment operation."},"AssignmentDeploymentJobResult":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/AzureResourceManagerError"},"resources":{"type":"array","description":"Resources created as result of the deployment job.","items":{"$ref":"#/components/schemas/AssignmentJobCreatedResource"}}},"description":"Result of each individual deployment in a blueprint assignment."},"AssignmentJobCreatedResource":{"properties":{"properties":{"type":"object","additionalProperties":{"type":"string","description":"property value"},"description":"Additional properties in a dictionary."}},"description":"Azure resource created from deployment job.","allOf":[{"$ref":"#/components/schemas/AzureResourceBase"}]},"AssignmentOperation":{"properties":{"properties":{"$ref":"#/components/schemas/AssignmentOperationProperties"}},"description":"Represents underlying deployment detail for each update to the blueprint assignment.","allOf":[{"$ref":"#/components/schemas/AzureResourceBase"}]},"AssignmentOperationList":{"type":"object","properties":{"nextLink":{"type":"string","description":"Link to the next page of results.","readOnly":true},"value":{"type":"array","description":"List of AssignmentOperation.","items":{"$ref":"#/components/schemas/AssignmentOperation"}}},"description":"List of AssignmentOperation."},"AssignmentOperationProperties":{"type":"object","properties":{"assignmentState":{"type":"string","description":"State of this blueprint assignment operation."},"blueprintVersion":{"type":"string","description":"The published version of the blueprint definition used for the blueprint assignment operation."},"deployments":{"type":"array","description":"List of jobs in this blueprint assignment operation.","items":{"$ref":"#/components/schemas/AssignmentDeploymentJob"}},"timeCreated":{"type":"string","description":"Create time of this blueprint assignment operation."},"timeFinished":{"type":"string","description":"Finish time of the overall underlying deployments."},"timeStarted":{"type":"string","description":"Start time of the underlying deployment."}},"description":"Properties of AssignmentOperation."},"AzureResourceBase":{"type":"object","properties":{"id":{"type":"string","description":"String Id used to locate any resource on Azure.","readOnly":true},"name":{"type":"string","description":"Name of this resource.","readOnly":true},"type":{"type":"string","description":"Type of this resource.","readOnly":true}},"description":"Common properties for all Azure resources."},"AzureResourceManagerError":{"type":"object","properties":{"code":{"type":"string","description":"Error code."},"message":{"type":"string","description":"Error message."}},"description":"Error code and message"}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string"}},"AssignmentNameParameter":{"name":"assignmentName","in":"path","description":"Name of the blueprint assignment.","required":true,"schema":{"type":"string"}},"AssignmentOperationNameParameter":{"name":"assignmentOperationName","in":"path","description":"Name of the blueprint assignment operation.","required":true,"schema":{"type":"string"}},"ScopeParameter":{"name":"scope","in":"path","description":"The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "BlueprintClient",
+    "description" : "Azure Blueprints Client provides access to blueprint definitions, assignments, and artifacts, and related blueprint operations.",
+    "version" : "2018-11-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{scope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations" : {
+      "get" : {
+        "tags" : [ "AssignmentOperations" ],
+        "description" : "List operations for given blueprint assignment within a subscription.",
+        "operationId" : "AssignmentOperations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assignmentName",
+          "in" : "path",
+          "description" : "Name of the blueprint assignment.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- all blueprint assignment operations retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AssignmentOperationList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}" : {
+      "get" : {
+        "tags" : [ "AssignmentOperations" ],
+        "description" : "Get a blueprint assignment operation.",
+        "operationId" : "AssignmentOperations_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assignmentName",
+          "in" : "path",
+          "description" : "Name of the blueprint assignment.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assignmentOperationName",
+          "in" : "path",
+          "description" : "Name of the blueprint assignment operation.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- blueprint assignment operation retrieved.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AssignmentOperation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AssignmentDeploymentJob" : {
+        "type" : "object",
+        "properties" : {
+          "action" : {
+            "type" : "string",
+            "description" : "Name of the action performed in this job."
+          },
+          "history" : {
+            "type" : "array",
+            "description" : "Result of this deployment job for each retry.",
+            "items" : {
+              "$ref" : "#/components/schemas/AssignmentDeploymentJobResult"
+            }
+          },
+          "jobId" : {
+            "type" : "string",
+            "description" : "Id of this job."
+          },
+          "jobState" : {
+            "type" : "string",
+            "description" : "State of this job."
+          },
+          "kind" : {
+            "type" : "string",
+            "description" : "Kind of job."
+          },
+          "requestUri" : {
+            "type" : "string",
+            "description" : "Reference to deployment job resource id."
+          },
+          "result" : {
+            "$ref" : "#/components/schemas/AssignmentDeploymentJobResult"
+          }
+        },
+        "description" : "Represents individual job in given blueprint assignment operation."
+      },
+      "AssignmentDeploymentJobResult" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/AzureResourceManagerError"
+          },
+          "resources" : {
+            "type" : "array",
+            "description" : "Resources created as result of the deployment job.",
+            "items" : {
+              "$ref" : "#/components/schemas/AssignmentJobCreatedResource"
+            }
+          }
+        },
+        "description" : "Result of each individual deployment in a blueprint assignment."
+      },
+      "AssignmentJobCreatedResource" : {
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string",
+              "description" : "property value"
+            },
+            "description" : "Additional properties in a dictionary."
+          }
+        },
+        "description" : "Azure resource created from deployment job.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AzureResourceBase"
+        } ]
+      },
+      "AssignmentOperation" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AssignmentOperationProperties"
+          }
+        },
+        "description" : "Represents underlying deployment detail for each update to the blueprint assignment.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AzureResourceBase"
+        } ]
+      },
+      "AssignmentOperationList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Link to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of AssignmentOperation.",
+            "items" : {
+              "$ref" : "#/components/schemas/AssignmentOperation"
+            }
+          }
+        },
+        "description" : "List of AssignmentOperation."
+      },
+      "AssignmentOperationProperties" : {
+        "type" : "object",
+        "properties" : {
+          "assignmentState" : {
+            "type" : "string",
+            "description" : "State of this blueprint assignment operation."
+          },
+          "blueprintVersion" : {
+            "type" : "string",
+            "description" : "The published version of the blueprint definition used for the blueprint assignment operation."
+          },
+          "deployments" : {
+            "type" : "array",
+            "description" : "List of jobs in this blueprint assignment operation.",
+            "items" : {
+              "$ref" : "#/components/schemas/AssignmentDeploymentJob"
+            }
+          },
+          "timeCreated" : {
+            "type" : "string",
+            "description" : "Create time of this blueprint assignment operation."
+          },
+          "timeFinished" : {
+            "type" : "string",
+            "description" : "Finish time of the overall underlying deployments."
+          },
+          "timeStarted" : {
+            "type" : "string",
+            "description" : "Start time of the underlying deployment."
+          }
+        },
+        "description" : "Properties of AssignmentOperation."
+      },
+      "AzureResourceBase" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "String Id used to locate any resource on Azure.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of this resource.",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of this resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Common properties for all Azure resources."
+      },
+      "AzureResourceManagerError" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message."
+          }
+        },
+        "description" : "Error code and message"
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client API Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "AssignmentNameParameter" : {
+        "name" : "assignmentName",
+        "in" : "path",
+        "description" : "Name of the blueprint assignment.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "AssignmentOperationNameParameter" : {
+        "name" : "assignmentOperationName",
+        "in" : "path",
+        "description" : "Name of the blueprint assignment operation.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ScopeParameter" : {
+        "name" : "scope",
+        "in" : "path",
+        "description" : "The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). For blueprint assignments management group scope is reserved for future use.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

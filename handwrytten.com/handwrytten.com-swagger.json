@@ -1,1 +1,2039 @@
-{"openapi":"3.0.1","info":{"title":"Handwrytten API","description":"This is the Handwrytten API for sending cards written in the handwriting of your choice.\nUsing this api, you can send cards to users.  You can also customize cards with logos, which\ncan be saved and then used like any other card in the system.\nFor a \"sandbox\" account, please contact contact@handwrytten.com\nTo move from credit card per-transaction to monthly invoicing, also contact us.\n[https://www.handwrytten.com](https://www.handwrytten.com)\n","termsOfService":"https://www.handwrytten.com/terms/","contact":{"email":"contact@handwrytten.com"},"version":"1.0.0"},"servers":[{"url":"https://api.handwrytten.com/v1"}],"tags":[{"name":"auth","description":"Commands for creating and registering accounts and logging in/out","externalDocs":{"description":"Find out more","url":"https://www.handwrytten.com"}},{"name":"cards","description":"access information on cards and card categories"},{"name":"giftCards","description":"access information on gift cards"},{"name":"templates","description":"access information on saved message templates"},{"name":"user","description":"Operations about user","externalDocs":{"description":"Find out more about our service","url":"https://www.handwrytten.com"}}],"paths":{"/auth/authorization":{"post":{"tags":["auth"],"summary":"Logs in to an existing account","operationId":"login","requestBody":{"description":"Login to account","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Login"}}},"required":true},"responses":{"200":{"description":"successful login","content":{"application/json":{"schema":{"type":"object","properties":{"anet_customer_id":{"type":"string","description":"used internally by Handwrytten","example":"hfekjh"},"free_cards":{"type":"integer","description":"number of free cards in account","example":1},"status":{"type":"string","example":"OK"},"uid":{"type":"string","description":"token for future authorized calls","example":"fhqwfuihuifqwhiuwqfhiqwfh124"},"user_id":{"type":"integer","example":979877}}}}}},"400":{"description":"auth error"}}}},"/auth/changePassword":{"post":{"tags":["auth"],"summary":"changes a user's password","operationId":"changePassword","requestBody":{"description":"Change password","content":{"application/json":{"schema":{"type":"object","properties":{"new_password":{"type":"string","description":"the new password","example":"myn3wp455w0rd!"},"old_password":{"type":"string","description":"the existing password","example":"myoldpassword1234!"},"uid":{"type":"string","description":"the authorized UID of the session","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful password change","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"OK"}}}}}},"405":{"description":"Invalid input"}}}},"/auth/logout":{"post":{"tags":["auth"],"summary":"logs out a session uid","operationId":"logout","requestBody":{"description":"logout session","content":{"application/json":{"schema":{"type":"object","properties":{"uid":{"type":"string","description":"the authorized UID of the session","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful logout","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"OK"}}}}}},"405":{"description":"Invalid input"}}}},"/auth/register":{"post":{"tags":["auth"],"summary":"Registers a new account","operationId":"register","requestBody":{"description":"New user account information","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Registration"}}},"required":true},"responses":{"200":{"description":"successful registration","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"OK"},"user_id":{"type":"integer","example":979877}}}}}},"405":{"description":"Invalid input"}}}},"/auth/resetPasswordRequest":{"post":{"tags":["auth"],"summary":"resets a user's password","operationId":"resetPasswordRequest","requestBody":{"description":"Reset password","content":{"application/json":{"schema":{"type":"object","properties":{"login":{"type":"string","description":"the email address of the user","example":"joe@bloggs.com"}}}}},"required":true},"responses":{"200":{"description":"successful reset request","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"OK"}}}}}},"405":{"description":"Invalid input"}}}},"/cards/createCustomCard":{"post":{"tags":["customizer"],"summary":"Create a new custom card","operationId":"CreateCustomCard","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"card_id":{"type":"integer","description":"the card id of the card template you're starting with.  You can find this by logging into Handwrytten, clicking \"customize\" next to any customizable card, and pulling the card ID from the end of the URL","example":243},"cover_id":{"type":"integer","description":"the id of the image you want to use for the \"cover\".  The cover is the large image on the front of the flat card.","example":42},"cover_size_percent":{"type":"integer","description":"the size of the image to use as the cover.","example":100},"footer_align":{"type":"string","description":"set to \"left\", \"center\", or \"right\" to align the footer appropriately","example":"center"},"footer_font_id":{"type":"integer","description":"font ID of the text in the footer, found by using ListFontForCustomizer","example":1},"footer_font_size":{"type":"integer","description":"Font size of the text in the footer","example":16},"footer_text":{"type":"string","description":"optional text for the footer of the customizable card","example":"Sample text for the footer"},"header_align":{"type":"string","description":"set to \"left\", \"center\", or \"right\" to align the header appropriately","example":"center"},"header_auto_size":{"type":"boolean","description":"if set to true, the header will be maximized to fill the header area"},"header_font_id":{"type":"integer","description":"font ID of the text in the header, found by using ListFontForCustomizer","example":8},"header_font_size":{"type":"integer","description":"font size of the text in the header of the card","example":20},"header_text":{"type":"string","description":"text in the header, if type is set to \"text\"","example":"Sample text for the header"},"logo_id":{"type":"integer","description":"Optional.  If setting \"type\" to \"logo\", set the id of the logo here.","example":20},"logo_size_percent":{"type":"integer","description":"set to the desired scaling of the logo on the header","example":100},"name":{"type":"string","description":"the name of the new card","example":"my custom card design"},"type":{"type":"string","description":"Defines the top of the back of the card. Set to either \"logo\" or \"text\".","example":"logo"},"uid":{"type":"string","description":"authorized UID of the session.","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Card"}}}}}}}},"/cards/list":{"get":{"tags":["cards"],"summary":"Lists information on cards","description":"Filterable card list.  If called with UID will also provide user-specific cards.","operationId":"simpleListCards","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Card"}}}}},"400":{"description":"Invalid status value"}}},"post":{"tags":["cards"],"summary":"Lists information on cards","description":"Simple listing of cards.  No filters can be applied.","operationId":"listCards","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"category_id":{"type":"integer","description":"optional category id filter","example":14},"uid":{"type":"string","description":"optional authorized UID of the session.  By providing this, the card list will include user-specific cards.","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Card"}}}}},"400":{"description":"Invalid status value"}}}},"/cards/uploadCustomLogo":{"post":{"tags":["customizer"],"summary":"upload logo or cover image for card","operationId":"uploadCustomLogo","requestBody":{"content":{"multipart/form-data":{"schema":{"required":["file","type","uid"],"type":"object","properties":{"file":{"type":"string","description":"upload images for customc cards","format":"binary"},"type":{"type":"string","description":"set to cover or header"},"uid":{"type":"string","description":"uid of the user"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object"}}}}}}},"/cards/view":{"post":{"tags":["cards"],"summary":"Provides full information on a specific card","description":"Full card details","operationId":"filterableCardDetails","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"card_id":{"type":"integer","description":"the card id to view","example":14},"uid":{"type":"string","description":"optional authorized UID of the session.  By providing this, the card details can provide user-specific cards","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CardDetails"}}}}}}},"/countries/list":{"get":{"tags":["countries"],"description":"Lists the countries to which Handwritten can mail, their associated country ID and any costs","responses":{"200":{"description":"successful operation","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Country"}}}}}}}},"/fonts/list":{"get":{"tags":["fonts"],"summary":"Lists Handwryting styles available for use","operationId":"fontsList","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Font"}}}}}}}},"/fonts/listForCustomizer":{"get":{"tags":["customizer"],"summary":"Lists fonts available for use with the card customizer","operationId":"fontsListForCustomizer","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FontForCustomizer"}}}}}}}},"/giftCards/view":{"get":{"tags":["giftCards"],"summary":"Lists information on gift cards","description":"Returns images and details (and associated denominations) of all gift cards","operationId":"getGiftCardDetails","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/GiftCard"}}}}}}},"post":{"tags":["giftCards"],"summary":"Lists information on gift cards","description":"Returns images and details (and associated denominations) of all gift cards","operationId":"giftCardDetails","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/GiftCard"}}}}}}}},"/orders/singleStepOrder":{"post":{"tags":["orders"],"summary":"sends an order in a single step.  This is much easier than using other order commands","description":"Sends an order in one step.  No need to create then process order.  Optionally include a gift card.","operationId":"singleStepOrder","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"required":["card_id","message","uid"],"type":"object","properties":{"card_id":{"type":"integer","description":"the id of the card you want to send","example":3404},"credit_card_id":{"type":"integer","description":"the credit card id to charge for the order.  Currently this is required, even for invoiced accounts, it just won't be charged.","example":34124},"denomination_id":{"type":"integer","description":"Optional.  Use if sending a gift card","example":12},"font_label":{"type":"string","description":"the colloquial name of the font, such as 'Fancy Jenna' or 'Casual David'","example":"Chill Charity"},"message":{"type":"string","description":"the full message body.  Use '\\n' for new lines","example":"Dear Frank,\nThank you so much for your interest in our services.\nYours,\nJoe"},"recipient_address1":{"type":"string","description":"the first address line of the return address","example":"123 E Main Street"},"recipient_address2":{"type":"string","description":"the second line of the address, such as suite, apartment, building, etc. Optional","example":"Second Floor"},"recipient_business_name":{"type":"string","description":"the second line of the recipient address.  Optional.","example":"Spacely Space Sprockets"},"recipient_city":{"type":"string","description":"the city of the recipient, to appear in the address","example":"Burlington"},"recipient_country":{"type":"string","description":"the country of the recipient.  Optional and defaults to usa","example":"Canada"},"recipient_country_id":{"type":"integer","description":"alternate way to specify country.  Optional and defaults to 1","example":2},"recipient_name":{"type":"string","description":"the name on the recipient address","example":"Cosmo Spacely"},"recipient_state":{"type":"string","description":"the ABBREVIATED state or province of the recipient.  This is required for US and Canada addresses and optional for all other countries","example":"ON"},"recipient_zip":{"type":"string","description":"the zip code or postal code of the recipient","example":"L7L 0E9"},"sender_address1":{"type":"string","description":"the first address line of the return address","example":"1430 E Indian School Road"},"sender_address2":{"type":"string","description":"the second line of the address, such as suite, apartment, building, etc. Optional","example":"Suite 100"},"sender_business_name":{"type":"string","description":"the second line of the return address.  Optional.","example":"Handwrytten"},"sender_city":{"type":"string","description":"the city of the sender, to appear in the return address","example":"Phoenix"},"sender_country":{"type":"string","description":"the country of the recipient.  Optional and defaults to usa","example":"United States"},"sender_country_id":{"type":"integer","description":"alternate way to specify country.  Optional and defaults to 1","example":1},"sender_name":{"type":"string","description":"the name on the return address","example":"Joe Sender"},"sender_state":{"type":"string","description":"the ABBREVIATED state or province of the sender.  This is required for US and Canada addresses and optional for all other countries","example":"AZ"},"sender_zip":{"type":"string","description":"The postal code or zip code of the sender.","example":"12345"},"uid":{"type":"string","description":"The UID of the logged-in user","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful order placement","content":{"application/json":{"schema":{"type":"object","properties":{"response":{"$ref":"#/components/schemas/Order"},"status":{"type":"string","example":"OK"}}}}}}}}},"/profile/address":{"post":{"tags":["profile"],"summary":"gets the user's return address information","operationId":"userAddress","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"uid":{"type":"string","description":"authorized UID of the session.  By providing this, the card list will include user-specific cards.","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object","properties":{"response":{"$ref":"#/components/schemas/Address"},"status":{"type":"string","example":"ok"}}}}}}}}},"/profile/deleteRecipient":{"post":{"tags":["address"],"summary":"deletes an existing recipient address","operationId":"deleteRecipient","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"required":["address_id","uid"],"type":"object","properties":{"address_id":{"type":"integer","description":"the id of the address to delete","example":549494},"uid":{"type":"string","description":"authorized UID of the session.","example":"33ce76fede1a31d5ee823179f78d9882"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"ok"}}}}}}}}},"/profile/profileAddRecipient":{"post":{"tags":["address"],"summary":"add a new recipient address","operationId":"addRecipientAddress","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"address1":{"type":"string","description":"the first line of the address","example":"1430 E Indian School Rd"},"address2":{"type":"string","description":"the second (optional) line of the address","example":"Suite 100"},"business_name":{"type":"string","description":"the optional business name on the address","example":"Handwrytten LLC"},"city":{"type":"string","description":"the city of the address","example":"Phoenix"},"country":{"type":"string","description":"the name of the country of the address, or use country_id","example":"United States"},"country_id":{"type":"integer","description":"the country id code of the recipient"},"name":{"type":"string","description":"the name on the address","example":"Joe Smith"},"state":{"type":"string","description":"the abbreviated state or province of the address","example":"AZ"},"uid":{"type":"string","description":"authorized UID of the session.","example":"33ce76fede1a31d5ee823179f78d9882"},"zip":{"type":"string","description":"the zip or postal code of the address","example":"85014"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object","properties":{"response":{"$ref":"#/components/schemas/recipientAddress"},"status":{"type":"string","example":"ok"}}}}}}}}},"/profile/recipientsList":{"post":{"tags":["address"],"summary":"list the addresses in the user's account","operationId":"recipientsList","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"uid":{"type":"string","description":"authorized UID of the session.","example":"33ce76fede1a31d5ee823179f78d9882"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/recipientAddress"}}}}}}}},"/profile/updateAddress":{"post":{"tags":["profile"],"summary":"update the user's return address information","operationId":"updateUserAddress","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"required":["address_id","uid"],"type":"object","properties":{"address1":{"type":"string","description":"the first line of the address","example":"1430 E Indian School Rd"},"address2":{"type":"string","description":"the second (optional) line of the address","example":"Suite 100"},"address_id":{"type":"integer","description":"the address you are updating","example":42},"business_name":{"type":"string","description":"the optional business name on the address","example":"Handwrytten LLC"},"city":{"type":"string","description":"the city of the address","example":"Phoenix"},"country":{"type":"string","description":"the name of the country of the address","example":"United States"},"country_id":{"type":"integer","description":"the id of the country of the address. do not use with \"country\" parameter","example":2},"name":{"type":"string","description":"the name on the address","example":"Joe Smith"},"state":{"type":"string","description":"the abbreviated state or province of the address","example":"AZ"},"uid":{"type":"string","description":"authorized UID of the session.","example":"33ce76fede1a31d5ee823179f78d9882"},"zip":{"type":"string","description":"the zip or postal code of the address","example":"85014"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object","properties":{"response":{"$ref":"#/components/schemas/Address"},"status":{"type":"string","example":"ok"}}}}}}}}},"/profile/updateRecipient":{"post":{"tags":["address"],"summary":"updates an existing new recipient address","operationId":"updateRecipient","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"address1":{"type":"string","description":"the updated first line of the address","example":"1430 E Indian School Rd"},"address2":{"type":"string","description":"the updated second (optional) line of the address","example":"Suite 100"},"business_name":{"type":"string","description":"the updated optional business name on the address","example":"Handwrytten LLC"},"city":{"type":"string","description":"the updated city of the address","example":"Phoenix"},"country":{"type":"string","description":"the updated name of the country of the address, or use country_id","example":"United States"},"country_id":{"type":"integer","description":"the country id of the address"},"id":{"type":"integer","description":"the id of the address to update","example":549494},"name":{"type":"string","description":"the updated name on the address","example":"Joe Smith"},"state":{"type":"string","description":"the updated abbreviated state or province of the address","example":"AZ"},"uid":{"type":"string","description":"authorized UID of the session.","example":"33ce76fede1a31d5ee823179f78d9882"},"zip":{"type":"string","description":"the updated zip or postal code of the address","example":"85014"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"object","properties":{"response":{"$ref":"#/components/schemas/recipientAddress"},"status":{"type":"string","example":"ok"}}}}}}}}},"/templateCategories/list":{"get":{"tags":["templates"],"summary":"List template categories","description":"Lists the common template categories of all users. As you are not logged in, this is what you are limited to.","operationId":"getTemplateCategories","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TemplateCategory"}}}}}}},"post":{"tags":["templates"],"summary":"List template categories","description":"Lists the template categories of all users. By passing the optional UID, any custom template categories are also available.","operationId":"getTemplateCategoriesAuthorized","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"uid":{"type":"string","description":"optional authorized UID of the session.  By providing this, the template list will include user-specific template categories","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TemplateCategory"}}}}}}}},"/templates/create":{"post":{"tags":["templates"],"summary":"Creates a New Template in the User’s Account","description":"Creates a new Template in the User’s Account","operationId":"createTemplate","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string","example":"How do I love thee?  Let me count the ways"},"name":{"type":"string","description":"the new name of the template","example":"My custom template"},"uid":{"type":"string","description":"The UID of the logged-in user","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Template"}}}}}}}},"/templates/delete":{"post":{"tags":["templates"],"summary":"Deletes a users template","description":"Deletes a template in the User’s Account","operationId":"deleteTemplate","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"template_id":{"type":"integer","description":"the ID of the template to delete","example":12},"uid":{"type":"string","description":"The UID of the logged-in user","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful deletion","content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","example":"OK"}}}}}}}}},"/templates/list":{"get":{"tags":["templates"],"summary":"List template categories","description":"Lists the common template categories of all users. As you are not logged in, this is what you are limited to.","operationId":"getTemplates","responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Template"}}}}}}},"post":{"tags":["templates"],"summary":"List template categories","description":"Lists the template categories of all users. By passing the optional UID, any custom template categories are also available.","operationId":"getTemplatessAuthorized","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"category_id":{"type":"integer","description":"optional category to filter the templates","example":12},"uid":{"type":"string","description":"optional authorized UID of the session.  By providing this, the template list will include user-specific template categories","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":false},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Template"}}}}}}}},"/templates/update":{"post":{"tags":["templates"],"summary":"Updates an Existing Template in the User’s Account","description":"Updates an Existing Template in the User’s Account","operationId":"updateTemplate","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string","example":"How do I love thee?  Let me count the ways"},"name":{"type":"string","description":"the new name of the template","example":"My custom template"},"template_id":{"type":"integer","description":"the ID of the template to update","example":12},"uid":{"type":"string","description":"The UID of the logged-in user","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Template"}}}}}}}},"/templates/view":{"post":{"tags":["templates"],"summary":"Get all info on a template","description":"Provides all details on a template","operationId":"getTemplateDetail","requestBody":{"description":"additional parameters","content":{"application/json":{"schema":{"type":"object","properties":{"template_id":{"type":"integer","description":"the ID of the template to view","example":12},"uid":{"type":"string","description":"optional authorized UID of the session.  By providing this, the user can specify user-sepecific templates","example":"fhqwfuihuifqwhiuwqfhiqwfh124"}}}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Template"}}}}}}}},"components":{"schemas":{"Address":{"type":"object","properties":{"address1":{"type":"string","description":"the first line of the address","example":"1430 E Indian School Rd"},"address2":{"type":"string","description":"the second (optional) line of the address","example":"Suite 100"},"business_name":{"type":"string","description":"the optional business name on the address","example":"Handwrytten LLC"},"city":{"type":"string","description":"the city of the address","example":"Phoenix"},"country":{"type":"string","description":"the name of the country of the address","example":"United States"},"id":{"type":"integer","description":"the internal id of the address at Handwrytten","example":978214798},"name":{"type":"string","description":"the name on the address","example":"Joe Smith"},"state":{"type":"string","description":"the abbreviated state or province of the address","example":"AZ"},"zip":{"type":"string","description":"the zip or postal code of the address","example":"85014"}}},"Card":{"type":"object","properties":{"available_free":{"maximum":1,"minimum":0,"type":"integer","description":"1 for cards that are available free","example":1},"category_id":{"type":"integer","description":"the associated category id","example":33},"cover":{"type":"string","description":"cover image of card"},"cover_height":{"type":"string","description":"the height in px of the cover image"},"cover_width":{"type":"string","description":"the width in px of the cover image"},"id":{"type":"integer","example":42},"name":{"type":"string"},"price":{"type":"number","description":"the base price of a card (in USD)","example":3.5}},"xml":{"name":"Tag"}},"CardDetails":{"type":"object","properties":{"available_free":{"maximum":1,"minimum":0,"type":"integer","description":"1 for cards that are available free","example":1},"category_id":{"type":"integer","description":"the associated category id","example":33},"cover":{"type":"string","description":"cover image of card"},"cover_height":{"type":"string","description":"the height in px of the cover image"},"cover_width":{"type":"string","description":"the width in px of the cover image"},"id":{"type":"integer","example":42},"images":{"type":"array","description":"common return value includes items for front, back, inside and envelope","items":{"$ref":"#/components/schemas/ImageArray"}},"name":{"type":"string"},"orientation":{"type":"string","description":"landscape or portrait"},"price":{"type":"number","description":"the base price of a card (in USD)","example":3.5}}},"Country":{"type":"object","properties":{"aliases":{"type":"string","description":"Other names for the country, separated by new lines","example":"USA\\nU.S.A.\\nUnited States of America"},"delivery_cost":{"type":"number","description":"the postage fee of delivering to a specific country","example":1.0},"id":{"type":"integer","description":"the internal id of the country","example":3},"states":{"type":"array","description":"Optional states or provinces in country","items":{"$ref":"#/components/schemas/State"}}}},"Denomination":{"type":"object","properties":{"id":{"type":"integer"},"nominal":{"type":"number"},"price":{"type":"number"}}},"Font":{"type":"object","properties":{"id":{"type":"string","description":"name used internally at Handwrytten","example":"astBecca"},"image":{"type":"string","description":"url to sample of font"},"label":{"type":"string","description":"Common name","example":"Chill Charity"}},"xml":{"name":"Tag"}},"FontForCustomizer":{"type":"object","properties":{"id":{"type":"integer","description":"font id for customizer","example":1},"label":{"type":"string","description":"Common name","example":"Open Sans"}},"xml":{"name":"Tag"}},"GiftCard":{"type":"object","properties":{"denominations":{"type":"array","items":{"$ref":"#/components/schemas/Denomination"}},"id":{"type":"integer"},"image":{"type":"string"},"name":{"type":"string"}}},"ImageArray":{"type":"object","properties":{"array":{"type":"array","items":{"type":"string","description":"filename"}},"name":{"type":"string"}}},"Login":{"required":["login","password"],"type":"object","properties":{"login":{"type":"string","description":"email address","example":"john@jjf.com"},"password":{"type":"string","example":"8yfqwiuy@!$"}},"xml":{"name":"login"}},"Order":{"type":"object","properties":{"address_from":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/Card"},"date_created":{"type":"string","description":"the date the order was created"},"for_free":{"type":"boolean","description":"if the order was free","example":true},"id":{"type":"integer","description":"the unique ID of the order","example":42},"message":{"type":"string","description":"The actual message of the template","example":"How do I love thee?  Let me count the ways"}}},"Registration":{"required":["fname","lname","login","password"],"type":"object","properties":{"discount_code":{"type":"string","description":"optional discount code"},"fname":{"type":"string","description":"first name","example":"John"},"lname":{"type":"string","description":"last name","example":"Smith"},"login":{"type":"string","description":"email address","example":"john@jjf.com"},"password":{"type":"string","example":"8yfqwiuy@!$"}},"xml":{"name":"registration"}},"State":{"type":"object","properties":{"name":{"type":"string","description":"the name of the state or province","example":"Arizona"},"short_name":{"type":"string","description":"the two or three character abbreviation for a state or provinnee","example":"AZ"}}},"Template":{"type":"object","properties":{"category_id":{"type":"integer","description":"the ID of the category to which this template belongs","example":33},"id":{"type":"integer","description":"the unique ID of the Template","example":42},"message":{"type":"string","description":"The actual message of the template","example":"How do I love thee?  Let me count the ways"},"name":{"type":"string","description":"The name of the Template","example":"Love Letter to Sandy"}}},"TemplateCategory":{"type":"object","properties":{"id":{"type":"integer","description":"the id of the Template Category","example":42},"name":{"type":"string","description":"The name of the Template Category","example":"Love Letters"},"price":{"type":"number"}}},"recipientAddress":{"type":"object","properties":{"address1":{"type":"string","description":"the first line of the address","example":"1430 E Indian School Rd"},"address2":{"type":"string","description":"the second (optional) line of the address","example":"Suite 100"},"business_name":{"type":"string","description":"the optional business name on the address","example":"Handwrytten LLC"},"city":{"type":"string","description":"the city of the address","example":"Phoenix"},"country":{"type":"string","description":"the name of the country of the address","example":"United States"},"id":{"type":"integer","description":"the internal id of the address at Handwrytten","example":978214798},"name":{"type":"string","description":"the name on the address","example":"Joe Smith"},"state":{"type":"string","description":"the abbreviated state or province of the address","example":"AZ"},"zip":{"type":"string","description":"the zip or postal code of the address","example":"85014"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Handwrytten API",
+    "description" : "This is the Handwrytten API for sending cards written in the handwriting of your choice.\nUsing this api, you can send cards to users.  You can also customize cards with logos, which\ncan be saved and then used like any other card in the system.\nFor a \"sandbox\" account, please contact contact@handwrytten.com\nTo move from credit card per-transaction to monthly invoicing, also contact us.\n[https://www.handwrytten.com](https://www.handwrytten.com)\n",
+    "termsOfService" : "https://www.handwrytten.com/terms/",
+    "contact" : {
+      "email" : "contact@handwrytten.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.handwrytten.com/v1"
+  } ],
+  "tags" : [ {
+    "name" : "auth",
+    "description" : "Commands for creating and registering accounts and logging in/out",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://www.handwrytten.com"
+    }
+  }, {
+    "name" : "cards",
+    "description" : "access information on cards and card categories"
+  }, {
+    "name" : "giftCards",
+    "description" : "access information on gift cards"
+  }, {
+    "name" : "templates",
+    "description" : "access information on saved message templates"
+  }, {
+    "name" : "user",
+    "description" : "Operations about user",
+    "externalDocs" : {
+      "description" : "Find out more about our service",
+      "url" : "https://www.handwrytten.com"
+    }
+  } ],
+  "paths" : {
+    "/auth/authorization" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "Logs in to an existing account",
+        "operationId" : "login",
+        "requestBody" : {
+          "description" : "Login to account",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Login"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful login",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "anet_customer_id" : {
+                      "type" : "string",
+                      "description" : "used internally by Handwrytten",
+                      "example" : "hfekjh"
+                    },
+                    "free_cards" : {
+                      "type" : "integer",
+                      "description" : "number of free cards in account",
+                      "example" : 1
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    },
+                    "uid" : {
+                      "type" : "string",
+                      "description" : "token for future authorized calls",
+                      "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                    },
+                    "user_id" : {
+                      "type" : "integer",
+                      "example" : 979877
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "auth error"
+          }
+        }
+      }
+    },
+    "/auth/changePassword" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "changes a user's password",
+        "operationId" : "changePassword",
+        "requestBody" : {
+          "description" : "Change password",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "new_password" : {
+                    "type" : "string",
+                    "description" : "the new password",
+                    "example" : "myn3wp455w0rd!"
+                  },
+                  "old_password" : {
+                    "type" : "string",
+                    "description" : "the existing password",
+                    "example" : "myoldpassword1234!"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "the authorized UID of the session",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful password change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/logout" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "logs out a session uid",
+        "operationId" : "logout",
+        "requestBody" : {
+          "description" : "logout session",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "the authorized UID of the session",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful logout",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/register" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "Registers a new account",
+        "operationId" : "register",
+        "requestBody" : {
+          "description" : "New user account information",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Registration"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful registration",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    },
+                    "user_id" : {
+                      "type" : "integer",
+                      "example" : 979877
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/resetPasswordRequest" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "resets a user's password",
+        "operationId" : "resetPasswordRequest",
+        "requestBody" : {
+          "description" : "Reset password",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "login" : {
+                    "type" : "string",
+                    "description" : "the email address of the user",
+                    "example" : "joe@bloggs.com"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful reset request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/cards/createCustomCard" : {
+      "post" : {
+        "tags" : [ "customizer" ],
+        "summary" : "Create a new custom card",
+        "operationId" : "CreateCustomCard",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "card_id" : {
+                    "type" : "integer",
+                    "description" : "the card id of the card template you're starting with.  You can find this by logging into Handwrytten, clicking \"customize\" next to any customizable card, and pulling the card ID from the end of the URL",
+                    "example" : 243
+                  },
+                  "cover_id" : {
+                    "type" : "integer",
+                    "description" : "the id of the image you want to use for the \"cover\".  The cover is the large image on the front of the flat card.",
+                    "example" : 42
+                  },
+                  "cover_size_percent" : {
+                    "type" : "integer",
+                    "description" : "the size of the image to use as the cover.",
+                    "example" : 100
+                  },
+                  "footer_align" : {
+                    "type" : "string",
+                    "description" : "set to \"left\", \"center\", or \"right\" to align the footer appropriately",
+                    "example" : "center"
+                  },
+                  "footer_font_id" : {
+                    "type" : "integer",
+                    "description" : "font ID of the text in the footer, found by using ListFontForCustomizer",
+                    "example" : 1
+                  },
+                  "footer_font_size" : {
+                    "type" : "integer",
+                    "description" : "Font size of the text in the footer",
+                    "example" : 16
+                  },
+                  "footer_text" : {
+                    "type" : "string",
+                    "description" : "optional text for the footer of the customizable card",
+                    "example" : "Sample text for the footer"
+                  },
+                  "header_align" : {
+                    "type" : "string",
+                    "description" : "set to \"left\", \"center\", or \"right\" to align the header appropriately",
+                    "example" : "center"
+                  },
+                  "header_auto_size" : {
+                    "type" : "boolean",
+                    "description" : "if set to true, the header will be maximized to fill the header area"
+                  },
+                  "header_font_id" : {
+                    "type" : "integer",
+                    "description" : "font ID of the text in the header, found by using ListFontForCustomizer",
+                    "example" : 8
+                  },
+                  "header_font_size" : {
+                    "type" : "integer",
+                    "description" : "font size of the text in the header of the card",
+                    "example" : 20
+                  },
+                  "header_text" : {
+                    "type" : "string",
+                    "description" : "text in the header, if type is set to \"text\"",
+                    "example" : "Sample text for the header"
+                  },
+                  "logo_id" : {
+                    "type" : "integer",
+                    "description" : "Optional.  If setting \"type\" to \"logo\", set the id of the logo here.",
+                    "example" : 20
+                  },
+                  "logo_size_percent" : {
+                    "type" : "integer",
+                    "description" : "set to the desired scaling of the logo on the header",
+                    "example" : 100
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the name of the new card",
+                    "example" : "my custom card design"
+                  },
+                  "type" : {
+                    "type" : "string",
+                    "description" : "Defines the top of the back of the card. Set to either \"logo\" or \"text\".",
+                    "example" : "logo"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Card"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/list" : {
+      "get" : {
+        "tags" : [ "cards" ],
+        "summary" : "Lists information on cards",
+        "description" : "Filterable card list.  If called with UID will also provide user-specific cards.",
+        "operationId" : "simpleListCards",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Card"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "cards" ],
+        "summary" : "Lists information on cards",
+        "description" : "Simple listing of cards.  No filters can be applied.",
+        "operationId" : "listCards",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "category_id" : {
+                    "type" : "integer",
+                    "description" : "optional category id filter",
+                    "example" : 14
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "optional authorized UID of the session.  By providing this, the card list will include user-specific cards.",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Card"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      }
+    },
+    "/cards/uploadCustomLogo" : {
+      "post" : {
+        "tags" : [ "customizer" ],
+        "summary" : "upload logo or cover image for card",
+        "operationId" : "uploadCustomLogo",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "file", "type", "uid" ],
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "type" : "string",
+                    "description" : "upload images for customc cards",
+                    "format" : "binary"
+                  },
+                  "type" : {
+                    "type" : "string",
+                    "description" : "set to cover or header"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "uid of the user"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/view" : {
+      "post" : {
+        "tags" : [ "cards" ],
+        "summary" : "Provides full information on a specific card",
+        "description" : "Full card details",
+        "operationId" : "filterableCardDetails",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "card_id" : {
+                    "type" : "integer",
+                    "description" : "the card id to view",
+                    "example" : 14
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "optional authorized UID of the session.  By providing this, the card details can provide user-specific cards",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CardDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/list" : {
+      "get" : {
+        "tags" : [ "countries" ],
+        "description" : "Lists the countries to which Handwritten can mail, their associated country ID and any costs",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Country"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fonts/list" : {
+      "get" : {
+        "tags" : [ "fonts" ],
+        "summary" : "Lists Handwryting styles available for use",
+        "operationId" : "fontsList",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Font"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fonts/listForCustomizer" : {
+      "get" : {
+        "tags" : [ "customizer" ],
+        "summary" : "Lists fonts available for use with the card customizer",
+        "operationId" : "fontsListForCustomizer",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/FontForCustomizer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/giftCards/view" : {
+      "get" : {
+        "tags" : [ "giftCards" ],
+        "summary" : "Lists information on gift cards",
+        "description" : "Returns images and details (and associated denominations) of all gift cards",
+        "operationId" : "getGiftCardDetails",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/GiftCard"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "giftCards" ],
+        "summary" : "Lists information on gift cards",
+        "description" : "Returns images and details (and associated denominations) of all gift cards",
+        "operationId" : "giftCardDetails",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/GiftCard"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/singleStepOrder" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "sends an order in a single step.  This is much easier than using other order commands",
+        "description" : "Sends an order in one step.  No need to create then process order.  Optionally include a gift card.",
+        "operationId" : "singleStepOrder",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "card_id", "message", "uid" ],
+                "type" : "object",
+                "properties" : {
+                  "card_id" : {
+                    "type" : "integer",
+                    "description" : "the id of the card you want to send",
+                    "example" : 3404
+                  },
+                  "credit_card_id" : {
+                    "type" : "integer",
+                    "description" : "the credit card id to charge for the order.  Currently this is required, even for invoiced accounts, it just won't be charged.",
+                    "example" : 34124
+                  },
+                  "denomination_id" : {
+                    "type" : "integer",
+                    "description" : "Optional.  Use if sending a gift card",
+                    "example" : 12
+                  },
+                  "font_label" : {
+                    "type" : "string",
+                    "description" : "the colloquial name of the font, such as 'Fancy Jenna' or 'Casual David'",
+                    "example" : "Chill Charity"
+                  },
+                  "message" : {
+                    "type" : "string",
+                    "description" : "the full message body.  Use '\\n' for new lines",
+                    "example" : "Dear Frank,\nThank you so much for your interest in our services.\nYours,\nJoe"
+                  },
+                  "recipient_address1" : {
+                    "type" : "string",
+                    "description" : "the first address line of the return address",
+                    "example" : "123 E Main Street"
+                  },
+                  "recipient_address2" : {
+                    "type" : "string",
+                    "description" : "the second line of the address, such as suite, apartment, building, etc. Optional",
+                    "example" : "Second Floor"
+                  },
+                  "recipient_business_name" : {
+                    "type" : "string",
+                    "description" : "the second line of the recipient address.  Optional.",
+                    "example" : "Spacely Space Sprockets"
+                  },
+                  "recipient_city" : {
+                    "type" : "string",
+                    "description" : "the city of the recipient, to appear in the address",
+                    "example" : "Burlington"
+                  },
+                  "recipient_country" : {
+                    "type" : "string",
+                    "description" : "the country of the recipient.  Optional and defaults to usa",
+                    "example" : "Canada"
+                  },
+                  "recipient_country_id" : {
+                    "type" : "integer",
+                    "description" : "alternate way to specify country.  Optional and defaults to 1",
+                    "example" : 2
+                  },
+                  "recipient_name" : {
+                    "type" : "string",
+                    "description" : "the name on the recipient address",
+                    "example" : "Cosmo Spacely"
+                  },
+                  "recipient_state" : {
+                    "type" : "string",
+                    "description" : "the ABBREVIATED state or province of the recipient.  This is required for US and Canada addresses and optional for all other countries",
+                    "example" : "ON"
+                  },
+                  "recipient_zip" : {
+                    "type" : "string",
+                    "description" : "the zip code or postal code of the recipient",
+                    "example" : "L7L 0E9"
+                  },
+                  "sender_address1" : {
+                    "type" : "string",
+                    "description" : "the first address line of the return address",
+                    "example" : "1430 E Indian School Road"
+                  },
+                  "sender_address2" : {
+                    "type" : "string",
+                    "description" : "the second line of the address, such as suite, apartment, building, etc. Optional",
+                    "example" : "Suite 100"
+                  },
+                  "sender_business_name" : {
+                    "type" : "string",
+                    "description" : "the second line of the return address.  Optional.",
+                    "example" : "Handwrytten"
+                  },
+                  "sender_city" : {
+                    "type" : "string",
+                    "description" : "the city of the sender, to appear in the return address",
+                    "example" : "Phoenix"
+                  },
+                  "sender_country" : {
+                    "type" : "string",
+                    "description" : "the country of the recipient.  Optional and defaults to usa",
+                    "example" : "United States"
+                  },
+                  "sender_country_id" : {
+                    "type" : "integer",
+                    "description" : "alternate way to specify country.  Optional and defaults to 1",
+                    "example" : 1
+                  },
+                  "sender_name" : {
+                    "type" : "string",
+                    "description" : "the name on the return address",
+                    "example" : "Joe Sender"
+                  },
+                  "sender_state" : {
+                    "type" : "string",
+                    "description" : "the ABBREVIATED state or province of the sender.  This is required for US and Canada addresses and optional for all other countries",
+                    "example" : "AZ"
+                  },
+                  "sender_zip" : {
+                    "type" : "string",
+                    "description" : "The postal code or zip code of the sender.",
+                    "example" : "12345"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "The UID of the logged-in user",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful order placement",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "$ref" : "#/components/schemas/Order"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/address" : {
+      "post" : {
+        "tags" : [ "profile" ],
+        "summary" : "gets the user's return address information",
+        "operationId" : "userAddress",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.  By providing this, the card list will include user-specific cards.",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "$ref" : "#/components/schemas/Address"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/deleteRecipient" : {
+      "post" : {
+        "tags" : [ "address" ],
+        "summary" : "deletes an existing recipient address",
+        "operationId" : "deleteRecipient",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "address_id", "uid" ],
+                "type" : "object",
+                "properties" : {
+                  "address_id" : {
+                    "type" : "integer",
+                    "description" : "the id of the address to delete",
+                    "example" : 549494
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "33ce76fede1a31d5ee823179f78d9882"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/profileAddRecipient" : {
+      "post" : {
+        "tags" : [ "address" ],
+        "summary" : "add a new recipient address",
+        "operationId" : "addRecipientAddress",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "address1" : {
+                    "type" : "string",
+                    "description" : "the first line of the address",
+                    "example" : "1430 E Indian School Rd"
+                  },
+                  "address2" : {
+                    "type" : "string",
+                    "description" : "the second (optional) line of the address",
+                    "example" : "Suite 100"
+                  },
+                  "business_name" : {
+                    "type" : "string",
+                    "description" : "the optional business name on the address",
+                    "example" : "Handwrytten LLC"
+                  },
+                  "city" : {
+                    "type" : "string",
+                    "description" : "the city of the address",
+                    "example" : "Phoenix"
+                  },
+                  "country" : {
+                    "type" : "string",
+                    "description" : "the name of the country of the address, or use country_id",
+                    "example" : "United States"
+                  },
+                  "country_id" : {
+                    "type" : "integer",
+                    "description" : "the country id code of the recipient"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the name on the address",
+                    "example" : "Joe Smith"
+                  },
+                  "state" : {
+                    "type" : "string",
+                    "description" : "the abbreviated state or province of the address",
+                    "example" : "AZ"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "33ce76fede1a31d5ee823179f78d9882"
+                  },
+                  "zip" : {
+                    "type" : "string",
+                    "description" : "the zip or postal code of the address",
+                    "example" : "85014"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "$ref" : "#/components/schemas/recipientAddress"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/recipientsList" : {
+      "post" : {
+        "tags" : [ "address" ],
+        "summary" : "list the addresses in the user's account",
+        "operationId" : "recipientsList",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "33ce76fede1a31d5ee823179f78d9882"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/recipientAddress"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/updateAddress" : {
+      "post" : {
+        "tags" : [ "profile" ],
+        "summary" : "update the user's return address information",
+        "operationId" : "updateUserAddress",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "address_id", "uid" ],
+                "type" : "object",
+                "properties" : {
+                  "address1" : {
+                    "type" : "string",
+                    "description" : "the first line of the address",
+                    "example" : "1430 E Indian School Rd"
+                  },
+                  "address2" : {
+                    "type" : "string",
+                    "description" : "the second (optional) line of the address",
+                    "example" : "Suite 100"
+                  },
+                  "address_id" : {
+                    "type" : "integer",
+                    "description" : "the address you are updating",
+                    "example" : 42
+                  },
+                  "business_name" : {
+                    "type" : "string",
+                    "description" : "the optional business name on the address",
+                    "example" : "Handwrytten LLC"
+                  },
+                  "city" : {
+                    "type" : "string",
+                    "description" : "the city of the address",
+                    "example" : "Phoenix"
+                  },
+                  "country" : {
+                    "type" : "string",
+                    "description" : "the name of the country of the address",
+                    "example" : "United States"
+                  },
+                  "country_id" : {
+                    "type" : "integer",
+                    "description" : "the id of the country of the address. do not use with \"country\" parameter",
+                    "example" : 2
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the name on the address",
+                    "example" : "Joe Smith"
+                  },
+                  "state" : {
+                    "type" : "string",
+                    "description" : "the abbreviated state or province of the address",
+                    "example" : "AZ"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "33ce76fede1a31d5ee823179f78d9882"
+                  },
+                  "zip" : {
+                    "type" : "string",
+                    "description" : "the zip or postal code of the address",
+                    "example" : "85014"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "$ref" : "#/components/schemas/Address"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/updateRecipient" : {
+      "post" : {
+        "tags" : [ "address" ],
+        "summary" : "updates an existing new recipient address",
+        "operationId" : "updateRecipient",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "address1" : {
+                    "type" : "string",
+                    "description" : "the updated first line of the address",
+                    "example" : "1430 E Indian School Rd"
+                  },
+                  "address2" : {
+                    "type" : "string",
+                    "description" : "the updated second (optional) line of the address",
+                    "example" : "Suite 100"
+                  },
+                  "business_name" : {
+                    "type" : "string",
+                    "description" : "the updated optional business name on the address",
+                    "example" : "Handwrytten LLC"
+                  },
+                  "city" : {
+                    "type" : "string",
+                    "description" : "the updated city of the address",
+                    "example" : "Phoenix"
+                  },
+                  "country" : {
+                    "type" : "string",
+                    "description" : "the updated name of the country of the address, or use country_id",
+                    "example" : "United States"
+                  },
+                  "country_id" : {
+                    "type" : "integer",
+                    "description" : "the country id of the address"
+                  },
+                  "id" : {
+                    "type" : "integer",
+                    "description" : "the id of the address to update",
+                    "example" : 549494
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the updated name on the address",
+                    "example" : "Joe Smith"
+                  },
+                  "state" : {
+                    "type" : "string",
+                    "description" : "the updated abbreviated state or province of the address",
+                    "example" : "AZ"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "authorized UID of the session.",
+                    "example" : "33ce76fede1a31d5ee823179f78d9882"
+                  },
+                  "zip" : {
+                    "type" : "string",
+                    "description" : "the updated zip or postal code of the address",
+                    "example" : "85014"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "$ref" : "#/components/schemas/recipientAddress"
+                    },
+                    "status" : {
+                      "type" : "string",
+                      "example" : "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templateCategories/list" : {
+      "get" : {
+        "tags" : [ "templates" ],
+        "summary" : "List template categories",
+        "description" : "Lists the common template categories of all users. As you are not logged in, this is what you are limited to.",
+        "operationId" : "getTemplateCategories",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TemplateCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "List template categories",
+        "description" : "Lists the template categories of all users. By passing the optional UID, any custom template categories are also available.",
+        "operationId" : "getTemplateCategoriesAuthorized",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "optional authorized UID of the session.  By providing this, the template list will include user-specific template categories",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TemplateCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templates/create" : {
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "Creates a New Template in the User’s Account",
+        "description" : "Creates a new Template in the User’s Account",
+        "operationId" : "createTemplate",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "message" : {
+                    "type" : "string",
+                    "example" : "How do I love thee?  Let me count the ways"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the new name of the template",
+                    "example" : "My custom template"
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "The UID of the logged-in user",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templates/delete" : {
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "Deletes a users template",
+        "description" : "Deletes a template in the User’s Account",
+        "operationId" : "deleteTemplate",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "template_id" : {
+                    "type" : "integer",
+                    "description" : "the ID of the template to delete",
+                    "example" : 12
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "The UID of the logged-in user",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful deletion",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templates/list" : {
+      "get" : {
+        "tags" : [ "templates" ],
+        "summary" : "List template categories",
+        "description" : "Lists the common template categories of all users. As you are not logged in, this is what you are limited to.",
+        "operationId" : "getTemplates",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "List template categories",
+        "description" : "Lists the template categories of all users. By passing the optional UID, any custom template categories are also available.",
+        "operationId" : "getTemplatessAuthorized",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "category_id" : {
+                    "type" : "integer",
+                    "description" : "optional category to filter the templates",
+                    "example" : 12
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "optional authorized UID of the session.  By providing this, the template list will include user-specific template categories",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templates/update" : {
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "Updates an Existing Template in the User’s Account",
+        "description" : "Updates an Existing Template in the User’s Account",
+        "operationId" : "updateTemplate",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "message" : {
+                    "type" : "string",
+                    "example" : "How do I love thee?  Let me count the ways"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "the new name of the template",
+                    "example" : "My custom template"
+                  },
+                  "template_id" : {
+                    "type" : "integer",
+                    "description" : "the ID of the template to update",
+                    "example" : 12
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "The UID of the logged-in user",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/templates/view" : {
+      "post" : {
+        "tags" : [ "templates" ],
+        "summary" : "Get all info on a template",
+        "description" : "Provides all details on a template",
+        "operationId" : "getTemplateDetail",
+        "requestBody" : {
+          "description" : "additional parameters",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "template_id" : {
+                    "type" : "integer",
+                    "description" : "the ID of the template to view",
+                    "example" : 12
+                  },
+                  "uid" : {
+                    "type" : "string",
+                    "description" : "optional authorized UID of the session.  By providing this, the user can specify user-sepecific templates",
+                    "example" : "fhqwfuihuifqwhiuwqfhiqwfh124"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Template"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "address1" : {
+            "type" : "string",
+            "description" : "the first line of the address",
+            "example" : "1430 E Indian School Rd"
+          },
+          "address2" : {
+            "type" : "string",
+            "description" : "the second (optional) line of the address",
+            "example" : "Suite 100"
+          },
+          "business_name" : {
+            "type" : "string",
+            "description" : "the optional business name on the address",
+            "example" : "Handwrytten LLC"
+          },
+          "city" : {
+            "type" : "string",
+            "description" : "the city of the address",
+            "example" : "Phoenix"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "the name of the country of the address",
+            "example" : "United States"
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "the internal id of the address at Handwrytten",
+            "example" : 978214798
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "the name on the address",
+            "example" : "Joe Smith"
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "the abbreviated state or province of the address",
+            "example" : "AZ"
+          },
+          "zip" : {
+            "type" : "string",
+            "description" : "the zip or postal code of the address",
+            "example" : "85014"
+          }
+        }
+      },
+      "Card" : {
+        "type" : "object",
+        "properties" : {
+          "available_free" : {
+            "maximum" : 1,
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "1 for cards that are available free",
+            "example" : 1
+          },
+          "category_id" : {
+            "type" : "integer",
+            "description" : "the associated category id",
+            "example" : 33
+          },
+          "cover" : {
+            "type" : "string",
+            "description" : "cover image of card"
+          },
+          "cover_height" : {
+            "type" : "string",
+            "description" : "the height in px of the cover image"
+          },
+          "cover_width" : {
+            "type" : "string",
+            "description" : "the width in px of the cover image"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 42
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number",
+            "description" : "the base price of a card (in USD)",
+            "example" : 3.5
+          }
+        },
+        "xml" : {
+          "name" : "Tag"
+        }
+      },
+      "CardDetails" : {
+        "type" : "object",
+        "properties" : {
+          "available_free" : {
+            "maximum" : 1,
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "1 for cards that are available free",
+            "example" : 1
+          },
+          "category_id" : {
+            "type" : "integer",
+            "description" : "the associated category id",
+            "example" : 33
+          },
+          "cover" : {
+            "type" : "string",
+            "description" : "cover image of card"
+          },
+          "cover_height" : {
+            "type" : "string",
+            "description" : "the height in px of the cover image"
+          },
+          "cover_width" : {
+            "type" : "string",
+            "description" : "the width in px of the cover image"
+          },
+          "id" : {
+            "type" : "integer",
+            "example" : 42
+          },
+          "images" : {
+            "type" : "array",
+            "description" : "common return value includes items for front, back, inside and envelope",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageArray"
+            }
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "orientation" : {
+            "type" : "string",
+            "description" : "landscape or portrait"
+          },
+          "price" : {
+            "type" : "number",
+            "description" : "the base price of a card (in USD)",
+            "example" : 3.5
+          }
+        }
+      },
+      "Country" : {
+        "type" : "object",
+        "properties" : {
+          "aliases" : {
+            "type" : "string",
+            "description" : "Other names for the country, separated by new lines",
+            "example" : "USA\\nU.S.A.\\nUnited States of America"
+          },
+          "delivery_cost" : {
+            "type" : "number",
+            "description" : "the postage fee of delivering to a specific country",
+            "example" : 1.0
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "the internal id of the country",
+            "example" : 3
+          },
+          "states" : {
+            "type" : "array",
+            "description" : "Optional states or provinces in country",
+            "items" : {
+              "$ref" : "#/components/schemas/State"
+            }
+          }
+        }
+      },
+      "Denomination" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "nominal" : {
+            "type" : "number"
+          },
+          "price" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Font" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "name used internally at Handwrytten",
+            "example" : "astBecca"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "url to sample of font"
+          },
+          "label" : {
+            "type" : "string",
+            "description" : "Common name",
+            "example" : "Chill Charity"
+          }
+        },
+        "xml" : {
+          "name" : "Tag"
+        }
+      },
+      "FontForCustomizer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "font id for customizer",
+            "example" : 1
+          },
+          "label" : {
+            "type" : "string",
+            "description" : "Common name",
+            "example" : "Open Sans"
+          }
+        },
+        "xml" : {
+          "name" : "Tag"
+        }
+      },
+      "GiftCard" : {
+        "type" : "object",
+        "properties" : {
+          "denominations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Denomination"
+            }
+          },
+          "id" : {
+            "type" : "integer"
+          },
+          "image" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ImageArray" : {
+        "type" : "object",
+        "properties" : {
+          "array" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "filename"
+            }
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Login" : {
+        "required" : [ "login", "password" ],
+        "type" : "object",
+        "properties" : {
+          "login" : {
+            "type" : "string",
+            "description" : "email address",
+            "example" : "john@jjf.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "8yfqwiuy@!$"
+          }
+        },
+        "xml" : {
+          "name" : "login"
+        }
+      },
+      "Order" : {
+        "type" : "object",
+        "properties" : {
+          "address_from" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/Card"
+          },
+          "date_created" : {
+            "type" : "string",
+            "description" : "the date the order was created"
+          },
+          "for_free" : {
+            "type" : "boolean",
+            "description" : "if the order was free",
+            "example" : true
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "the unique ID of the order",
+            "example" : 42
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The actual message of the template",
+            "example" : "How do I love thee?  Let me count the ways"
+          }
+        }
+      },
+      "Registration" : {
+        "required" : [ "fname", "lname", "login", "password" ],
+        "type" : "object",
+        "properties" : {
+          "discount_code" : {
+            "type" : "string",
+            "description" : "optional discount code"
+          },
+          "fname" : {
+            "type" : "string",
+            "description" : "first name",
+            "example" : "John"
+          },
+          "lname" : {
+            "type" : "string",
+            "description" : "last name",
+            "example" : "Smith"
+          },
+          "login" : {
+            "type" : "string",
+            "description" : "email address",
+            "example" : "john@jjf.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "8yfqwiuy@!$"
+          }
+        },
+        "xml" : {
+          "name" : "registration"
+        }
+      },
+      "State" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "the name of the state or province",
+            "example" : "Arizona"
+          },
+          "short_name" : {
+            "type" : "string",
+            "description" : "the two or three character abbreviation for a state or provinnee",
+            "example" : "AZ"
+          }
+        }
+      },
+      "Template" : {
+        "type" : "object",
+        "properties" : {
+          "category_id" : {
+            "type" : "integer",
+            "description" : "the ID of the category to which this template belongs",
+            "example" : 33
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "the unique ID of the Template",
+            "example" : 42
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The actual message of the template",
+            "example" : "How do I love thee?  Let me count the ways"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Template",
+            "example" : "Love Letter to Sandy"
+          }
+        }
+      },
+      "TemplateCategory" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "the id of the Template Category",
+            "example" : 42
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Template Category",
+            "example" : "Love Letters"
+          },
+          "price" : {
+            "type" : "number"
+          }
+        }
+      },
+      "recipientAddress" : {
+        "type" : "object",
+        "properties" : {
+          "address1" : {
+            "type" : "string",
+            "description" : "the first line of the address",
+            "example" : "1430 E Indian School Rd"
+          },
+          "address2" : {
+            "type" : "string",
+            "description" : "the second (optional) line of the address",
+            "example" : "Suite 100"
+          },
+          "business_name" : {
+            "type" : "string",
+            "description" : "the optional business name on the address",
+            "example" : "Handwrytten LLC"
+          },
+          "city" : {
+            "type" : "string",
+            "description" : "the city of the address",
+            "example" : "Phoenix"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "the name of the country of the address",
+            "example" : "United States"
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "the internal id of the address at Handwrytten",
+            "example" : 978214798
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "the name on the address",
+            "example" : "Joe Smith"
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "the abbreviated state or province of the address",
+            "example" : "AZ"
+          },
+          "zip" : {
+            "type" : "string",
+            "description" : "the zip or postal code of the address",
+            "example" : "85014"
+          }
+        }
+      }
+    }
+  }
+}

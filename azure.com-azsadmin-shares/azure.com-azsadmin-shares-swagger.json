@@ -1,1 +1,524 @@
-{"openapi":"3.0.1","info":{"title":"StorageManagementClient","description":"The Admin Storage Management Client.","version":"2015-12-01-preview"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares":{"get":{"tags":["Shares"],"description":"Returns a list of storage shares.","operationId":"Shares_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of storage shares has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ShareList"}}}},"404":{"description":"NOT FOUND -- The farm cannot be found."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}":{"get":{"tags":["Shares"],"description":"Returns a storage share.","operationId":"Shares_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"shareName","in":"path","description":"Share name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The storage share has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Share"}}}},"404":{"description":"NOT FOUND -- The farm or storage share cannot be found."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/metricdefinitions":{"get":{"tags":["Shares"],"description":"Returns a list of metric definitions for a storage share.","operationId":"Shares_ListMetricDefinitions","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"shareName","in":"path","description":"Share name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of metric definitions has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of metric definitions.","readOnly":true,"items":{"type":"object","properties":{"metricAvailabilities":{"type":"array","description":"Metric availabilities.","readOnly":true,"items":{"type":"object","properties":{"retention":{"type":"string","description":"Retention of metric."},"timeGrain":{"type":"string","description":"Time grain."}},"description":"Metric availability."}},"name":{"type":"object","properties":{"localizedValue":{"type":"string","description":"Localized value of the string."},"value":{"type":"string","description":"Value of the string."}},"description":"Localizable string."},"primaryAggregationType":{"type":"string","description":"Aggregate type.","readOnly":true,"enum":["None","Average","Total","Minimum","Maximum","Last"]},"unit":{"type":"string","description":"Metric unit.","enum":["Count","Bytes","Seconds","CountPerSecond","BytesPerSecond"]}},"description":"Metric definition."}}},"description":"Pageable list of metric definitions."}}}},"404":{"description":"NOT FOUND -- The farm cannot be found."}}}},"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/metrics":{"get":{"tags":["Shares"],"description":"Returns a list of metrics for a storage share.","operationId":"Shares_ListMetrics","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Resource group name.","required":true,"schema":{"type":"string"}},{"name":"farmId","in":"path","description":"Farm Id.","required":true,"schema":{"type":"string"}},{"name":"shareName","in":"path","description":"Share name.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The list of metrics has been returned.","content":{"application/json":{"schema":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of metrics.","readOnly":true,"items":{"type":"object","properties":{"endTime":{"type":"string","description":"Metric end time.","format":"date-time","readOnly":true},"metricUnit":{"type":"string","description":"Metric unit.","enum":["Count","Bytes","Seconds","CountPerSecond","BytesPerSecond"]},"metricValues":{"type":"array","description":"List of metric values.","readOnly":true,"items":{"type":"object","properties":{"average":{"type":"number","description":"Average value of metric.","format":"float","readOnly":true},"count":{"type":"integer","description":"Count of metric values.","format":"int32","readOnly":true},"maximum":{"type":"number","description":"Maximum value of metric.","format":"float","readOnly":true},"minimum":{"type":"number","description":"Minimum value of metric.","format":"float","readOnly":true},"properties":{"type":"string","description":"Metric value properties.","readOnly":true},"timeStamp":{"type":"string","description":"Timestamp of metric value.","format":"date-time","readOnly":true},"total":{"type":"number","description":"Total value of metric.","format":"float","readOnly":true}},"description":"Metric value."}},"name":{"type":"object","properties":{"localizedValue":{"type":"string","description":"Localized value of the string."},"value":{"type":"string","description":"Value of the string."}},"description":"Localizable string."},"startTime":{"type":"string","description":"Metric start time.","format":"date-time","readOnly":true},"timeGrain":{"type":"string","description":"Metric time grain.","readOnly":true}},"description":"Metric information."}}},"description":"Pageable list of metrics."}}}},"404":{"description":"NOT FOUND -- The farm or share cannot be found."}}}}},"components":{"schemas":{"Share":{"properties":{"properties":{"$ref":"#/components/schemas/ShareProperties"}},"description":"Storage share.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID."},"location":{"type":"string","description":"Resource location."},"name":{"type":"string","description":"Resource Name."},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags."},"type":{"type":"string","description":"Resource type."}},"description":"Base resource object."}]},"ShareList":{"type":"array","description":"List of storage shares.","items":{"$ref":"#/components/schemas/Share"}},"ShareProperties":{"type":"object","properties":{"freeCapacity":{"type":"integer","description":"The free space of the storage share in bytes.","format":"int64","readOnly":true},"healthStatus":{"type":"string","description":"Current health status.","readOnly":true,"enum":["Unknown","Healthy","Warning","Critical"]},"shareName":{"type":"string","description":"The name of the storage share.","readOnly":true},"totalCapacity":{"type":"integer","description":"The total capacity of the storage share in bytes.","format":"int64","readOnly":true},"uncPath":{"type":"string","description":"The UNC path to the storage share.","readOnly":true},"usedCapacity":{"type":"integer","description":"The used capacity of the storage share in bytes.","format":"int64","readOnly":true}},"description":"Storage share properties."}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "StorageManagementClient",
+    "description" : "The Admin Storage Management Client.",
+    "version" : "2015-12-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares" : {
+      "get" : {
+        "tags" : [ "Shares" ],
+        "description" : "Returns a list of storage shares.",
+        "operationId" : "Shares_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of storage shares has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ShareList"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The farm cannot be found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}" : {
+      "get" : {
+        "tags" : [ "Shares" ],
+        "description" : "Returns a storage share.",
+        "operationId" : "Shares_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "shareName",
+          "in" : "path",
+          "description" : "Share name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The storage share has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Share"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The farm or storage share cannot be found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/metricdefinitions" : {
+      "get" : {
+        "tags" : [ "Shares" ],
+        "description" : "Returns a list of metric definitions for a storage share.",
+        "operationId" : "Shares_ListMetricDefinitions",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "shareName",
+          "in" : "path",
+          "description" : "Share name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of metric definitions has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "URI to the next page.",
+                      "readOnly" : true
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "List of metric definitions.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "metricAvailabilities" : {
+                            "type" : "array",
+                            "description" : "Metric availabilities.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "retention" : {
+                                  "type" : "string",
+                                  "description" : "Retention of metric."
+                                },
+                                "timeGrain" : {
+                                  "type" : "string",
+                                  "description" : "Time grain."
+                                }
+                              },
+                              "description" : "Metric availability."
+                            }
+                          },
+                          "name" : {
+                            "type" : "object",
+                            "properties" : {
+                              "localizedValue" : {
+                                "type" : "string",
+                                "description" : "Localized value of the string."
+                              },
+                              "value" : {
+                                "type" : "string",
+                                "description" : "Value of the string."
+                              }
+                            },
+                            "description" : "Localizable string."
+                          },
+                          "primaryAggregationType" : {
+                            "type" : "string",
+                            "description" : "Aggregate type.",
+                            "readOnly" : true,
+                            "enum" : [ "None", "Average", "Total", "Minimum", "Maximum", "Last" ]
+                          },
+                          "unit" : {
+                            "type" : "string",
+                            "description" : "Metric unit.",
+                            "enum" : [ "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond" ]
+                          }
+                        },
+                        "description" : "Metric definition."
+                      }
+                    }
+                  },
+                  "description" : "Pageable list of metric definitions."
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The farm cannot be found."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/metrics" : {
+      "get" : {
+        "tags" : [ "Shares" ],
+        "description" : "Returns a list of metrics for a storage share.",
+        "operationId" : "Shares_ListMetrics",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Resource group name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "farmId",
+          "in" : "path",
+          "description" : "Farm Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "shareName",
+          "in" : "path",
+          "description" : "Share name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of metrics has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "URI to the next page.",
+                      "readOnly" : true
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "List of metrics.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "endTime" : {
+                            "type" : "string",
+                            "description" : "Metric end time.",
+                            "format" : "date-time",
+                            "readOnly" : true
+                          },
+                          "metricUnit" : {
+                            "type" : "string",
+                            "description" : "Metric unit.",
+                            "enum" : [ "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond" ]
+                          },
+                          "metricValues" : {
+                            "type" : "array",
+                            "description" : "List of metric values.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "average" : {
+                                  "type" : "number",
+                                  "description" : "Average value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "count" : {
+                                  "type" : "integer",
+                                  "description" : "Count of metric values.",
+                                  "format" : "int32",
+                                  "readOnly" : true
+                                },
+                                "maximum" : {
+                                  "type" : "number",
+                                  "description" : "Maximum value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "minimum" : {
+                                  "type" : "number",
+                                  "description" : "Minimum value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                },
+                                "properties" : {
+                                  "type" : "string",
+                                  "description" : "Metric value properties.",
+                                  "readOnly" : true
+                                },
+                                "timeStamp" : {
+                                  "type" : "string",
+                                  "description" : "Timestamp of metric value.",
+                                  "format" : "date-time",
+                                  "readOnly" : true
+                                },
+                                "total" : {
+                                  "type" : "number",
+                                  "description" : "Total value of metric.",
+                                  "format" : "float",
+                                  "readOnly" : true
+                                }
+                              },
+                              "description" : "Metric value."
+                            }
+                          },
+                          "name" : {
+                            "type" : "object",
+                            "properties" : {
+                              "localizedValue" : {
+                                "type" : "string",
+                                "description" : "Localized value of the string."
+                              },
+                              "value" : {
+                                "type" : "string",
+                                "description" : "Value of the string."
+                              }
+                            },
+                            "description" : "Localizable string."
+                          },
+                          "startTime" : {
+                            "type" : "string",
+                            "description" : "Metric start time.",
+                            "format" : "date-time",
+                            "readOnly" : true
+                          },
+                          "timeGrain" : {
+                            "type" : "string",
+                            "description" : "Metric time grain.",
+                            "readOnly" : true
+                          }
+                        },
+                        "description" : "Metric information."
+                      }
+                    }
+                  },
+                  "description" : "Pageable list of metrics."
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND -- The farm or share cannot be found."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Share" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ShareProperties"
+          }
+        },
+        "description" : "Storage share.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource ID."
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Resource location."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource Name."
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "Resource tags."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type."
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "ShareList" : {
+        "type" : "array",
+        "description" : "List of storage shares.",
+        "items" : {
+          "$ref" : "#/components/schemas/Share"
+        }
+      },
+      "ShareProperties" : {
+        "type" : "object",
+        "properties" : {
+          "freeCapacity" : {
+            "type" : "integer",
+            "description" : "The free space of the storage share in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "healthStatus" : {
+            "type" : "string",
+            "description" : "Current health status.",
+            "readOnly" : true,
+            "enum" : [ "Unknown", "Healthy", "Warning", "Critical" ]
+          },
+          "shareName" : {
+            "type" : "string",
+            "description" : "The name of the storage share.",
+            "readOnly" : true
+          },
+          "totalCapacity" : {
+            "type" : "integer",
+            "description" : "The total capacity of the storage share in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          },
+          "uncPath" : {
+            "type" : "string",
+            "description" : "The UNC path to the storage share.",
+            "readOnly" : true
+          },
+          "usedCapacity" : {
+            "type" : "integer",
+            "description" : "The used capacity of the storage share in bytes.",
+            "format" : "int64",
+            "readOnly" : true
+          }
+        },
+        "description" : "Storage share properties."
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

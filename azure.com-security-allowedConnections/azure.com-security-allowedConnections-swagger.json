@@ -1,1 +1,397 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2015-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections":{"get":{"tags":["AllowedConnections"],"description":"Gets the list of all possible traffic between resources for the subscription","operationId":"AllowedConnections_List","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AllowedConnectionsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections":{"get":{"tags":["AllowedConnections"],"description":"Gets the list of all possible traffic between resources for the subscription and location.","operationId":"AllowedConnections_ListByHomeRegion","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AllowedConnectionsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}":{"get":{"tags":["AllowedConnections"],"description":"Gets the list of all possible traffic between resources for the subscription and location, based on connection type.","operationId":"AllowedConnections_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Azure subscription ID","required":true,"schema":{"pattern":"^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$","type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group within the user's subscription. The name is case insensitive.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"ascLocation","in":"path","description":"The location where ASC stores the data of the subscription. can be retrieved from Get locations","required":true,"schema":{"type":"string"}},{"name":"connectionType","in":"path","description":"The type of allowed connections (Internal, External)","required":true,"schema":{"type":"string","enum":["Internal","External"]}},{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AllowedConnectionsResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"AllowedConnectionsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URI to fetch the next page.","readOnly":true},"value":{"type":"array","readOnly":true,"items":{"$ref":"#/components/schemas/AllowedConnectionsResource"}}},"description":"List of all possible traffic between Azure resources"},"AllowedConnectionsResource":{"properties":{"properties":{"$ref":"#/components/schemas/AllowedConnectionsResourceProperties"}},"description":"The resource whose properties describes the allowed traffic between Azure resources","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."},{"type":"object","properties":{"location":{"type":"string","description":"Location where the resource is stored","readOnly":true}},"description":"Describes an Azure resource with location"}]},"AllowedConnectionsResourceProperties":{"type":"object","properties":{"calculatedDateTime":{"type":"string","description":"The UTC time on which the allowed connections resource was calculated","format":"date-time","readOnly":true},"connectableResources":{"type":"array","description":"List of connectable resources","readOnly":true,"items":{"$ref":"#/components/schemas/ConnectableResource"}}},"description":"Describes the allowed traffic between Azure resources"},"ConnectableResource":{"type":"object","properties":{"id":{"type":"string","description":"The Azure resource id","readOnly":true},"inboundConnectedResources":{"type":"array","description":"The list of Azure resources that the resource has inbound allowed connection from","readOnly":true,"items":{"$ref":"#/components/schemas/ConnectedResource"}},"outboundConnectedResources":{"type":"array","description":"The list of Azure resources that the resource has outbound allowed connection to","readOnly":true,"items":{"$ref":"#/components/schemas/ConnectedResource"}}},"description":"Describes the allowed inbound and outbound traffic of an Azure resource"},"ConnectedResource":{"type":"object","properties":{"connectedResourceId":{"type":"string","description":"The Azure resource id of the connected resource","readOnly":true},"tcpPorts":{"type":"string","description":"The allowed tcp ports","readOnly":true},"udpPorts":{"type":"string","description":"The allowed udp ports","readOnly":true}},"description":"Describes properties of a connected resource"}},"parameters":{"ConnectionType":{"name":"connectionType","in":"path","description":"The type of allowed connections (Internal, External)","required":true,"schema":{"type":"string","enum":["Internal","External"]}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2015-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections" : {
+      "get" : {
+        "tags" : [ "AllowedConnections" ],
+        "description" : "Gets the list of all possible traffic between resources for the subscription",
+        "operationId" : "AllowedConnections_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllowedConnectionsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections" : {
+      "get" : {
+        "tags" : [ "AllowedConnections" ],
+        "description" : "Gets the list of all possible traffic between resources for the subscription and location.",
+        "operationId" : "AllowedConnections_ListByHomeRegion",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllowedConnectionsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}" : {
+      "get" : {
+        "tags" : [ "AllowedConnections" ],
+        "description" : "Gets the list of all possible traffic between resources for the subscription and location, based on connection type.",
+        "operationId" : "AllowedConnections_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Azure subscription ID",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group within the user's subscription. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "ascLocation",
+          "in" : "path",
+          "description" : "The location where ASC stores the data of the subscription. can be retrieved from Get locations",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "connectionType",
+          "in" : "path",
+          "description" : "The type of allowed connections (Internal, External)",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Internal", "External" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllowedConnectionsResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AllowedConnectionsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/AllowedConnectionsResource"
+            }
+          }
+        },
+        "description" : "List of all possible traffic between Azure resources"
+      },
+      "AllowedConnectionsResource" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AllowedConnectionsResourceProperties"
+          }
+        },
+        "description" : "The resource whose properties describes the allowed traffic between Azure resources",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        }, {
+          "type" : "object",
+          "properties" : {
+            "location" : {
+              "type" : "string",
+              "description" : "Location where the resource is stored",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource with location"
+        } ]
+      },
+      "AllowedConnectionsResourceProperties" : {
+        "type" : "object",
+        "properties" : {
+          "calculatedDateTime" : {
+            "type" : "string",
+            "description" : "The UTC time on which the allowed connections resource was calculated",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "connectableResources" : {
+            "type" : "array",
+            "description" : "List of connectable resources",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ConnectableResource"
+            }
+          }
+        },
+        "description" : "Describes the allowed traffic between Azure resources"
+      },
+      "ConnectableResource" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The Azure resource id",
+            "readOnly" : true
+          },
+          "inboundConnectedResources" : {
+            "type" : "array",
+            "description" : "The list of Azure resources that the resource has inbound allowed connection from",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ConnectedResource"
+            }
+          },
+          "outboundConnectedResources" : {
+            "type" : "array",
+            "description" : "The list of Azure resources that the resource has outbound allowed connection to",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ConnectedResource"
+            }
+          }
+        },
+        "description" : "Describes the allowed inbound and outbound traffic of an Azure resource"
+      },
+      "ConnectedResource" : {
+        "type" : "object",
+        "properties" : {
+          "connectedResourceId" : {
+            "type" : "string",
+            "description" : "The Azure resource id of the connected resource",
+            "readOnly" : true
+          },
+          "tcpPorts" : {
+            "type" : "string",
+            "description" : "The allowed tcp ports",
+            "readOnly" : true
+          },
+          "udpPorts" : {
+            "type" : "string",
+            "description" : "The allowed udp ports",
+            "readOnly" : true
+          }
+        },
+        "description" : "Describes properties of a connected resource"
+      }
+    },
+    "parameters" : {
+      "ConnectionType" : {
+        "name" : "connectionType",
+        "in" : "path",
+        "description" : "The type of allowed connections (Internal, External)",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Internal", "External" ]
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

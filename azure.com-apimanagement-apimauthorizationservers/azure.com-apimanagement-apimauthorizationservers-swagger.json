@@ -1,1 +1,762 @@
-{"openapi":"3.0.1","info":{"title":"ApiManagementClient","description":"Use these REST APIs for managing OAuth2 servers configuration in your Azure API Management deployment. OAuth 2.0 can be used to authorize developer accounts for Azure API Management. For more information refer to [How to OAuth2](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-oauth2).","version":"2019-12-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers":{"get":{"tags":["AuthorizationServer"],"description":"Lists a collection of authorization servers defined within a service instance.","operationId":"AuthorizationServer_ListByService","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"$filter","in":"query","description":"|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>","schema":{"type":"string"}},{"name":"$top","in":"query","description":"Number of records to return.","schema":{"minimum":1,"type":"integer","format":"int32"}},{"name":"$skip","in":"query","description":"Number of records to skip.","schema":{"minimum":0,"type":"integer","format":"int32"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"A Collection of the Authorization Server entities for the specified API Management service instance.","content":{"application/json":{"schema":{"type":"object","description":"Paged OAuth2 Authorization Servers list representation."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}":{"get":{"tags":["AuthorizationServer"],"description":"Gets the details of the authorization server specified by its identifier.","operationId":"AuthorizationServer_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Gets the details of the specified authorization server.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"External OAuth authorization server settings."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"put":{"tags":["AuthorizationServer"],"description":"Creates new authorization server or updates an existing authorization server.","operationId":"AuthorizationServer_CreateOrUpdate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. Not required when creating an entity, but required when updating an entity.","schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Create or update parameters.","content":{"application/json":{"schema":{"properties":{"properties":{"required":["authorizationEndpoint","clientId","clientRegistrationEndpoint","displayName","grantTypes"],"type":"object","properties":{"authorizationEndpoint":{"type":"string","description":"OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."},"clientId":{"type":"string","description":"Client or app id registered with this authorization server."},"clientRegistrationEndpoint":{"type":"string","description":"Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."},"clientSecret":{"type":"string","description":"Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."},"displayName":{"maxLength":50,"minLength":1,"type":"string","description":"User-friendly authorization server name."},"grantTypes":{"type":"array","description":"Form of an authorization grant, which the client uses to request the access token.","items":{"type":"string","enum":["authorizationCode","implicit","resourceOwnerPassword","clientCredentials"]}}},"description":"External OAuth authorization server settings Properties."}},"description":"External OAuth authorization server settings.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type for API Management resource.","readOnly":true}},"description":"The Resource definition."}]}}},"required":true},"responses":{"200":{"description":"Authorization server is already registered.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"External OAuth authorization server settings."}}}},"201":{"description":"Authorization server was successfully registered.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}},"content":{"application/json":{"schema":{"type":"object","description":"External OAuth authorization server settings."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"delete":{"tags":["AuthorizationServer"],"description":"Deletes specific authorization server instance.","operationId":"AuthorizationServer_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The authorization server settings were successfully deleted."},"204":{"description":"The authorization server settings were successfully deleted."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"head":{"tags":["AuthorizationServer"],"description":"Gets the entity state (Etag) version of the authorizationServer specified by its identifier.","operationId":"AuthorizationServer_GetEntityTag","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Specified authorization server entity exists and current entity state version is present in the ETag header.","headers":{"ETag":{"description":"Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.","schema":{"type":"string"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}},"patch":{"tags":["AuthorizationServer"],"description":"Updates the details of the authorization server specified by its identifier.","operationId":"AuthorizationServer_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"If-Match","in":"header","description":"ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"OAuth2 Server settings Update parameters.","content":{"application/json":{"schema":{"properties":{"properties":{"type":"object","properties":{"authorizationEndpoint":{"type":"string","description":"OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."},"clientId":{"type":"string","description":"Client or app id registered with this authorization server."},"clientRegistrationEndpoint":{"type":"string","description":"Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."},"clientSecret":{"type":"string","description":"Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."},"displayName":{"maxLength":50,"minLength":1,"type":"string","description":"User-friendly authorization server name."},"grantTypes":{"type":"array","description":"Form of an authorization grant, which the client uses to request the access token.","items":{"type":"string","enum":["authorizationCode","implicit","resourceOwnerPassword","clientCredentials"]}}},"description":"External OAuth authorization server Update settings contract."}},"description":"External OAuth authorization server settings.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type for API Management resource.","readOnly":true}},"description":"The Resource definition."}]}}},"required":true},"responses":{"204":{"description":"The authorization server settings were successfully updated."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}/listSecrets":{"post":{"tags":["AuthorizationServer"],"description":"Gets the client secret details of the authorization server.","operationId":"AuthorizationServer_ListSecrets","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"serviceName","in":"path","description":"The name of the API Management service.","required":true,"schema":{"maxLength":50,"minLength":1,"pattern":"^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$","type":"string"}},{"name":"authsid","in":"path","description":"Identifier of the authorization server.","required":true,"schema":{"maxLength":80,"minLength":1,"pattern":"^[^*#&+:<>?]+$","type":"string"}},{"name":"api-version","in":"query","description":"Version of the API to be used with the client request.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The response body contains the client secret.","content":{"application/json":{"schema":{"type":"object","description":"Client or app secret used in IdentityProviders, Aad, OpenID or OAuth."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","description":"Error Response."}}}}}}}},"components":{"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ApiManagementClient",
+    "description" : "Use these REST APIs for managing OAuth2 servers configuration in your Azure API Management deployment. OAuth 2.0 can be used to authorize developer accounts for Azure API Management. For more information refer to [How to OAuth2](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-oauth2).",
+    "version" : "2019-12-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers" : {
+      "get" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Lists a collection of authorization servers defined within a service instance.",
+        "operationId" : "AuthorizationServer_ListByService",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "|   Field     |     Usage     |     Supported operators     |     Supported functions     |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Number of records to return.",
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Number of records to skip.",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A Collection of the Authorization Server entities for the specified API Management service instance.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Paged OAuth2 Authorization Servers list representation."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}" : {
+      "get" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Gets the details of the authorization server specified by its identifier.",
+        "operationId" : "AuthorizationServer_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Gets the details of the specified authorization server.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "External OAuth authorization server settings."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Creates new authorization server or updates an existing authorization server.",
+        "operationId" : "AuthorizationServer_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. Not required when creating an entity, but required when updating an entity.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Create or update parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "properties" : {
+                    "required" : [ "authorizationEndpoint", "clientId", "clientRegistrationEndpoint", "displayName", "grantTypes" ],
+                    "type" : "object",
+                    "properties" : {
+                      "authorizationEndpoint" : {
+                        "type" : "string",
+                        "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                      },
+                      "clientId" : {
+                        "type" : "string",
+                        "description" : "Client or app id registered with this authorization server."
+                      },
+                      "clientRegistrationEndpoint" : {
+                        "type" : "string",
+                        "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                      },
+                      "clientSecret" : {
+                        "type" : "string",
+                        "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                      },
+                      "displayName" : {
+                        "maxLength" : 50,
+                        "minLength" : 1,
+                        "type" : "string",
+                        "description" : "User-friendly authorization server name."
+                      },
+                      "grantTypes" : {
+                        "type" : "array",
+                        "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                        "items" : {
+                          "type" : "string",
+                          "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                        }
+                      }
+                    },
+                    "description" : "External OAuth authorization server settings Properties."
+                  }
+                },
+                "description" : "External OAuth authorization server settings.",
+                "allOf" : [ {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "Resource ID.",
+                      "readOnly" : true
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Resource name.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Resource type for API Management resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The Resource definition."
+                } ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authorization server is already registered.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "External OAuth authorization server settings."
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Authorization server was successfully registered.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "External OAuth authorization server settings."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Deletes specific authorization server instance.",
+        "operationId" : "AuthorizationServer_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The authorization server settings were successfully deleted."
+          },
+          "204" : {
+            "description" : "The authorization server settings were successfully deleted."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "head" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Gets the entity state (Etag) version of the authorizationServer specified by its identifier.",
+        "operationId" : "AuthorizationServer_GetEntityTag",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Specified authorization server entity exists and current entity state version is present in the ETag header.",
+            "headers" : {
+              "ETag" : {
+                "description" : "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Updates the details of the authorization server specified by its identifier.",
+        "operationId" : "AuthorizationServer_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "OAuth2 Server settings Update parameters.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "properties" : {
+                    "type" : "object",
+                    "properties" : {
+                      "authorizationEndpoint" : {
+                        "type" : "string",
+                        "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                      },
+                      "clientId" : {
+                        "type" : "string",
+                        "description" : "Client or app id registered with this authorization server."
+                      },
+                      "clientRegistrationEndpoint" : {
+                        "type" : "string",
+                        "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                      },
+                      "clientSecret" : {
+                        "type" : "string",
+                        "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                      },
+                      "displayName" : {
+                        "maxLength" : 50,
+                        "minLength" : 1,
+                        "type" : "string",
+                        "description" : "User-friendly authorization server name."
+                      },
+                      "grantTypes" : {
+                        "type" : "array",
+                        "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                        "items" : {
+                          "type" : "string",
+                          "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                        }
+                      }
+                    },
+                    "description" : "External OAuth authorization server Update settings contract."
+                  }
+                },
+                "description" : "External OAuth authorization server settings.",
+                "allOf" : [ {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string",
+                      "description" : "Resource ID.",
+                      "readOnly" : true
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "Resource name.",
+                      "readOnly" : true
+                    },
+                    "type" : {
+                      "type" : "string",
+                      "description" : "Resource type for API Management resource.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The Resource definition."
+                } ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "The authorization server settings were successfully updated."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}/listSecrets" : {
+      "post" : {
+        "tags" : [ "AuthorizationServer" ],
+        "description" : "Gets the client secret details of the authorization server.",
+        "operationId" : "AuthorizationServer_ListSecrets",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serviceName",
+          "in" : "path",
+          "description" : "The name of the API Management service.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "pattern" : "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "authsid",
+          "in" : "path",
+          "description" : "Identifier of the authorization server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 80,
+            "minLength" : 1,
+            "pattern" : "^[^*#&+:<>?]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Version of the API to be used with the client request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The response body contains the client secret.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Client or app secret used in IdentityProviders, Aad, OpenID or OAuth."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Error Response."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow."
+      }
+    }
+  }
+}

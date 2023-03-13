@@ -1,1 +1,544 @@
-{"openapi":"3.0.1","info":{"title":"FabricAdminClient","description":"Scale unit operation endpoints and objects.","version":"2016-05-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits":{"get":{"tags":["ScaleUnits"],"description":"Returns a list of all scale units at a location.","operationId":"ScaleUnits_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}},{"name":"$filter","in":"query","description":"OData filter parameter.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScaleUnitList"}}}},"404":{"description":"NOT FOUND"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}":{"get":{"tags":["ScaleUnits"],"description":"Returns the requested scale unit.","operationId":"ScaleUnits_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"scaleUnit","in":"path","description":"Name of the scale units.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScaleUnit"}}}},"404":{"description":"NOT FOUND"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/createFromJson":{"post":{"tags":["ScaleUnits"],"description":"Add a new scale unit.","operationId":"ScaleUnits_CreateFromJson","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"scaleUnit","in":"path","description":"Name of the scale units.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"requestBody":{"description":"A list of input data that allows for creating the new scale unit.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateFromJsonScaleUnitParametersList"}}},"required":true},"responses":{"200":{"description":"OK"},"202":{"description":"ACCEPTED"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/scaleOut":{"post":{"tags":["ScaleUnits"],"description":"Scales out a scale unit.","operationId":"ScaleUnits_ScaleOut","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"Name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Location of the resource.","required":true,"schema":{"type":"string"}},{"name":"scaleUnit","in":"path","description":"Name of the scale units.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"requestBody":{"description":"A list of input data that allows for adding a set of scale unit nodes.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScaleOutScaleUnitParametersList"}}},"required":true},"responses":{"200":{"description":"OK"},"202":{"description":"ACCEPTED"}}}}},"components":{"schemas":{"CreateFromJsonScaleUnitParametersList":{"type":"object","properties":{"clusterName":{"type":"string","description":"Cluster name for the new scale unit."},"infrastructureNetwork":{"$ref":"#/components/schemas/NetworkDefinitionParameter"},"netQosPriority":{"type":"integer","description":"The network QOS priority setting.","format":"int32"},"physicalNodes":{"type":"array","description":"List of nodes in the scale unit.","items":{"$ref":"#/components/schemas/DeploymentJsonPhysicalNodeParameters"}},"softwareBgpAsn":{"type":"string","description":"The software ASN for the cluster's rack."},"storageNetwork":{"$ref":"#/components/schemas/NetworkDefinitionParameter"},"torSwitchBgpAsn":{"type":"string","description":"The ASN for the cluster's rack TOR."},"torSwitchBgpPeerIp":{"type":"array","description":"The list of IP addresses used for TOR communication.","items":{"type":"string"}}},"description":"A list of input data that allows for creating the new scale unit."},"DeploymentJsonPhysicalNodeParameters":{"type":"object","properties":{"bmcIpAddress":{"type":"string","description":"BMC address of the physical machine."},"name":{"type":"string","description":"Computer name of the physical machine."}},"description":"Description of a bare metal node used for scale unit scale out operations."},"NetworkDefinitionParameter":{"type":"object","properties":{"subnet":{"type":"array","description":"The subnet IP mask in the example format 10.0.0.0/25.","items":{"type":"string"}},"vlanId":{"type":"array","description":"The Vlan ID of the subnet.","items":{"type":"string"}}},"description":"A definition of the network received from a new cluster operation."},"ScaleOutScaleUnitParameters":{"type":"object","properties":{"bmcIpv4Address":{"type":"string","description":"BMC address of the physical machine."},"computerName":{"type":"string","description":"Computer name of the physical machine."}},"description":"Input data that allows for adding a scale unit node."},"ScaleOutScaleUnitParametersList":{"type":"object","properties":{"awaitStorageConvergence":{"type":"boolean","description":"Flag indicates if the operation should wait for storage to converge before returning."},"nodeList":{"type":"array","description":"List of nodes in the scale unit.","items":{"$ref":"#/components/schemas/ScaleOutScaleUnitParameters"}}},"description":"A list of input data that allows for adding a set of scale unit nodes."},"ScaleUnit":{"properties":{"properties":{"$ref":"#/components/schemas/ScaleUnitModel"}},"description":"Represents a cluster. Generally, the cluster will be a collection of hosts backed by failover cluster manager.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"The region where the resource is located."},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key-value pairs."},"type":{"type":"string","description":"Type of resource.","readOnly":true}},"description":"Base resource object."}]},"ScaleUnitCapacity":{"type":"object","properties":{"cores":{"type":"integer","description":"The number of CPU cores for the physical machine.","format":"int64"},"memoryGB":{"type":"number","description":"The memory for the physical machine.","format":"float"}},"description":"The capacity information for a physical machine."},"ScaleUnitList":{"type":"object","properties":{"nextLink":{"type":"string","description":"URI to the next page."},"value":{"type":"array","description":"List of scale units.","items":{"$ref":"#/components/schemas/ScaleUnit"}}},"description":"A pageable list of scale units."},"ScaleUnitModel":{"type":"object","properties":{"isMultiNode":{"type":"boolean","description":"Denotes if more than one node in cluster."},"logicalFaultDomain":{"type":"integer","description":"Fault domain name of the cluster.","format":"int32"},"model":{"type":"string","description":"Model of the servers in the cluster."},"nodes":{"type":"array","description":"List of nodes in the server.","items":{"type":"string"}},"scaleUnitType":{"type":"string","description":"Type of cluster.","enum":["Unknown","ComputeOnly","StorageOnly","HyperConverged"]},"state":{"type":"string","description":"Current state of the cluster.","enum":["Unknown","Creating","Running","Upgrading","Deleting"]},"totalCapacity":{"$ref":"#/components/schemas/ScaleUnitCapacity"}},"description":"Properties of a scale unit."}},"parameters":{"ScaleUnitParameter":{"name":"scaleUnit","in":"path","description":"Name of the scale units.","required":true,"schema":{"type":"string"}}},"requestBodies":{"CreateFromJsonScaleUnitParametersInBody":{"description":"A list of input data that allows for creating the new scale unit.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateFromJsonScaleUnitParametersList"}}},"required":true},"ScaleOutScaleUnitParametersInBody":{"description":"A list of input data that allows for adding a set of scale unit nodes.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScaleOutScaleUnitParametersList"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "FabricAdminClient",
+    "description" : "Scale unit operation endpoints and objects.",
+    "version" : "2016-05-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits" : {
+      "get" : {
+        "tags" : [ "ScaleUnits" ],
+        "description" : "Returns a list of all scale units at a location.",
+        "operationId" : "ScaleUnits_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "OData filter parameter.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ScaleUnitList"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}" : {
+      "get" : {
+        "tags" : [ "ScaleUnits" ],
+        "description" : "Returns the requested scale unit.",
+        "operationId" : "ScaleUnits_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scaleUnit",
+          "in" : "path",
+          "description" : "Name of the scale units.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ScaleUnit"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/createFromJson" : {
+      "post" : {
+        "tags" : [ "ScaleUnits" ],
+        "description" : "Add a new scale unit.",
+        "operationId" : "ScaleUnits_CreateFromJson",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scaleUnit",
+          "in" : "path",
+          "description" : "Name of the scale units.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A list of input data that allows for creating the new scale unit.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateFromJsonScaleUnitParametersList"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "202" : {
+            "description" : "ACCEPTED"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/scaleOut" : {
+      "post" : {
+        "tags" : [ "ScaleUnits" ],
+        "description" : "Scales out a scale unit.",
+        "operationId" : "ScaleUnits_ScaleOut",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Location of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scaleUnit",
+          "in" : "path",
+          "description" : "Name of the scale units.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A list of input data that allows for adding a set of scale unit nodes.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ScaleOutScaleUnitParametersList"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "202" : {
+            "description" : "ACCEPTED"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CreateFromJsonScaleUnitParametersList" : {
+        "type" : "object",
+        "properties" : {
+          "clusterName" : {
+            "type" : "string",
+            "description" : "Cluster name for the new scale unit."
+          },
+          "infrastructureNetwork" : {
+            "$ref" : "#/components/schemas/NetworkDefinitionParameter"
+          },
+          "netQosPriority" : {
+            "type" : "integer",
+            "description" : "The network QOS priority setting.",
+            "format" : "int32"
+          },
+          "physicalNodes" : {
+            "type" : "array",
+            "description" : "List of nodes in the scale unit.",
+            "items" : {
+              "$ref" : "#/components/schemas/DeploymentJsonPhysicalNodeParameters"
+            }
+          },
+          "softwareBgpAsn" : {
+            "type" : "string",
+            "description" : "The software ASN for the cluster's rack."
+          },
+          "storageNetwork" : {
+            "$ref" : "#/components/schemas/NetworkDefinitionParameter"
+          },
+          "torSwitchBgpAsn" : {
+            "type" : "string",
+            "description" : "The ASN for the cluster's rack TOR."
+          },
+          "torSwitchBgpPeerIp" : {
+            "type" : "array",
+            "description" : "The list of IP addresses used for TOR communication.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "A list of input data that allows for creating the new scale unit."
+      },
+      "DeploymentJsonPhysicalNodeParameters" : {
+        "type" : "object",
+        "properties" : {
+          "bmcIpAddress" : {
+            "type" : "string",
+            "description" : "BMC address of the physical machine."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Computer name of the physical machine."
+          }
+        },
+        "description" : "Description of a bare metal node used for scale unit scale out operations."
+      },
+      "NetworkDefinitionParameter" : {
+        "type" : "object",
+        "properties" : {
+          "subnet" : {
+            "type" : "array",
+            "description" : "The subnet IP mask in the example format 10.0.0.0/25.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "vlanId" : {
+            "type" : "array",
+            "description" : "The Vlan ID of the subnet.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "A definition of the network received from a new cluster operation."
+      },
+      "ScaleOutScaleUnitParameters" : {
+        "type" : "object",
+        "properties" : {
+          "bmcIpv4Address" : {
+            "type" : "string",
+            "description" : "BMC address of the physical machine."
+          },
+          "computerName" : {
+            "type" : "string",
+            "description" : "Computer name of the physical machine."
+          }
+        },
+        "description" : "Input data that allows for adding a scale unit node."
+      },
+      "ScaleOutScaleUnitParametersList" : {
+        "type" : "object",
+        "properties" : {
+          "awaitStorageConvergence" : {
+            "type" : "boolean",
+            "description" : "Flag indicates if the operation should wait for storage to converge before returning."
+          },
+          "nodeList" : {
+            "type" : "array",
+            "description" : "List of nodes in the scale unit.",
+            "items" : {
+              "$ref" : "#/components/schemas/ScaleOutScaleUnitParameters"
+            }
+          }
+        },
+        "description" : "A list of input data that allows for adding a set of scale unit nodes."
+      },
+      "ScaleUnit" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ScaleUnitModel"
+          }
+        },
+        "description" : "Represents a cluster. Generally, the cluster will be a collection of hosts backed by failover cluster manager.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "URI of the resource.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "The region where the resource is located."
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Name of the resource.",
+              "readOnly" : true
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "List of key-value pairs."
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Type of resource.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "ScaleUnitCapacity" : {
+        "type" : "object",
+        "properties" : {
+          "cores" : {
+            "type" : "integer",
+            "description" : "The number of CPU cores for the physical machine.",
+            "format" : "int64"
+          },
+          "memoryGB" : {
+            "type" : "number",
+            "description" : "The memory for the physical machine.",
+            "format" : "float"
+          }
+        },
+        "description" : "The capacity information for a physical machine."
+      },
+      "ScaleUnitList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of scale units.",
+            "items" : {
+              "$ref" : "#/components/schemas/ScaleUnit"
+            }
+          }
+        },
+        "description" : "A pageable list of scale units."
+      },
+      "ScaleUnitModel" : {
+        "type" : "object",
+        "properties" : {
+          "isMultiNode" : {
+            "type" : "boolean",
+            "description" : "Denotes if more than one node in cluster."
+          },
+          "logicalFaultDomain" : {
+            "type" : "integer",
+            "description" : "Fault domain name of the cluster.",
+            "format" : "int32"
+          },
+          "model" : {
+            "type" : "string",
+            "description" : "Model of the servers in the cluster."
+          },
+          "nodes" : {
+            "type" : "array",
+            "description" : "List of nodes in the server.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "scaleUnitType" : {
+            "type" : "string",
+            "description" : "Type of cluster.",
+            "enum" : [ "Unknown", "ComputeOnly", "StorageOnly", "HyperConverged" ]
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "Current state of the cluster.",
+            "enum" : [ "Unknown", "Creating", "Running", "Upgrading", "Deleting" ]
+          },
+          "totalCapacity" : {
+            "$ref" : "#/components/schemas/ScaleUnitCapacity"
+          }
+        },
+        "description" : "Properties of a scale unit."
+      }
+    },
+    "parameters" : {
+      "ScaleUnitParameter" : {
+        "name" : "scaleUnit",
+        "in" : "path",
+        "description" : "Name of the scale units.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "CreateFromJsonScaleUnitParametersInBody" : {
+        "description" : "A list of input data that allows for creating the new scale unit.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/CreateFromJsonScaleUnitParametersList"
+            }
+          }
+        },
+        "required" : true
+      },
+      "ScaleOutScaleUnitParametersInBody" : {
+        "description" : "A list of input data that allows for adding a set of scale unit nodes.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ScaleOutScaleUnitParametersList"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

@@ -1,1 +1,958 @@
-{"openapi":"3.0.1","info":{"title":"Voodoo Manufacturing 3D Print API","description":"Welcome to the Voodoo Manufacturing API docs!\n\nYour Voodoo Manufacturing API key must be included with each request to the API. The API will look for the key in the \"api_key\" header of the request. <a href=\"https://voodoomfg.com/3d-print-api#get-access\" target=\"_blank\">You can request a key here.</a>\n\nThis API provides a programmatic interface for submitting printing orders to Voodoo Manufacturing. The general process for creating an order is as follows:\n  - Get a list of the available materials with the /materials endpoint\n  - Upload models to the API with the /models endpoint\n  - Get quotes for shipping methods with the /order/shipping endpoint\n  - Get a quote for an order with the /order/create endpoint\n  - Confirm the order with the /order/confirm endpoint\n\nUploaded models and orders can be retrieved either in bulk or by id at the /model and /order endpoints, respectively.\n\nIn some cases, you may wish to get a quote for a specific model without the context of an order. In this case, you may use the /model/quote (if you've already uploaded the model to the API) or the /model/quote_attrs (lets you quote based on calculated model attributes) endpoints.\n","contact":{"email":"support@voodoomfg.com"},"version":"2.0.0"},"servers":[{"url":"/api/2"}],"security":[null],"paths":{"/materials":{"get":{"tags":["materials"],"summary":"Voodoo Manufacturing offers printing in a number of different materials, with different color options for each. Your organization can expose as many or as few material options as you want to your end-customer.\n","description":"The Materials endpoint returns a list of materials that are currently available for production for your account.\nThe responses include display details about each material, along with the unique id required to request a print in a specific material.\n","responses":{"200":{"description":"Array of materials","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Material"}},"example":[{"color":"True Red","color_sample":"#CF1B1D","id":1,"type":"PLA"},{"color":"True Brown","color_sample":"#995D15","id":2,"type":"PLA"}]}}}}}},"/model":{"get":{"tags":["model"],"summary":"Retrieve the models you've created.\n","description":"Lists all of the models you've created.\n","responses":{"200":{"description":"Array of models","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Model"}},"example":[{"id":1,"surface_area":6,"volume":1,"x":1,"y":1,"z":1},{"id":2,"surface_area":24,"volume":8,"x":2,"y":2,"z":2}]}}}}},"post":{"tags":["model"],"summary":"Models represent 3D design files that you'd like to produce. Creating models is generally the first step in creating an order.\n","description":"Downloads the model data from the URL specified by file_url and saves it as a model. As a part of the model upload process, the file is run through a program that repairs the mesh (closing holes, flipping inverted normals, etc). In some cases, this may alter the geometry of your model. If you're noticing bad results for your created models, you might consider repairing your files before submitting them.\n","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/CreateModelBody"}}},"required":true},"responses":{"200":{"description":"Model object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"},"example":{"id":1,"surface_area":6,"volume":1,"x":1,"y":1,"z":1}}}}}}},"/model/quote":{"get":{"tags":["model"],"summary":"Get a quote a given model id.\n","description":"Calculates a quote for the given model in the given material and quantity. This endpoint required that you've already uploaded the model to our servers -- to get a quote for a model you haven't yet uploaded, you can try /model/quote_attrs.\n","parameters":[{"name":"model_id","in":"query","description":"The unique id of the model you'd like to quote.","required":true,"schema":{"type":"integer"}},{"name":"material_id","in":"query","description":"The unique id of the desired material.","required":true,"schema":{"type":"number"}},{"name":"quantity","in":"query","description":"The number of units in this quote.","required":true,"schema":{"type":"number"}},{"name":"units","in":"query","description":"The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\".","required":true,"schema":{"type":"string"}},{"name":"options[orientation]","in":"query","description":"Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"Quote for model with attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelQuote"}}}}}}},"/model/quote_attrs":{"get":{"tags":["model"],"summary":"Get a quote for a model with the given attributes.\n","description":"This endpoint will provide a quote for a model matching the submitted parameters. Note that this quote may be different than the quote provided by /model/quote in the case that your attribute calculations differ from the ones used by Voodoo Manufacturing.\n","parameters":[{"name":"x","in":"query","description":"The calculated unitless x dimension of this model's bounding box.","required":true,"schema":{"type":"number"}},{"name":"y","in":"query","description":"The calculated unitless y dimension of this model's bounding box.","required":true,"schema":{"type":"number"}},{"name":"z","in":"query","description":"The calculated unitless z dimension of this model's bounding box.","required":true,"schema":{"type":"number"}},{"name":"volume","in":"query","description":"The calculated unitless volume of the model.","required":true,"schema":{"type":"number"}},{"name":"surface_area","in":"query","description":"The calculated unitless surface area of the model.","required":true,"schema":{"type":"number"}},{"name":"material_id","in":"query","description":"The unique id of the desired material.","required":true,"schema":{"type":"number"}},{"name":"quantity","in":"query","description":"The number of units in this quote.","required":true,"schema":{"type":"number"}},{"name":"units","in":"query","description":"The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\".","required":true,"schema":{"type":"string"}},{"name":"options[orientation]","in":"query","description":"Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"Quote for model with attributes","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ModelQuote"}}}}}}},"/model/{model_id}":{"get":{"tags":["model"],"summary":"Retrieve a previously created model by its id.\n","description":"In cases where you're ordering models you've created previously, you can fetch a specific model by its id.\n","parameters":[{"name":"model_id","in":"path","required":true,"schema":{"type":"integer"}}],"responses":{"200":{"description":"Model object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Model"},"example":{"id":1,"surface_area":6,"volume":1,"x":1,"y":1,"z":1}}}}}}},"/order":{"get":{"tags":["order"],"summary":"Lists all orders.\n","description":"Gets all of orders that you've confirmed.\n","responses":{"200":{"description":"Array of orders","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Order"}}}}}}}},"/order/confirm":{"post":{"tags":["order"],"summary":"Confirms an order from a quote_id and submits it to the Voodoo factory.\n","description":"After generating a quote for an order, you can choose to confirm the order for manufacturing by hitting this endpoint with the quote_id returned by the /order/quote endpoint. Returns the order with a unique order_id in place of the quote_id.\n","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/ConfirmOrderBody"}}},"required":true},"responses":{"200":{"description":"Order info with order_id","content":{"application/json":{"schema":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/ShippingAddress"},"delivery_date":{"type":"string","description":"The target delivery date for the shipping method. Formatted as a datetime string."},"notes":{"type":"string"},"order_id":{"type":"string","description":"Unique identifier for referencing this order."},"order_items":{"type":"array","items":{"$ref":"#/components/schemas/Print"}},"purchased":{"type":"boolean","description":"true if the purchase was completed successfully."},"quote":{"$ref":"#/components/schemas/Quote"},"shipping_service":{"$ref":"#/components/schemas/ShippingService"}}},"example":{"address":{"city":"Brooklyn","country":"USA","email":"oortlieb@gmail.com","name":"Oliver Ortlieb","state":"NY","street1":"361 Stagg St","street2":"Suite 408","zip":"11206"},"delivery_date":"2016-11-15T16:30:00Z","due_date":"2016-11-14T17:00:00.382Z","notes":"First run of prototypes","order_id":"1061a5eb-d2a8-4a0d-bea9-b027111ac325","order_items":[{"material_id":3,"model_id":1,"options":{"orientation":true},"quantity":3,"units":"mm"}],"purchased":true,"quote":{"after_credits":{"chargeAmt":48.14,"shipping":16.08,"success":true,"tax":0,"userCredit":0},"errors":[],"grand_total":48.14,"items":32.06,"options":{"orientation":15},"shipping":16.08,"tax":0,"total":48.14},"shipping_service":"PRIORITY_OVERNIGHT"}}}}}}},"/order/create":{"post":{"tags":["order"],"summary":"Quotes an order and returns a quote_id that is used to confirm the order.\n","description":"Creates an order for the requested items, shipping address, and shipping method. This method returns the order along with a quote_id, which needs to be confirmed with /order/confirm prior to the order actually being started. quote_ids are only valid for 15 minutes.\n","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/CreateOrderBody"}}},"required":true},"responses":{"200":{"description":"Quote and order information.","content":{"application/json":{"schema":{"type":"object","properties":{"address":{"$ref":"#/components/schemas/ShippingAddress"},"delivery_date":{"type":"string","description":"The target delivery date for the shipping method. Formatted as a datetime string."},"notes":{"type":"string"},"order_items":{"type":"array","items":{"$ref":"#/components/schemas/Print"}},"quote":{"$ref":"#/components/schemas/Quote"},"quote_id":{"type":"string","description":"Unique identifier for confirming this order. Use this value with /order/confirm place the order."},"shipping_service":{"$ref":"#/components/schemas/ShippingService"}}},"example":{"address":{"city":"Brooklyn","country":"USA","email":"oortlieb@gmail.com","name":"Oliver Ortlieb","state":"NY","street1":"361 Stagg St","street2":"Suite 408","zip":"11206"},"delivery_date":"2016-11-15T16:30:00Z","due_date":"2016-11-14T17:00:00.382Z","notes":"First run of prototypes","order_items":[{"material_id":3,"model_id":1,"options":{"orientation":true},"quantity":3,"units":"mm"}],"quote":{"after_credits":{"chargeAmt":48.14,"shipping":16.08,"success":true,"tax":0,"userCredit":0},"errors":[],"grand_total":48.14,"items":32.06,"options":{"orientation":15},"shipping":16.08,"tax":0,"total":48.14},"quote_id":"e0c90c1d8e1c89084899fbb94dc2fd30d2f8e42d4a6d408d8e0834d7922e30b9","shipping_service":"PRIORITY_OVERNIGHT"}}}}}}},"/order/shipping":{"post":{"tags":["order"],"summary":"List shipping options and prices for a given shipment.\n","description":"Get quotes for shipping your order to the given shipping address. Because shipping quotes depend on the items being shipped, you should use the same array of print descriptions here that you do to create the order.\n\nThis endpoint should allow you to select the appropriate shipping method using the \"service\" field of the desired shipping method.\n","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/ShippingOptionsBody"}}},"required":true},"responses":{"200":{"description":"Object containing an array of shipping rates","content":{"application/json":{"schema":{"type":"object","properties":{"rates":{"type":"array","items":{"$ref":"#/components/schemas/Rate"}}}},"example":{"rates":[{"additional_item_charge":0,"delivery_date":"2016-11-15T10:30:00Z","display_name":"FedEx - Priority Overnight","guaranteed":true,"price":25.69,"service":"PRIORITY_OVERNIGHT","ship_date":"2016-11-14T17:00:00.874Z","value":"rate_0646e5f9f3814c4086864914fbe08535"}]}}}}}}},"/order/{order_id}":{"get":{"tags":["order"],"summary":"Retrieve a previously created model by its id.\n","description":"In cases where you're ordering models you've created previously, you can fetch a specific model by its id.\n","parameters":[{"name":"order_id","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Model object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}}}}}}},"components":{"schemas":{"ConfirmOrderBody":{"type":"object","properties":{"quote_id":{"type":"string","description":"quote_id generated by the /order/create endpoint."}}},"CreateModelBody":{"type":"object","properties":{"file_url":{"type":"string","description":"URL to download the model data from. The URL must end in .STL or .OBJ -- the extension of the final segment of the URL is used to determine how ot parse the file."}}},"CreateOrderBody":{"type":"object","properties":{"models":{"type":"array","items":{"$ref":"#/components/schemas/Print"}},"notes":{"type":"string","description":"Any notes about this order. This field is always returned when reading the order back."},"shipping_address":{"$ref":"#/components/schemas/ShippingAddress"},"shipping_service":{"$ref":"#/components/schemas/ShippingService"}}},"Material":{"type":"object","properties":{"color":{"type":"string","description":"Name for the color of this material. This field is for display only and is not required for creating an order (use the material's id)."},"color_sample":{"type":"string","description":"A hex value providing an approximate visual sample of this color."},"id":{"type":"integer","description":"The unique identifier for this material. Use this value when submitting order items to specify that an ordered model should be printed with a specific material."},"type":{"type":"string","description":"Type of material, excluding color. Will be one of \"PLA\", \"Semi-flex TPU\", or \"Full-flex TPU\". This field is for display only and is not required for creating an order (use the material's id)."}}},"Model":{"type":"object","properties":{"id":{"type":"integer","description":"The unique identifier for this model. Use this value when submitting an order to specify the model you want to print."},"rendering_url":{"type":"string","description":"(reserved) URL with a rendering of the model. Value is null until the rendering is completed."},"surface_area":{"type":"number","description":"The unitless surface area of the submitted model. This is calculated when the model is created."},"volume":{"type":"number","description":"The unitless volume of the submitted model. This is calculated when the model is created."},"x":{"type":"number","description":"The unitless x-axis length of the model's bounding box. This is calculated when the model is created."},"y":{"type":"number","description":"The unitless y-axis length of the model's bounding box. This is calculated when the model is created."},"z":{"type":"number","description":"The unitless z-axis length of the model's bounding box. This is calculated when the model is created."}}},"ModelQuote":{"type":"object","properties":{"material_id":{"type":"integer","description":"Requested material id."},"model_id":{"type":"integer","description":"Requested model id. Not present on the response from /model/quote_attrs."},"options":{"$ref":"#/components/schemas/ProductionOptionsCosts"},"quote":{"type":"number","description":"The cost for printing the model in the requested quantity, before any additional services."},"unit_cost":{"type":"number","description":"The cost of a single print of the specified model."},"units":{"type":"string","description":"Units for the requested print. One of \"mm\", \"cm\", or \"in\"."}},"description":"Quote for a model in the given material_id, units, and quantity."},"Order":{"type":"object","properties":{"customer_contact_email":{"type":"string","description":"Customer's email address."},"customer_name":{"type":"string","description":"Customer's name."},"id":{"type":"integer","description":"Unique identifier for this order. Reference should be displayed and used for lookups instead of this field."},"notes":{"type":"string","description":"The notes field that was submitted with this order."},"prints":{"type":"array","items":{"$ref":"#/components/schemas/OrderPrint"}},"reference":{"type":"string","description":"Unique identifier for this order. Used to retrieve info for a specific order from /order/{order_id}."},"ship_by":{"type":"string","description":"Planned ship date for this order."},"shipping_address":{"$ref":"#/components/schemas/ShippingAddress"}},"description":"An order contains all of the relevant information about a confirmed order."},"OrderPrint":{"type":"object","properties":{"material":{"$ref":"#/components/schemas/Material"},"model":{"$ref":"#/components/schemas/Model"},"quantity":{"type":"integer","description":"The number of prints requested for this model and material pair."},"units":{"type":"string","description":"Units for the requested print. One of \"mm\", \"cm\", or \"in\"."}}},"Print":{"type":"object","properties":{"material_id":{"type":"integer","description":"The unique identifier of the material you'd like to print in. This value comes from the id field of the material object."},"model_id":{"type":"integer","description":"The unique identifier of the model you'd like to print. This value comes from the id field of the model object."},"options":{"$ref":"#/components/schemas/ProductionOptions"},"quantity":{"type":"integer","description":"The number of prints to order for this material/model pair."},"units":{"type":"string","description":"The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\"."}}},"ProductionOptions":{"type":"object","properties":{"orientation":{"type":"boolean","description":"Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation."}},"description":"Optional extra parameters for the production of this model. There may be additional charges for each enabled optional service."},"ProductionOptionsCosts":{"type":"object","properties":{"orientation":{"type":"number"}},"description":"Cost of any requested additional model services."},"Quote":{"type":"object","properties":{"errors":{"type":"array","description":"List of any issues quoting your order.","items":{"type":"string"}},"grand_total":{"type":"number","description":"Sum of items, shipping costs, and any calculated tax."},"items":{"type":"number","description":"Cost to make the specified models in the specified materials and quantities."},"options":{"$ref":"#/components/schemas/ProductionOptionsCosts"},"shipping":{"type":"number","description":"Cost of the selected shipping method."},"tax":{"type":"number","description":"The tax calculated for the given order. Tax is not applied to all orders."},"total":{"type":"number","description":"Sum of items and shipping costs. This is the taxable subtotal."}}},"Rate":{"type":"object","properties":{"delivery_date":{"type":"string","description":"The target delivery date for the shipping method. Formatted as a datetime string."},"display_name":{"type":"string","description":"The display name for this shipping service."},"guaranteed":{"type":"boolean","description":"Certain shipping methods have guaranteed delivery dates. This field indicates whether delivery_date is guaranteed or if it is just an estimate."},"price":{"type":"number","description":"The price of this shipping option for the given set of items."},"service":{"type":"string","description":"The identifier string for this shipping service. Use this value when creating an order with this as your requested shipping method."},"ship_date":{"type":"string","description":"The target ship date for the shipping method. Formatted as a datetime string."},"value":{"type":"string","description":"Reserved field. Do not use."}}},"ShippingAddress":{"type":"object","properties":{"city":{"type":"string"},"country":{"type":"string"},"email":{"type":"string","description":"Contact email address for the recipient."},"name":{"type":"string","description":"Name of the recipient."},"state":{"type":"string"},"street1":{"type":"string","description":"First line of the street address."},"street2":{"type":"string","description":"Second line of the street address (Apartment or Suite number, etc). Optional."},"zip":{"type":"string"}}},"ShippingOptionsBody":{"type":"object","properties":{"models":{"type":"array","items":{"$ref":"#/components/schemas/Print"}},"shipping_address":{"$ref":"#/components/schemas/ShippingAddress"}}},"ShippingService":{"type":"string","description":"Service identifier string pulled from a specific rate returned by /order/shipping."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Voodoo Manufacturing 3D Print API",
+    "description" : "Welcome to the Voodoo Manufacturing API docs!\n\nYour Voodoo Manufacturing API key must be included with each request to the API. The API will look for the key in the \"api_key\" header of the request. <a href=\"https://voodoomfg.com/3d-print-api#get-access\" target=\"_blank\">You can request a key here.</a>\n\nThis API provides a programmatic interface for submitting printing orders to Voodoo Manufacturing. The general process for creating an order is as follows:\n  - Get a list of the available materials with the /materials endpoint\n  - Upload models to the API with the /models endpoint\n  - Get quotes for shipping methods with the /order/shipping endpoint\n  - Get a quote for an order with the /order/create endpoint\n  - Confirm the order with the /order/confirm endpoint\n\nUploaded models and orders can be retrieved either in bulk or by id at the /model and /order endpoints, respectively.\n\nIn some cases, you may wish to get a quote for a specific model without the context of an order. In this case, you may use the /model/quote (if you've already uploaded the model to the API) or the /model/quote_attrs (lets you quote based on calculated model attributes) endpoints.\n",
+    "contact" : {
+      "email" : "support@voodoomfg.com"
+    },
+    "version" : "2.0.0"
+  },
+  "servers" : [ {
+    "url" : "/api/2"
+  } ],
+  "security" : [ null ],
+  "paths" : {
+    "/materials" : {
+      "get" : {
+        "tags" : [ "materials" ],
+        "summary" : "Voodoo Manufacturing offers printing in a number of different materials, with different color options for each. Your organization can expose as many or as few material options as you want to your end-customer.\n",
+        "description" : "The Materials endpoint returns a list of materials that are currently available for production for your account.\nThe responses include display details about each material, along with the unique id required to request a print in a specific material.\n",
+        "responses" : {
+          "200" : {
+            "description" : "Array of materials",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Material"
+                  }
+                },
+                "example" : [ {
+                  "color" : "True Red",
+                  "color_sample" : "#CF1B1D",
+                  "id" : 1,
+                  "type" : "PLA"
+                }, {
+                  "color" : "True Brown",
+                  "color_sample" : "#995D15",
+                  "id" : 2,
+                  "type" : "PLA"
+                } ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/model" : {
+      "get" : {
+        "tags" : [ "model" ],
+        "summary" : "Retrieve the models you've created.\n",
+        "description" : "Lists all of the models you've created.\n",
+        "responses" : {
+          "200" : {
+            "description" : "Array of models",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Model"
+                  }
+                },
+                "example" : [ {
+                  "id" : 1,
+                  "surface_area" : 6,
+                  "volume" : 1,
+                  "x" : 1,
+                  "y" : 1,
+                  "z" : 1
+                }, {
+                  "id" : 2,
+                  "surface_area" : 24,
+                  "volume" : 8,
+                  "x" : 2,
+                  "y" : 2,
+                  "z" : 2
+                } ]
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "model" ],
+        "summary" : "Models represent 3D design files that you'd like to produce. Creating models is generally the first step in creating an order.\n",
+        "description" : "Downloads the model data from the URL specified by file_url and saves it as a model. As a part of the model upload process, the file is run through a program that repairs the mesh (closing holes, flipping inverted normals, etc). In some cases, this may alter the geometry of your model. If you're noticing bad results for your created models, you might consider repairing your files before submitting them.\n",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateModelBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Model object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Model"
+                },
+                "example" : {
+                  "id" : 1,
+                  "surface_area" : 6,
+                  "volume" : 1,
+                  "x" : 1,
+                  "y" : 1,
+                  "z" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/model/quote" : {
+      "get" : {
+        "tags" : [ "model" ],
+        "summary" : "Get a quote a given model id.\n",
+        "description" : "Calculates a quote for the given model in the given material and quantity. This endpoint required that you've already uploaded the model to our servers -- to get a quote for a model you haven't yet uploaded, you can try /model/quote_attrs.\n",
+        "parameters" : [ {
+          "name" : "model_id",
+          "in" : "query",
+          "description" : "The unique id of the model you'd like to quote.",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "material_id",
+          "in" : "query",
+          "description" : "The unique id of the desired material.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "quantity",
+          "in" : "query",
+          "description" : "The number of units in this quote.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "units",
+          "in" : "query",
+          "description" : "The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\".",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "options[orientation]",
+          "in" : "query",
+          "description" : "Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Quote for model with attributes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelQuote"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/model/quote_attrs" : {
+      "get" : {
+        "tags" : [ "model" ],
+        "summary" : "Get a quote for a model with the given attributes.\n",
+        "description" : "This endpoint will provide a quote for a model matching the submitted parameters. Note that this quote may be different than the quote provided by /model/quote in the case that your attribute calculations differ from the ones used by Voodoo Manufacturing.\n",
+        "parameters" : [ {
+          "name" : "x",
+          "in" : "query",
+          "description" : "The calculated unitless x dimension of this model's bounding box.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "y",
+          "in" : "query",
+          "description" : "The calculated unitless y dimension of this model's bounding box.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "z",
+          "in" : "query",
+          "description" : "The calculated unitless z dimension of this model's bounding box.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "volume",
+          "in" : "query",
+          "description" : "The calculated unitless volume of the model.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "surface_area",
+          "in" : "query",
+          "description" : "The calculated unitless surface area of the model.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "material_id",
+          "in" : "query",
+          "description" : "The unique id of the desired material.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "quantity",
+          "in" : "query",
+          "description" : "The number of units in this quote.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "units",
+          "in" : "query",
+          "description" : "The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\".",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "options[orientation]",
+          "in" : "query",
+          "description" : "Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Quote for model with attributes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ModelQuote"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/model/{model_id}" : {
+      "get" : {
+        "tags" : [ "model" ],
+        "summary" : "Retrieve a previously created model by its id.\n",
+        "description" : "In cases where you're ordering models you've created previously, you can fetch a specific model by its id.\n",
+        "parameters" : [ {
+          "name" : "model_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Model object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Model"
+                },
+                "example" : {
+                  "id" : 1,
+                  "surface_area" : 6,
+                  "volume" : 1,
+                  "x" : 1,
+                  "y" : 1,
+                  "z" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Lists all orders.\n",
+        "description" : "Gets all of orders that you've confirmed.\n",
+        "responses" : {
+          "200" : {
+            "description" : "Array of orders",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/confirm" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Confirms an order from a quote_id and submits it to the Voodoo factory.\n",
+        "description" : "After generating a quote for an order, you can choose to confirm the order for manufacturing by hitting this endpoint with the quote_id returned by the /order/quote endpoint. Returns the order with a unique order_id in place of the quote_id.\n",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ConfirmOrderBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Order info with order_id",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "address" : {
+                      "$ref" : "#/components/schemas/ShippingAddress"
+                    },
+                    "delivery_date" : {
+                      "type" : "string",
+                      "description" : "The target delivery date for the shipping method. Formatted as a datetime string."
+                    },
+                    "notes" : {
+                      "type" : "string"
+                    },
+                    "order_id" : {
+                      "type" : "string",
+                      "description" : "Unique identifier for referencing this order."
+                    },
+                    "order_items" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Print"
+                      }
+                    },
+                    "purchased" : {
+                      "type" : "boolean",
+                      "description" : "true if the purchase was completed successfully."
+                    },
+                    "quote" : {
+                      "$ref" : "#/components/schemas/Quote"
+                    },
+                    "shipping_service" : {
+                      "$ref" : "#/components/schemas/ShippingService"
+                    }
+                  }
+                },
+                "example" : {
+                  "address" : {
+                    "city" : "Brooklyn",
+                    "country" : "USA",
+                    "email" : "oortlieb@gmail.com",
+                    "name" : "Oliver Ortlieb",
+                    "state" : "NY",
+                    "street1" : "361 Stagg St",
+                    "street2" : "Suite 408",
+                    "zip" : "11206"
+                  },
+                  "delivery_date" : "2016-11-15T16:30:00Z",
+                  "due_date" : "2016-11-14T17:00:00.382Z",
+                  "notes" : "First run of prototypes",
+                  "order_id" : "1061a5eb-d2a8-4a0d-bea9-b027111ac325",
+                  "order_items" : [ {
+                    "material_id" : 3,
+                    "model_id" : 1,
+                    "options" : {
+                      "orientation" : true
+                    },
+                    "quantity" : 3,
+                    "units" : "mm"
+                  } ],
+                  "purchased" : true,
+                  "quote" : {
+                    "after_credits" : {
+                      "chargeAmt" : 48.14,
+                      "shipping" : 16.08,
+                      "success" : true,
+                      "tax" : 0,
+                      "userCredit" : 0
+                    },
+                    "errors" : [ ],
+                    "grand_total" : 48.14,
+                    "items" : 32.06,
+                    "options" : {
+                      "orientation" : 15
+                    },
+                    "shipping" : 16.08,
+                    "tax" : 0,
+                    "total" : 48.14
+                  },
+                  "shipping_service" : "PRIORITY_OVERNIGHT"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/create" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Quotes an order and returns a quote_id that is used to confirm the order.\n",
+        "description" : "Creates an order for the requested items, shipping address, and shipping method. This method returns the order along with a quote_id, which needs to be confirmed with /order/confirm prior to the order actually being started. quote_ids are only valid for 15 minutes.\n",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateOrderBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Quote and order information.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "address" : {
+                      "$ref" : "#/components/schemas/ShippingAddress"
+                    },
+                    "delivery_date" : {
+                      "type" : "string",
+                      "description" : "The target delivery date for the shipping method. Formatted as a datetime string."
+                    },
+                    "notes" : {
+                      "type" : "string"
+                    },
+                    "order_items" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Print"
+                      }
+                    },
+                    "quote" : {
+                      "$ref" : "#/components/schemas/Quote"
+                    },
+                    "quote_id" : {
+                      "type" : "string",
+                      "description" : "Unique identifier for confirming this order. Use this value with /order/confirm place the order."
+                    },
+                    "shipping_service" : {
+                      "$ref" : "#/components/schemas/ShippingService"
+                    }
+                  }
+                },
+                "example" : {
+                  "address" : {
+                    "city" : "Brooklyn",
+                    "country" : "USA",
+                    "email" : "oortlieb@gmail.com",
+                    "name" : "Oliver Ortlieb",
+                    "state" : "NY",
+                    "street1" : "361 Stagg St",
+                    "street2" : "Suite 408",
+                    "zip" : "11206"
+                  },
+                  "delivery_date" : "2016-11-15T16:30:00Z",
+                  "due_date" : "2016-11-14T17:00:00.382Z",
+                  "notes" : "First run of prototypes",
+                  "order_items" : [ {
+                    "material_id" : 3,
+                    "model_id" : 1,
+                    "options" : {
+                      "orientation" : true
+                    },
+                    "quantity" : 3,
+                    "units" : "mm"
+                  } ],
+                  "quote" : {
+                    "after_credits" : {
+                      "chargeAmt" : 48.14,
+                      "shipping" : 16.08,
+                      "success" : true,
+                      "tax" : 0,
+                      "userCredit" : 0
+                    },
+                    "errors" : [ ],
+                    "grand_total" : 48.14,
+                    "items" : 32.06,
+                    "options" : {
+                      "orientation" : 15
+                    },
+                    "shipping" : 16.08,
+                    "tax" : 0,
+                    "total" : 48.14
+                  },
+                  "quote_id" : "e0c90c1d8e1c89084899fbb94dc2fd30d2f8e42d4a6d408d8e0834d7922e30b9",
+                  "shipping_service" : "PRIORITY_OVERNIGHT"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/shipping" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "List shipping options and prices for a given shipment.\n",
+        "description" : "Get quotes for shipping your order to the given shipping address. Because shipping quotes depend on the items being shipped, you should use the same array of print descriptions here that you do to create the order.\n\nThis endpoint should allow you to select the appropriate shipping method using the \"service\" field of the desired shipping method.\n",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ShippingOptionsBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Object containing an array of shipping rates",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "rates" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Rate"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "rates" : [ {
+                    "additional_item_charge" : 0,
+                    "delivery_date" : "2016-11-15T10:30:00Z",
+                    "display_name" : "FedEx - Priority Overnight",
+                    "guaranteed" : true,
+                    "price" : 25.69,
+                    "service" : "PRIORITY_OVERNIGHT",
+                    "ship_date" : "2016-11-14T17:00:00.874Z",
+                    "value" : "rate_0646e5f9f3814c4086864914fbe08535"
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/{order_id}" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Retrieve a previously created model by its id.\n",
+        "description" : "In cases where you're ordering models you've created previously, you can fetch a specific model by its id.\n",
+        "parameters" : [ {
+          "name" : "order_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Model object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ConfirmOrderBody" : {
+        "type" : "object",
+        "properties" : {
+          "quote_id" : {
+            "type" : "string",
+            "description" : "quote_id generated by the /order/create endpoint."
+          }
+        }
+      },
+      "CreateModelBody" : {
+        "type" : "object",
+        "properties" : {
+          "file_url" : {
+            "type" : "string",
+            "description" : "URL to download the model data from. The URL must end in .STL or .OBJ -- the extension of the final segment of the URL is used to determine how ot parse the file."
+          }
+        }
+      },
+      "CreateOrderBody" : {
+        "type" : "object",
+        "properties" : {
+          "models" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Print"
+            }
+          },
+          "notes" : {
+            "type" : "string",
+            "description" : "Any notes about this order. This field is always returned when reading the order back."
+          },
+          "shipping_address" : {
+            "$ref" : "#/components/schemas/ShippingAddress"
+          },
+          "shipping_service" : {
+            "$ref" : "#/components/schemas/ShippingService"
+          }
+        }
+      },
+      "Material" : {
+        "type" : "object",
+        "properties" : {
+          "color" : {
+            "type" : "string",
+            "description" : "Name for the color of this material. This field is for display only and is not required for creating an order (use the material's id)."
+          },
+          "color_sample" : {
+            "type" : "string",
+            "description" : "A hex value providing an approximate visual sample of this color."
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "The unique identifier for this material. Use this value when submitting order items to specify that an ordered model should be printed with a specific material."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of material, excluding color. Will be one of \"PLA\", \"Semi-flex TPU\", or \"Full-flex TPU\". This field is for display only and is not required for creating an order (use the material's id)."
+          }
+        }
+      },
+      "Model" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "The unique identifier for this model. Use this value when submitting an order to specify the model you want to print."
+          },
+          "rendering_url" : {
+            "type" : "string",
+            "description" : "(reserved) URL with a rendering of the model. Value is null until the rendering is completed."
+          },
+          "surface_area" : {
+            "type" : "number",
+            "description" : "The unitless surface area of the submitted model. This is calculated when the model is created."
+          },
+          "volume" : {
+            "type" : "number",
+            "description" : "The unitless volume of the submitted model. This is calculated when the model is created."
+          },
+          "x" : {
+            "type" : "number",
+            "description" : "The unitless x-axis length of the model's bounding box. This is calculated when the model is created."
+          },
+          "y" : {
+            "type" : "number",
+            "description" : "The unitless y-axis length of the model's bounding box. This is calculated when the model is created."
+          },
+          "z" : {
+            "type" : "number",
+            "description" : "The unitless z-axis length of the model's bounding box. This is calculated when the model is created."
+          }
+        }
+      },
+      "ModelQuote" : {
+        "type" : "object",
+        "properties" : {
+          "material_id" : {
+            "type" : "integer",
+            "description" : "Requested material id."
+          },
+          "model_id" : {
+            "type" : "integer",
+            "description" : "Requested model id. Not present on the response from /model/quote_attrs."
+          },
+          "options" : {
+            "$ref" : "#/components/schemas/ProductionOptionsCosts"
+          },
+          "quote" : {
+            "type" : "number",
+            "description" : "The cost for printing the model in the requested quantity, before any additional services."
+          },
+          "unit_cost" : {
+            "type" : "number",
+            "description" : "The cost of a single print of the specified model."
+          },
+          "units" : {
+            "type" : "string",
+            "description" : "Units for the requested print. One of \"mm\", \"cm\", or \"in\"."
+          }
+        },
+        "description" : "Quote for a model in the given material_id, units, and quantity."
+      },
+      "Order" : {
+        "type" : "object",
+        "properties" : {
+          "customer_contact_email" : {
+            "type" : "string",
+            "description" : "Customer's email address."
+          },
+          "customer_name" : {
+            "type" : "string",
+            "description" : "Customer's name."
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "Unique identifier for this order. Reference should be displayed and used for lookups instead of this field."
+          },
+          "notes" : {
+            "type" : "string",
+            "description" : "The notes field that was submitted with this order."
+          },
+          "prints" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OrderPrint"
+            }
+          },
+          "reference" : {
+            "type" : "string",
+            "description" : "Unique identifier for this order. Used to retrieve info for a specific order from /order/{order_id}."
+          },
+          "ship_by" : {
+            "type" : "string",
+            "description" : "Planned ship date for this order."
+          },
+          "shipping_address" : {
+            "$ref" : "#/components/schemas/ShippingAddress"
+          }
+        },
+        "description" : "An order contains all of the relevant information about a confirmed order."
+      },
+      "OrderPrint" : {
+        "type" : "object",
+        "properties" : {
+          "material" : {
+            "$ref" : "#/components/schemas/Material"
+          },
+          "model" : {
+            "$ref" : "#/components/schemas/Model"
+          },
+          "quantity" : {
+            "type" : "integer",
+            "description" : "The number of prints requested for this model and material pair."
+          },
+          "units" : {
+            "type" : "string",
+            "description" : "Units for the requested print. One of \"mm\", \"cm\", or \"in\"."
+          }
+        }
+      },
+      "Print" : {
+        "type" : "object",
+        "properties" : {
+          "material_id" : {
+            "type" : "integer",
+            "description" : "The unique identifier of the material you'd like to print in. This value comes from the id field of the material object."
+          },
+          "model_id" : {
+            "type" : "integer",
+            "description" : "The unique identifier of the model you'd like to print. This value comes from the id field of the model object."
+          },
+          "options" : {
+            "$ref" : "#/components/schemas/ProductionOptions"
+          },
+          "quantity" : {
+            "type" : "integer",
+            "description" : "The number of prints to order for this material/model pair."
+          },
+          "units" : {
+            "type" : "string",
+            "description" : "The units of the model file. Either \"mm\", \"cm\", or \"in\". The correct value to pass here depends on which design program you're using. Defaults to \"mm\"."
+          }
+        }
+      },
+      "ProductionOptions" : {
+        "type" : "object",
+        "properties" : {
+          "orientation" : {
+            "type" : "boolean",
+            "description" : "Indicates whether or not this model needs to be oriented prior to printing. If your model is already oriented for 3D printing, you can omit this flag (or set it to false) and it will not be re-oriented prior to printing. If true, it will be re-oriented prior to printing. If you're not sure if your model is oriented, you should set this flag to true. There is an additional charge for orientation."
+          }
+        },
+        "description" : "Optional extra parameters for the production of this model. There may be additional charges for each enabled optional service."
+      },
+      "ProductionOptionsCosts" : {
+        "type" : "object",
+        "properties" : {
+          "orientation" : {
+            "type" : "number"
+          }
+        },
+        "description" : "Cost of any requested additional model services."
+      },
+      "Quote" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "description" : "List of any issues quoting your order.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "grand_total" : {
+            "type" : "number",
+            "description" : "Sum of items, shipping costs, and any calculated tax."
+          },
+          "items" : {
+            "type" : "number",
+            "description" : "Cost to make the specified models in the specified materials and quantities."
+          },
+          "options" : {
+            "$ref" : "#/components/schemas/ProductionOptionsCosts"
+          },
+          "shipping" : {
+            "type" : "number",
+            "description" : "Cost of the selected shipping method."
+          },
+          "tax" : {
+            "type" : "number",
+            "description" : "The tax calculated for the given order. Tax is not applied to all orders."
+          },
+          "total" : {
+            "type" : "number",
+            "description" : "Sum of items and shipping costs. This is the taxable subtotal."
+          }
+        }
+      },
+      "Rate" : {
+        "type" : "object",
+        "properties" : {
+          "delivery_date" : {
+            "type" : "string",
+            "description" : "The target delivery date for the shipping method. Formatted as a datetime string."
+          },
+          "display_name" : {
+            "type" : "string",
+            "description" : "The display name for this shipping service."
+          },
+          "guaranteed" : {
+            "type" : "boolean",
+            "description" : "Certain shipping methods have guaranteed delivery dates. This field indicates whether delivery_date is guaranteed or if it is just an estimate."
+          },
+          "price" : {
+            "type" : "number",
+            "description" : "The price of this shipping option for the given set of items."
+          },
+          "service" : {
+            "type" : "string",
+            "description" : "The identifier string for this shipping service. Use this value when creating an order with this as your requested shipping method."
+          },
+          "ship_date" : {
+            "type" : "string",
+            "description" : "The target ship date for the shipping method. Formatted as a datetime string."
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "Reserved field. Do not use."
+          }
+        }
+      },
+      "ShippingAddress" : {
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "Contact email address for the recipient."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the recipient."
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "street1" : {
+            "type" : "string",
+            "description" : "First line of the street address."
+          },
+          "street2" : {
+            "type" : "string",
+            "description" : "Second line of the street address (Apartment or Suite number, etc). Optional."
+          },
+          "zip" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ShippingOptionsBody" : {
+        "type" : "object",
+        "properties" : {
+          "models" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Print"
+            }
+          },
+          "shipping_address" : {
+            "$ref" : "#/components/schemas/ShippingAddress"
+          }
+        }
+      },
+      "ShippingService" : {
+        "type" : "string",
+        "description" : "Service identifier string pulled from a specific rate returned by /order/shipping."
+      }
+    }
+  }
+}

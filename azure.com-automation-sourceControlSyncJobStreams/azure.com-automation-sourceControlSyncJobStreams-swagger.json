@@ -1,1 +1,341 @@
-{"openapi":"3.0.1","info":{"title":"AutomationManagement","version":"2017-05-15-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams":{"get":{"tags":["SourceControlSyncJobStreams"],"description":"Retrieve a list of sync job streams identified by sync job id.","externalDocs":{"url":"http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations"},"operationId":"SourceControlSyncJobStreams_ListBySyncJob","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of an Azure Resource group.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._]+$","type":"string"}},{"name":"automationAccountName","in":"path","description":"The name of the automation account.","required":true,"schema":{"type":"string"}},{"name":"sourceControlName","in":"path","description":"The source control name.","required":true,"schema":{"type":"string"}},{"name":"sourceControlSyncJobId","in":"path","description":"The source control sync job id.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"$filter","in":"query","description":"The filter to apply on the operation.","schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SourceControlSyncJobStreamsListBySyncJob"}}}},"default":{"description":"Automation error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Error response of an operation failure"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams/{streamId}":{"get":{"tags":["SourceControlSyncJobStreams"],"description":"Retrieve a sync job stream identified by stream id.","externalDocs":{"url":"http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations"},"operationId":"SourceControlSyncJobStreams_Get","parameters":[{"name":"resourceGroupName","in":"path","description":"Name of an Azure Resource group.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._]+$","type":"string"}},{"name":"automationAccountName","in":"path","description":"The name of the automation account.","required":true,"schema":{"type":"string"}},{"name":"sourceControlName","in":"path","description":"The source control name.","required":true,"schema":{"type":"string"}},{"name":"sourceControlSyncJobId","in":"path","description":"The source control sync job id.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"streamId","in":"path","description":"The id of the sync job stream.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SourceControlSyncJobStreamById"}}}},"default":{"description":"Automation error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Error response of an operation failure"}}}}}}}},"components":{"schemas":{"SourceControlSyncJobStream":{"type":"object","properties":{"id":{"type":"string","description":"Resource id.","readOnly":true},"properties":{"$ref":"#/components/schemas/SourceControlSyncJobStreamProperties"}},"description":"Definition of the source control sync job stream."},"SourceControlSyncJobStreamById":{"type":"object","properties":{"id":{"type":"string","description":"Resource id.","readOnly":true},"properties":{"$ref":"#/components/schemas/SourceControlSyncJobStreamByIdProperties"}},"description":"Definition of the source control sync job stream by id."},"SourceControlSyncJobStreamByIdProperties":{"type":"object","properties":{"sourceControlSyncJobStreamId":{"type":"string","description":"The sync job stream id."},"streamText":{"type":"string","description":"The text of the sync job stream."},"streamType":{"type":"string","description":"The type of the sync job stream.","enum":["Error","Output"]},"summary":{"type":"string","description":"The summary of the sync job stream."},"time":{"type":"string","description":"The time of the sync job stream.","format":"date-time","nullable":true,"readOnly":true},"value":{"type":"object","additionalProperties":{"type":"object"},"description":"The values of the job stream."}},"description":"Definition of source control sync job stream by id properties."},"SourceControlSyncJobStreamProperties":{"type":"object","properties":{"sourceControlSyncJobStreamId":{"type":"string","description":"The sync job stream id."},"streamType":{"type":"string","description":"The type of the sync job stream.","enum":["Error","Output"]},"summary":{"type":"string","description":"The summary of the sync job stream."},"time":{"type":"string","description":"The time of the sync job stream.","format":"date-time","nullable":true,"readOnly":true}},"description":"Definition of source control sync job stream properties."},"SourceControlSyncJobStreamsListBySyncJob":{"type":"object","properties":{"nextLink":{"type":"string","description":"The next link.","readOnly":true},"value":{"type":"array","description":"The list of source control sync job streams.","items":{"$ref":"#/components/schemas/SourceControlSyncJobStream"}}},"description":"The response model for the list source control sync job streams operation."}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "AutomationManagement",
+    "version" : "2017-05-15-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams" : {
+      "get" : {
+        "tags" : [ "SourceControlSyncJobStreams" ],
+        "description" : "Retrieve a list of sync job streams identified by sync job id.",
+        "externalDocs" : {
+          "url" : "http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations"
+        },
+        "operationId" : "SourceControlSyncJobStreams_ListBySyncJob",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of an Azure Resource group.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "automationAccountName",
+          "in" : "path",
+          "description" : "The name of the automation account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sourceControlName",
+          "in" : "path",
+          "description" : "The source control name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sourceControlSyncJobId",
+          "in" : "path",
+          "description" : "The source control sync job id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The filter to apply on the operation.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SourceControlSyncJobStreamsListBySyncJob"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Automation error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Error response of an operation failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams/{streamId}" : {
+      "get" : {
+        "tags" : [ "SourceControlSyncJobStreams" ],
+        "description" : "Retrieve a sync job stream identified by stream id.",
+        "externalDocs" : {
+          "url" : "http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations"
+        },
+        "operationId" : "SourceControlSyncJobStreams_Get",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "Name of an Azure Resource group.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "automationAccountName",
+          "in" : "path",
+          "description" : "The name of the automation account.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sourceControlName",
+          "in" : "path",
+          "description" : "The source control name.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sourceControlSyncJobId",
+          "in" : "path",
+          "description" : "The source control sync job id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "streamId",
+          "in" : "path",
+          "description" : "The id of the sync job stream.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SourceControlSyncJobStreamById"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Automation error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Error response of an operation failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "SourceControlSyncJobStream" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Resource id.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/SourceControlSyncJobStreamProperties"
+          }
+        },
+        "description" : "Definition of the source control sync job stream."
+      },
+      "SourceControlSyncJobStreamById" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Resource id.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/SourceControlSyncJobStreamByIdProperties"
+          }
+        },
+        "description" : "Definition of the source control sync job stream by id."
+      },
+      "SourceControlSyncJobStreamByIdProperties" : {
+        "type" : "object",
+        "properties" : {
+          "sourceControlSyncJobStreamId" : {
+            "type" : "string",
+            "description" : "The sync job stream id."
+          },
+          "streamText" : {
+            "type" : "string",
+            "description" : "The text of the sync job stream."
+          },
+          "streamType" : {
+            "type" : "string",
+            "description" : "The type of the sync job stream.",
+            "enum" : [ "Error", "Output" ]
+          },
+          "summary" : {
+            "type" : "string",
+            "description" : "The summary of the sync job stream."
+          },
+          "time" : {
+            "type" : "string",
+            "description" : "The time of the sync job stream.",
+            "format" : "date-time",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "The values of the job stream."
+          }
+        },
+        "description" : "Definition of source control sync job stream by id properties."
+      },
+      "SourceControlSyncJobStreamProperties" : {
+        "type" : "object",
+        "properties" : {
+          "sourceControlSyncJobStreamId" : {
+            "type" : "string",
+            "description" : "The sync job stream id."
+          },
+          "streamType" : {
+            "type" : "string",
+            "description" : "The type of the sync job stream.",
+            "enum" : [ "Error", "Output" ]
+          },
+          "summary" : {
+            "type" : "string",
+            "description" : "The summary of the sync job stream."
+          },
+          "time" : {
+            "type" : "string",
+            "description" : "The time of the sync job stream.",
+            "format" : "date-time",
+            "nullable" : true,
+            "readOnly" : true
+          }
+        },
+        "description" : "Definition of source control sync job stream properties."
+      },
+      "SourceControlSyncJobStreamsListBySyncJob" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The next link.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of source control sync job streams.",
+            "items" : {
+              "$ref" : "#/components/schemas/SourceControlSyncJobStream"
+            }
+          }
+        },
+        "description" : "The response model for the list source control sync job streams operation."
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

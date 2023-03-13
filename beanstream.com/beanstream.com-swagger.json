@@ -1,1 +1,2388 @@
-{"openapi":"3.0.1","info":{"title":"Beanstream Payments","description":"https://www.beanstream.com/api/v1","version":"1.0.1"},"servers":[{"url":"https://www.beanstream.com/api/v1"}],"paths":{"/payments":{"post":{"tags":["Payments"],"summary":"Make Payment","description":"Make a payment using credit card, cash, cheque, profile, or token. Each payment type has its own json definition passed in the body. For all payments you have the standard Billing, Shipping, Comments, etc. fields that are optional. Only the amount is required along with the payment data for card, cash, cheque, profile, and token. You must change the payment_method for each payment type. Credit Card - \"card\", Payment Profile - \"payment_profile\", Legato Token - \"token\", Cash - \"cash\", Cheque - \"cheque\", Interac - \"interac\"","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/PaymentRequest"}}},"required":false},"responses":{"200":{"description":"Payment response containing the payment details as well as if the payment was approved or declined.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/payments/{transId}":{"get":{"tags":["Payments"],"summary":"Get payment","description":"Get a previous payment (transaction).","parameters":[{"name":"transId","in":"path","description":"The transaction id.","required":true,"schema":{"type":"number","format":"integer"}}],"responses":{"200":{"description":"A transaction object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Transaction"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/payments/{transId}/completions":{"post":{"tags":["Payments"],"summary":"Complete pre-auth","description":"Complete a pre-authorized payment. The amount of the transaction to complete must be less than or equal to the original pre-auth amount. Complete must be set to true.","parameters":[{"name":"transId","in":"path","description":"The transaction id.","required":true,"schema":{"type":"number","format":"double"}}],"requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/PaymentRequest"}}},"required":false},"responses":{"200":{"description":"Payment response containing the payment details as well as if the transaction was approved or declined.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/payments/{transId}/returns":{"post":{"tags":["Payments"],"summary":"Return payment","description":"Return payment.","parameters":[{"name":"transId","in":"path","description":"The transaction id.","required":true,"schema":{"type":"number","format":"double"}}],"requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/Return"}}},"required":true},"responses":{"200":{"description":"Payment response containing the payment details as well as if the transaction was approved or declined.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/payments/{transId}/void":{"post":{"tags":["Payments"],"summary":"Void Transaction","description":"Void a transaction. You can void payments, returns, pre-auths, and completions. It will cancel that transaction.","parameters":[{"name":"transId","in":"path","description":"The transaction id to void.","required":true,"schema":{"type":"number","format":"double"}}],"requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/Void"}}},"required":true},"responses":{"200":{"description":"Payment response containing the payment details as well as if the transaction was approved or declined.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/profiles":{"post":{"tags":["Profiles"],"summary":"Create Profile","description":"Create a new Payment Profile using either a card or a Legato token. You must supply one of them.","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/CreateProfileBody"}}},"required":true},"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/profiles/{profileId}":{"get":{"tags":["Profiles"],"summary":"Get profile","description":"Get a Payment Profile using the profile ID, also known as the Customer Code.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PaymentProfile"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}},"put":{"tags":["Profiles"],"summary":"Update Profile","description":"Create a new Payment Profile using either a card or a Legato token. You must supply one of them.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}}],"requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/UpdateProfileBody"}}},"required":true},"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}},"delete":{"tags":["Profiles"],"summary":"Delete profile","description":"Delete a Payment Profile using the profile ID, also known as the Customer Code.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/profiles/{profileId}/cards":{"get":{"tags":["Profiles"],"summary":"Get cards","description":"Get all of the cards on the profile.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileGetCards"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}},"post":{"tags":["Profiles"],"summary":"Add card","description":"Add a card to the profile. Note that there is a default limit of 1 card per profile. You can change this in your Profiles settings in the back office.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The card that will be added to the profile.","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ProfileCard"}}},"required":true},"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/profiles/{profileId}/cards/{cardId}":{"put":{"tags":["Profiles"],"summary":"Update card","description":"Update the details of a card on the profile.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}},{"name":"cardId","in":"path","description":"The card id.","required":true,"schema":{"type":"number","format":"integer"}}],"requestBody":{"description":"The card that will be updated on the profile.","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ProfileCard"}}},"required":true},"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}},"delete":{"tags":["Profiles"],"summary":"Delete card","description":"Delete a card on the profile.","parameters":[{"name":"profileId","in":"path","description":"The profile id. (aka CustomerCode)","required":true,"schema":{"type":"string"}},{"name":"cardId","in":"path","description":"The card id.","required":true,"schema":{"type":"number","format":"integer"}}],"responses":{"200":{"description":"The Profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ProfileResponse"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/reports":{"post":{"tags":["Reporting"],"summary":"Search Query","description":"Query for transactions using a date range and optional search criteria. This method allows you to page your search results if you are expecting a lot of results to be returned. The page start value begins at 1. If no records are found the API will return a 404 error message. For details on the parameters and allowed values for Criteria please visit the documentation http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/SearchQuery"}}},"required":false},"responses":{"200":{"description":"A transaction object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SearchResult"}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"401":{"description":"Authentication Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"402":{"description":"Business Rule Violation or Decline","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"403":{"description":"Authorization Failure","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"405":{"description":"Invalid Request Method","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}},"500":{"description":"Internal Server Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/BeanstreamException"}}}}}}},"/scripts/tokenization/tokens":{"post":{"tags":["Tokenization"],"summary":"Tokenize credit card","description":"NOTE that the full URL for this API call is https://www.beanstream.com/scripts/tokenization/tokens. Turn a credit card into a token using this service. This helps lessen your PCI scope by not passing the credit card information to your server. Instead you turn the card number into a token in the client app, then send the token to the server. When you send the token to Beanstream to make a payment, Beanstream then looks up the card number from that token and makes the payment. Tokens can also be used to create payment profiles.","requestBody":{"content":{"*/*":{"schema":{"$ref":"#/components/schemas/TokenRequest"}}},"required":false},"responses":{"200":{"description":"Token response object. One will always be returned even if the data or card was invalid. The validity of the card is not checked with this API call.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TokenResponse"}}}}}}}},"components":{"schemas":{"Address":{"type":"object","properties":{"address_line1":{"type":"string","description":"alphanumeric (64)"},"address_line2":{"type":"string","description":"alphanumeric (64)"},"city":{"type":"string","description":"alphanumeric (32)"},"country":{"type":"string","description":"characters (2)"},"email_address":{"type":"string","description":"alphanumeric (32)"},"name":{"type":"string","description":"alphanumeric (64)"},"phone_number":{"type":"string","description":"alphanumeric (32)"},"postal_code":{"type":"string","description":"alphanumeric (16)"},"province":{"type":"string","description":"characters (2)"}}},"Adjustment":{"type":"object","properties":{"amount":{"type":"number","format":"double"},"approval":{"type":"number","format":"integer"},"created":{"type":"string","description":"The date it was created '2015-04-22T10:03:19.323-07:00'"},"id":{"type":"number","format":"integer"},"message":{"type":"string"},"type":{"type":"string"},"url":{"type":"string"}}},"BeanstreamException":{"type":"object","properties":{"category":{"type":"integer","format":"int32"},"code":{"type":"integer","format":"int32"},"details":{"type":"array","items":{"$ref":"#/components/schemas/Detail"}},"message":{"type":"string"},"reference":{"type":"string"}}},"Card":{"required":["expiry_month","expiry_year","name","number"],"type":"object","properties":{"complete":{"type":"boolean","description":"set to false for Pre-Authorize, and true to complete a payment","default":true},"cvd":{"type":"string","description":"Security code on the back of the credit card. This can be set to mandatory in the back office. digits(3 or 4)","default":"123"},"expiry_month":{"type":"string","description":"eg. 02 for February. digits(2)","default":"02"},"expiry_year":{"type":"string","description":"eg. 15 for 2015. digits(2)","default":"18"},"name":{"type":"string","description":"Card holder name. alphanumeric(64)"},"number":{"type":"string","description":"Credit card number (PAN). digits(20)","default":"5100000010001004"}}},"CardGetTransactionResponse":{"type":"object","properties":{"address_match":{"type":"integer","description":"digits (1)"},"avs_result":{"type":"string","description":"characters (1)"},"card_type":{"type":"string","description":"characters (2)"},"cvd_match":{"type":"integer","description":"digits (2)"},"expiry_month":{"type":"string","description":"characters (2)"},"expiry_year":{"type":"string","description":"characters (2)"},"last_four":{"type":"string","description":"digits (4)"}}},"CardPurchaseResponse":{"type":"object","properties":{"address_match":{"type":"integer","description":"digits (1)"},"card_type":{"type":"string","description":"characters (2)"},"cvd_match":{"type":"integer","description":"digits (2)"},"last_four":{"type":"string","description":"digits (4)"},"postal_result":{"type":"integer","description":"digits (1)"}}},"CreateProfileBody":{"type":"object","properties":{"billing":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/ProfileFromCard"},"comment":{"type":"string","description":"alphanumeric(256)"},"custom":{"$ref":"#/components/schemas/Custom"},"language":{"type":"string","description":"characters(2)"},"token":{"$ref":"#/components/schemas/ProfileFromToken"}}},"Criteria":{"type":"object","properties":{"field":{"type":"number","description":"Refer to the table on this page for the searchable fields http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/","format":"integer"},"operator":{"type":"string","description":"URL encoded comparators such as less than, greater than, equals... Refer to the table on this page for the full list of comparators http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/"},"value":{"type":"string","description":"The value you want to match against."}}},"Custom":{"type":"object","properties":{"ref1":{"type":"string","description":"alphanumeric (256)"},"ref2":{"type":"string","description":"alphanumeric (256)"},"ref3":{"type":"string","description":"alphanumeric (256)"},"ref4":{"type":"string","description":"alphanumeric (256)"},"ref5":{"type":"string","description":"alphanumeric (256)"}}},"Detail":{"type":"object","properties":{"field":{"type":"string"},"message":{"type":"string"}}},"GetProfileDefaultCard":{"type":"object","properties":{"card_type":{"type":"string","description":"MC, VI etc. characters(2)"},"expiry_month":{"type":"string","description":"digits(2)"},"expiry_year":{"type":"string","description":"digits(2)"},"name":{"type":"string","description":"cardholder name alphanumeric(64)"},"number":{"type":"string","description":"masked credit card number alphanumeric(20)"}}},"Link":{"type":"object","properties":{"href":{"type":"string","description":"alphanumeric (256). Url to perform the void, return, completion etc."},"method":{"type":"string","description":"characters (16). Http method. post, put, get etc."},"ref":{"type":"string","description":"characters (16). Eg. \"void\" or \"return\""}}},"PaymentProfile":{"type":"object","properties":{"account_ref":{"type":"string"},"billing":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/GetProfileDefaultCard"},"code":{"type":"integer","description":"digits(2)","format":"int32"},"custom":{"$ref":"#/components/schemas/Custom"},"customer_code":{"type":"string","description":"alphanumeric(32)"},"language":{"type":"string","description":"characters(2)"},"last_transaction":{"type":"string","description":"date and time alphanumeric(24)"},"message":{"type":"string","description":"alphanumeric(64)"},"modified_date":{"type":"string","description":"date and time it was last modified alphanumeric(24)"},"profile_group":{"type":"string"},"status":{"type":"string","description":"characters(1)"},"velocity_group":{"type":"string"}}},"PaymentRequest":{"required":["amount","payment_method"],"type":"object","properties":{"amount":{"type":"number","description":"A decimal value in dollars, or relevant currency. digits(9)","format":"double"},"billing":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/Card"},"comments":{"type":"string","description":"alphanumeric (256)"},"custom":{"$ref":"#/components/schemas/Custom"},"customer_ip":{"type":"string","description":"alphanumeric (30)"},"language":{"type":"string","description":"characters (3)"},"order_number":{"type":"string","description":"A unique order number. alphanumeric(30)"},"payment_method":{"type":"string","description":"One of (card, token, payment_profile, cash, cheque). characters(20)"},"payment_profile":{"$ref":"#/components/schemas/ProfilePurchase"},"shipping":{"$ref":"#/components/schemas/Address"},"term_url":{"type":"string","description":"alphanumeric (256)"},"token":{"$ref":"#/components/schemas/TokenPurchase"}}},"PaymentResponse":{"type":"object","properties":{"approved":{"type":"integer","description":"Approved = 1, declined = 0"},"auth_code":{"type":"string","description":"alphanumeric (32)"},"card":{"$ref":"#/components/schemas/CardPurchaseResponse"},"created":{"type":"string","description":"alphanumeric (32)"},"id":{"type":"string","description":"digits (9)"},"links":{"type":"array","items":{"$ref":"#/components/schemas/Link"}},"message":{"type":"string","description":"alphanumeric (256)"},"message_id":{"type":"string","description":"digits (3)"},"order_number":{"type":"string","description":"alphanumeric (32)"},"payment_method":{"type":"string","description":"characters (16)"},"type":{"type":"string","description":"characters (16)"}}},"ProfileCard":{"type":"object","properties":{"expiry_month":{"type":"string","description":"digits(2)"},"expiry_year":{"type":"string","description":"digits(2)"},"name":{"type":"string","description":"cardholder name. alphanumeric(64)"},"number":{"type":"string","description":"Credit card number. digits(20)"}}},"ProfileCards":{"type":"object","properties":{"card_id":{"type":"string","description":"1-indexed card ID. Total number of cards allowed is configured in your merchant account."},"card_type":{"type":"string","description":"MC, VI etc. characters(2)"},"expiry_month":{"type":"string","description":"digits(2)"},"expiry_year":{"type":"string","description":"digits(2)"},"function":{"type":"string","description":"Will say DEF for the default card"},"number":{"type":"string","description":"digits(20)"}}},"ProfileFromCard":{"required":["expiry_month","expiry_year","name","number"],"type":"object","properties":{"cvd":{"type":"string","description":"Security code on the back of the credit card. This can be set to mandatory in the back office. digits(3)","default":"123"},"expiry_month":{"type":"string","description":"eg. 02 for February. digits(2)","default":"02"},"expiry_year":{"type":"string","description":"digits(2)","default":"18"},"name":{"type":"string","description":"Card holder name. alphanumeric(64)","default":"5100000010001004"},"number":{"type":"string","description":"Credit card number (PAN)  digits(20)"}}},"ProfileFromToken":{"required":["code","name"],"type":"object","properties":{"code":{"type":"string","description":"The token received from the client-side tokenization service. alphanumeric(64)"},"name":{"type":"string","description":"alphanumeric(64)"}}},"ProfileGetCards":{"type":"object","properties":{"card":{"type":"array","items":{"$ref":"#/components/schemas/ProfileCards"}},"code":{"type":"number","description":"digits(2)","format":"integer"},"customer_code":{"type":"string","description":"characters(32)"},"message":{"type":"string","description":"alphanumeric(64)"}}},"ProfilePurchase":{"required":["card_id","customer_code"],"type":"object","properties":{"card_id":{"type":"integer","description":"Which credit card to use. Starts at 1 for the first card. You must configure how many cards can be stored by visiting the profile options in the back office. digits(1)"},"complete":{"type":"boolean","description":"Set to FALSE for pre-auth. digit(1) or boolean"},"customer_code":{"type":"string","description":"The payment profile ID. alphanumeric(32)"}}},"ProfileResponse":{"type":"object","properties":{"code":{"type":"number","format":"integer"},"customer_code":{"type":"string","description":"the ID of the payment profile. You need to keep track of this value."},"message":{"type":"string"}}},"ProfileToken":{"type":"object","properties":{"code":{"type":"string","description":"single use token associated with this account. alphanumeric(36)"},"name":{"type":"string","description":"Name of cardholder. alphanumeric(64)"}}},"Return":{"required":["amount"],"type":"object","properties":{"amount":{"type":"number","description":"The amount of the transaction to return. Must be less than or equal to the original purchase amount.","format":"double"},"order_number":{"type":"string","description":"alphanumeric (30)"}}},"SearchQuery":{"required":["end_date","end_row","name","start_date","start_row"],"type":"object","properties":{"criteria":{"type":"array","description":"Optional search criteria. All criteria are ANDed together.","items":{"$ref":"#/components/schemas/Criteria"}},"end_date":{"type":"string","description":"The end date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."},"end_row":{"type":"number","description":"Used to page the results. 1-based. This should always be 1 larger than start_row.","format":"integer"},"name":{"type":"string","description":"Only accepts 2 values. Can be either 'Search' for all fields or 'TransHistoryMinimal' for a subset of the fields returned in the results."},"start_date":{"type":"string","description":"The start date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."},"start_row":{"type":"number","description":"Used to page the results. 1-based","format":"integer"}}},"SearchRecord":{"type":"object","properties":{"b_address1":{"type":"string"},"b_address2":{"type":"string"},"b_city":{"type":"string"},"b_country":{"type":"string"},"b_email":{"type":"string"},"b_name":{"type":"string"},"b_phone":{"type":"string"},"b_postal":{"type":"string"},"b_province":{"type":"string"},"customer_code":{"type":"string","description":"The PaymentProfile ID used in this transaction, if appropriate."},"message_id":{"type":"number","format":"integer"},"message_text":{"type":"string"},"product_id":{"type":"string"},"product_name":{"type":"string"},"ref1":{"type":"string"},"ref2":{"type":"string"},"ref3":{"type":"string"},"ref4":{"type":"string"},"ref5":{"type":"string"},"row_id":{"type":"number","format":"integer"},"s_address1":{"type":"string"},"s_address2":{"type":"string"},"s_city":{"type":"string"},"s_country":{"type":"string"},"s_email":{"type":"string"},"s_name":{"type":"string"},"s_phone":{"type":"string"},"s_postal":{"type":"string"},"s_province":{"type":"string"},"trn_amount":{"type":"number","format":"float32"},"trn_approval_code":{"type":"string"},"trn_avs_result":{"type":"string","description":"Address Verification Service"},"trn_batch_no":{"type":"number","format":"integer"},"trn_card_expiry":{"type":"string"},"trn_card_owner":{"type":"string"},"trn_card_type":{"type":"string","description":"MC VI etc"},"trn_completions":{"type":"number","format":"float32"},"trn_cvd_result":{"type":"number","format":"integer"},"trn_date_time":{"type":"string","description":"2015-04-22T10:03:19.323-07:00"},"trn_id":{"type":"number","format":"integer"},"trn_ip":{"type":"string"},"trn_masked_card":{"type":"string","description":"The credit card with the middle digits redacted with X's"},"trn_order_number":{"type":"string"},"trn_payment_method":{"type":"string"},"trn_reference":{"type":"number","format":"integer"},"trn_response":{"type":"number","format":"integer"},"trn_returns":{"type":"number","format":"float32"},"trn_type":{"type":"string"},"trn_voided":{"type":"number","format":"integer"}}},"SearchResult":{"type":"object","properties":{"records":{"type":"array","items":{"$ref":"#/components/schemas/SearchRecord"}}}},"TokenPurchase":{"required":["code","name"],"type":"object","properties":{"code":{"type":"string","description":"the payment token you retrieved from the Legato service. alphanumeric(36)"},"complete":{"type":"boolean","description":"Set to FALSE for pre-auth"},"name":{"type":"string","description":"Card holder name. alphanumeric(64)"}}},"TokenRequest":{"required":["cvd","expiry_month","expiry_year","number"],"type":"object","properties":{"cvd":{"type":"string","description":"a 3 to 4 digit representation of CVD/CDD. This is the number usually found on the back of the credit card."},"expiry_month":{"type":"string","description":"a 2 digit representation of the expiry month. For example March is 03."},"expiry_year":{"type":"string","description":"a 2 digit representation of the expiry year. For example 2016 is 16."},"number":{"type":"string","description":"The credit card number"}}},"TokenResponse":{"required":["token"],"type":"object","properties":{"code":{"type":"string","description":"Response code for the message. It can be ignored."},"message":{"type":"string","description":"Response message with any hints as to what might have gone wrong, if something went wrong."},"token":{"type":"string","description":"The token representing the credit card number that you will send to Beanstream for purchases. You will always receive a token, even if the request data is wrong or the card is invalid."},"version":{"type":"integer","description":"Message version number. Can be ignored."}}},"Transaction":{"type":"object","properties":{"adjusted_by":{"type":"array","items":{"$ref":"#/components/schemas/Adjustment"}},"amount":{"type":"number","format":"double"},"approved":{"type":"boolean"},"auth_code":{"type":"string"},"batch_number":{"type":"string"},"billing":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/CardGetTransactionResponse"},"comments":{"type":"string"},"created":{"type":"string","description":"The date it was created '2015-04-22T10:03:19.323-07:00'"},"custom":{"$ref":"#/components/schemas/Custom"},"id":{"type":"number","format":"integer"},"links":{"type":"array","items":{"$ref":"#/components/schemas/Link"}},"message":{"type":"string"},"message_id":{"type":"number","format":"integer"},"order_number":{"type":"string"},"payment_method":{"type":"string"},"shipping":{"$ref":"#/components/schemas/Address"},"total_completions":{"type":"number","format":"double"},"total_refunds":{"type":"number","format":"double"},"type":{"type":"string"}}},"UpdateProfileBody":{"type":"object","properties":{"billing":{"$ref":"#/components/schemas/Address"},"card":{"$ref":"#/components/schemas/ProfileToken"},"comment":{"type":"string","description":"alphanumeric(256)"},"custom":{"$ref":"#/components/schemas/Custom"},"language":{"type":"string","description":"characters(2)"}}},"Void":{"required":["amount"],"type":"object","properties":{"amount":{"type":"number","description":"The amount of the transaction to void. Must be equal to the original purchase amount. You can void purchases as well as pre-auths and returns. The amount you are voiding has to match the amount of that transaction.","format":"double"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Beanstream Payments",
+    "description" : "https://www.beanstream.com/api/v1",
+    "version" : "1.0.1"
+  },
+  "servers" : [ {
+    "url" : "https://www.beanstream.com/api/v1"
+  } ],
+  "paths" : {
+    "/payments" : {
+      "post" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Make Payment",
+        "description" : "Make a payment using credit card, cash, cheque, profile, or token. Each payment type has its own json definition passed in the body. For all payments you have the standard Billing, Shipping, Comments, etc. fields that are optional. Only the amount is required along with the payment data for card, cash, cheque, profile, and token. You must change the payment_method for each payment type. Credit Card - \"card\", Payment Profile - \"payment_profile\", Legato Token - \"token\", Cash - \"cash\", Cheque - \"cheque\", Interac - \"interac\"",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentRequest"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Payment response containing the payment details as well as if the payment was approved or declined.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{transId}" : {
+      "get" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Get payment",
+        "description" : "Get a previous payment (transaction).",
+        "parameters" : [ {
+          "name" : "transId",
+          "in" : "path",
+          "description" : "The transaction id.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A transaction object.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{transId}/completions" : {
+      "post" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Complete pre-auth",
+        "description" : "Complete a pre-authorized payment. The amount of the transaction to complete must be less than or equal to the original pre-auth amount. Complete must be set to true.",
+        "parameters" : [ {
+          "name" : "transId",
+          "in" : "path",
+          "description" : "The transaction id.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentRequest"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Payment response containing the payment details as well as if the transaction was approved or declined.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{transId}/returns" : {
+      "post" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Return payment",
+        "description" : "Return payment.",
+        "parameters" : [ {
+          "name" : "transId",
+          "in" : "path",
+          "description" : "The transaction id.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Return"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Payment response containing the payment details as well as if the transaction was approved or declined.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{transId}/void" : {
+      "post" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Void Transaction",
+        "description" : "Void a transaction. You can void payments, returns, pre-auths, and completions. It will cancel that transaction.",
+        "parameters" : [ {
+          "name" : "transId",
+          "in" : "path",
+          "description" : "The transaction id to void.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Void"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Payment response containing the payment details as well as if the transaction was approved or declined.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles" : {
+      "post" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Create Profile",
+        "description" : "Create a new Payment Profile using either a card or a Legato token. You must supply one of them.",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateProfileBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{profileId}" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Get profile",
+        "description" : "Get a Payment Profile using the profile ID, also known as the Customer Code.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentProfile"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Update Profile",
+        "description" : "Create a new Payment Profile using either a card or a Legato token. You must supply one of them.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateProfileBody"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Delete profile",
+        "description" : "Delete a Payment Profile using the profile ID, also known as the Customer Code.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{profileId}/cards" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Get cards",
+        "description" : "Get all of the cards on the profile.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileGetCards"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Add card",
+        "description" : "Add a card to the profile. Note that there is a default limit of 1 card per profile. You can change this in your Profiles settings in the back office.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The card that will be added to the profile.",
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProfileCard"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{profileId}/cards/{cardId}" : {
+      "put" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Update card",
+        "description" : "Update the details of a card on the profile.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "cardId",
+          "in" : "path",
+          "description" : "The card id.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The card that will be updated on the profile.",
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProfileCard"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Delete card",
+        "description" : "Delete a card on the profile.",
+        "parameters" : [ {
+          "name" : "profileId",
+          "in" : "path",
+          "description" : "The profile id. (aka CustomerCode)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "cardId",
+          "in" : "path",
+          "description" : "The card id.",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The Profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports" : {
+      "post" : {
+        "tags" : [ "Reporting" ],
+        "summary" : "Search Query",
+        "description" : "Query for transactions using a date range and optional search criteria. This method allows you to page your search results if you are expecting a lot of results to be returned. The page start value begins at 1. If no records are found the API will return a 404 error message. For details on the parameters and allowed values for Criteria please visit the documentation http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SearchQuery"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "A transaction object.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SearchResult"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "402" : {
+            "description" : "Business Rule Violation or Decline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authorization Failure",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid Request Method",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BeanstreamException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scripts/tokenization/tokens" : {
+      "post" : {
+        "tags" : [ "Tokenization" ],
+        "summary" : "Tokenize credit card",
+        "description" : "NOTE that the full URL for this API call is https://www.beanstream.com/scripts/tokenization/tokens. Turn a credit card into a token using this service. This helps lessen your PCI scope by not passing the credit card information to your server. Instead you turn the card number into a token in the client app, then send the token to the server. When you send the token to Beanstream to make a payment, Beanstream then looks up the card number from that token and makes the payment. Tokens can also be used to create payment profiles.",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TokenRequest"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Token response object. One will always be returned even if the data or card was invalid. The validity of the card is not checked with this API call.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "address_line1" : {
+            "type" : "string",
+            "description" : "alphanumeric (64)"
+          },
+          "address_line2" : {
+            "type" : "string",
+            "description" : "alphanumeric (64)"
+          },
+          "city" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          },
+          "email_address" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "alphanumeric (64)"
+          },
+          "phone_number" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "postal_code" : {
+            "type" : "string",
+            "description" : "alphanumeric (16)"
+          },
+          "province" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          }
+        }
+      },
+      "Adjustment" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "approval" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "created" : {
+            "type" : "string",
+            "description" : "The date it was created '2015-04-22T10:03:19.323-07:00'"
+          },
+          "id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BeanstreamException" : {
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "details" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Detail"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "reference" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Card" : {
+        "required" : [ "expiry_month", "expiry_year", "name", "number" ],
+        "type" : "object",
+        "properties" : {
+          "complete" : {
+            "type" : "boolean",
+            "description" : "set to false for Pre-Authorize, and true to complete a payment",
+            "default" : true
+          },
+          "cvd" : {
+            "type" : "string",
+            "description" : "Security code on the back of the credit card. This can be set to mandatory in the back office. digits(3 or 4)",
+            "default" : "123"
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "eg. 02 for February. digits(2)",
+            "default" : "02"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "eg. 15 for 2015. digits(2)",
+            "default" : "18"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Card holder name. alphanumeric(64)"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "Credit card number (PAN). digits(20)",
+            "default" : "5100000010001004"
+          }
+        }
+      },
+      "CardGetTransactionResponse" : {
+        "type" : "object",
+        "properties" : {
+          "address_match" : {
+            "type" : "integer",
+            "description" : "digits (1)"
+          },
+          "avs_result" : {
+            "type" : "string",
+            "description" : "characters (1)"
+          },
+          "card_type" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          },
+          "cvd_match" : {
+            "type" : "integer",
+            "description" : "digits (2)"
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          },
+          "last_four" : {
+            "type" : "string",
+            "description" : "digits (4)"
+          }
+        }
+      },
+      "CardPurchaseResponse" : {
+        "type" : "object",
+        "properties" : {
+          "address_match" : {
+            "type" : "integer",
+            "description" : "digits (1)"
+          },
+          "card_type" : {
+            "type" : "string",
+            "description" : "characters (2)"
+          },
+          "cvd_match" : {
+            "type" : "integer",
+            "description" : "digits (2)"
+          },
+          "last_four" : {
+            "type" : "string",
+            "description" : "digits (4)"
+          },
+          "postal_result" : {
+            "type" : "integer",
+            "description" : "digits (1)"
+          }
+        }
+      },
+      "CreateProfileBody" : {
+        "type" : "object",
+        "properties" : {
+          "billing" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/ProfileFromCard"
+          },
+          "comment" : {
+            "type" : "string",
+            "description" : "alphanumeric(256)"
+          },
+          "custom" : {
+            "$ref" : "#/components/schemas/Custom"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "characters(2)"
+          },
+          "token" : {
+            "$ref" : "#/components/schemas/ProfileFromToken"
+          }
+        }
+      },
+      "Criteria" : {
+        "type" : "object",
+        "properties" : {
+          "field" : {
+            "type" : "number",
+            "description" : "Refer to the table on this page for the searchable fields http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/",
+            "format" : "integer"
+          },
+          "operator" : {
+            "type" : "string",
+            "description" : "URL encoded comparators such as less than, greater than, equals... Refer to the table on this page for the full list of comparators http://developer.beanstream.com/documentation/analyze-payments/search-specific-criteria/"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "The value you want to match against."
+          }
+        }
+      },
+      "Custom" : {
+        "type" : "object",
+        "properties" : {
+          "ref1" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "ref2" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "ref3" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "ref4" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "ref5" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          }
+        }
+      },
+      "Detail" : {
+        "type" : "object",
+        "properties" : {
+          "field" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GetProfileDefaultCard" : {
+        "type" : "object",
+        "properties" : {
+          "card_type" : {
+            "type" : "string",
+            "description" : "MC, VI etc. characters(2)"
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "cardholder name alphanumeric(64)"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "masked credit card number alphanumeric(20)"
+          }
+        }
+      },
+      "Link" : {
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string",
+            "description" : "alphanumeric (256). Url to perform the void, return, completion etc."
+          },
+          "method" : {
+            "type" : "string",
+            "description" : "characters (16). Http method. post, put, get etc."
+          },
+          "ref" : {
+            "type" : "string",
+            "description" : "characters (16). Eg. \"void\" or \"return\""
+          }
+        }
+      },
+      "PaymentProfile" : {
+        "type" : "object",
+        "properties" : {
+          "account_ref" : {
+            "type" : "string"
+          },
+          "billing" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/GetProfileDefaultCard"
+          },
+          "code" : {
+            "type" : "integer",
+            "description" : "digits(2)",
+            "format" : "int32"
+          },
+          "custom" : {
+            "$ref" : "#/components/schemas/Custom"
+          },
+          "customer_code" : {
+            "type" : "string",
+            "description" : "alphanumeric(32)"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "characters(2)"
+          },
+          "last_transaction" : {
+            "type" : "string",
+            "description" : "date and time alphanumeric(24)"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "alphanumeric(64)"
+          },
+          "modified_date" : {
+            "type" : "string",
+            "description" : "date and time it was last modified alphanumeric(24)"
+          },
+          "profile_group" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "characters(1)"
+          },
+          "velocity_group" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentRequest" : {
+        "required" : [ "amount", "payment_method" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "A decimal value in dollars, or relevant currency. digits(9)",
+            "format" : "double"
+          },
+          "billing" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/Card"
+          },
+          "comments" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "custom" : {
+            "$ref" : "#/components/schemas/Custom"
+          },
+          "customer_ip" : {
+            "type" : "string",
+            "description" : "alphanumeric (30)"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "characters (3)"
+          },
+          "order_number" : {
+            "type" : "string",
+            "description" : "A unique order number. alphanumeric(30)"
+          },
+          "payment_method" : {
+            "type" : "string",
+            "description" : "One of (card, token, payment_profile, cash, cheque). characters(20)"
+          },
+          "payment_profile" : {
+            "$ref" : "#/components/schemas/ProfilePurchase"
+          },
+          "shipping" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "term_url" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "token" : {
+            "$ref" : "#/components/schemas/TokenPurchase"
+          }
+        }
+      },
+      "PaymentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "approved" : {
+            "type" : "integer",
+            "description" : "Approved = 1, declined = 0"
+          },
+          "auth_code" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/CardPurchaseResponse"
+          },
+          "created" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "digits (9)"
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Link"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "alphanumeric (256)"
+          },
+          "message_id" : {
+            "type" : "string",
+            "description" : "digits (3)"
+          },
+          "order_number" : {
+            "type" : "string",
+            "description" : "alphanumeric (32)"
+          },
+          "payment_method" : {
+            "type" : "string",
+            "description" : "characters (16)"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "characters (16)"
+          }
+        }
+      },
+      "ProfileCard" : {
+        "type" : "object",
+        "properties" : {
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "cardholder name. alphanumeric(64)"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "Credit card number. digits(20)"
+          }
+        }
+      },
+      "ProfileCards" : {
+        "type" : "object",
+        "properties" : {
+          "card_id" : {
+            "type" : "string",
+            "description" : "1-indexed card ID. Total number of cards allowed is configured in your merchant account."
+          },
+          "card_type" : {
+            "type" : "string",
+            "description" : "MC, VI etc. characters(2)"
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "digits(2)"
+          },
+          "function" : {
+            "type" : "string",
+            "description" : "Will say DEF for the default card"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "digits(20)"
+          }
+        }
+      },
+      "ProfileFromCard" : {
+        "required" : [ "expiry_month", "expiry_year", "name", "number" ],
+        "type" : "object",
+        "properties" : {
+          "cvd" : {
+            "type" : "string",
+            "description" : "Security code on the back of the credit card. This can be set to mandatory in the back office. digits(3)",
+            "default" : "123"
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "eg. 02 for February. digits(2)",
+            "default" : "02"
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "digits(2)",
+            "default" : "18"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Card holder name. alphanumeric(64)",
+            "default" : "5100000010001004"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "Credit card number (PAN)  digits(20)"
+          }
+        }
+      },
+      "ProfileFromToken" : {
+        "required" : [ "code", "name" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The token received from the client-side tokenization service. alphanumeric(64)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "alphanumeric(64)"
+          }
+        }
+      },
+      "ProfileGetCards" : {
+        "type" : "object",
+        "properties" : {
+          "card" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProfileCards"
+            }
+          },
+          "code" : {
+            "type" : "number",
+            "description" : "digits(2)",
+            "format" : "integer"
+          },
+          "customer_code" : {
+            "type" : "string",
+            "description" : "characters(32)"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "alphanumeric(64)"
+          }
+        }
+      },
+      "ProfilePurchase" : {
+        "required" : [ "card_id", "customer_code" ],
+        "type" : "object",
+        "properties" : {
+          "card_id" : {
+            "type" : "integer",
+            "description" : "Which credit card to use. Starts at 1 for the first card. You must configure how many cards can be stored by visiting the profile options in the back office. digits(1)"
+          },
+          "complete" : {
+            "type" : "boolean",
+            "description" : "Set to FALSE for pre-auth. digit(1) or boolean"
+          },
+          "customer_code" : {
+            "type" : "string",
+            "description" : "The payment profile ID. alphanumeric(32)"
+          }
+        }
+      },
+      "ProfileResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "customer_code" : {
+            "type" : "string",
+            "description" : "the ID of the payment profile. You need to keep track of this value."
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ProfileToken" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "single use token associated with this account. alphanumeric(36)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of cardholder. alphanumeric(64)"
+          }
+        }
+      },
+      "Return" : {
+        "required" : [ "amount" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "The amount of the transaction to return. Must be less than or equal to the original purchase amount.",
+            "format" : "double"
+          },
+          "order_number" : {
+            "type" : "string",
+            "description" : "alphanumeric (30)"
+          }
+        }
+      },
+      "SearchQuery" : {
+        "required" : [ "end_date", "end_row", "name", "start_date", "start_row" ],
+        "type" : "object",
+        "properties" : {
+          "criteria" : {
+            "type" : "array",
+            "description" : "Optional search criteria. All criteria are ANDed together.",
+            "items" : {
+              "$ref" : "#/components/schemas/Criteria"
+            }
+          },
+          "end_date" : {
+            "type" : "string",
+            "description" : "The end date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."
+          },
+          "end_row" : {
+            "type" : "number",
+            "description" : "Used to page the results. 1-based. This should always be 1 larger than start_row.",
+            "format" : "integer"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Only accepts 2 values. Can be either 'Search' for all fields or 'TransHistoryMinimal' for a subset of the fields returned in the results."
+          },
+          "start_date" : {
+            "type" : "string",
+            "description" : "The start date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."
+          },
+          "start_row" : {
+            "type" : "number",
+            "description" : "Used to page the results. 1-based",
+            "format" : "integer"
+          }
+        }
+      },
+      "SearchRecord" : {
+        "type" : "object",
+        "properties" : {
+          "b_address1" : {
+            "type" : "string"
+          },
+          "b_address2" : {
+            "type" : "string"
+          },
+          "b_city" : {
+            "type" : "string"
+          },
+          "b_country" : {
+            "type" : "string"
+          },
+          "b_email" : {
+            "type" : "string"
+          },
+          "b_name" : {
+            "type" : "string"
+          },
+          "b_phone" : {
+            "type" : "string"
+          },
+          "b_postal" : {
+            "type" : "string"
+          },
+          "b_province" : {
+            "type" : "string"
+          },
+          "customer_code" : {
+            "type" : "string",
+            "description" : "The PaymentProfile ID used in this transaction, if appropriate."
+          },
+          "message_id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "message_text" : {
+            "type" : "string"
+          },
+          "product_id" : {
+            "type" : "string"
+          },
+          "product_name" : {
+            "type" : "string"
+          },
+          "ref1" : {
+            "type" : "string"
+          },
+          "ref2" : {
+            "type" : "string"
+          },
+          "ref3" : {
+            "type" : "string"
+          },
+          "ref4" : {
+            "type" : "string"
+          },
+          "ref5" : {
+            "type" : "string"
+          },
+          "row_id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "s_address1" : {
+            "type" : "string"
+          },
+          "s_address2" : {
+            "type" : "string"
+          },
+          "s_city" : {
+            "type" : "string"
+          },
+          "s_country" : {
+            "type" : "string"
+          },
+          "s_email" : {
+            "type" : "string"
+          },
+          "s_name" : {
+            "type" : "string"
+          },
+          "s_phone" : {
+            "type" : "string"
+          },
+          "s_postal" : {
+            "type" : "string"
+          },
+          "s_province" : {
+            "type" : "string"
+          },
+          "trn_amount" : {
+            "type" : "number",
+            "format" : "float32"
+          },
+          "trn_approval_code" : {
+            "type" : "string"
+          },
+          "trn_avs_result" : {
+            "type" : "string",
+            "description" : "Address Verification Service"
+          },
+          "trn_batch_no" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "trn_card_expiry" : {
+            "type" : "string"
+          },
+          "trn_card_owner" : {
+            "type" : "string"
+          },
+          "trn_card_type" : {
+            "type" : "string",
+            "description" : "MC VI etc"
+          },
+          "trn_completions" : {
+            "type" : "number",
+            "format" : "float32"
+          },
+          "trn_cvd_result" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "trn_date_time" : {
+            "type" : "string",
+            "description" : "2015-04-22T10:03:19.323-07:00"
+          },
+          "trn_id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "trn_ip" : {
+            "type" : "string"
+          },
+          "trn_masked_card" : {
+            "type" : "string",
+            "description" : "The credit card with the middle digits redacted with X's"
+          },
+          "trn_order_number" : {
+            "type" : "string"
+          },
+          "trn_payment_method" : {
+            "type" : "string"
+          },
+          "trn_reference" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "trn_response" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "trn_returns" : {
+            "type" : "number",
+            "format" : "float32"
+          },
+          "trn_type" : {
+            "type" : "string"
+          },
+          "trn_voided" : {
+            "type" : "number",
+            "format" : "integer"
+          }
+        }
+      },
+      "SearchResult" : {
+        "type" : "object",
+        "properties" : {
+          "records" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SearchRecord"
+            }
+          }
+        }
+      },
+      "TokenPurchase" : {
+        "required" : [ "code", "name" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "the payment token you retrieved from the Legato service. alphanumeric(36)"
+          },
+          "complete" : {
+            "type" : "boolean",
+            "description" : "Set to FALSE for pre-auth"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Card holder name. alphanumeric(64)"
+          }
+        }
+      },
+      "TokenRequest" : {
+        "required" : [ "cvd", "expiry_month", "expiry_year", "number" ],
+        "type" : "object",
+        "properties" : {
+          "cvd" : {
+            "type" : "string",
+            "description" : "a 3 to 4 digit representation of CVD/CDD. This is the number usually found on the back of the credit card."
+          },
+          "expiry_month" : {
+            "type" : "string",
+            "description" : "a 2 digit representation of the expiry month. For example March is 03."
+          },
+          "expiry_year" : {
+            "type" : "string",
+            "description" : "a 2 digit representation of the expiry year. For example 2016 is 16."
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "The credit card number"
+          }
+        }
+      },
+      "TokenResponse" : {
+        "required" : [ "token" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Response code for the message. It can be ignored."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Response message with any hints as to what might have gone wrong, if something went wrong."
+          },
+          "token" : {
+            "type" : "string",
+            "description" : "The token representing the credit card number that you will send to Beanstream for purchases. You will always receive a token, even if the request data is wrong or the card is invalid."
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "Message version number. Can be ignored."
+          }
+        }
+      },
+      "Transaction" : {
+        "type" : "object",
+        "properties" : {
+          "adjusted_by" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Adjustment"
+            }
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "approved" : {
+            "type" : "boolean"
+          },
+          "auth_code" : {
+            "type" : "string"
+          },
+          "batch_number" : {
+            "type" : "string"
+          },
+          "billing" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/CardGetTransactionResponse"
+          },
+          "comments" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "description" : "The date it was created '2015-04-22T10:03:19.323-07:00'"
+          },
+          "custom" : {
+            "$ref" : "#/components/schemas/Custom"
+          },
+          "id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Link"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "message_id" : {
+            "type" : "number",
+            "format" : "integer"
+          },
+          "order_number" : {
+            "type" : "string"
+          },
+          "payment_method" : {
+            "type" : "string"
+          },
+          "shipping" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "total_completions" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "total_refunds" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "UpdateProfileBody" : {
+        "type" : "object",
+        "properties" : {
+          "billing" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/ProfileToken"
+          },
+          "comment" : {
+            "type" : "string",
+            "description" : "alphanumeric(256)"
+          },
+          "custom" : {
+            "$ref" : "#/components/schemas/Custom"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "characters(2)"
+          }
+        }
+      },
+      "Void" : {
+        "required" : [ "amount" ],
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "The amount of the transaction to void. Must be equal to the original purchase amount. You can void purchases as well as pre-auths and returns. The amount you are voiding has to match the amount of that transaction.",
+            "format" : "double"
+          }
+        }
+      }
+    }
+  }
+}

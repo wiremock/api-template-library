@@ -1,1 +1,909 @@
-{"openapi":"3.0.1","info":{"title":"Geneea Natural Language Processing","description":"<div class=\"api-description\">\n    <h2>Authentication</h2>\n    <p>For all calls, supply your API key. <a href=\"https://www.geneea.com/pricing\">Sign up to <em>obtain the key</em></a>.</p>\n    <p>\n        Our API supports both <em>unencrypted (HTTP)</em> and <em>encrypted (HTTPS)</em> protocols.\n        However, for security reasons, we strongly encourage using only the encrypted version.\n    </p>\n    <p>The API key should be supplied as either a request parameter <code>user_key</code> or in <code>Authorization</code> header.</p>\n    <pre><code>Authorization: user_key &lt;YOUR_API_KEY&gt;</code></pre>\n\n    <h2>API operations</h2>\n    <p>\n        All API operations can perform analysis on supplied raw text or on text extracted from a given URL.\n        Optionally, one can supply additional information which can make the result more precise. An example\n        of such information would be the language of text or a particular text extractor for URL resources.\n    </p>\n    <p>The supported types of analyses are:</p>\n    <ul>\n        <li><strong>lemmatization</strong> &longrightarrow;\n            Finds out lemmata (basic forms) of all the words in the document.\n        </li>\n        <li><strong>correction</strong> &longrightarrow;\n            Performs correction (diacritization) on all the words in the document.\n        </li>\n        <li><strong>topic detection</strong> &longrightarrow;\n            Determines a topic of the document, e.g. finance or sports.\n        </li>\n        <li><strong>sentiment analysis</strong> &longrightarrow;\n            Determines a sentiment of the document, i.e. how positive or negative the document is.\n        </li>\n        <li><strong>named entity recognition</strong> &longrightarrow;\n            Finds named entities (like person, location, date etc.) mentioned the the document.\n        </li>\n    </ul>\n\n    <h2>Encoding</h2>\n    <p>The supplied text is expected to be in UTF-8 encoding, this is especially important for non-english texts.</p>\n\n    <h2>Returned values</h2>\n    <p>The API calls always return objects in serialized JSON format in UTF-8 encoding.</p>\n    <p>\n        If any error occurs, the HTTP response code will be in the range <code>4xx</code> (client-side error) or\n        <code>5xx</code> (server-side error). In this situation, the body of the response will contain information\n        about the error in JSON format, with <code>exception</code> and <code>message</code> values.\n    </p>\n\n    <h2>URL limitations</h2>\n    <p>\n        All the requests are semantically <code>GET</code>. However, for longer texts, you may run into issues\n        with URL length limit. Therefore, it's possible to always issue a <code>POST</code> request with all\n        the parameters encoded as a JSON in the request body.\n    </p>\n    <p>Example:</p>\n    <pre><code>\n        POST /s1/sentiment\n        Content-Type: application/json\n\n        {\"text\":\"There is no harm in being sometimes wrong - especially if one is promptly found out.\"}\n    </code></pre>\n    <p>This is equivalent to <code>GET /s1/sentiment?text=There%20is%20no%20harm...</code></p>\n\n    <h2>Request limitations</h2>\n    <p>\n        The API has other limitations concerning the size of the HTTP requests. The maximum allowed size of any\n        POST request body is <em>512 KiB</em>. For request with a URL resource, the maximum allowed number of\n        extracted characters from each such resource is <em>100,000</em>.\n    </p>\n\n    <h2>Terms of Service</h2>\n    <p>\n        By using the API, you agree to our\n        <a href=\"https://www.geneea.com/terms.html\" target=\"_blank\">Terms of Service Agreement</a>.\n    </p>\n\n    <h2>More information</h2>\n    <p>\n        <a href=\"https://help.geneea.com/index.html\" target=\"_blank\">\n        The Interpretor Public Documentation\n        </a>\n    </p>\n</div>\n","version":"1.0"},"servers":[{"url":"https://api.geneea.com/"}],"security":[{"user_key":null}],"tags":[{"name":"account","description":"Basic information about the user account."},{"name":"geneea-api-s1","description":"Geneea simple REST API version 1"},{"name":"status-api","description":"REST API for status monitoring"}],"paths":{"/account":{"get":{"tags":["account"],"summary":"Information about current user account","description":"getInfo","operationId":"getInfo","responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Information%20about%20a%20user%20account."}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/s1/correction":{"get":{"tags":["geneea-api-s1"],"summary":"Performs text correction (diacritization) on the given document","description":"<br/><strong>Possible options:</strong><p class=\"markdown\">An optional parameter <code>diacritize</code> with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate whether the text diacritization will be performed. The default value is <code>auto</code>.</p>","operationId":"correctionGet","parameters":[{"name":"id","in":"query","description":"document ID","schema":{"type":"string"}},{"name":"text","in":"query","description":"raw document text","schema":{"type":"string"}},{"name":"url","in":"query","description":"document URL","schema":{"type":"string"}},{"name":"extractor","in":"query","description":"document extractor","schema":{"type":"string","enum":["default","article","keep-everything"]}},{"name":"language","in":"query","description":"document language","schema":{"type":"string"}},{"name":"returnTextInfo","in":"query","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Response%20for%20the%20text%20correction"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false},"post":{"tags":["geneea-api-s1"],"summary":"Performs text correction (diacritization) on the given document","description":"<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre><br/><strong>Possible options:</strong><p class=\"markdown\">An optional parameter <code>diacritize</code> with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate whether the text diacritization will be performed. The default value is <code>auto</code>.</p>","operationId":"correctionPost","requestBody":{"description":"request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Request"}}},"required":false},"responses":{"200":{"description":"Description was not specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Response%20for%20the%20text%20correction"}}}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/s1/entities":{"get":{"tags":["geneea-api-s1"],"summary":"Performs named-entity recognition on the given document","description":"entitiesGet","operationId":"entitiesGet","parameters":[{"name":"id","in":"query","description":"document ID","schema":{"type":"string"}},{"name":"text","in":"query","description":"raw document text","schema":{"type":"string"}},{"name":"url","in":"query","description":"document URL","schema":{"type":"string"}},{"name":"extractor","in":"query","description":"document extractor","schema":{"type":"string","enum":["default","article","keep-everything"]}},{"name":"language","in":"query","description":"document language","schema":{"type":"string"}},{"name":"returnTextInfo","in":"query","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EntitiesResponse"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false},"post":{"tags":["geneea-api-s1"],"summary":"Performs named-entity recognition on the given document","description":"<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>","operationId":"entitiesPost","requestBody":{"description":"request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Request"}}},"required":false},"responses":{"200":{"description":"Description was not specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EntitiesResponse"}}}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/s1/lemmatize":{"get":{"tags":["geneea-api-s1"],"summary":"Performs lemmatization on the given document","description":"lemmatizeGet","operationId":"lemmatizeGet","parameters":[{"name":"id","in":"query","description":"document ID","schema":{"type":"string"}},{"name":"text","in":"query","description":"raw document text","schema":{"type":"string"}},{"name":"url","in":"query","description":"document URL","schema":{"type":"string"}},{"name":"extractor","in":"query","description":"document extractor","schema":{"type":"string","enum":["default","article","keep-everything"]}},{"name":"language","in":"query","description":"document language","schema":{"type":"string"}},{"name":"returnTextInfo","in":"query","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LemmatizeResponse"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false},"post":{"tags":["geneea-api-s1"],"summary":"Performs lemmatization on the given document","description":"<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>","operationId":"lemmatizePost","requestBody":{"description":"request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Request"}}},"required":false},"responses":{"200":{"description":"Description was not specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LemmatizeResponse"}}}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/s1/sentiment":{"get":{"tags":["geneea-api-s1"],"summary":"Performs sentiment analysis on the given document","description":"sentimentGet","operationId":"sentimentGet","parameters":[{"name":"id","in":"query","description":"document ID","schema":{"type":"string"}},{"name":"text","in":"query","description":"raw document text","schema":{"type":"string"}},{"name":"url","in":"query","description":"document URL","schema":{"type":"string"}},{"name":"extractor","in":"query","description":"document extractor","schema":{"type":"string","enum":["default","article","keep-everything"]}},{"name":"language","in":"query","description":"document language","schema":{"type":"string"}},{"name":"returnTextInfo","in":"query","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SentimentResponse"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false},"post":{"tags":["geneea-api-s1"],"summary":"Performs sentiment analysis on the given document","description":"<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>","operationId":"sentimentPost","requestBody":{"description":"request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Request"}}},"required":false},"responses":{"200":{"description":"Description was not specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SentimentResponse"}}}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/s1/topic":{"get":{"tags":["geneea-api-s1"],"summary":"Performs topic detection on the given document","description":"topicGet","operationId":"topicGet","parameters":[{"name":"id","in":"query","description":"document ID","schema":{"type":"string"}},{"name":"text","in":"query","description":"raw document text","schema":{"type":"string"}},{"name":"url","in":"query","description":"document URL","schema":{"type":"string"}},{"name":"extractor","in":"query","description":"document extractor","schema":{"type":"string","enum":["default","article","keep-everything"]}},{"name":"language","in":"query","description":"document language","schema":{"type":"string"}},{"name":"returnTextInfo","in":"query","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TopicResponse"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false},"post":{"tags":["geneea-api-s1"],"summary":"Performs topic detection on the given document","description":"<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>","operationId":"topicPost","requestBody":{"description":"request","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Request"}}},"required":false},"responses":{"200":{"description":"Description was not specified","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TopicResponse"}}}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/status":{"get":{"tags":["status-api"],"summary":"Gets status of the Interpretor service","description":"status","operationId":"status","responses":{"200":{"description":"OK","content":{"text/plain":{"schema":{"type":"string"}},"application/json":{"schema":{"type":"string"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}}},"components":{"schemas":{"EntitiesResponse":{"required":["entities","language"],"type":"object","properties":{"entities":{"type":"array","description":"Found named entities in the document","items":{"$ref":"#/components/schemas/Entity"}},"id":{"type":"string","description":"Unique identifier of the document"},"language":{"type":"string","description":"The used language of the document"},"text":{"type":"string","description":"The raw text of the document which has been analysed"}},"description":"Response for the named-entity recognition"},"Entity":{"required":["entity","links","textOffset","type"],"type":"object","properties":{"entity":{"type":"string","description":"Disambiguated and standardized form of the entity"},"links":{"type":"object","description":"Disambiguation links for the entity, e.g. its DBpedia page"},"sentiment":{"type":"number","description":"Detected sentiment of the entity (value from -1.0 to 1.0)","format":"double"},"textOffset":{"type":"integer","description":"Character offset in the text (starting from 0)","format":"int32"},"type":{"type":"string","description":"Detected type of the entity"}},"description":"The named entity"},"Information_about_a_user_account.":{"type":"object","properties":{"remainingQuotas":{"type":"array","description":"Remaining quotas for the user account.","items":{"$ref":"#/components/schemas/Entry«string,long»"}},"type":{"type":"string","description":"Type (plan) of the user account."}}},"Label":{"required":["confidence","label"],"type":"object","properties":{"confidence":{"type":"number","description":"Confidence (probability) of this label","format":"double"},"label":{"type":"string","description":"The value of this label"}},"description":"The topic label"},"LemmatizeResponse":{"required":["language","lemmatizedText"],"type":"object","properties":{"id":{"type":"string","description":"Unique identifier of the document"},"language":{"type":"string","description":"The used language of the document"},"lemmatizedText":{"type":"string","description":"Lemmatized text of the document, individual tokens are separated by a space and sentences are separated by a new-line character"},"text":{"type":"string","description":"The raw text of the document which has been analysed"}},"description":"Response for the lemmatization"},"Request":{"type":"object","properties":{"extractor":{"type":"string","description":"[optional] Text extractor to be used when analyzing HTML document","enum":["default","article","keep-everything"]},"id":{"type":"string","description":"Unique identifier of the document, it's optional"},"language":{"type":"string","description":"[optional] The language of the document, auto-detection will be used if omitted"},"options":{"type":"object","description":"[optional] Additional options for the internal modules (key-value pairs)"},"returnTextInfo":{"type":"boolean","description":"[optional] Indicates whether to return the source text within the response object"},"text":{"type":"string","description":"The raw text to be analyzed, mutually exclusive with the 'url' parameter"},"url":{"type":"string","description":"URL of a document to be analysed, mutually exclusive with the 'text' parameter"}},"description":"Request encapsulation for simple API version 1"},"Response_for_the_text_correction":{"required":["correctedText","language"],"type":"object","properties":{"corrected":{"type":"boolean"},"correctedText":{"type":"string","description":"Corrected text of the document"},"diacritized":{"type":"boolean"},"id":{"type":"string","description":"Unique identifier of the document"},"language":{"type":"string","description":"The used language of the document"},"text":{"type":"string","description":"The raw text of the document which has been analysed"}}},"SentimentResponse":{"required":["language","sentiment"],"type":"object","properties":{"id":{"type":"string","description":"Unique identifier of the document"},"language":{"type":"string","description":"The used language of the document"},"sentiment":{"type":"number","description":"Detected sentiment of the document (value from -1.0 to 1.0)","format":"double"},"text":{"type":"string","description":"The raw text of the document which has been analysed"}},"description":"Response for the sentiment analysis"},"TopicResponse":{"required":["confidence","labels","language","topic"],"type":"object","properties":{"confidence":{"type":"number","description":"Confidence for the detected topic","format":"double"},"id":{"type":"string","description":"Unique identifier of the document"},"labels":{"type":"array","description":"Probabilistic distribution over possible topic labels","items":{"$ref":"#/components/schemas/Label"}},"language":{"type":"string","description":"The used language of the document"},"text":{"type":"string","description":"The raw text of the document which has been analysed"},"topic":{"type":"string","description":"Detected topic of the document"}},"description":"Response for the topic detection"}},"securitySchemes":{"user_key":{"type":"apiKey","name":"user_key","in":"query"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Geneea Natural Language Processing",
+    "description" : "<div class=\"api-description\">\n    <h2>Authentication</h2>\n    <p>For all calls, supply your API key. <a href=\"https://www.geneea.com/pricing\">Sign up to <em>obtain the key</em></a>.</p>\n    <p>\n        Our API supports both <em>unencrypted (HTTP)</em> and <em>encrypted (HTTPS)</em> protocols.\n        However, for security reasons, we strongly encourage using only the encrypted version.\n    </p>\n    <p>The API key should be supplied as either a request parameter <code>user_key</code> or in <code>Authorization</code> header.</p>\n    <pre><code>Authorization: user_key &lt;YOUR_API_KEY&gt;</code></pre>\n\n    <h2>API operations</h2>\n    <p>\n        All API operations can perform analysis on supplied raw text or on text extracted from a given URL.\n        Optionally, one can supply additional information which can make the result more precise. An example\n        of such information would be the language of text or a particular text extractor for URL resources.\n    </p>\n    <p>The supported types of analyses are:</p>\n    <ul>\n        <li><strong>lemmatization</strong> &longrightarrow;\n            Finds out lemmata (basic forms) of all the words in the document.\n        </li>\n        <li><strong>correction</strong> &longrightarrow;\n            Performs correction (diacritization) on all the words in the document.\n        </li>\n        <li><strong>topic detection</strong> &longrightarrow;\n            Determines a topic of the document, e.g. finance or sports.\n        </li>\n        <li><strong>sentiment analysis</strong> &longrightarrow;\n            Determines a sentiment of the document, i.e. how positive or negative the document is.\n        </li>\n        <li><strong>named entity recognition</strong> &longrightarrow;\n            Finds named entities (like person, location, date etc.) mentioned the the document.\n        </li>\n    </ul>\n\n    <h2>Encoding</h2>\n    <p>The supplied text is expected to be in UTF-8 encoding, this is especially important for non-english texts.</p>\n\n    <h2>Returned values</h2>\n    <p>The API calls always return objects in serialized JSON format in UTF-8 encoding.</p>\n    <p>\n        If any error occurs, the HTTP response code will be in the range <code>4xx</code> (client-side error) or\n        <code>5xx</code> (server-side error). In this situation, the body of the response will contain information\n        about the error in JSON format, with <code>exception</code> and <code>message</code> values.\n    </p>\n\n    <h2>URL limitations</h2>\n    <p>\n        All the requests are semantically <code>GET</code>. However, for longer texts, you may run into issues\n        with URL length limit. Therefore, it's possible to always issue a <code>POST</code> request with all\n        the parameters encoded as a JSON in the request body.\n    </p>\n    <p>Example:</p>\n    <pre><code>\n        POST /s1/sentiment\n        Content-Type: application/json\n\n        {\"text\":\"There is no harm in being sometimes wrong - especially if one is promptly found out.\"}\n    </code></pre>\n    <p>This is equivalent to <code>GET /s1/sentiment?text=There%20is%20no%20harm...</code></p>\n\n    <h2>Request limitations</h2>\n    <p>\n        The API has other limitations concerning the size of the HTTP requests. The maximum allowed size of any\n        POST request body is <em>512 KiB</em>. For request with a URL resource, the maximum allowed number of\n        extracted characters from each such resource is <em>100,000</em>.\n    </p>\n\n    <h2>Terms of Service</h2>\n    <p>\n        By using the API, you agree to our\n        <a href=\"https://www.geneea.com/terms.html\" target=\"_blank\">Terms of Service Agreement</a>.\n    </p>\n\n    <h2>More information</h2>\n    <p>\n        <a href=\"https://help.geneea.com/index.html\" target=\"_blank\">\n        The Interpretor Public Documentation\n        </a>\n    </p>\n</div>\n",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.geneea.com/"
+  } ],
+  "security" : [ {
+    "user_key" : null
+  } ],
+  "tags" : [ {
+    "name" : "account",
+    "description" : "Basic information about the user account."
+  }, {
+    "name" : "geneea-api-s1",
+    "description" : "Geneea simple REST API version 1"
+  }, {
+    "name" : "status-api",
+    "description" : "REST API for status monitoring"
+  } ],
+  "paths" : {
+    "/account" : {
+      "get" : {
+        "tags" : [ "account" ],
+        "summary" : "Information about current user account",
+        "description" : "getInfo",
+        "operationId" : "getInfo",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Information%20about%20a%20user%20account."
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/s1/correction" : {
+      "get" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs text correction (diacritization) on the given document",
+        "description" : "<br/><strong>Possible options:</strong><p class=\"markdown\">An optional parameter <code>diacritize</code> with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate whether the text diacritization will be performed. The default value is <code>auto</code>.</p>",
+        "operationId" : "correctionGet",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "document ID",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "raw document text",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "document URL",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extractor",
+          "in" : "query",
+          "description" : "document extractor",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default", "article", "keep-everything" ]
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "document language",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "returnTextInfo",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response%20for%20the%20text%20correction"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs text correction (diacritization) on the given document",
+        "description" : "<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre><br/><strong>Possible options:</strong><p class=\"markdown\">An optional parameter <code>diacritize</code> with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate whether the text diacritization will be performed. The default value is <code>auto</code>.</p>",
+        "operationId" : "correctionPost",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Description was not specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response%20for%20the%20text%20correction"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/s1/entities" : {
+      "get" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs named-entity recognition on the given document",
+        "description" : "entitiesGet",
+        "operationId" : "entitiesGet",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "document ID",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "raw document text",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "document URL",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extractor",
+          "in" : "query",
+          "description" : "document extractor",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default", "article", "keep-everything" ]
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "document language",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "returnTextInfo",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EntitiesResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs named-entity recognition on the given document",
+        "description" : "<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>",
+        "operationId" : "entitiesPost",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Description was not specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EntitiesResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/s1/lemmatize" : {
+      "get" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs lemmatization on the given document",
+        "description" : "lemmatizeGet",
+        "operationId" : "lemmatizeGet",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "document ID",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "raw document text",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "document URL",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extractor",
+          "in" : "query",
+          "description" : "document extractor",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default", "article", "keep-everything" ]
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "document language",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "returnTextInfo",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LemmatizeResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs lemmatization on the given document",
+        "description" : "<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>",
+        "operationId" : "lemmatizePost",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Description was not specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LemmatizeResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/s1/sentiment" : {
+      "get" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs sentiment analysis on the given document",
+        "description" : "sentimentGet",
+        "operationId" : "sentimentGet",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "document ID",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "raw document text",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "document URL",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extractor",
+          "in" : "query",
+          "description" : "document extractor",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default", "article", "keep-everything" ]
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "document language",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "returnTextInfo",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SentimentResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs sentiment analysis on the given document",
+        "description" : "<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>",
+        "operationId" : "sentimentPost",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Description was not specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SentimentResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/s1/topic" : {
+      "get" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs topic detection on the given document",
+        "description" : "topicGet",
+        "operationId" : "topicGet",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "document ID",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "raw document text",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "document URL",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "extractor",
+          "in" : "query",
+          "description" : "document extractor",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "default", "article", "keep-everything" ]
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "document language",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "returnTextInfo",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TopicResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "geneea-api-s1" ],
+        "summary" : "Performs topic detection on the given document",
+        "description" : "<strong>Notes:</strong><br/>Valid JSON cannot contain newline characters. These have to be escaped. (See also <a href=\"https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation\" target=\"_blank\">Interpretor documentation</a>)<br/>Fields <code>text</code> and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{\"text\": \"Hello world!\"}</code></pre><pre><code>{\"url\": \"https://en.wikipedia.org/wiki/Pyrrhuloxia\"}</code></pre>",
+        "operationId" : "topicPost",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Description was not specified",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TopicResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/status" : {
+      "get" : {
+        "tags" : [ "status-api" ],
+        "summary" : "Gets status of the Interpretor service",
+        "description" : "status",
+        "operationId" : "status",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "EntitiesResponse" : {
+        "required" : [ "entities", "language" ],
+        "type" : "object",
+        "properties" : {
+          "entities" : {
+            "type" : "array",
+            "description" : "Found named entities in the document",
+            "items" : {
+              "$ref" : "#/components/schemas/Entity"
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "The used language of the document"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text of the document which has been analysed"
+          }
+        },
+        "description" : "Response for the named-entity recognition"
+      },
+      "Entity" : {
+        "required" : [ "entity", "links", "textOffset", "type" ],
+        "type" : "object",
+        "properties" : {
+          "entity" : {
+            "type" : "string",
+            "description" : "Disambiguated and standardized form of the entity"
+          },
+          "links" : {
+            "type" : "object",
+            "description" : "Disambiguation links for the entity, e.g. its DBpedia page"
+          },
+          "sentiment" : {
+            "type" : "number",
+            "description" : "Detected sentiment of the entity (value from -1.0 to 1.0)",
+            "format" : "double"
+          },
+          "textOffset" : {
+            "type" : "integer",
+            "description" : "Character offset in the text (starting from 0)",
+            "format" : "int32"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Detected type of the entity"
+          }
+        },
+        "description" : "The named entity"
+      },
+      "Information_about_a_user_account." : {
+        "type" : "object",
+        "properties" : {
+          "remainingQuotas" : {
+            "type" : "array",
+            "description" : "Remaining quotas for the user account.",
+            "items" : {
+              "$ref" : "#/components/schemas/Entry«string,long»"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type (plan) of the user account."
+          }
+        }
+      },
+      "Label" : {
+        "required" : [ "confidence", "label" ],
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "description" : "Confidence (probability) of this label",
+            "format" : "double"
+          },
+          "label" : {
+            "type" : "string",
+            "description" : "The value of this label"
+          }
+        },
+        "description" : "The topic label"
+      },
+      "LemmatizeResponse" : {
+        "required" : [ "language", "lemmatizedText" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "The used language of the document"
+          },
+          "lemmatizedText" : {
+            "type" : "string",
+            "description" : "Lemmatized text of the document, individual tokens are separated by a space and sentences are separated by a new-line character"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text of the document which has been analysed"
+          }
+        },
+        "description" : "Response for the lemmatization"
+      },
+      "Request" : {
+        "type" : "object",
+        "properties" : {
+          "extractor" : {
+            "type" : "string",
+            "description" : "[optional] Text extractor to be used when analyzing HTML document",
+            "enum" : [ "default", "article", "keep-everything" ]
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document, it's optional"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "[optional] The language of the document, auto-detection will be used if omitted"
+          },
+          "options" : {
+            "type" : "object",
+            "description" : "[optional] Additional options for the internal modules (key-value pairs)"
+          },
+          "returnTextInfo" : {
+            "type" : "boolean",
+            "description" : "[optional] Indicates whether to return the source text within the response object"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text to be analyzed, mutually exclusive with the 'url' parameter"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "URL of a document to be analysed, mutually exclusive with the 'text' parameter"
+          }
+        },
+        "description" : "Request encapsulation for simple API version 1"
+      },
+      "Response_for_the_text_correction" : {
+        "required" : [ "correctedText", "language" ],
+        "type" : "object",
+        "properties" : {
+          "corrected" : {
+            "type" : "boolean"
+          },
+          "correctedText" : {
+            "type" : "string",
+            "description" : "Corrected text of the document"
+          },
+          "diacritized" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "The used language of the document"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text of the document which has been analysed"
+          }
+        }
+      },
+      "SentimentResponse" : {
+        "required" : [ "language", "sentiment" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document"
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "The used language of the document"
+          },
+          "sentiment" : {
+            "type" : "number",
+            "description" : "Detected sentiment of the document (value from -1.0 to 1.0)",
+            "format" : "double"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text of the document which has been analysed"
+          }
+        },
+        "description" : "Response for the sentiment analysis"
+      },
+      "TopicResponse" : {
+        "required" : [ "confidence", "labels", "language", "topic" ],
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "description" : "Confidence for the detected topic",
+            "format" : "double"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identifier of the document"
+          },
+          "labels" : {
+            "type" : "array",
+            "description" : "Probabilistic distribution over possible topic labels",
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "The used language of the document"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The raw text of the document which has been analysed"
+          },
+          "topic" : {
+            "type" : "string",
+            "description" : "Detected topic of the document"
+          }
+        },
+        "description" : "Response for the topic detection"
+      }
+    },
+    "securitySchemes" : {
+      "user_key" : {
+        "type" : "apiKey",
+        "name" : "user_key",
+        "in" : "query"
+      }
+    }
+  }
+}

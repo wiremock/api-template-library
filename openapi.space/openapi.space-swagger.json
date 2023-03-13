@@ -1,1 +1,808 @@
-{"openapi":"3.0.1","info":{"title":"OpenAPI space","description":"This is the API for OpenAPI space.","contact":{"name":"APInf Oy","url":"http://apinf.org","email":"info@apinf.io"},"version":"1.0.0"},"servers":[{"url":"https://openapi.space/api/v1"}],"tags":[{"name":"APIs","description":"Operations for APIs"},{"name":"Auth","description":"Operations for authentication"}],"paths":{"/apis":{"get":{"tags":["APIs"],"summary":"Retrieves a list of currently defined APIs in API meta list format.","operationId":"search_apis","parameters":[{"name":"query","in":"query","description":"free text query to match","schema":{"type":"string"}},{"name":"limit","in":"query","description":"the maximum number of APIs to return","schema":{"type":"integer","default":10}},{"name":"offset","in":"query","description":"the offset where to start from when fetching a limited number of APIs","schema":{"type":"integer","default":0}},{"name":"sort","in":"query","description":"sort criteria or result set\n* NAME -\n* UPATED\n* CREATED\n* OWNER\n","schema":{"type":"string","default":"NAME","enum":["NAME","UPDATED","CREATED","OWNER"]}},{"name":"order","in":"query","description":"sort order","schema":{"type":"string","default":"ASC","enum":["ASC","DESC"]}}],"responses":{"200":{"description":"a list of APIs in API meta list format","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMetaList"}}}}},"security":[{"AuthToken":null}]}},"/apis/{owner}":{"get":{"tags":["APIs"],"summary":"Retrieves an API meta listing of all APIs defined for this owner","operationId":"get_owner_apis","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"sort","in":"query","description":"sort criteria or result set\n* NAME -\n* UPATED\n* CREATED\n* OWNER\n","schema":{"type":"string","default":"NAME","enum":["NAME","UPDATED","CREATED","OWNER"]}},{"name":"order","in":"query","description":"sort order","schema":{"type":"string","default":"ASC","enum":["ASC","DESC"]}}],"responses":{"200":{"description":"a list of APIs in API meta list format","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMetaList"}}}}},"security":[{"AuthToken":null}]}},"/apis/{owner}/{api}":{"get":{"tags":["APIs"],"summary":"Retrieves an API meta listing for all API versions for this owner and API","operationId":"get_api_versions","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"a list of API versions in API meta format","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMetaList"}}}}},"security":[{"AuthToken":null}]},"post":{"tags":["APIs"],"summary":"Saves the provided Swagger definition","description":"Saves the provided Swagger definition; the owner must match the token owner. The version will be extracted from the Swagger definitions itself.","operationId":"save_definition","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}},{"name":"private","in":"query","description":"Defines whether the API has to be private","schema":{"type":"boolean","default":false}},{"name":"force","in":"query","description":"force update","schema":{"type":"boolean","default":false}}],"requestBody":{"description":"the Swagger definition of this API","content":{"application/json":{"schema":{"type":"object"}}},"required":true},"responses":{"200":{"description":"the API was successfully saved","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMeta"}}}},"201":{"description":"new API was successfully saved","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMeta"}}}},"400":{"description":"the Swagger definition was invalid"},"403":{"description":"the API is not owned by the user"},"409":{"description":"can not overwrite a published API version without force=true"},"415":{"description":"invalid content type"}},"security":[{"AuthToken":null}]},"delete":{"tags":["APIs"],"summary":"Deletes the specified API","operationId":"delete_api","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"the API was successfully deleted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMetaList"}}}},"403":{"description":"access denied"},"404":{"description":"specified API not found"}},"security":[{"AuthToken":null}]}},"/apis/{owner}/{api}/{version}":{"post":{"tags":["APIs"],"summary":"Publish a particular version of the specified API","operationId":"publish_api_version","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}},{"name":"version","in":"path","description":"version identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"the API version was successfully published"},"403":{"description":"access denied"},"404":{"description":"specified API not found"},"409":{"description":"the API version is already published"}}},"delete":{"tags":["APIs"],"summary":"Deletes a particular version of the specified API","operationId":"delete_api_version","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}},{"name":"version","in":"path","description":"version identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"the API version was successfully deleted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/APIMeta"}}}},"403":{"description":"access denied"},"404":{"description":"specified API not found"},"409":{"description":"the API version is the only version of this API"}},"security":[{"AuthToken":null}]}},"/apis/{owner}/{api}/{version}/swagger.json":{"get":{"tags":["APIs"],"summary":"Retrieves the Swagger definition for the specified API and version in JSON format","operationId":"get_json_definition","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}},{"name":"version","in":"path","description":"version identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"the Swagger API in JSON format","content":{"application/json":{"schema":{"type":"object"}}}},"403":{"description":"access denied: api is private"},"404":{"description":"specified API not found"}},"security":[{"AuthToken":null}]}},"/apis/{owner}/{api}/{version}/swagger.yaml":{"get":{"tags":["APIs"],"summary":"Retrieves the Swagger definition for the specified API and version in YAML format","operationId":"get_yaml_definition","parameters":[{"name":"owner","in":"path","description":"API owner identifier","required":true,"schema":{"type":"string"}},{"name":"api","in":"path","description":"API identifier","required":true,"schema":{"type":"string"}},{"name":"version","in":"path","description":"version identifier","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"the Swagger API in YAML format","content":{"text/vnd.yaml":{"schema":{"type":"object"}}}},"403":{"description":"access denied: api is private"},"404":{"description":"specified API not found"}},"security":[{"AuthToken":null}]}},"/auth/login":{"post":{"tags":["Auth"],"summary":"Log in to OpenAPI space","operationId":"login","requestBody":{"description":"the user credentials","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Credentials"}}},"required":false},"responses":{"200":{"description":"login successful","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginToken"}}}},"401":{"description":"invalid password"},"404":{"description":"user not found"}}}},"/auth/login/apinf":{"post":{"tags":["Auth"],"summary":"Log in to OpenAPI space using an APInf account","operationId":"login_apinf","requestBody":{"description":"the APInf username and password","content":{"application/json":{"schema":{"required":["password","username"],"type":"object","properties":{"password":{"type":"string"},"username":{"type":"string"}}}}},"required":false},"responses":{"200":{"description":"login successful","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginToken"}}}},"401":{"description":"invalid username or password"}}}},"/auth/login/apinf_token":{"post":{"tags":["Auth"],"summary":"Log in to OpenAPI space using an APInf authentication token","operationId":"login_apinf_token","requestBody":{"description":"the APInf authentication token and user ID","content":{"application/json":{"schema":{"required":["auth_token","user_id"],"type":"object","properties":{"auth_token":{"type":"string"},"user_id":{"type":"string"}}}}},"required":false},"responses":{"200":{"description":"login successful","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginToken"}}}},"401":{"description":"invalid user ID or auth token"}}}},"/auth/logout":{"post":{"tags":["Auth"],"summary":"Log out from OpenAPI space","operationId":"logout","responses":{"200":{"description":"logout successful"},"403":{"description":"user was not logged in"}},"security":[{"AuthToken":null}]}},"/auth/ping":{"post":{"tags":["Auth"],"summary":"Check whether or not you are authenticated","operationId":"ping","responses":{"200":{"description":"logged in","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Registration"}}}},"403":{"description":"not logged in"}},"security":[{"AuthToken":null}]}},"/auth/register":{"post":{"tags":["Auth"],"summary":"Register to OpenAPI space","operationId":"register","requestBody":{"description":"registration details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Registration"}}},"required":false},"responses":{"200":{"description":"registration successful","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginToken"}}}},"409":{"description":"username or email taken","content":{"application/json":{"schema":{"type":"string","description":"defines which field is already in use","enum":["EMAIL","USERNAME"]}}}}}}}},"components":{"schemas":{"APIMeta":{"type":"object","properties":{"created":{"type":"string","format":"date-time"},"description":{"type":"string"},"modified":{"type":"string","format":"date-time"},"name":{"type":"string"},"owner":{"type":"string"},"swagger":{"type":"object","description":"An optional Swagger spec. Not included in meta lists."},"url":{"type":"string","format":"url"},"versions":{"type":"array","items":{"type":"object"}}}},"APIMetaList":{"type":"array","items":{"$ref":"#/components/schemas/APIMeta"}},"Credentials":{"required":["password","username"],"type":"object","properties":{"password":{"type":"string"},"username":{"type":"string"}}},"LoginToken":{"type":"object","properties":{"token":{"type":"string","description":"The authentication token sent from the server after a successful login"},"username":{"type":"string"}}},"Registration":{"allOf":[{"$ref":"#/components/schemas/Credentials"},{"required":["email"],"type":"object","properties":{"email":{"type":"string"}}}]}},"securitySchemes":{"AuthToken":{"type":"apiKey","name":"Authorization","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "OpenAPI space",
+    "description" : "This is the API for OpenAPI space.",
+    "contact" : {
+      "name" : "APInf Oy",
+      "url" : "http://apinf.org",
+      "email" : "info@apinf.io"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://openapi.space/api/v1"
+  } ],
+  "tags" : [ {
+    "name" : "APIs",
+    "description" : "Operations for APIs"
+  }, {
+    "name" : "Auth",
+    "description" : "Operations for authentication"
+  } ],
+  "paths" : {
+    "/apis" : {
+      "get" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Retrieves a list of currently defined APIs in API meta list format.",
+        "operationId" : "search_apis",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "query",
+          "description" : "free text query to match",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "the maximum number of APIs to return",
+          "schema" : {
+            "type" : "integer",
+            "default" : 10
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "the offset where to start from when fetching a limited number of APIs",
+          "schema" : {
+            "type" : "integer",
+            "default" : 0
+          }
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "sort criteria or result set\n* NAME -\n* UPATED\n* CREATED\n* OWNER\n",
+          "schema" : {
+            "type" : "string",
+            "default" : "NAME",
+            "enum" : [ "NAME", "UPDATED", "CREATED", "OWNER" ]
+          }
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "sort order",
+          "schema" : {
+            "type" : "string",
+            "default" : "ASC",
+            "enum" : [ "ASC", "DESC" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of APIs in API meta list format",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMetaList"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/apis/{owner}" : {
+      "get" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Retrieves an API meta listing of all APIs defined for this owner",
+        "operationId" : "get_owner_apis",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "sort criteria or result set\n* NAME -\n* UPATED\n* CREATED\n* OWNER\n",
+          "schema" : {
+            "type" : "string",
+            "default" : "NAME",
+            "enum" : [ "NAME", "UPDATED", "CREATED", "OWNER" ]
+          }
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "sort order",
+          "schema" : {
+            "type" : "string",
+            "default" : "ASC",
+            "enum" : [ "ASC", "DESC" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of APIs in API meta list format",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMetaList"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/apis/{owner}/{api}" : {
+      "get" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Retrieves an API meta listing for all API versions for this owner and API",
+        "operationId" : "get_api_versions",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of API versions in API meta format",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMetaList"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      },
+      "post" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Saves the provided Swagger definition",
+        "description" : "Saves the provided Swagger definition; the owner must match the token owner. The version will be extracted from the Swagger definitions itself.",
+        "operationId" : "save_definition",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "private",
+          "in" : "query",
+          "description" : "Defines whether the API has to be private",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "force",
+          "in" : "query",
+          "description" : "force update",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "requestBody" : {
+          "description" : "the Swagger definition of this API",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "the API was successfully saved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMeta"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "new API was successfully saved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMeta"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "the Swagger definition was invalid"
+          },
+          "403" : {
+            "description" : "the API is not owned by the user"
+          },
+          "409" : {
+            "description" : "can not overwrite a published API version without force=true"
+          },
+          "415" : {
+            "description" : "invalid content type"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Deletes the specified API",
+        "operationId" : "delete_api",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the API was successfully deleted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMetaList"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "access denied"
+          },
+          "404" : {
+            "description" : "specified API not found"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/apis/{owner}/{api}/{version}" : {
+      "post" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Publish a particular version of the specified API",
+        "operationId" : "publish_api_version",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "version identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the API version was successfully published"
+          },
+          "403" : {
+            "description" : "access denied"
+          },
+          "404" : {
+            "description" : "specified API not found"
+          },
+          "409" : {
+            "description" : "the API version is already published"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Deletes a particular version of the specified API",
+        "operationId" : "delete_api_version",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "version identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the API version was successfully deleted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIMeta"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "access denied"
+          },
+          "404" : {
+            "description" : "specified API not found"
+          },
+          "409" : {
+            "description" : "the API version is the only version of this API"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/apis/{owner}/{api}/{version}/swagger.json" : {
+      "get" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Retrieves the Swagger definition for the specified API and version in JSON format",
+        "operationId" : "get_json_definition",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "version identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the Swagger API in JSON format",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "access denied: api is private"
+          },
+          "404" : {
+            "description" : "specified API not found"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/apis/{owner}/{api}/{version}/swagger.yaml" : {
+      "get" : {
+        "tags" : [ "APIs" ],
+        "summary" : "Retrieves the Swagger definition for the specified API and version in YAML format",
+        "operationId" : "get_yaml_definition",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "API owner identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api",
+          "in" : "path",
+          "description" : "API identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "version identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the Swagger API in YAML format",
+            "content" : {
+              "text/vnd.yaml" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "access denied: api is private"
+          },
+          "404" : {
+            "description" : "specified API not found"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Log in to OpenAPI space",
+        "operationId" : "login",
+        "requestBody" : {
+          "description" : "the user credentials",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Credentials"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "login successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginToken"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "invalid password"
+          },
+          "404" : {
+            "description" : "user not found"
+          }
+        }
+      }
+    },
+    "/auth/login/apinf" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Log in to OpenAPI space using an APInf account",
+        "operationId" : "login_apinf",
+        "requestBody" : {
+          "description" : "the APInf username and password",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "password", "username" ],
+                "type" : "object",
+                "properties" : {
+                  "password" : {
+                    "type" : "string"
+                  },
+                  "username" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "login successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginToken"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "invalid username or password"
+          }
+        }
+      }
+    },
+    "/auth/login/apinf_token" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Log in to OpenAPI space using an APInf authentication token",
+        "operationId" : "login_apinf_token",
+        "requestBody" : {
+          "description" : "the APInf authentication token and user ID",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "auth_token", "user_id" ],
+                "type" : "object",
+                "properties" : {
+                  "auth_token" : {
+                    "type" : "string"
+                  },
+                  "user_id" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "login successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginToken"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "invalid user ID or auth token"
+          }
+        }
+      }
+    },
+    "/auth/logout" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Log out from OpenAPI space",
+        "operationId" : "logout",
+        "responses" : {
+          "200" : {
+            "description" : "logout successful"
+          },
+          "403" : {
+            "description" : "user was not logged in"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/auth/ping" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Check whether or not you are authenticated",
+        "operationId" : "ping",
+        "responses" : {
+          "200" : {
+            "description" : "logged in",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Registration"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "not logged in"
+          }
+        },
+        "security" : [ {
+          "AuthToken" : null
+        } ]
+      }
+    },
+    "/auth/register" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Register to OpenAPI space",
+        "operationId" : "register",
+        "requestBody" : {
+          "description" : "registration details",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Registration"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "registration successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginToken"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "username or email taken",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "defines which field is already in use",
+                  "enum" : [ "EMAIL", "USERNAME" ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "APIMeta" : {
+        "type" : "object",
+        "properties" : {
+          "created" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "modified" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "owner" : {
+            "type" : "string"
+          },
+          "swagger" : {
+            "type" : "object",
+            "description" : "An optional Swagger spec. Not included in meta lists."
+          },
+          "url" : {
+            "type" : "string",
+            "format" : "url"
+          },
+          "versions" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "APIMetaList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/APIMeta"
+        }
+      },
+      "Credentials" : {
+        "required" : [ "password", "username" ],
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LoginToken" : {
+        "type" : "object",
+        "properties" : {
+          "token" : {
+            "type" : "string",
+            "description" : "The authentication token sent from the server after a successful login"
+          },
+          "username" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Registration" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Credentials"
+        }, {
+          "required" : [ "email" ],
+          "type" : "object",
+          "properties" : {
+            "email" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      }
+    },
+    "securitySchemes" : {
+      "AuthToken" : {
+        "type" : "apiKey",
+        "name" : "Authorization",
+        "in" : "header"
+      }
+    }
+  }
+}

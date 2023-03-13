@@ -1,1 +1,2656 @@
-{"openapi":"3.0.1","info":{"title":"CROssBAR Data API","description":"# About CROssBAR & data\n**CROssBAR**: Comprehensive Resource of Biomedical Relations with Deep Learning Applications and Knowledge Graph Representations\nCROssBAR is a comprehensive system that integrates large-scale biomedical data from various resources e.g UniProt, ChEMBL, Drugbank, EFO, HPO, InterPro & PubChem and stores them in a new NoSQL database, enrich these data with deep learning based prediction of relations between numerous biomedical entities, rigorously analyse the enriched data to obtain biologically meaningful modules and display them to the user via easy to interpret, interactive and heterogeneous knowledge graphs.\nCROssBAR platform exposes a set of 12 endpoints to query data stored in the CROssBAR database. These endpoints help the user to find data of interest using different parameters provided by the API endpoint.\nFor example,\nhttps://www.ebi.ac.uk/tools/crossbar/proteins?accession=A0A023GRW5 -> will provide protein information about accession 'A0A023GRW5' including its interactions, functions, cross-references, variations and more.\nhttps://www.ebi.ac.uk/tools/crossbar/activities?moleculeChemblId=CHEMBL465983 -> will provide ChEMBL bio-interactions related information including targets and bio-activity measurements associated with molecule chembl id 'CHEMBL465983'\n\n**Knowledge graphs**\nAnother use case of CROssBAR's API endpoints is in building knowledge graphs. These endpoints can be *weaved* together (output from one API endpoint fed as input to another API endpoint) programmatically to link nodes like protein, disease, drugs etc. as nodes of the graph. The endpoints are designed to be independent from each other which allows users the flexibility to drive biological networks from any facet e.g drug-centric, disease-centric, gene-centric etc. Our service for knowledge graph construction is available at https://crossbar.kansil.org.\nAn example for the part of the background queries on the CROssBAR API during the construction of a knowledge graph, \n(with the aim of keeping the example simple, we have only included the processes related to pathways, genes/proteins and drugs/compounds)\nIn this example, we would like to find bio-active compounds (with a pChEMBL value threshold of at least 6.0) & drugs targeting all proteins belonging to \"WNT ligand biogenesis and trafficking\" pathway (based on Reactome pathway annotations).\nThis can be achieved by using endpoints listed on this swagger documentation as illustrated in following steps-\nFind bio-active compounds (with a pChEMBL value threshold of at least 6.0) & drugs targeting all proteins belonging to \"WNT ligand biogenesis and trafficking\" pathway (based on Reactome annotations)\nThis can be achieved by using endpoints listed on [this swagger documentation](https://www.ebi.ac.uk/tools/crossbar/swagger-ui.html) as illustrated in following steps-\n1. Get all proteins from “/proteins” API endpoint which have a reactome pathway name equal to \"WNT ligand biogenesis and trafficking\".\n2. From the collection of uniprot protein accessions collected from step 1 above, we query “/targets” API endpoint to obtain the ‘target_chembl_id’s of these proteins.\n3. From the collection of target_chembl_ids collected from step 2 above, we query “/activities” API endpoint with pChEMBL value >=6, to obtain the ’molecule_chembl_id’s of the molecules that we need. \n4. From the collection of uniprot protein accessions collected from step 1 above, we find out Drug names and ids from the “/drugs” API endpoint that targets our proteins.\n5. From the collection of ’molecule_chembl_id’s obtained in step3, we query “/molecules” endpoint to get the compounds that are interacting with the genes/proteins belonging to the “WNT ligand biogenesis and trafficking” pathway.","contact":{"name":"API support","email":"crossbar_dev@ebi.ac.uk"},"version":"1.0"},"servers":[{"url":"//www.ebi.ac.uk/Tools/crossbar"}],"tags":[{"name":"Activities","description":"Chembl Activities Resource"},{"name":"Assays","description":"Chembl Assays Resource"},{"name":"Drugs","description":"Drug Resource"},{"name":"EFO disease terms","description":"EFO Resource"},{"name":"HPO","description":"HPO Resource"},{"name":"Intact","description":"Intact Resource"},{"name":"Molecules","description":"Chembl Molecules Resource"},{"name":"Proteins","description":"Protein Resource"},{"name":"PubChem Bioassay Sids","description":"Pubchem Bioassay Sids Resource"},{"name":"PubChem Biossays","description":"Pubchem Bioassay Resource"},{"name":"PubChem Compounds","description":"Pubchem Compound Resource"},{"name":"PubChem Substances","description":"Pubchem Substance Resource"},{"name":"Targets","description":"Chembl Targets Resource"}],"paths":{"/activities":{"get":{"tags":["Activities"],"summary":"Get ChEMBL activities","operationId":"getActivitiesUsingGET","parameters":[{"name":"assayChemblId","in":"query","description":"assayChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"moleculeChemblId","in":"query","description":"moleculeChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"pchemblValue","in":"query","description":"pchemblValue","schema":{"type":"number","format":"double"}},{"name":"targetChemblId","in":"query","description":"targetChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Activities"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/assays":{"get":{"tags":["Assays"],"summary":"Get ChEMBL assays","operationId":"getAssaysUsingGET","parameters":[{"name":"assayChemblId","in":"query","description":"assayChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"assayOrg","in":"query","description":"assayOrg","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"assayType","in":"query","description":"assayType","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"targetChemblId","in":"query","description":"targetChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Assays"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/drugs":{"get":{"tags":["Drugs"],"summary":"drugs collected from Drugbank","operationId":"getDrugsUsingGET","parameters":[{"name":"accession","in":"query","description":"accession","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"chemblId","in":"query","description":"chemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"identifier","in":"query","description":"identifier","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"name","in":"query","description":"name","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"pubchemCid","in":"query","description":"pubchemCid","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Drugs"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/efo":{"get":{"tags":["EFO disease terms"],"summary":"Get EFO diseases data","operationId":"getEFOUsingGET","parameters":[{"name":"doid","in":"query","description":"doid","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"label","in":"query","description":"label","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"mesh","in":"query","description":"mesh","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"oboId","in":"query","description":"oboId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"omimId","in":"query","description":"omimId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"synonym","in":"query","description":"synonym","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EFOEntities"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/hpo":{"get":{"tags":["HPO"],"summary":"Get HPO phenotypes data","operationId":"getHpoUsingGET","parameters":[{"name":"genesymbol","in":"query","description":"genesymbol","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"hpotermname","in":"query","description":"hpotermname","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"synonym","in":"query","description":"synonym","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HpoEntities"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/intact":{"get":{"tags":["Intact"],"summary":"Molecular Interactions collected from IntAct","operationId":"getIntactUsingGET","parameters":[{"name":"accession","in":"query","description":"accession","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"confidence","in":"query","description":"confidence","schema":{"type":"number","format":"double"}},{"name":"gene","in":"query","description":"gene","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IntactInteractions"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/molecules":{"get":{"tags":["Molecules"],"summary":"Get ChEMBL molecules","operationId":"getMoleculesUsingGET","parameters":[{"name":"canonicalSmiles","in":"query","description":"canonicalSmiles","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"inchiKey","in":"query","description":"inchiKey","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"moleculeChemblId","in":"query","description":"moleculeChemblId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Molecules"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/proteins":{"get":{"tags":["Proteins"],"summary":"Proteins collected from Uniprot for selective tax ids  HUMAN(9606), MOUSE(10090), RAT(10116), BOVINE(9913), ESCHERICHIA_COLI(83333), SUS_SCROFA(9823), MYCOBACTERIUM_TUBERCULOSIS(83332), ORYCTOLAGUS_CUNICULUS(9986), SACCHAROMYCES_CEREVISIAE(559292), CVHSA(694009) & SARS2(2697049)","operationId":"getProteinsUsingGET","parameters":[{"name":"accession","in":"query","description":"accession","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"ec","in":"query","description":"ec","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"fullName","in":"query","description":"fullName","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"gene","in":"query","description":"gene","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"go","in":"query","description":"go","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"interpro","in":"query","description":"interpro","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"omim","in":"query","description":"omim","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"orphanet","in":"query","description":"orphanet","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"pfam","in":"query","description":"pfam","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"reactome","in":"query","description":"reactome","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"taxId","in":"query","description":"taxId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"integer","format":"int32"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Proteins"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/pubchem/bioassays":{"get":{"tags":["PubChem Biossays"],"summary":"Get pubchem bioassays","operationId":"getBioassaysUsingGET","parameters":[{"name":"accession","in":"query","description":"accession","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"assayPubchemId","in":"query","description":"assayPubchemId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":1}},{"name":"ncbiProteinId","in":"query","description":"ncbiProteinId","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Bioassays"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/pubchem/bioassays/sids":{"get":{"tags":["PubChem Bioassay Sids"],"summary":"Get pubchem bioassays associated to particular substance ids (sid) & outcome","operationId":"getBioassaysUsingGET_1","parameters":[{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"outcome","in":"query","description":"outcome","schema":{"type":"string"}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"sids","in":"query","description":"sids","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Bioassays"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/pubchem/compounds":{"get":{"tags":["PubChem Compounds"],"summary":"Get pubchem compounds","operationId":"getCompoundsUsingGET","parameters":[{"name":"canonicalSmiles","in":"query","description":"canonicalSmiles","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"cid","in":"query","description":"cid","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"inchiKey","in":"query","description":"inchiKey","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PubchemCompounds"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/pubchem/substances":{"get":{"tags":["PubChem Substances"],"summary":"Get pubchem substances","operationId":"getSubstancesUsingGET","parameters":[{"name":"cid","in":"query","description":"cid","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"sid","in":"query","description":"sid","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PubchemSubstances"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}},"/targets":{"get":{"tags":["Targets"],"summary":"Get ChEMBL targets","operationId":"getTargetsUsingGET","parameters":[{"name":"accession","in":"query","description":"accession","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"limit","in":"query","description":"limit","schema":{"type":"integer","format":"int32","default":10}},{"name":"page","in":"query","description":"page","schema":{"type":"integer","format":"int32","default":0}},{"name":"targetIds","in":"query","description":"targetIds","style":"form","explode":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Targets"}}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"deprecated":false}}},"components":{"schemas":{"Activities":{"title":"Activities","type":"object","properties":{"activities":{"type":"array","items":{"$ref":"#/components/schemas/Activity"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"Activity":{"title":"Activity","type":"object","properties":{"assay_chembl_id":{"type":"string"},"data_validity_comment":{"type":"string"},"molecule_chembl_id":{"type":"string"},"pchembl_value":{"type":"number","format":"double"},"standard_flag":{"type":"boolean"},"standard_relation":{"type":"string"},"standard_units":{"type":"string"},"standard_value":{"type":"number","format":"double"},"target_chembl_id":{"type":"string"}}},"Assay":{"title":"Assay","type":"object","properties":{"assay_chembl_id":{"type":"string"},"assay_id":{"type":"string"},"assay_organism":{"type":"string"},"assay_type":{"type":"string"},"confidence_score":{"type":"number","format":"double"},"target_chembl_id":{"type":"string"}}},"AssayData":{"title":"AssayData","type":"object","properties":{"standard_type":{"type":"string"},"standard_units":{"type":"string"},"standard_value":{"type":"number","format":"double"}}},"AssayOrganism":{"title":"AssayOrganism","type":"object","properties":{"db_object_id":{"type":"integer"},"tax_name":{"type":"string"}}},"Assays":{"title":"Assays","type":"object","properties":{"assays":{"type":"array","items":{"$ref":"#/components/schemas/Assay"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"BioAssay":{"title":"BioAssay","type":"object","properties":{"activity":{"type":"integer","format":"int32"},"assay_organisms":{"type":"array","items":{"$ref":"#/components/schemas/AssayOrganism"}},"assay_pubchem_id":{"type":"integer"},"assay_type":{"type":"string"},"chembl_xref":{"type":"string"},"protein_name":{"type":"string"},"source":{"type":"string"},"target_info":{"type":"array","items":{"$ref":"#/components/schemas/TargetInfo"}},"target_type_info":{"type":"array","items":{"$ref":"#/components/schemas/TargetType"}}}},"BioAssayMetaData":{"title":"BioAssayMetaData","type":"object","properties":{"bioAssay":{"$ref":"#/components/schemas/BioAssay"},"sidRelatedData":{"type":"array","items":{"$ref":"#/components/schemas/SidRelatedData"}}}},"Bioassays":{"title":"Bioassays","type":"object","properties":{"bioassays":{"type":"array","items":{"$ref":"#/components/schemas/BioAssayMetaData"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"CrossReferences":{"title":"CrossReferences","type":"object","properties":{"ensembl":{"type":"array","items":{"$ref":"#/components/schemas/Ensembl"}},"go":{"type":"array","items":{"$ref":"#/components/schemas/Go"}},"interpro":{"type":"array","items":{"$ref":"#/components/schemas/Interpro"}},"kegg":{"type":"array","items":{"$ref":"#/components/schemas/Kegg"}},"omim":{"type":"array","items":{"$ref":"#/components/schemas/Omim"}},"openTargets":{"type":"array","items":{"$ref":"#/components/schemas/OpenTargets"}},"orphanet":{"type":"array","items":{"$ref":"#/components/schemas/Orphanet"}},"pdBe":{"type":"array","items":{"$ref":"#/components/schemas/PDBe"}},"pfam":{"type":"array","items":{"$ref":"#/components/schemas/Pfam"}},"reactome":{"type":"array","items":{"$ref":"#/components/schemas/Reactome"}}}},"CrossbarDrug":{"title":"CrossbarDrug","type":"object","properties":{"alogp":{"type":"number","format":"double"},"canonical_smiles":{"type":"string"},"chembl_id":{"type":"string"},"full_mwt":{"type":"number","format":"double"},"identifier":{"type":"string"},"inchi_key":{"type":"string"},"kegg_cid":{"type":"string"},"molecule_type":{"type":"string"},"name":{"type":"string"},"pathway":{"type":"array","items":{"$ref":"#/components/schemas/Pathway"}},"pb_structures":{"type":"array","items":{"type":"string"}},"polar_surface_area":{"type":"number","format":"double"},"pubchem_cid":{"type":"string"},"pubchem_sid":{"type":"string"},"standard_inchi":{"type":"string"},"targets":{"type":"array","items":{"$ref":"#/components/schemas/Target"}},"uniprot_accession":{"type":"string"}}},"CrossbarFeature":{"title":"CrossbarFeature","type":"object","properties":{"begin":{"$ref":"#/components/schemas/FeaturePosition"},"category":{"type":"string"},"description":{"type":"string"},"end":{"$ref":"#/components/schemas/FeaturePosition"},"ftId":{"type":"string"},"type":{"type":"string"}}},"CrossbarMolecule":{"title":"CrossbarMolecule","type":"object","properties":{"alogp":{"type":"number","format":"double"},"canonical_smiles":{"type":"string"},"chirality":{"type":"number","format":"double"},"full_mwt":{"type":"number","format":"double"},"heavy_atoms_count":{"type":"integer","format":"int32"},"inchi_key":{"type":"string"},"max_phase":{"type":"integer","format":"int32"},"molecular_species":{"type":"string"},"molecular_type":{"type":"string"},"molecule_chembl_id":{"type":"string"},"parent_chembl_id":{"type":"string"},"pref_name":{"type":"string"},"prodrug":{"type":"number","format":"double"},"standard_inchi":{"type":"string"},"xrefs":{"type":"array","items":{"$ref":"#/components/schemas/Xref"}}}},"CrossbarPCCompound":{"title":"CrossbarPCCompound","type":"object","properties":{"alogp":{"type":"number","format":"double"},"atom_chiral_count":{"type":"integer","format":"int64"},"atom_chiral_def_count":{"type":"integer","format":"int64"},"bond_chiral_count":{"type":"integer","format":"int64"},"bond_chiral_def_count":{"type":"integer","format":"int64"},"bond_chiral_undef_count":{"type":"integer","format":"int64"},"canonical_smiles":{"type":"string"},"cid":{"type":"integer"},"covalent_unit_count":{"type":"integer","format":"int64"},"finger_print":{"pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$","type":"string","format":"byte"},"full_mwt":{"type":"number","format":"double"},"heavy_atoms_count":{"type":"integer","format":"int64"},"inchi_key":{"type":"string"},"isotope_atom_count":{"type":"integer","format":"int64"},"polar_surface_area":{"type":"number","format":"double"},"standard_inchi":{"type":"string"},"tautomers_count":{"type":"integer","format":"int64"}}},"CrossbarProteinVariation":{"title":"CrossbarProteinVariation","type":"object","properties":{"alternativeSequence":{"type":"string"},"association":{"type":"array","items":{"$ref":"#/components/schemas/VariationAssociation"}},"begin":{"$ref":"#/components/schemas/FeaturePosition"},"clinicalSignificances":{"type":"string"},"description":{"type":"string"},"end":{"$ref":"#/components/schemas/FeaturePosition"},"evidences":{"type":"array","items":{"$ref":"#/components/schemas/VariationEvidence"}},"ftId":{"type":"string"},"somaticStatus":{"type":"integer","format":"int64"},"sourceType":{"type":"string"},"wildType":{"type":"string"},"xrefs":{"type":"array","items":{"$ref":"#/components/schemas/VariationXref"}}}},"CrossbarTarget":{"title":"CrossbarTarget","type":"object","properties":{"accession":{"type":"string"},"target_chembl_id":{"type":"string"}}},"Drugs":{"title":"Drugs","type":"object","properties":{"drugs":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarDrug"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"EFO":{"title":"EFO","type":"object","properties":{"description":{"type":"array","items":{"type":"string"}},"doid":{"type":"array","items":{"type":"string"}},"icd9":{"type":"array","items":{"type":"string"}},"label":{"type":"string"},"mesh":{"type":"array","items":{"type":"string"}},"ncit":{"type":"array","items":{"type":"string"}},"obo_id":{"type":"string"},"omim":{"type":"array","items":{"type":"string"}},"short_form":{"type":"string"},"snowmed":{"type":"array","items":{"type":"string"}},"synonyms":{"type":"array","items":{"type":"string"}},"umls":{"type":"array","items":{"type":"string"}}}},"EFOEntities":{"title":"EFOEntities","type":"object","properties":{"diseases":{"type":"array","items":{"$ref":"#/components/schemas/EFO"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"Ensembl":{"title":"Ensembl","type":"object","properties":{"geneId":{"type":"string"},"id":{"type":"string"},"isoform":{"type":"string"},"proteinSequenceId":{"type":"string"}}},"FeaturePosition":{"title":"FeaturePosition","type":"object","properties":{"ceil":{"type":"integer","format":"int32"},"floor":{"type":"integer","format":"int32"},"uncertain":{"type":"boolean"},"unparsed":{"type":"string"}}},"Features":{"title":"Features","type":"object","properties":{"active_site":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"binding_site":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"chain":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"domain":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"mutagen":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"region":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"top_dom":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}},"variant":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarFeature"}}}},"Fragment":{"title":"Fragment","type":"object","properties":{"from":{"type":"integer","format":"int32"},"to":{"type":"integer","format":"int32"},"type":{"type":"string"}}},"Gene":{"title":"Gene","type":"object","properties":{"id":{"type":"string"},"symbol":{"type":"string"}}},"Go":{"title":"Go","type":"object","properties":{"evidences":{"type":"array","items":{"$ref":"#/components/schemas/GoEvidence"}},"id":{"type":"string"},"term":{"type":"string"}}},"GoEvidence":{"title":"GoEvidence","type":"object","properties":{"source_id":{"type":"string"},"source_name":{"type":"string"}}},"HPOEntity":{"title":"HPOEntity","type":"object","properties":{"db_references":{"type":"array","items":{"type":"string"}},"gene":{"type":"array","items":{"$ref":"#/components/schemas/Gene"}},"hpo_id":{"type":"string"},"synonyms":{"type":"array","items":{"type":"string"}},"term_name":{"type":"string"}}},"HitPosition":{"title":"HitPosition","type":"object","properties":{"from":{"type":"integer","format":"int32"},"to":{"type":"integer","format":"int32"}}},"HpoEntities":{"title":"HpoEntities","type":"object","properties":{"hpo":{"type":"array","items":{"$ref":"#/components/schemas/HPOEntity"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"Intact":{"title":"Intact","type":"object","properties":{"confidence":{"type":"number","format":"double"},"interaction_ac":{"type":"array","items":{"type":"string"}},"interactor_a":{"$ref":"#/components/schemas/Interactor"},"interactor_b":{"$ref":"#/components/schemas/Interactor"},"method":{"type":"string"},"source_db":{"type":"string"}}},"IntactInteractions":{"title":"IntactInteractions","type":"object","properties":{"interactions":{"type":"array","items":{"$ref":"#/components/schemas/Intact"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"Interactor":{"title":"Interactor","type":"object","properties":{"accession":{"type":"string"},"gene":{"type":"string"}}},"Interpro":{"title":"Interpro","type":"object","properties":{"entry_id":{"type":"string"},"entry_name":{"type":"string"},"entry_type":{"type":"string"},"fragments":{"type":"array","items":{"$ref":"#/components/schemas/Fragment"}},"hit_position":{"$ref":"#/components/schemas/HitPosition"}}},"Kegg":{"title":"Kegg","type":"object","properties":{"id":{"type":"string"}}},"Molecules":{"title":"Molecules","type":"object","properties":{"molecules":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarMolecule"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"Omim":{"title":"Omim","type":"object","properties":{"_id":{"type":"string"},"type":{"type":"string"}}},"OpenTargets":{"title":"OpenTargets","type":"object","properties":{"id":{"type":"string"}}},"Orphanet":{"title":"Orphanet","type":"object","properties":{"disease":{"type":"string"},"id":{"type":"string"}}},"PDBe":{"title":"PDBe","type":"object","properties":{"chains":{"type":"string"},"id":{"type":"string"},"method":{"type":"string"},"resolution":{"type":"string"}}},"PageMeta":{"title":"PageMeta","type":"object","properties":{"currentElements":{"type":"integer","format":"int64"},"currentPage":{"type":"integer","format":"int32"},"limit":{"type":"integer","format":"int32"},"totalElements":{"type":"integer","format":"int64"},"totalPages":{"type":"integer","format":"int32"}}},"Pathway":{"title":"Pathway","type":"object","properties":{"category":{"type":"string"},"name":{"type":"string"}}},"Pfam":{"title":"Pfam","type":"object","properties":{"entryName":{"type":"string"},"id":{"type":"string"}}},"Protein":{"title":"Protein","type":"object","properties":{"accession":{"type":"string"},"chromosome":{"type":"string"},"crossreferences":{"$ref":"#/components/schemas/CrossReferences"},"ec_numbers":{"type":"array","items":{"type":"string"}},"features":{"$ref":"#/components/schemas/Features"},"full_name":{"type":"string"},"genes":{"type":"array","items":{"type":"string"}},"interactions":{"type":"array","items":{"$ref":"#/components/schemas/ProteinInteraction"}},"length":{"type":"number","format":"double"},"mass":{"type":"number","format":"double"},"tax_id":{"type":"integer","format":"int32"},"variations":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarProteinVariation"}}}},"ProteinInteraction":{"title":"ProteinInteraction","type":"object","properties":{"id":{"type":"string"},"interaction_type":{"type":"string"},"interactors":{"type":"array","items":{"type":"string"}}}},"Proteins":{"title":"Proteins","type":"object","properties":{"pageMeta":{"$ref":"#/components/schemas/PageMeta"},"proteins":{"type":"array","items":{"$ref":"#/components/schemas/Protein"}}}},"PubchemCompounds":{"title":"PubchemCompounds","type":"object","properties":{"compounds":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarPCCompound"}},"pageMeta":{"$ref":"#/components/schemas/PageMeta"}}},"PubchemSubstances":{"title":"PubchemSubstances","type":"object","properties":{"pageMeta":{"$ref":"#/components/schemas/PageMeta"},"substances":{"type":"array","items":{"$ref":"#/components/schemas/Substance"}}}},"Reactome":{"title":"Reactome","type":"object","properties":{"id":{"type":"string"},"pathwayName":{"type":"string"}}},"SidRelatedData":{"title":"SidRelatedData","type":"object","properties":{"assay_data":{"type":"array","items":{"$ref":"#/components/schemas/AssayData"}},"assay_pubchem_id":{"type":"integer"},"outcome":{"type":"string"},"sid":{"type":"integer"},"standard_relation":{"type":"string"}}},"Substance":{"title":"Substance","type":"object","properties":{"chembl_cmpd_xref":{"type":"string"},"cids":{"type":"array","items":{"type":"integer"}},"sid":{"type":"integer"}}},"Target":{"title":"Target","type":"object","properties":{"accessions":{"type":"array","items":{"type":"string"}},"action":{"type":"array","items":{"type":"string"}},"id":{"type":"string"},"name":{"type":"string"},"organism":{"type":"string"}}},"TargetInfo":{"title":"TargetInfo","type":"object","properties":{"ncbi_protein_id":{"type":"integer"},"target_chembl_id":{"type":"string"},"uniprot_accession":{"type":"string"}}},"TargetType":{"title":"TargetType","type":"object","properties":{"molecule_type":{"type":"string"},"value":{"type":"integer","format":"int32"}}},"Targets":{"title":"Targets","type":"object","properties":{"pageMeta":{"$ref":"#/components/schemas/PageMeta"},"targets":{"type":"array","items":{"$ref":"#/components/schemas/CrossbarTarget"}}}},"VariationAssociation":{"title":"VariationAssociation","type":"object","properties":{"description":{"type":"string"},"evidences":{"type":"array","items":{"$ref":"#/components/schemas/VariationEvidence"}},"name":{"type":"string"},"xrefs":{"type":"array","items":{"$ref":"#/components/schemas/VariationXref"}}}},"VariationEvidence":{"title":"VariationEvidence","type":"object","properties":{"source":{"$ref":"#/components/schemas/VariationEvidenceSource"}}},"VariationEvidenceSource":{"title":"VariationEvidenceSource","type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"}}},"VariationXref":{"title":"VariationXref","type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"}}},"Xref":{"title":"Xref","type":"object","properties":{"id":{"type":"string"},"source":{"type":"string"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "CROssBAR Data API",
+    "description" : "# About CROssBAR & data\n**CROssBAR**: Comprehensive Resource of Biomedical Relations with Deep Learning Applications and Knowledge Graph Representations\nCROssBAR is a comprehensive system that integrates large-scale biomedical data from various resources e.g UniProt, ChEMBL, Drugbank, EFO, HPO, InterPro & PubChem and stores them in a new NoSQL database, enrich these data with deep learning based prediction of relations between numerous biomedical entities, rigorously analyse the enriched data to obtain biologically meaningful modules and display them to the user via easy to interpret, interactive and heterogeneous knowledge graphs.\nCROssBAR platform exposes a set of 12 endpoints to query data stored in the CROssBAR database. These endpoints help the user to find data of interest using different parameters provided by the API endpoint.\nFor example,\nhttps://www.ebi.ac.uk/tools/crossbar/proteins?accession=A0A023GRW5 -> will provide protein information about accession 'A0A023GRW5' including its interactions, functions, cross-references, variations and more.\nhttps://www.ebi.ac.uk/tools/crossbar/activities?moleculeChemblId=CHEMBL465983 -> will provide ChEMBL bio-interactions related information including targets and bio-activity measurements associated with molecule chembl id 'CHEMBL465983'\n\n**Knowledge graphs**\nAnother use case of CROssBAR's API endpoints is in building knowledge graphs. These endpoints can be *weaved* together (output from one API endpoint fed as input to another API endpoint) programmatically to link nodes like protein, disease, drugs etc. as nodes of the graph. The endpoints are designed to be independent from each other which allows users the flexibility to drive biological networks from any facet e.g drug-centric, disease-centric, gene-centric etc. Our service for knowledge graph construction is available at https://crossbar.kansil.org.\nAn example for the part of the background queries on the CROssBAR API during the construction of a knowledge graph, \n(with the aim of keeping the example simple, we have only included the processes related to pathways, genes/proteins and drugs/compounds)\nIn this example, we would like to find bio-active compounds (with a pChEMBL value threshold of at least 6.0) & drugs targeting all proteins belonging to \"WNT ligand biogenesis and trafficking\" pathway (based on Reactome pathway annotations).\nThis can be achieved by using endpoints listed on this swagger documentation as illustrated in following steps-\nFind bio-active compounds (with a pChEMBL value threshold of at least 6.0) & drugs targeting all proteins belonging to \"WNT ligand biogenesis and trafficking\" pathway (based on Reactome annotations)\nThis can be achieved by using endpoints listed on [this swagger documentation](https://www.ebi.ac.uk/tools/crossbar/swagger-ui.html) as illustrated in following steps-\n1. Get all proteins from “/proteins” API endpoint which have a reactome pathway name equal to \"WNT ligand biogenesis and trafficking\".\n2. From the collection of uniprot protein accessions collected from step 1 above, we query “/targets” API endpoint to obtain the ‘target_chembl_id’s of these proteins.\n3. From the collection of target_chembl_ids collected from step 2 above, we query “/activities” API endpoint with pChEMBL value >=6, to obtain the ’molecule_chembl_id’s of the molecules that we need. \n4. From the collection of uniprot protein accessions collected from step 1 above, we find out Drug names and ids from the “/drugs” API endpoint that targets our proteins.\n5. From the collection of ’molecule_chembl_id’s obtained in step3, we query “/molecules” endpoint to get the compounds that are interacting with the genes/proteins belonging to the “WNT ligand biogenesis and trafficking” pathway.",
+    "contact" : {
+      "name" : "API support",
+      "email" : "crossbar_dev@ebi.ac.uk"
+    },
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "//www.ebi.ac.uk/Tools/crossbar"
+  } ],
+  "tags" : [ {
+    "name" : "Activities",
+    "description" : "Chembl Activities Resource"
+  }, {
+    "name" : "Assays",
+    "description" : "Chembl Assays Resource"
+  }, {
+    "name" : "Drugs",
+    "description" : "Drug Resource"
+  }, {
+    "name" : "EFO disease terms",
+    "description" : "EFO Resource"
+  }, {
+    "name" : "HPO",
+    "description" : "HPO Resource"
+  }, {
+    "name" : "Intact",
+    "description" : "Intact Resource"
+  }, {
+    "name" : "Molecules",
+    "description" : "Chembl Molecules Resource"
+  }, {
+    "name" : "Proteins",
+    "description" : "Protein Resource"
+  }, {
+    "name" : "PubChem Bioassay Sids",
+    "description" : "Pubchem Bioassay Sids Resource"
+  }, {
+    "name" : "PubChem Biossays",
+    "description" : "Pubchem Bioassay Resource"
+  }, {
+    "name" : "PubChem Compounds",
+    "description" : "Pubchem Compound Resource"
+  }, {
+    "name" : "PubChem Substances",
+    "description" : "Pubchem Substance Resource"
+  }, {
+    "name" : "Targets",
+    "description" : "Chembl Targets Resource"
+  } ],
+  "paths" : {
+    "/activities" : {
+      "get" : {
+        "tags" : [ "Activities" ],
+        "summary" : "Get ChEMBL activities",
+        "operationId" : "getActivitiesUsingGET",
+        "parameters" : [ {
+          "name" : "assayChemblId",
+          "in" : "query",
+          "description" : "assayChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "moleculeChemblId",
+          "in" : "query",
+          "description" : "moleculeChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "pchemblValue",
+          "in" : "query",
+          "description" : "pchemblValue",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "targetChemblId",
+          "in" : "query",
+          "description" : "targetChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Activities"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/assays" : {
+      "get" : {
+        "tags" : [ "Assays" ],
+        "summary" : "Get ChEMBL assays",
+        "operationId" : "getAssaysUsingGET",
+        "parameters" : [ {
+          "name" : "assayChemblId",
+          "in" : "query",
+          "description" : "assayChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "assayOrg",
+          "in" : "query",
+          "description" : "assayOrg",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "assayType",
+          "in" : "query",
+          "description" : "assayType",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "targetChemblId",
+          "in" : "query",
+          "description" : "targetChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Assays"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/drugs" : {
+      "get" : {
+        "tags" : [ "Drugs" ],
+        "summary" : "drugs collected from Drugbank",
+        "operationId" : "getDrugsUsingGET",
+        "parameters" : [ {
+          "name" : "accession",
+          "in" : "query",
+          "description" : "accession",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "chemblId",
+          "in" : "query",
+          "description" : "chemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "identifier",
+          "in" : "query",
+          "description" : "identifier",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "name",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "pubchemCid",
+          "in" : "query",
+          "description" : "pubchemCid",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Drugs"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/efo" : {
+      "get" : {
+        "tags" : [ "EFO disease terms" ],
+        "summary" : "Get EFO diseases data",
+        "operationId" : "getEFOUsingGET",
+        "parameters" : [ {
+          "name" : "doid",
+          "in" : "query",
+          "description" : "doid",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "label",
+          "in" : "query",
+          "description" : "label",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "mesh",
+          "in" : "query",
+          "description" : "mesh",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "oboId",
+          "in" : "query",
+          "description" : "oboId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "omimId",
+          "in" : "query",
+          "description" : "omimId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "synonym",
+          "in" : "query",
+          "description" : "synonym",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EFOEntities"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/hpo" : {
+      "get" : {
+        "tags" : [ "HPO" ],
+        "summary" : "Get HPO phenotypes data",
+        "operationId" : "getHpoUsingGET",
+        "parameters" : [ {
+          "name" : "genesymbol",
+          "in" : "query",
+          "description" : "genesymbol",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "hpotermname",
+          "in" : "query",
+          "description" : "hpotermname",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "synonym",
+          "in" : "query",
+          "description" : "synonym",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HpoEntities"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/intact" : {
+      "get" : {
+        "tags" : [ "Intact" ],
+        "summary" : "Molecular Interactions collected from IntAct",
+        "operationId" : "getIntactUsingGET",
+        "parameters" : [ {
+          "name" : "accession",
+          "in" : "query",
+          "description" : "accession",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "confidence",
+          "in" : "query",
+          "description" : "confidence",
+          "schema" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }, {
+          "name" : "gene",
+          "in" : "query",
+          "description" : "gene",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IntactInteractions"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/molecules" : {
+      "get" : {
+        "tags" : [ "Molecules" ],
+        "summary" : "Get ChEMBL molecules",
+        "operationId" : "getMoleculesUsingGET",
+        "parameters" : [ {
+          "name" : "canonicalSmiles",
+          "in" : "query",
+          "description" : "canonicalSmiles",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "inchiKey",
+          "in" : "query",
+          "description" : "inchiKey",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "moleculeChemblId",
+          "in" : "query",
+          "description" : "moleculeChemblId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Molecules"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/proteins" : {
+      "get" : {
+        "tags" : [ "Proteins" ],
+        "summary" : "Proteins collected from Uniprot for selective tax ids  HUMAN(9606), MOUSE(10090), RAT(10116), BOVINE(9913), ESCHERICHIA_COLI(83333), SUS_SCROFA(9823), MYCOBACTERIUM_TUBERCULOSIS(83332), ORYCTOLAGUS_CUNICULUS(9986), SACCHAROMYCES_CEREVISIAE(559292), CVHSA(694009) & SARS2(2697049)",
+        "operationId" : "getProteinsUsingGET",
+        "parameters" : [ {
+          "name" : "accession",
+          "in" : "query",
+          "description" : "accession",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "ec",
+          "in" : "query",
+          "description" : "ec",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "fullName",
+          "in" : "query",
+          "description" : "fullName",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "gene",
+          "in" : "query",
+          "description" : "gene",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "go",
+          "in" : "query",
+          "description" : "go",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "interpro",
+          "in" : "query",
+          "description" : "interpro",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "omim",
+          "in" : "query",
+          "description" : "omim",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "orphanet",
+          "in" : "query",
+          "description" : "orphanet",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "pfam",
+          "in" : "query",
+          "description" : "pfam",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "reactome",
+          "in" : "query",
+          "description" : "reactome",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "taxId",
+          "in" : "query",
+          "description" : "taxId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Proteins"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/pubchem/bioassays" : {
+      "get" : {
+        "tags" : [ "PubChem Biossays" ],
+        "summary" : "Get pubchem bioassays",
+        "operationId" : "getBioassaysUsingGET",
+        "parameters" : [ {
+          "name" : "accession",
+          "in" : "query",
+          "description" : "accession",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "assayPubchemId",
+          "in" : "query",
+          "description" : "assayPubchemId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        }, {
+          "name" : "ncbiProteinId",
+          "in" : "query",
+          "description" : "ncbiProteinId",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Bioassays"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/pubchem/bioassays/sids" : {
+      "get" : {
+        "tags" : [ "PubChem Bioassay Sids" ],
+        "summary" : "Get pubchem bioassays associated to particular substance ids (sid) & outcome",
+        "operationId" : "getBioassaysUsingGET_1",
+        "parameters" : [ {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "outcome",
+          "in" : "query",
+          "description" : "outcome",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "sids",
+          "in" : "query",
+          "description" : "sids",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Bioassays"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/pubchem/compounds" : {
+      "get" : {
+        "tags" : [ "PubChem Compounds" ],
+        "summary" : "Get pubchem compounds",
+        "operationId" : "getCompoundsUsingGET",
+        "parameters" : [ {
+          "name" : "canonicalSmiles",
+          "in" : "query",
+          "description" : "canonicalSmiles",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "cid",
+          "in" : "query",
+          "description" : "cid",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "inchiKey",
+          "in" : "query",
+          "description" : "inchiKey",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PubchemCompounds"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/pubchem/substances" : {
+      "get" : {
+        "tags" : [ "PubChem Substances" ],
+        "summary" : "Get pubchem substances",
+        "operationId" : "getSubstancesUsingGET",
+        "parameters" : [ {
+          "name" : "cid",
+          "in" : "query",
+          "description" : "cid",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "sid",
+          "in" : "query",
+          "description" : "sid",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PubchemSubstances"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/targets" : {
+      "get" : {
+        "tags" : [ "Targets" ],
+        "summary" : "Get ChEMBL targets",
+        "operationId" : "getTargetsUsingGET",
+        "parameters" : [ {
+          "name" : "accession",
+          "in" : "query",
+          "description" : "accession",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "targetIds",
+          "in" : "query",
+          "description" : "targetIds",
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Targets"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Activities" : {
+        "title" : "Activities",
+        "type" : "object",
+        "properties" : {
+          "activities" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Activity"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "Activity" : {
+        "title" : "Activity",
+        "type" : "object",
+        "properties" : {
+          "assay_chembl_id" : {
+            "type" : "string"
+          },
+          "data_validity_comment" : {
+            "type" : "string"
+          },
+          "molecule_chembl_id" : {
+            "type" : "string"
+          },
+          "pchembl_value" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "standard_flag" : {
+            "type" : "boolean"
+          },
+          "standard_relation" : {
+            "type" : "string"
+          },
+          "standard_units" : {
+            "type" : "string"
+          },
+          "standard_value" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "target_chembl_id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Assay" : {
+        "title" : "Assay",
+        "type" : "object",
+        "properties" : {
+          "assay_chembl_id" : {
+            "type" : "string"
+          },
+          "assay_id" : {
+            "type" : "string"
+          },
+          "assay_organism" : {
+            "type" : "string"
+          },
+          "assay_type" : {
+            "type" : "string"
+          },
+          "confidence_score" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "target_chembl_id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AssayData" : {
+        "title" : "AssayData",
+        "type" : "object",
+        "properties" : {
+          "standard_type" : {
+            "type" : "string"
+          },
+          "standard_units" : {
+            "type" : "string"
+          },
+          "standard_value" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "AssayOrganism" : {
+        "title" : "AssayOrganism",
+        "type" : "object",
+        "properties" : {
+          "db_object_id" : {
+            "type" : "integer"
+          },
+          "tax_name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Assays" : {
+        "title" : "Assays",
+        "type" : "object",
+        "properties" : {
+          "assays" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Assay"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "BioAssay" : {
+        "title" : "BioAssay",
+        "type" : "object",
+        "properties" : {
+          "activity" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "assay_organisms" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AssayOrganism"
+            }
+          },
+          "assay_pubchem_id" : {
+            "type" : "integer"
+          },
+          "assay_type" : {
+            "type" : "string"
+          },
+          "chembl_xref" : {
+            "type" : "string"
+          },
+          "protein_name" : {
+            "type" : "string"
+          },
+          "source" : {
+            "type" : "string"
+          },
+          "target_info" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TargetInfo"
+            }
+          },
+          "target_type_info" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TargetType"
+            }
+          }
+        }
+      },
+      "BioAssayMetaData" : {
+        "title" : "BioAssayMetaData",
+        "type" : "object",
+        "properties" : {
+          "bioAssay" : {
+            "$ref" : "#/components/schemas/BioAssay"
+          },
+          "sidRelatedData" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SidRelatedData"
+            }
+          }
+        }
+      },
+      "Bioassays" : {
+        "title" : "Bioassays",
+        "type" : "object",
+        "properties" : {
+          "bioassays" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BioAssayMetaData"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "CrossReferences" : {
+        "title" : "CrossReferences",
+        "type" : "object",
+        "properties" : {
+          "ensembl" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Ensembl"
+            }
+          },
+          "go" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Go"
+            }
+          },
+          "interpro" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Interpro"
+            }
+          },
+          "kegg" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Kegg"
+            }
+          },
+          "omim" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Omim"
+            }
+          },
+          "openTargets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpenTargets"
+            }
+          },
+          "orphanet" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Orphanet"
+            }
+          },
+          "pdBe" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PDBe"
+            }
+          },
+          "pfam" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Pfam"
+            }
+          },
+          "reactome" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Reactome"
+            }
+          }
+        }
+      },
+      "CrossbarDrug" : {
+        "title" : "CrossbarDrug",
+        "type" : "object",
+        "properties" : {
+          "alogp" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "canonical_smiles" : {
+            "type" : "string"
+          },
+          "chembl_id" : {
+            "type" : "string"
+          },
+          "full_mwt" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "identifier" : {
+            "type" : "string"
+          },
+          "inchi_key" : {
+            "type" : "string"
+          },
+          "kegg_cid" : {
+            "type" : "string"
+          },
+          "molecule_type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "pathway" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Pathway"
+            }
+          },
+          "pb_structures" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "polar_surface_area" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "pubchem_cid" : {
+            "type" : "string"
+          },
+          "pubchem_sid" : {
+            "type" : "string"
+          },
+          "standard_inchi" : {
+            "type" : "string"
+          },
+          "targets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Target"
+            }
+          },
+          "uniprot_accession" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CrossbarFeature" : {
+        "title" : "CrossbarFeature",
+        "type" : "object",
+        "properties" : {
+          "begin" : {
+            "$ref" : "#/components/schemas/FeaturePosition"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "end" : {
+            "$ref" : "#/components/schemas/FeaturePosition"
+          },
+          "ftId" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CrossbarMolecule" : {
+        "title" : "CrossbarMolecule",
+        "type" : "object",
+        "properties" : {
+          "alogp" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "canonical_smiles" : {
+            "type" : "string"
+          },
+          "chirality" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "full_mwt" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "heavy_atoms_count" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "inchi_key" : {
+            "type" : "string"
+          },
+          "max_phase" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "molecular_species" : {
+            "type" : "string"
+          },
+          "molecular_type" : {
+            "type" : "string"
+          },
+          "molecule_chembl_id" : {
+            "type" : "string"
+          },
+          "parent_chembl_id" : {
+            "type" : "string"
+          },
+          "pref_name" : {
+            "type" : "string"
+          },
+          "prodrug" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "standard_inchi" : {
+            "type" : "string"
+          },
+          "xrefs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Xref"
+            }
+          }
+        }
+      },
+      "CrossbarPCCompound" : {
+        "title" : "CrossbarPCCompound",
+        "type" : "object",
+        "properties" : {
+          "alogp" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "atom_chiral_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "atom_chiral_def_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "bond_chiral_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "bond_chiral_def_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "bond_chiral_undef_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "canonical_smiles" : {
+            "type" : "string"
+          },
+          "cid" : {
+            "type" : "integer"
+          },
+          "covalent_unit_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "finger_print" : {
+            "pattern" : "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type" : "string",
+            "format" : "byte"
+          },
+          "full_mwt" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "heavy_atoms_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "inchi_key" : {
+            "type" : "string"
+          },
+          "isotope_atom_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "polar_surface_area" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "standard_inchi" : {
+            "type" : "string"
+          },
+          "tautomers_count" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "CrossbarProteinVariation" : {
+        "title" : "CrossbarProteinVariation",
+        "type" : "object",
+        "properties" : {
+          "alternativeSequence" : {
+            "type" : "string"
+          },
+          "association" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VariationAssociation"
+            }
+          },
+          "begin" : {
+            "$ref" : "#/components/schemas/FeaturePosition"
+          },
+          "clinicalSignificances" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "end" : {
+            "$ref" : "#/components/schemas/FeaturePosition"
+          },
+          "evidences" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VariationEvidence"
+            }
+          },
+          "ftId" : {
+            "type" : "string"
+          },
+          "somaticStatus" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "sourceType" : {
+            "type" : "string"
+          },
+          "wildType" : {
+            "type" : "string"
+          },
+          "xrefs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VariationXref"
+            }
+          }
+        }
+      },
+      "CrossbarTarget" : {
+        "title" : "CrossbarTarget",
+        "type" : "object",
+        "properties" : {
+          "accession" : {
+            "type" : "string"
+          },
+          "target_chembl_id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Drugs" : {
+        "title" : "Drugs",
+        "type" : "object",
+        "properties" : {
+          "drugs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarDrug"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "EFO" : {
+        "title" : "EFO",
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "doid" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "icd9" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "mesh" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "ncit" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "obo_id" : {
+            "type" : "string"
+          },
+          "omim" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "short_form" : {
+            "type" : "string"
+          },
+          "snowmed" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "synonyms" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "umls" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "EFOEntities" : {
+        "title" : "EFOEntities",
+        "type" : "object",
+        "properties" : {
+          "diseases" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/EFO"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "Ensembl" : {
+        "title" : "Ensembl",
+        "type" : "object",
+        "properties" : {
+          "geneId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isoform" : {
+            "type" : "string"
+          },
+          "proteinSequenceId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FeaturePosition" : {
+        "title" : "FeaturePosition",
+        "type" : "object",
+        "properties" : {
+          "ceil" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "floor" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "uncertain" : {
+            "type" : "boolean"
+          },
+          "unparsed" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Features" : {
+        "title" : "Features",
+        "type" : "object",
+        "properties" : {
+          "active_site" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "binding_site" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "chain" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "domain" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "mutagen" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "region" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "top_dom" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          },
+          "variant" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarFeature"
+            }
+          }
+        }
+      },
+      "Fragment" : {
+        "title" : "Fragment",
+        "type" : "object",
+        "properties" : {
+          "from" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "to" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Gene" : {
+        "title" : "Gene",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "symbol" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Go" : {
+        "title" : "Go",
+        "type" : "object",
+        "properties" : {
+          "evidences" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GoEvidence"
+            }
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "term" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GoEvidence" : {
+        "title" : "GoEvidence",
+        "type" : "object",
+        "properties" : {
+          "source_id" : {
+            "type" : "string"
+          },
+          "source_name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "HPOEntity" : {
+        "title" : "HPOEntity",
+        "type" : "object",
+        "properties" : {
+          "db_references" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "gene" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Gene"
+            }
+          },
+          "hpo_id" : {
+            "type" : "string"
+          },
+          "synonyms" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "term_name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "HitPosition" : {
+        "title" : "HitPosition",
+        "type" : "object",
+        "properties" : {
+          "from" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "to" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "HpoEntities" : {
+        "title" : "HpoEntities",
+        "type" : "object",
+        "properties" : {
+          "hpo" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/HPOEntity"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "Intact" : {
+        "title" : "Intact",
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "interaction_ac" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "interactor_a" : {
+            "$ref" : "#/components/schemas/Interactor"
+          },
+          "interactor_b" : {
+            "$ref" : "#/components/schemas/Interactor"
+          },
+          "method" : {
+            "type" : "string"
+          },
+          "source_db" : {
+            "type" : "string"
+          }
+        }
+      },
+      "IntactInteractions" : {
+        "title" : "IntactInteractions",
+        "type" : "object",
+        "properties" : {
+          "interactions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Intact"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "Interactor" : {
+        "title" : "Interactor",
+        "type" : "object",
+        "properties" : {
+          "accession" : {
+            "type" : "string"
+          },
+          "gene" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Interpro" : {
+        "title" : "Interpro",
+        "type" : "object",
+        "properties" : {
+          "entry_id" : {
+            "type" : "string"
+          },
+          "entry_name" : {
+            "type" : "string"
+          },
+          "entry_type" : {
+            "type" : "string"
+          },
+          "fragments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Fragment"
+            }
+          },
+          "hit_position" : {
+            "$ref" : "#/components/schemas/HitPosition"
+          }
+        }
+      },
+      "Kegg" : {
+        "title" : "Kegg",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Molecules" : {
+        "title" : "Molecules",
+        "type" : "object",
+        "properties" : {
+          "molecules" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarMolecule"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "Omim" : {
+        "title" : "Omim",
+        "type" : "object",
+        "properties" : {
+          "_id" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "OpenTargets" : {
+        "title" : "OpenTargets",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Orphanet" : {
+        "title" : "Orphanet",
+        "type" : "object",
+        "properties" : {
+          "disease" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PDBe" : {
+        "title" : "PDBe",
+        "type" : "object",
+        "properties" : {
+          "chains" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "method" : {
+            "type" : "string"
+          },
+          "resolution" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PageMeta" : {
+        "title" : "PageMeta",
+        "type" : "object",
+        "properties" : {
+          "currentElements" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "currentPage" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "limit" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "totalElements" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "totalPages" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "Pathway" : {
+        "title" : "Pathway",
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Pfam" : {
+        "title" : "Pfam",
+        "type" : "object",
+        "properties" : {
+          "entryName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Protein" : {
+        "title" : "Protein",
+        "type" : "object",
+        "properties" : {
+          "accession" : {
+            "type" : "string"
+          },
+          "chromosome" : {
+            "type" : "string"
+          },
+          "crossreferences" : {
+            "$ref" : "#/components/schemas/CrossReferences"
+          },
+          "ec_numbers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "features" : {
+            "$ref" : "#/components/schemas/Features"
+          },
+          "full_name" : {
+            "type" : "string"
+          },
+          "genes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "interactions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProteinInteraction"
+            }
+          },
+          "length" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "mass" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "tax_id" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "variations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarProteinVariation"
+            }
+          }
+        }
+      },
+      "ProteinInteraction" : {
+        "title" : "ProteinInteraction",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "interaction_type" : {
+            "type" : "string"
+          },
+          "interactors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "Proteins" : {
+        "title" : "Proteins",
+        "type" : "object",
+        "properties" : {
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          },
+          "proteins" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Protein"
+            }
+          }
+        }
+      },
+      "PubchemCompounds" : {
+        "title" : "PubchemCompounds",
+        "type" : "object",
+        "properties" : {
+          "compounds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarPCCompound"
+            }
+          },
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          }
+        }
+      },
+      "PubchemSubstances" : {
+        "title" : "PubchemSubstances",
+        "type" : "object",
+        "properties" : {
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          },
+          "substances" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Substance"
+            }
+          }
+        }
+      },
+      "Reactome" : {
+        "title" : "Reactome",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "pathwayName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SidRelatedData" : {
+        "title" : "SidRelatedData",
+        "type" : "object",
+        "properties" : {
+          "assay_data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AssayData"
+            }
+          },
+          "assay_pubchem_id" : {
+            "type" : "integer"
+          },
+          "outcome" : {
+            "type" : "string"
+          },
+          "sid" : {
+            "type" : "integer"
+          },
+          "standard_relation" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Substance" : {
+        "title" : "Substance",
+        "type" : "object",
+        "properties" : {
+          "chembl_cmpd_xref" : {
+            "type" : "string"
+          },
+          "cids" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "sid" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "Target" : {
+        "title" : "Target",
+        "type" : "object",
+        "properties" : {
+          "accessions" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "action" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "organism" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TargetInfo" : {
+        "title" : "TargetInfo",
+        "type" : "object",
+        "properties" : {
+          "ncbi_protein_id" : {
+            "type" : "integer"
+          },
+          "target_chembl_id" : {
+            "type" : "string"
+          },
+          "uniprot_accession" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TargetType" : {
+        "title" : "TargetType",
+        "type" : "object",
+        "properties" : {
+          "molecule_type" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "Targets" : {
+        "title" : "Targets",
+        "type" : "object",
+        "properties" : {
+          "pageMeta" : {
+            "$ref" : "#/components/schemas/PageMeta"
+          },
+          "targets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CrossbarTarget"
+            }
+          }
+        }
+      },
+      "VariationAssociation" : {
+        "title" : "VariationAssociation",
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "evidences" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VariationEvidence"
+            }
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "xrefs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VariationXref"
+            }
+          }
+        }
+      },
+      "VariationEvidence" : {
+        "title" : "VariationEvidence",
+        "type" : "object",
+        "properties" : {
+          "source" : {
+            "$ref" : "#/components/schemas/VariationEvidenceSource"
+          }
+        }
+      },
+      "VariationEvidenceSource" : {
+        "title" : "VariationEvidenceSource",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "VariationXref" : {
+        "title" : "VariationXref",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Xref" : {
+        "title" : "Xref",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "source" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

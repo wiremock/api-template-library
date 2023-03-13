@@ -1,1 +1,1008 @@
-{"openapi":"3.0.1","info":{"title":"customproviders","description":"Allows extension of ARM control plane with custom resource providers.","version":"2018-09-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.CustomProviders/operations":{"get":{"tags":["Operations"],"description":"The list of operations provided by Microsoft CustomProviders.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Describe the result of a successful operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceProviderOperationList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.CustomProviders/resourceProviders":{"get":{"tags":["CustomResourceProvider"],"description":"Gets all the custom resource providers within a subscription.","operationId":"CustomResourceProvider_ListBySubscription","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns an array of custom resource providers.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ListByCustomRPManifest"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders":{"get":{"tags":["CustomResourceProvider"],"description":"Gets all the custom resource providers within a resource group.","operationId":"CustomResourceProvider_ListByResourceGroup","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK - Returns an array of custom resource providers.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ListByCustomRPManifest"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders/{resourceProviderName}":{"get":{"tags":["CustomResourceProvider"],"description":"Gets the custom resource provider manifest.","operationId":"CustomResourceProvider_Get","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"resourceProviderName","in":"path","description":"The name of the resource provider.","required":true,"schema":{"maxLength":64,"minLength":3,"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition with the existing resource.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CustomRPManifest"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"tags":["CustomResourceProvider"],"description":"Creates or updates the custom resource provider.","operationId":"CustomResourceProvider_CreateOrUpdate","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"resourceProviderName","in":"path","description":"The name of the resource provider.","required":true,"schema":{"maxLength":64,"minLength":3,"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters required to create or update a custom resource provider definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CustomRPManifest"}}},"required":true},"responses":{"200":{"description":"OK response definition. Resource already exists and the changes have been accepted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CustomRPManifest"}}}},"201":{"description":"Created response definition. Resource has been created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CustomRPManifest"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"delete":{"tags":["CustomResourceProvider"],"description":"Deletes the custom resource provider.","operationId":"CustomResourceProvider_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"resourceProviderName","in":"path","description":"The name of the resource provider.","required":true,"schema":{"maxLength":64,"minLength":3,"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK resource deleted"},"202":{"description":"OK resource delete has been accepted."},"204":{"description":"OK resource was not found."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"patch":{"tags":["CustomResourceProvider"],"description":"Updates an existing custom resource provider. The only value that can be updated via PATCH currently is the tags.","operationId":"CustomResourceProvider_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"resourceProviderName","in":"path","description":"The name of the resource provider.","required":true,"schema":{"maxLength":64,"minLength":3,"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The updatable fields of a custom resource provider.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResourceProvidersUpdate"}}},"required":true},"responses":{"200":{"description":"OK response. The resource has been updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CustomRPManifest"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/{scope}/providers/Microsoft.CustomProviders/associations":{"get":{"tags":["Associations"],"description":"Gets all association for the given scope.","operationId":"Associations_ListAll","parameters":[{"name":"scope","in":"path","description":"The scope of the association.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. Returns all associations for the given scope.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AssociationsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/{scope}/providers/Microsoft.CustomProviders/associations/{associationName}":{"get":{"tags":["Associations"],"description":"Get an association.","operationId":"Associations_Get","parameters":[{"name":"scope","in":"path","description":"The scope of the association.","required":true,"schema":{"type":"string"}},{"name":"associationName","in":"path","description":"The name of the association.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. Returns association.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Association"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"tags":["Associations"],"description":"Create or update an association.","operationId":"Associations_CreateOrUpdate","parameters":[{"name":"scope","in":"path","description":"The scope of the association. The scope can be any valid REST resource instance. For example, use '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}' for a virtual machine resource.","required":true,"schema":{"type":"string"}},{"name":"associationName","in":"path","description":"The name of the association.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters required to create or update an association.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Association"}}},"required":true},"responses":{"200":{"description":"OK. Association already exists and the changes have been accepted.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Association"}}}},"201":{"description":"Created. Association has been created.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Association"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"delete":{"tags":["Associations"],"description":"Delete an association.","operationId":"Associations_Delete","parameters":[{"name":"scope","in":"path","description":"The scope of the association.","required":true,"schema":{"type":"string"}},{"name":"associationName","in":"path","description":"The name of the association.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. Association deleted."},"202":{"description":"Accepted. Association delete has been accepted."},"204":{"description":"No Content. Association was not found."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"Association":{"type":"object","properties":{"id":{"type":"string","description":"The association id.","readOnly":true},"name":{"type":"string","description":"The association name.","readOnly":true},"properties":{"type":"object","properties":{"provisioningState":{"type":"string","description":"The provisioning state of the association.","readOnly":true,"enum":["Accepted","Deleting","Running","Succeeded","Failed"]},"targetResourceId":{"type":"string","description":"The REST resource instance of the target resource for this association."}},"description":"The properties of the association."},"type":{"type":"string","description":"The association type.","readOnly":true}},"description":"The resource definition of this association."},"AssociationsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to use for getting the next set of results."},"value":{"type":"array","description":"The array of associations.","items":{"$ref":"#/components/schemas/Association"}}},"description":"List of associations."},"CustomRPActionRouteDefinition":{"properties":{"routingType":{"type":"string","description":"The routing types that are supported for action requests.","enum":["Proxy"]}},"description":"The route definition for an action implemented by the custom resource provider.","allOf":[{"$ref":"#/components/schemas/CustomRPRouteDefinition"}]},"CustomRPManifest":{"properties":{"properties":{"type":"object","properties":{"actions":{"type":"array","description":"A list of actions that the custom resource provider implements.","items":{"$ref":"#/components/schemas/CustomRPActionRouteDefinition"}},"provisioningState":{"type":"string","description":"The provisioning state of the resource provider.","readOnly":true,"enum":["Accepted","Deleting","Running","Succeeded","Failed"]},"resourceTypes":{"type":"array","description":"A list of resource types that the custom resource provider implements.","items":{"$ref":"#/components/schemas/CustomRPResourceTypeRouteDefinition"}},"validations":{"type":"array","description":"A list of validations to run on the custom resource provider's requests.","items":{"$ref":"#/components/schemas/CustomRPValidations"}}},"description":"The manifest for the custom resource provider"}},"description":"A manifest file that defines the custom resource provider resources.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"CustomRPResourceTypeRouteDefinition":{"properties":{"routingType":{"type":"string","description":"The routing types that are supported for resource requests.","enum":["Proxy","Proxy,Cache"]}},"description":"The route definition for a resource implemented by the custom resource provider.","allOf":[{"$ref":"#/components/schemas/CustomRPRouteDefinition"}]},"CustomRPRouteDefinition":{"required":["endpoint","name"],"type":"object","properties":{"endpoint":{"pattern":"^https://.+","type":"string","description":"The route definition endpoint URI that the custom resource provider will proxy requests to. This can be in the form of a flat URI (e.g. 'https://testendpoint/') or can specify to route via a path (e.g. 'https://testendpoint/{requestPath}')"},"name":{"type":"string","description":"The name of the route definition. This becomes the name for the ARM extension (e.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders/{resourceProviderName}/{name}')"}},"description":"A route definition that defines an action or resource that can be interacted with through the custom resource provider."},"CustomRPValidations":{"required":["specification"],"type":"object","properties":{"specification":{"pattern":"^https://raw.githubusercontent.com/.+","type":"string","description":"A link to the validation specification. The specification must be hosted on raw.githubusercontent.com."},"validationType":{"type":"string","description":"The type of validation to run against a matching request.","enum":["Swagger"]}},"description":"A validation to apply on custom resource provider requests."},"ErrorDefinition":{"type":"object","properties":{"code":{"type":"string","description":"Service specific error code which serves as the substatus for the HTTP error code.","readOnly":true},"details":{"type":"array","description":"Internal error details.","readOnly":true,"items":{"$ref":"#/components/schemas/ErrorDefinition"}},"message":{"type":"string","description":"Description of the error.","readOnly":true}},"description":"Error definition."},"ErrorResponse":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/ErrorDefinition"}},"description":"Error response."},"ListByCustomRPManifest":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to use for getting the next set of results."},"value":{"type":"array","description":"The array of custom resource provider manifests.","items":{"$ref":"#/components/schemas/CustomRPManifest"}}},"description":"List of custom resource providers."},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Resource name","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags"},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"The resource definition."},"ResourceProviderOperation":{"type":"object","properties":{"display":{"type":"object","properties":{"description":{"type":"string","description":"Description of this operation."},"operation":{"type":"string","description":"Type of operation: get, read, delete, etc."},"provider":{"type":"string","description":"Resource provider: Microsoft Custom Providers."},"resource":{"type":"string","description":"Resource on which the operation is performed."}},"description":"Display metadata associated with the operation."},"name":{"type":"string","description":"Operation name, in format of {provider}/{resource}/{operation}"}},"description":"Supported operations of this resource provider."},"ResourceProviderOperationList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URL to use for getting the next set of results."},"value":{"type":"array","description":"List of operations supported by this resource provider.","items":{"$ref":"#/components/schemas/ResourceProviderOperation"}}},"description":"Results of the request to list operations."},"ResourceProvidersUpdate":{"type":"object","properties":{"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags"}},"description":"custom resource provider update information."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to be used with the HTTP request.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"ResourceProviderNameParameter":{"name":"resourceProviderName","in":"path","description":"The name of the resource provider.","required":true,"schema":{"maxLength":64,"minLength":3,"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "customproviders",
+    "description" : "Allows extension of ARM control plane with custom resource providers.",
+    "version" : "2018-09-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.CustomProviders/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "description" : "The list of operations provided by Microsoft CustomProviders.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Describe the result of a successful operation.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ResourceProviderOperationList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.CustomProviders/resourceProviders" : {
+      "get" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Gets all the custom resource providers within a subscription.",
+        "operationId" : "CustomResourceProvider_ListBySubscription",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns an array of custom resource providers.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListByCustomRPManifest"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders" : {
+      "get" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Gets all the custom resource providers within a resource group.",
+        "operationId" : "CustomResourceProvider_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK - Returns an array of custom resource providers.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListByCustomRPManifest"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders/{resourceProviderName}" : {
+      "get" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Gets the custom resource provider manifest.",
+        "operationId" : "CustomResourceProvider_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceProviderName",
+          "in" : "path",
+          "description" : "The name of the resource provider.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 3,
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition with the existing resource.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomRPManifest"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Creates or updates the custom resource provider.",
+        "operationId" : "CustomResourceProvider_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceProviderName",
+          "in" : "path",
+          "description" : "The name of the resource provider.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 3,
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters required to create or update a custom resource provider definition.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CustomRPManifest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition. Resource already exists and the changes have been accepted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomRPManifest"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created response definition. Resource has been created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomRPManifest"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Deletes the custom resource provider.",
+        "operationId" : "CustomResourceProvider_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceProviderName",
+          "in" : "path",
+          "description" : "The name of the resource provider.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 3,
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK resource deleted"
+          },
+          "202" : {
+            "description" : "OK resource delete has been accepted."
+          },
+          "204" : {
+            "description" : "OK resource was not found."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "CustomResourceProvider" ],
+        "description" : "Updates an existing custom resource provider. The only value that can be updated via PATCH currently is the tags.",
+        "operationId" : "CustomResourceProvider_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceProviderName",
+          "in" : "path",
+          "description" : "The name of the resource provider.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 3,
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The updatable fields of a custom resource provider.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResourceProvidersUpdate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK response. The resource has been updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomRPManifest"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.CustomProviders/associations" : {
+      "get" : {
+        "tags" : [ "Associations" ],
+        "description" : "Gets all association for the given scope.",
+        "operationId" : "Associations_ListAll",
+        "parameters" : [ {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns all associations for the given scope.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AssociationsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.CustomProviders/associations/{associationName}" : {
+      "get" : {
+        "tags" : [ "Associations" ],
+        "description" : "Get an association.",
+        "operationId" : "Associations_Get",
+        "parameters" : [ {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "associationName",
+          "in" : "path",
+          "description" : "The name of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Returns association.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Association"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Associations" ],
+        "description" : "Create or update an association.",
+        "operationId" : "Associations_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the association. The scope can be any valid REST resource instance. For example, use '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}' for a virtual machine resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "associationName",
+          "in" : "path",
+          "description" : "The name of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters required to create or update an association.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Association"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK. Association already exists and the changes have been accepted.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Association"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Created. Association has been created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Association"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Associations" ],
+        "description" : "Delete an association.",
+        "operationId" : "Associations_Delete",
+        "parameters" : [ {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "The scope of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "associationName",
+          "in" : "path",
+          "description" : "The name of the association.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to be used with the HTTP request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. Association deleted."
+          },
+          "202" : {
+            "description" : "Accepted. Association delete has been accepted."
+          },
+          "204" : {
+            "description" : "No Content. Association was not found."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Association" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The association id.",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The association name.",
+            "readOnly" : true
+          },
+          "properties" : {
+            "type" : "object",
+            "properties" : {
+              "provisioningState" : {
+                "type" : "string",
+                "description" : "The provisioning state of the association.",
+                "readOnly" : true,
+                "enum" : [ "Accepted", "Deleting", "Running", "Succeeded", "Failed" ]
+              },
+              "targetResourceId" : {
+                "type" : "string",
+                "description" : "The REST resource instance of the target resource for this association."
+              }
+            },
+            "description" : "The properties of the association."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The association type.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The resource definition of this association."
+      },
+      "AssociationsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to use for getting the next set of results."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The array of associations.",
+            "items" : {
+              "$ref" : "#/components/schemas/Association"
+            }
+          }
+        },
+        "description" : "List of associations."
+      },
+      "CustomRPActionRouteDefinition" : {
+        "properties" : {
+          "routingType" : {
+            "type" : "string",
+            "description" : "The routing types that are supported for action requests.",
+            "enum" : [ "Proxy" ]
+          }
+        },
+        "description" : "The route definition for an action implemented by the custom resource provider.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CustomRPRouteDefinition"
+        } ]
+      },
+      "CustomRPManifest" : {
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "properties" : {
+              "actions" : {
+                "type" : "array",
+                "description" : "A list of actions that the custom resource provider implements.",
+                "items" : {
+                  "$ref" : "#/components/schemas/CustomRPActionRouteDefinition"
+                }
+              },
+              "provisioningState" : {
+                "type" : "string",
+                "description" : "The provisioning state of the resource provider.",
+                "readOnly" : true,
+                "enum" : [ "Accepted", "Deleting", "Running", "Succeeded", "Failed" ]
+              },
+              "resourceTypes" : {
+                "type" : "array",
+                "description" : "A list of resource types that the custom resource provider implements.",
+                "items" : {
+                  "$ref" : "#/components/schemas/CustomRPResourceTypeRouteDefinition"
+                }
+              },
+              "validations" : {
+                "type" : "array",
+                "description" : "A list of validations to run on the custom resource provider's requests.",
+                "items" : {
+                  "$ref" : "#/components/schemas/CustomRPValidations"
+                }
+              }
+            },
+            "description" : "The manifest for the custom resource provider"
+          }
+        },
+        "description" : "A manifest file that defines the custom resource provider resources.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "CustomRPResourceTypeRouteDefinition" : {
+        "properties" : {
+          "routingType" : {
+            "type" : "string",
+            "description" : "The routing types that are supported for resource requests.",
+            "enum" : [ "Proxy", "Proxy,Cache" ]
+          }
+        },
+        "description" : "The route definition for a resource implemented by the custom resource provider.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CustomRPRouteDefinition"
+        } ]
+      },
+      "CustomRPRouteDefinition" : {
+        "required" : [ "endpoint", "name" ],
+        "type" : "object",
+        "properties" : {
+          "endpoint" : {
+            "pattern" : "^https://.+",
+            "type" : "string",
+            "description" : "The route definition endpoint URI that the custom resource provider will proxy requests to. This can be in the form of a flat URI (e.g. 'https://testendpoint/') or can specify to route via a path (e.g. 'https://testendpoint/{requestPath}')"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the route definition. This becomes the name for the ARM extension (e.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomProviders/resourceProviders/{resourceProviderName}/{name}')"
+          }
+        },
+        "description" : "A route definition that defines an action or resource that can be interacted with through the custom resource provider."
+      },
+      "CustomRPValidations" : {
+        "required" : [ "specification" ],
+        "type" : "object",
+        "properties" : {
+          "specification" : {
+            "pattern" : "^https://raw.githubusercontent.com/.+",
+            "type" : "string",
+            "description" : "A link to the validation specification. The specification must be hosted on raw.githubusercontent.com."
+          },
+          "validationType" : {
+            "type" : "string",
+            "description" : "The type of validation to run against a matching request.",
+            "enum" : [ "Swagger" ]
+          }
+        },
+        "description" : "A validation to apply on custom resource provider requests."
+      },
+      "ErrorDefinition" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Service specific error code which serves as the substatus for the HTTP error code.",
+            "readOnly" : true
+          },
+          "details" : {
+            "type" : "array",
+            "description" : "Internal error details.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDefinition"
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Description of the error.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Error definition."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/ErrorDefinition"
+          }
+        },
+        "description" : "Error response."
+      },
+      "ListByCustomRPManifest" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to use for getting the next set of results."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The array of custom resource provider manifests.",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomRPManifest"
+            }
+          }
+        },
+        "description" : "List of custom resource providers."
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "The resource definition."
+      },
+      "ResourceProviderOperation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "description" : {
+                "type" : "string",
+                "description" : "Description of this operation."
+              },
+              "operation" : {
+                "type" : "string",
+                "description" : "Type of operation: get, read, delete, etc."
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Resource provider: Microsoft Custom Providers."
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed."
+              }
+            },
+            "description" : "Display metadata associated with the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name, in format of {provider}/{resource}/{operation}"
+          }
+        },
+        "description" : "Supported operations of this resource provider."
+      },
+      "ResourceProviderOperationList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URL to use for getting the next set of results."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of operations supported by this resource provider.",
+            "items" : {
+              "$ref" : "#/components/schemas/ResourceProviderOperation"
+            }
+          }
+        },
+        "description" : "Results of the request to list operations."
+      },
+      "ResourceProvidersUpdate" : {
+        "type" : "object",
+        "properties" : {
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "custom resource provider update information."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to be used with the HTTP request.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceProviderNameParameter" : {
+        "name" : "resourceProviderName",
+        "in" : "path",
+        "description" : "The name of the resource provider.",
+        "required" : true,
+        "schema" : {
+          "maxLength" : 64,
+          "minLength" : 3,
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

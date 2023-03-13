@@ -1,1 +1,393 @@
-{"openapi":"3.0.1","info":{"title":"MonitorManagementClient","version":"2018-01-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{resourceUri}/providers/microsoft.insights/metrics":{"get":{"tags":["Metrics"],"description":"**Lists the metric values for a resource**.","operationId":"Metrics_List","parameters":[{"name":"resourceUri","in":"path","description":"The identifier of the resource.","required":true,"schema":{"type":"string"}},{"name":"timespan","in":"query","description":"The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.","schema":{"type":"string"}},{"name":"interval","in":"query","description":"The interval (i.e. timegrain) of the query.","schema":{"type":"string","format":"duration"}},{"name":"metricnames","in":"query","description":"The names of the metrics (comma separated) to retrieve.","schema":{"type":"string"}},{"name":"aggregation","in":"query","description":"The list of aggregation types (comma separated) to retrieve.","schema":{"type":"string"}},{"name":"top","in":"query","description":"The maximum number of records to retrieve.\nValid only if $filter is specified.\nDefaults to 10.","schema":{"type":"integer","format":"int32"}},{"name":"orderby","in":"query","description":"The aggregation to use for sorting results and the direction of the sort.\nOnly one order can be specified.\nExamples: sum asc.","schema":{"type":"string"}},{"name":"$filter","in":"query","description":"The **$filter** is used to reduce the set of metric data returned.<br>Example:<br>Metric contains metadata A, B and C.<br>- Return all time series of C where A = a1 and B = b1 or b2<br>**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**<br>- Invalid variant:<br>**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**<br>This is invalid because the logical or operator cannot separate two different metadata names.<br>- Return all time series where A = a1, B = b1 and C = c1:<br>**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**<br>- Return all time series where A = a1<br>**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**.","schema":{"type":"string"}},{"name":"resultType","in":"query","description":"Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details.","schema":{"type":"string","enum":["Data","Metadata"]}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"metricnamespace","in":"query","description":"Metric namespace to query metric definitions for.","schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to get the list of metric values.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Response"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"LocalizableString":{"required":["value"],"type":"object","properties":{"localizedValue":{"type":"string","description":"the locale specific value."},"value":{"type":"string","description":"the invariant value."}},"description":"The localizable string class."},"MetadataValue":{"type":"object","properties":{"name":{"$ref":"#/components/schemas/LocalizableString"},"value":{"type":"string","description":"the value of the metadata."}},"description":"Represents a metric metadata value."},"Metric":{"required":["id","name","timeseries","type","unit"],"type":"object","properties":{"id":{"type":"string","description":"the metric Id."},"name":{"$ref":"#/components/schemas/LocalizableString"},"timeseries":{"type":"array","description":"the time series returned when a data query is performed.","items":{"$ref":"#/components/schemas/TimeSeriesElement"}},"type":{"type":"string","description":"the resource type of the metric resource."},"unit":{"$ref":"#/components/schemas/Unit"}},"description":"The result data of a query."},"MetricValue":{"required":["timeStamp"],"type":"object","properties":{"average":{"type":"number","description":"the average value in the time range.","format":"double"},"count":{"type":"number","description":"the number of samples in the time range. Can be used to determine the number of values that contributed to the average value.","format":"double"},"maximum":{"type":"number","description":"the greatest value in the time range.","format":"double"},"minimum":{"type":"number","description":"the least value in the time range.","format":"double"},"timeStamp":{"type":"string","description":"the timestamp for the metric value in ISO 8601 format.","format":"date-time"},"total":{"type":"number","description":"the sum of all of the values in the time range.","format":"double"}},"description":"Represents a metric value."},"Response":{"required":["timespan","value"],"type":"object","properties":{"cost":{"minimum":0,"type":"number","description":"The integer value representing the cost of the query, for data case.","format":"int32"},"interval":{"type":"string","description":"The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.","format":"duration"},"namespace":{"type":"string","description":"The namespace of the metrics been queried"},"resourceregion":{"type":"string","description":"The region of the resource been queried for metrics."},"timespan":{"type":"string","description":"The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested."},"value":{"type":"array","description":"the value of the collection.","items":{"$ref":"#/components/schemas/Metric"}}},"description":"The response to a metrics query."},"TimeSeriesElement":{"type":"object","properties":{"data":{"type":"array","description":"An array of data points representing the metric values.  This is only returned if a result type of data is specified.","items":{"$ref":"#/components/schemas/MetricValue"}},"metadatavalues":{"type":"array","description":"the metadata values returned if $filter was specified in the call.","items":{"$ref":"#/components/schemas/MetadataValue"}}},"description":"A time series result type. The discriminator value is always TimeSeries in this case."},"Unit":{"type":"string","description":"the unit of the metric.","enum":["Count","Bytes","Seconds","CountPerSecond","BytesPerSecond","Percent","MilliSeconds","ByteSeconds","Unspecified","Cores","MilliCores","NanoCores","BitsPerSecond"]}},"parameters":{"AggregationsParameter":{"name":"aggregation","in":"query","description":"The list of aggregation types (comma separated) to retrieve.","schema":{"type":"string"}},"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"IntervalParameter":{"name":"interval","in":"query","description":"The interval (i.e. timegrain) of the query.","schema":{"type":"string","format":"duration"}},"MetricNamesParameter":{"name":"metricnames","in":"query","description":"The names of the metrics (comma separated) to retrieve.","schema":{"type":"string"}},"MetricNamespaceParameter":{"name":"metricnamespace","in":"query","description":"Metric namespace to query metric definitions for.","schema":{"type":"string"}},"OrderByParameter":{"name":"orderby","in":"query","description":"The aggregation to use for sorting results and the direction of the sort.\nOnly one order can be specified.\nExamples: sum asc.","schema":{"type":"string"}},"ResourceUriParameter":{"name":"resourceUri","in":"path","description":"The identifier of the resource.","required":true,"schema":{"type":"string"}},"ResultTypeParameter":{"name":"resultType","in":"query","description":"Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details.","schema":{"type":"string","enum":["Data","Metadata"]}},"TimespanParameter":{"name":"timespan","in":"query","description":"The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.","schema":{"type":"string"}},"TopParameter":{"name":"top","in":"query","description":"The maximum number of records to retrieve.\nValid only if $filter is specified.\nDefaults to 10.","schema":{"type":"integer","format":"int32"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MonitorManagementClient",
+    "version" : "2018-01-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{resourceUri}/providers/microsoft.insights/metrics" : {
+      "get" : {
+        "tags" : [ "Metrics" ],
+        "description" : "**Lists the metric values for a resource**.",
+        "operationId" : "Metrics_List",
+        "parameters" : [ {
+          "name" : "resourceUri",
+          "in" : "path",
+          "description" : "The identifier of the resource.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timespan",
+          "in" : "query",
+          "description" : "The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "interval",
+          "in" : "query",
+          "description" : "The interval (i.e. timegrain) of the query.",
+          "schema" : {
+            "type" : "string",
+            "format" : "duration"
+          }
+        }, {
+          "name" : "metricnames",
+          "in" : "query",
+          "description" : "The names of the metrics (comma separated) to retrieve.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "aggregation",
+          "in" : "query",
+          "description" : "The list of aggregation types (comma separated) to retrieve.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "top",
+          "in" : "query",
+          "description" : "The maximum number of records to retrieve.\nValid only if $filter is specified.\nDefaults to 10.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "orderby",
+          "in" : "query",
+          "description" : "The aggregation to use for sorting results and the direction of the sort.\nOnly one order can be specified.\nExamples: sum asc.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "The **$filter** is used to reduce the set of metric data returned.<br>Example:<br>Metric contains metadata A, B and C.<br>- Return all time series of C where A = a1 and B = b1 or b2<br>**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**<br>- Invalid variant:<br>**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**<br>This is invalid because the logical or operator cannot separate two different metadata names.<br>- Return all time series where A = a1, B = b1 and C = c1:<br>**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**<br>- Return all time series where A = a1<br>**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resultType",
+          "in" : "query",
+          "description" : "Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Data", "Metadata" ]
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metricnamespace",
+          "in" : "query",
+          "description" : "Metric namespace to query metric definitions for.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to get the list of metric values.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "LocalizableString" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "localizedValue" : {
+            "type" : "string",
+            "description" : "the locale specific value."
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "the invariant value."
+          }
+        },
+        "description" : "The localizable string class."
+      },
+      "MetadataValue" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizableString"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "the value of the metadata."
+          }
+        },
+        "description" : "Represents a metric metadata value."
+      },
+      "Metric" : {
+        "required" : [ "id", "name", "timeseries", "type", "unit" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "the metric Id."
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizableString"
+          },
+          "timeseries" : {
+            "type" : "array",
+            "description" : "the time series returned when a data query is performed.",
+            "items" : {
+              "$ref" : "#/components/schemas/TimeSeriesElement"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "the resource type of the metric resource."
+          },
+          "unit" : {
+            "$ref" : "#/components/schemas/Unit"
+          }
+        },
+        "description" : "The result data of a query."
+      },
+      "MetricValue" : {
+        "required" : [ "timeStamp" ],
+        "type" : "object",
+        "properties" : {
+          "average" : {
+            "type" : "number",
+            "description" : "the average value in the time range.",
+            "format" : "double"
+          },
+          "count" : {
+            "type" : "number",
+            "description" : "the number of samples in the time range. Can be used to determine the number of values that contributed to the average value.",
+            "format" : "double"
+          },
+          "maximum" : {
+            "type" : "number",
+            "description" : "the greatest value in the time range.",
+            "format" : "double"
+          },
+          "minimum" : {
+            "type" : "number",
+            "description" : "the least value in the time range.",
+            "format" : "double"
+          },
+          "timeStamp" : {
+            "type" : "string",
+            "description" : "the timestamp for the metric value in ISO 8601 format.",
+            "format" : "date-time"
+          },
+          "total" : {
+            "type" : "number",
+            "description" : "the sum of all of the values in the time range.",
+            "format" : "double"
+          }
+        },
+        "description" : "Represents a metric value."
+      },
+      "Response" : {
+        "required" : [ "timespan", "value" ],
+        "type" : "object",
+        "properties" : {
+          "cost" : {
+            "minimum" : 0,
+            "type" : "number",
+            "description" : "The integer value representing the cost of the query, for data case.",
+            "format" : "int32"
+          },
+          "interval" : {
+            "type" : "string",
+            "description" : "The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.",
+            "format" : "duration"
+          },
+          "namespace" : {
+            "type" : "string",
+            "description" : "The namespace of the metrics been queried"
+          },
+          "resourceregion" : {
+            "type" : "string",
+            "description" : "The region of the resource been queried for metrics."
+          },
+          "timespan" : {
+            "type" : "string",
+            "description" : "The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "the value of the collection.",
+            "items" : {
+              "$ref" : "#/components/schemas/Metric"
+            }
+          }
+        },
+        "description" : "The response to a metrics query."
+      },
+      "TimeSeriesElement" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "An array of data points representing the metric values.  This is only returned if a result type of data is specified.",
+            "items" : {
+              "$ref" : "#/components/schemas/MetricValue"
+            }
+          },
+          "metadatavalues" : {
+            "type" : "array",
+            "description" : "the metadata values returned if $filter was specified in the call.",
+            "items" : {
+              "$ref" : "#/components/schemas/MetadataValue"
+            }
+          }
+        },
+        "description" : "A time series result type. The discriminator value is always TimeSeries in this case."
+      },
+      "Unit" : {
+        "type" : "string",
+        "description" : "the unit of the metric.",
+        "enum" : [ "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond", "Percent", "MilliSeconds", "ByteSeconds", "Unspecified", "Cores", "MilliCores", "NanoCores", "BitsPerSecond" ]
+      }
+    },
+    "parameters" : {
+      "AggregationsParameter" : {
+        "name" : "aggregation",
+        "in" : "query",
+        "description" : "The list of aggregation types (comma separated) to retrieve.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "IntervalParameter" : {
+        "name" : "interval",
+        "in" : "query",
+        "description" : "The interval (i.e. timegrain) of the query.",
+        "schema" : {
+          "type" : "string",
+          "format" : "duration"
+        }
+      },
+      "MetricNamesParameter" : {
+        "name" : "metricnames",
+        "in" : "query",
+        "description" : "The names of the metrics (comma separated) to retrieve.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "MetricNamespaceParameter" : {
+        "name" : "metricnamespace",
+        "in" : "query",
+        "description" : "Metric namespace to query metric definitions for.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "OrderByParameter" : {
+        "name" : "orderby",
+        "in" : "query",
+        "description" : "The aggregation to use for sorting results and the direction of the sort.\nOnly one order can be specified.\nExamples: sum asc.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceUriParameter" : {
+        "name" : "resourceUri",
+        "in" : "path",
+        "description" : "The identifier of the resource.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResultTypeParameter" : {
+        "name" : "resultType",
+        "in" : "query",
+        "description" : "Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details.",
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "Data", "Metadata" ]
+        }
+      },
+      "TimespanParameter" : {
+        "name" : "timespan",
+        "in" : "query",
+        "description" : "The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "TopParameter" : {
+        "name" : "top",
+        "in" : "query",
+        "description" : "The maximum number of records to retrieve.\nValid only if $filter is specified.\nDefaults to 10.",
+        "schema" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

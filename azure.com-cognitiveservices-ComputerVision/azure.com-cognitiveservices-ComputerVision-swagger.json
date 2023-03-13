@@ -1,1 +1,1176 @@
-{"openapi":"3.0.1","info":{"title":"Computer Vision","description":"The Computer Vision API provides state-of-the-art algorithms to process images and return information. For example, it can be used to determine if an image contains mature content, or it can be used to find all the faces in an image.  It also has other features like estimating dominant and accent colors, categorizing the content of images, and describing an image with complete English sentences.  Additionally, it can also intelligently generate images thumbnails for displaying large images effectively.","version":"1.0"},"servers":[{"url":"https://azure.local/vision/v1.0"}],"security":[{"apim_key":null}],"paths":{"/analyze":{"post":{"description":"This operation extracts a rich set of visual features based on the image content. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL.  Within your request, there is an optional parameter to allow you to choose which features to return.  By default, image categories are returned in the response.","operationId":"AnalyzeImage","parameters":[{"name":"visualFeatures","in":"query","description":"A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.","style":"form","explode":false,"schema":{"type":"array","items":{"type":"string","enum":["ImageType","Faces","Adult","Categories","Color","Tags","Description"]}}},{"name":"details","in":"query","description":"A string indicating which domain-specific details to return. Multiple values should be comma-separated. Valid visual feature types include:Celebrities - identifies celebrities if detected in the image.","style":"form","explode":false,"schema":{"type":"array","items":{"type":"string","nullable":false,"enum":["Celebrities","Landmarks"]}}},{"name":"language","in":"query","description":"The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.","schema":{"type":"string","default":"en","enum":["en","es","ja","pt","zh"]}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"The response include the extracted features in JSON format.Here is the definitions for enumeration typesClipartTypeNon-clipart = 0,  ambiguous = 1, normal-clipart = 2, good-clipart = 3.LineDrawingTypeNon-LineDrawing = 0,LineDrawing = 1.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ImageAnalysis"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/describe":{"post":{"description":"This operation generates a description of an image in human readable language with complete sentences.  The description is based on a collection of content tags, which are also returned by the operation. More than one description can be generated for each image.  Descriptions are ordered by their confidence score. All descriptions are in English. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL.A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.","operationId":"DescribeImage","parameters":[{"name":"maxCandidates","in":"query","description":"Maximum number of candidate descriptions to be returned.  The default is 1.","schema":{"type":"string","default":"1"}},{"name":"language","in":"query","description":"The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.","schema":{"type":"string","default":"en","enum":["en","es","ja","pt","zh"]}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"Image description object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ImageDescription"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/generateThumbnail":{"post":{"description":"This operation generates a thumbnail image with the user-specified width and height. By default, the service analyzes the image, identifies the region of interest (ROI), and generates smart cropping coordinates based on the ROI. Smart cropping helps when you specify an aspect ratio that differs from that of the input image. A successful response contains the thumbnail image binary. If the request failed, the response contains an error code and a message to help determine what went wrong.","operationId":"GenerateThumbnail","parameters":[{"name":"width","in":"query","description":"Width of the thumbnail. It must be between 1 and 1024. Recommended minimum of 50.","required":true,"schema":{"maximum":1023,"minimum":1,"type":"integer"}},{"name":"height","in":"query","description":"Height of the thumbnail. It must be between 1 and 1024. Recommended minimum of 50.","required":true,"schema":{"maximum":1023,"minimum":1,"type":"integer"}},{"name":"smartCropping","in":"query","description":"Boolean flag for enabling smart cropping.","schema":{"type":"boolean","default":false}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"The generated thumbnail in binary format.","content":{"application/octet-stream":{"schema":{"type":"string","format":"binary"}}}},"default":{"description":"Error response.","content":{"application/octet-stream":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/models":{"get":{"description":"This operation returns the list of domain-specific models that are supported by the Computer Vision API.  Currently, the API only supports one domain-specific model: a celebrity recognizer. A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.","operationId":"ListModels","responses":{"200":{"description":"List of available domain models.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ListModelsResult"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/models/{model}/analyze":{"post":{"description":"This operation recognizes content within an image by applying a domain-specific model.  The list of domain-specific models that are supported by the Computer Vision API can be retrieved using the /models GET request.  Currently, the API only provides a single domain-specific model: celebrities. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.","operationId":"AnalyzeImageByDomain","parameters":[{"name":"model","in":"path","description":"The domain-specific content to recognize.","required":true,"schema":{"type":"string"}},{"name":"language","in":"query","description":"The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.","schema":{"type":"string","default":"en","enum":["en","es","ja","pt","zh"]}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"Analysis result based on the domain model","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DomainModelResults"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/ocr":{"post":{"description":"Optical Character Recognition (OCR) detects printed text in an image and extracts the recognized characters into a machine-usable character stream.   Upon success, the OCR results will be returned. Upon failure, the error code together with an error message will be returned. The error code can be one of InvalidImageUrl, InvalidImageFormat, InvalidImageSize, NotSupportedImage,  NotSupportedLanguage, or InternalServerError.","operationId":"RecognizePrintedText","parameters":[{"name":"detectOrientation","in":"query","description":"Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down). ","required":true,"schema":{"type":"boolean","default":true}},{"name":"language","in":"query","description":"The BCP-47 language code of the text to be detected in the image. The default value is 'unk'","schema":{"type":"string","default":"unk","enum":["unk","zh-Hans","zh-Hant","cs","da","nl","en","fi","fr","de","el","hu","it","ja","ko","nb","pl","pt","ru","es","sv","tr","ar","ro","sr-Cyrl","sr-Latn","sk"]}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"The OCR results in the hierarchy of region/line/word. The results include text, bounding box for regions, lines and words.textAngleThe angle, in degrees, of the detected text with respect to the closest horizontal or vertical direction. After rotating the input image clockwise by this angle, the recognized text lines become horizontal or vertical. In combination with the orientation property it can be used to overlay recognition results correctly on the original image, by rotating either the original image or recognition results by a suitable angle around the center of the original image. If the angle cannot be confidently detected, this property is not present. If the image contains text at different angles, only part of the text will be recognized correctly.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OcrResult"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/recognizeText":{"post":{"description":"Recognize Text operation. When you use the Recognize Text interface, the response contains a field called 'Operation-Location'. The 'Operation-Location' field contains the URL that you must use for your Get Handwritten Text Operation Result operation.","operationId":"RecognizeText","parameters":[{"name":"detectHandwriting","in":"query","description":"If 'true' is specified, handwriting recognition is performed. If this parameter is set to 'false' or is not specified, printed text recognition is performed.","schema":{"type":"boolean","default":false}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"202":{"description":"The service has accepted the request and will start processing later. It will return Accepted immediately and include an Operation-Location header. Client side should further query the operation status using the URL specified in this header. The operation ID will expire in 48 hours.","headers":{"Operation-Location":{"description":"URL to query for status of the operation. The operation ID will expire in 48 hours. ","schema":{"type":"string"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/tag":{"post":{"description":"This operation generates a list of words, or tags, that are relevant to the content of the supplied image. The Computer Vision API can return tags based on objects, living beings, scenery or actions found in images. Unlike categories, tags are not organized according to a hierarchical classification system, but correspond to image content. Tags may contain hints to avoid ambiguity or provide context, for example the tag 'cello' may be accompanied by the hint 'musical instrument'. All tags are in English.","operationId":"TagImage","parameters":[{"name":"language","in":"query","description":"The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.","schema":{"type":"string","default":"en","enum":["en","es","ja","pt","zh"]}}],"requestBody":{"description":"A JSON document with a URL pointing to the image that is to be analyzed.","content":{"application/json":{"schema":{"required":["url"],"type":"object","properties":{"url":{"type":"string","description":"Publicly reachable URL of an image"}}}}},"required":true},"responses":{"200":{"description":"Image tags object.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TagResult"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}},"/textOperations/{operationId}":{"get":{"description":"This interface is used for getting text operation result. The URL to this interface should be retrieved from 'Operation-Location' field returned from Recognize Text interface.","operationId":"GetTextOperationResult","parameters":[{"name":"operationId","in":"path","description":"Id of the text operation returned in the response of the 'Recognize Handwritten Text'","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Returns the operation status.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TextOperationResult"}}}},"default":{"description":"Error response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ComputerVisionError"}}}}}}}},"components":{"schemas":{"AdultInfo":{"type":"object","properties":{"adultScore":{"type":"number","description":"Score from 0 to 1 that indicates how much of adult content is within the image.","format":"double","nullable":false},"isAdultContent":{"type":"boolean","description":"A value indicating if the image contains adult-oriented content.","nullable":false},"isRacyContent":{"type":"boolean","description":"A value indicating if the image is race.","nullable":false},"racyScore":{"type":"number","description":"Score from 0 to 1 that indicates how suggestive is the image.","format":"double","nullable":false}},"description":"An object describing whether the image contains adult-oriented content and/or is racy."},"BoundingBox":{"type":"array","items":{"type":"integer","nullable":false}},"Category":{"type":"object","properties":{"detail":{"$ref":"#/components/schemas/CategoryDetail"},"name":{"type":"string","description":"Name of the category."},"score":{"type":"number","description":"Scoring of the category.","format":"double"}},"description":"An object describing identified category."},"CategoryDetail":{"type":"object","properties":{"celebrities":{"type":"array","description":"An array of celebrities if any identified.","items":{"$ref":"#/components/schemas/CelebritiesModel"}}},"description":"An object describing additional category details."},"CelebritiesModel":{"type":"object","properties":{"confidence":{"type":"number","description":"Level of confidence ranging from 0 to 1.","format":"double"},"faceRectangle":{"$ref":"#/components/schemas/FaceRectangle"},"name":{"type":"string","description":"Name of the celebrity."}},"description":"An object describing possible celebrity identification."},"CelebrityResults":{"type":"object","properties":{"celebrities":{"type":"array","items":{"$ref":"#/components/schemas/CelebritiesModel"}},"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the REST API request."}},"description":"List of celebrities recognized in the image."},"ColorInfo":{"type":"object","properties":{"accentColor":{"type":"string","description":"Possible accent color."},"dominantColorBackground":{"type":"string","description":"Possible dominant background color."},"dominantColorForeground":{"type":"string","description":"Possible dominant foreground color."},"dominantColors":{"type":"array","description":"An array of possible dominant colors.","items":{"type":"string"}},"isBWImg":{"type":"boolean","description":"A value indicating if the image is black and white."}},"description":"An object providing additional metadata describing color attributes."},"ComputerVisionError":{"required":["code","message"],"type":"object","properties":{"code":{"type":"string","description":"The error code.","enum":["InvalidImageUrl","InvalidImageFormat","InvalidImageSize","NotSupportedVisualFeature","NotSupportedImage","InvalidDetails","NotSupportedLanguage","BadArgument","FailedToProcess","Timeout","InternalServerError","Unspecified","StorageException"]},"message":{"type":"string","description":"A message explaining the error reported by the service."},"requestId":{"type":"string","description":"A unique request identifier."}}},"DomainModelResults":{"type":"object","properties":{"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the REST API request."},"result":{"type":"object","description":"Model-specific response"}},"description":"Result of image analysis using a specific domain model including additional metadata."},"FaceDescription":{"type":"object","properties":{"age":{"type":"integer","description":"Possible age of the face."},"faceRectangle":{"$ref":"#/components/schemas/FaceRectangle"},"gender":{"type":"string","description":"Possible gender of the face.","enum":["Male","Female"]}},"description":"An object describing a face identified in the image."},"FaceRectangle":{"type":"object","properties":{"height":{"type":"integer","description":"Height measured from the top-left point of the face."},"left":{"type":"integer","description":"X-coordinate of the top left point of the face."},"top":{"type":"integer","description":"Y-coordinate of the top left point of the face."},"width":{"type":"integer","description":"Width measured from the top-left point of the face."}},"description":"An object describing face rectangle."},"ImageAnalysis":{"type":"object","properties":{"adult":{"$ref":"#/components/schemas/AdultInfo"},"categories":{"type":"array","description":"An array indicating identified categories.","items":{"$ref":"#/components/schemas/Category"}},"color":{"$ref":"#/components/schemas/ColorInfo"},"description":{"$ref":"#/components/schemas/ImageDescriptionDetails"},"faces":{"type":"array","description":"An array of possible faces within the image.","items":{"$ref":"#/components/schemas/FaceDescription"}},"imageType":{"$ref":"#/components/schemas/ImageType"},"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the request for tracking purposes."},"tags":{"type":"array","description":"A list of tags with confidence level.","items":{"$ref":"#/components/schemas/ImageTag"}}},"description":"Result of AnalyzeImage operation."},"ImageCaption":{"type":"object","properties":{"confidence":{"type":"number","description":"The level of confidence the service has in the caption","format":"double"},"text":{"type":"string","description":"The text of the caption"}},"description":"An image caption, i.e. a brief description of what the image depicts."},"ImageDescription":{"type":"object","properties":{"description":{"$ref":"#/components/schemas/ImageDescriptionDetails"}},"description":"A collection of content tags, along with a list of captions sorted by confidence level, and image metadata."},"ImageDescriptionDetails":{"type":"object","properties":{"captions":{"type":"array","description":"A list of captions, sorted by confidence level.","items":{"$ref":"#/components/schemas/ImageCaption"}},"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the REST API request."},"tags":{"type":"array","description":"A collection of image tags.","items":{"type":"string"}}},"description":"A collection of content tags, along with a list of captions sorted by confidence level, and image metadata."},"ImageMetadata":{"type":"object","properties":{"format":{"type":"string","description":"Image format"},"height":{"type":"integer","description":"Image height","format":"int32"},"width":{"type":"integer","description":"Image width","format":"int32"}},"description":"Image metadata"},"ImageTag":{"type":"object","properties":{"confidence":{"type":"number","description":"The level of confidence the service has in the caption","format":"double"},"name":{"type":"string","description":"The tag value"}},"description":"An image caption, i.e. a brief description of what the image depicts."},"ImageType":{"type":"object","properties":{"clipArtType":{"type":"number","description":"Confidence level that the image is a clip art."},"lineDrawingType":{"type":"number","description":"Confidence level that the image is a line drawing."}},"description":"An object providing possible image types and matching confidence levels."},"LandmarkResults":{"type":"object","properties":{"landmarks":{"type":"array","items":{"type":"object","properties":{"confidence":{"type":"number","description":"Confidence level for the landmark recognition.","format":"double"},"name":{"type":"string","description":"Name of the landmark."}},"description":"A landmark recognized in the image"}},"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the REST API request."}},"description":"List of landmarks recognized in the image."},"Line":{"type":"object","properties":{"boundingBox":{"$ref":"#/components/schemas/BoundingBox"},"text":{"type":"string"},"words":{"type":"array","items":{"$ref":"#/components/schemas/Word"}}}},"ListModelsResult":{"type":"object","properties":{"models":{"type":"array","description":"An array of supported models.","readOnly":true,"items":{"$ref":"#/components/schemas/ModelDescription"}}},"description":"Result of the List Domain Models operation."},"ModelDescription":{"type":"object","properties":{"categories":{"type":"array","items":{"type":"string"}},"name":{"type":"string"}},"description":"An object describing supported model by name and categories."},"OcrLine":{"type":"object","properties":{"boundingBox":{"type":"string","description":"Bounding box of a recognized line. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."},"words":{"type":"array","description":"An array of objects, where each object represents a recognized word.","items":{"$ref":"#/components/schemas/OcrWord"}}},"description":"An object describing a single recognized line of text."},"OcrRegion":{"type":"object","properties":{"boundingBox":{"type":"string","description":"Bounding box of a recognized region. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."},"lines":{"type":"array","items":{"$ref":"#/components/schemas/OcrLine"}}},"description":"A region consists of multiple lines (e.g. a column of text in a multi-column document)."},"OcrResult":{"type":"object","properties":{"language":{"type":"string","description":"The BCP-47 language code of the text in the image."},"orientation":{"type":"string","description":"Orientation of the text recognized in the image. The value (up,down,left, or right) refers to the direction that the top of the recognized text is facing, after the image has been rotated around its center according to the detected text angle (see textAngle property)."},"regions":{"type":"array","description":"An array of objects, where each object represents a region of recognized text.","items":{"$ref":"#/components/schemas/OcrRegion"}},"textAngle":{"type":"number","description":"The angle, in degrees, of the detected text with respect to the closest horizontal or vertical direction. After rotating the input image clockwise by this angle, the recognized text lines become horizontal or vertical. In combination with the orientation property it can be used to overlay recognition results correctly on the original image, by rotating either the original image or recognition results by a suitable angle around the center of the original image. If the angle cannot be confidently detected, this property is not present. If the image contains text at different angles, only part of the text will be recognized correctly.","format":"double"}}},"OcrWord":{"type":"object","properties":{"boundingBox":{"type":"string","description":"Bounding box of a recognized word. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."},"text":{"type":"string","description":"String value of a recognized word."}},"description":"Information on a recognized word."},"RecognitionResult":{"type":"object","properties":{"lines":{"type":"array","items":{"$ref":"#/components/schemas/Line"}}}},"ServiceLanguage":{"type":"string"},"TagResult":{"type":"object","properties":{"metadata":{"$ref":"#/components/schemas/ImageMetadata"},"requestId":{"type":"string","description":"Id of the REST API request."},"tags":{"type":"array","description":"A list of tags with confidence level.","items":{"$ref":"#/components/schemas/ImageTag"}}},"description":"The results of a image tag operation, including any tags and image metadata."},"TextOperationResult":{"type":"object","properties":{"recognitionResult":{"$ref":"#/components/schemas/RecognitionResult"},"status":{"type":"string","description":"Status of the text operation.","nullable":false,"enum":["Not Started","Running","Failed","Succeeded"]}}},"Word":{"type":"object","properties":{"boundingBox":{"$ref":"#/components/schemas/BoundingBox"},"text":{"type":"string"}}}},"parameters":{"DetectOrientation":{"name":"detectOrientation","in":"query","description":"Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down). ","required":true,"schema":{"type":"boolean","default":true}},"HandwritingBoolean":{"name":"detectHandwriting","in":"query","description":"If 'true' is specified, handwriting recognition is performed. If this parameter is set to 'false' or is not specified, printed text recognition is performed.","schema":{"type":"boolean","default":false}},"OcrLanguage":{"name":"language","in":"query","description":"The BCP-47 language code of the text to be detected in the image. The default value is 'unk'","schema":{"type":"string","nullable":false,"default":"unk","enum":["unk","zh-Hans","zh-Hant","cs","da","nl","en","fi","fr","de","el","hu","it","ja","ko","nb","pl","pt","ru","es","sv","tr","ar","ro","sr-Cyrl","sr-Latn","sk"]}},"ServiceLanguage":{"name":"language","in":"query","description":"The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.","schema":{"type":"string","nullable":false,"default":"en","enum":["en","es","ja","pt","zh"]}},"VisualFeatures":{"name":"visualFeatures","in":"query","description":"A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.","style":"form","explode":false,"schema":{"type":"array","items":{"type":"string","nullable":false,"enum":["ImageType","Faces","Adult","Categories","Color","Tags","Description"]}}}},"securitySchemes":{"apim_key":{"type":"apiKey","name":"Ocp-Apim-Subscription-Key","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Computer Vision",
+    "description" : "The Computer Vision API provides state-of-the-art algorithms to process images and return information. For example, it can be used to determine if an image contains mature content, or it can be used to find all the faces in an image.  It also has other features like estimating dominant and accent colors, categorizing the content of images, and describing an image with complete English sentences.  Additionally, it can also intelligently generate images thumbnails for displaying large images effectively.",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://azure.local/vision/v1.0"
+  } ],
+  "security" : [ {
+    "apim_key" : null
+  } ],
+  "paths" : {
+    "/analyze" : {
+      "post" : {
+        "description" : "This operation extracts a rich set of visual features based on the image content. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL.  Within your request, there is an optional parameter to allow you to choose which features to return.  By default, image categories are returned in the response.",
+        "operationId" : "AnalyzeImage",
+        "parameters" : [ {
+          "name" : "visualFeatures",
+          "in" : "query",
+          "description" : "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.",
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "ImageType", "Faces", "Adult", "Categories", "Color", "Tags", "Description" ]
+            }
+          }
+        }, {
+          "name" : "details",
+          "in" : "query",
+          "description" : "A string indicating which domain-specific details to return. Multiple values should be comma-separated. Valid visual feature types include:Celebrities - identifies celebrities if detected in the image.",
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "nullable" : false,
+              "enum" : [ "Celebrities", "Landmarks" ]
+            }
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.",
+          "schema" : {
+            "type" : "string",
+            "default" : "en",
+            "enum" : [ "en", "es", "ja", "pt", "zh" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The response include the extracted features in JSON format.Here is the definitions for enumeration typesClipartTypeNon-clipart = 0,  ambiguous = 1, normal-clipart = 2, good-clipart = 3.LineDrawingTypeNon-LineDrawing = 0,LineDrawing = 1.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ImageAnalysis"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/describe" : {
+      "post" : {
+        "description" : "This operation generates a description of an image in human readable language with complete sentences.  The description is based on a collection of content tags, which are also returned by the operation. More than one description can be generated for each image.  Descriptions are ordered by their confidence score. All descriptions are in English. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL.A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.",
+        "operationId" : "DescribeImage",
+        "parameters" : [ {
+          "name" : "maxCandidates",
+          "in" : "query",
+          "description" : "Maximum number of candidate descriptions to be returned.  The default is 1.",
+          "schema" : {
+            "type" : "string",
+            "default" : "1"
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.",
+          "schema" : {
+            "type" : "string",
+            "default" : "en",
+            "enum" : [ "en", "es", "ja", "pt", "zh" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Image description object.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ImageDescription"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generateThumbnail" : {
+      "post" : {
+        "description" : "This operation generates a thumbnail image with the user-specified width and height. By default, the service analyzes the image, identifies the region of interest (ROI), and generates smart cropping coordinates based on the ROI. Smart cropping helps when you specify an aspect ratio that differs from that of the input image. A successful response contains the thumbnail image binary. If the request failed, the response contains an error code and a message to help determine what went wrong.",
+        "operationId" : "GenerateThumbnail",
+        "parameters" : [ {
+          "name" : "width",
+          "in" : "query",
+          "description" : "Width of the thumbnail. It must be between 1 and 1024. Recommended minimum of 50.",
+          "required" : true,
+          "schema" : {
+            "maximum" : 1023,
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        }, {
+          "name" : "height",
+          "in" : "query",
+          "description" : "Height of the thumbnail. It must be between 1 and 1024. Recommended minimum of 50.",
+          "required" : true,
+          "schema" : {
+            "maximum" : 1023,
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        }, {
+          "name" : "smartCropping",
+          "in" : "query",
+          "description" : "Boolean flag for enabling smart cropping.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The generated thumbnail in binary format.",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models" : {
+      "get" : {
+        "description" : "This operation returns the list of domain-specific models that are supported by the Computer Vision API.  Currently, the API only supports one domain-specific model: a celebrity recognizer. A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.",
+        "operationId" : "ListModels",
+        "responses" : {
+          "200" : {
+            "description" : "List of available domain models.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListModelsResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models/{model}/analyze" : {
+      "post" : {
+        "description" : "This operation recognizes content within an image by applying a domain-specific model.  The list of domain-specific models that are supported by the Computer Vision API can be retrieved using the /models GET request.  Currently, the API only provides a single domain-specific model: celebrities. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.",
+        "operationId" : "AnalyzeImageByDomain",
+        "parameters" : [ {
+          "name" : "model",
+          "in" : "path",
+          "description" : "The domain-specific content to recognize.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.",
+          "schema" : {
+            "type" : "string",
+            "default" : "en",
+            "enum" : [ "en", "es", "ja", "pt", "zh" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Analysis result based on the domain model",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DomainModelResults"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ocr" : {
+      "post" : {
+        "description" : "Optical Character Recognition (OCR) detects printed text in an image and extracts the recognized characters into a machine-usable character stream.   Upon success, the OCR results will be returned. Upon failure, the error code together with an error message will be returned. The error code can be one of InvalidImageUrl, InvalidImageFormat, InvalidImageSize, NotSupportedImage,  NotSupportedLanguage, or InternalServerError.",
+        "operationId" : "RecognizePrintedText",
+        "parameters" : [ {
+          "name" : "detectOrientation",
+          "in" : "query",
+          "description" : "Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down). ",
+          "required" : true,
+          "schema" : {
+            "type" : "boolean",
+            "default" : true
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The BCP-47 language code of the text to be detected in the image. The default value is 'unk'",
+          "schema" : {
+            "type" : "string",
+            "default" : "unk",
+            "enum" : [ "unk", "zh-Hans", "zh-Hant", "cs", "da", "nl", "en", "fi", "fr", "de", "el", "hu", "it", "ja", "ko", "nb", "pl", "pt", "ru", "es", "sv", "tr", "ar", "ro", "sr-Cyrl", "sr-Latn", "sk" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The OCR results in the hierarchy of region/line/word. The results include text, bounding box for regions, lines and words.textAngleThe angle, in degrees, of the detected text with respect to the closest horizontal or vertical direction. After rotating the input image clockwise by this angle, the recognized text lines become horizontal or vertical. In combination with the orientation property it can be used to overlay recognition results correctly on the original image, by rotating either the original image or recognition results by a suitable angle around the center of the original image. If the angle cannot be confidently detected, this property is not present. If the image contains text at different angles, only part of the text will be recognized correctly.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OcrResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recognizeText" : {
+      "post" : {
+        "description" : "Recognize Text operation. When you use the Recognize Text interface, the response contains a field called 'Operation-Location'. The 'Operation-Location' field contains the URL that you must use for your Get Handwritten Text Operation Result operation.",
+        "operationId" : "RecognizeText",
+        "parameters" : [ {
+          "name" : "detectHandwriting",
+          "in" : "query",
+          "description" : "If 'true' is specified, handwriting recognition is performed. If this parameter is set to 'false' or is not specified, printed text recognition is performed.",
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "202" : {
+            "description" : "The service has accepted the request and will start processing later. It will return Accepted immediately and include an Operation-Location header. Client side should further query the operation status using the URL specified in this header. The operation ID will expire in 48 hours.",
+            "headers" : {
+              "Operation-Location" : {
+                "description" : "URL to query for status of the operation. The operation ID will expire in 48 hours. ",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tag" : {
+      "post" : {
+        "description" : "This operation generates a list of words, or tags, that are relevant to the content of the supplied image. The Computer Vision API can return tags based on objects, living beings, scenery or actions found in images. Unlike categories, tags are not organized according to a hierarchical classification system, but correspond to image content. Tags may contain hints to avoid ambiguity or provide context, for example the tag 'cello' may be accompanied by the hint 'musical instrument'. All tags are in English.",
+        "operationId" : "TagImage",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.",
+          "schema" : {
+            "type" : "string",
+            "default" : "en",
+            "enum" : [ "en", "es", "ja", "pt", "zh" ]
+          }
+        } ],
+        "requestBody" : {
+          "description" : "A JSON document with a URL pointing to the image that is to be analyzed.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "url" ],
+                "type" : "object",
+                "properties" : {
+                  "url" : {
+                    "type" : "string",
+                    "description" : "Publicly reachable URL of an image"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Image tags object.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TagResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/textOperations/{operationId}" : {
+      "get" : {
+        "description" : "This interface is used for getting text operation result. The URL to this interface should be retrieved from 'Operation-Location' field returned from Recognize Text interface.",
+        "operationId" : "GetTextOperationResult",
+        "parameters" : [ {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "Id of the text operation returned in the response of the 'Recognize Handwritten Text'",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns the operation status.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TextOperationResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComputerVisionError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AdultInfo" : {
+        "type" : "object",
+        "properties" : {
+          "adultScore" : {
+            "type" : "number",
+            "description" : "Score from 0 to 1 that indicates how much of adult content is within the image.",
+            "format" : "double",
+            "nullable" : false
+          },
+          "isAdultContent" : {
+            "type" : "boolean",
+            "description" : "A value indicating if the image contains adult-oriented content.",
+            "nullable" : false
+          },
+          "isRacyContent" : {
+            "type" : "boolean",
+            "description" : "A value indicating if the image is race.",
+            "nullable" : false
+          },
+          "racyScore" : {
+            "type" : "number",
+            "description" : "Score from 0 to 1 that indicates how suggestive is the image.",
+            "format" : "double",
+            "nullable" : false
+          }
+        },
+        "description" : "An object describing whether the image contains adult-oriented content and/or is racy."
+      },
+      "BoundingBox" : {
+        "type" : "array",
+        "items" : {
+          "type" : "integer",
+          "nullable" : false
+        }
+      },
+      "Category" : {
+        "type" : "object",
+        "properties" : {
+          "detail" : {
+            "$ref" : "#/components/schemas/CategoryDetail"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the category."
+          },
+          "score" : {
+            "type" : "number",
+            "description" : "Scoring of the category.",
+            "format" : "double"
+          }
+        },
+        "description" : "An object describing identified category."
+      },
+      "CategoryDetail" : {
+        "type" : "object",
+        "properties" : {
+          "celebrities" : {
+            "type" : "array",
+            "description" : "An array of celebrities if any identified.",
+            "items" : {
+              "$ref" : "#/components/schemas/CelebritiesModel"
+            }
+          }
+        },
+        "description" : "An object describing additional category details."
+      },
+      "CelebritiesModel" : {
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "description" : "Level of confidence ranging from 0 to 1.",
+            "format" : "double"
+          },
+          "faceRectangle" : {
+            "$ref" : "#/components/schemas/FaceRectangle"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the celebrity."
+          }
+        },
+        "description" : "An object describing possible celebrity identification."
+      },
+      "CelebrityResults" : {
+        "type" : "object",
+        "properties" : {
+          "celebrities" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CelebritiesModel"
+            }
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the REST API request."
+          }
+        },
+        "description" : "List of celebrities recognized in the image."
+      },
+      "ColorInfo" : {
+        "type" : "object",
+        "properties" : {
+          "accentColor" : {
+            "type" : "string",
+            "description" : "Possible accent color."
+          },
+          "dominantColorBackground" : {
+            "type" : "string",
+            "description" : "Possible dominant background color."
+          },
+          "dominantColorForeground" : {
+            "type" : "string",
+            "description" : "Possible dominant foreground color."
+          },
+          "dominantColors" : {
+            "type" : "array",
+            "description" : "An array of possible dominant colors.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "isBWImg" : {
+            "type" : "boolean",
+            "description" : "A value indicating if the image is black and white."
+          }
+        },
+        "description" : "An object providing additional metadata describing color attributes."
+      },
+      "ComputerVisionError" : {
+        "required" : [ "code", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code.",
+            "enum" : [ "InvalidImageUrl", "InvalidImageFormat", "InvalidImageSize", "NotSupportedVisualFeature", "NotSupportedImage", "InvalidDetails", "NotSupportedLanguage", "BadArgument", "FailedToProcess", "Timeout", "InternalServerError", "Unspecified", "StorageException" ]
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A message explaining the error reported by the service."
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "A unique request identifier."
+          }
+        }
+      },
+      "DomainModelResults" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the REST API request."
+          },
+          "result" : {
+            "type" : "object",
+            "description" : "Model-specific response"
+          }
+        },
+        "description" : "Result of image analysis using a specific domain model including additional metadata."
+      },
+      "FaceDescription" : {
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "integer",
+            "description" : "Possible age of the face."
+          },
+          "faceRectangle" : {
+            "$ref" : "#/components/schemas/FaceRectangle"
+          },
+          "gender" : {
+            "type" : "string",
+            "description" : "Possible gender of the face.",
+            "enum" : [ "Male", "Female" ]
+          }
+        },
+        "description" : "An object describing a face identified in the image."
+      },
+      "FaceRectangle" : {
+        "type" : "object",
+        "properties" : {
+          "height" : {
+            "type" : "integer",
+            "description" : "Height measured from the top-left point of the face."
+          },
+          "left" : {
+            "type" : "integer",
+            "description" : "X-coordinate of the top left point of the face."
+          },
+          "top" : {
+            "type" : "integer",
+            "description" : "Y-coordinate of the top left point of the face."
+          },
+          "width" : {
+            "type" : "integer",
+            "description" : "Width measured from the top-left point of the face."
+          }
+        },
+        "description" : "An object describing face rectangle."
+      },
+      "ImageAnalysis" : {
+        "type" : "object",
+        "properties" : {
+          "adult" : {
+            "$ref" : "#/components/schemas/AdultInfo"
+          },
+          "categories" : {
+            "type" : "array",
+            "description" : "An array indicating identified categories.",
+            "items" : {
+              "$ref" : "#/components/schemas/Category"
+            }
+          },
+          "color" : {
+            "$ref" : "#/components/schemas/ColorInfo"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/ImageDescriptionDetails"
+          },
+          "faces" : {
+            "type" : "array",
+            "description" : "An array of possible faces within the image.",
+            "items" : {
+              "$ref" : "#/components/schemas/FaceDescription"
+            }
+          },
+          "imageType" : {
+            "$ref" : "#/components/schemas/ImageType"
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the request for tracking purposes."
+          },
+          "tags" : {
+            "type" : "array",
+            "description" : "A list of tags with confidence level.",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageTag"
+            }
+          }
+        },
+        "description" : "Result of AnalyzeImage operation."
+      },
+      "ImageCaption" : {
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "description" : "The level of confidence the service has in the caption",
+            "format" : "double"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The text of the caption"
+          }
+        },
+        "description" : "An image caption, i.e. a brief description of what the image depicts."
+      },
+      "ImageDescription" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "$ref" : "#/components/schemas/ImageDescriptionDetails"
+          }
+        },
+        "description" : "A collection of content tags, along with a list of captions sorted by confidence level, and image metadata."
+      },
+      "ImageDescriptionDetails" : {
+        "type" : "object",
+        "properties" : {
+          "captions" : {
+            "type" : "array",
+            "description" : "A list of captions, sorted by confidence level.",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageCaption"
+            }
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the REST API request."
+          },
+          "tags" : {
+            "type" : "array",
+            "description" : "A collection of image tags.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "description" : "A collection of content tags, along with a list of captions sorted by confidence level, and image metadata."
+      },
+      "ImageMetadata" : {
+        "type" : "object",
+        "properties" : {
+          "format" : {
+            "type" : "string",
+            "description" : "Image format"
+          },
+          "height" : {
+            "type" : "integer",
+            "description" : "Image height",
+            "format" : "int32"
+          },
+          "width" : {
+            "type" : "integer",
+            "description" : "Image width",
+            "format" : "int32"
+          }
+        },
+        "description" : "Image metadata"
+      },
+      "ImageTag" : {
+        "type" : "object",
+        "properties" : {
+          "confidence" : {
+            "type" : "number",
+            "description" : "The level of confidence the service has in the caption",
+            "format" : "double"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The tag value"
+          }
+        },
+        "description" : "An image caption, i.e. a brief description of what the image depicts."
+      },
+      "ImageType" : {
+        "type" : "object",
+        "properties" : {
+          "clipArtType" : {
+            "type" : "number",
+            "description" : "Confidence level that the image is a clip art."
+          },
+          "lineDrawingType" : {
+            "type" : "number",
+            "description" : "Confidence level that the image is a line drawing."
+          }
+        },
+        "description" : "An object providing possible image types and matching confidence levels."
+      },
+      "LandmarkResults" : {
+        "type" : "object",
+        "properties" : {
+          "landmarks" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "confidence" : {
+                  "type" : "number",
+                  "description" : "Confidence level for the landmark recognition.",
+                  "format" : "double"
+                },
+                "name" : {
+                  "type" : "string",
+                  "description" : "Name of the landmark."
+                }
+              },
+              "description" : "A landmark recognized in the image"
+            }
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the REST API request."
+          }
+        },
+        "description" : "List of landmarks recognized in the image."
+      },
+      "Line" : {
+        "type" : "object",
+        "properties" : {
+          "boundingBox" : {
+            "$ref" : "#/components/schemas/BoundingBox"
+          },
+          "text" : {
+            "type" : "string"
+          },
+          "words" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Word"
+            }
+          }
+        }
+      },
+      "ListModelsResult" : {
+        "type" : "object",
+        "properties" : {
+          "models" : {
+            "type" : "array",
+            "description" : "An array of supported models.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ModelDescription"
+            }
+          }
+        },
+        "description" : "Result of the List Domain Models operation."
+      },
+      "ModelDescription" : {
+        "type" : "object",
+        "properties" : {
+          "categories" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "description" : "An object describing supported model by name and categories."
+      },
+      "OcrLine" : {
+        "type" : "object",
+        "properties" : {
+          "boundingBox" : {
+            "type" : "string",
+            "description" : "Bounding box of a recognized line. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."
+          },
+          "words" : {
+            "type" : "array",
+            "description" : "An array of objects, where each object represents a recognized word.",
+            "items" : {
+              "$ref" : "#/components/schemas/OcrWord"
+            }
+          }
+        },
+        "description" : "An object describing a single recognized line of text."
+      },
+      "OcrRegion" : {
+        "type" : "object",
+        "properties" : {
+          "boundingBox" : {
+            "type" : "string",
+            "description" : "Bounding box of a recognized region. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."
+          },
+          "lines" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OcrLine"
+            }
+          }
+        },
+        "description" : "A region consists of multiple lines (e.g. a column of text in a multi-column document)."
+      },
+      "OcrResult" : {
+        "type" : "object",
+        "properties" : {
+          "language" : {
+            "type" : "string",
+            "description" : "The BCP-47 language code of the text in the image."
+          },
+          "orientation" : {
+            "type" : "string",
+            "description" : "Orientation of the text recognized in the image. The value (up,down,left, or right) refers to the direction that the top of the recognized text is facing, after the image has been rotated around its center according to the detected text angle (see textAngle property)."
+          },
+          "regions" : {
+            "type" : "array",
+            "description" : "An array of objects, where each object represents a region of recognized text.",
+            "items" : {
+              "$ref" : "#/components/schemas/OcrRegion"
+            }
+          },
+          "textAngle" : {
+            "type" : "number",
+            "description" : "The angle, in degrees, of the detected text with respect to the closest horizontal or vertical direction. After rotating the input image clockwise by this angle, the recognized text lines become horizontal or vertical. In combination with the orientation property it can be used to overlay recognition results correctly on the original image, by rotating either the original image or recognition results by a suitable angle around the center of the original image. If the angle cannot be confidently detected, this property is not present. If the image contains text at different angles, only part of the text will be recognized correctly.",
+            "format" : "double"
+          }
+        }
+      },
+      "OcrWord" : {
+        "type" : "object",
+        "properties" : {
+          "boundingBox" : {
+            "type" : "string",
+            "description" : "Bounding box of a recognized word. The four integers represent the x-coordinate of the left edge, the y-coordinate of the top edge, width, and height of the bounding box, in the coordinate system of the input image, after it has been rotated around its center according to the detected text angle (see textAngle property), with the origin at the top-left corner, and the y-axis pointing down."
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "String value of a recognized word."
+          }
+        },
+        "description" : "Information on a recognized word."
+      },
+      "RecognitionResult" : {
+        "type" : "object",
+        "properties" : {
+          "lines" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Line"
+            }
+          }
+        }
+      },
+      "ServiceLanguage" : {
+        "type" : "string"
+      },
+      "TagResult" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/ImageMetadata"
+          },
+          "requestId" : {
+            "type" : "string",
+            "description" : "Id of the REST API request."
+          },
+          "tags" : {
+            "type" : "array",
+            "description" : "A list of tags with confidence level.",
+            "items" : {
+              "$ref" : "#/components/schemas/ImageTag"
+            }
+          }
+        },
+        "description" : "The results of a image tag operation, including any tags and image metadata."
+      },
+      "TextOperationResult" : {
+        "type" : "object",
+        "properties" : {
+          "recognitionResult" : {
+            "$ref" : "#/components/schemas/RecognitionResult"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the text operation.",
+            "nullable" : false,
+            "enum" : [ "Not Started", "Running", "Failed", "Succeeded" ]
+          }
+        }
+      },
+      "Word" : {
+        "type" : "object",
+        "properties" : {
+          "boundingBox" : {
+            "$ref" : "#/components/schemas/BoundingBox"
+          },
+          "text" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "DetectOrientation" : {
+        "name" : "detectOrientation",
+        "in" : "query",
+        "description" : "Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down). ",
+        "required" : true,
+        "schema" : {
+          "type" : "boolean",
+          "default" : true
+        }
+      },
+      "HandwritingBoolean" : {
+        "name" : "detectHandwriting",
+        "in" : "query",
+        "description" : "If 'true' is specified, handwriting recognition is performed. If this parameter is set to 'false' or is not specified, printed text recognition is performed.",
+        "schema" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      },
+      "OcrLanguage" : {
+        "name" : "language",
+        "in" : "query",
+        "description" : "The BCP-47 language code of the text to be detected in the image. The default value is 'unk'",
+        "schema" : {
+          "type" : "string",
+          "nullable" : false,
+          "default" : "unk",
+          "enum" : [ "unk", "zh-Hans", "zh-Hant", "cs", "da", "nl", "en", "fi", "fr", "de", "el", "hu", "it", "ja", "ko", "nb", "pl", "pt", "ru", "es", "sv", "tr", "ar", "ro", "sr-Cyrl", "sr-Latn", "sk" ]
+        }
+      },
+      "ServiceLanguage" : {
+        "name" : "language",
+        "in" : "query",
+        "description" : "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese.",
+        "schema" : {
+          "type" : "string",
+          "nullable" : false,
+          "default" : "en",
+          "enum" : [ "en", "es", "ja", "pt", "zh" ]
+        }
+      },
+      "VisualFeatures" : {
+        "name" : "visualFeatures",
+        "in" : "query",
+        "description" : "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.",
+        "style" : "form",
+        "explode" : false,
+        "schema" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "ImageType", "Faces", "Adult", "Categories", "Color", "Tags", "Description" ]
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "apim_key" : {
+        "type" : "apiKey",
+        "name" : "Ocp-Apim-Subscription-Key",
+        "in" : "header"
+      }
+    }
+  }
+}

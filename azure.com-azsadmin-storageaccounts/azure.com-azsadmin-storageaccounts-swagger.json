@@ -1,1 +1,663 @@
-{"openapi":"3.0.1","info":{"title":"StorageManagementClient","description":"The Admin Storage Management Client.","version":"2019-08-08-preview"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/reclaimStorageCapacity":{"post":{"tags":["StorageAccounts"],"description":"Start reclaim storage capacity on deleted storage objects.","operationId":"StorageAccounts_ReclaimStorageCapacity","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Resource location.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- Reclaim storage capacity has completed."},"202":{"description":"Accepted -- reclaim storage capacity operation triggered; operation will complete asynchronously."},"default":{"description":"Error Response.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"The error description code.","readOnly":true},"details":{"type":"array","description":"The error details information.","readOnly":true,"items":{"type":"string"}},"message":{"type":"string","description":"The error description message.","readOnly":true},"target":{"type":"string","description":"The error target description.","readOnly":true}},"description":"The error response for request which failed."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts":{"get":{"tags":["StorageAccounts"],"description":"Returns a list of storage accounts.","operationId":"StorageAccounts_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Resource location.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}},{"name":"$filter","in":"query","description":"Filter string","schema":{"type":"string"}},{"name":"summary","in":"query","description":"Switch for whether summary or detailed information is returned.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"OK -- The list of storage accounts has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/StorageAccountList"}}}},"default":{"description":"Error Response.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"The error description code.","readOnly":true},"details":{"type":"array","description":"The error details information.","readOnly":true,"items":{"type":"string"}},"message":{"type":"string","description":"The error description message.","readOnly":true},"target":{"type":"string","description":"The error target description.","readOnly":true}},"description":"The error response for request which failed."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts/{accountId}":{"get":{"tags":["StorageAccounts"],"description":"Returns the requested storage account.","operationId":"StorageAccounts_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Resource location.","required":true,"schema":{"type":"string"}},{"name":"accountId","in":"path","description":"Internal storage account ID, which is not visible to tenant.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- The storage account has been returned.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/StorageAccount"}}}},"default":{"description":"Error Response.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"The error description code.","readOnly":true},"details":{"type":"array","description":"The error details information.","readOnly":true,"items":{"type":"string"}},"message":{"type":"string","description":"The error description message.","readOnly":true},"target":{"type":"string","description":"The error target description.","readOnly":true}},"description":"The error response for request which failed."}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts/{accountId}/undelete":{"post":{"tags":["StorageAccounts"],"description":"Undelete a deleted storage account with new account name if the a new name is provided.","operationId":"StorageAccounts_Undelete","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription Id.","required":true,"schema":{"type":"string"}},{"name":"location","in":"path","description":"Resource location.","required":true,"schema":{"type":"string"}},{"name":"accountId","in":"path","description":"Internal storage account ID, which is not visible to tenant.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"REST Api Version.","required":true,"schema":{"type":"string"}},{"name":"newAccountName","in":"query","description":"New storage account name when doing undelete storage account operation.","schema":{"type":"string"}}],"responses":{"200":{"description":"OK -- Undelete either has been performed or account was not deleted.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UndeleteStorageAccount"}}}},"202":{"description":"Accepted -- undelete operation trigged; operation will complete asynchronously."},"default":{"description":"Error Response.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"The error description code.","readOnly":true},"details":{"type":"array","description":"The error details information.","readOnly":true,"items":{"type":"string"}},"message":{"type":"string","description":"The error description message.","readOnly":true},"target":{"type":"string","description":"The error target description.","readOnly":true}},"description":"The error response for request which failed."}}}}}}}},"components":{"schemas":{"EncryptionKeySource":{"type":"string","description":"Encryption Key Source","enum":["Microsoft.Storage"]},"LocationStatus":{"type":"string","description":"Gets the status indicating whether the primary location of the storage account is available or unavailable.","enum":["Available","Unavailable"]},"StorageAccount":{"properties":{"kind":{"$ref":"#/components/schemas/StorageAccountKind"},"properties":{"$ref":"#/components/schemas/StorageAccountProperties"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Resource tags.","readOnly":true}},"description":"Properties of the storage account.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"location":{"type":"string","description":"Resource Location.","readOnly":true},"name":{"type":"string","description":"Resource Name.","readOnly":true},"type":{"type":"string","description":"Resource Type.","readOnly":true}},"description":"Base resource object."}]},"StorageAccountAccessTier":{"type":"string","description":"Access tier for storage account","enum":["Hot","Cool"]},"StorageAccountHealthState":{"type":"string","description":"Health state for storage account","enum":["Healthy","Suspended","OverQuota","SuspendedAndOverQuota"]},"StorageAccountKind":{"type":"string","description":"The kind of storage account","enum":["Storage","StorageV2","BlobStorage"]},"StorageAccountList":{"type":"object","properties":{"@odata.nextLink":{"type":"string","description":"URI to the next page.","readOnly":true},"value":{"type":"array","description":"List of storage accounts.","readOnly":true,"items":{"$ref":"#/components/schemas/StorageAccount"}}},"description":"Pageable list of storage accounts."},"StorageAccountProperties":{"type":"object","properties":{"accessTier":{"$ref":"#/components/schemas/StorageAccountAccessTier"},"accountId":{"type":"string","description":"Internal storage account ID, which is not visible to tenant.","readOnly":true},"accountStatus":{"$ref":"#/components/schemas/StorageAccountStatus"},"accountType":{"$ref":"#/components/schemas/StorageAccountType"},"creationTime":{"type":"string","description":"The creation date and time of storage account in UTC.","readOnly":true},"deletedTime":{"type":"string","description":"The date-time when the storage account was deleted.","format":"date-time","readOnly":true},"encryption":{"$ref":"#/components/schemas/StorageEncryption"},"faultDomain":{"type":"string","description":"The fault domain for the storage account.","readOnly":true},"healthState":{"$ref":"#/components/schemas/StorageAccountHealthState"},"primaryEndpoints":{"type":"object","description":"The URLs that are used to perform a retrieval of a public BLOB, queue, or table object.","readOnly":true},"primaryLocation":{"type":"string","description":"The primary location for the storage account.","readOnly":true},"provisioningState":{"$ref":"#/components/schemas/StorageAccountState"},"statusOfPrimary":{"$ref":"#/components/schemas/LocationStatus"},"supportsHttpsTrafficOnly":{"type":"boolean","description":"Storage account supports https traffic only or not","readOnly":true},"tenantResourceGroupName":{"type":"string","description":"The name of resource group under which the storage account locates.","readOnly":true},"tenantStorageAccountName":{"type":"string","description":"Storage account name from tenant view.","readOnly":true},"tenantSubscriptionId":{"type":"string","description":"Subscription ID of the subscription under which the storage account locates.","readOnly":true},"tenantViewId":{"type":"string","description":"Resource URI of storage account from tenant view.","readOnly":true}},"description":"Properties of a storage account."},"StorageAccountState":{"type":"string","description":"Storage account state.","enum":["Creating","Succeeded"]},"StorageAccountStatus":{"type":"string","description":"The state of storage account in WAC.","enum":["Active","Deleted"]},"StorageAccountType":{"type":"string","description":"Storage account type.","enum":["Standard_LRS","Standard_GRS","Standard_ZRS","Standard_RAGRS","Premium_LRS"]},"StorageEncryption":{"type":"object","properties":{"keySource":{"$ref":"#/components/schemas/EncryptionKeySource"},"services":{"$ref":"#/components/schemas/StorageEncryptionServices"}},"description":"Storage encryption setting"},"StorageEncryptionServices":{"type":"object","properties":{"blob":{"$ref":"#/components/schemas/StorageEncryptionSetting"},"queue":{"$ref":"#/components/schemas/StorageEncryptionSetting"},"table":{"$ref":"#/components/schemas/StorageEncryptionSetting"}},"description":"Services for which encryption setting is mentioned."},"StorageEncryptionSetting":{"type":"object","properties":{"enabled":{"type":"boolean","description":"Bool to indicate whether enabled or not.","readOnly":true},"lastEnabledTime":{"type":"string","description":"A rough estimate of the date/time when the encryption was last enabled by the user.","readOnly":true}},"description":"Storage Encryption setting"},"UndeleteStorageAccount":{"type":"object","properties":{"accountId":{"type":"string","description":"The internal wac id for storage account.","readOnly":true},"newAccountName":{"type":"string","description":"The new account name for the restored account if defined.","readOnly":true}},"description":"Undelete storage account information."}},"parameters":{"AccountIdParameter":{"name":"accountId","in":"path","description":"Internal storage account ID, which is not visible to tenant.","required":true,"schema":{"type":"string"}},"FilterParameter":{"name":"$filter","in":"query","description":"Filter string","schema":{"type":"string"}},"NewAccountNameParameter":{"name":"newAccountName","in":"query","description":"New storage account name when doing undelete storage account operation.","schema":{"type":"string"}},"SummaryParameter":{"name":"summary","in":"query","description":"Switch for whether summary or detailed information is returned.","schema":{"type":"boolean"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "StorageManagementClient",
+    "description" : "The Admin Storage Management Client.",
+    "version" : "2019-08-08-preview"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/reclaimStorageCapacity" : {
+      "post" : {
+        "tags" : [ "StorageAccounts" ],
+        "description" : "Start reclaim storage capacity on deleted storage objects.",
+        "operationId" : "StorageAccounts_ReclaimStorageCapacity",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Resource location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- Reclaim storage capacity has completed."
+          },
+          "202" : {
+            "description" : "Accepted -- reclaim storage capacity operation triggered; operation will complete asynchronously."
+          },
+          "default" : {
+            "description" : "Error Response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "The error description code.",
+                      "readOnly" : true
+                    },
+                    "details" : {
+                      "type" : "array",
+                      "description" : "The error details information.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "The error description message.",
+                      "readOnly" : true
+                    },
+                    "target" : {
+                      "type" : "string",
+                      "description" : "The error target description.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The error response for request which failed."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts" : {
+      "get" : {
+        "tags" : [ "StorageAccounts" ],
+        "description" : "Returns a list of storage accounts.",
+        "operationId" : "StorageAccounts_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Resource location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter string",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "summary",
+          "in" : "query",
+          "description" : "Switch for whether summary or detailed information is returned.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The list of storage accounts has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StorageAccountList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error Response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "The error description code.",
+                      "readOnly" : true
+                    },
+                    "details" : {
+                      "type" : "array",
+                      "description" : "The error details information.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "The error description message.",
+                      "readOnly" : true
+                    },
+                    "target" : {
+                      "type" : "string",
+                      "description" : "The error target description.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The error response for request which failed."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts/{accountId}" : {
+      "get" : {
+        "tags" : [ "StorageAccounts" ],
+        "description" : "Returns the requested storage account.",
+        "operationId" : "StorageAccounts_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Resource location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "Internal storage account ID, which is not visible to tenant.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- The storage account has been returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StorageAccount"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error Response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "The error description code.",
+                      "readOnly" : true
+                    },
+                    "details" : {
+                      "type" : "array",
+                      "description" : "The error details information.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "The error description message.",
+                      "readOnly" : true
+                    },
+                    "target" : {
+                      "type" : "string",
+                      "description" : "The error target description.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The error response for request which failed."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/storageaccounts/{accountId}/undelete" : {
+      "post" : {
+        "tags" : [ "StorageAccounts" ],
+        "description" : "Undelete a deleted storage account with new account name if the a new name is provided.",
+        "operationId" : "StorageAccounts_Undelete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "path",
+          "description" : "Resource location.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "Internal storage account ID, which is not visible to tenant.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "REST Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "newAccountName",
+          "in" : "query",
+          "description" : "New storage account name when doing undelete storage account operation.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK -- Undelete either has been performed or account was not deleted.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UndeleteStorageAccount"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted -- undelete operation trigged; operation will complete asynchronously."
+          },
+          "default" : {
+            "description" : "Error Response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "The error description code.",
+                      "readOnly" : true
+                    },
+                    "details" : {
+                      "type" : "array",
+                      "description" : "The error details information.",
+                      "readOnly" : true,
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "The error description message.",
+                      "readOnly" : true
+                    },
+                    "target" : {
+                      "type" : "string",
+                      "description" : "The error target description.",
+                      "readOnly" : true
+                    }
+                  },
+                  "description" : "The error response for request which failed."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "EncryptionKeySource" : {
+        "type" : "string",
+        "description" : "Encryption Key Source",
+        "enum" : [ "Microsoft.Storage" ]
+      },
+      "LocationStatus" : {
+        "type" : "string",
+        "description" : "Gets the status indicating whether the primary location of the storage account is available or unavailable.",
+        "enum" : [ "Available", "Unavailable" ]
+      },
+      "StorageAccount" : {
+        "properties" : {
+          "kind" : {
+            "$ref" : "#/components/schemas/StorageAccountKind"
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/StorageAccountProperties"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Resource tags.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Properties of the storage account.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource ID.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Resource Location.",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource Name.",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource Type.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base resource object."
+        } ]
+      },
+      "StorageAccountAccessTier" : {
+        "type" : "string",
+        "description" : "Access tier for storage account",
+        "enum" : [ "Hot", "Cool" ]
+      },
+      "StorageAccountHealthState" : {
+        "type" : "string",
+        "description" : "Health state for storage account",
+        "enum" : [ "Healthy", "Suspended", "OverQuota", "SuspendedAndOverQuota" ]
+      },
+      "StorageAccountKind" : {
+        "type" : "string",
+        "description" : "The kind of storage account",
+        "enum" : [ "Storage", "StorageV2", "BlobStorage" ]
+      },
+      "StorageAccountList" : {
+        "type" : "object",
+        "properties" : {
+          "@odata.nextLink" : {
+            "type" : "string",
+            "description" : "URI to the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of storage accounts.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/StorageAccount"
+            }
+          }
+        },
+        "description" : "Pageable list of storage accounts."
+      },
+      "StorageAccountProperties" : {
+        "type" : "object",
+        "properties" : {
+          "accessTier" : {
+            "$ref" : "#/components/schemas/StorageAccountAccessTier"
+          },
+          "accountId" : {
+            "type" : "string",
+            "description" : "Internal storage account ID, which is not visible to tenant.",
+            "readOnly" : true
+          },
+          "accountStatus" : {
+            "$ref" : "#/components/schemas/StorageAccountStatus"
+          },
+          "accountType" : {
+            "$ref" : "#/components/schemas/StorageAccountType"
+          },
+          "creationTime" : {
+            "type" : "string",
+            "description" : "The creation date and time of storage account in UTC.",
+            "readOnly" : true
+          },
+          "deletedTime" : {
+            "type" : "string",
+            "description" : "The date-time when the storage account was deleted.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "encryption" : {
+            "$ref" : "#/components/schemas/StorageEncryption"
+          },
+          "faultDomain" : {
+            "type" : "string",
+            "description" : "The fault domain for the storage account.",
+            "readOnly" : true
+          },
+          "healthState" : {
+            "$ref" : "#/components/schemas/StorageAccountHealthState"
+          },
+          "primaryEndpoints" : {
+            "type" : "object",
+            "description" : "The URLs that are used to perform a retrieval of a public BLOB, queue, or table object.",
+            "readOnly" : true
+          },
+          "primaryLocation" : {
+            "type" : "string",
+            "description" : "The primary location for the storage account.",
+            "readOnly" : true
+          },
+          "provisioningState" : {
+            "$ref" : "#/components/schemas/StorageAccountState"
+          },
+          "statusOfPrimary" : {
+            "$ref" : "#/components/schemas/LocationStatus"
+          },
+          "supportsHttpsTrafficOnly" : {
+            "type" : "boolean",
+            "description" : "Storage account supports https traffic only or not",
+            "readOnly" : true
+          },
+          "tenantResourceGroupName" : {
+            "type" : "string",
+            "description" : "The name of resource group under which the storage account locates.",
+            "readOnly" : true
+          },
+          "tenantStorageAccountName" : {
+            "type" : "string",
+            "description" : "Storage account name from tenant view.",
+            "readOnly" : true
+          },
+          "tenantSubscriptionId" : {
+            "type" : "string",
+            "description" : "Subscription ID of the subscription under which the storage account locates.",
+            "readOnly" : true
+          },
+          "tenantViewId" : {
+            "type" : "string",
+            "description" : "Resource URI of storage account from tenant view.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Properties of a storage account."
+      },
+      "StorageAccountState" : {
+        "type" : "string",
+        "description" : "Storage account state.",
+        "enum" : [ "Creating", "Succeeded" ]
+      },
+      "StorageAccountStatus" : {
+        "type" : "string",
+        "description" : "The state of storage account in WAC.",
+        "enum" : [ "Active", "Deleted" ]
+      },
+      "StorageAccountType" : {
+        "type" : "string",
+        "description" : "Storage account type.",
+        "enum" : [ "Standard_LRS", "Standard_GRS", "Standard_ZRS", "Standard_RAGRS", "Premium_LRS" ]
+      },
+      "StorageEncryption" : {
+        "type" : "object",
+        "properties" : {
+          "keySource" : {
+            "$ref" : "#/components/schemas/EncryptionKeySource"
+          },
+          "services" : {
+            "$ref" : "#/components/schemas/StorageEncryptionServices"
+          }
+        },
+        "description" : "Storage encryption setting"
+      },
+      "StorageEncryptionServices" : {
+        "type" : "object",
+        "properties" : {
+          "blob" : {
+            "$ref" : "#/components/schemas/StorageEncryptionSetting"
+          },
+          "queue" : {
+            "$ref" : "#/components/schemas/StorageEncryptionSetting"
+          },
+          "table" : {
+            "$ref" : "#/components/schemas/StorageEncryptionSetting"
+          }
+        },
+        "description" : "Services for which encryption setting is mentioned."
+      },
+      "StorageEncryptionSetting" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Bool to indicate whether enabled or not.",
+            "readOnly" : true
+          },
+          "lastEnabledTime" : {
+            "type" : "string",
+            "description" : "A rough estimate of the date/time when the encryption was last enabled by the user.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Storage Encryption setting"
+      },
+      "UndeleteStorageAccount" : {
+        "type" : "object",
+        "properties" : {
+          "accountId" : {
+            "type" : "string",
+            "description" : "The internal wac id for storage account.",
+            "readOnly" : true
+          },
+          "newAccountName" : {
+            "type" : "string",
+            "description" : "The new account name for the restored account if defined.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Undelete storage account information."
+      }
+    },
+    "parameters" : {
+      "AccountIdParameter" : {
+        "name" : "accountId",
+        "in" : "path",
+        "description" : "Internal storage account ID, which is not visible to tenant.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "FilterParameter" : {
+        "name" : "$filter",
+        "in" : "query",
+        "description" : "Filter string",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "NewAccountNameParameter" : {
+        "name" : "newAccountName",
+        "in" : "query",
+        "description" : "New storage account name when doing undelete storage account operation.",
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SummaryParameter" : {
+        "name" : "summary",
+        "in" : "query",
+        "description" : "Switch for whether summary or detailed information is returned.",
+        "schema" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

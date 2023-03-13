@@ -1,1 +1,395 @@
-{"openapi":"3.0.1","info":{"title":"ComputeManagementConvenienceClient","version":"2015-11-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}":{"put":{"tags":["Deployments"],"description":"Create a named template deployment using a template.","operationId":"VirtualMachines_QuickCreate","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group. The name is case insensitive.","required":true,"schema":{"pattern":"^[-\\w\\._]+$","type":"string"}},{"name":"deploymentName","in":"path","description":"The name of the deployment.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Additional parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Deployment"}}},"required":false},"responses":{"200":{"description":"","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeploymentExtended"}}}},"201":{"description":"","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeploymentExtended"}}}}}}}},"components":{"schemas":{"BasicDependency":{"type":"object","properties":{"id":{"type":"string","description":"Gets or sets the ID of the dependency."},"resourceName":{"type":"string","description":"Gets or sets the dependency resource name."},"resourceType":{"type":"string","description":"Gets or sets the dependency resource type."}},"description":"Deployment dependency information."},"Dependency":{"type":"object","properties":{"dependsOn":{"type":"array","description":"Gets the list of dependencies.","items":{"$ref":"#/components/schemas/BasicDependency"}},"id":{"type":"string","description":"Gets or sets the ID of the dependency."},"resourceName":{"type":"string","description":"Gets or sets the dependency resource name."},"resourceType":{"type":"string","description":"Gets or sets the dependency resource type."}},"description":"Deployment dependency information."},"Deployment":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/DeploymentProperties"}},"description":"Deployment operation parameters."},"DeploymentExtended":{"required":["name"],"type":"object","properties":{"id":{"type":"string","description":"Gets or sets the ID of the deployment."},"name":{"type":"string","description":"Gets or sets the name of the deployment."},"properties":{"$ref":"#/components/schemas/DeploymentPropertiesExtended"}},"description":"Deployment information."},"DeploymentParameters":{"type":"object","properties":{"adminPassword":{"required":["value"],"type":"object","properties":{"value":{"type":"string","description":"Password for the Virtual Machine.","format":"password"}}},"adminUsername":{"required":["value"],"type":"object","properties":{"value":{"type":"string","description":"Username for the Virtual Machine."}}},"dnsLabelPrefix":{"required":["value"],"type":"object","properties":{"value":{"type":"string","description":"Unique DNS Name for the Public IP used to access the Virtual Machine."}}},"osVersion":{"required":["value"],"type":"object","properties":{"value":{"type":"string","description":"The OS version for the VM. This will pick a fully patched image of this given OS version.","default":"14.04.2-LTS","enum":["12.04.5-LTS","14.04.2-LTS","15.10"]}},"description":"Deployment operation parameters."}}},"DeploymentProperties":{"required":["mode","templateLink"],"type":"object","properties":{"mode":{"type":"string","description":"Gets or sets the deployment mode.","enum":["Incremental"]},"parameters":{"$ref":"#/components/schemas/DeploymentParameters"},"templateLink":{"$ref":"#/components/schemas/TemplateLink"}},"description":"Deployment properties."},"DeploymentPropertiesExtended":{"type":"object","properties":{"correlationId":{"type":"string","description":"Gets or sets the correlation ID of the deployment."},"dependencies":{"type":"array","description":"Gets the list of deployment dependencies.","items":{"$ref":"#/components/schemas/Dependency"}},"mode":{"type":"string","description":"Gets or sets the deployment mode.","enum":["Incremental","Complete"]},"outputs":{"type":"object","description":"Gets or sets key/value pairs that represent deployment output."},"parameters":{"type":"object","description":"Deployment parameters. Use only one of Parameters or ParametersLink."},"parametersLink":{"$ref":"#/components/schemas/ParametersLink"},"providers":{"type":"array","description":"Gets the list of resource providers needed for the deployment.","items":{"$ref":"#/components/schemas/Provider"}},"provisioningState":{"type":"string","description":"Gets or sets the state of the provisioning."},"template":{"type":"object","description":"Gets or sets the template content. Use only one of Template or TemplateLink."},"templateLink":{"$ref":"#/components/schemas/TemplateLink"},"timestamp":{"type":"string","description":"Gets or sets the timestamp of the template deployment.","format":"date-time"}},"description":"Deployment properties with additional details."},"ParametersLink":{"required":["uri"],"type":"object","properties":{"contentVersion":{"type":"string","description":"If included it must match the ContentVersion in the template."},"uri":{"type":"string","description":"URI referencing the template."}},"description":"Entity representing the reference to the deployment parameters."},"Provider":{"type":"object","properties":{"id":{"type":"string","description":"Gets or sets the provider id."},"namespace":{"type":"string","description":"Gets or sets the namespace of the provider."},"registrationState":{"type":"string","description":"Gets or sets the registration state of the provider."},"resourceTypes":{"type":"array","description":"Gets or sets the collection of provider resource types.","items":{"$ref":"#/components/schemas/ProviderResourceType"}}},"description":"Resource provider information."},"ProviderResourceType":{"type":"object","properties":{"apiVersions":{"type":"array","description":"Gets or sets the api version.","items":{"type":"string"}},"locations":{"type":"array","description":"Gets or sets the collection of locations where this resource type can be created in.","items":{"type":"string"}},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"Gets or sets the properties."},"resourceType":{"type":"string","description":"Gets or sets the resource type."}},"description":"Resource type managed by the resource provider."},"TemplateLink":{"required":["uri"],"type":"object","properties":{"uri":{"type":"string","description":"URI referencing the template.","enum":["https://raw.githubusercontent.com/stankovski/azure-rest-api-specs/master/arm-compute/quickstart-templates/vm-simple-linux.json"]}},"description":"Entity representing the reference to the template."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "ComputeManagementConvenienceClient",
+    "version" : "2015-11-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}" : {
+      "put" : {
+        "tags" : [ "Deployments" ],
+        "description" : "Create a named template deployment using a template.",
+        "operationId" : "VirtualMachines_QuickCreate",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group. The name is case insensitive.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[-\\w\\._]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "deploymentName",
+          "in" : "path",
+          "description" : "The name of the deployment.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Additional parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Deployment"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeploymentExtended"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeploymentExtended"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BasicDependency" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Gets or sets the ID of the dependency."
+          },
+          "resourceName" : {
+            "type" : "string",
+            "description" : "Gets or sets the dependency resource name."
+          },
+          "resourceType" : {
+            "type" : "string",
+            "description" : "Gets or sets the dependency resource type."
+          }
+        },
+        "description" : "Deployment dependency information."
+      },
+      "Dependency" : {
+        "type" : "object",
+        "properties" : {
+          "dependsOn" : {
+            "type" : "array",
+            "description" : "Gets the list of dependencies.",
+            "items" : {
+              "$ref" : "#/components/schemas/BasicDependency"
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Gets or sets the ID of the dependency."
+          },
+          "resourceName" : {
+            "type" : "string",
+            "description" : "Gets or sets the dependency resource name."
+          },
+          "resourceType" : {
+            "type" : "string",
+            "description" : "Gets or sets the dependency resource type."
+          }
+        },
+        "description" : "Deployment dependency information."
+      },
+      "Deployment" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/DeploymentProperties"
+          }
+        },
+        "description" : "Deployment operation parameters."
+      },
+      "DeploymentExtended" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Gets or sets the ID of the deployment."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Gets or sets the name of the deployment."
+          },
+          "properties" : {
+            "$ref" : "#/components/schemas/DeploymentPropertiesExtended"
+          }
+        },
+        "description" : "Deployment information."
+      },
+      "DeploymentParameters" : {
+        "type" : "object",
+        "properties" : {
+          "adminPassword" : {
+            "required" : [ "value" ],
+            "type" : "object",
+            "properties" : {
+              "value" : {
+                "type" : "string",
+                "description" : "Password for the Virtual Machine.",
+                "format" : "password"
+              }
+            }
+          },
+          "adminUsername" : {
+            "required" : [ "value" ],
+            "type" : "object",
+            "properties" : {
+              "value" : {
+                "type" : "string",
+                "description" : "Username for the Virtual Machine."
+              }
+            }
+          },
+          "dnsLabelPrefix" : {
+            "required" : [ "value" ],
+            "type" : "object",
+            "properties" : {
+              "value" : {
+                "type" : "string",
+                "description" : "Unique DNS Name for the Public IP used to access the Virtual Machine."
+              }
+            }
+          },
+          "osVersion" : {
+            "required" : [ "value" ],
+            "type" : "object",
+            "properties" : {
+              "value" : {
+                "type" : "string",
+                "description" : "The OS version for the VM. This will pick a fully patched image of this given OS version.",
+                "default" : "14.04.2-LTS",
+                "enum" : [ "12.04.5-LTS", "14.04.2-LTS", "15.10" ]
+              }
+            },
+            "description" : "Deployment operation parameters."
+          }
+        }
+      },
+      "DeploymentProperties" : {
+        "required" : [ "mode", "templateLink" ],
+        "type" : "object",
+        "properties" : {
+          "mode" : {
+            "type" : "string",
+            "description" : "Gets or sets the deployment mode.",
+            "enum" : [ "Incremental" ]
+          },
+          "parameters" : {
+            "$ref" : "#/components/schemas/DeploymentParameters"
+          },
+          "templateLink" : {
+            "$ref" : "#/components/schemas/TemplateLink"
+          }
+        },
+        "description" : "Deployment properties."
+      },
+      "DeploymentPropertiesExtended" : {
+        "type" : "object",
+        "properties" : {
+          "correlationId" : {
+            "type" : "string",
+            "description" : "Gets or sets the correlation ID of the deployment."
+          },
+          "dependencies" : {
+            "type" : "array",
+            "description" : "Gets the list of deployment dependencies.",
+            "items" : {
+              "$ref" : "#/components/schemas/Dependency"
+            }
+          },
+          "mode" : {
+            "type" : "string",
+            "description" : "Gets or sets the deployment mode.",
+            "enum" : [ "Incremental", "Complete" ]
+          },
+          "outputs" : {
+            "type" : "object",
+            "description" : "Gets or sets key/value pairs that represent deployment output."
+          },
+          "parameters" : {
+            "type" : "object",
+            "description" : "Deployment parameters. Use only one of Parameters or ParametersLink."
+          },
+          "parametersLink" : {
+            "$ref" : "#/components/schemas/ParametersLink"
+          },
+          "providers" : {
+            "type" : "array",
+            "description" : "Gets the list of resource providers needed for the deployment.",
+            "items" : {
+              "$ref" : "#/components/schemas/Provider"
+            }
+          },
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "Gets or sets the state of the provisioning."
+          },
+          "template" : {
+            "type" : "object",
+            "description" : "Gets or sets the template content. Use only one of Template or TemplateLink."
+          },
+          "templateLink" : {
+            "$ref" : "#/components/schemas/TemplateLink"
+          },
+          "timestamp" : {
+            "type" : "string",
+            "description" : "Gets or sets the timestamp of the template deployment.",
+            "format" : "date-time"
+          }
+        },
+        "description" : "Deployment properties with additional details."
+      },
+      "ParametersLink" : {
+        "required" : [ "uri" ],
+        "type" : "object",
+        "properties" : {
+          "contentVersion" : {
+            "type" : "string",
+            "description" : "If included it must match the ContentVersion in the template."
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "URI referencing the template."
+          }
+        },
+        "description" : "Entity representing the reference to the deployment parameters."
+      },
+      "Provider" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Gets or sets the provider id."
+          },
+          "namespace" : {
+            "type" : "string",
+            "description" : "Gets or sets the namespace of the provider."
+          },
+          "registrationState" : {
+            "type" : "string",
+            "description" : "Gets or sets the registration state of the provider."
+          },
+          "resourceTypes" : {
+            "type" : "array",
+            "description" : "Gets or sets the collection of provider resource types.",
+            "items" : {
+              "$ref" : "#/components/schemas/ProviderResourceType"
+            }
+          }
+        },
+        "description" : "Resource provider information."
+      },
+      "ProviderResourceType" : {
+        "type" : "object",
+        "properties" : {
+          "apiVersions" : {
+            "type" : "array",
+            "description" : "Gets or sets the api version.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "locations" : {
+            "type" : "array",
+            "description" : "Gets or sets the collection of locations where this resource type can be created in.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Gets or sets the properties."
+          },
+          "resourceType" : {
+            "type" : "string",
+            "description" : "Gets or sets the resource type."
+          }
+        },
+        "description" : "Resource type managed by the resource provider."
+      },
+      "TemplateLink" : {
+        "required" : [ "uri" ],
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "type" : "string",
+            "description" : "URI referencing the template.",
+            "enum" : [ "https://raw.githubusercontent.com/stankovski/azure-rest-api-specs/master/arm-compute/quickstart-templates/vm-simple-linux.json" ]
+          }
+        },
+        "description" : "Entity representing the reference to the template."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

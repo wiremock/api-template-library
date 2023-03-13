@@ -1,1 +1,780 @@
-{"openapi":"3.0.1","info":{"title":"Commons Votes API","description":"An API that allows querying of Commons Votes data.","contact":{"name":"UK Parliament","url":"https://www.parliament.uk/","email":"softwareengineering@parliament.uk"},"version":"v1"},"servers":[{"url":"http://commonsvotes-api.parliament.uk/"},{"url":"https://commonsvotes-api.parliament.uk/"}],"paths":{"/data/division/{divisionId}.{format}":{"get":{"tags":["Divisions"],"summary":"Return a Division","description":"Single Division which has the specified Id","operationId":"Divisions_GetDivisionById","parameters":[{"name":"divisionId","in":"path","description":"Id number of a Division whose records are to be returned","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"format","in":"path","description":"xml or json","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PublishedDivision"}},"text/json":{"schema":{"$ref":"#/components/schemas/PublishedDivision"}}}},"400":{"description":"BadRequest"},"404":{"description":"NotFound"}}}},"/data/divisions.{format}/groupedbyparty":{"get":{"tags":["Divisions"],"summary":"Return Divisions results grouped by party","description":"Division results which meet the specified criteria grouped by parties","operationId":"Divisions_GetDivisionsGroupsByParty","parameters":[{"name":"format","in":"path","description":"xml or json","required":true,"schema":{"type":"string"}},{"name":"queryParameters.searchTerm","in":"query","description":"Divisions containing search term within title or number","schema":{"type":"string"}},{"name":"queryParameters.memberId","in":"query","description":"Divisions returning Member with Member ID voting records","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.includeWhenMemberWasTeller","in":"query","description":"Divisions where member was a teller as well as if they actually voted","schema":{"type":"boolean"}},{"name":"queryParameters.startDate","in":"query","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.endDate","in":"query","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.divisionNumber","in":"query","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DivisionGroupedByParty"}}},"text/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DivisionGroupedByParty"}}}}},"400":{"description":"BadRequest"}}}},"/data/divisions.{format}/membervoting":{"get":{"tags":["Divisions"],"summary":"Return voting records for a Member","description":"List of voting records for a member which meet the specified criteria.","operationId":"Divisions_GetVotingRecordsForMember","parameters":[{"name":"format","in":"path","description":"xml or json","required":true,"schema":{"type":"string"}},{"name":"queryParameters.memberId","in":"query","description":"Id number of a Member whose voting records are to be returned","required":true,"schema":{"maximum":2147483647,"minimum":1,"type":"integer","format":"int32"}},{"name":"queryParameters.skip","in":"query","description":"The number of records to skip. Default is 0","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.take","in":"query","description":"The number of records to return per page. Default is 25","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.searchTerm","in":"query","description":"Divisions containing search term within title or number","schema":{"type":"string"}},{"name":"queryParameters.includeWhenMemberWasTeller","in":"query","description":"Divisions where member was a teller as well as if they actually voted","schema":{"type":"boolean"}},{"name":"queryParameters.startDate","in":"query","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.endDate","in":"query","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.divisionNumber","in":"query","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/MemberVotingRecord"}}},"text/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/MemberVotingRecord"}}}}},"400":{"description":"BadRequest"}}}},"/data/divisions.{format}/search":{"get":{"tags":["Divisions"],"summary":"Return a list of Divisions","description":"List of Divisions which meet the specified criteria","operationId":"Divisions_SearchDivisions","parameters":[{"name":"format","in":"path","description":"json or xml","required":true,"schema":{"type":"string"}},{"name":"queryParameters.skip","in":"query","description":"The number of records to skip. Default is 0","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.take","in":"query","description":"The number of records to return per page. Default is 25","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.searchTerm","in":"query","description":"Divisions containing search term within title or number","schema":{"type":"string"}},{"name":"queryParameters.memberId","in":"query","description":"Divisions returning Member with Member ID voting records","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.includeWhenMemberWasTeller","in":"query","description":"Divisions where member was a teller as well as if they actually voted","schema":{"type":"boolean"}},{"name":"queryParameters.startDate","in":"query","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.endDate","in":"query","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.divisionNumber","in":"query","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PublishedDivision"}}},"text/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PublishedDivision"}}}}},"400":{"description":"BadRequest"}}}},"/data/divisions.{format}/searchTotalResults":{"get":{"tags":["Divisions"],"summary":"Return total results count","description":"Total count of Divisions meeting the specified criteria","operationId":"Divisions_SearchTotalResults","parameters":[{"name":"format","in":"path","description":"json or xml","required":true,"schema":{"type":"string"}},{"name":"queryParameters.searchTerm","in":"query","description":"Divisions containing search term within title or number","schema":{"type":"string"}},{"name":"queryParameters.memberId","in":"query","description":"Divisions returning Member with Member ID voting records","schema":{"type":"integer","format":"int32"}},{"name":"queryParameters.includeWhenMemberWasTeller","in":"query","description":"Divisions where member was a teller as well as if they actually voted","schema":{"type":"boolean"}},{"name":"queryParameters.startDate","in":"query","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.endDate","in":"query","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","schema":{"type":"string","format":"date-time"}},{"name":"queryParameters.divisionNumber","in":"query","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"integer","format":"int32"}},"text/json":{"schema":{"type":"integer","format":"int32"}}}},"400":{"description":"BadRequest"}}}}},"components":{"schemas":{"DivisionGroupedByParty":{"type":"object","properties":{"AyeCount":{"type":"integer","format":"int32"},"Ayes":{"type":"array","description":"Counts of all members who voted 'Aye', grouped by party","items":{"$ref":"#/components/schemas/PartyVoteResult"}},"Date":{"type":"string","format":"date-time"},"DivisionId":{"type":"integer","format":"int32"},"NoCount":{"type":"integer","format":"int32"},"Noes":{"type":"array","description":"Counts of all members who voted 'Noe', grouped by party","items":{"$ref":"#/components/schemas/PartyVoteResult"}},"Number":{"type":"integer","format":"int32"},"Title":{"type":"string"}}},"MemberSearchQueryParameters":{"required":["MemberId"],"type":"object","properties":{"DivisionNumber":{"type":"integer","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","format":"int32"},"EndDate":{"type":"string","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","format":"date-time"},"IncludeWhenMemberWasTeller":{"type":"boolean","description":"Divisions where member was a teller as well as if they actually voted"},"MemberId":{"maximum":2147483647,"minimum":1,"type":"integer","description":"Id number of a Member whose voting records are to be returned","format":"int32"},"SearchTerm":{"type":"string","description":"Divisions containing search term within title or number"},"Skip":{"type":"integer","description":"The number of records to skip. Default is 0","format":"int32"},"StartDate":{"type":"string","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","format":"date-time"},"Take":{"type":"integer","description":"The number of records to return per page. Default is 25","format":"int32"}}},"MemberVotingRecord":{"type":"object","properties":{"MemberId":{"type":"integer","format":"int32"},"MemberVotedAye":{"type":"boolean"},"MemberWasTeller":{"type":"boolean"},"PublishedDivision":{"$ref":"#/components/schemas/PublishedDivision"}}},"PartyVoteResult":{"type":"object","properties":{"PartyName":{"type":"string"},"VoteCount":{"type":"integer","format":"int32"}}},"PublishedDivision":{"type":"object","properties":{"AyeCount":{"type":"integer","format":"int32"},"AyeTellers":{"type":"array","items":{"$ref":"#/components/schemas/RecordedMember"}},"Ayes":{"type":"array","items":{"$ref":"#/components/schemas/RecordedMember"}},"Date":{"type":"string","format":"date-time"},"DivisionId":{"type":"integer","format":"int32"},"DoubleMajorityAyeCount":{"type":"integer","format":"int32"},"DoubleMajorityNoCount":{"type":"integer","format":"int32"},"EVELCountry":{"type":"string"},"EVELType":{"type":"string"},"FriendlyDescription":{"type":"string"},"FriendlyTitle":{"type":"string"},"IsDeferred":{"type":"boolean"},"NoCount":{"type":"integer","format":"int32"},"NoTellers":{"type":"array","items":{"$ref":"#/components/schemas/RecordedMember"}},"NoVoteRecorded":{"type":"array","items":{"$ref":"#/components/schemas/RecordedMember"}},"Noes":{"type":"array","items":{"$ref":"#/components/schemas/RecordedMember"}},"Number":{"type":"integer","format":"int32"},"PublicationUpdated":{"type":"string","format":"date-time"},"RemoteVotingEnd":{"type":"string","format":"date-time"},"RemoteVotingStart":{"type":"string","format":"date-time"},"Title":{"type":"string"}}},"QueryParameters":{"type":"object","properties":{"DivisionNumber":{"type":"integer","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","format":"int32"},"EndDate":{"type":"string","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","format":"date-time"},"IncludeWhenMemberWasTeller":{"type":"boolean","description":"Divisions where member was a teller as well as if they actually voted"},"MemberId":{"type":"integer","description":"Divisions returning Member with Member ID voting records","format":"int32"},"SearchTerm":{"type":"string","description":"Divisions containing search term within title or number"},"StartDate":{"type":"string","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","format":"date-time"}}},"RecordedMember":{"type":"object","properties":{"ListAs":{"type":"string"},"MemberFrom":{"type":"string"},"MemberId":{"type":"integer","format":"int32"},"Name":{"type":"string"},"Party":{"type":"string"},"PartyAbbreviation":{"type":"string"},"PartyColour":{"type":"string"},"ProxyName":{"type":"string"},"SubParty":{"type":"string"}}},"SearchQueryParameters":{"type":"object","properties":{"DivisionNumber":{"type":"integer","description":"Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint","format":"int32"},"EndDate":{"type":"string","description":"Divisions where division date in one or before date provided. Date format is yyyy-MM-dd","format":"date-time"},"IncludeWhenMemberWasTeller":{"type":"boolean","description":"Divisions where member was a teller as well as if they actually voted"},"MemberId":{"type":"integer","description":"Divisions returning Member with Member ID voting records","format":"int32"},"SearchTerm":{"type":"string","description":"Divisions containing search term within title or number"},"Skip":{"type":"integer","description":"The number of records to skip. Default is 0","format":"int32"},"StartDate":{"type":"string","description":"Divisions where division date in one or after date provided. Date format is yyyy-MM-dd","format":"date-time"},"Take":{"type":"integer","description":"The number of records to return per page. Default is 25","format":"int32"}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Commons Votes API",
+    "description" : "An API that allows querying of Commons Votes data.",
+    "contact" : {
+      "name" : "UK Parliament",
+      "url" : "https://www.parliament.uk/",
+      "email" : "softwareengineering@parliament.uk"
+    },
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "http://commonsvotes-api.parliament.uk/"
+  }, {
+    "url" : "https://commonsvotes-api.parliament.uk/"
+  } ],
+  "paths" : {
+    "/data/division/{divisionId}.{format}" : {
+      "get" : {
+        "tags" : [ "Divisions" ],
+        "summary" : "Return a Division",
+        "description" : "Single Division which has the specified Id",
+        "operationId" : "Divisions_GetDivisionById",
+        "parameters" : [ {
+          "name" : "divisionId",
+          "in" : "path",
+          "description" : "Id number of a Division whose records are to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "format",
+          "in" : "path",
+          "description" : "xml or json",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublishedDivision"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublishedDivision"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BadRequest"
+          },
+          "404" : {
+            "description" : "NotFound"
+          }
+        }
+      }
+    },
+    "/data/divisions.{format}/groupedbyparty" : {
+      "get" : {
+        "tags" : [ "Divisions" ],
+        "summary" : "Return Divisions results grouped by party",
+        "description" : "Division results which meet the specified criteria grouped by parties",
+        "operationId" : "Divisions_GetDivisionsGroupsByParty",
+        "parameters" : [ {
+          "name" : "format",
+          "in" : "path",
+          "description" : "xml or json",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.searchTerm",
+          "in" : "query",
+          "description" : "Divisions containing search term within title or number",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.memberId",
+          "in" : "query",
+          "description" : "Divisions returning Member with Member ID voting records",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.includeWhenMemberWasTeller",
+          "in" : "query",
+          "description" : "Divisions where member was a teller as well as if they actually voted",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "queryParameters.startDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.endDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.divisionNumber",
+          "in" : "query",
+          "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/DivisionGroupedByParty"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/DivisionGroupedByParty"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BadRequest"
+          }
+        }
+      }
+    },
+    "/data/divisions.{format}/membervoting" : {
+      "get" : {
+        "tags" : [ "Divisions" ],
+        "summary" : "Return voting records for a Member",
+        "description" : "List of voting records for a member which meet the specified criteria.",
+        "operationId" : "Divisions_GetVotingRecordsForMember",
+        "parameters" : [ {
+          "name" : "format",
+          "in" : "path",
+          "description" : "xml or json",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.memberId",
+          "in" : "query",
+          "description" : "Id number of a Member whose voting records are to be returned",
+          "required" : true,
+          "schema" : {
+            "maximum" : 2147483647,
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.skip",
+          "in" : "query",
+          "description" : "The number of records to skip. Default is 0",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.take",
+          "in" : "query",
+          "description" : "The number of records to return per page. Default is 25",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.searchTerm",
+          "in" : "query",
+          "description" : "Divisions containing search term within title or number",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.includeWhenMemberWasTeller",
+          "in" : "query",
+          "description" : "Divisions where member was a teller as well as if they actually voted",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "queryParameters.startDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.endDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.divisionNumber",
+          "in" : "query",
+          "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MemberVotingRecord"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MemberVotingRecord"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BadRequest"
+          }
+        }
+      }
+    },
+    "/data/divisions.{format}/search" : {
+      "get" : {
+        "tags" : [ "Divisions" ],
+        "summary" : "Return a list of Divisions",
+        "description" : "List of Divisions which meet the specified criteria",
+        "operationId" : "Divisions_SearchDivisions",
+        "parameters" : [ {
+          "name" : "format",
+          "in" : "path",
+          "description" : "json or xml",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.skip",
+          "in" : "query",
+          "description" : "The number of records to skip. Default is 0",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.take",
+          "in" : "query",
+          "description" : "The number of records to return per page. Default is 25",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.searchTerm",
+          "in" : "query",
+          "description" : "Divisions containing search term within title or number",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.memberId",
+          "in" : "query",
+          "description" : "Divisions returning Member with Member ID voting records",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.includeWhenMemberWasTeller",
+          "in" : "query",
+          "description" : "Divisions where member was a teller as well as if they actually voted",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "queryParameters.startDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.endDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.divisionNumber",
+          "in" : "query",
+          "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PublishedDivision"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PublishedDivision"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BadRequest"
+          }
+        }
+      }
+    },
+    "/data/divisions.{format}/searchTotalResults" : {
+      "get" : {
+        "tags" : [ "Divisions" ],
+        "summary" : "Return total results count",
+        "description" : "Total count of Divisions meeting the specified criteria",
+        "operationId" : "Divisions_SearchTotalResults",
+        "parameters" : [ {
+          "name" : "format",
+          "in" : "path",
+          "description" : "json or xml",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.searchTerm",
+          "in" : "query",
+          "description" : "Divisions containing search term within title or number",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "queryParameters.memberId",
+          "in" : "query",
+          "description" : "Divisions returning Member with Member ID voting records",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "queryParameters.includeWhenMemberWasTeller",
+          "in" : "query",
+          "description" : "Divisions where member was a teller as well as if they actually voted",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "queryParameters.startDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.endDate",
+          "in" : "query",
+          "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "queryParameters.divisionNumber",
+          "in" : "query",
+          "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BadRequest"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "DivisionGroupedByParty" : {
+        "type" : "object",
+        "properties" : {
+          "AyeCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "Ayes" : {
+            "type" : "array",
+            "description" : "Counts of all members who voted 'Aye', grouped by party",
+            "items" : {
+              "$ref" : "#/components/schemas/PartyVoteResult"
+            }
+          },
+          "Date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "DivisionId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "NoCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "Noes" : {
+            "type" : "array",
+            "description" : "Counts of all members who voted 'Noe', grouped by party",
+            "items" : {
+              "$ref" : "#/components/schemas/PartyVoteResult"
+            }
+          },
+          "Number" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "Title" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MemberSearchQueryParameters" : {
+        "required" : [ "MemberId" ],
+        "type" : "object",
+        "properties" : {
+          "DivisionNumber" : {
+            "type" : "integer",
+            "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+            "format" : "int32"
+          },
+          "EndDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          },
+          "IncludeWhenMemberWasTeller" : {
+            "type" : "boolean",
+            "description" : "Divisions where member was a teller as well as if they actually voted"
+          },
+          "MemberId" : {
+            "maximum" : 2147483647,
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "Id number of a Member whose voting records are to be returned",
+            "format" : "int32"
+          },
+          "SearchTerm" : {
+            "type" : "string",
+            "description" : "Divisions containing search term within title or number"
+          },
+          "Skip" : {
+            "type" : "integer",
+            "description" : "The number of records to skip. Default is 0",
+            "format" : "int32"
+          },
+          "StartDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          },
+          "Take" : {
+            "type" : "integer",
+            "description" : "The number of records to return per page. Default is 25",
+            "format" : "int32"
+          }
+        }
+      },
+      "MemberVotingRecord" : {
+        "type" : "object",
+        "properties" : {
+          "MemberId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "MemberVotedAye" : {
+            "type" : "boolean"
+          },
+          "MemberWasTeller" : {
+            "type" : "boolean"
+          },
+          "PublishedDivision" : {
+            "$ref" : "#/components/schemas/PublishedDivision"
+          }
+        }
+      },
+      "PartyVoteResult" : {
+        "type" : "object",
+        "properties" : {
+          "PartyName" : {
+            "type" : "string"
+          },
+          "VoteCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "PublishedDivision" : {
+        "type" : "object",
+        "properties" : {
+          "AyeCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "AyeTellers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecordedMember"
+            }
+          },
+          "Ayes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecordedMember"
+            }
+          },
+          "Date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "DivisionId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "DoubleMajorityAyeCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "DoubleMajorityNoCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "EVELCountry" : {
+            "type" : "string"
+          },
+          "EVELType" : {
+            "type" : "string"
+          },
+          "FriendlyDescription" : {
+            "type" : "string"
+          },
+          "FriendlyTitle" : {
+            "type" : "string"
+          },
+          "IsDeferred" : {
+            "type" : "boolean"
+          },
+          "NoCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "NoTellers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecordedMember"
+            }
+          },
+          "NoVoteRecorded" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecordedMember"
+            }
+          },
+          "Noes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecordedMember"
+            }
+          },
+          "Number" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "PublicationUpdated" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "RemoteVotingEnd" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "RemoteVotingStart" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "Title" : {
+            "type" : "string"
+          }
+        }
+      },
+      "QueryParameters" : {
+        "type" : "object",
+        "properties" : {
+          "DivisionNumber" : {
+            "type" : "integer",
+            "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+            "format" : "int32"
+          },
+          "EndDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          },
+          "IncludeWhenMemberWasTeller" : {
+            "type" : "boolean",
+            "description" : "Divisions where member was a teller as well as if they actually voted"
+          },
+          "MemberId" : {
+            "type" : "integer",
+            "description" : "Divisions returning Member with Member ID voting records",
+            "format" : "int32"
+          },
+          "SearchTerm" : {
+            "type" : "string",
+            "description" : "Divisions containing search term within title or number"
+          },
+          "StartDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          }
+        }
+      },
+      "RecordedMember" : {
+        "type" : "object",
+        "properties" : {
+          "ListAs" : {
+            "type" : "string"
+          },
+          "MemberFrom" : {
+            "type" : "string"
+          },
+          "MemberId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "Name" : {
+            "type" : "string"
+          },
+          "Party" : {
+            "type" : "string"
+          },
+          "PartyAbbreviation" : {
+            "type" : "string"
+          },
+          "PartyColour" : {
+            "type" : "string"
+          },
+          "ProxyName" : {
+            "type" : "string"
+          },
+          "SubParty" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SearchQueryParameters" : {
+        "type" : "object",
+        "properties" : {
+          "DivisionNumber" : {
+            "type" : "integer",
+            "description" : "Division Number - as specified by the House, unique within a session. This is different to the division id which uniquely identifies a division in this system and is passed to the GET division endpoint",
+            "format" : "int32"
+          },
+          "EndDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or before date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          },
+          "IncludeWhenMemberWasTeller" : {
+            "type" : "boolean",
+            "description" : "Divisions where member was a teller as well as if they actually voted"
+          },
+          "MemberId" : {
+            "type" : "integer",
+            "description" : "Divisions returning Member with Member ID voting records",
+            "format" : "int32"
+          },
+          "SearchTerm" : {
+            "type" : "string",
+            "description" : "Divisions containing search term within title or number"
+          },
+          "Skip" : {
+            "type" : "integer",
+            "description" : "The number of records to skip. Default is 0",
+            "format" : "int32"
+          },
+          "StartDate" : {
+            "type" : "string",
+            "description" : "Divisions where division date in one or after date provided. Date format is yyyy-MM-dd",
+            "format" : "date-time"
+          },
+          "Take" : {
+            "type" : "integer",
+            "description" : "The number of records to return per page. Default is 25",
+            "format" : "int32"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,585 @@
-{"openapi":"3.0.1","info":{"title":"Security Center","description":"API spec for Microsoft.Security (Azure Security Center) resource provider","version":"2019-01-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments":{"get":{"tags":["SubAssessments"],"description":"Get security sub-assessments on all your scanned resources inside a scope","operationId":"SubAssessments_List","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}},{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecuritySubAssessmentList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}":{"get":{"tags":["SubAssessments"],"description":"Get a security sub-assessment on your scanned resource","operationId":"SubAssessments_Get","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}},{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}},{"name":"subAssessmentName","in":"path","description":"The Sub-Assessment Key - Unique key for the sub-assessment type","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecuritySubAssessment"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}},"/{scope}/providers/Microsoft.Security/subAssessments":{"get":{"tags":["SubAssessments"],"description":"Get security sub-assessments on all your scanned resources inside a subscription scope","operationId":"SubAssessments_ListAll","parameters":[{"name":"api-version","in":"query","description":"API version for the operation","required":true,"schema":{"type":"string"}},{"name":"scope","in":"path","description":"Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SecuritySubAssessmentList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"object","properties":{"code":{"type":"string","description":"An identifier for the error. Codes are invariant and are intended to be consumed programmatically.","readOnly":true},"message":{"type":"string","description":"A message describing the error, intended to be suitable for display in a user interface.","readOnly":true}},"description":"Error details."}},"description":"Error response structure."}}}}}}}},"components":{"schemas":{"AdditionalData":{"required":["assessedResourceType"],"type":"object","properties":{"assessedResourceType":{"type":"string","description":"Sub-assessment resource type","enum":["SqlServerVulnerability","ContainerRegistryVulnerability","ServerVulnerability"]}},"description":"Details of the sub-assessment","discriminator":{"propertyName":"assessedResourceType"}},"CVE":{"type":"object","properties":{"link":{"type":"string","description":"Link url","readOnly":true},"title":{"type":"string","description":"CVE title","readOnly":true}},"description":"CVE details"},"CVSS":{"type":"object","properties":{"base":{"type":"number","description":"CVSS base","readOnly":true}},"description":"CVSS details"},"ContainerRegistryVulnerabilityProperties":{"properties":{"cve":{"type":"array","description":"List of CVEs","readOnly":true,"items":{"$ref":"#/components/schemas/CVE"}},"cvss":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/CVSS"},"description":"Dictionary from cvss version to cvss details object","readOnly":true},"imageDigest":{"type":"string","description":"Digest of the vulnerable image","readOnly":true},"patchable":{"type":"boolean","description":"Indicates whether a patch is available or not","readOnly":true},"publishedTime":{"type":"string","description":"Published time","format":"date-time","readOnly":true},"repositoryName":{"type":"string","description":"Name of the repository which the vulnerable image belongs to","readOnly":true},"type":{"type":"string","description":"Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered, Vulnerability","readOnly":true},"vendorReferences":{"type":"array","readOnly":true,"items":{"$ref":"#/components/schemas/VendorReference"}}},"description":"Additional context fields for container registry Vulnerability assessment","allOf":[{"$ref":"#/components/schemas/AdditionalData"}]},"SecuritySubAssessment":{"properties":{"properties":{"$ref":"#/components/schemas/SecuritySubAssessmentProperties"}},"description":"Security sub-assessment on a resource","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource Id","readOnly":true},"name":{"type":"string","description":"Resource name","readOnly":true},"type":{"type":"string","description":"Resource type","readOnly":true}},"description":"Describes an Azure resource."}]},"SecuritySubAssessmentList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The URI to fetch the next page.","readOnly":true},"value":{"type":"array","readOnly":true,"items":{"$ref":"#/components/schemas/SecuritySubAssessment"}}},"description":"List of security sub-assessments"},"SecuritySubAssessmentProperties":{"type":"object","properties":{"additionalData":{"$ref":"#/components/schemas/AdditionalData"},"category":{"type":"string","description":"Category of the sub-assessment","readOnly":true},"description":{"type":"string","description":"Human readable description of the assessment status","readOnly":true},"displayName":{"type":"string","description":"User friendly display name of the sub-assessment","readOnly":true},"id":{"type":"string","description":"Vulnerability ID","readOnly":true},"impact":{"type":"string","description":"Description of the impact of this sub-assessment","readOnly":true},"remediation":{"type":"string","description":"Information on how to remediate this sub-assessment","readOnly":true},"resourceDetails":{"required":["source"],"type":"object","properties":{"source":{"type":"string","description":"The platform where the assessed resource resides","enum":["Azure","OnPremise"]}},"description":"Details of the resource that was assessed"},"status":{"$ref":"#/components/schemas/SubAssessmentStatus"},"timeGenerated":{"type":"string","description":"The date and time the sub-assessment was generated","format":"date-time","readOnly":true}},"description":"Describes properties of an sub-assessment."},"ServerVulnerabilityProperties":{"properties":{"cve":{"type":"array","description":"List of CVEs","readOnly":true,"items":{"$ref":"#/components/schemas/CVE"}},"cvss":{"type":"object","additionalProperties":{"$ref":"#/components/schemas/CVSS"},"description":"Dictionary from cvss version to cvss details object","readOnly":true},"patchable":{"type":"boolean","description":"Indicates whether a patch is available or not","readOnly":true},"publishedTime":{"type":"string","description":"Published time","format":"date-time","readOnly":true},"threat":{"type":"string","description":"Threat name","readOnly":true},"type":{"type":"string","description":"Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered","readOnly":true},"vendorReferences":{"type":"array","readOnly":true,"items":{"$ref":"#/components/schemas/VendorReference"}}},"description":"Additional context fields for server vulnerability assessment","allOf":[{"$ref":"#/components/schemas/AdditionalData"}]},"SqlServerVulnerabilityProperties":{"properties":{"query":{"type":"string","description":"The T-SQL query that runs on your SQL database to perform the particular check","readOnly":true},"type":{"type":"string","description":"The resource type the sub assessment refers to in its resource details","readOnly":true}},"description":"Details of the resource that was assessed","allOf":[{"$ref":"#/components/schemas/AdditionalData"}]},"SubAssessmentStatus":{"type":"object","properties":{"cause":{"type":"string","description":"Programmatic code for the cause of the assessment status","readOnly":true},"code":{"type":"string","description":"Programmatic code for the status of the assessment","readOnly":true,"enum":["Healthy","Unhealthy","NotApplicable"]},"description":{"type":"string","description":"Human readable description of the assessment status","readOnly":true},"severity":{"type":"string","description":"The sub-assessment severity level","readOnly":true,"enum":["Low","Medium","High"]}},"description":"Status of the sub-assessment"},"VendorReference":{"type":"object","properties":{"link":{"type":"string","description":"Link url","readOnly":true},"title":{"type":"string","description":"Link title","readOnly":true}},"description":"Vendor reference"}},"parameters":{"AssessmentName":{"name":"assessmentName","in":"path","description":"The Assessment Key - Unique key for the assessment type","required":true,"schema":{"type":"string"}},"SubAssessmentName":{"name":"subAssessmentName","in":"path","description":"The Sub-Assessment Key - Unique key for the sub-assessment type","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Security Center",
+    "description" : "API spec for Microsoft.Security (Azure Security Center) resource provider",
+    "version" : "2019-01-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments" : {
+      "get" : {
+        "tags" : [ "SubAssessments" ],
+        "description" : "Get security sub-assessments on all your scanned resources inside a scope",
+        "operationId" : "SubAssessments_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assessmentName",
+          "in" : "path",
+          "description" : "The Assessment Key - Unique key for the assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecuritySubAssessmentList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}" : {
+      "get" : {
+        "tags" : [ "SubAssessments" ],
+        "description" : "Get a security sub-assessment on your scanned resource",
+        "operationId" : "SubAssessments_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "assessmentName",
+          "in" : "path",
+          "description" : "The Assessment Key - Unique key for the assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subAssessmentName",
+          "in" : "path",
+          "description" : "The Sub-Assessment Key - Unique key for the sub-assessment type",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecuritySubAssessment"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{scope}/providers/Microsoft.Security/subAssessments" : {
+      "get" : {
+        "tags" : [ "SubAssessments" ],
+        "description" : "Get security sub-assessments on all your scanned resources inside a subscription scope",
+        "operationId" : "SubAssessments_ListAll",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "API version for the operation",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "path",
+          "description" : "Scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group (/providers/Microsoft.Management/managementGroups/mgName).",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SecuritySubAssessmentList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "An identifier for the error. Codes are invariant and are intended to be consumed programmatically.",
+                          "readOnly" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "A message describing the error, intended to be suitable for display in a user interface.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "Error details."
+                    }
+                  },
+                  "description" : "Error response structure."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AdditionalData" : {
+        "required" : [ "assessedResourceType" ],
+        "type" : "object",
+        "properties" : {
+          "assessedResourceType" : {
+            "type" : "string",
+            "description" : "Sub-assessment resource type",
+            "enum" : [ "SqlServerVulnerability", "ContainerRegistryVulnerability", "ServerVulnerability" ]
+          }
+        },
+        "description" : "Details of the sub-assessment",
+        "discriminator" : {
+          "propertyName" : "assessedResourceType"
+        }
+      },
+      "CVE" : {
+        "type" : "object",
+        "properties" : {
+          "link" : {
+            "type" : "string",
+            "description" : "Link url",
+            "readOnly" : true
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "CVE title",
+            "readOnly" : true
+          }
+        },
+        "description" : "CVE details"
+      },
+      "CVSS" : {
+        "type" : "object",
+        "properties" : {
+          "base" : {
+            "type" : "number",
+            "description" : "CVSS base",
+            "readOnly" : true
+          }
+        },
+        "description" : "CVSS details"
+      },
+      "ContainerRegistryVulnerabilityProperties" : {
+        "properties" : {
+          "cve" : {
+            "type" : "array",
+            "description" : "List of CVEs",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/CVE"
+            }
+          },
+          "cvss" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/CVSS"
+            },
+            "description" : "Dictionary from cvss version to cvss details object",
+            "readOnly" : true
+          },
+          "imageDigest" : {
+            "type" : "string",
+            "description" : "Digest of the vulnerable image",
+            "readOnly" : true
+          },
+          "patchable" : {
+            "type" : "boolean",
+            "description" : "Indicates whether a patch is available or not",
+            "readOnly" : true
+          },
+          "publishedTime" : {
+            "type" : "string",
+            "description" : "Published time",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "repositoryName" : {
+            "type" : "string",
+            "description" : "Name of the repository which the vulnerable image belongs to",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered, Vulnerability",
+            "readOnly" : true
+          },
+          "vendorReferences" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/VendorReference"
+            }
+          }
+        },
+        "description" : "Additional context fields for container registry Vulnerability assessment",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AdditionalData"
+        } ]
+      },
+      "SecuritySubAssessment" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/SecuritySubAssessmentProperties"
+          }
+        },
+        "description" : "Security sub-assessment on a resource",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "Resource Id",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Resource name",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Resource type",
+              "readOnly" : true
+            }
+          },
+          "description" : "Describes an Azure resource."
+        } ]
+      },
+      "SecuritySubAssessmentList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The URI to fetch the next page.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/SecuritySubAssessment"
+            }
+          }
+        },
+        "description" : "List of security sub-assessments"
+      },
+      "SecuritySubAssessmentProperties" : {
+        "type" : "object",
+        "properties" : {
+          "additionalData" : {
+            "$ref" : "#/components/schemas/AdditionalData"
+          },
+          "category" : {
+            "type" : "string",
+            "description" : "Category of the sub-assessment",
+            "readOnly" : true
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Human readable description of the assessment status",
+            "readOnly" : true
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "User friendly display name of the sub-assessment",
+            "readOnly" : true
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "Vulnerability ID",
+            "readOnly" : true
+          },
+          "impact" : {
+            "type" : "string",
+            "description" : "Description of the impact of this sub-assessment",
+            "readOnly" : true
+          },
+          "remediation" : {
+            "type" : "string",
+            "description" : "Information on how to remediate this sub-assessment",
+            "readOnly" : true
+          },
+          "resourceDetails" : {
+            "required" : [ "source" ],
+            "type" : "object",
+            "properties" : {
+              "source" : {
+                "type" : "string",
+                "description" : "The platform where the assessed resource resides",
+                "enum" : [ "Azure", "OnPremise" ]
+              }
+            },
+            "description" : "Details of the resource that was assessed"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/SubAssessmentStatus"
+          },
+          "timeGenerated" : {
+            "type" : "string",
+            "description" : "The date and time the sub-assessment was generated",
+            "format" : "date-time",
+            "readOnly" : true
+          }
+        },
+        "description" : "Describes properties of an sub-assessment."
+      },
+      "ServerVulnerabilityProperties" : {
+        "properties" : {
+          "cve" : {
+            "type" : "array",
+            "description" : "List of CVEs",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/CVE"
+            }
+          },
+          "cvss" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/CVSS"
+            },
+            "description" : "Dictionary from cvss version to cvss details object",
+            "readOnly" : true
+          },
+          "patchable" : {
+            "type" : "boolean",
+            "description" : "Indicates whether a patch is available or not",
+            "readOnly" : true
+          },
+          "publishedTime" : {
+            "type" : "string",
+            "description" : "Published time",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "threat" : {
+            "type" : "string",
+            "description" : "Threat name",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered",
+            "readOnly" : true
+          },
+          "vendorReferences" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/VendorReference"
+            }
+          }
+        },
+        "description" : "Additional context fields for server vulnerability assessment",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AdditionalData"
+        } ]
+      },
+      "SqlServerVulnerabilityProperties" : {
+        "properties" : {
+          "query" : {
+            "type" : "string",
+            "description" : "The T-SQL query that runs on your SQL database to perform the particular check",
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The resource type the sub assessment refers to in its resource details",
+            "readOnly" : true
+          }
+        },
+        "description" : "Details of the resource that was assessed",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AdditionalData"
+        } ]
+      },
+      "SubAssessmentStatus" : {
+        "type" : "object",
+        "properties" : {
+          "cause" : {
+            "type" : "string",
+            "description" : "Programmatic code for the cause of the assessment status",
+            "readOnly" : true
+          },
+          "code" : {
+            "type" : "string",
+            "description" : "Programmatic code for the status of the assessment",
+            "readOnly" : true,
+            "enum" : [ "Healthy", "Unhealthy", "NotApplicable" ]
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Human readable description of the assessment status",
+            "readOnly" : true
+          },
+          "severity" : {
+            "type" : "string",
+            "description" : "The sub-assessment severity level",
+            "readOnly" : true,
+            "enum" : [ "Low", "Medium", "High" ]
+          }
+        },
+        "description" : "Status of the sub-assessment"
+      },
+      "VendorReference" : {
+        "type" : "object",
+        "properties" : {
+          "link" : {
+            "type" : "string",
+            "description" : "Link url",
+            "readOnly" : true
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Link title",
+            "readOnly" : true
+          }
+        },
+        "description" : "Vendor reference"
+      }
+    },
+    "parameters" : {
+      "AssessmentName" : {
+        "name" : "assessmentName",
+        "in" : "path",
+        "description" : "The Assessment Key - Unique key for the assessment type",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubAssessmentName" : {
+        "name" : "subAssessmentName",
+        "in" : "path",
+        "description" : "The Sub-Assessment Key - Unique key for the sub-assessment type",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,1486 @@
-{"openapi":"3.0.1","info":{"title":"Mon-voyage-pas-cher.com Public API","version":"0.0.1"},"servers":[{"url":"https://api.mon-voyage-pas-cher.com/"}],"paths":{"/airports":{"get":{"tags":["Geography APIs"],"summary":"Search airports by country / Search nearby airports / Search an airport","description":"This webservice is providing you the ability to retrieve a list of airports matching your search criterias.<br />The 3 mains search criterias are<br />- by country code, this will list all airports for a given country.<br />- by latitude/longitude with a radius in km. You can actually combine those 2 criterias, and search for example the closest airport in the USA of Vancoucer, Canada.<br />- The last way to use the API is by searching directly with a IATA CODE in the location parameter, this will only return one result in the array of data results","operationId":"getAirport","parameters":[{"name":"language","in":"query","description":"the language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"location","in":"query","description":"The location you want to search for. Either a latitude/longitude point or a letter airport IATA CODE ( ex. LHR ) if you want the detail for only one single airport.","schema":{"pattern":"^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"radius","in":"query","description":"Radius in km for a lat/long search, will be ignore if a IATA is passed in location parameter code is passed","schema":{"maximum":500,"type":"integer","default":100}},{"name":"countrycode","in":"query","description":"Filter - The country ISO code 2 letters, provided by the GET /countries. If passed the results will be filtered to this country only, regardless if you passed a lat/long and a large radius","schema":{"pattern":"^[A-Za-z]{2}$","type":"string"}},{"name":"top_airports","in":"query","description":"Filter the results to only the top and large airports airports.","schema":{"type":"boolean"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AirportsSearchResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/cities/findcitiesfromlatlong":{"get":{"tags":["Geography APIs"],"summary":"Search all cities from lat/long or countrycode","description":"Search cities according to given criterias. Either lat/long + radius or country code. A limit can be given but cannot exceed 50 results.<br /> A significant city will be defined according to the pourcent of population within a country.","operationId":"getCities","parameters":[{"name":"language","in":"query","description":"the language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"countrycode","in":"query","description":"if you want to limit the result to one country","schema":{"pattern":"^[A-Za-z]{2}$","type":"string"}},{"name":"location","in":"query","description":"The Lat/Long of the location your are seeking cities ( ex. 45.4478988,3.23456)","schema":{"pattern":"^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"radius","in":"query","description":"Radius in km for a lat/long search. Default is 20km and there is no maximum, but need to be combined with limit. code is passed","schema":{"maximum":200,"type":"integer","default":20}},{"name":"limit","in":"query","description":"Limit of the result. Default is 20 rows, and maximum is 50.","schema":{"maximum":50,"minimum":1,"type":"integer","default":20}},{"name":"offset","in":"query","description":"offset of the result set","schema":{"minimum":0,"type":"integer","default":0}},{"name":"sort","in":"query","description":"The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point","required":true,"schema":{"type":"string","default":"distance,asc","enum":["distance,desc","distance,asc","population,desc","population,asc","elevation,desc","elevation,asc","name,desc","name,asc","timezone,asc","timezone,desc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CitiesResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/cities/findcitiesfromtext":{"get":{"tags":["Geography APIs"],"summary":"Retrieve cities informations from a string / build an autocomplete","description":"Search cities from a string parameters.","operationId":"getAutocomplete","parameters":[{"name":"q","in":"query","description":"the string you want to search","required":true,"schema":{"minLength":3,"type":"string"}},{"name":"language","in":"query","description":"the language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"countrycode","in":"query","description":"if you want to limit the result to one country","schema":{"pattern":"^[A-Za-z]{2}$","type":"string"}},{"name":"sort","in":"query","description":"The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point","required":true,"schema":{"type":"string","default":"population,desc","enum":["population,desc","population,asc","elevation,desc","elevation,asc","name,desc","name,asc","timezone,asc","timezone,desc","match_score,desc","match_score,asc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CitiesResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/cities/significant":{"get":{"tags":["Geography APIs"],"summary":"Search significant cities from lat/long or countrycode","description":"Search cities according to given criterias. Either lat/long + radius or country code. A limit can be given but cannot exceed 50 results.<br /> A significant city will be defined according to the pourcent of population within a country.","operationId":"getSignificantCities","parameters":[{"name":"language","in":"query","description":"the language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"pourcent","in":"query","description":"The pourcent of population the cities need to be in order to appear in results","schema":{"maximum":5,"minimum":0.05,"type":"number","default":0.5}},{"name":"countrycode","in":"query","description":"if you want to limit the result to one country","schema":{"pattern":"^[A-Za-z]{2}$","type":"string"}},{"name":"location","in":"query","description":"The Lat/Long of the location your are seeking cities ( ex. 45.4478988,3.23456)","schema":{"pattern":"^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"radius","in":"query","description":"Radius in km for a lat/long search. Default is 20km and there is no maximum, but need to be combined with limit. code is passed","schema":{"maximum":200,"type":"integer","default":20}},{"name":"limit","in":"query","description":"Limit of the result. Default is 20 rows, and maximum is 50.","schema":{"maximum":50,"minimum":1,"type":"integer","default":20}},{"name":"offset","in":"query","description":"offset of the result set","schema":{"minimum":0,"type":"integer","default":0}},{"name":"sort","in":"query","description":"The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point","required":true,"schema":{"type":"string","default":"population,desc","enum":["distance,desc","distance,asc","population,desc","population,asc","elevation,desc","elevation,asc","name,desc","name,asc","timezone,asc","timezone,desc"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CitiesResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/continents":{"get":{"tags":["Geography APIs"],"summary":"Search all continents or one specific continent","description":"This webservice is providing you the ability to retrieve all informations about continents","operationId":"getContinents","parameters":[{"name":"language","in":"query","description":"The language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"continentcode","in":"query","description":"The code of the continent you want to retrieve, this parameter is not required if you want ot retrieve all continents at once","schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ContinentsResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/countries":{"get":{"tags":["Geography APIs"],"summary":"Search all countries or one specific country","description":"This webservice is providing you the ability to retrieve a list of countries matching your search criterias.<br />The 2 mains ways to search use this API are<br />- by countrycode, it will only returns you one country<br />- without the countrycode parameter which will return the full list of countries","operationId":"getCountries","parameters":[{"name":"language","in":"query","description":"the language code of the language you want the content to be returned","required":true,"schema":{"type":"string","enum":["en","fr","de","es"]}},{"name":"countrycode","in":"query","description":"The code of the country you want to retrieve","schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CountriesResponse"}}}},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/distance":{"get":{"tags":["Services APIs"],"summary":"Calculate distance between lats/longs","description":"This webservice is providing you the ability to calculate the distance between 2 lat/long points, it returns you the value in km or miles","operationId":"getDistance","parameters":[{"name":"locationA","in":"query","description":"The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) of location point A","required":true,"schema":{"pattern":"^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"locationB","in":"query","description":"The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) of location point B","required":true,"schema":{"pattern":"^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"unit","in":"query","description":"The unit of length you want the elevation returned either meters or feet returned","schema":{"type":"string","default":"kms","enum":["kms","miles"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DistanceResponse"}}}},"403":{"description":"Forbidden"},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/elevation":{"get":{"tags":["Services APIs"],"summary":"Search elevation informations from lat/long","description":"This webservice is providing you the ability to retrieve the elevation in meters or feet of ONE or MULTIPLE given latitude/longitude point(s). <br />If you use MULTIPLE lat/long point, the maximum number of point you can send in one request is 256. Be aware that if MULTIPLE mode, the results are de-deplicated if you are sending the same latitude/longitude point multiple times.<br />If your workload is a batch of millions of lat/long point, You will also get better throughput if you send around 100 lat/long points in one request than the maximum. This maximum is mostly allowed for people trying to graph altitudes.","operationId":"getElevation","parameters":[{"name":"locations","in":"query","description":"The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) or a list of coordinates separated using the pipe ('|') character. The maximum number of coordinates you can send at one time is 20 ( ex. 67.85572,20.22513|27.85572,20.22513 )","required":true,"schema":{"pattern":"^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)+((\\|\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)){0,256}$","type":"string","default":"67.85572,20.22513"}},{"name":"unit","in":"query","description":"The unit of length you want the elevation returned either meters or feet returned","schema":{"type":"string","default":"meters","enum":["meters","feet"]}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ElevationResponse"}}}},"403":{"description":"Forbidden"},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/pong":{"get":{"tags":["Utilities APIs"],"description":"Returns a ping. In case you need a health check in your system. Cannot be called /ping as AWS is using this route for their health check. This webservice doesn't have CORS enable, as it's supposed to be call server to server and not from a webpage ( it won't work over the tester)","operationId":"getPing","responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PongResponse"}}}}},"security":[{"x-api-key":null}]}},"/sun_positions":{"get":{"tags":["Services APIs"],"summary":"Search position of sun from lat/long and date","description":"This webservice is providing you the ability to retrieve the time of each phases of the sunlight cycle. Sunset, sunrise, sunriseEnd, golden hour, solarNoon, dawn, dusk and more for a given location and date. If the date if not provided, the response provided return informations for today at UTC time.","operationId":"getSun","parameters":[{"name":"location","in":"query","description":"Here you can send either a latitude / longitude","required":true,"schema":{"pattern":"^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string"}},{"name":"date","in":"query","description":"The date for what you will get the data ( full-date notation as defined by RFC 3339, section 5.6, for example, 2017-07-21 ), if not provided as parameter, today is going to be used","schema":{"type":"string","format":"date"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SunPositionResponse"}}}},"403":{"description":"Forbidden"},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}},"/swagger":null,"/timezone":{"get":{"tags":["Services APIs"],"summary":"Search timezone and time informations from lat/long","description":"This webservice is providing you the ability to retrieve the tz database time zones ( https://en.wikipedia.org/wiki/List_of_tz_database_time_zones )  from a given location ( )latitude and longitude or IATA code ). It also returns you the current time at the provided location.","operationId":"getTimezone","parameters":[{"name":"location","in":"query","description":"Here you can send either a latitude / longitude ( ex. 67.85572,20.22513 ) or a IATA Code ( ex. LHR for London Heathrow)","required":true,"schema":{"pattern":"^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$","type":"string","default":"45.8326307,6.8650517"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TimezoneResponse"}}}},"403":{"description":"Forbidden"},"500":{"description":"The error message object","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}},"security":[{"x-api-key":null}]},"options":{"summary":"CORS support","description":"Enable CORS by returning correct headers\n","responses":{"200":{"description":"Default response for CORS method","headers":{"Access-Control-Allow-Origin":{"schema":{"type":"string"}},"Access-Control-Allow-Methods":{"schema":{"type":"string"}},"Access-Control-Allow-Headers":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"AirportsSearchResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"array","items":{"$ref":"#/components/schemas/DataAirportsSearch"}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This section provides response schema of Airport Search Response"},"CitiesData":{"type":"object","properties":{"alternatename":{"type":"array","items":{"type":"string","description":"Here is a list of alternate name for the city in the requested language"}},"asciiname":{"type":"string","description":"The ASCII name of the city"},"country":{"type":"string","description":"The 2 letter ISO code of the country the city belongs to"},"elevation":{"type":"number","description":"The elevation of the city"},"latitude":{"type":"number","description":"The latitude considered as central for the city"},"longitude":{"type":"number","description":"The longitude considered as central for the city"},"name":{"type":"string","description":"The name of the city"},"population":{"type":"number","description":"The population of the city"},"timezone":{"type":"string","description":"The longitude considered as central for the city"}},"description":"This is the data object for the response of a Cities APIs calls"},"CitiesResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"array","items":{"$ref":"#/components/schemas/CitiesData"}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a Cities API call"},"ContinentData":{"type":"object","properties":{"code":{"type":"string","description":"The ISO code of the continent."},"countries_in":{"type":"array","items":{"type":"string","description":"Here is a list of country code that belong to the continent"}},"latitude":{"type":"number","description":"The latitude considered as central for the continent"},"longitude":{"type":"number","description":"The longitude considered as central for the continent"},"name":{"type":"string","description":"The name of the continent in english"},"name_locale":{"type":"string","description":"The name of the continent in the requested languager"}},"description":"This is the data object for the response of a Continent API call"},"ContinentsResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"array","items":{"$ref":"#/components/schemas/ContinentData"}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a Continent API call"},"CountriesData":{"type":"object","properties":{"airportscount":{"type":"number","description":"The name of the country in english language"},"alternatename":{"type":"array","items":{"type":"string","description":"The other given name, nickname of the country, this is as well as in requested language but also foreign languages"}},"areainsqkm":{"type":"number","description":"The superficy of the country in square km"},"capital":{"type":"string","description":"The capital of this country in english language"},"currencycode":{"type":"string","description":"The international currency code"},"currencyname":{"type":"string","description":"The local name of the currency used in this country"},"fr_article":{"type":"string","description":"The name of the country in english language"},"fr_preposition":{"type":"string","description":"The name of the country in english language"},"iso_alpha2":{"type":"string","description":"The 2 letter ISO code of the country"},"languages":{"type":"string","description":"The name of the country in english language"},"latitude":{"type":"number","description":"The latitude considered as central for this country"},"longitude":{"type":"number","description":"The longitude considered as central for this country"},"name":{"type":"string","description":"The name of the country in english language"},"name_locale":{"type":"string","description":"The name of the country in the requested language"},"neighbors":{"type":"array","items":{"type":"string","description":"Here is a list of country code that have territorial border with the this country"}},"population":{"type":"number","description":"The total population in this country"},"postalcode":{"type":"string","description":"The format of the postal codes if multiple format to be applied, then a pipe | is used as separator"},"postalcoderegex":{"type":"string","description":"The regex to use to check a postal code for this country"},"tld":{"type":"string","description":"The top level domain which is used by the local internet authority."}},"description":"This is the data object for the response of a Countries API call"},"CountriesResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"array","items":{"$ref":"#/components/schemas/CountriesData"}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a Countries API call"},"DataAirportsSearch":{"type":"object","properties":{"airlineroutescount":{"type":"integer"},"airport_website":{"type":"string"},"altitude":{"type":"integer"},"cityname":{"type":"string"},"countrycode":{"type":"string"},"destinationscount":{"type":"integer"},"distance":{"type":"string","description":"only in response when operating a lat/long search"},"iatacode":{"type":"string"},"icao":{"type":"string"},"istopdestination":{"type":"boolean"},"latitude":{"type":"number"},"longitude":{"type":"number"},"name":{"type":"string"},"timezone":{"type":"string"},"wikipedia_page":{"type":"string"}}},"DistanceResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"number","description":"Here is the distance between latlong A and latlong B, in the requested unit"},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This section provides response schema of pong response"},"ElevationData":{"type":"object","properties":{"elevation":{"type":"integer"},"location":{"type":"string"},"unit":{"type":"string"}}},"ElevationResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"array","items":{"$ref":"#/components/schemas/ElevationData"}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a TimezoneRequest"},"ErrorResponse":{"required":["message"],"type":"object","properties":{"message":{"type":"string"}}},"PongResponse":{"type":"object","properties":{"data":{"type":"string","description":"Will always return \"pong\""},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This section provides response schema of pong response"},"SunPositionData":{"type":"object","properties":{"dawn":{"type":"string","description":"Date and time of the dawn at local time of the given location","format":"date-time"},"dusk":{"type":"string","description":"Date and time of the dusk at local time of the given location","format":"date-time"},"goldenHour":{"type":"string","description":"Date and time of the golden hour at local time of the given location","format":"date-time"},"goldenHourEnd":{"type":"string","description":"Date and time of the golden hour end at local time of the given location","format":"date-time"},"nadir":{"type":"string","description":"Date and time of the nadir at local time of the given location","format":"date-time"},"nauticalDawn":{"type":"string","description":"Date and time of the nautical dawn at local time of the given location","format":"date-time"},"nauticalDusk":{"type":"string","description":"Date and time of the nautical dusk at local time of the given location","format":"date-time"},"night":{"type":"string","description":"Date and time of the night at local time of the given location","format":"date-time"},"nightEnd":{"type":"string","description":"Date and time of the night end at local time of the given location","format":"date-time"},"solarNoon":{"type":"string","description":"Date and time of the solar moon at local time of the given location","format":"date-time"},"sunrise":{"type":"string","description":"Date and time of the sunris at local time of the given location","format":"date-time"},"sunriseEnd":{"type":"string","description":"Date and time of the sunrise end at local time of the given location","format":"date-time"},"sunset":{"type":"string","description":"Date and time of the sunset at local time of the given location","format":"date-time"},"sunsetStart":{"type":"string","description":"Date and time of the sunset start at local time of the given location","format":"date-time"}},"description":"This is the data object for the response of a SunPosition API call"},"SunPositionResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"$ref":"#/components/schemas/SunPositionData"},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a SunPosition API call"},"TimezoneResponse":{"type":"object","properties":{"count":{"type":"integer"},"data":{"type":"object","properties":{"time_now":{"type":"string","format":"date-time"},"timezone_name":{"type":"string"}}},"message":{"type":"string"},"status":{"type":"string","description":"Status of the response"}},"description":"This is the main object for the response of a TimezoneRequest"}},"securitySchemes":{"x-api-key":{"type":"apiKey","name":"x-api-key","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Mon-voyage-pas-cher.com Public API",
+    "version" : "0.0.1"
+  },
+  "servers" : [ {
+    "url" : "https://api.mon-voyage-pas-cher.com/"
+  } ],
+  "paths" : {
+    "/airports" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Search airports by country / Search nearby airports / Search an airport",
+        "description" : "This webservice is providing you the ability to retrieve a list of airports matching your search criterias.<br />The 3 mains search criterias are<br />- by country code, this will list all airports for a given country.<br />- by latitude/longitude with a radius in km. You can actually combine those 2 criterias, and search for example the closest airport in the USA of Vancoucer, Canada.<br />- The last way to use the API is by searching directly with a IATA CODE in the location parameter, this will only return one result in the array of data results",
+        "operationId" : "getAirport",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "the language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "location",
+          "in" : "query",
+          "description" : "The location you want to search for. Either a latitude/longitude point or a letter airport IATA CODE ( ex. LHR ) if you want the detail for only one single airport.",
+          "schema" : {
+            "pattern" : "^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "Radius in km for a lat/long search, will be ignore if a IATA is passed in location parameter code is passed",
+          "schema" : {
+            "maximum" : 500,
+            "type" : "integer",
+            "default" : 100
+          }
+        }, {
+          "name" : "countrycode",
+          "in" : "query",
+          "description" : "Filter - The country ISO code 2 letters, provided by the GET /countries. If passed the results will be filtered to this country only, regardless if you passed a lat/long and a large radius",
+          "schema" : {
+            "pattern" : "^[A-Za-z]{2}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "top_airports",
+          "in" : "query",
+          "description" : "Filter the results to only the top and large airports airports.",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AirportsSearchResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities/findcitiesfromlatlong" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Search all cities from lat/long or countrycode",
+        "description" : "Search cities according to given criterias. Either lat/long + radius or country code. A limit can be given but cannot exceed 50 results.<br /> A significant city will be defined according to the pourcent of population within a country.",
+        "operationId" : "getCities",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "the language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "countrycode",
+          "in" : "query",
+          "description" : "if you want to limit the result to one country",
+          "schema" : {
+            "pattern" : "^[A-Za-z]{2}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "query",
+          "description" : "The Lat/Long of the location your are seeking cities ( ex. 45.4478988,3.23456)",
+          "schema" : {
+            "pattern" : "^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "Radius in km for a lat/long search. Default is 20km and there is no maximum, but need to be combined with limit. code is passed",
+          "schema" : {
+            "maximum" : 200,
+            "type" : "integer",
+            "default" : 20
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit of the result. Default is 20 rows, and maximum is 50.",
+          "schema" : {
+            "maximum" : 50,
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 20
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "offset of the result set",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "default" : 0
+          }
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "distance,asc",
+            "enum" : [ "distance,desc", "distance,asc", "population,desc", "population,asc", "elevation,desc", "elevation,asc", "name,desc", "name,asc", "timezone,asc", "timezone,desc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CitiesResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities/findcitiesfromtext" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Retrieve cities informations from a string / build an autocomplete",
+        "description" : "Search cities from a string parameters.",
+        "operationId" : "getAutocomplete",
+        "parameters" : [ {
+          "name" : "q",
+          "in" : "query",
+          "description" : "the string you want to search",
+          "required" : true,
+          "schema" : {
+            "minLength" : 3,
+            "type" : "string"
+          }
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "the language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "countrycode",
+          "in" : "query",
+          "description" : "if you want to limit the result to one country",
+          "schema" : {
+            "pattern" : "^[A-Za-z]{2}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "population,desc",
+            "enum" : [ "population,desc", "population,asc", "elevation,desc", "elevation,asc", "name,desc", "name,asc", "timezone,asc", "timezone,desc", "match_score,desc", "match_score,asc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CitiesResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities/significant" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Search significant cities from lat/long or countrycode",
+        "description" : "Search cities according to given criterias. Either lat/long + radius or country code. A limit can be given but cannot exceed 50 results.<br /> A significant city will be defined according to the pourcent of population within a country.",
+        "operationId" : "getSignificantCities",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "the language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "pourcent",
+          "in" : "query",
+          "description" : "The pourcent of population the cities need to be in order to appear in results",
+          "schema" : {
+            "maximum" : 5,
+            "minimum" : 0.05,
+            "type" : "number",
+            "default" : 0.5
+          }
+        }, {
+          "name" : "countrycode",
+          "in" : "query",
+          "description" : "if you want to limit the result to one country",
+          "schema" : {
+            "pattern" : "^[A-Za-z]{2}$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "location",
+          "in" : "query",
+          "description" : "The Lat/Long of the location your are seeking cities ( ex. 45.4478988,3.23456)",
+          "schema" : {
+            "pattern" : "^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "radius",
+          "in" : "query",
+          "description" : "Radius in km for a lat/long search. Default is 20km and there is no maximum, but need to be combined with limit. code is passed",
+          "schema" : {
+            "maximum" : 200,
+            "type" : "integer",
+            "default" : 20
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit of the result. Default is 20 rows, and maximum is 50.",
+          "schema" : {
+            "maximum" : 50,
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 20
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "offset of the result set",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "default" : 0
+          }
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "The order you want the result ordered. Default is population while when entering a lat/long, you can order the results by distance from requested lat/long point",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "population,desc",
+            "enum" : [ "distance,desc", "distance,asc", "population,desc", "population,asc", "elevation,desc", "elevation,asc", "name,desc", "name,asc", "timezone,asc", "timezone,desc" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CitiesResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/continents" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Search all continents or one specific continent",
+        "description" : "This webservice is providing you the ability to retrieve all informations about continents",
+        "operationId" : "getContinents",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "The language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "continentcode",
+          "in" : "query",
+          "description" : "The code of the continent you want to retrieve, this parameter is not required if you want ot retrieve all continents at once",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContinentsResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries" : {
+      "get" : {
+        "tags" : [ "Geography APIs" ],
+        "summary" : "Search all countries or one specific country",
+        "description" : "This webservice is providing you the ability to retrieve a list of countries matching your search criterias.<br />The 2 mains ways to search use this API are<br />- by countrycode, it will only returns you one country<br />- without the countrycode parameter which will return the full list of countries",
+        "operationId" : "getCountries",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "the language code of the language you want the content to be returned",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "en", "fr", "de", "es" ]
+          }
+        }, {
+          "name" : "countrycode",
+          "in" : "query",
+          "description" : "The code of the country you want to retrieve",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CountriesResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/distance" : {
+      "get" : {
+        "tags" : [ "Services APIs" ],
+        "summary" : "Calculate distance between lats/longs",
+        "description" : "This webservice is providing you the ability to calculate the distance between 2 lat/long points, it returns you the value in km or miles",
+        "operationId" : "getDistance",
+        "parameters" : [ {
+          "name" : "locationA",
+          "in" : "query",
+          "description" : "The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) of location point A",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "locationB",
+          "in" : "query",
+          "description" : "The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) of location point B",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "unit",
+          "in" : "query",
+          "description" : "The unit of length you want the elevation returned either meters or feet returned",
+          "schema" : {
+            "type" : "string",
+            "default" : "kms",
+            "enum" : [ "kms", "miles" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DistanceResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/elevation" : {
+      "get" : {
+        "tags" : [ "Services APIs" ],
+        "summary" : "Search elevation informations from lat/long",
+        "description" : "This webservice is providing you the ability to retrieve the elevation in meters or feet of ONE or MULTIPLE given latitude/longitude point(s). <br />If you use MULTIPLE lat/long point, the maximum number of point you can send in one request is 256. Be aware that if MULTIPLE mode, the results are de-deplicated if you are sending the same latitude/longitude point multiple times.<br />If your workload is a batch of millions of lat/long point, You will also get better throughput if you send around 100 lat/long points in one request than the maximum. This maximum is mostly allowed for people trying to graph altitudes.",
+        "operationId" : "getElevation",
+        "parameters" : [ {
+          "name" : "locations",
+          "in" : "query",
+          "description" : "The location as a latitude / longitude point ( ex. 67.85572,20.22513 ) or a list of coordinates separated using the pipe ('|') character. The maximum number of coordinates you can send at one time is 20 ( ex. 67.85572,20.22513|27.85572,20.22513 )",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)+((\\|\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)){0,256}$",
+            "type" : "string",
+            "default" : "67.85572,20.22513"
+          }
+        }, {
+          "name" : "unit",
+          "in" : "query",
+          "description" : "The unit of length you want the elevation returned either meters or feet returned",
+          "schema" : {
+            "type" : "string",
+            "default" : "meters",
+            "enum" : [ "meters", "feet" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ElevationResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pong" : {
+      "get" : {
+        "tags" : [ "Utilities APIs" ],
+        "description" : "Returns a ping. In case you need a health check in your system. Cannot be called /ping as AWS is using this route for their health check. This webservice doesn't have CORS enable, as it's supposed to be call server to server and not from a webpage ( it won't work over the tester)",
+        "operationId" : "getPing",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PongResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      }
+    },
+    "/sun_positions" : {
+      "get" : {
+        "tags" : [ "Services APIs" ],
+        "summary" : "Search position of sun from lat/long and date",
+        "description" : "This webservice is providing you the ability to retrieve the time of each phases of the sunlight cycle. Sunset, sunrise, sunriseEnd, golden hour, solarNoon, dawn, dusk and more for a given location and date. If the date if not provided, the response provided return informations for today at UTC time.",
+        "operationId" : "getSun",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "query",
+          "description" : "Here you can send either a latitude / longitude",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "query",
+          "description" : "The date for what you will get the data ( full-date notation as defined by RFC 3339, section 5.6, for example, 2017-07-21 ), if not provided as parameter, today is going to be used",
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SunPositionResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swagger" : null,
+    "/timezone" : {
+      "get" : {
+        "tags" : [ "Services APIs" ],
+        "summary" : "Search timezone and time informations from lat/long",
+        "description" : "This webservice is providing you the ability to retrieve the tz database time zones ( https://en.wikipedia.org/wiki/List_of_tz_database_time_zones )  from a given location ( )latitude and longitude or IATA code ). It also returns you the current time at the provided location.",
+        "operationId" : "getTimezone",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "query",
+          "description" : "Here you can send either a latitude / longitude ( ex. 67.85572,20.22513 ) or a IATA Code ( ex. LHR for London Heathrow)",
+          "required" : true,
+          "schema" : {
+            "pattern" : "^[A-Za-z]{3}$|^(\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)$",
+            "type" : "string",
+            "default" : "45.8326307,6.8650517"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimezoneResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "500" : {
+            "description" : "The error message object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "x-api-key" : null
+        } ]
+      },
+      "options" : {
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Methods" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "Access-Control-Allow-Headers" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AirportsSearchResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DataAirportsSearch"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This section provides response schema of Airport Search Response"
+      },
+      "CitiesData" : {
+        "type" : "object",
+        "properties" : {
+          "alternatename" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "Here is a list of alternate name for the city in the requested language"
+            }
+          },
+          "asciiname" : {
+            "type" : "string",
+            "description" : "The ASCII name of the city"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "The 2 letter ISO code of the country the city belongs to"
+          },
+          "elevation" : {
+            "type" : "number",
+            "description" : "The elevation of the city"
+          },
+          "latitude" : {
+            "type" : "number",
+            "description" : "The latitude considered as central for the city"
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "The longitude considered as central for the city"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the city"
+          },
+          "population" : {
+            "type" : "number",
+            "description" : "The population of the city"
+          },
+          "timezone" : {
+            "type" : "string",
+            "description" : "The longitude considered as central for the city"
+          }
+        },
+        "description" : "This is the data object for the response of a Cities APIs calls"
+      },
+      "CitiesResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CitiesData"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a Cities API call"
+      },
+      "ContinentData" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The ISO code of the continent."
+          },
+          "countries_in" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "Here is a list of country code that belong to the continent"
+            }
+          },
+          "latitude" : {
+            "type" : "number",
+            "description" : "The latitude considered as central for the continent"
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "The longitude considered as central for the continent"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the continent in english"
+          },
+          "name_locale" : {
+            "type" : "string",
+            "description" : "The name of the continent in the requested languager"
+          }
+        },
+        "description" : "This is the data object for the response of a Continent API call"
+      },
+      "ContinentsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ContinentData"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a Continent API call"
+      },
+      "CountriesData" : {
+        "type" : "object",
+        "properties" : {
+          "airportscount" : {
+            "type" : "number",
+            "description" : "The name of the country in english language"
+          },
+          "alternatename" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "The other given name, nickname of the country, this is as well as in requested language but also foreign languages"
+            }
+          },
+          "areainsqkm" : {
+            "type" : "number",
+            "description" : "The superficy of the country in square km"
+          },
+          "capital" : {
+            "type" : "string",
+            "description" : "The capital of this country in english language"
+          },
+          "currencycode" : {
+            "type" : "string",
+            "description" : "The international currency code"
+          },
+          "currencyname" : {
+            "type" : "string",
+            "description" : "The local name of the currency used in this country"
+          },
+          "fr_article" : {
+            "type" : "string",
+            "description" : "The name of the country in english language"
+          },
+          "fr_preposition" : {
+            "type" : "string",
+            "description" : "The name of the country in english language"
+          },
+          "iso_alpha2" : {
+            "type" : "string",
+            "description" : "The 2 letter ISO code of the country"
+          },
+          "languages" : {
+            "type" : "string",
+            "description" : "The name of the country in english language"
+          },
+          "latitude" : {
+            "type" : "number",
+            "description" : "The latitude considered as central for this country"
+          },
+          "longitude" : {
+            "type" : "number",
+            "description" : "The longitude considered as central for this country"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the country in english language"
+          },
+          "name_locale" : {
+            "type" : "string",
+            "description" : "The name of the country in the requested language"
+          },
+          "neighbors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "Here is a list of country code that have territorial border with the this country"
+            }
+          },
+          "population" : {
+            "type" : "number",
+            "description" : "The total population in this country"
+          },
+          "postalcode" : {
+            "type" : "string",
+            "description" : "The format of the postal codes if multiple format to be applied, then a pipe | is used as separator"
+          },
+          "postalcoderegex" : {
+            "type" : "string",
+            "description" : "The regex to use to check a postal code for this country"
+          },
+          "tld" : {
+            "type" : "string",
+            "description" : "The top level domain which is used by the local internet authority."
+          }
+        },
+        "description" : "This is the data object for the response of a Countries API call"
+      },
+      "CountriesResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CountriesData"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a Countries API call"
+      },
+      "DataAirportsSearch" : {
+        "type" : "object",
+        "properties" : {
+          "airlineroutescount" : {
+            "type" : "integer"
+          },
+          "airport_website" : {
+            "type" : "string"
+          },
+          "altitude" : {
+            "type" : "integer"
+          },
+          "cityname" : {
+            "type" : "string"
+          },
+          "countrycode" : {
+            "type" : "string"
+          },
+          "destinationscount" : {
+            "type" : "integer"
+          },
+          "distance" : {
+            "type" : "string",
+            "description" : "only in response when operating a lat/long search"
+          },
+          "iatacode" : {
+            "type" : "string"
+          },
+          "icao" : {
+            "type" : "string"
+          },
+          "istopdestination" : {
+            "type" : "boolean"
+          },
+          "latitude" : {
+            "type" : "number"
+          },
+          "longitude" : {
+            "type" : "number"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "timezone" : {
+            "type" : "string"
+          },
+          "wikipedia_page" : {
+            "type" : "string"
+          }
+        }
+      },
+      "DistanceResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "number",
+            "description" : "Here is the distance between latlong A and latlong B, in the requested unit"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This section provides response schema of pong response"
+      },
+      "ElevationData" : {
+        "type" : "object",
+        "properties" : {
+          "elevation" : {
+            "type" : "integer"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "unit" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ElevationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ElevationData"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a TimezoneRequest"
+      },
+      "ErrorResponse" : {
+        "required" : [ "message" ],
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PongResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "string",
+            "description" : "Will always return \"pong\""
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This section provides response schema of pong response"
+      },
+      "SunPositionData" : {
+        "type" : "object",
+        "properties" : {
+          "dawn" : {
+            "type" : "string",
+            "description" : "Date and time of the dawn at local time of the given location",
+            "format" : "date-time"
+          },
+          "dusk" : {
+            "type" : "string",
+            "description" : "Date and time of the dusk at local time of the given location",
+            "format" : "date-time"
+          },
+          "goldenHour" : {
+            "type" : "string",
+            "description" : "Date and time of the golden hour at local time of the given location",
+            "format" : "date-time"
+          },
+          "goldenHourEnd" : {
+            "type" : "string",
+            "description" : "Date and time of the golden hour end at local time of the given location",
+            "format" : "date-time"
+          },
+          "nadir" : {
+            "type" : "string",
+            "description" : "Date and time of the nadir at local time of the given location",
+            "format" : "date-time"
+          },
+          "nauticalDawn" : {
+            "type" : "string",
+            "description" : "Date and time of the nautical dawn at local time of the given location",
+            "format" : "date-time"
+          },
+          "nauticalDusk" : {
+            "type" : "string",
+            "description" : "Date and time of the nautical dusk at local time of the given location",
+            "format" : "date-time"
+          },
+          "night" : {
+            "type" : "string",
+            "description" : "Date and time of the night at local time of the given location",
+            "format" : "date-time"
+          },
+          "nightEnd" : {
+            "type" : "string",
+            "description" : "Date and time of the night end at local time of the given location",
+            "format" : "date-time"
+          },
+          "solarNoon" : {
+            "type" : "string",
+            "description" : "Date and time of the solar moon at local time of the given location",
+            "format" : "date-time"
+          },
+          "sunrise" : {
+            "type" : "string",
+            "description" : "Date and time of the sunris at local time of the given location",
+            "format" : "date-time"
+          },
+          "sunriseEnd" : {
+            "type" : "string",
+            "description" : "Date and time of the sunrise end at local time of the given location",
+            "format" : "date-time"
+          },
+          "sunset" : {
+            "type" : "string",
+            "description" : "Date and time of the sunset at local time of the given location",
+            "format" : "date-time"
+          },
+          "sunsetStart" : {
+            "type" : "string",
+            "description" : "Date and time of the sunset start at local time of the given location",
+            "format" : "date-time"
+          }
+        },
+        "description" : "This is the data object for the response of a SunPosition API call"
+      },
+      "SunPositionResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/SunPositionData"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a SunPosition API call"
+      },
+      "TimezoneResponse" : {
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer"
+          },
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "time_now" : {
+                "type" : "string",
+                "format" : "date-time"
+              },
+              "timezone_name" : {
+                "type" : "string"
+              }
+            }
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status of the response"
+          }
+        },
+        "description" : "This is the main object for the response of a TimezoneRequest"
+      }
+    },
+    "securitySchemes" : {
+      "x-api-key" : {
+        "type" : "apiKey",
+        "name" : "x-api-key",
+        "in" : "header"
+      }
+    }
+  }
+}

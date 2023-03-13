@@ -1,1 +1,529 @@
-{"openapi":"3.0.1","info":{"title":"EVEMarketer Marketstat API","description":"EVEMarketer Marketstat API is almost compatible with EVE-Central's Marketstat API.","version":"1.0.1"},"servers":[{"url":"https://api.evemarketer.com/ec"}],"tags":[{"name":"marketstat","description":"marketstat"}],"paths":{"/marketstat":{"get":{"tags":["marketstat"],"summary":"XML Marketstat","parameters":[{"name":"typeid","in":"query","description":"TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n","required":true,"style":"form","explode":false,"schema":{"type":"array","items":{"type":"integer","format":"int32"}}},{"name":"regionlimit","in":"query","description":"Limit the statistics to a single region.","schema":{"type":"integer","format":"int32"}},{"name":"usesystem","in":"query","description":"Limit the statistics to a single solar system.","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"Successful Request","headers":{"X-Ratelimit-Reset":{"description":"The time at which the current rate limit window resets in UTC epoch seconds.","schema":{"type":"integer"}},"X-Ratelimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}},"X-Ratelimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}}},"content":{"application/xml":{"schema":{"$ref":"#/components/schemas/ExecAPI"}}}},"400":{"description":"Invalid Parameters"},"429":{"description":"Rate limit exceeded"}}},"post":{"tags":["marketstat"],"summary":"XML Marketstat","requestBody":{"content":{"multipart/form-data":{"schema":{"required":["typeid"],"type":"object","properties":{"typeid":{"type":"array","description":"TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n","items":{"type":"integer","format":"int32"}},"regionlimit":{"type":"integer","description":"Limit the statistics to a single region.","format":"int32"},"usesystem":{"type":"integer","description":"Limit the statistics to a single solar system.","format":"int32"}}}}},"required":true},"responses":{"200":{"description":"Successful Request","headers":{"X-Ratelimit-Reset":{"description":"The time at which the current rate limit window resets in UTC epoch seconds.","schema":{"type":"integer"}},"X-Ratelimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}},"X-Ratelimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}}},"content":{"application/xml":{"schema":{"$ref":"#/components/schemas/ExecAPI"}}}},"400":{"description":"Invalid Parameters"},"429":{"description":"Rate limit exceeded"}}}},"/marketstat/json":{"get":{"tags":["marketstat"],"summary":"JSON Marketstat","requestBody":{"content":{"multipart/form-data":{"schema":{"required":["typeid"],"type":"object","properties":{"typeid":{"type":"array","description":"TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n","items":{"type":"integer","format":"int32"}},"regionlimit":{"type":"integer","description":"Limit the statistics to a single region.","format":"int32"},"usesystem":{"type":"integer","description":"Limit the statistics to a single region.","format":"int32"}}}}},"required":true},"responses":{"200":{"description":"Successful Request","headers":{"X-Ratelimit-Reset":{"description":"The time at which the current rate limit window resets in UTC epoch seconds.","schema":{"type":"integer"}},"X-Ratelimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}},"X-Ratelimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Type"}}}}},"400":{"description":"Invalid Parameters"},"429":{"description":"Rate limit exceeded"}}},"post":{"tags":["marketstat"],"summary":"JSON Marketstat","parameters":[{"name":"typeid","in":"query","description":"TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n","required":true,"style":"form","explode":false,"schema":{"type":"array","items":{"type":"integer","format":"int32"}}},{"name":"regionlimit","in":"query","description":"Limit the statistics to a single region.","schema":{"type":"integer","format":"int32"}},{"name":"usesystem","in":"query","description":"Limit the statistics to a single region.","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"Successful Request","headers":{"X-Ratelimit-Reset":{"description":"The time at which the current rate limit window resets in UTC epoch seconds.","schema":{"type":"integer"}},"X-Ratelimit-Limit":{"description":"The number of allowed requests in the current period","schema":{"type":"integer"}},"X-Ratelimit-Remaining":{"description":"The number of remaining requests in the current period","schema":{"type":"integer"}}},"content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Type"}}}}},"400":{"description":"Invalid Parameters"},"429":{"description":"Rate limit exceeded"}}}}},"components":{"schemas":{"ExecAPI":{"type":"object","properties":{"marketstat":{"$ref":"#/components/schemas/MarketStatXML"},"method":{"type":"string","example":"marketstat_xml","xml":{"attribute":true}},"version":{"type":"string","example":"2.0","xml":{"attribute":true}}}},"ForQuery":{"type":"object","properties":{"bid":{"type":"boolean","description":"is buy?"},"hours":{"type":"integer","description":"always 0","format":"int32"},"minq":{"type":"integer","description":"always 0","format":"int32"},"regions":{"type":"array","description":"Region IDs","items":{"type":"integer","format":"int32","example":10000002}},"systems":{"type":"array","description":"System IDs","items":{"type":"integer","format":"int32"}},"types":{"type":"array","description":"Type IDs","items":{"type":"integer","format":"int32","example":44992}}}},"MarketStatXML":{"type":"array","items":{"type":"object","properties":{"buy":{"$ref":"#/components/schemas/TypeStatXML"},"sell":{"$ref":"#/components/schemas/TypeStatXML"}}}},"Type":{"type":"object","properties":{"buy":{"$ref":"#/components/schemas/TypeStat"},"sell":{"$ref":"#/components/schemas/TypeStat"}}},"TypeStat":{"type":"object","properties":{"avg":{"type":"number","description":"Average Price","format":"double","example":3352708.11},"fivePercent":{"type":"number","format":"double","example":2949353.31},"forQuery":{"$ref":"#/components/schemas/ForQuery"},"generated":{"type":"integer","description":"Generated at (UNIX Timestamp msec)","format":"int64","example":1499280224508},"highToLow":{"type":"boolean"},"max":{"type":"number","format":"double","example":10000000},"median":{"type":"number","description":"Median Price","format":"double","example":3094978.97},"min":{"type":"number","format":"double","example":2601400.03},"stdDev":{"type":"number","description":"Standard Deviation","format":"double","example":877391.25},"variance":{"type":"number","format":"double","example":7.6981542253724E11},"volume":{"type":"integer","description":"Order Volume","format":"int64","example":963208},"wavg":{"type":"number","description":"Weighted Average Price","format":"double","example":3204519.59}}},"TypeStatXML":{"type":"object","properties":{"avg":{"type":"number","description":"Weighted Average Price","format":"double","example":3204519.59},"max":{"type":"number","description":"Maximum Price","format":"double","example":10000000},"median":{"type":"number","description":"Median Price","format":"double","example":3094978.97},"min":{"type":"number","description":"Minimum Price","format":"double","example":2601400.03},"percentile":{"type":"number","description":"5% Price","format":"double","example":2949353.31},"stddev":{"type":"number","description":"Standard Deviation","format":"double","example":877391.25},"volume":{"type":"integer","description":"Order Volume","format":"int64","example":963208}}}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "EVEMarketer Marketstat API",
+    "description" : "EVEMarketer Marketstat API is almost compatible with EVE-Central's Marketstat API.",
+    "version" : "1.0.1"
+  },
+  "servers" : [ {
+    "url" : "https://api.evemarketer.com/ec"
+  } ],
+  "tags" : [ {
+    "name" : "marketstat",
+    "description" : "marketstat"
+  } ],
+  "paths" : {
+    "/marketstat" : {
+      "get" : {
+        "tags" : [ "marketstat" ],
+        "summary" : "XML Marketstat",
+        "parameters" : [ {
+          "name" : "typeid",
+          "in" : "query",
+          "description" : "TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n",
+          "required" : true,
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }, {
+          "name" : "regionlimit",
+          "in" : "query",
+          "description" : "Limit the statistics to a single region.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "usesystem",
+          "in" : "query",
+          "description" : "Limit the statistics to a single solar system.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Request",
+            "headers" : {
+              "X-Ratelimit-Reset" : {
+                "description" : "The time at which the current rate limit window resets in UTC epoch seconds.",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExecAPI"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Parameters"
+          },
+          "429" : {
+            "description" : "Rate limit exceeded"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "marketstat" ],
+        "summary" : "XML Marketstat",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "typeid" ],
+                "type" : "object",
+                "properties" : {
+                  "typeid" : {
+                    "type" : "array",
+                    "description" : "TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n",
+                    "items" : {
+                      "type" : "integer",
+                      "format" : "int32"
+                    }
+                  },
+                  "regionlimit" : {
+                    "type" : "integer",
+                    "description" : "Limit the statistics to a single region.",
+                    "format" : "int32"
+                  },
+                  "usesystem" : {
+                    "type" : "integer",
+                    "description" : "Limit the statistics to a single solar system.",
+                    "format" : "int32"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful Request",
+            "headers" : {
+              "X-Ratelimit-Reset" : {
+                "description" : "The time at which the current rate limit window resets in UTC epoch seconds.",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExecAPI"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Parameters"
+          },
+          "429" : {
+            "description" : "Rate limit exceeded"
+          }
+        }
+      }
+    },
+    "/marketstat/json" : {
+      "get" : {
+        "tags" : [ "marketstat" ],
+        "summary" : "JSON Marketstat",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "typeid" ],
+                "type" : "object",
+                "properties" : {
+                  "typeid" : {
+                    "type" : "array",
+                    "description" : "TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n",
+                    "items" : {
+                      "type" : "integer",
+                      "format" : "int32"
+                    }
+                  },
+                  "regionlimit" : {
+                    "type" : "integer",
+                    "description" : "Limit the statistics to a single region.",
+                    "format" : "int32"
+                  },
+                  "usesystem" : {
+                    "type" : "integer",
+                    "description" : "Limit the statistics to a single region.",
+                    "format" : "int32"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful Request",
+            "headers" : {
+              "X-Ratelimit-Reset" : {
+                "description" : "The time at which the current rate limit window resets in UTC epoch seconds.",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Type"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Parameters"
+          },
+          "429" : {
+            "description" : "Rate limit exceeded"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "marketstat" ],
+        "summary" : "JSON Marketstat",
+        "parameters" : [ {
+          "name" : "typeid",
+          "in" : "query",
+          "description" : "TypeID. Multiple TypeIDs can be specified in the following format (up to 200 TypeIDs per request):\ntypeid=34&typeid=35 or typeid=34,35\n",
+          "required" : true,
+          "style" : "form",
+          "explode" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }, {
+          "name" : "regionlimit",
+          "in" : "query",
+          "description" : "Limit the statistics to a single region.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "usesystem",
+          "in" : "query",
+          "description" : "Limit the statistics to a single region.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Request",
+            "headers" : {
+              "X-Ratelimit-Reset" : {
+                "description" : "The time at which the current rate limit window resets in UTC epoch seconds.",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Limit" : {
+                "description" : "The number of allowed requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              },
+              "X-Ratelimit-Remaining" : {
+                "description" : "The number of remaining requests in the current period",
+                "schema" : {
+                  "type" : "integer"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Type"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Parameters"
+          },
+          "429" : {
+            "description" : "Rate limit exceeded"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ExecAPI" : {
+        "type" : "object",
+        "properties" : {
+          "marketstat" : {
+            "$ref" : "#/components/schemas/MarketStatXML"
+          },
+          "method" : {
+            "type" : "string",
+            "example" : "marketstat_xml",
+            "xml" : {
+              "attribute" : true
+            }
+          },
+          "version" : {
+            "type" : "string",
+            "example" : "2.0",
+            "xml" : {
+              "attribute" : true
+            }
+          }
+        }
+      },
+      "ForQuery" : {
+        "type" : "object",
+        "properties" : {
+          "bid" : {
+            "type" : "boolean",
+            "description" : "is buy?"
+          },
+          "hours" : {
+            "type" : "integer",
+            "description" : "always 0",
+            "format" : "int32"
+          },
+          "minq" : {
+            "type" : "integer",
+            "description" : "always 0",
+            "format" : "int32"
+          },
+          "regions" : {
+            "type" : "array",
+            "description" : "Region IDs",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32",
+              "example" : 10000002
+            }
+          },
+          "systems" : {
+            "type" : "array",
+            "description" : "System IDs",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "types" : {
+            "type" : "array",
+            "description" : "Type IDs",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32",
+              "example" : 44992
+            }
+          }
+        }
+      },
+      "MarketStatXML" : {
+        "type" : "array",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "buy" : {
+              "$ref" : "#/components/schemas/TypeStatXML"
+            },
+            "sell" : {
+              "$ref" : "#/components/schemas/TypeStatXML"
+            }
+          }
+        }
+      },
+      "Type" : {
+        "type" : "object",
+        "properties" : {
+          "buy" : {
+            "$ref" : "#/components/schemas/TypeStat"
+          },
+          "sell" : {
+            "$ref" : "#/components/schemas/TypeStat"
+          }
+        }
+      },
+      "TypeStat" : {
+        "type" : "object",
+        "properties" : {
+          "avg" : {
+            "type" : "number",
+            "description" : "Average Price",
+            "format" : "double",
+            "example" : 3352708.11
+          },
+          "fivePercent" : {
+            "type" : "number",
+            "format" : "double",
+            "example" : 2949353.31
+          },
+          "forQuery" : {
+            "$ref" : "#/components/schemas/ForQuery"
+          },
+          "generated" : {
+            "type" : "integer",
+            "description" : "Generated at (UNIX Timestamp msec)",
+            "format" : "int64",
+            "example" : 1499280224508
+          },
+          "highToLow" : {
+            "type" : "boolean"
+          },
+          "max" : {
+            "type" : "number",
+            "format" : "double",
+            "example" : 10000000
+          },
+          "median" : {
+            "type" : "number",
+            "description" : "Median Price",
+            "format" : "double",
+            "example" : 3094978.97
+          },
+          "min" : {
+            "type" : "number",
+            "format" : "double",
+            "example" : 2601400.03
+          },
+          "stdDev" : {
+            "type" : "number",
+            "description" : "Standard Deviation",
+            "format" : "double",
+            "example" : 877391.25
+          },
+          "variance" : {
+            "type" : "number",
+            "format" : "double",
+            "example" : 7.6981542253724E11
+          },
+          "volume" : {
+            "type" : "integer",
+            "description" : "Order Volume",
+            "format" : "int64",
+            "example" : 963208
+          },
+          "wavg" : {
+            "type" : "number",
+            "description" : "Weighted Average Price",
+            "format" : "double",
+            "example" : 3204519.59
+          }
+        }
+      },
+      "TypeStatXML" : {
+        "type" : "object",
+        "properties" : {
+          "avg" : {
+            "type" : "number",
+            "description" : "Weighted Average Price",
+            "format" : "double",
+            "example" : 3204519.59
+          },
+          "max" : {
+            "type" : "number",
+            "description" : "Maximum Price",
+            "format" : "double",
+            "example" : 10000000
+          },
+          "median" : {
+            "type" : "number",
+            "description" : "Median Price",
+            "format" : "double",
+            "example" : 3094978.97
+          },
+          "min" : {
+            "type" : "number",
+            "description" : "Minimum Price",
+            "format" : "double",
+            "example" : 2601400.03
+          },
+          "percentile" : {
+            "type" : "number",
+            "description" : "5% Price",
+            "format" : "double",
+            "example" : 2949353.31
+          },
+          "stddev" : {
+            "type" : "number",
+            "description" : "Standard Deviation",
+            "format" : "double",
+            "example" : 877391.25
+          },
+          "volume" : {
+            "type" : "integer",
+            "description" : "Order Volume",
+            "format" : "int64",
+            "example" : 963208
+          }
+        }
+      }
+    }
+  }
+}

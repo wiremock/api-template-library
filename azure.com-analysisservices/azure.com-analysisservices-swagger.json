@@ -1,1 +1,1351 @@
-{"openapi":"3.0.1","info":{"title":"AzureAnalysisServices","description":"The Azure Analysis Services Web API provides a RESTful set of web services that enables users to create, retrieve, update, and delete Analysis Services servers","version":"2017-08-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.AnalysisServices/operations":{"get":{"tags":["Operations"],"description":"Lists all of the available consumption REST API operations.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability":{"post":{"tags":["Servers"],"description":"Check the name availability in the target location.","operationId":"Servers_CheckNameAvailability","parameters":[{"name":"location","in":"path","description":"The region name which the operation will lookup into.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Contains the information used to provision the Analysis Services server.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CheckServerNameAvailabilityParameters"}}},"required":true},"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CheckServerNameAvailabilityResult"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationresults/{operationId}":{"get":{"tags":["Servers"],"description":"List the result of the specified operation.","operationId":"Servers_ListOperationResults","parameters":[{"name":"location","in":"path","description":"The region name which the operation will lookup into.","required":true,"schema":{"type":"string"}},{"name":"operationId","in":"path","description":"The target operation Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The operation completed."},"202":{"description":"Accepted. The operation is ongoing."}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationstatuses/{operationId}":{"get":{"tags":["Servers"],"description":"List the status of operation.","operationId":"Servers_ListOperationStatuses","parameters":[{"name":"location","in":"path","description":"The region name which the operation will lookup into.","required":true,"schema":{"type":"string"}},{"name":"operationId","in":"path","description":"The target operation Id.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The operation completed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationStatus"}}}},"202":{"description":"Accepted. The operation is ongoing.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationStatus"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers":{"get":{"tags":["Servers"],"description":"Lists all the Analysis Services servers for the given subscription.","operationId":"Servers_List","parameters":[{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServers"}}}}}}},"/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus":{"get":{"description":"Lists eligible SKUs for Analysis Services resource provider.","operationId":"Servers_ListSkusForNew","parameters":[{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SkuEnumerationForNewResourceResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers":{"get":{"tags":["Servers"],"description":"Gets all the Analysis Services servers for the given resource group.","operationId":"Servers_ListByResourceGroup","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServers"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}":{"get":{"tags":["Servers"],"description":"Gets details about the specified Analysis Services server.","operationId":"Servers_GetDetails","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be a minimum of 3 characters, and a maximum of 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK. The operation was successful.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}}}}},"put":{"tags":["Servers"],"description":"Provisions the specified Analysis Services server based on the configuration specified in the request.","operationId":"Servers_Create","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be a minimum of 3 characters, and a maximum of 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Contains the information used to provision the Analysis Services server.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}},"required":true},"responses":{"200":{"description":"OK. The operation completed successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}}},"201":{"description":"InProgress. The operation is still completing.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}}}}},"delete":{"tags":["Servers"],"description":"Deletes the specified Analysis Services server.","operationId":"Servers_Delete","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK."},"202":{"description":"Accepted."},"204":{"description":"No Content."}}},"patch":{"tags":["Servers"],"description":"Updates the current state of the specified Analysis Services server.","operationId":"Servers_Update","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Request object that contains the updated information for the server.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServerUpdateParameters"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}}},"202":{"description":"Accepted","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AnalysisServicesServer"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/dissociateGateway":{"post":{"tags":["Servers"],"description":"Dissociates a Unified Gateway associated with the server.","operationId":"Servers_DissociateGateway","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/listGatewayStatus":{"post":{"tags":["Servers"],"description":"Return the gateway status of the specified Analysis Services server instance.","operationId":"Servers_ListGatewayStatus","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GatewayListStatusLive"}}}},"default":{"description":"Default response as an error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GatewayListStatusError"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/resume":{"post":{"tags":["Servers"],"description":"Resumes operation of the specified Analysis Services server instance.","operationId":"Servers_Resume","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"},"202":{"description":"Accepted"}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/skus":{"get":{"tags":["Servers"],"description":"Lists eligible SKUs for an Analysis Services resource.","operationId":"Servers_ListSkusForExisting","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/SkuEnumerationForExistingResourceResult"}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/suspend":{"post":{"tags":["Servers"],"description":"Suspends operation of the specified Analysis Services server instance.","operationId":"Servers_Suspend","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},{"name":"serverName","in":"path","description":"The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.","required":true,"schema":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string"}},{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK."},"202":{"description":"Accepted."}}}}},"components":{"schemas":{"AnalysisServicesServer":{"properties":{"properties":{"$ref":"#/components/schemas/AnalysisServicesServerProperties"}},"description":"Represents an instance of an Analysis Services resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"AnalysisServicesServerMutableProperties":{"type":"object","properties":{"asAdministrators":{"$ref":"#/components/schemas/ServerAdministrators"},"backupBlobContainerUri":{"type":"string","description":"The SAS container URI to the backup container."},"gatewayDetails":{"$ref":"#/components/schemas/GatewayDetails"},"ipV4FirewallSettings":{"$ref":"#/components/schemas/IPv4FirewallSettings"},"querypoolConnectionMode":{"type":"string","description":"How the read-write server's participation in the query pool is controlled.<br/>It can have the following values: <ul><li>readOnly - indicates that the read-write server is intended not to participate in query operations</li><li>all - indicates that the read-write server can participate in query operations</li></ul>Specifying readOnly when capacity is 1 results in error.","default":"All","enum":["All","ReadOnly"]}},"description":"An object that represents a set of mutable Analysis Services resource properties."},"AnalysisServicesServerProperties":{"properties":{"provisioningState":{"type":"string","description":"The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.","readOnly":true,"enum":["Deleting","Succeeded","Failed","Paused","Suspended","Provisioning","Updating","Suspending","Pausing","Resuming","Preparing","Scaling"]},"serverFullName":{"type":"string","description":"The full name of the Analysis Services resource.","readOnly":true},"state":{"type":"string","description":"The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.","readOnly":true,"enum":["Deleting","Succeeded","Failed","Paused","Suspended","Provisioning","Updating","Suspending","Pausing","Resuming","Preparing","Scaling"]}},"description":"Properties of Analysis Services resource.","allOf":[{"$ref":"#/components/schemas/AnalysisServicesServerMutableProperties"}]},"AnalysisServicesServerUpdateParameters":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/AnalysisServicesServerMutableProperties"},"sku":{"$ref":"#/components/schemas/ResourceSku"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Key-value pairs of additional provisioning properties."}},"description":"Provision request specification"},"AnalysisServicesServers":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"An array of Analysis Services resources.","items":{"$ref":"#/components/schemas/AnalysisServicesServer"}}},"description":"An array of Analysis Services resources."},"CheckServerNameAvailabilityParameters":{"type":"object","properties":{"name":{"maxLength":63,"minLength":3,"pattern":"^[a-z][a-z0-9]*$","type":"string","description":"Name for checking availability."},"type":{"type":"string","description":"The resource type of azure analysis services.","default":"Microsoft.AnalysisServices/servers"}},"description":"Details of server name request body."},"CheckServerNameAvailabilityResult":{"type":"object","properties":{"message":{"type":"string","description":"The detailed message of the request unavailability."},"nameAvailable":{"type":"boolean","description":"Indicator of available of the server name."},"reason":{"type":"string","description":"The reason of unavailability."}},"description":"The checking result of server name availability."},"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"GatewayDetails":{"type":"object","properties":{"dmtsClusterUri":{"type":"string","description":"Uri of the DMTS cluster.","readOnly":true},"gatewayObjectId":{"type":"string","description":"Gateway object id from in the DMTS cluster for the gateway resource.","readOnly":true},"gatewayResourceId":{"type":"string","description":"Gateway resource to be associated with the server."}},"description":"The gateway details."},"GatewayError":{"type":"object","properties":{"code":{"type":"string","description":"Error code of list gateway."},"message":{"type":"string","description":"Error message of list gateway."}},"description":"Detail of gateway errors."},"GatewayListStatusError":{"type":"object","properties":{"error":{"$ref":"#/components/schemas/GatewayError"}},"description":"Status of gateway is error."},"GatewayListStatusLive":{"type":"object","properties":{"status":{"type":"string","description":"Live message of list gateway.","enum":["Live"]}},"description":"Status of gateway is live."},"IPv4FirewallRule":{"type":"object","properties":{"firewallRuleName":{"type":"string","description":"The rule name."},"rangeEnd":{"type":"string","description":"The end range of IPv4."},"rangeStart":{"type":"string","description":"The start range of IPv4."}},"description":"The detail of firewall rule."},"IPv4FirewallSettings":{"type":"object","properties":{"enablePowerBIService":{"type":"boolean","description":"The indicator of enabling PBI service."},"firewallRules":{"type":"array","description":"An array of firewall rules.","items":{"$ref":"#/components/schemas/IPv4FirewallRule"}}},"description":"An array of firewall rules."},"Operation":{"type":"object","properties":{"display":{"type":"object","properties":{"operation":{"type":"string","description":"Operation type: Read, write, delete, etc.","readOnly":true},"provider":{"type":"string","description":"Service provider: Microsoft.Consumption.","readOnly":true},"resource":{"type":"string","description":"Resource on which the operation is performed: UsageDetail, etc.","readOnly":true}},"description":"The object that represents the operation."},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{operation}.","readOnly":true}},"description":"A Consumption REST API operation."},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"URL to get the next set of operation list results if there are any.","readOnly":true},"value":{"type":"array","description":"List of analysis services operations supported by the Microsoft.AnalysisServices resource provider.","readOnly":true,"items":{"$ref":"#/components/schemas/Operation"}}},"description":"Result of listing consumption operations. It contains a list of operations and a URL link to get the next set of results."},"OperationStatus":{"type":"object","properties":{"endTime":{"type":"string","description":"The end time of the operation."},"error":{"$ref":"#/components/schemas/ErrorResponse"},"id":{"type":"string","description":"The operation Id."},"name":{"type":"string","description":"The operation name."},"startTime":{"type":"string","description":"The start time of the operation."},"status":{"type":"string","description":"The status of the operation."}},"description":"The status of operation."},"Resource":{"required":["location","sku"],"type":"object","properties":{"id":{"type":"string","description":"An identifier that represents the Analysis Services resource.","readOnly":true},"location":{"type":"string","description":"Location of the Analysis Services resource."},"name":{"type":"string","description":"The name of the Analysis Services resource.","readOnly":true},"sku":{"$ref":"#/components/schemas/ResourceSku"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Key-value pairs of additional resource provisioning properties."},"type":{"type":"string","description":"The type of the Analysis Services resource.","readOnly":true}},"description":"Represents an instance of an Analysis Services resource."},"ResourceSku":{"required":["name"],"type":"object","properties":{"capacity":{"maximum":8,"minimum":1,"type":"integer","description":"The number of instances in the read only query pool."},"name":{"type":"string","description":"Name of the SKU level."},"tier":{"type":"string","description":"The name of the Azure pricing tier to which the SKU applies.","enum":["Development","Basic","Standard"]}},"description":"Represents the SKU name and Azure pricing tier for Analysis Services resource."},"ServerAdministrators":{"type":"object","properties":{"members":{"type":"array","description":"An array of administrator user identities.","items":{"type":"string","description":"The UPN of the user. For example: johnsmith@contoso.com."}}},"description":"An array of administrator user identities."},"SkuDetailsForExistingResource":{"type":"object","properties":{"sku":{"$ref":"#/components/schemas/ResourceSku"}},"description":"An object that represents SKU details for existing resources."},"SkuEnumerationForExistingResourceResult":{"type":"object","properties":{"value":{"type":"array","description":"The collection of available SKUs for existing resources.","items":{"$ref":"#/components/schemas/SkuDetailsForExistingResource"}}},"description":"An object that represents enumerating SKUs for existing resources."},"SkuEnumerationForNewResourceResult":{"type":"object","properties":{"value":{"type":"array","description":"The collection of available SKUs for new resources.","items":{"$ref":"#/components/schemas/ResourceSku"}}},"description":"An object that represents enumerating SKUs for new resources."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The client API version.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.","required":true,"schema":{"maxLength":90,"minLength":1,"pattern":"^[-\\w\\._\\(\\)]+$","type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "AzureAnalysisServices",
+    "description" : "The Azure Analysis Services Web API provides a RESTful set of web services that enables users to create, retrieve, update, and delete Analysis Services servers",
+    "version" : "2017-08-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.AnalysisServices/operations" : {
+      "get" : {
+        "tags" : [ "Operations" ],
+        "description" : "Lists all of the available consumption REST API operations.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability" : {
+      "post" : {
+        "tags" : [ "Servers" ],
+        "description" : "Check the name availability in the target location.",
+        "operationId" : "Servers_CheckNameAvailability",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "description" : "The region name which the operation will lookup into.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Contains the information used to provision the Analysis Services server.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CheckServerNameAvailabilityParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CheckServerNameAvailabilityResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationresults/{operationId}" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "List the result of the specified operation.",
+        "operationId" : "Servers_ListOperationResults",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "description" : "The region name which the operation will lookup into.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "The target operation Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The operation completed."
+          },
+          "202" : {
+            "description" : "Accepted. The operation is ongoing."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationstatuses/{operationId}" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "List the status of operation.",
+        "operationId" : "Servers_ListOperationStatuses",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "description" : "The region name which the operation will lookup into.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "The target operation Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The operation completed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationStatus"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted. The operation is ongoing.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "Lists all the Analysis Services servers for the given subscription.",
+        "operationId" : "Servers_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus" : {
+      "get" : {
+        "description" : "Lists eligible SKUs for Analysis Services resource provider.",
+        "operationId" : "Servers_ListSkusForNew",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SkuEnumerationForNewResourceResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "Gets all the Analysis Services servers for the given resource group.",
+        "operationId" : "Servers_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "Gets details about the specified Analysis Services server.",
+        "operationId" : "Servers_GetDetails",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be a minimum of 3 characters, and a maximum of 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The operation was successful.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Servers" ],
+        "description" : "Provisions the specified Analysis Services server based on the configuration specified in the request.",
+        "operationId" : "Servers_Create",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be a minimum of 3 characters, and a maximum of 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Contains the information used to provision the Analysis Services server.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AnalysisServicesServer"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK. The operation completed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServer"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "InProgress. The operation is still completing.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Servers" ],
+        "description" : "Deletes the specified Analysis Services server.",
+        "operationId" : "Servers_Delete",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK."
+          },
+          "202" : {
+            "description" : "Accepted."
+          },
+          "204" : {
+            "description" : "No Content."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Servers" ],
+        "description" : "Updates the current state of the specified Analysis Services server.",
+        "operationId" : "Servers_Update",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Request object that contains the updated information for the server.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AnalysisServicesServerUpdateParameters"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServer"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnalysisServicesServer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/dissociateGateway" : {
+      "post" : {
+        "tags" : [ "Servers" ],
+        "description" : "Dissociates a Unified Gateway associated with the server.",
+        "operationId" : "Servers_DissociateGateway",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/listGatewayStatus" : {
+      "post" : {
+        "tags" : [ "Servers" ],
+        "description" : "Return the gateway status of the specified Analysis Services server instance.",
+        "operationId" : "Servers_ListGatewayStatus",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GatewayListStatusLive"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default response as an error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GatewayListStatusError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/resume" : {
+      "post" : {
+        "tags" : [ "Servers" ],
+        "description" : "Resumes operation of the specified Analysis Services server instance.",
+        "operationId" : "Servers_Resume",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "202" : {
+            "description" : "Accepted"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/skus" : {
+      "get" : {
+        "tags" : [ "Servers" ],
+        "description" : "Lists eligible SKUs for an Analysis Services resource.",
+        "operationId" : "Servers_ListSkusForExisting",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SkuEnumerationForExistingResourceResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}/suspend" : {
+      "post" : {
+        "tags" : [ "Servers" ],
+        "description" : "Suspends operation of the specified Analysis Services server instance.",
+        "operationId" : "Servers_Suspend",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 90,
+            "minLength" : 1,
+            "pattern" : "^[-\\w\\._\\(\\)]+$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the Analysis Services server. It must be at least 3 characters in length, and no more than 63.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The client API version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK."
+          },
+          "202" : {
+            "description" : "Accepted."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AnalysisServicesServer" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AnalysisServicesServerProperties"
+          }
+        },
+        "description" : "Represents an instance of an Analysis Services resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "AnalysisServicesServerMutableProperties" : {
+        "type" : "object",
+        "properties" : {
+          "asAdministrators" : {
+            "$ref" : "#/components/schemas/ServerAdministrators"
+          },
+          "backupBlobContainerUri" : {
+            "type" : "string",
+            "description" : "The SAS container URI to the backup container."
+          },
+          "gatewayDetails" : {
+            "$ref" : "#/components/schemas/GatewayDetails"
+          },
+          "ipV4FirewallSettings" : {
+            "$ref" : "#/components/schemas/IPv4FirewallSettings"
+          },
+          "querypoolConnectionMode" : {
+            "type" : "string",
+            "description" : "How the read-write server's participation in the query pool is controlled.<br/>It can have the following values: <ul><li>readOnly - indicates that the read-write server is intended not to participate in query operations</li><li>all - indicates that the read-write server can participate in query operations</li></ul>Specifying readOnly when capacity is 1 results in error.",
+            "default" : "All",
+            "enum" : [ "All", "ReadOnly" ]
+          }
+        },
+        "description" : "An object that represents a set of mutable Analysis Services resource properties."
+      },
+      "AnalysisServicesServerProperties" : {
+        "properties" : {
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.",
+            "readOnly" : true,
+            "enum" : [ "Deleting", "Succeeded", "Failed", "Paused", "Suspended", "Provisioning", "Updating", "Suspending", "Pausing", "Resuming", "Preparing", "Scaling" ]
+          },
+          "serverFullName" : {
+            "type" : "string",
+            "description" : "The full name of the Analysis Services resource.",
+            "readOnly" : true
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.",
+            "readOnly" : true,
+            "enum" : [ "Deleting", "Succeeded", "Failed", "Paused", "Suspended", "Provisioning", "Updating", "Suspending", "Pausing", "Resuming", "Preparing", "Scaling" ]
+          }
+        },
+        "description" : "Properties of Analysis Services resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AnalysisServicesServerMutableProperties"
+        } ]
+      },
+      "AnalysisServicesServerUpdateParameters" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/AnalysisServicesServerMutableProperties"
+          },
+          "sku" : {
+            "$ref" : "#/components/schemas/ResourceSku"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Key-value pairs of additional provisioning properties."
+          }
+        },
+        "description" : "Provision request specification"
+      },
+      "AnalysisServicesServers" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "An array of Analysis Services resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/AnalysisServicesServer"
+            }
+          }
+        },
+        "description" : "An array of Analysis Services resources."
+      },
+      "CheckServerNameAvailabilityParameters" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 63,
+            "minLength" : 3,
+            "pattern" : "^[a-z][a-z0-9]*$",
+            "type" : "string",
+            "description" : "Name for checking availability."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The resource type of azure analysis services.",
+            "default" : "Microsoft.AnalysisServices/servers"
+          }
+        },
+        "description" : "Details of server name request body."
+      },
+      "CheckServerNameAvailabilityResult" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "The detailed message of the request unavailability."
+          },
+          "nameAvailable" : {
+            "type" : "boolean",
+            "description" : "Indicator of available of the server name."
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "The reason of unavailability."
+          }
+        },
+        "description" : "The checking result of server name availability."
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "GatewayDetails" : {
+        "type" : "object",
+        "properties" : {
+          "dmtsClusterUri" : {
+            "type" : "string",
+            "description" : "Uri of the DMTS cluster.",
+            "readOnly" : true
+          },
+          "gatewayObjectId" : {
+            "type" : "string",
+            "description" : "Gateway object id from in the DMTS cluster for the gateway resource.",
+            "readOnly" : true
+          },
+          "gatewayResourceId" : {
+            "type" : "string",
+            "description" : "Gateway resource to be associated with the server."
+          }
+        },
+        "description" : "The gateway details."
+      },
+      "GatewayError" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code of list gateway."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message of list gateway."
+          }
+        },
+        "description" : "Detail of gateway errors."
+      },
+      "GatewayListStatusError" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/GatewayError"
+          }
+        },
+        "description" : "Status of gateway is error."
+      },
+      "GatewayListStatusLive" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "Live message of list gateway.",
+            "enum" : [ "Live" ]
+          }
+        },
+        "description" : "Status of gateway is live."
+      },
+      "IPv4FirewallRule" : {
+        "type" : "object",
+        "properties" : {
+          "firewallRuleName" : {
+            "type" : "string",
+            "description" : "The rule name."
+          },
+          "rangeEnd" : {
+            "type" : "string",
+            "description" : "The end range of IPv4."
+          },
+          "rangeStart" : {
+            "type" : "string",
+            "description" : "The start range of IPv4."
+          }
+        },
+        "description" : "The detail of firewall rule."
+      },
+      "IPv4FirewallSettings" : {
+        "type" : "object",
+        "properties" : {
+          "enablePowerBIService" : {
+            "type" : "boolean",
+            "description" : "The indicator of enabling PBI service."
+          },
+          "firewallRules" : {
+            "type" : "array",
+            "description" : "An array of firewall rules.",
+            "items" : {
+              "$ref" : "#/components/schemas/IPv4FirewallRule"
+            }
+          }
+        },
+        "description" : "An array of firewall rules."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "type" : "object",
+            "properties" : {
+              "operation" : {
+                "type" : "string",
+                "description" : "Operation type: Read, write, delete, etc.",
+                "readOnly" : true
+              },
+              "provider" : {
+                "type" : "string",
+                "description" : "Service provider: Microsoft.Consumption.",
+                "readOnly" : true
+              },
+              "resource" : {
+                "type" : "string",
+                "description" : "Resource on which the operation is performed: UsageDetail, etc.",
+                "readOnly" : true
+              }
+            },
+            "description" : "The object that represents the operation."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{operation}.",
+            "readOnly" : true
+          }
+        },
+        "description" : "A Consumption REST API operation."
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "URL to get the next set of operation list results if there are any.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "List of analysis services operations supported by the Microsoft.AnalysisServices resource provider.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "Result of listing consumption operations. It contains a list of operations and a URL link to get the next set of results."
+      },
+      "OperationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "endTime" : {
+            "type" : "string",
+            "description" : "The end time of the operation."
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/ErrorResponse"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The operation Id."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The operation name."
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The start time of the operation."
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The status of the operation."
+          }
+        },
+        "description" : "The status of operation."
+      },
+      "Resource" : {
+        "required" : [ "location", "sku" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "An identifier that represents the Analysis Services resource.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Location of the Analysis Services resource."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the Analysis Services resource.",
+            "readOnly" : true
+          },
+          "sku" : {
+            "$ref" : "#/components/schemas/ResourceSku"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Key-value pairs of additional resource provisioning properties."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of the Analysis Services resource.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Represents an instance of an Analysis Services resource."
+      },
+      "ResourceSku" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "capacity" : {
+            "maximum" : 8,
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "The number of instances in the read only query pool."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the SKU level."
+          },
+          "tier" : {
+            "type" : "string",
+            "description" : "The name of the Azure pricing tier to which the SKU applies.",
+            "enum" : [ "Development", "Basic", "Standard" ]
+          }
+        },
+        "description" : "Represents the SKU name and Azure pricing tier for Analysis Services resource."
+      },
+      "ServerAdministrators" : {
+        "type" : "object",
+        "properties" : {
+          "members" : {
+            "type" : "array",
+            "description" : "An array of administrator user identities.",
+            "items" : {
+              "type" : "string",
+              "description" : "The UPN of the user. For example: johnsmith@contoso.com."
+            }
+          }
+        },
+        "description" : "An array of administrator user identities."
+      },
+      "SkuDetailsForExistingResource" : {
+        "type" : "object",
+        "properties" : {
+          "sku" : {
+            "$ref" : "#/components/schemas/ResourceSku"
+          }
+        },
+        "description" : "An object that represents SKU details for existing resources."
+      },
+      "SkuEnumerationForExistingResourceResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The collection of available SKUs for existing resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/SkuDetailsForExistingResource"
+            }
+          }
+        },
+        "description" : "An object that represents enumerating SKUs for existing resources."
+      },
+      "SkuEnumerationForNewResourceResult" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "The collection of available SKUs for new resources.",
+            "items" : {
+              "$ref" : "#/components/schemas/ResourceSku"
+            }
+          }
+        },
+        "description" : "An object that represents enumerating SKUs for new resources."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The client API version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the Azure Resource group of which a given Analysis Services server is part. This name must be at least 1 character in length, and no more than 90.",
+        "required" : true,
+        "schema" : {
+          "maxLength" : 90,
+          "minLength" : 1,
+          "pattern" : "^[-\\w\\._\\(\\)]+$",
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

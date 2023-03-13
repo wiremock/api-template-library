@@ -1,1 +1,683 @@
-{"openapi":"3.0.1","info":{"title":"Sandbox API","description":"Sandbox API","termsOfService":"https://getsandbox.com/policy/customer-agreement","contact":{"name":"Sandbox Support","url":"https://getsandbox.com","email":"hello@getsandbox.com"},"version":"v1"},"externalDocs":{"url":"https://getsandbox.com/docs/api/overview"},"servers":[{"url":"https://getsandbox.com/api/"}],"tags":[{"name":"Activity"},{"name":"Sandbox"}],"paths":{"/1/activity/search":{"get":{"tags":["Activity"],"summary":"searchActivity","operationId":"getSandboxesActivity","parameters":[{"name":"fromTimestamp","in":"query","description":"Timestamp to start search from, epoch time in milliseconds.","schema":{"type":"integer","format":"int64"}},{"name":"sourceSandboxes","in":"query","description":"Comma-separated list of Sandbox names to search.","schema":{"type":"string"}},{"name":"keyword","in":"query","description":"A keyword to search activities by, will match any part of the ActivityMessage.","schema":{"type":"string"}},{"name":"allTypes","in":"query","description":"Flag to return all types of activity, defaults to just Requests","schema":{"type":"boolean"}},{"name":"maxResults","in":"query","description":"Maximum number of results to return","schema":{"type":"integer","format":"int32"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ActivityMessage"}},"example":"[\n  {\n    \"createdTimestamp\": 1464829513623,\n    \"messageType\": \"request\",\n    \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"messageObject\": {\n      \"request\": {\n        \"transport\": \"HTTP\",\n        \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"sandboxName\": \"testbox\",\n        \"fullSandboxName\": \"testbox\",\n        \"fullSandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"headers\": {\n          \"Accept\": \"*/*\",\n          \"Host\": \"testbox.getsandbox.com\",\n          \"User-Agent\": \"curl/7.43.0\",\n          \"X-Forwarded-For\": \"10.0.2.2\"\n        },\n        \"properties\": {},\n        \"body\": \"\",\n        \"ip\": \"10.0.2.2\",\n        \"cookies\": {},\n        \"query\": {},\n        \"accepted\": [\"*/*\"],\n        \"url\": \"/hello\",\n        \"params\": {},\n        \"method\": \"GET\",\n        \"path\": \"/hello\",\n        \"rawUrl\": \"/hello\",\n        \"received_timestamp\": 1464829513575\n      },\n      \"responses\": [\n        {\n          \"transport\": \"HTTP\",\n          \"body\": \"[\\n  \\\"hello\\\"\\n]\",\n          \"headers\": {\n            \"Content-Type\": \"application/json\"\n          },\n          \"cookies\": [],\n          \"responded_timestamp\": 1464829513609,\n          \"duration_ms\": 34,\n          \"status\": 200\n        }\n      ]\n    }\n  },\n  {\n    \"createdTimestamp\": 1464829507925,\n    \"messageType\": \"request\",\n    \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"messageObject\": {\n      \"request\": {\n        \"transport\": \"HTTP\",\n        \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"sandboxName\": \"testbox\",\n        \"fullSandboxName\": \"testbox\",\n        \"fullSandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"headers\": {\n          \"Accept\": \"*/*\",\n          \"Host\": \"testbox.getsandbox.com\",\n          \"User-Agent\": \"curl/7.43.0\",\n          \"X-Forwarded-For\": \"10.0.2.2\"\n        },\n        \"properties\": {},\n        \"body\": \"\",\n        \"ip\": \"10.0.2.2\",\n        \"cookies\": {},\n        \"query\": {},\n        \"accepted\": [\"*/*\"],\n        \"url\": \"/hello\",\n        \"params\": {},\n        \"method\": \"GET\",\n        \"path\": \"/hello\",\n        \"rawUrl\": \"/hello\",\n        \"received_timestamp\": 1464829507856\n      },\n      \"responses\": [\n        {\n          \"transport\": \"HTTP\",\n          \"body\": \"[\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\"\\n]\",\n          \"headers\": {\n            \"Content-Type\": \"application/json\"\n          },\n          \"cookies\": [],\n          \"responded_timestamp\": 1464829507885,\n          \"duration_ms\": 29,\n          \"status\": 200\n        }\n      ]\n    }\n  }\n]"}}}}}},"/1/sandboxes":{"get":{"tags":["Sandbox"],"summary":"getSandboxes","operationId":"getSandboxes","parameters":[{"name":"filterType","in":"query","schema":{"type":"string"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Sandbox"}},"example":"[\n  {\n    \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"name\": \"testbox\",\n    \"description\": \"\",\n    \"configuredRoutes\": [],\n    \"hasRepository\": true,\n    \"apiDefinition\": \"None\",\n    \"stackType\": \"JavaScript\",\n    \"runtimeVersion\": \"VERSION_2\",\n    \"proxyStatus\": \"STARTED\",\n    \"transportType\": \"HTTP\",\n    \"properties\": {},\n    \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n    \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n  }\n]"}}}}},"post":{"tags":["Sandbox"],"summary":"createSandbox","operationId":"createSandbox","requestBody":{"description":"Sandbox to be created","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateSandbox"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Sandbox"},"example":"{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"}}}}}},"/1/sandboxes/{sandboxName}":{"get":{"tags":["Sandbox"],"summary":"getSandbox","operationId":"getSandbox","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Sandbox"},"example":"{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"}}}}},"put":{"tags":["Sandbox"],"summary":"updateSandbox","operationId":"updateSandbox","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Fields to updated on given Sandbox","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Sandbox"}}},"required":true},"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Sandbox"},"example":"{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"}}}}},"delete":{"tags":["Sandbox"],"summary":"deleteSandbox","operationId":"deleteSandbox","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"responses":{"default":{"description":"successful operation"}}}},"/1/sandboxes/{sandboxName}/fork":{"get":{"tags":["Sandbox"],"summary":"forkSandbox","operationId":"forkSandbox","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"successful operation","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Sandbox"},"example":"{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"}}}}}},"/1/sandboxes/{sandboxName}/state":{"get":{"tags":["Sandbox"],"summary":"getSandboxState","operationId":"getSandboxState","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"responses":{"default":{"description":"successful operation"}}},"delete":{"tags":["Sandbox"],"summary":"deleteSandboxState","operationId":"deleteSandboxState","parameters":[{"name":"sandboxName","in":"path","description":"Name of the Sandbox","required":true,"schema":{"type":"string"}}],"responses":{"default":{"description":"successful operation"}}}}},"components":{"schemas":{"ActivityMessage":{"type":"object","properties":{"createdTimestamp":{"type":"integer","description":"Epoch time in milliseconds when the message was created","format":"int64"},"message":{"type":"string","description":"The details of the message when type is 'log'"},"messageObject":{"$ref":"#/components/schemas/RuntimeTransaction"},"messageType":{"type":"string","enum":["request","log"]},"sandboxId":{"type":"string","description":"The ID of the sandbox that generated this message"}}},"ConfiguredRouteDetails":{"required":["errorOverrideType"],"type":"object","properties":{"activeErrorOverride":{"type":"boolean","description":"Whether error overrides are enabled or not."},"activeLatency":{"type":"boolean","description":"Whether latency delays are enabled or not."},"defaultLatency":{"maximum":30000,"minimum":0,"type":"integer","description":"A delay in milliseconds applied to requests at a 'normal' level.","format":"int32"},"errorOverrideType":{"type":"string","description":"The type of error override applied to this route.","enum":["NONE","TIMEOUT","SERVICE_DOWN"]},"loadLatency":{"maximum":30000,"minimum":0,"type":"integer","description":"A delay in milliseconds applied to requests at a 'high' level.","format":"int32"},"loadThreshold":{"maximum":100,"minimum":0,"type":"integer","description":"The threshold in transactions/second to signify 'high' load","format":"int32"},"method":{"type":"string"},"path":{"type":"string"},"properties":{"type":"object","additionalProperties":{"type":"string"}},"routeConfig":{"$ref":"#/components/schemas/RouteConfig"},"transport":{"type":"string"}}},"CreateSandbox":{"type":"object","properties":{"commitBaseTemplate":{"type":"boolean","description":"Whether to commit the example Sandbox definition upon creation."},"description":{"maxLength":255,"minLength":0,"pattern":"^[A-Za-z-_ 0-9]*$","type":"string","description":"Text describing this Sandbox."},"name":{"pattern":"^[A-Za-z-_ 0-9]*$","type":"string","description":"Optional name to give the Sandbox, will be generated if omitted."},"ownerOrganisationName":{"maxLength":36,"minLength":2,"pattern":"^[a-zA-Z-_0-9]*$","type":"string","description":"Name of the team this Sandbox should be created under."},"parentSandboxName":{"pattern":"^[A-Za-z-_ 0-9]*$","type":"string","description":"Name of the Sandbox this should be created under, if exists will be a 'clone'."},"transportType":{"type":"string","enum":["HTTP"]}}},"Error":{"type":"object","properties":{"code":{"type":"string"},"detailedMessage":{"type":"string","description":"Longer message describing the error."},"field":{"type":"string","description":"Message describing which field the error relates to."},"message":{"type":"string","description":"Short message describing the error."}}},"RouteConfig":{"type":"object","properties":{"errorStrategy":{"type":"string","enum":["NONE","TIMEOUT","SERVICE_DOWN"]},"latencyMs":{"type":"integer","format":"int32"},"latencyMultiplier":{"type":"integer","format":"int32"},"latencyType":{"type":"string","enum":["NONE","CONSTANT","LINEAR"]},"method":{"type":"string"},"path":{"type":"string"}}},"RuntimeRequest":{"type":"object","properties":{"body":{"type":"string","description":"The body of the given request."},"contentType":{"type":"string","description":"The content type of the body, for example 'application/json'."},"fullSandboxId":{"type":"string","description":"The parent ID of the Sandbox that received the request."},"fullSandboxName":{"type":"string","description":"The parent name of the Sandbox that received the request."},"headers":{"type":"object","additionalProperties":{"type":"string"},"description":"Transport headers for the given request."},"ip":{"type":"string","description":"The requestor IP address."},"properties":{"type":"object","additionalProperties":{"type":"string"}},"receivedTimestamp":{"type":"integer","description":"The epoch time in milliseconds when the request was received.","format":"int64"},"sandboxId":{"type":"string","description":"The ID of the Sandbox that received the request."},"sandboxName":{"type":"string","description":"The name of the Sandbox that received the request."},"transport":{"type":"string","description":"Which transport the request was for, 'HTTP'."}}},"RuntimeResponse":{"type":"object","properties":{"body":{"type":"string","description":"The body of the given response."},"durationMillis":{"type":"integer","description":"Duration in milliseconds of the processing time in Sandbox.","format":"int64"},"error":{"$ref":"#/components/schemas/Error"},"headers":{"type":"object","additionalProperties":{"type":"string"},"description":"Transport headers for the given response."},"respondedTimestamp":{"type":"integer","description":"The epoch time in milliseconds when the response was sent.","format":"int64"},"responseDelay":{"type":"integer","description":"Duration in milliseconds of the response delay.","format":"int32"},"transport":{"type":"string","description":"Which transport the request was for, 'HTTP'."}}},"RuntimeTransaction":{"type":"object","properties":{"request":{"$ref":"#/components/schemas/RuntimeRequest"},"responses":{"type":"array","items":{"$ref":"#/components/schemas/RuntimeResponse"}},"sandboxName":{"type":"string","description":"The source sandbox name."}}},"Sandbox":{"required":["name"],"type":"object","properties":{"apiDefinition":{"type":"string","description":"The import source of this Sandbox.","enum":["None","Apiary","Swagger_V2_Json","RAML_V08","WSDL"]},"childSandboxes":{"uniqueItems":true,"type":"array","description":"Clones of this Sandbox.","items":{"$ref":"#/components/schemas/Sandbox"}},"configuredRoutes":{"uniqueItems":true,"type":"array","description":"Extra configuration applied to some routes, delays, overrides etc.","items":{"$ref":"#/components/schemas/ConfiguredRouteDetails"}},"description":{"maxLength":255,"minLength":0,"pattern":"^[A-Za-z0-9 _\\-]*$","type":"string"},"gitAccessToken":{"type":"string"},"gitUrl":{"type":"string","description":"The git clone URL."},"hasRepository":{"type":"boolean","description":"Whether this Sandbox has a git repository or not."},"id":{"type":"string","description":"The ID of the Sandbox."},"ipWhitelist":{"uniqueItems":true,"type":"array","description":"The list of IPs allowed to make requests, all allowed if omitted.","items":{"type":"string"}},"name":{"pattern":"^[a-z0-9\\-]*$","type":"string"},"parentSandbox":{"$ref":"#/components/schemas/Sandbox"},"properties":{"type":"object","additionalProperties":{"type":"object"}},"proxyStatus":{"type":"string","description":"The listener status.","enum":["STARTED","STOPPED"]},"runtimeVersion":{"type":"string","description":"The library version of this Sandbox.","enum":["VERSION_1","VERSION_2"]},"sandboxUrl":{"type":"string","description":"The request URL for this Sandbox."},"stackType":{"type":"string","enum":["JavaScript"]},"transportType":{"type":"string","description":"The listener transport.","enum":["HTTP"]}}}},"securitySchemes":{"api_key":{"type":"apiKey","name":"API_Key","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Sandbox API",
+    "description" : "Sandbox API",
+    "termsOfService" : "https://getsandbox.com/policy/customer-agreement",
+    "contact" : {
+      "name" : "Sandbox Support",
+      "url" : "https://getsandbox.com",
+      "email" : "hello@getsandbox.com"
+    },
+    "version" : "v1"
+  },
+  "externalDocs" : {
+    "url" : "https://getsandbox.com/docs/api/overview"
+  },
+  "servers" : [ {
+    "url" : "https://getsandbox.com/api/"
+  } ],
+  "tags" : [ {
+    "name" : "Activity"
+  }, {
+    "name" : "Sandbox"
+  } ],
+  "paths" : {
+    "/1/activity/search" : {
+      "get" : {
+        "tags" : [ "Activity" ],
+        "summary" : "searchActivity",
+        "operationId" : "getSandboxesActivity",
+        "parameters" : [ {
+          "name" : "fromTimestamp",
+          "in" : "query",
+          "description" : "Timestamp to start search from, epoch time in milliseconds.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "sourceSandboxes",
+          "in" : "query",
+          "description" : "Comma-separated list of Sandbox names to search.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "keyword",
+          "in" : "query",
+          "description" : "A keyword to search activities by, will match any part of the ActivityMessage.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "allTypes",
+          "in" : "query",
+          "description" : "Flag to return all types of activity, defaults to just Requests",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "maxResults",
+          "in" : "query",
+          "description" : "Maximum number of results to return",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ActivityMessage"
+                  }
+                },
+                "example" : "[\n  {\n    \"createdTimestamp\": 1464829513623,\n    \"messageType\": \"request\",\n    \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"messageObject\": {\n      \"request\": {\n        \"transport\": \"HTTP\",\n        \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"sandboxName\": \"testbox\",\n        \"fullSandboxName\": \"testbox\",\n        \"fullSandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"headers\": {\n          \"Accept\": \"*/*\",\n          \"Host\": \"testbox.getsandbox.com\",\n          \"User-Agent\": \"curl/7.43.0\",\n          \"X-Forwarded-For\": \"10.0.2.2\"\n        },\n        \"properties\": {},\n        \"body\": \"\",\n        \"ip\": \"10.0.2.2\",\n        \"cookies\": {},\n        \"query\": {},\n        \"accepted\": [\"*/*\"],\n        \"url\": \"/hello\",\n        \"params\": {},\n        \"method\": \"GET\",\n        \"path\": \"/hello\",\n        \"rawUrl\": \"/hello\",\n        \"received_timestamp\": 1464829513575\n      },\n      \"responses\": [\n        {\n          \"transport\": \"HTTP\",\n          \"body\": \"[\\n  \\\"hello\\\"\\n]\",\n          \"headers\": {\n            \"Content-Type\": \"application/json\"\n          },\n          \"cookies\": [],\n          \"responded_timestamp\": 1464829513609,\n          \"duration_ms\": 34,\n          \"status\": 200\n        }\n      ]\n    }\n  },\n  {\n    \"createdTimestamp\": 1464829507925,\n    \"messageType\": \"request\",\n    \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"messageObject\": {\n      \"request\": {\n        \"transport\": \"HTTP\",\n        \"sandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"sandboxName\": \"testbox\",\n        \"fullSandboxName\": \"testbox\",\n        \"fullSandboxId\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n        \"headers\": {\n          \"Accept\": \"*/*\",\n          \"Host\": \"testbox.getsandbox.com\",\n          \"User-Agent\": \"curl/7.43.0\",\n          \"X-Forwarded-For\": \"10.0.2.2\"\n        },\n        \"properties\": {},\n        \"body\": \"\",\n        \"ip\": \"10.0.2.2\",\n        \"cookies\": {},\n        \"query\": {},\n        \"accepted\": [\"*/*\"],\n        \"url\": \"/hello\",\n        \"params\": {},\n        \"method\": \"GET\",\n        \"path\": \"/hello\",\n        \"rawUrl\": \"/hello\",\n        \"received_timestamp\": 1464829507856\n      },\n      \"responses\": [\n        {\n          \"transport\": \"HTTP\",\n          \"body\": \"[\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\",\\n  \\\"hello\\\"\\n]\",\n          \"headers\": {\n            \"Content-Type\": \"application/json\"\n          },\n          \"cookies\": [],\n          \"responded_timestamp\": 1464829507885,\n          \"duration_ms\": 29,\n          \"status\": 200\n        }\n      ]\n    }\n  }\n]"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/sandboxes" : {
+      "get" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "getSandboxes",
+        "operationId" : "getSandboxes",
+        "parameters" : [ {
+          "name" : "filterType",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Sandbox"
+                  }
+                },
+                "example" : "[\n  {\n    \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n    \"name\": \"testbox\",\n    \"description\": \"\",\n    \"configuredRoutes\": [],\n    \"hasRepository\": true,\n    \"apiDefinition\": \"None\",\n    \"stackType\": \"JavaScript\",\n    \"runtimeVersion\": \"VERSION_2\",\n    \"proxyStatus\": \"STARTED\",\n    \"transportType\": \"HTTP\",\n    \"properties\": {},\n    \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n    \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n  }\n]"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "createSandbox",
+        "operationId" : "createSandbox",
+        "requestBody" : {
+          "description" : "Sandbox to be created",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateSandbox"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sandbox"
+                },
+                "example" : "{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/sandboxes/{sandboxName}" : {
+      "get" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "getSandbox",
+        "operationId" : "getSandbox",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sandbox"
+                },
+                "example" : "{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "updateSandbox",
+        "operationId" : "updateSandbox",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Fields to updated on given Sandbox",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Sandbox"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sandbox"
+                },
+                "example" : "{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "deleteSandbox",
+        "operationId" : "deleteSandbox",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/1/sandboxes/{sandboxName}/fork" : {
+      "get" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "forkSandbox",
+        "operationId" : "forkSandbox",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Sandbox"
+                },
+                "example" : "{\n  \"id\": \"s-328f0d3a-7cf8-400c-a5e8-dc0e84b737b3\",\n  \"name\": \"testbox\",\n  \"description\": \"\",\n  \"configuredRoutes\": [],\n  \"hasRepository\": true,\n  \"apiDefinition\": \"None\",\n  \"stackType\": \"JavaScript\",\n  \"runtimeVersion\": \"VERSION_2\",\n  \"proxyStatus\": \"STARTED\",\n  \"transportType\": \"HTTP\",\n  \"properties\": {},\n  \"gitUrl\": \"http://git.getsandbox.com/testbox.git\",\n  \"sandboxUrl\": \"http://testbox.getsandbox.com\"\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/sandboxes/{sandboxName}/state" : {
+      "get" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "getSandboxState",
+        "operationId" : "getSandboxState",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Sandbox" ],
+        "summary" : "deleteSandboxState",
+        "operationId" : "deleteSandboxState",
+        "parameters" : [ {
+          "name" : "sandboxName",
+          "in" : "path",
+          "description" : "Name of the Sandbox",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ActivityMessage" : {
+        "type" : "object",
+        "properties" : {
+          "createdTimestamp" : {
+            "type" : "integer",
+            "description" : "Epoch time in milliseconds when the message was created",
+            "format" : "int64"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The details of the message when type is 'log'"
+          },
+          "messageObject" : {
+            "$ref" : "#/components/schemas/RuntimeTransaction"
+          },
+          "messageType" : {
+            "type" : "string",
+            "enum" : [ "request", "log" ]
+          },
+          "sandboxId" : {
+            "type" : "string",
+            "description" : "The ID of the sandbox that generated this message"
+          }
+        }
+      },
+      "ConfiguredRouteDetails" : {
+        "required" : [ "errorOverrideType" ],
+        "type" : "object",
+        "properties" : {
+          "activeErrorOverride" : {
+            "type" : "boolean",
+            "description" : "Whether error overrides are enabled or not."
+          },
+          "activeLatency" : {
+            "type" : "boolean",
+            "description" : "Whether latency delays are enabled or not."
+          },
+          "defaultLatency" : {
+            "maximum" : 30000,
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "A delay in milliseconds applied to requests at a 'normal' level.",
+            "format" : "int32"
+          },
+          "errorOverrideType" : {
+            "type" : "string",
+            "description" : "The type of error override applied to this route.",
+            "enum" : [ "NONE", "TIMEOUT", "SERVICE_DOWN" ]
+          },
+          "loadLatency" : {
+            "maximum" : 30000,
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "A delay in milliseconds applied to requests at a 'high' level.",
+            "format" : "int32"
+          },
+          "loadThreshold" : {
+            "maximum" : 100,
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "The threshold in transactions/second to signify 'high' load",
+            "format" : "int32"
+          },
+          "method" : {
+            "type" : "string"
+          },
+          "path" : {
+            "type" : "string"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "routeConfig" : {
+            "$ref" : "#/components/schemas/RouteConfig"
+          },
+          "transport" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreateSandbox" : {
+        "type" : "object",
+        "properties" : {
+          "commitBaseTemplate" : {
+            "type" : "boolean",
+            "description" : "Whether to commit the example Sandbox definition upon creation."
+          },
+          "description" : {
+            "maxLength" : 255,
+            "minLength" : 0,
+            "pattern" : "^[A-Za-z-_ 0-9]*$",
+            "type" : "string",
+            "description" : "Text describing this Sandbox."
+          },
+          "name" : {
+            "pattern" : "^[A-Za-z-_ 0-9]*$",
+            "type" : "string",
+            "description" : "Optional name to give the Sandbox, will be generated if omitted."
+          },
+          "ownerOrganisationName" : {
+            "maxLength" : 36,
+            "minLength" : 2,
+            "pattern" : "^[a-zA-Z-_0-9]*$",
+            "type" : "string",
+            "description" : "Name of the team this Sandbox should be created under."
+          },
+          "parentSandboxName" : {
+            "pattern" : "^[A-Za-z-_ 0-9]*$",
+            "type" : "string",
+            "description" : "Name of the Sandbox this should be created under, if exists will be a 'clone'."
+          },
+          "transportType" : {
+            "type" : "string",
+            "enum" : [ "HTTP" ]
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "detailedMessage" : {
+            "type" : "string",
+            "description" : "Longer message describing the error."
+          },
+          "field" : {
+            "type" : "string",
+            "description" : "Message describing which field the error relates to."
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Short message describing the error."
+          }
+        }
+      },
+      "RouteConfig" : {
+        "type" : "object",
+        "properties" : {
+          "errorStrategy" : {
+            "type" : "string",
+            "enum" : [ "NONE", "TIMEOUT", "SERVICE_DOWN" ]
+          },
+          "latencyMs" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "latencyMultiplier" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "latencyType" : {
+            "type" : "string",
+            "enum" : [ "NONE", "CONSTANT", "LINEAR" ]
+          },
+          "method" : {
+            "type" : "string"
+          },
+          "path" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RuntimeRequest" : {
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "type" : "string",
+            "description" : "The body of the given request."
+          },
+          "contentType" : {
+            "type" : "string",
+            "description" : "The content type of the body, for example 'application/json'."
+          },
+          "fullSandboxId" : {
+            "type" : "string",
+            "description" : "The parent ID of the Sandbox that received the request."
+          },
+          "fullSandboxName" : {
+            "type" : "string",
+            "description" : "The parent name of the Sandbox that received the request."
+          },
+          "headers" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Transport headers for the given request."
+          },
+          "ip" : {
+            "type" : "string",
+            "description" : "The requestor IP address."
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "receivedTimestamp" : {
+            "type" : "integer",
+            "description" : "The epoch time in milliseconds when the request was received.",
+            "format" : "int64"
+          },
+          "sandboxId" : {
+            "type" : "string",
+            "description" : "The ID of the Sandbox that received the request."
+          },
+          "sandboxName" : {
+            "type" : "string",
+            "description" : "The name of the Sandbox that received the request."
+          },
+          "transport" : {
+            "type" : "string",
+            "description" : "Which transport the request was for, 'HTTP'."
+          }
+        }
+      },
+      "RuntimeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "type" : "string",
+            "description" : "The body of the given response."
+          },
+          "durationMillis" : {
+            "type" : "integer",
+            "description" : "Duration in milliseconds of the processing time in Sandbox.",
+            "format" : "int64"
+          },
+          "error" : {
+            "$ref" : "#/components/schemas/Error"
+          },
+          "headers" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Transport headers for the given response."
+          },
+          "respondedTimestamp" : {
+            "type" : "integer",
+            "description" : "The epoch time in milliseconds when the response was sent.",
+            "format" : "int64"
+          },
+          "responseDelay" : {
+            "type" : "integer",
+            "description" : "Duration in milliseconds of the response delay.",
+            "format" : "int32"
+          },
+          "transport" : {
+            "type" : "string",
+            "description" : "Which transport the request was for, 'HTTP'."
+          }
+        }
+      },
+      "RuntimeTransaction" : {
+        "type" : "object",
+        "properties" : {
+          "request" : {
+            "$ref" : "#/components/schemas/RuntimeRequest"
+          },
+          "responses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RuntimeResponse"
+            }
+          },
+          "sandboxName" : {
+            "type" : "string",
+            "description" : "The source sandbox name."
+          }
+        }
+      },
+      "Sandbox" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "apiDefinition" : {
+            "type" : "string",
+            "description" : "The import source of this Sandbox.",
+            "enum" : [ "None", "Apiary", "Swagger_V2_Json", "RAML_V08", "WSDL" ]
+          },
+          "childSandboxes" : {
+            "uniqueItems" : true,
+            "type" : "array",
+            "description" : "Clones of this Sandbox.",
+            "items" : {
+              "$ref" : "#/components/schemas/Sandbox"
+            }
+          },
+          "configuredRoutes" : {
+            "uniqueItems" : true,
+            "type" : "array",
+            "description" : "Extra configuration applied to some routes, delays, overrides etc.",
+            "items" : {
+              "$ref" : "#/components/schemas/ConfiguredRouteDetails"
+            }
+          },
+          "description" : {
+            "maxLength" : 255,
+            "minLength" : 0,
+            "pattern" : "^[A-Za-z0-9 _\\-]*$",
+            "type" : "string"
+          },
+          "gitAccessToken" : {
+            "type" : "string"
+          },
+          "gitUrl" : {
+            "type" : "string",
+            "description" : "The git clone URL."
+          },
+          "hasRepository" : {
+            "type" : "boolean",
+            "description" : "Whether this Sandbox has a git repository or not."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The ID of the Sandbox."
+          },
+          "ipWhitelist" : {
+            "uniqueItems" : true,
+            "type" : "array",
+            "description" : "The list of IPs allowed to make requests, all allowed if omitted.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "name" : {
+            "pattern" : "^[a-z0-9\\-]*$",
+            "type" : "string"
+          },
+          "parentSandbox" : {
+            "$ref" : "#/components/schemas/Sandbox"
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "proxyStatus" : {
+            "type" : "string",
+            "description" : "The listener status.",
+            "enum" : [ "STARTED", "STOPPED" ]
+          },
+          "runtimeVersion" : {
+            "type" : "string",
+            "description" : "The library version of this Sandbox.",
+            "enum" : [ "VERSION_1", "VERSION_2" ]
+          },
+          "sandboxUrl" : {
+            "type" : "string",
+            "description" : "The request URL for this Sandbox."
+          },
+          "stackType" : {
+            "type" : "string",
+            "enum" : [ "JavaScript" ]
+          },
+          "transportType" : {
+            "type" : "string",
+            "description" : "The listener transport.",
+            "enum" : [ "HTTP" ]
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "api_key" : {
+        "type" : "apiKey",
+        "name" : "API_Key",
+        "in" : "header"
+      }
+    }
+  }
+}

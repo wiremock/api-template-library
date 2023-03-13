@@ -1,1 +1,952 @@
-{"openapi":"3.0.1","info":{"title":"HDInsightManagementClient","description":"The HDInsight Management Client.","version":"2018-06-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/executeScriptActions":{"post":{"tags":["Clusters"],"description":"Executes script actions on the specified HDInsight cluster.","operationId":"Clusters_ExecuteScriptActions","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"The parameters for executing script actions.","content":{"application/json":{"schema":{"required":["persistOnSuccess"],"type":"object","properties":{"persistOnSuccess":{"type":"boolean","description":"Gets or sets if the scripts needs to be persisted."},"scriptActions":{"type":"array","description":"The list of run time script actions.","items":{"required":["name","roles","uri"],"type":"object","properties":{"applicationName":{"type":"string","description":"The application name of the script action, if any.","readOnly":true},"name":{"type":"string","description":"The name of the script action."},"parameters":{"type":"string","description":"The parameters for the script"},"roles":{"type":"array","description":"The list of roles where script will be executed.","items":{"type":"string"}},"uri":{"type":"string","description":"The URI to the script."}},"description":"Describes a script action on a running cluster."}}},"description":"The parameters for the script actions to execute on a running cluster."}}},"required":true},"responses":{"200":{"description":"Accepted response definition."},"202":{"description":"OK response definition."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptActions":{"get":{"tags":["ScriptActions"],"description":"Lists all the persisted script actions for the specified cluster.","operationId":"ScriptActions_ListByCluster","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScriptActionsList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptActions/{scriptName}":{"delete":{"tags":["ScriptActions"],"description":"Deletes a specified persisted script action of the cluster.","operationId":"ScriptActions_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"scriptName","in":"path","description":"The name of the script.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory":{"get":{"tags":["ScriptExecutionHistory"],"description":"Lists all scripts' execution history for the specified cluster.","operationId":"ScriptExecutionHistory_ListByCluster","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScriptActionExecutionHistoryList"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}":{"get":{"tags":["ScriptExecutionHistory"],"description":"Gets the script execution detail for the given script execution ID.","operationId":"ScriptActions_GetExecutionDetail","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"scriptExecutionId","in":"path","description":"The script execution Id","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition.","content":{"application/json":{"schema":{"type":"object","description":"The execution details of a script action."}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}/promote":{"post":{"tags":["Promote"],"description":"Promotes the specified ad-hoc script execution to a persisted script.","operationId":"ScriptExecutionHistory_Promote","parameters":[{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},{"name":"scriptExecutionId","in":"path","description":"The script execution Id","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK response definition."},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."}}}}}}}},"components":{"schemas":{"ClusterListRuntimeScriptActionDetailResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of persisted script action details for the cluster.","readOnly":true,"items":{"type":"object","description":"The execution details of a script action.","allOf":[{"required":["name","roles","uri"],"type":"object","properties":{"applicationName":{"type":"string","description":"The application name of the script action, if any.","readOnly":true},"name":{"type":"string","description":"The name of the script action."},"parameters":{"type":"string","description":"The parameters for the script"},"roles":{"type":"array","description":"The list of roles where script will be executed.","items":{"type":"string"}},"uri":{"type":"string","description":"The URI to the script."}},"description":"Describes a script action on a running cluster."},{"type":"object","properties":{"debugInformation":{"type":"string","description":"The script action execution debug information.","readOnly":true},"endTime":{"type":"string","description":"The end time of script action execution.","readOnly":true},"executionSummary":{"type":"array","description":"The summary of script action execution result.","readOnly":true,"items":{"type":"object","properties":{"instanceCount":{"type":"integer","description":"The instance count for a given script action execution status.","format":"int32","readOnly":true},"status":{"type":"string","description":"The status of script action execution.","readOnly":true}},"description":"The execution summary of a script action."}},"operation":{"type":"string","description":"The reason why the script action was executed.","readOnly":true},"scriptExecutionId":{"type":"integer","description":"The execution id of the script action.","format":"int64","readOnly":true},"startTime":{"type":"string","description":"The start time of script action execution.","readOnly":true},"status":{"type":"string","description":"The current execution status of the script action.","readOnly":true}}}]}}},"description":"The list runtime script action detail response."},"ScriptAction":{"required":["name","parameters","uri"],"type":"object","properties":{"name":{"type":"string","description":"The name of the script action."},"parameters":{"type":"string","description":"The parameters for the script provided."},"uri":{"type":"string","description":"The URI to the script."}},"description":"Describes a script action on role on the cluster."},"ScriptActionExecutionHistoryList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of persisted script action details for the cluster.","readOnly":true,"items":{"type":"object","description":"The execution details of a script action.","allOf":[{"required":["name","roles","uri"],"type":"object","properties":{"applicationName":{"type":"string","description":"The application name of the script action, if any.","readOnly":true},"name":{"type":"string","description":"The name of the script action."},"parameters":{"type":"string","description":"The parameters for the script"},"roles":{"type":"array","description":"The list of roles where script will be executed.","items":{"type":"string"}},"uri":{"type":"string","description":"The URI to the script."}},"description":"Describes a script action on a running cluster."},{"type":"object","properties":{"debugInformation":{"type":"string","description":"The script action execution debug information.","readOnly":true},"endTime":{"type":"string","description":"The end time of script action execution.","readOnly":true},"executionSummary":{"type":"array","description":"The summary of script action execution result.","readOnly":true,"items":{"type":"object","properties":{"instanceCount":{"type":"integer","description":"The instance count for a given script action execution status.","format":"int32","readOnly":true},"status":{"type":"string","description":"The status of script action execution.","readOnly":true}},"description":"The execution summary of a script action."}},"operation":{"type":"string","description":"The reason why the script action was executed.","readOnly":true},"scriptExecutionId":{"type":"integer","description":"The execution id of the script action.","format":"int64","readOnly":true},"startTime":{"type":"string","description":"The start time of script action execution.","readOnly":true},"status":{"type":"string","description":"The current execution status of the script action.","readOnly":true}}}]}}},"description":"The list script execution history response."},"ScriptActionPersistedGetResponseSpec":{"type":"object","properties":{"applicationName":{"type":"string","description":"The application name for the script action."},"name":{"type":"string","description":"The name of script action."},"parameters":{"type":"string","description":"The parameters for the script provided."},"roles":{"type":"array","description":"The list of roles where script will be executed.","items":{"type":"string"}},"uri":{"type":"string","description":"The URI to the script."}},"description":"The persisted script action for cluster."},"ScriptActionsList":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link (url) to the next page of results.","readOnly":true},"value":{"type":"array","description":"The list of persisted script action details for the cluster.","items":{"type":"object","description":"The execution details of a script action.","allOf":[{"required":["name","roles","uri"],"type":"object","properties":{"applicationName":{"type":"string","description":"The application name of the script action, if any.","readOnly":true},"name":{"type":"string","description":"The name of the script action."},"parameters":{"type":"string","description":"The parameters for the script"},"roles":{"type":"array","description":"The list of roles where script will be executed.","items":{"type":"string"}},"uri":{"type":"string","description":"The URI to the script."}},"description":"Describes a script action on a running cluster."},{"type":"object","properties":{"debugInformation":{"type":"string","description":"The script action execution debug information.","readOnly":true},"endTime":{"type":"string","description":"The end time of script action execution.","readOnly":true},"executionSummary":{"type":"array","description":"The summary of script action execution result.","readOnly":true,"items":{"type":"object","properties":{"instanceCount":{"type":"integer","description":"The instance count for a given script action execution status.","format":"int32","readOnly":true},"status":{"type":"string","description":"The status of script action execution.","readOnly":true}},"description":"The execution summary of a script action."}},"operation":{"type":"string","description":"The reason why the script action was executed.","readOnly":true},"scriptExecutionId":{"type":"integer","description":"The execution id of the script action.","format":"int64","readOnly":true},"startTime":{"type":"string","description":"The start time of script action execution.","readOnly":true},"status":{"type":"string","description":"The current execution status of the script action.","readOnly":true}}}]}}},"description":"The persisted script action for the cluster."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The HDInsight client API Version.","required":true,"schema":{"type":"string"}},"ClusterNameParameter":{"name":"clusterName","in":"path","description":"The name of the cluster.","required":true,"schema":{"type":"string"}},"ResourceGroupNameParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group.","required":true,"schema":{"type":"string"}},"ScriptExecutionIdParameter":{"name":"scriptExecutionId","in":"path","description":"The script execution Id","required":true,"schema":{"type":"string"}},"ScriptNameParameter":{"name":"scriptName","in":"path","description":"The name of the script.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "HDInsightManagementClient",
+    "description" : "The HDInsight Management Client.",
+    "version" : "2018-06-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/executeScriptActions" : {
+      "post" : {
+        "tags" : [ "Clusters" ],
+        "description" : "Executes script actions on the specified HDInsight cluster.",
+        "operationId" : "Clusters_ExecuteScriptActions",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The parameters for executing script actions.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "persistOnSuccess" ],
+                "type" : "object",
+                "properties" : {
+                  "persistOnSuccess" : {
+                    "type" : "boolean",
+                    "description" : "Gets or sets if the scripts needs to be persisted."
+                  },
+                  "scriptActions" : {
+                    "type" : "array",
+                    "description" : "The list of run time script actions.",
+                    "items" : {
+                      "required" : [ "name", "roles", "uri" ],
+                      "type" : "object",
+                      "properties" : {
+                        "applicationName" : {
+                          "type" : "string",
+                          "description" : "The application name of the script action, if any.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "The name of the script action."
+                        },
+                        "parameters" : {
+                          "type" : "string",
+                          "description" : "The parameters for the script"
+                        },
+                        "roles" : {
+                          "type" : "array",
+                          "description" : "The list of roles where script will be executed.",
+                          "items" : {
+                            "type" : "string"
+                          }
+                        },
+                        "uri" : {
+                          "type" : "string",
+                          "description" : "The URI to the script."
+                        }
+                      },
+                      "description" : "Describes a script action on a running cluster."
+                    }
+                  }
+                },
+                "description" : "The parameters for the script actions to execute on a running cluster."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Accepted response definition."
+          },
+          "202" : {
+            "description" : "OK response definition."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptActions" : {
+      "get" : {
+        "tags" : [ "ScriptActions" ],
+        "description" : "Lists all the persisted script actions for the specified cluster.",
+        "operationId" : "ScriptActions_ListByCluster",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ScriptActionsList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptActions/{scriptName}" : {
+      "delete" : {
+        "tags" : [ "ScriptActions" ],
+        "description" : "Deletes a specified persisted script action of the cluster.",
+        "operationId" : "ScriptActions_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scriptName",
+          "in" : "path",
+          "description" : "The name of the script.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory" : {
+      "get" : {
+        "tags" : [ "ScriptExecutionHistory" ],
+        "description" : "Lists all scripts' execution history for the specified cluster.",
+        "operationId" : "ScriptExecutionHistory_ListByCluster",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ScriptActionExecutionHistoryList"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}" : {
+      "get" : {
+        "tags" : [ "ScriptExecutionHistory" ],
+        "description" : "Gets the script execution detail for the given script execution ID.",
+        "operationId" : "ScriptActions_GetExecutionDetail",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scriptExecutionId",
+          "in" : "path",
+          "description" : "The script execution Id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "The execution details of a script action."
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}/promote" : {
+      "post" : {
+        "tags" : [ "Promote" ],
+        "description" : "Promotes the specified ad-hoc script execution to a persisted script.",
+        "operationId" : "ScriptExecutionHistory_Promote",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "clusterName",
+          "in" : "path",
+          "description" : "The name of the cluster.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scriptExecutionId",
+          "in" : "path",
+          "description" : "The script execution Id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The HDInsight client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK response definition."
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string",
+                      "description" : "Error code"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "description" : "Error message indicating why the operation failed."
+                    }
+                  },
+                  "description" : "Describes the format of Error response."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ClusterListRuntimeScriptActionDetailResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of persisted script action details for the cluster.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "object",
+              "description" : "The execution details of a script action.",
+              "allOf" : [ {
+                "required" : [ "name", "roles", "uri" ],
+                "type" : "object",
+                "properties" : {
+                  "applicationName" : {
+                    "type" : "string",
+                    "description" : "The application name of the script action, if any.",
+                    "readOnly" : true
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "The name of the script action."
+                  },
+                  "parameters" : {
+                    "type" : "string",
+                    "description" : "The parameters for the script"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "description" : "The list of roles where script will be executed.",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "uri" : {
+                    "type" : "string",
+                    "description" : "The URI to the script."
+                  }
+                },
+                "description" : "Describes a script action on a running cluster."
+              }, {
+                "type" : "object",
+                "properties" : {
+                  "debugInformation" : {
+                    "type" : "string",
+                    "description" : "The script action execution debug information.",
+                    "readOnly" : true
+                  },
+                  "endTime" : {
+                    "type" : "string",
+                    "description" : "The end time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "executionSummary" : {
+                    "type" : "array",
+                    "description" : "The summary of script action execution result.",
+                    "readOnly" : true,
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "instanceCount" : {
+                          "type" : "integer",
+                          "description" : "The instance count for a given script action execution status.",
+                          "format" : "int32",
+                          "readOnly" : true
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "description" : "The status of script action execution.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "The execution summary of a script action."
+                    }
+                  },
+                  "operation" : {
+                    "type" : "string",
+                    "description" : "The reason why the script action was executed.",
+                    "readOnly" : true
+                  },
+                  "scriptExecutionId" : {
+                    "type" : "integer",
+                    "description" : "The execution id of the script action.",
+                    "format" : "int64",
+                    "readOnly" : true
+                  },
+                  "startTime" : {
+                    "type" : "string",
+                    "description" : "The start time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "description" : "The current execution status of the script action.",
+                    "readOnly" : true
+                  }
+                }
+              } ]
+            }
+          }
+        },
+        "description" : "The list runtime script action detail response."
+      },
+      "ScriptAction" : {
+        "required" : [ "name", "parameters", "uri" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the script action."
+          },
+          "parameters" : {
+            "type" : "string",
+            "description" : "The parameters for the script provided."
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "The URI to the script."
+          }
+        },
+        "description" : "Describes a script action on role on the cluster."
+      },
+      "ScriptActionExecutionHistoryList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of persisted script action details for the cluster.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "object",
+              "description" : "The execution details of a script action.",
+              "allOf" : [ {
+                "required" : [ "name", "roles", "uri" ],
+                "type" : "object",
+                "properties" : {
+                  "applicationName" : {
+                    "type" : "string",
+                    "description" : "The application name of the script action, if any.",
+                    "readOnly" : true
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "The name of the script action."
+                  },
+                  "parameters" : {
+                    "type" : "string",
+                    "description" : "The parameters for the script"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "description" : "The list of roles where script will be executed.",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "uri" : {
+                    "type" : "string",
+                    "description" : "The URI to the script."
+                  }
+                },
+                "description" : "Describes a script action on a running cluster."
+              }, {
+                "type" : "object",
+                "properties" : {
+                  "debugInformation" : {
+                    "type" : "string",
+                    "description" : "The script action execution debug information.",
+                    "readOnly" : true
+                  },
+                  "endTime" : {
+                    "type" : "string",
+                    "description" : "The end time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "executionSummary" : {
+                    "type" : "array",
+                    "description" : "The summary of script action execution result.",
+                    "readOnly" : true,
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "instanceCount" : {
+                          "type" : "integer",
+                          "description" : "The instance count for a given script action execution status.",
+                          "format" : "int32",
+                          "readOnly" : true
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "description" : "The status of script action execution.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "The execution summary of a script action."
+                    }
+                  },
+                  "operation" : {
+                    "type" : "string",
+                    "description" : "The reason why the script action was executed.",
+                    "readOnly" : true
+                  },
+                  "scriptExecutionId" : {
+                    "type" : "integer",
+                    "description" : "The execution id of the script action.",
+                    "format" : "int64",
+                    "readOnly" : true
+                  },
+                  "startTime" : {
+                    "type" : "string",
+                    "description" : "The start time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "description" : "The current execution status of the script action.",
+                    "readOnly" : true
+                  }
+                }
+              } ]
+            }
+          }
+        },
+        "description" : "The list script execution history response."
+      },
+      "ScriptActionPersistedGetResponseSpec" : {
+        "type" : "object",
+        "properties" : {
+          "applicationName" : {
+            "type" : "string",
+            "description" : "The application name for the script action."
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of script action."
+          },
+          "parameters" : {
+            "type" : "string",
+            "description" : "The parameters for the script provided."
+          },
+          "roles" : {
+            "type" : "array",
+            "description" : "The list of roles where script will be executed.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "The URI to the script."
+          }
+        },
+        "description" : "The persisted script action for cluster."
+      },
+      "ScriptActionsList" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link (url) to the next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "The list of persisted script action details for the cluster.",
+            "items" : {
+              "type" : "object",
+              "description" : "The execution details of a script action.",
+              "allOf" : [ {
+                "required" : [ "name", "roles", "uri" ],
+                "type" : "object",
+                "properties" : {
+                  "applicationName" : {
+                    "type" : "string",
+                    "description" : "The application name of the script action, if any.",
+                    "readOnly" : true
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "The name of the script action."
+                  },
+                  "parameters" : {
+                    "type" : "string",
+                    "description" : "The parameters for the script"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "description" : "The list of roles where script will be executed.",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "uri" : {
+                    "type" : "string",
+                    "description" : "The URI to the script."
+                  }
+                },
+                "description" : "Describes a script action on a running cluster."
+              }, {
+                "type" : "object",
+                "properties" : {
+                  "debugInformation" : {
+                    "type" : "string",
+                    "description" : "The script action execution debug information.",
+                    "readOnly" : true
+                  },
+                  "endTime" : {
+                    "type" : "string",
+                    "description" : "The end time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "executionSummary" : {
+                    "type" : "array",
+                    "description" : "The summary of script action execution result.",
+                    "readOnly" : true,
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "instanceCount" : {
+                          "type" : "integer",
+                          "description" : "The instance count for a given script action execution status.",
+                          "format" : "int32",
+                          "readOnly" : true
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "description" : "The status of script action execution.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "The execution summary of a script action."
+                    }
+                  },
+                  "operation" : {
+                    "type" : "string",
+                    "description" : "The reason why the script action was executed.",
+                    "readOnly" : true
+                  },
+                  "scriptExecutionId" : {
+                    "type" : "integer",
+                    "description" : "The execution id of the script action.",
+                    "format" : "int64",
+                    "readOnly" : true
+                  },
+                  "startTime" : {
+                    "type" : "string",
+                    "description" : "The start time of script action execution.",
+                    "readOnly" : true
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "description" : "The current execution status of the script action.",
+                    "readOnly" : true
+                  }
+                }
+              } ]
+            }
+          }
+        },
+        "description" : "The persisted script action for the cluster."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The HDInsight client API Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ClusterNameParameter" : {
+        "name" : "clusterName",
+        "in" : "path",
+        "description" : "The name of the cluster.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupNameParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ScriptExecutionIdParameter" : {
+        "name" : "scriptExecutionId",
+        "in" : "path",
+        "description" : "The script execution Id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ScriptNameParameter" : {
+        "name" : "scriptName",
+        "in" : "path",
+        "description" : "The name of the script.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,841 @@
-{"openapi":"3.0.1","info":{"title":"IoTSpacesClient","description":"Use this API to manage the IoTSpaces service instances in your Azure subscription.","version":"2017-10-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/providers/Microsoft.IoTSpaces/operations":{"get":{"tags":["Proxy"],"description":"Lists all of the available IoTSpaces service REST API operations.","operationId":"Operations_List","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}}],"responses":{"200":{"description":"OK. The request has succeeded.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationListResult"}}}},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false}},"/subscriptions/{subscriptionId}/providers/Microsoft.IoTSpaces/Graph":{"get":{"tags":["Collection"],"description":"Get all the IoTSpaces instances in a subscription.","operationId":"IoTSpaces_List","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}}],"responses":{"200":{"description":"This is a synchronous operation. The body contains a JSON-serialized array of the metadata from all the IoTSpaces instances in the subscription.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescriptionListResult"}}}},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false}},"/subscriptions/{subscriptionId}/providers/Microsoft.IoTSpaces/checkNameAvailability":{"post":{"tags":["Proxy"],"description":"Check if an IoTSpaces instance name is available.","operationId":"IoTSpaces_CheckNameAvailability","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}}],"requestBody":{"description":"Set the name parameter in the OperationInputs structure to the name of the IoTSpaces instance to check.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/OperationInputs"}}},"required":true},"responses":{"200":{"description":"This is a synchronous operation. The body contains a JSON-serialized response that specifies whether the IoTSpaces service name is available. If the name is not available, the body contains the reason.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesNameAvailabilityInfo"}}}},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTSpaces/Graph":{"get":{"tags":["Collection"],"description":"Get all the IoTSpaces instances in a resource group.","operationId":"IoTSpaces_ListByResourceGroup","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}}],"responses":{"200":{"description":"This is a synchronous operation. The body contains a JSON-serialized array of the metadata from all the IoTSpaces instances in the resource group.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescriptionListResult"}}}},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTSpaces/Graph/{resourceName}":{"get":{"tags":["Resource"],"description":"Get the metadata of a IoTSpaces instance.","operationId":"IoTSpaces_Get","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}}],"responses":{"200":{"description":"The body contains all the non-security properties of the IoTSpaces instance. Security-related properties are set to null.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescription"}}}},"default":{"description":"Default error response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false},"put":{"tags":["Resource"],"description":"Create or update the metadata of an IoTSpaces instance. The usual pattern to modify a property is to retrieve the IoTSpaces instance metadata and security metadata, and then combine them with the modified values in a new body to update the IoTSpaces instance.","operationId":"IoTSpaces_CreateOrUpdate","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}}],"requestBody":{"description":"The IoTSpaces instance metadata and security metadata.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescription"}}},"required":true},"responses":{"200":{"description":"This is returned as a response to the status polling request for the create or update operation. The body contains the resource representation that indicates a transitional provisioning state.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescription"}}}},"202":{"description":"Accepted - Put request accepted; the operation will complete asynchronously."},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false},"delete":{"tags":["Resource"],"description":"Delete an IoTSpaces instance.","operationId":"IoTSpaces_Delete","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}}],"responses":{"200":{"description":"This is returned as a response to the status polling request for the delete operation. The body contains the resource representation that indicates a transitional provisioning state.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescription"}}}},"202":{"description":"Accepted - Delete request accepted; the operation will complete asynchronously."},"204":{"description":"Once the long running delete operation completes successfully, a 204 No Content status code is returned when the status polling request finds the IoTSpaces service metadata in the service and the status of the delete operation is set to a completed state."},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}}},"patch":{"tags":["Resource"],"description":"Update the metadata of a IoTSpaces instance.","operationId":"IoTSpaces_Update","parameters":[{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},{"name":"resourceName","in":"path","description":"The name of the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}}],"requestBody":{"description":"The IoTSpaces instance metadata and security metadata.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesPatchDescription"}}},"required":true},"responses":{"200":{"description":"This is returned as a response to the status polling request for the create or update operation. The body contains the resource representation that indicates a transitional provisioning state.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/IoTSpacesDescription"}}}},"202":{"description":"Accepted - Put request accepted; the operation will complete asynchronously."},"default":{"description":"DefaultErrorResponse","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorDetails"}}}}},"deprecated":false}}},"components":{"schemas":{"ErrorDetails":{"type":"object","properties":{"code":{"type":"string","description":"The error code.","readOnly":true},"message":{"type":"string","description":"The error message.","readOnly":true},"target":{"type":"string","description":"The target of the particular error.","readOnly":true}},"description":"Error details."},"IoTSpacesDescription":{"properties":{"properties":{"$ref":"#/components/schemas/IoTSpacesProperties"},"sku":{"$ref":"#/components/schemas/IoTSpacesSkuInfo"}},"description":"The description of the IoTSpaces service.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"IoTSpacesDescriptionListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link used to get the next page of IoTSpaces description objects."},"value":{"type":"array","description":"A list of IoTSpaces description objects.","items":{"$ref":"#/components/schemas/IoTSpacesDescription"}}},"description":"A list of IoTSpaces description objects with a next link."},"IoTSpacesNameAvailabilityInfo":{"type":"object","properties":{"message":{"type":"string","description":"The detailed reason message."},"nameAvailable":{"type":"boolean","description":"The value which indicates whether the provided name is available.","readOnly":true},"reason":{"type":"string","description":"The reason for unavailability.","readOnly":true,"enum":["Invalid","AlreadyExists"]}},"description":"The properties indicating whether a given IoTSpaces service name is available."},"IoTSpacesPatchDescription":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/IoTSpacesProperties"},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"Instance tags"}},"description":"The description of the IoTSpaces service."},"IoTSpacesProperties":{"type":"object","properties":{"managementApiUrl":{"type":"string","description":"The management Api endpoint.","readOnly":true},"provisioningState":{"type":"string","description":"The provisioning state.","readOnly":true,"enum":["Provisioning","Deleting","Succeeded","Failed","Canceled"]},"storageContainer":{"$ref":"#/components/schemas/StorageContainerProperties"},"webPortalUrl":{"type":"string","description":"The management UI endpoint.","readOnly":true}},"description":"The properties of an IoTSpaces instance."},"IoTSpacesSkuInfo":{"required":["name"],"type":"object","properties":{"name":{"type":"string","description":"The name of the SKU.","enum":["F1","S1","S2","S3"]}},"description":"Information about the SKU of the IoTSpaces instance."},"Operation":{"type":"object","properties":{"display":{"$ref":"#/components/schemas/OperationDisplay"},"name":{"type":"string","description":"Operation name: {provider}/{resource}/{read | write | action | delete}","readOnly":true}},"description":"IoTSpaces service REST API operation"},"OperationDisplay":{"type":"object","properties":{"description":{"type":"string","description":"Friendly description for the operation,","readOnly":true},"operation":{"type":"string","description":"Name of the operation","readOnly":true},"provider":{"type":"string","description":"Service provider: Microsoft IoTSpaces","readOnly":true},"resource":{"type":"string","description":"Resource Type: IoTSpaces","readOnly":true}},"description":"The object that represents the operation."},"OperationInputs":{"required":["name"],"type":"object","properties":{"name":{"type":"string","description":"The name of the IoTSpaces service instance to check."}},"description":"Input values."},"OperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"The link used to get the next page of IoTSpaces description objects."},"value":{"type":"array","description":"A list of IoT spaces operations supported by the Microsoft.IoTSpaces resource provider.","readOnly":true,"items":{"$ref":"#/components/schemas/Operation"}}},"description":"A list of IoTSpaces service operations. It contains a list of operations and a URL link to get the next set of results."},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"The resource identifier.","readOnly":true},"location":{"type":"string","description":"The resource location."},"name":{"pattern":"^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$","type":"string","description":"The resource name.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"The resource tags."},"type":{"type":"string","description":"The resource type.","readOnly":true}},"description":"The common properties of an IoTSpaces service."},"StorageContainerProperties":{"type":"object","properties":{"connectionString":{"type":"string","description":"The connection string of the storage account."},"containerName":{"type":"string","description":"The name of storage container in the storage account."},"resourceGroup":{"type":"string","description":"The name of the resource group of the storage account."},"subscriptionId":{"type":"string","description":"The subscription identifier of the storage account."}},"description":"The properties of the Azure Storage Container for file archive."}},"parameters":{"api-version":{"name":"api-version","in":"query","description":"The version of the API.","required":true,"schema":{"minLength":10,"type":"string","enum":["2017-10-01-preview"]}},"resourceGroupName":{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},"resourceName":{"name":"resourceName","in":"path","description":"The name of the IoTSpaces instance.","required":true,"schema":{"maxLength":64,"minLength":1,"type":"string"}},"subscriptionId":{"name":"subscriptionId","in":"path","description":"The subscription identifier.","required":true,"schema":{"type":"string","format":"uuid"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "IoTSpacesClient",
+    "description" : "Use this API to manage the IoTSpaces service instances in your Azure subscription.",
+    "version" : "2017-10-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/providers/Microsoft.IoTSpaces/operations" : {
+      "get" : {
+        "tags" : [ "Proxy" ],
+        "description" : "Lists all of the available IoTSpaces service REST API operations.",
+        "operationId" : "Operations_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK. The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.IoTSpaces/Graph" : {
+      "get" : {
+        "tags" : [ "Collection" ],
+        "description" : "Get all the IoTSpaces instances in a subscription.",
+        "operationId" : "IoTSpaces_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "This is a synchronous operation. The body contains a JSON-serialized array of the metadata from all the IoTSpaces instances in the subscription.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescriptionListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.IoTSpaces/checkNameAvailability" : {
+      "post" : {
+        "tags" : [ "Proxy" ],
+        "description" : "Check if an IoTSpaces instance name is available.",
+        "operationId" : "IoTSpaces_CheckNameAvailability",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Set the name parameter in the OperationInputs structure to the name of the IoTSpaces instance to check.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/OperationInputs"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "This is a synchronous operation. The body contains a JSON-serialized response that specifies whether the IoTSpaces service name is available. If the name is not available, the body contains the reason.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesNameAvailabilityInfo"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTSpaces/Graph" : {
+      "get" : {
+        "tags" : [ "Collection" ],
+        "description" : "Get all the IoTSpaces instances in a resource group.",
+        "operationId" : "IoTSpaces_ListByResourceGroup",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "This is a synchronous operation. The body contains a JSON-serialized array of the metadata from all the IoTSpaces instances in the resource group.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescriptionListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTSpaces/Graph/{resourceName}" : {
+      "get" : {
+        "tags" : [ "Resource" ],
+        "description" : "Get the metadata of a IoTSpaces instance.",
+        "operationId" : "IoTSpaces_Get",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The body contains all the non-security properties of the IoTSpaces instance. Security-related properties are set to null.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescription"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Default error response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "put" : {
+        "tags" : [ "Resource" ],
+        "description" : "Create or update the metadata of an IoTSpaces instance. The usual pattern to modify a property is to retrieve the IoTSpaces instance metadata and security metadata, and then combine them with the modified values in a new body to update the IoTSpaces instance.",
+        "operationId" : "IoTSpaces_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The IoTSpaces instance metadata and security metadata.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/IoTSpacesDescription"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "This is returned as a response to the status polling request for the create or update operation. The body contains the resource representation that indicates a transitional provisioning state.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescription"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted - Put request accepted; the operation will complete asynchronously."
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ "Resource" ],
+        "description" : "Delete an IoTSpaces instance.",
+        "operationId" : "IoTSpaces_Delete",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "This is returned as a response to the status polling request for the delete operation. The body contains the resource representation that indicates a transitional provisioning state.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescription"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted - Delete request accepted; the operation will complete asynchronously."
+          },
+          "204" : {
+            "description" : "Once the long running delete operation completes successfully, a 204 No Content status code is returned when the status polling request finds the IoTSpaces service metadata in the service and the status of the delete operation is set to a completed state."
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Resource" ],
+        "description" : "Update the metadata of a IoTSpaces instance.",
+        "operationId" : "IoTSpaces_Update",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The version of the API.",
+          "required" : true,
+          "schema" : {
+            "minLength" : 10,
+            "type" : "string",
+            "enum" : [ "2017-10-01-preview" ]
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }, {
+          "name" : "resourceName",
+          "in" : "path",
+          "description" : "The name of the IoTSpaces instance.",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 64,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The IoTSpaces instance metadata and security metadata.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/IoTSpacesPatchDescription"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "This is returned as a response to the status polling request for the create or update operation. The body contains the resource representation that indicates a transitional provisioning state.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/IoTSpacesDescription"
+                }
+              }
+            }
+          },
+          "202" : {
+            "description" : "Accepted - Put request accepted; the operation will complete asynchronously."
+          },
+          "default" : {
+            "description" : "DefaultErrorResponse",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorDetails" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code.",
+            "readOnly" : true
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "The error message.",
+            "readOnly" : true
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "The target of the particular error.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Error details."
+      },
+      "IoTSpacesDescription" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/IoTSpacesProperties"
+          },
+          "sku" : {
+            "$ref" : "#/components/schemas/IoTSpacesSkuInfo"
+          }
+        },
+        "description" : "The description of the IoTSpaces service.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "IoTSpacesDescriptionListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link used to get the next page of IoTSpaces description objects."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "A list of IoTSpaces description objects.",
+            "items" : {
+              "$ref" : "#/components/schemas/IoTSpacesDescription"
+            }
+          }
+        },
+        "description" : "A list of IoTSpaces description objects with a next link."
+      },
+      "IoTSpacesNameAvailabilityInfo" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "The detailed reason message."
+          },
+          "nameAvailable" : {
+            "type" : "boolean",
+            "description" : "The value which indicates whether the provided name is available.",
+            "readOnly" : true
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "The reason for unavailability.",
+            "readOnly" : true,
+            "enum" : [ "Invalid", "AlreadyExists" ]
+          }
+        },
+        "description" : "The properties indicating whether a given IoTSpaces service name is available."
+      },
+      "IoTSpacesPatchDescription" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/IoTSpacesProperties"
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "Instance tags"
+          }
+        },
+        "description" : "The description of the IoTSpaces service."
+      },
+      "IoTSpacesProperties" : {
+        "type" : "object",
+        "properties" : {
+          "managementApiUrl" : {
+            "type" : "string",
+            "description" : "The management Api endpoint.",
+            "readOnly" : true
+          },
+          "provisioningState" : {
+            "type" : "string",
+            "description" : "The provisioning state.",
+            "readOnly" : true,
+            "enum" : [ "Provisioning", "Deleting", "Succeeded", "Failed", "Canceled" ]
+          },
+          "storageContainer" : {
+            "$ref" : "#/components/schemas/StorageContainerProperties"
+          },
+          "webPortalUrl" : {
+            "type" : "string",
+            "description" : "The management UI endpoint.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The properties of an IoTSpaces instance."
+      },
+      "IoTSpacesSkuInfo" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the SKU.",
+            "enum" : [ "F1", "S1", "S2", "S3" ]
+          }
+        },
+        "description" : "Information about the SKU of the IoTSpaces instance."
+      },
+      "Operation" : {
+        "type" : "object",
+        "properties" : {
+          "display" : {
+            "$ref" : "#/components/schemas/OperationDisplay"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Operation name: {provider}/{resource}/{read | write | action | delete}",
+            "readOnly" : true
+          }
+        },
+        "description" : "IoTSpaces service REST API operation"
+      },
+      "OperationDisplay" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Friendly description for the operation,",
+            "readOnly" : true
+          },
+          "operation" : {
+            "type" : "string",
+            "description" : "Name of the operation",
+            "readOnly" : true
+          },
+          "provider" : {
+            "type" : "string",
+            "description" : "Service provider: Microsoft IoTSpaces",
+            "readOnly" : true
+          },
+          "resource" : {
+            "type" : "string",
+            "description" : "Resource Type: IoTSpaces",
+            "readOnly" : true
+          }
+        },
+        "description" : "The object that represents the operation."
+      },
+      "OperationInputs" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the IoTSpaces service instance to check."
+          }
+        },
+        "description" : "Input values."
+      },
+      "OperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "The link used to get the next page of IoTSpaces description objects."
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "A list of IoT spaces operations supported by the Microsoft.IoTSpaces resource provider.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Operation"
+            }
+          }
+        },
+        "description" : "A list of IoTSpaces service operations. It contains a list of operations and a URL link to get the next set of results."
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The resource identifier.",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "The resource location."
+          },
+          "name" : {
+            "pattern" : "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$",
+            "type" : "string",
+            "description" : "The resource name.",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "The resource tags."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The resource type.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The common properties of an IoTSpaces service."
+      },
+      "StorageContainerProperties" : {
+        "type" : "object",
+        "properties" : {
+          "connectionString" : {
+            "type" : "string",
+            "description" : "The connection string of the storage account."
+          },
+          "containerName" : {
+            "type" : "string",
+            "description" : "The name of storage container in the storage account."
+          },
+          "resourceGroup" : {
+            "type" : "string",
+            "description" : "The name of the resource group of the storage account."
+          },
+          "subscriptionId" : {
+            "type" : "string",
+            "description" : "The subscription identifier of the storage account."
+          }
+        },
+        "description" : "The properties of the Azure Storage Container for file archive."
+      }
+    },
+    "parameters" : {
+      "api-version" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The version of the API.",
+        "required" : true,
+        "schema" : {
+          "minLength" : 10,
+          "type" : "string",
+          "enum" : [ "2017-10-01-preview" ]
+        }
+      },
+      "resourceGroupName" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group that contains the IoTSpaces instance.",
+        "required" : true,
+        "schema" : {
+          "maxLength" : 64,
+          "minLength" : 1,
+          "type" : "string"
+        }
+      },
+      "resourceName" : {
+        "name" : "resourceName",
+        "in" : "path",
+        "description" : "The name of the IoTSpaces instance.",
+        "required" : true,
+        "schema" : {
+          "maxLength" : 64,
+          "minLength" : 1,
+          "type" : "string"
+        }
+      },
+      "subscriptionId" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The subscription identifier.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

@@ -1,1 +1,457 @@
-{"openapi":"3.0.1","info":{"title":"Locations","description":"The Locations API is a collection of methods that support geographical information. The first method is an address lookup service for UK addresses. This service can be used to provide a new customer with a list of possible addresses from which they can populate a registration form.","version":"2.0"},"servers":[{"url":"https://sandbox.whapi.com/v2/locations"}],"security":[{"apiKey":null}],"paths":{"/address/lookup/":{"get":{"tags":["Locations"],"description":"Retrieves a list of addresses when supplied with a house number or name and a postcode. It is generally used during customer registration to provide a list of possible addresses from where the customer can select their own address details.\n","operationId":"addressLookup","parameters":[{"name":"houseNum","in":"query","description":"House number or name of the address.","required":true,"schema":{"type":"string"}},{"name":"postCode","in":"query","description":"Postcode of the address, no spaces required.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/addresses"},"example":"{\n  \"addresses\": \n  [\n    {\n      \"fullAddress\": \"4 Bywater Place, LONDON, SE16 5ND\",\n      \"street\": \"4 Bywater Place\",\n      \"postcode\": \"SE16 5ND\",\n      \"city\": \"London\",\n      \"county\": \"London\"\n    }\n  ]\n}        \n"}}},"400":{"description":"Missing or Invalid Parameter","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n  \"errors\":\n  [\n    {\n      \"code\":\"10070\",\n      \"message\":\"Missing Parameter\",\n      \"field\":\"postCode\"\n    },\n    {\n      \"code\":\"10071\",\n      \"message\":\"Invalid Parameter\",\n      \"field\":\"postCode\"\n    }\n  ]\n}\n"}}},"404":{"description":"Address not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n  \"errors\" : \n  [\n    {\n      \"code\":\"20301\",\n      \"message\":\"Could not find any addresses\",\n      \"field\":\"postCode\"\n    }\n  ]\n}\n"}}}}}},"/countries/":{"get":{"tags":["Locations"],"description":"Retrieves a list of countries and its currencies.","operationId":"getCountries","responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/countries"},"example":"{\n    \"countries\": \n    [\n        {\n            \"code\": \"GB\",\n            \"name\": \"United Kingdom\", \n            \"currencyCode\" : \"GBP\", \n            \"dialCode\" : \"+44\"\n        }\n    ]\n}\n"}}},"400":{"description":"Missing or Invalid Parameter","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"}}},"404":{"description":"Country/Countries not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20303\",\n          \"message\":\"Country not Found\"\n        }\n    ]\n}\n"}}}}}},"/countries/{countryCode}":{"get":{"tags":["Locations"],"description":"Retrieves the specified country and its currency.","operationId":"getCountry","parameters":[{"name":"countryCode","in":"path","description":"Code of the country","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/country"},"example":"{\n  \"code\":\"gb\",\n  \"name\":\"Great Britain\",\n  \"currencyCode\":\"GBP\",\n  \"dialCode\":\"+44\"\n}\n"}}},"400":{"description":"Missing or Invalid Parameter","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"}}},"404":{"description":"Country/Countries not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20303\",\n          \"message\":\"Country not Found\"\n        }\n    ]\n}\n"}}}}}},"/currencies/":{"get":{"tags":["Locations"],"description":"Retreives the list of currencies.","operationId":"getCurrencies","responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/currencies"},"example":"{\n  \"currencies\": \n  [\n    {\n      \"code\":\"GBP\",\n      \"name\":\"Pound\",\n      \"minDeposit\":\"5.00\",\n      \"maxDeposit\":\"100.00\",\n      \"minWithdrawal\":\"20.00\",\n      \"maxWithdrawal\":\"1000.00\",\n      \"exchangeRate\":\"1.00\"\n    }\n  ]\n}\n"}}},"404":{"description":"Currency not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20304\",\n          \"message\":\"Currency not Found\"\n        }\n    ]\n}\n"}}}}}},"/currencies/{currencyCode}":{"get":{"tags":["Locations"],"description":"Retreives the specified currency.","operationId":"getCurrency","parameters":[{"name":"currencyCode","in":"path","description":"Code of the currency","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/currency"},"example":"{\n    \"code\":\"GBP\",\n    \"name\":\"Pound\",\n    \"minDeposit\":\"5.00\",\n    \"maxDeposit\":\"100.00\",\n    \"minWithdrawal\":\"20.00\",\n    \"maxWithdrawal\":\"1000.00\",\n    \"exchangeRate\":\"1.00\"\n}\n"}}},"400":{"description":"Missing or Invalid Parameter","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"}}},"404":{"description":"Currency not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/locationsErrors"},"example":"{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20304\",\n          \"message\":\"Currency not Found\"\n        }\n    ]\n}\n"}}}}}}},"components":{"schemas":{"address":{"title":"address","type":"object","properties":{"city":{"type":"string","description":"The name of the postal city/town"},"county":{"type":"string","description":"The name of the county"},"fullAddress":{"type":"string","description":"The customer’s complete address including postcode"},"postCode":{"type":"string","description":"The postcode of the address"},"street":{"type":"string","description":"The name of the street including the house number/house name"}}},"addresses":{"type":"object","properties":{"addresses":{"type":"array","items":{"$ref":"#/components/schemas/address"}}}},"countries":{"type":"object","properties":{"countries":{"type":"array","items":{"$ref":"#/components/schemas/country"}}}},"country":{"title":"country","type":"object","properties":{"code":{"type":"string","description":"The code of the country"},"currencyCode":{"type":"string","description":"The currency code"},"dialCode":{"type":"string","description":"The dial code of the country"},"name":{"type":"string","description":"The name of the country"}}},"currencies":{"type":"object","properties":{"currencies":{"type":"array","items":{"$ref":"#/components/schemas/currency"}}}},"currency":{"title":"currency","type":"object","properties":{"code":{"type":"string","description":"The code of the currency"},"exchangeRate":{"type":"number","description":"The exchange rate for the currency","format":"double"},"maxDeposit":{"type":"number","description":"The maximum deposit for the currency","format":"double"},"maxWithdrawal":{"type":"number","description":"The maximum withdrawl for the currency","format":"double"},"minDeposit":{"type":"number","description":"The minimum deposit for the currency","format":"double"},"minWithdrawal":{"type":"number","description":"The minimum withdrawal for the currency","format":"double"},"name":{"type":"string","description":"The name of the currency"}}},"error":{"type":"object","properties":{"code":{"type":"string","description":"A unique William Hill identifier for the error"},"field":{"type":"string","description":"To help pinpoint the exact parameter where a request has failed"},"message":{"type":"string","description":"A unique William Hill text string to enable you to identify the error (in English only)"}}},"locationsErrors":{"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/components/schemas/error"}}}}},"parameters":{"apiKey":{"name":"apiKey","in":"header","description":"A unique identifier of your application that is generated by the API portal and presented in the header.","required":true,"schema":{"type":"string"}},"countryCode":{"name":"countryCode","in":"path","description":"Code of the country","required":true,"schema":{"type":"string"}},"currencyCode":{"name":"currencyCode","in":"path","description":"Code of the currency","required":true,"schema":{"type":"string"}},"houseNum":{"name":"houseNum","in":"query","description":"House number or name of the address.","required":true,"schema":{"type":"string"}},"postCode":{"name":"postCode","in":"query","description":"Postcode of the address, no spaces required.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"apiKey":{"type":"apiKey","description":"A unique identifier of your application that is generated by the API portal and presented in the header.","name":"apiKey","in":"header"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Locations",
+    "description" : "The Locations API is a collection of methods that support geographical information. The first method is an address lookup service for UK addresses. This service can be used to provide a new customer with a list of possible addresses from which they can populate a registration form.",
+    "version" : "2.0"
+  },
+  "servers" : [ {
+    "url" : "https://sandbox.whapi.com/v2/locations"
+  } ],
+  "security" : [ {
+    "apiKey" : null
+  } ],
+  "paths" : {
+    "/address/lookup/" : {
+      "get" : {
+        "tags" : [ "Locations" ],
+        "description" : "Retrieves a list of addresses when supplied with a house number or name and a postcode. It is generally used during customer registration to provide a list of possible addresses from where the customer can select their own address details.\n",
+        "operationId" : "addressLookup",
+        "parameters" : [ {
+          "name" : "houseNum",
+          "in" : "query",
+          "description" : "House number or name of the address.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "postCode",
+          "in" : "query",
+          "description" : "Postcode of the address, no spaces required.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/addresses"
+                },
+                "example" : "{\n  \"addresses\": \n  [\n    {\n      \"fullAddress\": \"4 Bywater Place, LONDON, SE16 5ND\",\n      \"street\": \"4 Bywater Place\",\n      \"postcode\": \"SE16 5ND\",\n      \"city\": \"London\",\n      \"county\": \"London\"\n    }\n  ]\n}        \n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing or Invalid Parameter",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n  \"errors\":\n  [\n    {\n      \"code\":\"10070\",\n      \"message\":\"Missing Parameter\",\n      \"field\":\"postCode\"\n    },\n    {\n      \"code\":\"10071\",\n      \"message\":\"Invalid Parameter\",\n      \"field\":\"postCode\"\n    }\n  ]\n}\n"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Address not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n  \"errors\" : \n  [\n    {\n      \"code\":\"20301\",\n      \"message\":\"Could not find any addresses\",\n      \"field\":\"postCode\"\n    }\n  ]\n}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/" : {
+      "get" : {
+        "tags" : [ "Locations" ],
+        "description" : "Retrieves a list of countries and its currencies.",
+        "operationId" : "getCountries",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/countries"
+                },
+                "example" : "{\n    \"countries\": \n    [\n        {\n            \"code\": \"GB\",\n            \"name\": \"United Kingdom\", \n            \"currencyCode\" : \"GBP\", \n            \"dialCode\" : \"+44\"\n        }\n    ]\n}\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing or Invalid Parameter",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Country/Countries not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20303\",\n          \"message\":\"Country not Found\"\n        }\n    ]\n}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/{countryCode}" : {
+      "get" : {
+        "tags" : [ "Locations" ],
+        "description" : "Retrieves the specified country and its currency.",
+        "operationId" : "getCountry",
+        "parameters" : [ {
+          "name" : "countryCode",
+          "in" : "path",
+          "description" : "Code of the country",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/country"
+                },
+                "example" : "{\n  \"code\":\"gb\",\n  \"name\":\"Great Britain\",\n  \"currencyCode\":\"GBP\",\n  \"dialCode\":\"+44\"\n}\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing or Invalid Parameter",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Country/Countries not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20303\",\n          \"message\":\"Country not Found\"\n        }\n    ]\n}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencies/" : {
+      "get" : {
+        "tags" : [ "Locations" ],
+        "description" : "Retreives the list of currencies.",
+        "operationId" : "getCurrencies",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/currencies"
+                },
+                "example" : "{\n  \"currencies\": \n  [\n    {\n      \"code\":\"GBP\",\n      \"name\":\"Pound\",\n      \"minDeposit\":\"5.00\",\n      \"maxDeposit\":\"100.00\",\n      \"minWithdrawal\":\"20.00\",\n      \"maxWithdrawal\":\"1000.00\",\n      \"exchangeRate\":\"1.00\"\n    }\n  ]\n}\n"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Currency not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20304\",\n          \"message\":\"Currency not Found\"\n        }\n    ]\n}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencies/{currencyCode}" : {
+      "get" : {
+        "tags" : [ "Locations" ],
+        "description" : "Retreives the specified currency.",
+        "operationId" : "getCurrency",
+        "parameters" : [ {
+          "name" : "currencyCode",
+          "in" : "path",
+          "description" : "Code of the currency",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/currency"
+                },
+                "example" : "{\n    \"code\":\"GBP\",\n    \"name\":\"Pound\",\n    \"minDeposit\":\"5.00\",\n    \"maxDeposit\":\"100.00\",\n    \"minWithdrawal\":\"20.00\",\n    \"maxWithdrawal\":\"1000.00\",\n    \"exchangeRate\":\"1.00\"\n}\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing or Invalid Parameter",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"10070\",\n          \"message\":\"Missing Parameter\",\n          \"field\":\"postCode\"\n        },\n        {\n          \"code\":\"10071\",\n          \"message\":\"Invalid Parameter\",\n          \"field\":\"postCode\"\n        }    \n    ]\n}\n"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Currency not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/locationsErrors"
+                },
+                "example" : "{\n    \"errors\" : \n    [\n        {\n          \"code\":\"20304\",\n          \"message\":\"Currency not Found\"\n        }\n    ]\n}\n"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "address" : {
+        "title" : "address",
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string",
+            "description" : "The name of the postal city/town"
+          },
+          "county" : {
+            "type" : "string",
+            "description" : "The name of the county"
+          },
+          "fullAddress" : {
+            "type" : "string",
+            "description" : "The customer’s complete address including postcode"
+          },
+          "postCode" : {
+            "type" : "string",
+            "description" : "The postcode of the address"
+          },
+          "street" : {
+            "type" : "string",
+            "description" : "The name of the street including the house number/house name"
+          }
+        }
+      },
+      "addresses" : {
+        "type" : "object",
+        "properties" : {
+          "addresses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/address"
+            }
+          }
+        }
+      },
+      "countries" : {
+        "type" : "object",
+        "properties" : {
+          "countries" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/country"
+            }
+          }
+        }
+      },
+      "country" : {
+        "title" : "country",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The code of the country"
+          },
+          "currencyCode" : {
+            "type" : "string",
+            "description" : "The currency code"
+          },
+          "dialCode" : {
+            "type" : "string",
+            "description" : "The dial code of the country"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the country"
+          }
+        }
+      },
+      "currencies" : {
+        "type" : "object",
+        "properties" : {
+          "currencies" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/currency"
+            }
+          }
+        }
+      },
+      "currency" : {
+        "title" : "currency",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The code of the currency"
+          },
+          "exchangeRate" : {
+            "type" : "number",
+            "description" : "The exchange rate for the currency",
+            "format" : "double"
+          },
+          "maxDeposit" : {
+            "type" : "number",
+            "description" : "The maximum deposit for the currency",
+            "format" : "double"
+          },
+          "maxWithdrawal" : {
+            "type" : "number",
+            "description" : "The maximum withdrawl for the currency",
+            "format" : "double"
+          },
+          "minDeposit" : {
+            "type" : "number",
+            "description" : "The minimum deposit for the currency",
+            "format" : "double"
+          },
+          "minWithdrawal" : {
+            "type" : "number",
+            "description" : "The minimum withdrawal for the currency",
+            "format" : "double"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the currency"
+          }
+        }
+      },
+      "error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "A unique William Hill identifier for the error"
+          },
+          "field" : {
+            "type" : "string",
+            "description" : "To help pinpoint the exact parameter where a request has failed"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A unique William Hill text string to enable you to identify the error (in English only)"
+          }
+        }
+      },
+      "locationsErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "apiKey" : {
+        "name" : "apiKey",
+        "in" : "header",
+        "description" : "A unique identifier of your application that is generated by the API portal and presented in the header.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "countryCode" : {
+        "name" : "countryCode",
+        "in" : "path",
+        "description" : "Code of the country",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "currencyCode" : {
+        "name" : "currencyCode",
+        "in" : "path",
+        "description" : "Code of the currency",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "houseNum" : {
+        "name" : "houseNum",
+        "in" : "query",
+        "description" : "House number or name of the address.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "postCode" : {
+        "name" : "postCode",
+        "in" : "query",
+        "description" : "Postcode of the address, no spaces required.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "apiKey" : {
+        "type" : "apiKey",
+        "description" : "A unique identifier of your application that is generated by the API portal and presented in the header.",
+        "name" : "apiKey",
+        "in" : "header"
+      }
+    }
+  }
+}

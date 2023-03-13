@@ -1,1 +1,694 @@
-{"openapi":"3.0.1","info":{"title":"GalleryManagementClient","description":"The Admin Gallery Management Client.","version":"2015-04-01"},"servers":[{"url":"https://adminmanagement.local.azurestack.external/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems":{"get":{"tags":["GalleryItems"],"summary":"Lists gallery items.","operationId":"GalleryItems_List","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItemList"}}}}}},"post":{"tags":["GalleryItems"],"summary":"Uploads a provider gallery item to the storage.","operationId":"GalleryItems_Create","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"requestBody":{"description":"The URI to the gallery item JSON file.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItemUriPayload"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItem"}}}},"201":{"description":"CREATED","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItem"}}}}}}},"/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems/{galleryItemName}":{"get":{"tags":["GalleryItems"],"summary":"Get a specific gallery item.","operationId":"GalleryItems_Get","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"galleryItemName","in":"path","description":"Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItem"}}}},"404":{"description":"NOT FOUND"}}},"delete":{"tags":["GalleryItems"],"summary":"Delete a specific gallery item.","operationId":"GalleryItems_Delete","parameters":[{"name":"subscriptionId","in":"path","description":"Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.","required":true,"schema":{"type":"string"}},{"name":"galleryItemName","in":"path","description":"Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client API Version.","required":true,"schema":{"type":"string","default":"2016-05-01"}}],"responses":{"200":{"description":"OK"},"204":{"description":"NO CONTENT."}}}}},"components":{"schemas":{"Artifact":{"type":"object","properties":{"name":{"type":"string","description":"Name of the artifact."},"type":{"type":"string","description":"Artifact type.","enum":["template","fragment","custom","metadata"]},"uri":{"type":"string","description":"URI to the artifact."}},"description":"Represents gallery item artifacts."},"DefinitionTemplates":{"type":"object","properties":{"defaultDeploymentTemplateId":{"type":"string","description":"Default deployment template ID."},"deploymentFragmentFileUris":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key-value pairs containing the deployment fragment file IDs defined in the package manifest.","readOnly":true},"deploymentTemplateFileUris":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key-value containing the deployment template file IDs defined in the package manifest.","readOnly":true},"uiDefinitionFileUri":{"type":"string","description":"UI definition file URI."}},"description":"Holds UI definition file Uri and deployment template file URIs."},"Filter":{"type":"object","properties":{"type":{"type":"string","description":"Filter type."},"value":{"type":"string","description":"Filter value."}},"description":"Represents a filter item."},"GalleryItem":{"properties":{"properties":{"$ref":"#/components/schemas/GalleryItemProperties"}},"description":"Properties of a gallery item.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"URI of the resource.","readOnly":true},"location":{"type":"string","description":"Location of the resource.","readOnly":true},"name":{"type":"string","description":"Name of the resource.","readOnly":true},"tags":{"type":"object","additionalProperties":{"type":"string"},"description":"List of key-value pairs.","readOnly":true},"type":{"type":"string","description":"Type of the resource.","readOnly":true}},"description":"Base Resource Object."}]},"GalleryItemList":{"type":"object","properties":{"value":{"type":"array","description":"List of gallery items.","items":{"$ref":"#/components/schemas/GalleryItem"}}},"description":"List of gallery items."},"GalleryItemProperties":{"type":"object","properties":{"additionalProperties":{"type":"object","additionalProperties":{"type":"string"},"description":"List of additional properties provided for the item.","readOnly":true},"artifacts":{"type":"array","description":"List of artifacts for the gallery item.","readOnly":true,"items":{"$ref":"#/components/schemas/Artifact"}},"categoryIds":{"type":"array","description":"List of category IDs the gallery item belongs to.","readOnly":true,"items":{"type":"string"}},"changedTime":{"type":"string","description":"Last update time of gallery item.","format":"date-time"},"createdTime":{"type":"string","description":"The date and time that the gallery item was created.","format":"date-time"},"definitionTemplates":{"$ref":"#/components/schemas/DefinitionTemplates"},"description":{"type":"string","description":"The description of the gallery item."},"filters":{"type":"array","description":"List of filters for the gallery item.","readOnly":true,"items":{"$ref":"#/components/schemas/Filter"}},"iconFileUris":{"type":"object","properties":{"hero":{"type":"string","description":"URI to the hero icon."},"large":{"type":"string","description":"URI to the large icon."},"medium":{"type":"string","description":"URI to the medium icon."},"small":{"type":"string","description":"URI to the small icon."},"wide":{"type":"string","description":"URI to the wide icon."}},"description":"URIs to icon files.","readOnly":true},"identity":{"type":"string","description":"Identity of the gallery item."},"images":{"type":"array","description":"List of images.","readOnly":true,"items":{"$ref":"#/components/schemas/ImageGroup"}},"itemDisplayName":{"type":"string","description":"Displayed name in the portal."},"itemName":{"type":"string","description":"The display name for the gallery item, for the locale of the request."},"itemType":{"type":"string","description":"Describes the type of the gallery item, either GalleryItem or ItemGroup.","enum":["GalleryItem","ItemGroup"]},"links":{"type":"array","description":"Links provided for the item.","readOnly":true,"items":{"$ref":"#/components/schemas/LinkProperties"}},"longSummary":{"type":"string","description":"Long summary of the gallery item."},"marketingMaterial":{"$ref":"#/components/schemas/MarketingMaterial"},"metadata":{"$ref":"#/components/schemas/OpenProperty"},"products":{"type":"array","description":"List of products.","readOnly":true,"items":{"$ref":"#/components/schemas/Product"}},"properties":{"type":"object","additionalProperties":{"type":"string"},"description":"List of properties provided for the gallery item.","readOnly":true},"publisher":{"type":"string","description":"The publisher of the gallery item."},"publisherDisplayName":{"type":"string","description":"Display name of the publisher."},"resourceGroupName":{"type":"string","description":"Resource group name the gallery item belongs too."},"screenshotUris":{"type":"array","description":"List of screenshot image URIs provided for the item.","readOnly":true,"items":{"type":"string"}},"summary":{"type":"string","description":"Short summary of the gallery item."},"uiDefinitionUri":{"type":"string","description":"The URL of the view definition object that defines the UI information that is used when an instance of the gallery item resource definition is created."},"version":{"type":"string","description":"The version identifier of the gallery item, in Major.Minor.Build format."}},"description":"Properties of a gallery item."},"GalleryItemUriPayload":{"type":"object","properties":{"galleryItemUri":{"type":"string","description":"URI for your gallery package that has already been uploaded online."}},"description":"Location of gallery item payload."},"Image":{"type":"object","properties":{"id":{"type":"string","description":"ID of the image."},"type":{"type":"string","description":"Type of image."},"uri":{"type":"string","description":"URI to the image."}},"description":"Represents an image item."},"ImageGroup":{"type":"object","properties":{"context":{"type":"string","description":"Image group identifier."},"items":{"type":"array","description":"List of images.","readOnly":true,"items":{"$ref":"#/components/schemas/Image"}}},"description":"Group of images."},"LinkProperties":{"type":"object","properties":{"displayName":{"type":"string","description":"Display name of the link."},"id":{"type":"string","description":"ID of the link."},"uri":{"type":"string","description":"URI of the link."}},"description":"Represents a link item read from the gallery item package."},"MarketingMaterial":{"type":"object","properties":{"learnUri":{"type":"string","description":"URI to educational material."},"path":{"type":"string","description":"Path to the marketing site."}},"description":"Marketing material for a gallery item."},"OfferDetails":{"type":"object","properties":{"offerId":{"type":"string","description":"Offer identifier."},"plans":{"type":"array","description":"List of plans available for the offer.","readOnly":true,"items":{"$ref":"#/components/schemas/Plan"}},"publisherId":{"type":"string","description":"Publisher identifier."}},"description":"Represents a offer details item read from the gallery item package."},"OpenProperty":{"type":"object","properties":{"properties":{"type":"object","additionalProperties":{"type":"object"},"description":"Dictionary of dynamic properties.","readOnly":true}},"description":"Open type used to define dynamic properties."},"Plan":{"type":"object","properties":{"description":{"type":"string","description":"Description of the plan."},"displayName":{"type":"string","description":"Display name of the plan."},"planId":{"type":"string","description":"Plan identifier."},"summary":{"type":"string","description":"Summary of the plan."}},"description":"Represents a plan item read from the gallery item package."},"Product":{"type":"object","properties":{"displayName":{"type":"string","description":"Display name of the product."},"legalTerms":{"type":"string","description":"Legal terms of the product."},"legalTermsUri":{"type":"string","description":"URI to the legal terms of the product."},"offerDetails":{"$ref":"#/components/schemas/OfferDetails"},"pricingDetailsUri":{"type":"string","description":"URI to the pricing details of the product."},"privacyPolicy":{"type":"string","description":"Privacy policy of the product."},"privacyPolicyUri":{"type":"string","description":"URI to the privacy policy of the product."},"publisherDisplayName":{"type":"string","description":"Publisher display name of the product."}},"description":"Represents a product item read from the gallery item package."}},"parameters":{"GalleryItemNameParameter":{"name":"galleryItemName","in":"path","description":"Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.","required":true,"schema":{"type":"string"}}},"requestBodies":{"GalleryItemUriPayloadParameter":{"description":"The URI to the gallery item JSON file.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GalleryItemUriPayload"}}},"required":true}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Authorization uses an Azure Active Directory OAuth2 flow."}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "GalleryManagementClient",
+    "description" : "The Admin Gallery Management Client.",
+    "version" : "2015-04-01"
+  },
+  "servers" : [ {
+    "url" : "https://adminmanagement.local.azurestack.external/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems" : {
+      "get" : {
+        "tags" : [ "GalleryItems" ],
+        "summary" : "Lists gallery items.",
+        "operationId" : "GalleryItems_List",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GalleryItemList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "GalleryItems" ],
+        "summary" : "Uploads a provider gallery item to the storage.",
+        "operationId" : "GalleryItems_Create",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The URI to the gallery item JSON file.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GalleryItemUriPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GalleryItem"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "CREATED",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GalleryItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems/{galleryItemName}" : {
+      "get" : {
+        "tags" : [ "GalleryItems" ],
+        "summary" : "Get a specific gallery item.",
+        "operationId" : "GalleryItems_Get",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "galleryItemName",
+          "in" : "path",
+          "description" : "Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GalleryItem"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "NOT FOUND"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "GalleryItems" ],
+        "summary" : "Delete a specific gallery item.",
+        "operationId" : "GalleryItems_Delete",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "galleryItemName",
+          "in" : "path",
+          "description" : "Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client API Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2016-05-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "204" : {
+            "description" : "NO CONTENT."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Artifact" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the artifact."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Artifact type.",
+            "enum" : [ "template", "fragment", "custom", "metadata" ]
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "URI to the artifact."
+          }
+        },
+        "description" : "Represents gallery item artifacts."
+      },
+      "DefinitionTemplates" : {
+        "type" : "object",
+        "properties" : {
+          "defaultDeploymentTemplateId" : {
+            "type" : "string",
+            "description" : "Default deployment template ID."
+          },
+          "deploymentFragmentFileUris" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "List of key-value pairs containing the deployment fragment file IDs defined in the package manifest.",
+            "readOnly" : true
+          },
+          "deploymentTemplateFileUris" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "List of key-value containing the deployment template file IDs defined in the package manifest.",
+            "readOnly" : true
+          },
+          "uiDefinitionFileUri" : {
+            "type" : "string",
+            "description" : "UI definition file URI."
+          }
+        },
+        "description" : "Holds UI definition file Uri and deployment template file URIs."
+      },
+      "Filter" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Filter type."
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "Filter value."
+          }
+        },
+        "description" : "Represents a filter item."
+      },
+      "GalleryItem" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/GalleryItemProperties"
+          }
+        },
+        "description" : "Properties of a gallery item.",
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "description" : "URI of the resource.",
+              "readOnly" : true
+            },
+            "location" : {
+              "type" : "string",
+              "description" : "Location of the resource.",
+              "readOnly" : true
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "Name of the resource.",
+              "readOnly" : true
+            },
+            "tags" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string"
+              },
+              "description" : "List of key-value pairs.",
+              "readOnly" : true
+            },
+            "type" : {
+              "type" : "string",
+              "description" : "Type of the resource.",
+              "readOnly" : true
+            }
+          },
+          "description" : "Base Resource Object."
+        } ]
+      },
+      "GalleryItemList" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "List of gallery items.",
+            "items" : {
+              "$ref" : "#/components/schemas/GalleryItem"
+            }
+          }
+        },
+        "description" : "List of gallery items."
+      },
+      "GalleryItemProperties" : {
+        "type" : "object",
+        "properties" : {
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "List of additional properties provided for the item.",
+            "readOnly" : true
+          },
+          "artifacts" : {
+            "type" : "array",
+            "description" : "List of artifacts for the gallery item.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Artifact"
+            }
+          },
+          "categoryIds" : {
+            "type" : "array",
+            "description" : "List of category IDs the gallery item belongs to.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "changedTime" : {
+            "type" : "string",
+            "description" : "Last update time of gallery item.",
+            "format" : "date-time"
+          },
+          "createdTime" : {
+            "type" : "string",
+            "description" : "The date and time that the gallery item was created.",
+            "format" : "date-time"
+          },
+          "definitionTemplates" : {
+            "$ref" : "#/components/schemas/DefinitionTemplates"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The description of the gallery item."
+          },
+          "filters" : {
+            "type" : "array",
+            "description" : "List of filters for the gallery item.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Filter"
+            }
+          },
+          "iconFileUris" : {
+            "type" : "object",
+            "properties" : {
+              "hero" : {
+                "type" : "string",
+                "description" : "URI to the hero icon."
+              },
+              "large" : {
+                "type" : "string",
+                "description" : "URI to the large icon."
+              },
+              "medium" : {
+                "type" : "string",
+                "description" : "URI to the medium icon."
+              },
+              "small" : {
+                "type" : "string",
+                "description" : "URI to the small icon."
+              },
+              "wide" : {
+                "type" : "string",
+                "description" : "URI to the wide icon."
+              }
+            },
+            "description" : "URIs to icon files.",
+            "readOnly" : true
+          },
+          "identity" : {
+            "type" : "string",
+            "description" : "Identity of the gallery item."
+          },
+          "images" : {
+            "type" : "array",
+            "description" : "List of images.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ImageGroup"
+            }
+          },
+          "itemDisplayName" : {
+            "type" : "string",
+            "description" : "Displayed name in the portal."
+          },
+          "itemName" : {
+            "type" : "string",
+            "description" : "The display name for the gallery item, for the locale of the request."
+          },
+          "itemType" : {
+            "type" : "string",
+            "description" : "Describes the type of the gallery item, either GalleryItem or ItemGroup.",
+            "enum" : [ "GalleryItem", "ItemGroup" ]
+          },
+          "links" : {
+            "type" : "array",
+            "description" : "Links provided for the item.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/LinkProperties"
+            }
+          },
+          "longSummary" : {
+            "type" : "string",
+            "description" : "Long summary of the gallery item."
+          },
+          "marketingMaterial" : {
+            "$ref" : "#/components/schemas/MarketingMaterial"
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/OpenProperty"
+          },
+          "products" : {
+            "type" : "array",
+            "description" : "List of products.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Product"
+            }
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "List of properties provided for the gallery item.",
+            "readOnly" : true
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "The publisher of the gallery item."
+          },
+          "publisherDisplayName" : {
+            "type" : "string",
+            "description" : "Display name of the publisher."
+          },
+          "resourceGroupName" : {
+            "type" : "string",
+            "description" : "Resource group name the gallery item belongs too."
+          },
+          "screenshotUris" : {
+            "type" : "array",
+            "description" : "List of screenshot image URIs provided for the item.",
+            "readOnly" : true,
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "summary" : {
+            "type" : "string",
+            "description" : "Short summary of the gallery item."
+          },
+          "uiDefinitionUri" : {
+            "type" : "string",
+            "description" : "The URL of the view definition object that defines the UI information that is used when an instance of the gallery item resource definition is created."
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The version identifier of the gallery item, in Major.Minor.Build format."
+          }
+        },
+        "description" : "Properties of a gallery item."
+      },
+      "GalleryItemUriPayload" : {
+        "type" : "object",
+        "properties" : {
+          "galleryItemUri" : {
+            "type" : "string",
+            "description" : "URI for your gallery package that has already been uploaded online."
+          }
+        },
+        "description" : "Location of gallery item payload."
+      },
+      "Image" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "ID of the image."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of image."
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "URI to the image."
+          }
+        },
+        "description" : "Represents an image item."
+      },
+      "ImageGroup" : {
+        "type" : "object",
+        "properties" : {
+          "context" : {
+            "type" : "string",
+            "description" : "Image group identifier."
+          },
+          "items" : {
+            "type" : "array",
+            "description" : "List of images.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Image"
+            }
+          }
+        },
+        "description" : "Group of images."
+      },
+      "LinkProperties" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "Display name of the link."
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "ID of the link."
+          },
+          "uri" : {
+            "type" : "string",
+            "description" : "URI of the link."
+          }
+        },
+        "description" : "Represents a link item read from the gallery item package."
+      },
+      "MarketingMaterial" : {
+        "type" : "object",
+        "properties" : {
+          "learnUri" : {
+            "type" : "string",
+            "description" : "URI to educational material."
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "Path to the marketing site."
+          }
+        },
+        "description" : "Marketing material for a gallery item."
+      },
+      "OfferDetails" : {
+        "type" : "object",
+        "properties" : {
+          "offerId" : {
+            "type" : "string",
+            "description" : "Offer identifier."
+          },
+          "plans" : {
+            "type" : "array",
+            "description" : "List of plans available for the offer.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Plan"
+            }
+          },
+          "publisherId" : {
+            "type" : "string",
+            "description" : "Publisher identifier."
+          }
+        },
+        "description" : "Represents a offer details item read from the gallery item package."
+      },
+      "OpenProperty" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            },
+            "description" : "Dictionary of dynamic properties.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Open type used to define dynamic properties."
+      },
+      "Plan" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the plan."
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "Display name of the plan."
+          },
+          "planId" : {
+            "type" : "string",
+            "description" : "Plan identifier."
+          },
+          "summary" : {
+            "type" : "string",
+            "description" : "Summary of the plan."
+          }
+        },
+        "description" : "Represents a plan item read from the gallery item package."
+      },
+      "Product" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "Display name of the product."
+          },
+          "legalTerms" : {
+            "type" : "string",
+            "description" : "Legal terms of the product."
+          },
+          "legalTermsUri" : {
+            "type" : "string",
+            "description" : "URI to the legal terms of the product."
+          },
+          "offerDetails" : {
+            "$ref" : "#/components/schemas/OfferDetails"
+          },
+          "pricingDetailsUri" : {
+            "type" : "string",
+            "description" : "URI to the pricing details of the product."
+          },
+          "privacyPolicy" : {
+            "type" : "string",
+            "description" : "Privacy policy of the product."
+          },
+          "privacyPolicyUri" : {
+            "type" : "string",
+            "description" : "URI to the privacy policy of the product."
+          },
+          "publisherDisplayName" : {
+            "type" : "string",
+            "description" : "Publisher display name of the product."
+          }
+        },
+        "description" : "Represents a product item read from the gallery item package."
+      }
+    },
+    "parameters" : {
+      "GalleryItemNameParameter" : {
+        "name" : "galleryItemName",
+        "in" : "path",
+        "description" : "Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "requestBodies" : {
+      "GalleryItemUriPayloadParameter" : {
+        "description" : "The URI to the gallery item JSON file.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/GalleryItemUriPayload"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Authorization uses an Azure Active Directory OAuth2 flow."
+      }
+    }
+  }
+}

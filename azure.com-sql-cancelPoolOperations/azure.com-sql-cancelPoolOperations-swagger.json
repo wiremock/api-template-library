@@ -1,1 +1,374 @@
-{"openapi":"3.0.1","info":{"title":"SqlManagementClient","description":"The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.","version":"2017-10-01-preview"},"servers":[{"url":"https://management.azure.com/"}],"paths":{"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations":{"get":{"tags":["ElasticPools"],"description":"Gets a list of operations performed on the elastic pool.","operationId":"ElasticPoolOperations_ListByElasticPool","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"elasticPoolName","in":"path","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request for getting elastic pool operations has been executed successfully.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ElasticPoolOperationListResult"}}}},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."}}}},"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations/{operationId}/cancel":{"post":{"tags":["ElasticPools"],"description":"Cancels the asynchronous operation on the elastic pool.","operationId":"ElasticPoolOperations_Cancel","parameters":[{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},{"name":"elasticPoolName","in":"path","required":true,"schema":{"type":"string"}},{"name":"operationId","in":"path","description":"The operation identifier.","required":true,"schema":{"type":"string","format":"uuid"}},{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"The request for cancel has been executed successfully."},"default":{"description":"*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 409 CannotCancelOperation - The management operation is in a state that cannot be cancelled.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."}}}}},"components":{"schemas":{"ElasticPoolOperation":{"properties":{"properties":{"$ref":"#/components/schemas/ElasticPoolOperationProperties"}},"description":"A elastic pool operation.","allOf":[{"description":"ARM proxy resource.","allOf":[{"type":"object","properties":{"id":{"type":"string","description":"Resource ID.","readOnly":true},"name":{"type":"string","description":"Resource name.","readOnly":true},"type":{"type":"string","description":"Resource type.","readOnly":true}},"description":"ARM resource."}]}]},"ElasticPoolOperationListResult":{"type":"object","properties":{"nextLink":{"type":"string","description":"Link to retrieve next page of results.","readOnly":true},"value":{"type":"array","description":"Array of results.","readOnly":true,"items":{"$ref":"#/components/schemas/ElasticPoolOperation"}}},"description":"The response to a list elastic pool operations request"},"ElasticPoolOperationProperties":{"type":"object","properties":{"description":{"type":"string","description":"The operation description.","readOnly":true},"elasticPoolName":{"type":"string","description":"The name of the elastic pool the operation is being performed on.","readOnly":true},"errorCode":{"type":"integer","description":"The operation error code.","format":"int32","readOnly":true},"errorDescription":{"type":"string","description":"The operation error description.","readOnly":true},"errorSeverity":{"type":"integer","description":"The operation error severity.","format":"int32","readOnly":true},"estimatedCompletionTime":{"type":"string","description":"The estimated completion time of the operation.","format":"date-time","readOnly":true},"isCancellable":{"type":"boolean","description":"Whether the operation can be cancelled.","readOnly":true},"isUserError":{"type":"boolean","description":"Whether or not the error is a user error.","readOnly":true},"operation":{"type":"string","description":"The name of operation.","readOnly":true},"operationFriendlyName":{"type":"string","description":"The friendly name of operation.","readOnly":true},"percentComplete":{"type":"integer","description":"The percentage of the operation completed.","format":"int32","readOnly":true},"serverName":{"type":"string","description":"The name of the server.","readOnly":true},"startTime":{"type":"string","description":"The operation start time.","format":"date-time","readOnly":true},"state":{"type":"string","description":"The operation state.","readOnly":true}},"description":"The properties of a elastic pool operation."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"The API version to use for the request.","required":true,"schema":{"type":"string"}},"BlobAuditingPolicyNameParameter":{"name":"blobAuditingPolicyName","in":"path","description":"The name of the blob auditing policy.","required":true,"schema":{"type":"string","enum":["default"]}},"DatabaseNameParameter":{"name":"databaseName","in":"path","description":"The name of the database.","required":true,"schema":{"type":"string"}},"ManagedInstanceNameParameter":{"name":"managedInstanceName","in":"path","description":"The name of the managed instance.","required":true,"schema":{"type":"string"}},"ResourceGroupParameter":{"name":"resourceGroupName","in":"path","description":"The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.","required":true,"schema":{"type":"string"}},"ServerNameParameter":{"name":"serverName","in":"path","description":"The name of the server.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineContainerNameParameter":{"name":"sqlVirtualMachineContainerName","in":"path","description":"The name of the SqlVirtualMachineContainer.","required":true,"schema":{"type":"string"}},"SqlVirtualMachineInstanceNameParameter":{"name":"sqlVirtualMachineInstanceName","in":"path","description":"The name of the SqlVirtualMachineInstance.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The subscription ID that identifies an Azure subscription.","required":true,"schema":{"type":"string"}},"VirtualClusterNameParameter":{"name":"virtualClusterName","in":"path","description":"The name of the virtual cluster.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "SqlManagementClient",
+    "description" : "The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure SQL Database services to manage your databases. The API enables users to create, retrieve, update, and delete databases, servers, and other entities.",
+    "version" : "2017-10-01-preview"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations" : {
+      "get" : {
+        "tags" : [ "ElasticPools" ],
+        "description" : "Gets a list of operations performed on the elastic pool.",
+        "operationId" : "ElasticPoolOperations_ListByElasticPool",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "elasticPoolName",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request for getting elastic pool operations has been executed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ElasticPoolOperationListResult"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations/{operationId}/cancel" : {
+      "post" : {
+        "tags" : [ "ElasticPools" ],
+        "description" : "Cancels the asynchronous operation on the elastic pool.",
+        "operationId" : "ElasticPoolOperations_Cancel",
+        "parameters" : [ {
+          "name" : "resourceGroupName",
+          "in" : "path",
+          "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "serverName",
+          "in" : "path",
+          "description" : "The name of the server.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "elasticPoolName",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "operationId",
+          "in" : "path",
+          "description" : "The operation identifier.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The subscription ID that identifies an Azure subscription.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "The API version to use for the request.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request for cancel has been executed successfully."
+          },
+          "default" : {
+            "description" : "*** Error Responses: ***\n\n * 404 SubscriptionDoesNotHaveServer - The requested server was not found\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 404 OperationIdNotFound - The operation with Id does not exist.\n\n * 409 OperationCancelled - The operation has been cancelled by user.\n\n * 409 OperationInterrupted - The operation on the resource could not be completed because it was interrupted by another operation on the same resource.\n\n * 409 CannotCancelOperation - The management operation is in a state that cannot be cancelled.\n\n * 500 OperationTimedOut - The operation timed out and automatically rolled back. Please retry the operation."
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ElasticPoolOperation" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/ElasticPoolOperationProperties"
+          }
+        },
+        "description" : "A elastic pool operation.",
+        "allOf" : [ {
+          "description" : "ARM proxy resource.",
+          "allOf" : [ {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "Resource ID.",
+                "readOnly" : true
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Resource name.",
+                "readOnly" : true
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "Resource type.",
+                "readOnly" : true
+              }
+            },
+            "description" : "ARM resource."
+          } ]
+        } ]
+      },
+      "ElasticPoolOperationListResult" : {
+        "type" : "object",
+        "properties" : {
+          "nextLink" : {
+            "type" : "string",
+            "description" : "Link to retrieve next page of results.",
+            "readOnly" : true
+          },
+          "value" : {
+            "type" : "array",
+            "description" : "Array of results.",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ElasticPoolOperation"
+            }
+          }
+        },
+        "description" : "The response to a list elastic pool operations request"
+      },
+      "ElasticPoolOperationProperties" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string",
+            "description" : "The operation description.",
+            "readOnly" : true
+          },
+          "elasticPoolName" : {
+            "type" : "string",
+            "description" : "The name of the elastic pool the operation is being performed on.",
+            "readOnly" : true
+          },
+          "errorCode" : {
+            "type" : "integer",
+            "description" : "The operation error code.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "errorDescription" : {
+            "type" : "string",
+            "description" : "The operation error description.",
+            "readOnly" : true
+          },
+          "errorSeverity" : {
+            "type" : "integer",
+            "description" : "The operation error severity.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "estimatedCompletionTime" : {
+            "type" : "string",
+            "description" : "The estimated completion time of the operation.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "isCancellable" : {
+            "type" : "boolean",
+            "description" : "Whether the operation can be cancelled.",
+            "readOnly" : true
+          },
+          "isUserError" : {
+            "type" : "boolean",
+            "description" : "Whether or not the error is a user error.",
+            "readOnly" : true
+          },
+          "operation" : {
+            "type" : "string",
+            "description" : "The name of operation.",
+            "readOnly" : true
+          },
+          "operationFriendlyName" : {
+            "type" : "string",
+            "description" : "The friendly name of operation.",
+            "readOnly" : true
+          },
+          "percentComplete" : {
+            "type" : "integer",
+            "description" : "The percentage of the operation completed.",
+            "format" : "int32",
+            "readOnly" : true
+          },
+          "serverName" : {
+            "type" : "string",
+            "description" : "The name of the server.",
+            "readOnly" : true
+          },
+          "startTime" : {
+            "type" : "string",
+            "description" : "The operation start time.",
+            "format" : "date-time",
+            "readOnly" : true
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The operation state.",
+            "readOnly" : true
+          }
+        },
+        "description" : "The properties of a elastic pool operation."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "The API version to use for the request.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "BlobAuditingPolicyNameParameter" : {
+        "name" : "blobAuditingPolicyName",
+        "in" : "path",
+        "description" : "The name of the blob auditing policy.",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "default" ]
+        }
+      },
+      "DatabaseNameParameter" : {
+        "name" : "databaseName",
+        "in" : "path",
+        "description" : "The name of the database.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ManagedInstanceNameParameter" : {
+        "name" : "managedInstanceName",
+        "in" : "path",
+        "description" : "The name of the managed instance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ResourceGroupParameter" : {
+        "name" : "resourceGroupName",
+        "in" : "path",
+        "description" : "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "ServerNameParameter" : {
+        "name" : "serverName",
+        "in" : "path",
+        "description" : "The name of the server.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineContainerNameParameter" : {
+        "name" : "sqlVirtualMachineContainerName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineContainer.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SqlVirtualMachineInstanceNameParameter" : {
+        "name" : "sqlVirtualMachineInstanceName",
+        "in" : "path",
+        "description" : "The name of the SqlVirtualMachineInstance.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The subscription ID that identifies an Azure subscription.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "VirtualClusterNameParameter" : {
+        "name" : "virtualClusterName",
+        "in" : "path",
+        "description" : "The name of the virtual cluster.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}

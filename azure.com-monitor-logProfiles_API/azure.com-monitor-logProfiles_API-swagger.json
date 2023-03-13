@@ -1,1 +1,425 @@
-{"openapi":"3.0.1","info":{"title":"MonitorManagementClient","version":"2016-03-01"},"servers":[{"url":"https://management.azure.com/"}],"security":[{"azure_auth":["user_impersonation"]}],"paths":{"/subscriptions/{subscriptionId}/providers/microsoft.insights/logprofiles":{"get":{"tags":["LogProfiles"],"description":"List the log profiles.","operationId":"LogProfiles_List","parameters":[{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to list log profiles","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileCollection"}}}}}}},"/subscriptions/{subscriptionId}/providers/microsoft.insights/logprofiles/{logProfileName}":{"get":{"tags":["LogProfiles"],"description":"Gets the log profile.","operationId":"LogProfiles_Get","parameters":[{"name":"logProfileName","in":"path","description":"The name of the log profile.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to get more information about a log profile.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}},"put":{"tags":["LogProfiles"],"description":"Create or update a log profile in Azure Monitoring REST API.","operationId":"LogProfiles_CreateOrUpdate","parameters":[{"name":"logProfileName","in":"path","description":"The name of the log profile.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileResource"}}},"required":true},"responses":{"200":{"description":"Successful request to create or update a log profile","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileResource"}}}}}},"delete":{"tags":["LogProfiles"],"description":"Deletes the log profile.","operationId":"LogProfiles_Delete","parameters":[{"name":"logProfileName","in":"path","description":"The name of the log profile.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful request to delete a log profile"}}},"patch":{"description":"Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.","operationId":"LogProfiles_Update","parameters":[{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}},{"name":"logProfileName","in":"path","description":"The name of the log profile.","required":true,"schema":{"type":"string"}},{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Parameters supplied to the operation.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileResourcePatch"}}},"required":true},"responses":{"200":{"description":"An existing log profile was successfully updated.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/LogProfileResource"}}}},"default":{"description":"Error response describing why the operation failed.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ErrorResponse"}}}}}}}},"components":{"schemas":{"ErrorResponse":{"type":"object","properties":{"code":{"type":"string","description":"Error code"},"message":{"type":"string","description":"Error message indicating why the operation failed."}},"description":"Describes the format of Error response."},"LogProfileCollection":{"required":["value"],"type":"object","properties":{"value":{"type":"array","description":"the values of the log profiles.","items":{"$ref":"#/components/schemas/LogProfileResource"}}},"description":"Represents a collection of log profiles."},"LogProfileProperties":{"required":["categories","locations","retentionPolicy"],"type":"object","properties":{"categories":{"type":"array","description":"the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'","items":{"type":"string"}},"locations":{"type":"array","description":"List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location.","items":{"type":"string"}},"retentionPolicy":{"$ref":"#/components/schemas/RetentionPolicy"},"serviceBusRuleId":{"type":"string","description":"The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'."},"storageAccountId":{"type":"string","description":"the resource id of the storage account to which you would like to send the Activity Log."}},"description":"The log profile properties."},"LogProfileResource":{"properties":{"properties":{"$ref":"#/components/schemas/LogProfileProperties"}},"description":"The log profile resource.","allOf":[{"$ref":"#/components/schemas/Resource"}]},"LogProfileResourcePatch":{"type":"object","properties":{"properties":{"$ref":"#/components/schemas/LogProfileProperties"},"tags":{"type":"object","description":"Resource tags"}},"description":"The log profile resource for patch operations."},"Resource":{"required":["location"],"type":"object","properties":{"id":{"type":"string","description":"Azure resource Id","readOnly":true},"location":{"type":"string","description":"Resource location"},"name":{"type":"string","description":"Azure resource name","readOnly":true},"tags":{"type":"object","description":"Resource tags"},"type":{"type":"string","description":"Azure resource type","readOnly":true}},"description":"An azure resource object"},"RetentionPolicy":{"required":["days","enabled"],"type":"object","properties":{"days":{"minimum":0,"type":"integer","description":"the number of days for the retention in days. A value of 0 will retain the events indefinitely.","format":"int32"},"enabled":{"type":"boolean","description":"a value indicating whether the retention policy is enabled."}},"description":"Specifies the retention policy for the log."}},"parameters":{"ApiVersionParameter":{"name":"api-version","in":"query","description":"Client Api Version.","required":true,"schema":{"type":"string"}},"LogProfileNameParameter":{"name":"logProfileName","in":"path","description":"The name of the log profile.","required":true,"schema":{"type":"string"}},"SubscriptionIdParameter":{"name":"subscriptionId","in":"path","description":"The Azure subscription Id.","required":true,"schema":{"type":"string"}}},"securitySchemes":{"azure_auth":{"type":"oauth2","description":"Azure Active Directory OAuth2 Flow"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MonitorManagementClient",
+    "version" : "2016-03-01"
+  },
+  "servers" : [ {
+    "url" : "https://management.azure.com/"
+  } ],
+  "security" : [ {
+    "azure_auth" : [ "user_impersonation" ]
+  } ],
+  "paths" : {
+    "/subscriptions/{subscriptionId}/providers/microsoft.insights/logprofiles" : {
+      "get" : {
+        "tags" : [ "LogProfiles" ],
+        "description" : "List the log profiles.",
+        "operationId" : "LogProfiles_List",
+        "parameters" : [ {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to list log profiles",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LogProfileCollection"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/microsoft.insights/logprofiles/{logProfileName}" : {
+      "get" : {
+        "tags" : [ "LogProfiles" ],
+        "description" : "Gets the log profile.",
+        "operationId" : "LogProfiles_Get",
+        "parameters" : [ {
+          "name" : "logProfileName",
+          "in" : "path",
+          "description" : "The name of the log profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to get more information about a log profile.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LogProfileResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "LogProfiles" ],
+        "description" : "Create or update a log profile in Azure Monitoring REST API.",
+        "operationId" : "LogProfiles_CreateOrUpdate",
+        "parameters" : [ {
+          "name" : "logProfileName",
+          "in" : "path",
+          "description" : "The name of the log profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LogProfileResource"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to create or update a log profile",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LogProfileResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "LogProfiles" ],
+        "description" : "Deletes the log profile.",
+        "operationId" : "LogProfiles_Delete",
+        "parameters" : [ {
+          "name" : "logProfileName",
+          "in" : "path",
+          "description" : "The name of the log profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request to delete a log profile"
+          }
+        }
+      },
+      "patch" : {
+        "description" : "Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.",
+        "operationId" : "LogProfiles_Update",
+        "parameters" : [ {
+          "name" : "subscriptionId",
+          "in" : "path",
+          "description" : "The Azure subscription Id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "logProfileName",
+          "in" : "path",
+          "description" : "The name of the log profile.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "api-version",
+          "in" : "query",
+          "description" : "Client Api Version.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Parameters supplied to the operation.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LogProfileResourcePatch"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An existing log profile was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LogProfileResource"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Error response describing why the operation failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Error message indicating why the operation failed."
+          }
+        },
+        "description" : "Describes the format of Error response."
+      },
+      "LogProfileCollection" : {
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "array",
+            "description" : "the values of the log profiles.",
+            "items" : {
+              "$ref" : "#/components/schemas/LogProfileResource"
+            }
+          }
+        },
+        "description" : "Represents a collection of log profiles."
+      },
+      "LogProfileProperties" : {
+        "required" : [ "categories", "locations", "retentionPolicy" ],
+        "type" : "object",
+        "properties" : {
+          "categories" : {
+            "type" : "array",
+            "description" : "the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "locations" : {
+            "type" : "array",
+            "description" : "List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "retentionPolicy" : {
+            "$ref" : "#/components/schemas/RetentionPolicy"
+          },
+          "serviceBusRuleId" : {
+            "type" : "string",
+            "description" : "The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'."
+          },
+          "storageAccountId" : {
+            "type" : "string",
+            "description" : "the resource id of the storage account to which you would like to send the Activity Log."
+          }
+        },
+        "description" : "The log profile properties."
+      },
+      "LogProfileResource" : {
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/LogProfileProperties"
+          }
+        },
+        "description" : "The log profile resource.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Resource"
+        } ]
+      },
+      "LogProfileResourcePatch" : {
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "$ref" : "#/components/schemas/LogProfileProperties"
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          }
+        },
+        "description" : "The log profile resource for patch operations."
+      },
+      "Resource" : {
+        "required" : [ "location" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Azure resource Id",
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Resource location"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Azure resource name",
+            "readOnly" : true
+          },
+          "tags" : {
+            "type" : "object",
+            "description" : "Resource tags"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Azure resource type",
+            "readOnly" : true
+          }
+        },
+        "description" : "An azure resource object"
+      },
+      "RetentionPolicy" : {
+        "required" : [ "days", "enabled" ],
+        "type" : "object",
+        "properties" : {
+          "days" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "the number of days for the retention in days. A value of 0 will retain the events indefinitely.",
+            "format" : "int32"
+          },
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "a value indicating whether the retention policy is enabled."
+          }
+        },
+        "description" : "Specifies the retention policy for the log."
+      }
+    },
+    "parameters" : {
+      "ApiVersionParameter" : {
+        "name" : "api-version",
+        "in" : "query",
+        "description" : "Client Api Version.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "LogProfileNameParameter" : {
+        "name" : "logProfileName",
+        "in" : "path",
+        "description" : "The name of the log profile.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "SubscriptionIdParameter" : {
+        "name" : "subscriptionId",
+        "in" : "path",
+        "description" : "The Azure subscription Id.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "azure_auth" : {
+        "type" : "oauth2",
+        "description" : "Azure Active Directory OAuth2 Flow"
+      }
+    }
+  }
+}
