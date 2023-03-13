@@ -18,19 +18,31 @@ updateAll() {
 
   for dir in ../*; do
     if [[ -d "$dir" ]]; then
-
-      set +e
-      (update "${dir#../}" "$wiremock_cloud_url" "$wiremock_cloud_username" "$wiremock_cloud_api_token")
-      local result=$?
-      set -e
-
-      if [[ result -eq 0 ]]; then
-        echo "Imported $dir"
-      else
-        >&2 echo "Failed to import $dir"
+      (updateAsync) &
+      if [[ $(jobs -r -p | wc -l) -ge 10 ]]; then
+        # now there are $N jobs already running, so wait here for any job
+        # to be finished so there is a place to start next one.
+        wait -n
       fi
     fi
   done
+
+  wait
+
+  echo "All imported"
+}
+
+updateAsync() {
+  set +e
+  (update "${dir#../}" "$wiremock_cloud_url" "$wiremock_cloud_username" "$wiremock_cloud_api_token")
+  local result=$?
+  set -e
+
+  if [[ result -eq 0 ]]; then
+    echo "Imported $dir"
+  else
+    >&2 echo "Failed to import $dir"
+  fi
 }
 
 update() {
@@ -89,4 +101,4 @@ curl_auth() {
     "$@"
 }
 
-update "$@"
+updateAll "$@"
