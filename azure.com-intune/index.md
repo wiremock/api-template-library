@@ -1,0 +1,11 @@
+---
+slug: "azure-com-intune"
+name: "IntuneResourceManagementClient"
+provider: "azure.com"
+description: "Microsoft.Intune Resource provider Api features in the swagger-2.0 specification"
+logo: "azure.com-intune-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-intune-stubs.json"
+---

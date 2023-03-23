@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-RegionHealth"
+name: "InfrastructureInsightsManagementClient"
+provider: "azure.com"
+description: "Region health operation endpoints and objects."
+logo: "azure.com-azsadmin-RegionHealth-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-RegionHealth-stubs.json"
+---

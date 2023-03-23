@@ -1,0 +1,11 @@
+---
+slug: "1password-com-events"
+name: "Events API"
+provider: "1password.com"
+description: "1Password Events API Specification."
+logo: "1password.com-events-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "security"
+stubs: "1password.com-events-stubs.json"
+---

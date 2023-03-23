@@ -1,0 +1,11 @@
+---
+slug: "evetech-net"
+name: "EVE Swagger Interface"
+provider: "evetech.net"
+description: "An OpenAPI for EVE Online"
+logo: "evetech.net-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "media"
+stubs: "evetech.net-stubs.json"
+---

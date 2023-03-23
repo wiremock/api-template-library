@@ -1,0 +1,11 @@
+---
+slug: "botschaft-local"
+name: "FastAPI"
+provider: "botschaft.local"
+description: null
+logo: "botschaft.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "messaging"
+stubs: "botschaft.local-stubs.json"
+---

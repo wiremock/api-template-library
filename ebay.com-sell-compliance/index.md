@@ -1,0 +1,12 @@
+---
+slug: "ebay-com-sell-compliance"
+name: "Compliance API"
+provider: "ebay.com"
+description: "Service for providing information to sellers about their listings being\
+  \ non-compliant, or at risk for becoming non-compliant, against eBay listing policies."
+logo: "ebay.com-sell-compliance-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "ecommerce"
+stubs: "ebay.com-sell-compliance-stubs.json"
+---

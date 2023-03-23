@@ -1,0 +1,11 @@
+---
+slug: "nrm-se-georg"
+name: "Georg API"
+provider: "nrm.se"
+description: null
+logo: "nrm.se-georg-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "location"
+stubs: "nrm.se-georg-stubs.json"
+---

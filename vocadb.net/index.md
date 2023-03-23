@@ -1,0 +1,11 @@
+---
+slug: "vocadb-net"
+name: "VocaDbWeb"
+provider: "vocadb.net"
+description: null
+logo: "vocadb.net-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "media"
+stubs: "vocadb.net-stubs.json"
+---

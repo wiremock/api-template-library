@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-shoppingcontent"
+name: "Content API for Shopping"
+provider: "googleapis.com"
+description: "Manage your product listings and accounts for Google Shopping"
+logo: "googleapis.com-shoppingcontent-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-shoppingcontent-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-hybriddatamanager-hybriddata"
+name: "HybridDataManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-hybriddatamanager-hybriddata-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-hybriddatamanager-hybriddata-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "haloapi-com-ugc"
+name: "UGC"
+provider: "haloapi.com"
+description: "API that provides Metadata about User-Generated Content (Maps and Game\
+  \ Variants)."
+logo: "haloapi.com-ugc-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "entertainment"
+stubs: "haloapi.com-ugc-stubs.json"
+---

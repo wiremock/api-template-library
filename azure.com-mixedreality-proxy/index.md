@@ -1,0 +1,11 @@
+---
+slug: "azure-com-mixedreality-proxy"
+name: "Mixed Reality"
+provider: "azure.com"
+description: "Mixed Reality Resource Provider Proxy API"
+logo: "azure.com-mixedreality-proxy-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-mixedreality-proxy-stubs.json"
+---

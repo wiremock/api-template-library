@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-workstations"
+name: "Cloud Workstations API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-workstations-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-workstations-stubs.json"
+---

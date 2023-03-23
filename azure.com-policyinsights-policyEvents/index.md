@@ -1,0 +1,11 @@
+---
+slug: "azure-com-policyinsights-policyEvents"
+name: "PolicyEventsClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-policyinsights-policyEvents-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-policyinsights-policyEvents-stubs.json"
+---

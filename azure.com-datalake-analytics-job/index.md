@@ -1,0 +1,11 @@
+---
+slug: "azure-com-datalake-analytics-job"
+name: "DataLakeAnalyticsJobManagementClient"
+provider: "azure.com"
+description: "Creates an Azure Data Lake Analytics job client."
+logo: "azure.com-datalake-analytics-job-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-datalake-analytics-job-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "apidapp-com"
+name: "ApiDapp"
+provider: "apidapp.com"
+description: null
+logo: "apidapp.com-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "financial"
+stubs: "apidapp.com-stubs.json"
+---

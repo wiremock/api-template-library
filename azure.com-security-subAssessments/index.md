@@ -1,0 +1,11 @@
+---
+slug: "azure-com-security-subAssessments"
+name: "Security Center"
+provider: "azure.com"
+description: "API spec for Microsoft.Security (Azure Security Center) resource provider"
+logo: "azure.com-security-subAssessments-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-security-subAssessments-stubs.json"
+---

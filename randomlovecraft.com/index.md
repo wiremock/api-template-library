@@ -1,0 +1,11 @@
+---
+slug: "randomlovecraft-com"
+name: "Random Lovecraft"
+provider: "randomlovecraft.com"
+description: "Random sentences from the complete works of H.P. Lovecraft. CORS-enabled."
+logo: "randomlovecraft.com-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "text"
+stubs: "randomlovecraft.com-stubs.json"
+---

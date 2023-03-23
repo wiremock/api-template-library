@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-Recommendations"
+name: "Recommendations API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-Recommendations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-Recommendations-stubs.json"
+---

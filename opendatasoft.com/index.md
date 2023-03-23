@@ -1,0 +1,11 @@
+---
+slug: "opendatasoft-com"
+name: "opendatasoft"
+provider: "opendatasoft.com"
+description: null
+logo: "opendatasoft.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "open_data"
+stubs: "opendatasoft.com-stubs.json"
+---

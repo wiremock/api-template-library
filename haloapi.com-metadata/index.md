@@ -1,0 +1,11 @@
+---
+slug: "haloapi-com-metadata"
+name: "Metadata"
+provider: "haloapi.com"
+description: "API that provides Metadata information."
+logo: "haloapi.com-metadata-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "entertainment"
+stubs: "haloapi.com-metadata-stubs.json"
+---

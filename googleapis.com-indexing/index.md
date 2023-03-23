@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-indexing"
+name: "Indexing API"
+provider: "googleapis.com"
+description: "Notifies Google when your web pages change."
+logo: "googleapis.com-indexing-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-indexing-stubs.json"
+---

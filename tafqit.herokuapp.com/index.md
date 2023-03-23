@@ -1,0 +1,11 @@
+---
+slug: "tafqit-herokuapp-com"
+name: "Tafqit"
+provider: "tafqit.herokuapp.com"
+description: "Convert numbers to their Arabic text representation"
+logo: "tafqit.herokuapp.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "text"
+stubs: "tafqit.herokuapp.com-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-labservices-ML"
+name: "ManagedLabsClient"
+provider: "azure.com"
+description: "The Managed Labs Client."
+logo: "azure.com-labservices-ML-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-labservices-ML-stubs.json"
+---

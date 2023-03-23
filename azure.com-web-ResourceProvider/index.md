@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-ResourceProvider"
+name: " API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-ResourceProvider-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-ResourceProvider-stubs.json"
+---

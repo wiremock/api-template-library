@@ -1,0 +1,12 @@
+---
+slug: "azure-com-applicationinsights-componentWorkItemConfigs_API"
+name: "ApplicationInsightsManagementClient"
+provider: "azure.com"
+description: "Azure Application Insights client for work item configurations for a\
+  \ component."
+logo: "azure.com-applicationinsights-componentWorkItemConfigs_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-applicationinsights-componentWorkItemConfigs_API-stubs.json"
+---

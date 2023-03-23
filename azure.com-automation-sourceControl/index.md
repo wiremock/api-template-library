@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-sourceControl"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-sourceControl-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-sourceControl-stubs.json"
+---

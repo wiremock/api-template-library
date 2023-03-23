@@ -1,0 +1,11 @@
+---
+slug: "fecru-local"
+name: "Fisheye Crucible"
+provider: "fecru.local"
+description: null
+logo: "fecru.local-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "developer_tools"
+stubs: "fecru.local-stubs.json"
+---

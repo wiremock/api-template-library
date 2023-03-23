@@ -1,0 +1,11 @@
+---
+slug: "rottentomatoes-com"
+name: "Rotten Tomatoes"
+provider: "rottentomatoes.com"
+description: "Test our API services using I/O Docs."
+logo: "rottentomatoes.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "media"
+stubs: "rottentomatoes.com-stubs.json"
+---

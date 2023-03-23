@@ -1,0 +1,15 @@
+---
+slug: "googleapis-com-realtimebidding"
+name: "Real-time Bidding API"
+provider: "googleapis.com"
+description: "Allows external bidders to manage their RTB integration with Google.\
+  \ This includes managing bidder endpoints, QPS quotas, configuring what ad inventory\
+  \ to receive via pretargeting, submitting creatives for verification, and accessing\
+  \ creative metadata such as approval status."
+logo: "googleapis.com-realtimebidding-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-realtimebidding-stubs.json"
+---

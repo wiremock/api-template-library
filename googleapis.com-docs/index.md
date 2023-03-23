@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-docs"
+name: "Google Docs API"
+provider: "googleapis.com"
+description: "Reads and writes Google Docs documents."
+logo: "googleapis.com-docs-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-docs-stubs.json"
+---

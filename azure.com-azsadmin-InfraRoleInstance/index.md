@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-InfraRoleInstance"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Infrastructure role instance operation endpoints and objects."
+logo: "azure.com-azsadmin-InfraRoleInstance-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-InfraRoleInstance-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "vestorly-com"
+name: "Vestorly API"
+provider: "vestorly.com"
+description: "Vestorly Developers API"
+logo: "vestorly.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "marketing"
+stubs: "vestorly.com-stubs.json"
+---

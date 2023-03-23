@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-analyticsdata"
+name: "Google Analytics Data API"
+provider: "googleapis.com"
+description: "Accesses report data in Google Analytics."
+logo: "googleapis.com-analyticsdata-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-analyticsdata-stubs.json"
+---

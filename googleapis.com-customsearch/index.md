@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-customsearch"
+name: "Custom Search API"
+provider: "googleapis.com"
+description: "Searches over a website or collection of websites"
+logo: "googleapis.com-customsearch-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-customsearch-stubs.json"
+---

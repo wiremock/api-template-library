@@ -1,0 +1,11 @@
+---
+slug: "sportsdata-io-lol-v3-projections"
+name: "LoL v3 Projections"
+provider: "sportsdata.io"
+description: "LoL v3 Projections"
+logo: "sportsdata.io-lol-v3-projections-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "entertainment"
+stubs: "sportsdata.io-lol-v3-projections-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "amazonaws-com-elastictranscoder"
+name: "Amazon Elastic Transcoder"
+provider: "amazonaws.com"
+description: "<fullname>AWS Elastic Transcoder Service</fullname> <p>The AWS Elastic\
+  \ Transcoder Service.</p>"
+logo: "amazonaws.com-elastictranscoder-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-elastictranscoder-stubs.json"
+---

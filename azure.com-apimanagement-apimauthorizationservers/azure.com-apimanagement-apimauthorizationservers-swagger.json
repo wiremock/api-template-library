@@ -85,6 +85,64 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "count" : {
+                      "type" : "integer",
+                      "description" : "Total record count number across all pages.",
+                      "format" : "int64"
+                    },
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Page values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "required" : [ "authorizationEndpoint", "clientId", "clientRegistrationEndpoint", "displayName", "grantTypes" ],
+                            "type" : "object",
+                            "properties" : {
+                              "authorizationEndpoint" : {
+                                "type" : "string",
+                                "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                              },
+                              "clientId" : {
+                                "type" : "string",
+                                "description" : "Client or app id registered with this authorization server."
+                              },
+                              "clientRegistrationEndpoint" : {
+                                "type" : "string",
+                                "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                              },
+                              "clientSecret" : {
+                                "type" : "string",
+                                "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                              },
+                              "displayName" : {
+                                "maxLength" : 50,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "User-friendly authorization server name."
+                              },
+                              "grantTypes" : {
+                                "type" : "array",
+                                "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                                "items" : {
+                                  "type" : "string",
+                                  "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                                }
+                              }
+                            },
+                            "description" : "External OAuth authorization server settings Properties."
+                          }
+                        },
+                        "description" : "External OAuth authorization server settings."
+                      }
+                    }
+                  },
                   "description" : "Paged OAuth2 Authorization Servers list representation."
                 }
               }
@@ -96,6 +154,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -170,8 +266,67 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "External OAuth authorization server settings."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "authorizationEndpoint", "clientId", "clientRegistrationEndpoint", "displayName", "grantTypes" ],
+                      "type" : "object",
+                      "properties" : {
+                        "authorizationEndpoint" : {
+                          "type" : "string",
+                          "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                        },
+                        "clientId" : {
+                          "type" : "string",
+                          "description" : "Client or app id registered with this authorization server."
+                        },
+                        "clientRegistrationEndpoint" : {
+                          "type" : "string",
+                          "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                        },
+                        "clientSecret" : {
+                          "type" : "string",
+                          "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "displayName" : {
+                          "maxLength" : 50,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "User-friendly authorization server name."
+                        },
+                        "grantTypes" : {
+                          "type" : "array",
+                          "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                          "items" : {
+                            "type" : "string",
+                            "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                          }
+                        }
+                      },
+                      "description" : "External OAuth authorization server settings Properties."
+                    }
+                  },
+                  "description" : "External OAuth authorization server settings.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -182,6 +337,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -332,8 +525,67 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "External OAuth authorization server settings."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "authorizationEndpoint", "clientId", "clientRegistrationEndpoint", "displayName", "grantTypes" ],
+                      "type" : "object",
+                      "properties" : {
+                        "authorizationEndpoint" : {
+                          "type" : "string",
+                          "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                        },
+                        "clientId" : {
+                          "type" : "string",
+                          "description" : "Client or app id registered with this authorization server."
+                        },
+                        "clientRegistrationEndpoint" : {
+                          "type" : "string",
+                          "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                        },
+                        "clientSecret" : {
+                          "type" : "string",
+                          "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "displayName" : {
+                          "maxLength" : 50,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "User-friendly authorization server name."
+                        },
+                        "grantTypes" : {
+                          "type" : "array",
+                          "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                          "items" : {
+                            "type" : "string",
+                            "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                          }
+                        }
+                      },
+                      "description" : "External OAuth authorization server settings Properties."
+                    }
+                  },
+                  "description" : "External OAuth authorization server settings.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -351,8 +603,67 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "External OAuth authorization server settings."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "authorizationEndpoint", "clientId", "clientRegistrationEndpoint", "displayName", "grantTypes" ],
+                      "type" : "object",
+                      "properties" : {
+                        "authorizationEndpoint" : {
+                          "type" : "string",
+                          "description" : "OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2."
+                        },
+                        "clientId" : {
+                          "type" : "string",
+                          "description" : "Client or app id registered with this authorization server."
+                        },
+                        "clientRegistrationEndpoint" : {
+                          "type" : "string",
+                          "description" : "Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced."
+                        },
+                        "clientSecret" : {
+                          "type" : "string",
+                          "description" : "Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "displayName" : {
+                          "maxLength" : 50,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "User-friendly authorization server name."
+                        },
+                        "grantTypes" : {
+                          "type" : "array",
+                          "description" : "Form of an authorization grant, which the client uses to request the access token.",
+                          "items" : {
+                            "type" : "string",
+                            "enum" : [ "authorizationCode", "implicit", "resourceOwnerPassword", "clientCredentials" ]
+                          }
+                        }
+                      },
+                      "description" : "External OAuth authorization server settings Properties."
+                    }
+                  },
+                  "description" : "External OAuth authorization server settings.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -363,6 +674,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -442,6 +791,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -518,6 +905,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -664,6 +1089,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -731,6 +1194,12 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "clientSecret" : {
+                      "type" : "string",
+                      "description" : "Client or app secret used in IdentityProviders, Aad, OpenID or OAuth."
+                    }
+                  },
                   "description" : "Client or app secret used in IdentityProviders, Aad, OpenID or OAuth."
                 }
               }
@@ -742,6 +1211,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

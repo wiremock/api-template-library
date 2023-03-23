@@ -1,0 +1,11 @@
+---
+slug: "azure-com-network-virtualWan"
+name: "VirtualWANAsAServiceManagementClient"
+provider: "azure.com"
+description: "REST API for Azure VirtualWAN As a Service."
+logo: "azure.com-network-virtualWan-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-network-virtualWan-stubs.json"
+---

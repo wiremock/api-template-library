@@ -1,0 +1,11 @@
+---
+slug: "azure-com-commerce"
+name: "UsageManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-commerce-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-commerce-stubs.json"
+---

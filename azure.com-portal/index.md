@@ -1,0 +1,11 @@
+---
+slug: "azure-com-portal"
+name: "portal"
+provider: "azure.com"
+description: "Allows creation and deletion of Azure Shared Dashboards."
+logo: "azure.com-portal-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-portal-stubs.json"
+---

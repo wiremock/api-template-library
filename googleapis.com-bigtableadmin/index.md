@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-bigtableadmin"
+name: "Cloud Bigtable Admin API"
+provider: "googleapis.com"
+description: "Administer your Cloud Bigtable tables and instances."
+logo: "googleapis.com-bigtableadmin-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-bigtableadmin-stubs.json"
+---

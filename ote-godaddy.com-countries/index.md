@@ -1,0 +1,11 @@
+---
+slug: "ote-godaddy-com-countries"
+name: "countries"
+provider: "ote-godaddy.com"
+description: null
+logo: "ote-godaddy.com-countries-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "hosting"
+stubs: "ote-godaddy.com-countries-stubs.json"
+---

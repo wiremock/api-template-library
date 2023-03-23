@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-cloudidentity"
+name: "Cloud Identity API"
+provider: "googleapis.com"
+description: "API for provisioning and managing identity resources."
+logo: "googleapis.com-cloudidentity-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-cloudidentity-stubs.json"
+---

@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-groupsmigration"
+name: "Groups Migration API"
+provider: "googleapis.com"
+description: "The Groups Migration API allows domain administrators to archive emails\
+  \ into Google groups."
+logo: "googleapis.com-groupsmigration-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-groupsmigration-stubs.json"
+---

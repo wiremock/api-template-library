@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-Diagnostics"
+name: "Diagnostics API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-Diagnostics-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-Diagnostics-stubs.json"
+---

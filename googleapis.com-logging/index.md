@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-logging"
+name: "Cloud Logging API"
+provider: "googleapis.com"
+description: "Writes log entries and manages your Cloud Logging configuration."
+logo: "googleapis.com-logging-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-logging-stubs.json"
+---

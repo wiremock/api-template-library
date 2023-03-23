@@ -1,0 +1,11 @@
+---
+slug: "amazonaws-com-forecastquery"
+name: "Amazon Forecast Query Service"
+provider: "amazonaws.com"
+description: "Provides APIs for creating and managing Amazon Forecast resources."
+logo: "amazonaws.com-forecastquery-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-forecastquery-stubs.json"
+---

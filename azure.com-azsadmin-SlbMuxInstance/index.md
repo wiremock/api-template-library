@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-SlbMuxInstance"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Software load balancer multiplexer operation endpoints and objects."
+logo: "azure.com-azsadmin-SlbMuxInstance-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-SlbMuxInstance-stubs.json"
+---

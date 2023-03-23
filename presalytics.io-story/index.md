@@ -1,0 +1,12 @@
+---
+slug: "presalytics-io-story"
+name: "Story"
+provider: "presalytics.io"
+description: "This API is the main entry point for creating, editing and publishing\
+  \ analytics throught the Presalytics API"
+logo: "presalytics.io-story-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+stubs: "presalytics.io-story-stubs.json"
+---

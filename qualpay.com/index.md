@@ -1,0 +1,11 @@
+---
+slug: "qualpay-com"
+name: "Qualpay Payment Gateway API"
+provider: "qualpay.com"
+description: "This document describes the Qualpay Payment Gateway API."
+logo: "qualpay.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "ecommerce"
+stubs: "qualpay.com-stubs.json"
+---

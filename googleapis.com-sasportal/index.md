@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-sasportal"
+name: "SAS Portal API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-sasportal-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-sasportal-stubs.json"
+---

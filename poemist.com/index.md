@@ -1,0 +1,11 @@
+---
+slug: "poemist-com"
+name: "Poemist API"
+provider: "poemist.com"
+description: null
+logo: "poemist.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "text"
+stubs: "poemist.com-stubs.json"
+---

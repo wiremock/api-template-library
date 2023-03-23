@@ -1,0 +1,11 @@
+---
+slug: "pay1-de-link"
+name: "PAYONE Link API"
+provider: "pay1.de"
+description: null
+logo: "pay1.de-link-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "payment"
+stubs: "pay1.de-link-stubs.json"
+---

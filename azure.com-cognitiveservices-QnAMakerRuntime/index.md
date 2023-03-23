@@ -1,0 +1,11 @@
+---
+slug: "azure-com-cognitiveservices-QnAMakerRuntime"
+name: "QnAMaker Runtime Client"
+provider: "azure.com"
+description: "An API for QnAMaker runtime"
+logo: "azure.com-cognitiveservices-QnAMakerRuntime-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-cognitiveservices-QnAMakerRuntime-stubs.json"
+---

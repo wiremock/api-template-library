@@ -1,0 +1,11 @@
+---
+slug: "maif-local-otoroshi"
+name: "Otoroshi Admin API"
+provider: "maif.local"
+description: "Admin API of the Otoroshi reverse proxy"
+logo: "maif.local-otoroshi-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+stubs: "maif.local-otoroshi-stubs.json"
+---

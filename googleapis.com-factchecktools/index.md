@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-factchecktools"
+name: "Fact Check Tools API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-factchecktools-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-factchecktools-stubs.json"
+---

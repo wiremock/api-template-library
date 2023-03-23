@@ -1,0 +1,11 @@
+---
+slug: "azure-com-scheduler"
+name: "SchedulerManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-scheduler-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-scheduler-stubs.json"
+---

@@ -16,7 +16,7 @@
     },
     "termsOfService" : "https://www.twilio.com/legal/tos",
     "title" : "Twilio - Messaging",
-    "version" : "1.39.2",
+    "version" : "1.40.0",
     "x-apisguru-categories" : [ "telecom", "messaging" ],
     "x-logo" : {
       "url" : "https://api.apis.guru/v2/cache/logo/https_static1.twilio.com_marketing_bundles_marketing_img_logos_wordmark-red.svg"
@@ -77,7 +77,7 @@
       } ],
       "x-twilio" : {
         "className" : "domain_certs",
-        "defaultOutputProperties" : [ "certificate_sid", "domain_name", "domain_sid", "date_expires", "date_created", "date_updated", "url", "validated" ],
+        "defaultOutputProperties" : [ "certificate_sid", "domain_name", "domain_sid", "date_expires", "date_created", "date_updated", "url" ],
         "mountName" : "domain_certs",
         "pathType" : "instance"
       },
@@ -312,6 +312,139 @@
               }
             },
             "description" : "Created"
+          }
+        },
+        "security" : [ {
+          "accountSid_authToken" : null
+        } ],
+        "x-maturity" : [ "Beta" ]
+      }
+    },
+    "/v1/LinkShortening/Domains/{DomainSid}/MessagingServices/{MessagingServiceSid}" : {
+      "description" : "TODO: Resource-level docs",
+      "servers" : [ {
+        "url" : "https://messaging.twilio.com"
+      } ],
+      "x-twilio" : {
+        "defaultOutputProperties" : [ "messaging_service_sid", "domain_sid", "url" ],
+        "mountName" : "linkshortening_messaging_service",
+        "pathType" : "instance"
+      },
+      "delete" : {
+        "description" : "",
+        "operationId" : "DeleteLinkshorteningMessagingService",
+        "parameters" : [ {
+          "description" : "The domain SID to dissociate from a messaging service. With URL shortening enabled, links in messages sent with the associated messaging service will be shortened to the provided domain",
+          "in" : "path",
+          "name" : "DomainSid",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 34,
+            "minLength" : 34,
+            "pattern" : "^DN[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        }, {
+          "description" : "A messaging service SID to dissociate from a domain. With URL shortening enabled, links in messages sent with the provided messaging service will be shortened to the associated domain",
+          "in" : "path",
+          "name" : "MessagingServiceSid",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 34,
+            "minLength" : 34,
+            "pattern" : "^MG[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "The resource was deleted successfully."
+          }
+        },
+        "security" : [ {
+          "accountSid_authToken" : null
+        } ],
+        "x-maturity" : [ "Beta" ]
+      },
+      "post" : {
+        "description" : "",
+        "operationId" : "CreateLinkshorteningMessagingService",
+        "parameters" : [ {
+          "description" : "The domain SID to associate with a messaging service. With URL shortening enabled, links in messages sent with the associated messaging service will be shortened to the provided domain",
+          "in" : "path",
+          "name" : "DomainSid",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 34,
+            "minLength" : 34,
+            "pattern" : "^DN[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        }, {
+          "description" : "A messaging service SID to associate with a domain. With URL shortening enabled, links in messages sent with the provided messaging service will be shortened to the associated domain",
+          "in" : "path",
+          "name" : "MessagingServiceSid",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 34,
+            "minLength" : 34,
+            "pattern" : "^MG[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/messaging.v1.linkshortening_messaging_service"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "security" : [ {
+          "accountSid_authToken" : null
+        } ],
+        "x-maturity" : [ "Beta" ]
+      }
+    },
+    "/v1/LinkShortening/MessagingService/{MessagingServiceSid}/DomainConfig" : {
+      "description" : "TODO: Resource-level docs",
+      "servers" : [ {
+        "url" : "https://messaging.twilio.com"
+      } ],
+      "x-twilio" : {
+        "defaultOutputProperties" : [ "domain_sid", "config_sid", "fallback_url", "callback_url", "date_created", "date_updated", "url", "messaging_service_sid" ],
+        "mountName" : "domain_config_messaging_service",
+        "pathType" : "instance"
+      },
+      "get" : {
+        "description" : "",
+        "operationId" : "FetchDomainConfigMessagingService",
+        "parameters" : [ {
+          "description" : "Unique string used to identify the Messaging service that this domain should be associated with.",
+          "in" : "path",
+          "name" : "MessagingServiceSid",
+          "required" : true,
+          "schema" : {
+            "maxLength" : 34,
+            "minLength" : 34,
+            "pattern" : "^MG[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/messaging.v1.domain_config_messaging_service"
+                }
+              }
+            },
+            "description" : "OK"
           }
         },
         "security" : [ {
@@ -2972,6 +3105,10 @@
       },
       "messaging.v1.domain_cert_v4" : {
         "properties" : {
+          "cert_in_validation" : {
+            "description" : "Optional JSON field describing the status and upload date of a new certificate in the process of validation",
+            "nullable" : true
+          },
           "certificate_sid" : {
             "description" : "The unique string that we created to identify this Certificate resource.",
             "maxLength" : 34,
@@ -3016,11 +3153,6 @@
             "format" : "uri",
             "nullable" : true,
             "type" : "string"
-          },
-          "validated" : {
-            "description" : "Boolean value indicating whether certificate has been validated",
-            "nullable" : true,
-            "type" : "boolean"
           }
         },
         "type" : "object"
@@ -3086,6 +3218,64 @@
         },
         "type" : "object"
       },
+      "messaging.v1.domain_config_messaging_service" : {
+        "properties" : {
+          "callback_url" : {
+            "description" : "URL to receive click events to your webhook whenever the recipients click on the shortened links.",
+            "format" : "uri",
+            "nullable" : true,
+            "type" : "string"
+          },
+          "config_sid" : {
+            "description" : "The unique string that we created to identify the Domain config (prefix ZK).",
+            "maxLength" : 34,
+            "minLength" : 34,
+            "nullable" : true,
+            "pattern" : "^ZK[0-9a-fA-F]{32}$",
+            "type" : "string"
+          },
+          "date_created" : {
+            "description" : "Date this Domain Config was created.",
+            "format" : "date-time",
+            "nullable" : true,
+            "type" : "string"
+          },
+          "date_updated" : {
+            "description" : "Date that this Domain Config was last updated.",
+            "format" : "date-time",
+            "nullable" : true,
+            "type" : "string"
+          },
+          "domain_sid" : {
+            "description" : "The unique string that we created to identify the Domain resource.",
+            "maxLength" : 34,
+            "minLength" : 34,
+            "nullable" : true,
+            "pattern" : "^DN[0-9a-fA-F]{32}$",
+            "type" : "string"
+          },
+          "fallback_url" : {
+            "description" : "Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.",
+            "format" : "uri",
+            "nullable" : true,
+            "type" : "string"
+          },
+          "messaging_service_sid" : {
+            "description" : "The unique string that identifies the messaging service",
+            "maxLength" : 34,
+            "minLength" : 34,
+            "nullable" : true,
+            "pattern" : "^MG[0-9a-fA-F]{32}$",
+            "type" : "string"
+          },
+          "url" : {
+            "format" : "uri",
+            "nullable" : true,
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "messaging.v1.external_campaign" : {
         "properties" : {
           "account_sid" : {
@@ -3121,6 +3311,32 @@
             "minLength" : 34,
             "nullable" : true,
             "pattern" : "^QE[0-9a-fA-F]{32}$",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "messaging.v1.linkshortening_messaging_service" : {
+        "properties" : {
+          "domain_sid" : {
+            "description" : "The unique string identifies the domain resource",
+            "maxLength" : 34,
+            "minLength" : 34,
+            "nullable" : true,
+            "pattern" : "^DN[0-9a-fA-F]{32}$",
+            "type" : "string"
+          },
+          "messaging_service_sid" : {
+            "description" : "The unique string that identifies the messaging service",
+            "maxLength" : 34,
+            "minLength" : 34,
+            "nullable" : true,
+            "pattern" : "^MG[0-9a-fA-F]{32}$",
+            "type" : "string"
+          },
+          "url" : {
+            "format" : "uri",
+            "nullable" : true,
             "type" : "string"
           }
         },

@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-ml"
+name: "AI Platform Training & Prediction API"
+provider: "googleapis.com"
+description: "An API to enable creating and using machine learning models."
+logo: "googleapis.com-ml-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-ml-stubs.json"
+---

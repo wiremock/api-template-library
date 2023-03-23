@@ -1,0 +1,11 @@
+---
+slug: "apisetu-gov-in-bhavishya"
+name: "Department of Pension and Pensioners Welfare"
+provider: "apisetu.gov.in"
+description: "APIs provided by Department of Pension and Pensioners Welfare."
+logo: "apisetu.gov.in-bhavishya-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "apisetu.gov.in-bhavishya-stubs.json"
+---

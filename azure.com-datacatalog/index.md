@@ -1,0 +1,11 @@
+---
+slug: "azure-com-datacatalog"
+name: "Azure Data Catalog Resource Provider"
+provider: "azure.com"
+description: "The Azure Data Catalog Resource Provider Services API."
+logo: "azure.com-datacatalog-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-datacatalog-stubs.json"
+---

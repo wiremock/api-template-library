@@ -1,0 +1,11 @@
+---
+slug: "amazonaws-com-mediaconnect"
+name: "AWS MediaConnect"
+provider: "amazonaws.com"
+description: "API for AWS Elemental MediaConnect"
+logo: "amazonaws.com-mediaconnect-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-mediaconnect-stubs.json"
+---

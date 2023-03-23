@@ -1,0 +1,11 @@
+---
+slug: "eos-local"
+name: "Net API"
+provider: "eos.local"
+description: null
+logo: "eos.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "hosting"
+stubs: "eos.local-stubs.json"
+---

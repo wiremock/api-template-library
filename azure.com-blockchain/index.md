@@ -1,0 +1,11 @@
+---
+slug: "azure-com-blockchain"
+name: "BlockchainManagementClient"
+provider: "azure.com"
+description: "REST API for Azure Blockchain Service"
+logo: "azure.com-blockchain-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-blockchain-stubs.json"
+---

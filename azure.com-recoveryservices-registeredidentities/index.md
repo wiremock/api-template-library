@@ -1,0 +1,11 @@
+---
+slug: "azure-com-recoveryservices-registeredidentities"
+name: "RecoveryServicesClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-recoveryservices-registeredidentities-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-recoveryservices-registeredidentities-stubs.json"
+---

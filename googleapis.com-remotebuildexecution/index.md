@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-remotebuildexecution"
+name: "Remote Build Execution API"
+provider: "googleapis.com"
+description: "Supplies a Remote Execution API service for tools such as bazel."
+logo: "googleapis.com-remotebuildexecution-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-remotebuildexecution-stubs.json"
+---

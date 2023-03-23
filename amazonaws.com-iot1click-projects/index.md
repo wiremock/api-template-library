@@ -1,0 +1,11 @@
+---
+slug: "amazonaws-com-iot1click-projects"
+name: "AWS IoT 1-Click Projects Service"
+provider: "amazonaws.com"
+description: "The AWS IoT 1-Click Projects API Reference"
+logo: "amazonaws.com-iot1click-projects-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-iot1click-projects-stubs.json"
+---

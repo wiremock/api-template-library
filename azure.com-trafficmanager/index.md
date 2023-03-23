@@ -1,0 +1,11 @@
+---
+slug: "azure-com-trafficmanager"
+name: "TrafficManagerManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-trafficmanager-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-trafficmanager-stubs.json"
+---

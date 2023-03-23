@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-discoveryengine"
+name: "Discovery Engine API"
+provider: "googleapis.com"
+description: "Discovery Engine API."
+logo: "googleapis.com-discoveryengine-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-discoveryengine-stubs.json"
+---

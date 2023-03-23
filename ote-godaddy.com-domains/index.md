@@ -1,0 +1,11 @@
+---
+slug: "ote-godaddy-com-domains"
+name: "domains"
+provider: "ote-godaddy.com"
+description: null
+logo: "ote-godaddy.com-domains-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "hosting"
+stubs: "ote-godaddy.com-domains-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "change-local"
+name: "API V1"
+provider: "change.local"
+description: null
+logo: "change.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "payment"
+stubs: "change.local-stubs.json"
+---

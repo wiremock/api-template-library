@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-websecurityscanner"
+name: "Web Security Scanner API"
+provider: "googleapis.com"
+description: "Scans your Compute and App Engine apps for common web vulnerabilities."
+logo: "googleapis.com-websecurityscanner-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-websecurityscanner-stubs.json"
+---

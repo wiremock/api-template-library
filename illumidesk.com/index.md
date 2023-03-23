@@ -1,0 +1,11 @@
+---
+slug: "illumidesk-com"
+name: "IllumiDesk"
+provider: "illumidesk.com"
+description: null
+logo: "illumidesk.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "open_data"
+stubs: "illumidesk.com-stubs.json"
+---

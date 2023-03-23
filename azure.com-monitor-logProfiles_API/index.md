@@ -1,0 +1,11 @@
+---
+slug: "azure-com-monitor-logProfiles_API"
+name: "MonitorManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-monitor-logProfiles_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-monitor-logProfiles_API-stubs.json"
+---

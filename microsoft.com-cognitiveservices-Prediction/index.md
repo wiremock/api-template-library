@@ -1,0 +1,12 @@
+---
+slug: "microsoft-com-cognitiveservices-Prediction"
+name: "Custom Vision Prediction Client"
+provider: "microsoft.com"
+description: null
+logo: "microsoft.com-cognitiveservices-Prediction-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "developer_tools"
+- name: "cloud"
+stubs: "microsoft.com-cognitiveservices-Prediction-stubs.json"
+---

@@ -1,0 +1,13 @@
+---
+slug: "azure-com-sql-connectionPolicies"
+name: "Azure SQL Server API spec"
+provider: "azure.com"
+description: "The Azure SQL Server management API provides a RESTful set of web services\
+  \ that interact with Azure SQL Server services to manage your databases. The API\
+  \ enables users update server connection policy."
+logo: "azure.com-sql-connectionPolicies-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-sql-connectionPolicies-stubs.json"
+---

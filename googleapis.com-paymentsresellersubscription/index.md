@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-paymentsresellersubscription"
+name: "Payments Reseller Subscription API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-paymentsresellersubscription-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-paymentsresellersubscription-stubs.json"
+---

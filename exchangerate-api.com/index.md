@@ -1,0 +1,12 @@
+---
+slug: "exchangerate-api-com"
+name: "ExchangeRate-API"
+provider: "exchangerate-api.com"
+description: "Fetch the latest currency exchange rates via API. ExchangeRate-API is\
+  \ free and unlimited."
+logo: "exchangerate-api.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "financial"
+stubs: "exchangerate-api.com-stubs.json"
+---

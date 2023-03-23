@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-storageaccounts"
+name: "StorageManagementClient"
+provider: "azure.com"
+description: "The Admin Storage Management Client."
+logo: "azure.com-azsadmin-storageaccounts-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-storageaccounts-stubs.json"
+---

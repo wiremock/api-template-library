@@ -1,0 +1,11 @@
+---
+slug: "azure-com-machinelearningservices-artifact"
+name: "Artifact"
+provider: "azure.com"
+description: null
+logo: "azure.com-machinelearningservices-artifact-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-machinelearningservices-artifact-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-edgegateway"
+name: "DataBoxEdgeManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-edgegateway-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-edgegateway-stubs.json"
+---

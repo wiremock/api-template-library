@@ -407,8 +407,95 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "The execution details of a script action."
+                  "description" : "The execution details of a script action.",
+                  "allOf" : [ {
+                    "required" : [ "name", "roles", "uri" ],
+                    "type" : "object",
+                    "properties" : {
+                      "applicationName" : {
+                        "type" : "string",
+                        "description" : "The application name of the script action, if any.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "The name of the script action."
+                      },
+                      "parameters" : {
+                        "type" : "string",
+                        "description" : "The parameters for the script"
+                      },
+                      "roles" : {
+                        "type" : "array",
+                        "description" : "The list of roles where script will be executed.",
+                        "items" : {
+                          "type" : "string"
+                        }
+                      },
+                      "uri" : {
+                        "type" : "string",
+                        "description" : "The URI to the script."
+                      }
+                    },
+                    "description" : "Describes a script action on a running cluster."
+                  }, {
+                    "type" : "object",
+                    "properties" : {
+                      "debugInformation" : {
+                        "type" : "string",
+                        "description" : "The script action execution debug information.",
+                        "readOnly" : true
+                      },
+                      "endTime" : {
+                        "type" : "string",
+                        "description" : "The end time of script action execution.",
+                        "readOnly" : true
+                      },
+                      "executionSummary" : {
+                        "type" : "array",
+                        "description" : "The summary of script action execution result.",
+                        "readOnly" : true,
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "instanceCount" : {
+                              "type" : "integer",
+                              "description" : "The instance count for a given script action execution status.",
+                              "format" : "int32",
+                              "readOnly" : true
+                            },
+                            "status" : {
+                              "type" : "string",
+                              "description" : "The status of script action execution.",
+                              "readOnly" : true
+                            }
+                          },
+                          "description" : "The execution summary of a script action."
+                        }
+                      },
+                      "operation" : {
+                        "type" : "string",
+                        "description" : "The reason why the script action was executed.",
+                        "readOnly" : true
+                      },
+                      "scriptExecutionId" : {
+                        "type" : "integer",
+                        "description" : "The execution id of the script action.",
+                        "format" : "int64",
+                        "readOnly" : true
+                      },
+                      "startTime" : {
+                        "type" : "string",
+                        "description" : "The start time of script action execution.",
+                        "readOnly" : true
+                      },
+                      "status" : {
+                        "type" : "string",
+                        "description" : "The current execution status of the script action.",
+                        "readOnly" : true
+                      }
+                    }
+                  } ]
                 }
               }
             }

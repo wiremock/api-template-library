@@ -1,0 +1,11 @@
+---
+slug: "haloapi-com-stats"
+name: "Stats"
+provider: "haloapi.com"
+description: "API that provides statistical data about Players and Matches."
+logo: "haloapi.com-stats-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "entertainment"
+stubs: "haloapi.com-stats-stubs.json"
+---

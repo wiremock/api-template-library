@@ -1,0 +1,11 @@
+---
+slug: "stoplight-io"
+name: "Stoplight"
+provider: "stoplight.io"
+description: ""
+logo: "stoplight.io-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "developer_tools"
+stubs: "stoplight.io-stubs.json"
+---

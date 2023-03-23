@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-job"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-job-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-job-stubs.json"
+---

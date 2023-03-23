@@ -1,0 +1,11 @@
+---
+slug: "azure-com-policyinsights-remediations"
+name: "RemediationsClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-policyinsights-remediations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-policyinsights-remediations-stubs.json"
+---

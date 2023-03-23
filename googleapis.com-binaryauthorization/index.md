@@ -1,0 +1,14 @@
+---
+slug: "googleapis-com-binaryauthorization"
+name: "Binary Authorization API"
+provider: "googleapis.com"
+description: "The management interface for Binary Authorization, a service that provides\
+  \ policy-based deployment validation and control for images deployed to Google Kubernetes\
+  \ Engine (GKE), Anthos Service Mesh, Anthos Clusters, and Cloud Run. "
+logo: "googleapis.com-binaryauthorization-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-binaryauthorization-stubs.json"
+---

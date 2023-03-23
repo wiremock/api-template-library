@@ -1,0 +1,13 @@
+---
+slug: "rapidapi-com-football-prediction"
+name: "Football Prediction API"
+provider: "rapidapi.com"
+description: "The Football Prediction API allows developers to get predictions for\
+  \ upcoming football (soccer) matches, results for past matches, and performance\
+  \ monitoring for statistical models."
+logo: "rapidapi.com-football-prediction-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "text"
+stubs: "rapidapi.com-football-prediction-stubs.json"
+---

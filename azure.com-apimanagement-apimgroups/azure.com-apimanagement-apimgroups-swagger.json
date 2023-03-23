@@ -88,6 +88,54 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Page values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "required" : [ "displayName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "builtIn" : {
+                                "type" : "boolean",
+                                "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                                "readOnly" : true
+                              },
+                              "description" : {
+                                "maxLength" : 1000,
+                                "type" : "string",
+                                "description" : "Group description. Can contain HTML formatting tags."
+                              },
+                              "displayName" : {
+                                "maxLength" : 300,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Group name."
+                              },
+                              "externalId" : {
+                                "type" : "string",
+                                "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                              },
+                              "type" : {
+                                "type" : "string",
+                                "description" : "Group type.",
+                                "enum" : [ "custom", "system", "external" ]
+                              }
+                            },
+                            "description" : "Group contract Properties."
+                          }
+                        },
+                        "description" : "Contract details."
+                      }
+                    }
+                  },
                   "description" : "Paged Group list representation."
                 }
               }
@@ -99,6 +147,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -172,8 +258,62 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Contract details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName" ],
+                      "type" : "object",
+                      "properties" : {
+                        "builtIn" : {
+                          "type" : "boolean",
+                          "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                          "readOnly" : true
+                        },
+                        "description" : {
+                          "maxLength" : 1000,
+                          "type" : "string",
+                          "description" : "Group description. Can contain HTML formatting tags."
+                        },
+                        "displayName" : {
+                          "maxLength" : 300,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Group name."
+                        },
+                        "externalId" : {
+                          "type" : "string",
+                          "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Group type.",
+                          "enum" : [ "custom", "system", "external" ]
+                        }
+                      },
+                      "description" : "Group contract Properties."
+                    }
+                  },
+                  "description" : "Contract details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -184,6 +324,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -302,8 +480,62 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Contract details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName" ],
+                      "type" : "object",
+                      "properties" : {
+                        "builtIn" : {
+                          "type" : "boolean",
+                          "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                          "readOnly" : true
+                        },
+                        "description" : {
+                          "maxLength" : 1000,
+                          "type" : "string",
+                          "description" : "Group description. Can contain HTML formatting tags."
+                        },
+                        "displayName" : {
+                          "maxLength" : 300,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Group name."
+                        },
+                        "externalId" : {
+                          "type" : "string",
+                          "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Group type.",
+                          "enum" : [ "custom", "system", "external" ]
+                        }
+                      },
+                      "description" : "Group contract Properties."
+                    }
+                  },
+                  "description" : "Contract details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -321,8 +553,62 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Contract details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName" ],
+                      "type" : "object",
+                      "properties" : {
+                        "builtIn" : {
+                          "type" : "boolean",
+                          "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                          "readOnly" : true
+                        },
+                        "description" : {
+                          "maxLength" : 1000,
+                          "type" : "string",
+                          "description" : "Group description. Can contain HTML formatting tags."
+                        },
+                        "displayName" : {
+                          "maxLength" : 300,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Group name."
+                        },
+                        "externalId" : {
+                          "type" : "string",
+                          "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Group type.",
+                          "enum" : [ "custom", "system", "external" ]
+                        }
+                      },
+                      "description" : "Group contract Properties."
+                    }
+                  },
+                  "description" : "Contract details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -333,6 +619,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -411,6 +735,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -486,6 +848,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -600,6 +1000,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -691,6 +1129,82 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Page values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "type" : "object",
+                            "properties" : {
+                              "email" : {
+                                "type" : "string",
+                                "description" : "Email address."
+                              },
+                              "firstName" : {
+                                "type" : "string",
+                                "description" : "First name."
+                              },
+                              "groups" : {
+                                "type" : "array",
+                                "description" : "Collection of groups user is part of.",
+                                "readOnly" : true,
+                                "items" : {
+                                  "required" : [ "displayName" ],
+                                  "type" : "object",
+                                  "properties" : {
+                                    "builtIn" : {
+                                      "type" : "boolean",
+                                      "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                                      "readOnly" : true
+                                    },
+                                    "description" : {
+                                      "maxLength" : 1000,
+                                      "type" : "string",
+                                      "description" : "Group description. Can contain HTML formatting tags."
+                                    },
+                                    "displayName" : {
+                                      "maxLength" : 300,
+                                      "minLength" : 1,
+                                      "type" : "string",
+                                      "description" : "Group name."
+                                    },
+                                    "externalId" : {
+                                      "type" : "string",
+                                      "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                                    },
+                                    "type" : {
+                                      "type" : "string",
+                                      "description" : "Group type.",
+                                      "enum" : [ "custom", "system", "external" ]
+                                    }
+                                  },
+                                  "description" : "Group contract Properties."
+                                }
+                              },
+                              "lastName" : {
+                                "type" : "string",
+                                "description" : "Last name."
+                              },
+                              "registrationDate" : {
+                                "type" : "string",
+                                "description" : "Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time"
+                              }
+                            },
+                            "description" : "User profile."
+                          }
+                        },
+                        "description" : "User details."
+                      }
+                    }
+                  },
                   "description" : "Paged Users list representation."
                 }
               }
@@ -702,6 +1216,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -777,8 +1329,90 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "User details."
+                  "properties" : {
+                    "properties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "email" : {
+                          "type" : "string",
+                          "description" : "Email address."
+                        },
+                        "firstName" : {
+                          "type" : "string",
+                          "description" : "First name."
+                        },
+                        "groups" : {
+                          "type" : "array",
+                          "description" : "Collection of groups user is part of.",
+                          "readOnly" : true,
+                          "items" : {
+                            "required" : [ "displayName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "builtIn" : {
+                                "type" : "boolean",
+                                "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                                "readOnly" : true
+                              },
+                              "description" : {
+                                "maxLength" : 1000,
+                                "type" : "string",
+                                "description" : "Group description. Can contain HTML formatting tags."
+                              },
+                              "displayName" : {
+                                "maxLength" : 300,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Group name."
+                              },
+                              "externalId" : {
+                                "type" : "string",
+                                "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                              },
+                              "type" : {
+                                "type" : "string",
+                                "description" : "Group type.",
+                                "enum" : [ "custom", "system", "external" ]
+                              }
+                            },
+                            "description" : "Group contract Properties."
+                          }
+                        },
+                        "lastName" : {
+                          "type" : "string",
+                          "description" : "Last name."
+                        },
+                        "registrationDate" : {
+                          "type" : "string",
+                          "description" : "Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        }
+                      },
+                      "description" : "User profile."
+                    }
+                  },
+                  "description" : "User details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -788,8 +1422,90 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "User details."
+                  "properties" : {
+                    "properties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "email" : {
+                          "type" : "string",
+                          "description" : "Email address."
+                        },
+                        "firstName" : {
+                          "type" : "string",
+                          "description" : "First name."
+                        },
+                        "groups" : {
+                          "type" : "array",
+                          "description" : "Collection of groups user is part of.",
+                          "readOnly" : true,
+                          "items" : {
+                            "required" : [ "displayName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "builtIn" : {
+                                "type" : "boolean",
+                                "description" : "true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false.",
+                                "readOnly" : true
+                              },
+                              "description" : {
+                                "maxLength" : 1000,
+                                "type" : "string",
+                                "description" : "Group description. Can contain HTML formatting tags."
+                              },
+                              "displayName" : {
+                                "maxLength" : 300,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Group name."
+                              },
+                              "externalId" : {
+                                "type" : "string",
+                                "description" : "For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null."
+                              },
+                              "type" : {
+                                "type" : "string",
+                                "description" : "Group type.",
+                                "enum" : [ "custom", "system", "external" ]
+                              }
+                            },
+                            "description" : "Group contract Properties."
+                          }
+                        },
+                        "lastName" : {
+                          "type" : "string",
+                          "description" : "Last name."
+                        },
+                        "registrationDate" : {
+                          "type" : "string",
+                          "description" : "Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        }
+                      },
+                      "description" : "User profile."
+                    }
+                  },
+                  "description" : "User details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -800,6 +1516,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -880,6 +1634,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -960,6 +1752,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-monitor-operations_API"
+name: "MonitorManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-monitor-operations_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-monitor-operations_API-stubs.json"
+---

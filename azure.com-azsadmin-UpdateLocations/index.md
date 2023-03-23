@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-UpdateLocations"
+name: "UpdateAdminClient"
+provider: "azure.com"
+description: "Update location operation endpoints and objects."
+logo: "azure.com-azsadmin-UpdateLocations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-UpdateLocations-stubs.json"
+---

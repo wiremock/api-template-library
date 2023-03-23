@@ -181,7 +181,7 @@
             "application/json" : {
               "schema" : {
                 "type" : "object",
-                "required" : [ "Name" ],
+                "required" : [ "Name", "KmsKey", "SourceURI", "ScheduleConfig" ],
                 "properties" : {
                   "Name" : {
                     "description" : "The name of the DataIntegration.",
@@ -207,9 +207,9 @@
                   "SourceURI" : {
                     "description" : "The URI of the data source.",
                     "type" : "string",
-                    "pattern" : ".*\\S.*",
+                    "pattern" : "^(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+$)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+$)",
                     "minLength" : 1,
-                    "maxLength" : 255
+                    "maxLength" : 1000
                   },
                   "ScheduleConfig" : {
                     "description" : "The name of the data and how often it should be pulled from the source.",
@@ -219,7 +219,7 @@
                         "allOf" : [ {
                           "$ref" : "#/components/schemas/NonBlankString"
                         }, {
-                          "description" : "The start date for objects to import in the first flow run."
+                          "description" : "The start date for objects to import in the first flow run as an Unix/epoch timestamp in milliseconds or in ISO-8601 format."
                         } ]
                       },
                       "Object" : {
@@ -231,7 +231,7 @@
                       },
                       "ScheduleExpression" : {
                         "allOf" : [ {
-                          "$ref" : "#/components/schemas/Schedule"
+                          "$ref" : "#/components/schemas/NonBlankString"
                         }, {
                           "description" : "How often the data should be pulled from data source."
                         } ]
@@ -239,7 +239,7 @@
                     }
                   },
                   "Tags" : {
-                    "description" : "One or more tags.",
+                    "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.",
                     "type" : "object",
                     "minProperties" : 1,
                     "maxProperties" : 200,
@@ -248,11 +248,38 @@
                     }
                   },
                   "ClientToken" : {
-                    "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.",
+                    "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.",
                     "type" : "string",
                     "pattern" : ".*",
                     "minLength" : 1,
                     "maxLength" : 2048
+                  },
+                  "FileConfiguration" : {
+                    "description" : "The configuration for what files should be pulled from the source.",
+                    "type" : "object",
+                    "properties" : {
+                      "Folders" : {
+                        "allOf" : [ {
+                          "$ref" : "#/components/schemas/FolderList"
+                        }, {
+                          "description" : "Identifiers for the source folders to pull all files from recursively."
+                        } ]
+                      },
+                      "Filters" : {
+                        "allOf" : [ {
+                          "$ref" : "#/components/schemas/FieldsMap"
+                        }, {
+                          "description" : "Restrictions for what files should be pulled from the source."
+                        } ]
+                      }
+                    }
+                  },
+                  "ObjectConfiguration" : {
+                    "description" : "The configuration for what data should be pulled from the source.",
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "$ref" : "#/components/schemas/FieldsMap"
+                    }
                   }
                 }
               }
@@ -473,14 +500,14 @@
                     "maxLength" : 255
                   },
                   "ClientToken" : {
-                    "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.",
+                    "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.",
                     "type" : "string",
                     "pattern" : ".*",
                     "minLength" : 1,
                     "maxLength" : 2048
                   },
                   "Tags" : {
-                    "description" : "One or more tags.",
+                    "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.",
                     "type" : "object",
                     "minProperties" : 1,
                     "maxProperties" : 200,
@@ -1512,7 +1539,7 @@
                 "required" : [ "tags" ],
                 "properties" : {
                   "tags" : {
-                    "description" : "One or more tags. ",
+                    "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.",
                     "type" : "object",
                     "minProperties" : 1,
                     "maxProperties" : 200,
@@ -1735,7 +1762,7 @@
           },
           "SourceURI" : {
             "allOf" : [ {
-              "$ref" : "#/components/schemas/NonBlankString"
+              "$ref" : "#/components/schemas/SourceURI"
             }, {
               "description" : "The URI of the data source."
             } ]
@@ -1751,14 +1778,28 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           },
           "ClientToken" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/IdempotencyToken"
             }, {
-              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request."
+              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>."
+            } ]
+          },
+          "FileConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FileConfiguration"
+            }, {
+              "description" : "The configuration for what files should be pulled from the source."
+            } ]
+          },
+          "ObjectConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectConfiguration"
+            }, {
+              "description" : "The configuration for what data should be pulled from the source."
             } ]
           }
         }
@@ -1775,15 +1816,23 @@
         "minLength" : 1,
         "maxLength" : 255
       },
-      "Schedule" : {
-        "type" : "string",
-        "pattern" : "^[a-zA-Z0-9\\/\\._\\-]+$",
-        "minLength" : 1,
-        "maxLength" : 255
-      },
       "TagValue" : {
         "type" : "string",
         "maxLength" : 256
+      },
+      "FolderList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/NonBlankLongString"
+        },
+        "minItems" : 1,
+        "maxItems" : 10
+      },
+      "FieldsMap" : {
+        "type" : "object",
+        "additionalProperties" : {
+          "$ref" : "#/components/schemas/FieldsList"
+        }
       },
       "InternalServiceError" : null,
       "ResourceQuotaExceededException" : null,
@@ -1856,7 +1905,7 @@
           },
           "SourceURI" : {
             "allOf" : [ {
-              "$ref" : "#/components/schemas/NonBlankString"
+              "$ref" : "#/components/schemas/SourceURI"
             }, {
               "description" : "The URI of the data source."
             } ]
@@ -1872,7 +1921,21 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
+            } ]
+          },
+          "FileConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FileConfiguration"
+            }, {
+              "description" : "The configuration for what files should be pulled from the source."
+            } ]
+          },
+          "ObjectConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectConfiguration"
+            }, {
+              "description" : "The configuration for what data should be pulled from the source."
             } ]
           }
         }
@@ -1919,7 +1982,7 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           }
         }
@@ -2060,14 +2123,21 @@
         "minLength" : 1,
         "maxLength" : 1000
       },
+      "SourceURI" : {
+        "type" : "string",
+        "pattern" : "^(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+$)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+$)",
+        "minLength" : 1,
+        "maxLength" : 1000
+      },
       "ScheduleConfiguration" : {
         "type" : "object",
+        "required" : [ "ScheduleExpression" ],
         "properties" : {
           "FirstExecutionFrom" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/NonBlankString"
             }, {
-              "description" : "The start date for objects to import in the first flow run."
+              "description" : "The start date for objects to import in the first flow run as an Unix/epoch timestamp in milliseconds or in ISO-8601 format."
             } ]
           },
           "Object" : {
@@ -2079,7 +2149,7 @@
           },
           "ScheduleExpression" : {
             "allOf" : [ {
-              "$ref" : "#/components/schemas/Schedule"
+              "$ref" : "#/components/schemas/NonBlankString"
             }, {
               "description" : "How often the data should be pulled from data source."
             } ]
@@ -2101,9 +2171,37 @@
         "minLength" : 1,
         "maxLength" : 2048
       },
+      "FileConfiguration" : {
+        "type" : "object",
+        "required" : [ "Folders" ],
+        "properties" : {
+          "Folders" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FolderList"
+            }, {
+              "description" : "Identifiers for the source folders to pull all files from recursively."
+            } ]
+          },
+          "Filters" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FieldsMap"
+            }, {
+              "description" : "Restrictions for what files should be pulled from the source."
+            } ]
+          }
+        },
+        "description" : "The configuration for what files should be pulled from the source."
+      },
+      "ObjectConfiguration" : {
+        "type" : "object",
+        "description" : "The configuration for what data should be pulled from the source.",
+        "additionalProperties" : {
+          "$ref" : "#/components/schemas/FieldsMap"
+        }
+      },
       "CreateDataIntegrationRequest" : {
         "type" : "object",
-        "required" : [ "Name" ],
+        "required" : [ "Name", "KmsKey", "SourceURI", "ScheduleConfig" ],
         "title" : "CreateDataIntegrationRequest",
         "properties" : {
           "Name" : {
@@ -2129,7 +2227,7 @@
           },
           "SourceURI" : {
             "allOf" : [ {
-              "$ref" : "#/components/schemas/NonBlankString"
+              "$ref" : "#/components/schemas/SourceURI"
             }, {
               "description" : "The URI of the data source."
             } ]
@@ -2145,14 +2243,28 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           },
           "ClientToken" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/IdempotencyToken"
             }, {
-              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request."
+              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>."
+            } ]
+          },
+          "FileConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FileConfiguration"
+            }, {
+              "description" : "The configuration for what files should be pulled from the source."
+            } ]
+          },
+          "ObjectConfiguration" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectConfiguration"
+            }, {
+              "description" : "The configuration for what data should be pulled from the source."
             } ]
           }
         }
@@ -2218,14 +2330,14 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/IdempotencyToken"
             }, {
-              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request."
+              "description" : "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>."
             } ]
           },
           "Tags" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           }
         }
@@ -2244,14 +2356,14 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/Arn"
             }, {
-              "description" : "The Amazon Resource Name (ARN)of the DataIntegration."
+              "description" : "The Amazon Resource Name (ARN) of the DataIntegration."
             } ]
           },
           "ClientId" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/ClientId"
             }, {
-              "description" : "The identifier for teh client that is associated with the DataIntegration association."
+              "description" : "The identifier for the client that is associated with the DataIntegration association."
             } ]
           }
         },
@@ -2284,7 +2396,7 @@
           },
           "SourceURI" : {
             "allOf" : [ {
-              "$ref" : "#/components/schemas/NonBlankString"
+              "$ref" : "#/components/schemas/SourceURI"
             }, {
               "description" : "The URI of the data source."
             } ]
@@ -2362,7 +2474,7 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "The tags."
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           }
         },
@@ -2432,6 +2544,26 @@
         "minItems" : 1,
         "maxItems" : 50
       },
+      "Fields" : {
+        "type" : "string",
+        "pattern" : "^[a-zA-Z0-9\\/\\._\\-]+$",
+        "minLength" : 1,
+        "maxLength" : 255
+      },
+      "FieldsList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Fields"
+        },
+        "minItems" : 1,
+        "maxItems" : 2048
+      },
+      "NonBlankLongString" : {
+        "type" : "string",
+        "pattern" : ".*\\S.*",
+        "minLength" : 1,
+        "maxLength" : 200
+      },
       "GetDataIntegrationRequest" : {
         "type" : "object",
         "title" : "GetDataIntegrationRequest"
@@ -2488,7 +2620,7 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TagMap"
             }, {
-              "description" : "One or more tags. "
+              "description" : "The tags used to organize, track, or control access for this resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }."
             } ]
           }
         }

@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-certificatemanager"
+name: "Certificate Manager API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-certificatemanager-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-certificatemanager-stubs.json"
+---

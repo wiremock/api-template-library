@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-domains"
+name: "Cloud Domains API"
+provider: "googleapis.com"
+description: "Enables management and configuration of domain names."
+logo: "googleapis.com-domains-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-domains-stubs.json"
+---

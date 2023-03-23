@@ -88,6 +88,63 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "count" : {
+                      "type" : "integer",
+                      "description" : "Total record count number across all pages.",
+                      "format" : "int64"
+                    },
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Logger values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "required" : [ "credentials", "loggerType" ],
+                            "type" : "object",
+                            "properties" : {
+                              "credentials" : {
+                                "type" : "object",
+                                "additionalProperties" : {
+                                  "type" : "string"
+                                },
+                                "description" : "The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.",
+                                "example" : {
+                                  "connectionString" : "Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...",
+                                  "name" : "apim"
+                                }
+                              },
+                              "description" : {
+                                "maxLength" : 256,
+                                "type" : "string",
+                                "description" : "Logger description."
+                              },
+                              "isBuffered" : {
+                                "type" : "boolean",
+                                "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                              },
+                              "loggerType" : {
+                                "type" : "string",
+                                "description" : "Logger type.",
+                                "enum" : [ "azureEventHub", "applicationInsights" ]
+                              },
+                              "resourceId" : {
+                                "type" : "string",
+                                "description" : "Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."
+                              }
+                            },
+                            "description" : "The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."
+                          }
+                        },
+                        "description" : "Logger details."
+                      }
+                    }
+                  },
                   "description" : "Paged Logger list representation."
                 }
               }
@@ -99,6 +156,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -172,8 +267,66 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Logger details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "credentials", "loggerType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "credentials" : {
+                          "type" : "object",
+                          "additionalProperties" : {
+                            "type" : "string"
+                          },
+                          "description" : "The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.",
+                          "example" : {
+                            "connectionString" : "Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...",
+                            "name" : "apim"
+                          }
+                        },
+                        "description" : {
+                          "maxLength" : 256,
+                          "type" : "string",
+                          "description" : "Logger description."
+                        },
+                        "isBuffered" : {
+                          "type" : "boolean",
+                          "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                        },
+                        "loggerType" : {
+                          "type" : "string",
+                          "description" : "Logger type.",
+                          "enum" : [ "azureEventHub", "applicationInsights" ]
+                        },
+                        "resourceId" : {
+                          "type" : "string",
+                          "description" : "Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."
+                        }
+                      },
+                      "description" : "The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."
+                    }
+                  },
+                  "description" : "Logger details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -184,6 +337,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -332,8 +523,66 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Logger details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "credentials", "loggerType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "credentials" : {
+                          "type" : "object",
+                          "additionalProperties" : {
+                            "type" : "string"
+                          },
+                          "description" : "The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.",
+                          "example" : {
+                            "connectionString" : "Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...",
+                            "name" : "apim"
+                          }
+                        },
+                        "description" : {
+                          "maxLength" : 256,
+                          "type" : "string",
+                          "description" : "Logger description."
+                        },
+                        "isBuffered" : {
+                          "type" : "boolean",
+                          "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                        },
+                        "loggerType" : {
+                          "type" : "string",
+                          "description" : "Logger type.",
+                          "enum" : [ "azureEventHub", "applicationInsights" ]
+                        },
+                        "resourceId" : {
+                          "type" : "string",
+                          "description" : "Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."
+                        }
+                      },
+                      "description" : "The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."
+                    }
+                  },
+                  "description" : "Logger details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -351,8 +600,66 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Logger details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "credentials", "loggerType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "credentials" : {
+                          "type" : "object",
+                          "additionalProperties" : {
+                            "type" : "string"
+                          },
+                          "description" : "The name and SendRule connection string of the event hub for azureEventHub logger.\nInstrumentation key for applicationInsights logger.",
+                          "example" : {
+                            "connectionString" : "Endpoint=sb://contoso-ns.servicebus.windows.net/;SharedAccessKeyName=Sender;SharedAccessKey=...",
+                            "name" : "apim"
+                          }
+                        },
+                        "description" : {
+                          "maxLength" : 256,
+                          "type" : "string",
+                          "description" : "Logger description."
+                        },
+                        "isBuffered" : {
+                          "type" : "boolean",
+                          "description" : "Whether records are buffered in the logger before publishing. Default is assumed to be true."
+                        },
+                        "loggerType" : {
+                          "type" : "string",
+                          "description" : "Logger type.",
+                          "enum" : [ "azureEventHub", "applicationInsights" ]
+                        },
+                        "resourceId" : {
+                          "type" : "string",
+                          "description" : "Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource)."
+                        }
+                      },
+                      "description" : "The Logger entity in API Management represents an event sink that you can use to log API Management events. Currently the Logger entity supports logging API Management events to Azure Event Hubs."
+                    }
+                  },
+                  "description" : "Logger details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -363,6 +670,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -448,6 +793,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -523,6 +906,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -638,6 +1059,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

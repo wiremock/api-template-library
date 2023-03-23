@@ -1,0 +1,11 @@
+---
+slug: "zenoti-com"
+name: "Zenoti API"
+provider: "zenoti.com"
+description: "Our API documentation has been moved to https://docs.zenoti.com. \n\n"
+logo: "zenoti.com-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "customer_relation"
+stubs: "zenoti.com-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-DownloadedProduct"
+name: "AzureBridgeAdminClient"
+provider: "azure.com"
+description: "AzureBridge Admin Client."
+logo: "azure.com-azsadmin-DownloadedProduct-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-DownloadedProduct-stubs.json"
+---

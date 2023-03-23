@@ -1,0 +1,13 @@
+---
+slug: "scrapewebsite-email"
+name: "Scrape Website Email API"
+provider: "scrapewebsite.email"
+description: "ScrapeWebsiteEmail is a service that exposes an api to fetch e-mails\
+  \ from a website."
+logo: "scrapewebsite.email-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "email"
+- name: "tools"
+stubs: "scrapewebsite.email-stubs.json"
+---

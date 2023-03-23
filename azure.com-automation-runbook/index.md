@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-runbook"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-runbook-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-runbook-stubs.json"
+---

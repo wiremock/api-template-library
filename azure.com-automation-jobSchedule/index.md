@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-jobSchedule"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-jobSchedule-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-jobSchedule-stubs.json"
+---

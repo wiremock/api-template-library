@@ -1,0 +1,11 @@
+---
+slug: "wso2apistore-com-transform"
+name: "Transform"
+provider: "wso2apistore.com"
+description: "This API provides XML to JSON, JSON to XML transformations."
+logo: "wso2apistore.com-transform-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "developer_tools"
+stubs: "wso2apistore.com-transform-stubs.json"
+---

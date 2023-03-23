@@ -1,0 +1,11 @@
+---
+slug: "azure-com-security-advancedThreatProtectionSettings"
+name: "Security Center"
+provider: "azure.com"
+description: "API spec for Microsoft.Security (Azure Security Center) resource provider"
+logo: "azure.com-security-advancedThreatProtectionSettings-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-security-advancedThreatProtectionSettings-stubs.json"
+---

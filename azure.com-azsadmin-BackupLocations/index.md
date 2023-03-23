@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-BackupLocations"
+name: "BackupManagementClient"
+provider: "azure.com"
+description: "The Admin Backup Management Client."
+logo: "azure.com-azsadmin-BackupLocations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-BackupLocations-stubs.json"
+---

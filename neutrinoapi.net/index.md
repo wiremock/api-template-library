@@ -1,0 +1,15 @@
+---
+slug: "neutrinoapi-net"
+name: "Neutrino API"
+provider: "neutrinoapi.net"
+description: "The general-purpose API"
+logo: "neutrinoapi.net-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "email"
+- name: "messaging"
+- name: "telecom"
+- name: "location"
+- name: "text"
+stubs: "neutrinoapi.net-stubs.json"
+---

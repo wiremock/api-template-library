@@ -1,0 +1,11 @@
+---
+slug: "ote-godaddy-com-agreements"
+name: "agreements"
+provider: "ote-godaddy.com"
+description: null
+logo: "ote-godaddy.com-agreements-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "hosting"
+stubs: "ote-godaddy.com-agreements-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-composer"
+name: "Cloud Composer API"
+provider: "googleapis.com"
+description: "Manages Apache Airflow environments on Google Cloud Platform."
+logo: "googleapis.com-composer-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-composer-stubs.json"
+---

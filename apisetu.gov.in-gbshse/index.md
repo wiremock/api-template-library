@@ -1,0 +1,12 @@
+---
+slug: "apisetu-gov-in-gbshse"
+name: "Goa State Board of Secondary and Higher Secondary Education, Goa"
+provider: "apisetu.gov.in"
+description: "APIs provided by Goa State Board of Secondary and Higher Secondary Education,\
+  \ Goa."
+logo: "apisetu.gov.in-gbshse-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "apisetu.gov.in-gbshse-stubs.json"
+---

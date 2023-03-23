@@ -1,0 +1,11 @@
+---
+slug: "azure-com-streamanalytics-transformations"
+name: "StreamAnalyticsManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-streamanalytics-transformations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-streamanalytics-transformations-stubs.json"
+---

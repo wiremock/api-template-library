@@ -1,0 +1,11 @@
+---
+slug: "azure-com-guestconfiguration-guestconfiguration_NotImplemented"
+name: "GuestConfiguration"
+provider: "azure.com"
+description: null
+logo: "azure.com-guestconfiguration-guestconfiguration_NotImplemented-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-guestconfiguration-guestconfiguration_NotImplemented-stubs.json"
+---

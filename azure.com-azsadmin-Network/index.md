@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-Network"
+name: "NetworkAdminManagementClient"
+provider: "azure.com"
+description: "Network admin operation endpoints and objects."
+logo: "azure.com-azsadmin-Network-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-Network-stubs.json"
+---

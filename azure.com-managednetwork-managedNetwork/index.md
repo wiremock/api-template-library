@@ -1,0 +1,14 @@
+---
+slug: "azure-com-managednetwork-managedNetwork"
+name: "ManagedNetworkManagementClient"
+provider: "azure.com"
+description: "The Microsoft Azure Managed Network management API provides a RESTful\
+  \ set of web services that interact with Microsoft Azure Networks service to programmatically\
+  \ view, control, change, and monitor your entire Azure network centrally and with\
+  \ ease."
+logo: "azure.com-managednetwork-managedNetwork-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-managednetwork-managedNetwork-stubs.json"
+---

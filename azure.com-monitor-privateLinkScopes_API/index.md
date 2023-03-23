@@ -1,0 +1,11 @@
+---
+slug: "azure-com-monitor-privateLinkScopes_API"
+name: "Azure Monitor Private Link Scopes"
+provider: "azure.com"
+description: "Azure Monitor API reference for Private Links Scopes management."
+logo: "azure.com-monitor-privateLinkScopes_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-monitor-privateLinkScopes_API-stubs.json"
+---

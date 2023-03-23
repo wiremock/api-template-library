@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-orgpolicy"
+name: "Organization Policy API"
+provider: "googleapis.com"
+description: "The Org Policy API allows users to configure governance rules on their\
+  \ GCP resources across the Cloud Resource Hierarchy."
+logo: "googleapis.com-orgpolicy-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-orgpolicy-stubs.json"
+---

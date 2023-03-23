@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-webhook"
+name: "AutomationManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-webhook-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-webhook-stubs.json"
+---

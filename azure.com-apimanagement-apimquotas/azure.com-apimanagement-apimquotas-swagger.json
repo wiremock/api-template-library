@@ -72,6 +72,64 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "count" : {
+                      "type" : "integer",
+                      "description" : "Total record count number across all pages.",
+                      "format" : "int64"
+                    },
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Quota counter values.",
+                      "items" : {
+                        "required" : [ "counterKey", "periodEndTime", "periodKey", "periodStartTime" ],
+                        "type" : "object",
+                        "properties" : {
+                          "counterKey" : {
+                            "minLength" : 1,
+                            "type" : "string",
+                            "description" : "The Key value of the Counter. Must not be empty."
+                          },
+                          "periodEndTime" : {
+                            "type" : "string",
+                            "description" : "The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                            "format" : "date-time"
+                          },
+                          "periodKey" : {
+                            "minLength" : 1,
+                            "type" : "string",
+                            "description" : "Identifier of the Period for which the counter was collected. Must not be empty."
+                          },
+                          "periodStartTime" : {
+                            "type" : "string",
+                            "description" : "The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                            "format" : "date-time"
+                          },
+                          "value" : {
+                            "type" : "object",
+                            "properties" : {
+                              "callsCount" : {
+                                "type" : "integer",
+                                "description" : "Number of times Counter was called.",
+                                "format" : "int32"
+                              },
+                              "kbTransferred" : {
+                                "type" : "number",
+                                "description" : "Data Transferred in KiloBytes.",
+                                "format" : "double"
+                              }
+                            },
+                            "description" : "Quota counter value details."
+                          }
+                        },
+                        "description" : "Quota counter details."
+                      }
+                    }
+                  },
                   "description" : "Paged Quota Counter list representation."
                 }
               }
@@ -83,6 +141,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -172,6 +268,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -247,7 +381,46 @@
             "content" : {
               "application/json" : {
                 "schema" : {
+                  "required" : [ "counterKey", "periodEndTime", "periodKey", "periodStartTime" ],
                   "type" : "object",
+                  "properties" : {
+                    "counterKey" : {
+                      "minLength" : 1,
+                      "type" : "string",
+                      "description" : "The Key value of the Counter. Must not be empty."
+                    },
+                    "periodEndTime" : {
+                      "type" : "string",
+                      "description" : "The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                      "format" : "date-time"
+                    },
+                    "periodKey" : {
+                      "minLength" : 1,
+                      "type" : "string",
+                      "description" : "Identifier of the Period for which the counter was collected. Must not be empty."
+                    },
+                    "periodStartTime" : {
+                      "type" : "string",
+                      "description" : "The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                      "format" : "date-time"
+                    },
+                    "value" : {
+                      "type" : "object",
+                      "properties" : {
+                        "callsCount" : {
+                          "type" : "integer",
+                          "description" : "Number of times Counter was called.",
+                          "format" : "int32"
+                        },
+                        "kbTransferred" : {
+                          "type" : "number",
+                          "description" : "Data Transferred in KiloBytes.",
+                          "format" : "double"
+                        }
+                      },
+                      "description" : "Quota counter value details."
+                    }
+                  },
                   "description" : "Quota counter details."
                 }
               }
@@ -259,6 +432,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -356,6 +567,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

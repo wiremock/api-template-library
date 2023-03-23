@@ -1,0 +1,13 @@
+---
+slug: "walmart-com-order"
+name: "Orders API"
+provider: "walmart.com"
+description: "Please make sure you use the correct version of the APIs for your use\
+  \ case. To find out the appropriate version, go to the API Docs  drop down on the\
+  \ menu."
+logo: "walmart.com-order-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "ecommerce"
+stubs: "walmart.com-order-stubs.json"
+---

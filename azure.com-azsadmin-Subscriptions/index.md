@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-Subscriptions"
+name: "SubscriptionClient"
+provider: "azure.com"
+description: "The User Subscription Management Client."
+logo: "azure.com-azsadmin-Subscriptions-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-Subscriptions-stubs.json"
+---

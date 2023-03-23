@@ -1,0 +1,11 @@
+---
+slug: "azure-com-applicationinsights-workbooks_API"
+name: "ApplicationInsightsManagementClient"
+provider: "azure.com"
+description: "Azure Application Insights workbook type."
+logo: "azure.com-applicationinsights-workbooks_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-applicationinsights-workbooks_API-stubs.json"
+---

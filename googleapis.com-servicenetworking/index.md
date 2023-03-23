@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-servicenetworking"
+name: "Service Networking API"
+provider: "googleapis.com"
+description: "Provides automatic management of network configurations necessary for\
+  \ certain services."
+logo: "googleapis.com-servicenetworking-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-servicenetworking-stubs.json"
+---

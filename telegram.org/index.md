@@ -1,0 +1,11 @@
+---
+slug: "telegram-org"
+name: "Telegram Bot API"
+provider: "telegram.org"
+description: "Auto-generated OpenAPI schema"
+logo: "telegram.org-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "messaging"
+stubs: "telegram.org-stubs.json"
+---

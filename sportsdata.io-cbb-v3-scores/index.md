@@ -1,0 +1,11 @@
+---
+slug: "sportsdata-io-cbb-v3-scores"
+name: "CBB v3 Scores"
+provider: "sportsdata.io"
+description: null
+logo: "sportsdata.io-cbb-v3-scores-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "entertainment"
+stubs: "sportsdata.io-cbb-v3-scores-stubs.json"
+---

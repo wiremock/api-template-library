@@ -85,6 +85,94 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Page values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "required" : [ "scope", "state" ],
+                            "type" : "object",
+                            "properties" : {
+                              "allowTracing" : {
+                                "type" : "boolean",
+                                "description" : "Determines whether tracing is enabled"
+                              },
+                              "createdDate" : {
+                                "type" : "string",
+                                "description" : "Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time",
+                                "readOnly" : true
+                              },
+                              "displayName" : {
+                                "maxLength" : 100,
+                                "minLength" : 0,
+                                "type" : "string",
+                                "description" : "The name of the subscription, or null if the subscription has no name."
+                              },
+                              "endDate" : {
+                                "type" : "string",
+                                "description" : "Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time"
+                              },
+                              "expirationDate" : {
+                                "type" : "string",
+                                "description" : "Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time"
+                              },
+                              "notificationDate" : {
+                                "type" : "string",
+                                "description" : "Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time"
+                              },
+                              "ownerId" : {
+                                "type" : "string",
+                                "description" : "The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier."
+                              },
+                              "primaryKey" : {
+                                "maxLength" : 256,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                              },
+                              "scope" : {
+                                "type" : "string",
+                                "description" : "Scope like /products/{productId} or /apis or /apis/{apiId}."
+                              },
+                              "secondaryKey" : {
+                                "maxLength" : 256,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                              },
+                              "startDate" : {
+                                "type" : "string",
+                                "description" : "Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                                "format" : "date-time"
+                              },
+                              "state" : {
+                                "type" : "string",
+                                "description" : "Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.",
+                                "enum" : [ "suspended", "active", "expired", "submitted", "rejected", "cancelled" ]
+                              },
+                              "stateComment" : {
+                                "type" : "string",
+                                "description" : "Optional subscription comment added by an administrator."
+                              }
+                            },
+                            "description" : "Subscription details."
+                          }
+                        },
+                        "description" : "Subscription details."
+                      }
+                    }
+                  },
                   "description" : "Paged Subscriptions list representation."
                 }
               }
@@ -96,6 +184,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -169,8 +295,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Subscription details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "scope", "state" ],
+                      "type" : "object",
+                      "properties" : {
+                        "allowTracing" : {
+                          "type" : "boolean",
+                          "description" : "Determines whether tracing is enabled"
+                        },
+                        "createdDate" : {
+                          "type" : "string",
+                          "description" : "Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "displayName" : {
+                          "maxLength" : 100,
+                          "minLength" : 0,
+                          "type" : "string",
+                          "description" : "The name of the subscription, or null if the subscription has no name."
+                        },
+                        "endDate" : {
+                          "type" : "string",
+                          "description" : "Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "expirationDate" : {
+                          "type" : "string",
+                          "description" : "Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "notificationDate" : {
+                          "type" : "string",
+                          "description" : "Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "ownerId" : {
+                          "type" : "string",
+                          "description" : "The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier."
+                        },
+                        "primaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "scope" : {
+                          "type" : "string",
+                          "description" : "Scope like /products/{productId} or /apis or /apis/{apiId}."
+                        },
+                        "secondaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "startDate" : {
+                          "type" : "string",
+                          "description" : "Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.",
+                          "enum" : [ "suspended", "active", "expired", "submitted", "rejected", "cancelled" ]
+                        },
+                        "stateComment" : {
+                          "type" : "string",
+                          "description" : "Optional subscription comment added by an administrator."
+                        }
+                      },
+                      "description" : "Subscription details."
+                    }
+                  },
+                  "description" : "Subscription details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -181,6 +401,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -322,8 +580,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Subscription details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "scope", "state" ],
+                      "type" : "object",
+                      "properties" : {
+                        "allowTracing" : {
+                          "type" : "boolean",
+                          "description" : "Determines whether tracing is enabled"
+                        },
+                        "createdDate" : {
+                          "type" : "string",
+                          "description" : "Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "displayName" : {
+                          "maxLength" : 100,
+                          "minLength" : 0,
+                          "type" : "string",
+                          "description" : "The name of the subscription, or null if the subscription has no name."
+                        },
+                        "endDate" : {
+                          "type" : "string",
+                          "description" : "Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "expirationDate" : {
+                          "type" : "string",
+                          "description" : "Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "notificationDate" : {
+                          "type" : "string",
+                          "description" : "Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "ownerId" : {
+                          "type" : "string",
+                          "description" : "The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier."
+                        },
+                        "primaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "scope" : {
+                          "type" : "string",
+                          "description" : "Scope like /products/{productId} or /apis or /apis/{apiId}."
+                        },
+                        "secondaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "startDate" : {
+                          "type" : "string",
+                          "description" : "Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.",
+                          "enum" : [ "suspended", "active", "expired", "submitted", "rejected", "cancelled" ]
+                        },
+                        "stateComment" : {
+                          "type" : "string",
+                          "description" : "Optional subscription comment added by an administrator."
+                        }
+                      },
+                      "description" : "Subscription details."
+                    }
+                  },
+                  "description" : "Subscription details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -341,8 +693,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Subscription details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "scope", "state" ],
+                      "type" : "object",
+                      "properties" : {
+                        "allowTracing" : {
+                          "type" : "boolean",
+                          "description" : "Determines whether tracing is enabled"
+                        },
+                        "createdDate" : {
+                          "type" : "string",
+                          "description" : "Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "displayName" : {
+                          "maxLength" : 100,
+                          "minLength" : 0,
+                          "type" : "string",
+                          "description" : "The name of the subscription, or null if the subscription has no name."
+                        },
+                        "endDate" : {
+                          "type" : "string",
+                          "description" : "Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "expirationDate" : {
+                          "type" : "string",
+                          "description" : "Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "notificationDate" : {
+                          "type" : "string",
+                          "description" : "Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "ownerId" : {
+                          "type" : "string",
+                          "description" : "The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier."
+                        },
+                        "primaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "scope" : {
+                          "type" : "string",
+                          "description" : "Scope like /products/{productId} or /apis or /apis/{apiId}."
+                        },
+                        "secondaryKey" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value."
+                        },
+                        "startDate" : {
+                          "type" : "string",
+                          "description" : "Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.\n",
+                          "format" : "date-time"
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.",
+                          "enum" : [ "suspended", "active", "expired", "submitted", "rejected", "cancelled" ]
+                        },
+                        "stateComment" : {
+                          "type" : "string",
+                          "description" : "Optional subscription comment added by an administrator."
+                        }
+                      },
+                      "description" : "Subscription details."
+                    }
+                  },
+                  "description" : "Subscription details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -353,6 +799,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -431,6 +915,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -506,6 +1028,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -650,6 +1210,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -716,6 +1314,20 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "primaryKey" : {
+                      "maxLength" : 256,
+                      "minLength" : 1,
+                      "type" : "string",
+                      "description" : "Subscription primary key."
+                    },
+                    "secondaryKey" : {
+                      "maxLength" : 256,
+                      "minLength" : 1,
+                      "type" : "string",
+                      "description" : "Subscription secondary key."
+                    }
+                  },
                   "description" : "Subscription keys."
                 }
               }
@@ -727,6 +1339,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -796,6 +1446,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -865,6 +1553,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

@@ -1,0 +1,12 @@
+---
+slug: "bufferapp-com"
+name: "Bufferapp"
+provider: "bufferapp.com"
+description: "Social media management for marketers and agencies"
+logo: "bufferapp.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "social"
+- name: "marketing"
+stubs: "bufferapp.com-stubs.json"
+---

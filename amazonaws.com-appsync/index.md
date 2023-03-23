@@ -1,0 +1,12 @@
+---
+slug: "amazonaws-com-appsync"
+name: "AWS AppSync"
+provider: "amazonaws.com"
+description: "AppSync provides API actions for creating and interacting with data\
+  \ sources using GraphQL from your application."
+logo: "amazonaws.com-appsync-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-appsync-stubs.json"
+---

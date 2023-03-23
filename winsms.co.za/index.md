@@ -1,0 +1,11 @@
+---
+slug: "winsms-co-za"
+name: "WINSMS"
+provider: "winsms.co.za"
+description: "WinSMS RESTful API"
+logo: "winsms.co.za-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "messaging"
+stubs: "winsms.co.za-stubs.json"
+---

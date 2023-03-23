@@ -1,0 +1,11 @@
+---
+slug: "naviplancentral-com-plan"
+name: "NaviPlan API"
+provider: "naviplancentral.com"
+description: "An API for accessing NaviPlan plan data for a client."
+logo: "naviplancentral.com-plan-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "financial"
+stubs: "naviplancentral.com-plan-stubs.json"
+---

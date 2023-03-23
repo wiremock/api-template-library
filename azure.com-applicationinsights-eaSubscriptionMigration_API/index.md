@@ -1,0 +1,12 @@
+---
+slug: "azure-com-applicationinsights-eaSubscriptionMigration_API"
+name: "ApplicationInsightsManagementClient"
+provider: "azure.com"
+description: "Apis for customer in enterprise agreement migrate to new pricing model\
+  \ or rollback to legacy pricing model."
+logo: "azure.com-applicationinsights-eaSubscriptionMigration_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-applicationinsights-eaSubscriptionMigration_API-stubs.json"
+---

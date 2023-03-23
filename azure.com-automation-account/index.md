@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-account"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-account-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-account-stubs.json"
+---

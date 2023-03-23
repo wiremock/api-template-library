@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-OfferDelegation"
+name: "SubscriptionsManagementClient"
+provider: "azure.com"
+description: "The Admin Subscriptions Management Client."
+logo: "azure.com-azsadmin-OfferDelegation-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-OfferDelegation-stubs.json"
+---

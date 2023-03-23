@@ -1,0 +1,11 @@
+---
+slug: "azure-com-alertsmanagement-SmartDetectorAlertRulesApi"
+name: "Azure Alerts Management Service Resource Provider"
+provider: "azure.com"
+description: "APIs for Azure Smart Detector Alert Rules CRUD operations."
+logo: "azure.com-alertsmanagement-SmartDetectorAlertRulesApi-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-alertsmanagement-SmartDetectorAlertRulesApi-stubs.json"
+---

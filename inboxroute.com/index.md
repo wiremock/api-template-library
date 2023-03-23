@@ -1,0 +1,13 @@
+---
+slug: "inboxroute-com"
+name: "Mailsquad"
+provider: "inboxroute.com"
+description: "MailSquad offers an affordable and super easy way to create, send and\
+  \ track delightful emails."
+logo: "inboxroute.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "email"
+- name: "marketing"
+stubs: "inboxroute.com-stubs.json"
+---

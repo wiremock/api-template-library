@@ -1,0 +1,12 @@
+---
+slug: "apimatic-io"
+name: "APIMATIC API Transformer"
+provider: "apimatic.io"
+description: "Transform API Descriptions from/to various formats"
+logo: "apimatic.io-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+- name: "tools"
+stubs: "apimatic.io-stubs.json"
+---

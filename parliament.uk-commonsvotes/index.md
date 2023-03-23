@@ -1,0 +1,11 @@
+---
+slug: "parliament-uk-commonsvotes"
+name: "Commons Votes API"
+provider: "parliament.uk"
+description: "An API that allows querying of Commons Votes data."
+logo: "parliament.uk-commonsvotes-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "parliament.uk-commonsvotes-stubs.json"
+---

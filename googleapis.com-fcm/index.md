@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-fcm"
+name: "Firebase Cloud Messaging API"
+provider: "googleapis.com"
+description: "FCM send API that provides a cross-platform messaging solution to reliably\
+  \ deliver messages at no cost."
+logo: "googleapis.com-fcm-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-fcm-stubs.json"
+---

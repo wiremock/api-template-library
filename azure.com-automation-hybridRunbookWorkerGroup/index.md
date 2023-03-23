@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-hybridRunbookWorkerGroup"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-hybridRunbookWorkerGroup-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-hybridRunbookWorkerGroup-stubs.json"
+---

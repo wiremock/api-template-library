@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-dscNodeConfiguration"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-dscNodeConfiguration-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-dscNodeConfiguration-stubs.json"
+---

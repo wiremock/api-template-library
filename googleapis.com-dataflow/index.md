@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-dataflow"
+name: "Dataflow API"
+provider: "googleapis.com"
+description: "Manages Google Cloud Dataflow projects on Google Cloud Platform."
+logo: "googleapis.com-dataflow-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-dataflow-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "n-auth-com"
+name: "nextAuth API"
+provider: "n-auth.com"
+description: "API for the nextAuth server"
+logo: "n-auth.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "security"
+stubs: "n-auth.com-stubs.json"
+---

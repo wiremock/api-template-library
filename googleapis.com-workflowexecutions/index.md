@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-workflowexecutions"
+name: "Workflow Executions API"
+provider: "googleapis.com"
+description: "Execute workflows created with Workflows API."
+logo: "googleapis.com-workflowexecutions-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-workflowexecutions-stubs.json"
+---

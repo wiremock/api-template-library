@@ -1,0 +1,11 @@
+---
+slug: "callfire-com"
+name: "CallFire API Documentation"
+provider: "callfire.com"
+description: "CallFire"
+logo: "callfire.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "telecom"
+stubs: "callfire.com-stubs.json"
+---

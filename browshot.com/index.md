@@ -1,0 +1,11 @@
+---
+slug: "browshot-com"
+name: "Browshot API"
+provider: "browshot.com"
+description: "Take screenshots of any website in real time"
+logo: "browshot.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "tools"
+stubs: "browshot.com-stubs.json"
+---

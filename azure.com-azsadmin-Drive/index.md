@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-Drive"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Drive operation endpoints and objects."
+logo: "azure.com-azsadmin-Drive-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-Drive-stubs.json"
+---

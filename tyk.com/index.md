@@ -1,0 +1,11 @@
+---
+slug: "tyk-com"
+name: "Gateway REST API"
+provider: "tyk.com"
+description: null
+logo: "tyk.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "enterprise"
+stubs: "tyk.com-stubs.json"
+---

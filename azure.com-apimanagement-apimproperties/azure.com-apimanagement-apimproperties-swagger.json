@@ -88,6 +88,42 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "Next page link if any."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "Page values.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "properties" : {
+                            "required" : [ "displayName", "value" ],
+                            "type" : "object",
+                            "properties" : {
+                              "displayName" : {
+                                "maxLength" : 256,
+                                "minLength" : 1,
+                                "pattern" : "^[A-Za-z0-9-._]+$",
+                                "type" : "string",
+                                "description" : "Unique name of Property. It may contain only letters, digits, period, dash, and underscore characters."
+                              },
+                              "value" : {
+                                "maxLength" : 4096,
+                                "minLength" : 1,
+                                "type" : "string",
+                                "description" : "Value of the property. Can contain policy expressions. It may not be empty or consist only of whitespace."
+                              }
+                            },
+                            "description" : "Property Contract properties."
+                          }
+                        },
+                        "description" : "Property details."
+                      }
+                    }
+                  },
                   "description" : "Paged Property list representation."
                 }
               }
@@ -99,6 +135,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -172,8 +246,50 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Property details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName", "value" ],
+                      "type" : "object",
+                      "properties" : {
+                        "displayName" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "pattern" : "^[A-Za-z0-9-._]+$",
+                          "type" : "string",
+                          "description" : "Unique name of Property. It may contain only letters, digits, period, dash, and underscore characters."
+                        },
+                        "value" : {
+                          "maxLength" : 4096,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Value of the property. Can contain policy expressions. It may not be empty or consist only of whitespace."
+                        }
+                      },
+                      "description" : "Property Contract properties."
+                    }
+                  },
+                  "description" : "Property details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -184,6 +300,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -316,8 +470,50 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Property details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName", "value" ],
+                      "type" : "object",
+                      "properties" : {
+                        "displayName" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "pattern" : "^[A-Za-z0-9-._]+$",
+                          "type" : "string",
+                          "description" : "Unique name of Property. It may contain only letters, digits, period, dash, and underscore characters."
+                        },
+                        "value" : {
+                          "maxLength" : 4096,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Value of the property. Can contain policy expressions. It may not be empty or consist only of whitespace."
+                        }
+                      },
+                      "description" : "Property Contract properties."
+                    }
+                  },
+                  "description" : "Property details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -335,8 +531,50 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "Property details."
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "displayName", "value" ],
+                      "type" : "object",
+                      "properties" : {
+                        "displayName" : {
+                          "maxLength" : 256,
+                          "minLength" : 1,
+                          "pattern" : "^[A-Za-z0-9-._]+$",
+                          "type" : "string",
+                          "description" : "Unique name of Property. It may contain only letters, digits, period, dash, and underscore characters."
+                        },
+                        "value" : {
+                          "maxLength" : 4096,
+                          "minLength" : 1,
+                          "type" : "string",
+                          "description" : "Value of the property. Can contain policy expressions. It may not be empty or consist only of whitespace."
+                        }
+                      },
+                      "description" : "Property Contract properties."
+                    }
+                  },
+                  "description" : "Property details.",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type for API Management resource.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "The Resource definition."
+                  } ]
                 }
               }
             }
@@ -347,6 +585,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -425,6 +701,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -500,6 +814,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }
@@ -608,6 +960,44 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response."
+                        },
+                        "details" : {
+                          "type" : "array",
+                          "description" : "The list of invalid fields send in request, in case of validation error.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "Property level error code."
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "Human-readable representation of property-level error."
+                              },
+                              "target" : {
+                                "type" : "string",
+                                "description" : "Property name."
+                              }
+                            },
+                            "description" : "Error Field contract."
+                          }
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable representation of the error."
+                        }
+                      },
+                      "description" : "Error Body contract."
+                    }
+                  },
                   "description" : "Error Response."
                 }
               }

@@ -1,0 +1,14 @@
+---
+slug: "googleapis-com-gmailpostmastertools"
+name: "Gmail Postmaster Tools API"
+provider: "googleapis.com"
+description: "The Postmaster Tools API is a RESTful API that provides programmatic\
+  \ access to email traffic metrics (like spam reports, delivery errors etc) otherwise\
+  \ available through the Gmail Postmaster Tools UI currently."
+logo: "googleapis.com-gmailpostmastertools-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-gmailpostmastertools-stubs.json"
+---

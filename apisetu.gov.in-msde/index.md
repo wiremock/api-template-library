@@ -1,0 +1,16 @@
+---
+slug: "apisetu-gov-in-msde"
+name: "Ministry of Skill Development And Entrepreneurship"
+provider: "apisetu.gov.in"
+description: "National Council for Vocational Training (NCVT) under Ministry of Skill\
+  \ Development And Entrepreneurship has been entrusted with the responsibilities\
+  \ of prescribing standards and curricula for craftsmen training and conducting All\
+  \ India Trade Tests and awarding National Trade Certificates. All the ITI certificates\
+  \ under the purview of NCVT are available to download through Citizen's DigiLocker\
+  \ account."
+logo: "apisetu.gov.in-msde-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "apisetu.gov.in-msde-stubs.json"
+---

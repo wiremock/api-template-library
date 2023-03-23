@@ -1,0 +1,11 @@
+---
+slug: "azure-com-netapp"
+name: "Microsoft NetApp"
+provider: "azure.com"
+description: "Microsoft NetApp Azure Resource Provider specification"
+logo: "azure.com-netapp-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-netapp-stubs.json"
+---

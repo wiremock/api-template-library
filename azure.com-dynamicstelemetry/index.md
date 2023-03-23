@@ -1,0 +1,11 @@
+---
+slug: "azure-com-dynamicstelemetry"
+name: "Dynamics Telemetry"
+provider: "azure.com"
+description: null
+logo: "azure.com-dynamicstelemetry-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-dynamicstelemetry-stubs.json"
+---

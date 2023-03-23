@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-sourceControlSyncJob"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-sourceControlSyncJob-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-sourceControlSyncJob-stubs.json"
+---

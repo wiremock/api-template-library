@@ -1,0 +1,11 @@
+---
+slug: "ipinfodb-com"
+name: "ipinfodb.com"
+provider: "ipinfodb.com"
+description: null
+logo: "ipinfodb.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "location"
+stubs: "ipinfodb.com-stubs.json"
+---

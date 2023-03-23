@@ -1,0 +1,11 @@
+---
+slug: "amazonaws-com-mediapackage-vod"
+name: "AWS Elemental MediaPackage VOD"
+provider: "amazonaws.com"
+description: "AWS Elemental MediaPackage VOD"
+logo: "amazonaws.com-mediapackage-vod-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-mediapackage-vod-stubs.json"
+---

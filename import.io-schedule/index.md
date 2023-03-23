@@ -1,0 +1,11 @@
+---
+slug: "import-io-schedule"
+name: "import.io"
+provider: "import.io"
+description: null
+logo: "import.io-schedule-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "tools"
+stubs: "import.io-schedule-stubs.json"
+---

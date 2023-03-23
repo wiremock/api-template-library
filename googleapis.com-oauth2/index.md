@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-oauth2"
+name: "Google OAuth2 API"
+provider: "googleapis.com"
+description: "Obtains end-user authorization grants for use with other Google APIs."
+logo: "googleapis.com-oauth2-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-oauth2-stubs.json"
+---

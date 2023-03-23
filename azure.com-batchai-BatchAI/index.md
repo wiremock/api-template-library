@@ -1,0 +1,11 @@
+---
+slug: "azure-com-batchai-BatchAI"
+name: "BatchAI"
+provider: "azure.com"
+description: "The Azure BatchAI Management API."
+logo: "azure.com-batchai-BatchAI-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-batchai-BatchAI-stubs.json"
+---

@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-servicedirectory"
+name: "Service Directory API"
+provider: "googleapis.com"
+description: "Service Directory is a platform for discovering, publishing, and connecting\
+  \ services. "
+logo: "googleapis.com-servicedirectory-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-servicedirectory-stubs.json"
+---

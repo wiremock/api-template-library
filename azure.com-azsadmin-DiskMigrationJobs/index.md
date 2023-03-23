@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-DiskMigrationJobs"
+name: "ComputeDiskAdminManagementClient"
+provider: "azure.com"
+description: "The Admin Compute Disk Management Client."
+logo: "azure.com-azsadmin-DiskMigrationJobs-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-DiskMigrationJobs-stubs.json"
+---

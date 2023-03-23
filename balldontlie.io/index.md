@@ -1,0 +1,11 @@
+---
+slug: "balldontlie-io"
+name: "balldontlie"
+provider: "balldontlie.io"
+description: null
+logo: "balldontlie.io-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "balldontlie.io-stubs.json"
+---

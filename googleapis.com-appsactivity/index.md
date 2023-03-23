@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-appsactivity"
+name: "Drive Activity API"
+provider: "googleapis.com"
+description: "Provides a historical view of activity."
+logo: "googleapis.com-appsactivity-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-appsactivity-stubs.json"
+---

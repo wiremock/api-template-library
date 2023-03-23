@@ -1,0 +1,11 @@
+---
+slug: "paccurate-io"
+name: "paccurate.io"
+provider: "paccurate.io"
+description: null
+logo: "paccurate.io-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "transport"
+stubs: "paccurate.io-stubs.json"
+---

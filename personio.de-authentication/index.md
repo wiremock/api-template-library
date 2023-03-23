@@ -1,0 +1,11 @@
+---
+slug: "personio-de-authentication"
+name: "Authentication"
+provider: "personio.de"
+description: "Personio Authentication API"
+logo: "personio.de-authentication-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "enterprise"
+stubs: "personio.de-authentication-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "azure-com-consumption"
+name: "ConsumptionManagementClient"
+provider: "azure.com"
+description: "Consumption management client provides access to consumption resources\
+  \ for Azure Enterprise Subscriptions."
+logo: "azure.com-consumption-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-consumption-stubs.json"
+---

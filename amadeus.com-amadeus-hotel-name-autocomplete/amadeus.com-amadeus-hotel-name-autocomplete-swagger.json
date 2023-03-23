@@ -78,7 +78,107 @@
               "application/vnd.amadeus+json" : {
                 "schema" : {
                   "title" : "Success",
+                  "required" : [ "data" ],
                   "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "required" : [ "hotelIds", "iataCode", "id", "name", "subType", "type" ],
+                        "type" : "object",
+                        "properties" : {
+                          "address" : {
+                            "required" : [ "cityName", "countryCode" ],
+                            "type" : "object",
+                            "properties" : {
+                              "cityName" : {
+                                "maxLength" : 105,
+                                "minLength" : 1,
+                                "pattern" : "^[A-Za-z0-9 - ]+",
+                                "type" : "string",
+                                "description" : "The name of the city to which the location belongs to."
+                              },
+                              "countryCode" : {
+                                "maxLength" : 2,
+                                "minLength" : 2,
+                                "pattern" : "^[A-Z]+",
+                                "type" : "string",
+                                "description" : "The countrycode to which the location belongs to."
+                              },
+                              "stateCode" : {
+                                "maxLength" : 2,
+                                "minLength" : 2,
+                                "pattern" : "^[A-Z]+",
+                                "type" : "string",
+                                "description" : "The statecode to which the location belongs to."
+                              }
+                            },
+                            "description" : "Address of the location containing Cityname, Statecode and countrycode respectively."
+                          },
+                          "geoCode" : {
+                            "required" : [ "latitude", "longitude" ],
+                            "type" : "object",
+                            "properties" : {
+                              "latitude" : {
+                                "type" : "number",
+                                "description" : "Latitude of the location on Earth.",
+                                "format" : "double"
+                              },
+                              "longitude" : {
+                                "type" : "number",
+                                "description" : "Longitude of the location on Earth.",
+                                "format" : "double"
+                              }
+                            },
+                            "description" : "Geocode of the location containing latitude and longitude respectively."
+                          },
+                          "hotelIds" : {
+                            "maxItems" : 10,
+                            "minItems" : 1,
+                            "uniqueItems" : true,
+                            "type" : "array",
+                            "description" : "HotelIDs associated with the location only if it's a hotel. For leisure property dupes ID are listed as well. ",
+                            "items" : {
+                              "type" : "string"
+                            }
+                          },
+                          "iataCode" : {
+                            "maxLength" : 3,
+                            "minLength" : 3,
+                            "pattern" : "^[A-Z]+",
+                            "type" : "string",
+                            "description" : "[IATA codes](http://www.iata.org/publications/Pages/code-search.aspx) associated with the location."
+                          },
+                          "id" : {
+                            "maximum" : 10,
+                            "minimum" : 1,
+                            "type" : "number",
+                            "description" : "ID of the resource."
+                          },
+                          "name" : {
+                            "maxLength" : 80,
+                            "minLength" : 1,
+                            "pattern" : "^[A-Za-z0-9 - * '.]+",
+                            "type" : "string",
+                            "description" : "Name of the location (Hotel Name)"
+                          },
+                          "relevance" : {
+                            "type" : "integer",
+                            "description" : "A no. between 1-100. The higher the number better is the relevant search for that location."
+                          },
+                          "subType" : {
+                            "type" : "string",
+                            "description" : "The category of the location or Point of reference (HOTEL_LEISURE,HOTEL_GDS).",
+                            "enum" : [ "HOTEL_GDS", "HOTEL_LEISURE" ]
+                          },
+                          "type" : {
+                            "type" : "string",
+                            "description" : "Type of resource or the resource name."
+                          }
+                        }
+                      }
+                    }
+                  },
                   "example" : {
                     "data" : [ {
                       "address" : {
@@ -475,7 +575,53 @@
             "content" : {
               "application/vnd.amadeus+json" : {
                 "schema" : {
+                  "required" : [ "errors" ],
                   "type" : "object",
+                  "properties" : {
+                    "errors" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer",
+                            "description" : "an application-specific error code",
+                            "format" : "int64"
+                          },
+                          "detail" : {
+                            "type" : "string",
+                            "description" : "explanation of the error"
+                          },
+                          "source" : {
+                            "type" : "object",
+                            "properties" : {
+                              "example" : {
+                                "type" : "string",
+                                "description" : "a string indicating an example of the right value"
+                              },
+                              "parameter" : {
+                                "type" : "string",
+                                "description" : "a string indicating which URI query parameter caused the issue"
+                              },
+                              "pointer" : {
+                                "type" : "string",
+                                "description" : "a JSON Pointer [RFC6901] to the associated entity in the request document"
+                              }
+                            },
+                            "description" : "an object containing references to the source of the error"
+                          },
+                          "status" : {
+                            "type" : "integer",
+                            "description" : "the HTTP status code applicable to this error"
+                          },
+                          "title" : {
+                            "type" : "string",
+                            "description" : "a short summary of the error"
+                          }
+                        }
+                      }
+                    }
+                  },
                   "example" : {
                     "errors" : [ {
                       "code" : 141,

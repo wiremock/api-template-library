@@ -1,0 +1,11 @@
+---
+slug: "randommer-io"
+name: "Randommer API"
+provider: "randommer.io"
+description: null
+logo: "randommer.io-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+stubs: "randommer.io-stubs.json"
+---

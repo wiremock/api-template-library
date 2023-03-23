@@ -1,0 +1,12 @@
+---
+slug: "ebay-com-commerce-translation"
+name: "Translation API"
+provider: "ebay.com"
+description: "This API allows 3rd party developers to translate item title, description,\
+  \ search query."
+logo: "ebay.com-commerce-translation-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "ecommerce"
+stubs: "ebay.com-commerce-translation-stubs.json"
+---

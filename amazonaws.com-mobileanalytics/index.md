@@ -1,0 +1,12 @@
+---
+slug: "amazonaws-com-mobileanalytics"
+name: "Amazon Mobile Analytics"
+provider: "amazonaws.com"
+description: "Amazon Mobile Analytics is a service for collecting, visualizing, and\
+  \ understanding app usage data at scale."
+logo: "amazonaws.com-mobileanalytics-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-mobileanalytics-stubs.json"
+---

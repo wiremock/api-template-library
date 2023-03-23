@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-vpcaccess"
+name: "Serverless VPC Access API"
+provider: "googleapis.com"
+description: "API for managing VPC access connectors."
+logo: "googleapis.com-vpcaccess-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-vpcaccess-stubs.json"
+---

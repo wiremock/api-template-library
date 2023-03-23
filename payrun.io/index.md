@@ -1,0 +1,11 @@
+---
+slug: "payrun-io"
+name: "PayRun.IO"
+provider: "payrun.io"
+description: "Open, scableable, transparent payroll API."
+logo: "payrun.io-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "financial"
+stubs: "payrun.io-stubs.json"
+---

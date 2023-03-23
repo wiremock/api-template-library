@@ -1,0 +1,11 @@
+---
+slug: "azure-com-monitor-metricsCreate_API"
+name: "Azure Metrics"
+provider: "azure.com"
+description: "A client for issuing REST requests to the Azure metrics service."
+logo: "azure.com-monitor-metricsCreate_API-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-monitor-metricsCreate_API-stubs.json"
+---

@@ -1,0 +1,13 @@
+---
+slug: "amazonaws-com-cloudhsmv2"
+name: "AWS CloudHSM V2"
+provider: "amazonaws.com"
+description: "For more information about AWS CloudHSM, see <a href=\"http://aws.amazon.com/cloudhsm/\"\
+  >AWS CloudHSM</a> and the <a href=\"https://docs.aws.amazon.com/cloudhsm/latest/userguide/\"\
+  >AWS CloudHSM User Guide</a>."
+logo: "amazonaws.com-cloudhsmv2-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-cloudhsmv2-stubs.json"
+---

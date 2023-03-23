@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-storage"
+name: "Cloud Storage JSON API"
+provider: "googleapis.com"
+description: "Stores and retrieves potentially large, immutable data objects."
+logo: "googleapis.com-storage-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-storage-stubs.json"
+---

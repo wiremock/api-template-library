@@ -1,0 +1,11 @@
+---
+slug: "azure-com-resources"
+name: "ResourceManagementClient"
+provider: "azure.com"
+description: "Provides operations for working with resources and resource groups."
+logo: "azure.com-resources-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-resources-stubs.json"
+---

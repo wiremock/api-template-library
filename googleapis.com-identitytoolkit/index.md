@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-identitytoolkit"
+name: "Identity Toolkit API"
+provider: "googleapis.com"
+description: "The Google Identity Toolkit API lets you use open standards to verify\
+  \ a user's identity."
+logo: "googleapis.com-identitytoolkit-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-identitytoolkit-stubs.json"
+---

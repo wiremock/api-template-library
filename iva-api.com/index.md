@@ -1,0 +1,12 @@
+---
+slug: "iva-api-com"
+name: "Entertainment Express API"
+provider: "iva-api.com"
+description: "Your Gateway to Building Incredible Movie, TV, and Game Content Discovery\
+  \ Experiences."
+logo: "iva-api.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "media"
+stubs: "iva-api.com-stubs.json"
+---

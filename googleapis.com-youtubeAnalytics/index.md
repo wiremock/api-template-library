@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-youtubeAnalytics"
+name: "YouTube Analytics API"
+provider: "googleapis.com"
+description: "Retrieves your YouTube Analytics data."
+logo: "googleapis.com-youtubeAnalytics-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-youtubeAnalytics-stubs.json"
+---

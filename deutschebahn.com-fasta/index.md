@@ -1,0 +1,13 @@
+---
+slug: "deutschebahn-com-fasta"
+name: "FaSta - Station Facilities Status"
+provider: "deutschebahn.com"
+description: "A RESTful webservice to retrieve data about the operational state of\
+  \ public elevators and escalators in german railway stations."
+logo: "deutschebahn.com-fasta-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "transport"
+- name: "open_data"
+stubs: "deutschebahn.com-fasta-stubs.json"
+---

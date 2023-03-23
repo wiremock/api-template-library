@@ -1,0 +1,11 @@
+---
+slug: "azure-com-containerinstance-containerInstance"
+name: "ContainerInstanceManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-containerinstance-containerInstance-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-containerinstance-containerInstance-stubs.json"
+---

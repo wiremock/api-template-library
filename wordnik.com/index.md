@@ -1,0 +1,12 @@
+---
+slug: "wordnik-com"
+name: "Wordnik"
+provider: "wordnik.com"
+description: "Wordnik is the worlds biggest online English dictionary, by number of\
+  \ words"
+logo: "wordnik.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "text"
+stubs: "wordnik.com-stubs.json"
+---

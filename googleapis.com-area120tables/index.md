@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-area120tables"
+name: "Area120 Tables API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-area120tables-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-area120tables-stubs.json"
+---

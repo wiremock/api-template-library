@@ -1,0 +1,10 @@
+---
+slug: "vtex-local-VTEX_TEMPLATE"
+name: "Pets Api"
+provider: "vtex.local"
+description: null
+logo: "vtex.local-VTEX_TEMPLATE-logo.svg"
+logoMediaType: "image/svg+xml"
+tags: []
+stubs: "vtex.local-VTEX_TEMPLATE-stubs.json"
+---

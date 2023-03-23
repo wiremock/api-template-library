@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-queueServices"
+name: "StorageManagementClient"
+provider: "azure.com"
+description: "The Admin Storage Management Client."
+logo: "azure.com-azsadmin-queueServices-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-queueServices-stubs.json"
+---

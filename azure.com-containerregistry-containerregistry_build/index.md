@@ -1,0 +1,11 @@
+---
+slug: "azure-com-containerregistry-containerregistry_build"
+name: "ContainerRegistryManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-containerregistry-containerregistry_build-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-containerregistry-containerregistry_build-stubs.json"
+---

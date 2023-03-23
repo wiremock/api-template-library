@@ -1,0 +1,11 @@
+---
+slug: "jira-local"
+name: "JIRA 7.6.1"
+provider: "jira.local"
+description: null
+logo: "jira.local-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "developer_tools"
+stubs: "jira.local-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-KeyVault"
+name: "KeyVaultManagementClient"
+provider: "azure.com"
+description: "The Admin KeyVault Management Client."
+logo: "azure.com-azsadmin-KeyVault-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-KeyVault-stubs.json"
+---

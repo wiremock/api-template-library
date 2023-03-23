@@ -1,0 +1,12 @@
+---
+slug: "azure-com-servicebus-servicebus-preview"
+name: "ServiceBusManagementClient"
+provider: "azure.com"
+description: "Azure Service Bus client for managing Namespace, IPFilter Rules, VirtualNetworkRules\
+  \ and Zone Redundant"
+logo: "azure.com-servicebus-servicebus-preview-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-servicebus-servicebus-preview-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-GalleryItem"
+name: "GalleryManagementClient"
+provider: "azure.com"
+description: "The Admin Gallery Management Client."
+logo: "azure.com-azsadmin-GalleryItem-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-GalleryItem-stubs.json"
+---

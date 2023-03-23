@@ -1,0 +1,12 @@
+---
+slug: "botify-com"
+name: "Botify API"
+provider: "botify.com"
+description: "Botify Saas API"
+logo: "botify.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "tools"
+stubs: "botify.com-stubs.json"
+---

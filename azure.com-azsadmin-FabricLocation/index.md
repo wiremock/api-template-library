@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-FabricLocation"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Fabric location operation endpoints and objects."
+logo: "azure.com-azsadmin-FabricLocation-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-FabricLocation-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "mastodon-local"
+name: "Mastodon API Specification (https://github.com/mastodon/mastodon)"
+provider: "mastodon.local"
+description: null
+logo: "mastodon.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "social"
+stubs: "mastodon.local-stubs.json"
+---

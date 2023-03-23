@@ -1,0 +1,13 @@
+---
+slug: "nytimes-com-movie_reviews"
+name: "Movie Reviews API"
+provider: "nytimes.com"
+description: "With the Movie Reviews API, you can search New York Times movie reviews\
+  \ by keyword and get lists of NYT Critics' Picks."
+logo: "nytimes.com-movie_reviews-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "media"
+- name: "open_data"
+stubs: "nytimes.com-movie_reviews-stubs.json"
+---

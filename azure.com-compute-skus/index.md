@@ -1,0 +1,11 @@
+---
+slug: "azure-com-compute-skus"
+name: "ComputeManagementClient"
+provider: "azure.com"
+description: "The Compute Management Client."
+logo: "azure.com-compute-skus-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-compute-skus-stubs.json"
+---

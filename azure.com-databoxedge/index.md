@@ -1,0 +1,11 @@
+---
+slug: "azure-com-databoxedge"
+name: "DataBoxEdgeManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-databoxedge-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-databoxedge-stubs.json"
+---

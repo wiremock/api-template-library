@@ -1,0 +1,11 @@
+---
+slug: "azure-com-containerservice-containerService"
+name: "ContainerServiceClient"
+provider: "azure.com"
+description: "The Container Service Client."
+logo: "azure.com-containerservice-containerService-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-containerservice-containerService-stubs.json"
+---

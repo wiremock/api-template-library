@@ -1,0 +1,11 @@
+---
+slug: "azure-com-apimanagement-apimdeployment"
+name: "ApiManagementClient"
+provider: "azure.com"
+description: "Use these REST APIs to manage Azure API Management deployment."
+logo: "azure.com-apimanagement-apimdeployment-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-apimanagement-apimdeployment-stubs.json"
+---

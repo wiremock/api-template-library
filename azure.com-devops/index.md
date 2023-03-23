@@ -1,0 +1,11 @@
+---
+slug: "azure-com-devops"
+name: "Azure DevOps"
+provider: "azure.com"
+description: "Azure DevOps Resource Provider"
+logo: "azure.com-devops-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-devops-stubs.json"
+---

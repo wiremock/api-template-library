@@ -1,0 +1,11 @@
+---
+slug: "superset-apache-local-superset"
+name: "Superset"
+provider: "superset.apache.local"
+description: "Superset"
+logo: "superset.apache.local-superset-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "enterprise"
+stubs: "superset.apache.local-superset-stubs.json"
+---

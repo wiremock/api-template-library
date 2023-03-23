@@ -1,0 +1,11 @@
+---
+slug: "azure-com-batch-BatchService"
+name: "BatchService"
+provider: "azure.com"
+description: "A client for issuing REST requests to the Azure Batch service."
+logo: "azure.com-batch-BatchService-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-batch-BatchService-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-machinelearningservices-hyperdrive"
+name: "HyperDrive"
+provider: "azure.com"
+description: "HyperDrive REST API"
+logo: "azure.com-machinelearningservices-hyperdrive-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-machinelearningservices-hyperdrive-stubs.json"
+---

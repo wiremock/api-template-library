@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-playdeveloperreporting"
+name: "Google Play Developer Reporting API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-playdeveloperreporting-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-playdeveloperreporting-stubs.json"
+---

@@ -1,0 +1,14 @@
+---
+slug: "apisetu-gov-in-kkhsou"
+name: "Krishna Kanta Handique State Open University (KKHSOU), Assam"
+provider: "apisetu.gov.in"
+description: "Krishna Kanta Handiqui State Open University (http://www.kkhsou.in//)\
+  \ has made available their Results of MA (Education,Assamese,Political Sc,Sociology,English)\
+  \ & MBA programmes, for the year 2018, in DigiLocker, which can be pulled by students\
+  \ into their accounts."
+logo: "apisetu.gov.in-kkhsou-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "apisetu.gov.in-kkhsou-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-DeletedWebApps"
+name: "DeletedWebApps API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-DeletedWebApps-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-DeletedWebApps-stubs.json"
+---

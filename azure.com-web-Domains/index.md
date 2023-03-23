@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-Domains"
+name: "Domains API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-Domains-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-Domains-stubs.json"
+---

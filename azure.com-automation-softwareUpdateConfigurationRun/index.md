@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-softwareUpdateConfigurationRun"
+name: "Update Management"
+provider: "azure.com"
+description: "APIs for managing software update configurations."
+logo: "azure.com-automation-softwareUpdateConfigurationRun-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-softwareUpdateConfigurationRun-stubs.json"
+---

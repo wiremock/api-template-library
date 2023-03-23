@@ -1,0 +1,11 @@
+---
+slug: "sportsdata-io-nba-v3-scores"
+name: "NBA v3 Scores"
+provider: "sportsdata.io"
+description: null
+logo: "sportsdata.io-nba-v3-scores-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "entertainment"
+stubs: "sportsdata.io-nba-v3-scores-stubs.json"
+---

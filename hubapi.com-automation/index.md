@@ -1,0 +1,10 @@
+---
+slug: "hubapi-com-automation"
+name: "Custom Workflow Actions"
+provider: "hubapi.com"
+description: "Create custom workflow actions"
+logo: "hubapi.com-automation-logo.png"
+logoMediaType: "image/png"
+tags: []
+stubs: "hubapi.com-automation-stubs.json"
+---

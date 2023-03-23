@@ -1,0 +1,11 @@
+---
+slug: "azure-com-recoveryservicesbackup-operations"
+name: "RecoveryServicesBackupClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-recoveryservicesbackup-operations-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-recoveryservicesbackup-operations-stubs.json"
+---

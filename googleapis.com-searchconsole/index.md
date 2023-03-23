@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-searchconsole"
+name: "Google Search Console API"
+provider: "googleapis.com"
+description: "The Search Console API provides access to both Search Console data (verified\
+  \ users only) and to public information on an URL basis (anyone)"
+logo: "googleapis.com-searchconsole-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-searchconsole-stubs.json"
+---

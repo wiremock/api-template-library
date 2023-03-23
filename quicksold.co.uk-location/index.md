@@ -1,0 +1,11 @@
+---
+slug: "quicksold-co-uk-location"
+name: "Quicksold REST API"
+provider: "quicksold.co.uk"
+description: null
+logo: "quicksold.co.uk-location-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "location"
+stubs: "quicksold.co.uk-location-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "okta-local"
+name: "Users (Okta API)"
+provider: "okta.local"
+description: "The [Okta User API](/docs/api/rest/users.html) provides operations to\
+  \ manage users in your organization."
+logo: "okta.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "security"
+stubs: "okta.local-stubs.json"
+---

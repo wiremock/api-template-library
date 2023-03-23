@@ -1,0 +1,11 @@
+---
+slug: "mailscript-com"
+name: "Mailscript"
+provider: "mailscript.com"
+description: null
+logo: "mailscript.com-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "email"
+stubs: "mailscript.com-stubs.json"
+---

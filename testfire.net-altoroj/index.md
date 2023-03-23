@@ -1,0 +1,11 @@
+---
+slug: "testfire-net-altoroj"
+name: "AltoroJ REST API"
+provider: "testfire.net"
+description: null
+logo: "testfire.net-altoroj-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "security"
+stubs: "testfire.net-altoroj-stubs.json"
+---

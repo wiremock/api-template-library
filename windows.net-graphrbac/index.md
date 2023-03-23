@@ -1,0 +1,11 @@
+---
+slug: "windows-net-graphrbac"
+name: "GraphRbacManagementClient"
+provider: "windows.net"
+description: "The Graph RBAC Management Client"
+logo: "windows.net-graphrbac-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "windows.net-graphrbac-stubs.json"
+---

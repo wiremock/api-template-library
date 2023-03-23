@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-playablelocations"
+name: "Playable Locations API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-playablelocations-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-playablelocations-stubs.json"
+---

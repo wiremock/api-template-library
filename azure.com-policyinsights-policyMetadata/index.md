@@ -1,0 +1,11 @@
+---
+slug: "azure-com-policyinsights-policyMetadata"
+name: "PolicyMetadataClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-policyinsights-policyMetadata-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-policyinsights-policyMetadata-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-security-regulatoryCompliance"
+name: "Security Center"
+provider: "azure.com"
+description: "API spec for Microsoft.Security (Azure Security Center) resource provider"
+logo: "azure.com-security-regulatoryCompliance-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-security-regulatoryCompliance-stubs.json"
+---

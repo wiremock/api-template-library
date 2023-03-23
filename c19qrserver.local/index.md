@@ -1,0 +1,11 @@
+---
+slug: "c19qrserver-local"
+name: "API for the COVID-19 Tracking QR Code Signin Server."
+provider: "c19qrserver.local"
+description: "This is the API for the COVID-19 Contact Tracing QRCode Signin Server"
+logo: "c19qrserver.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "c19qrserver.local-stubs.json"
+---

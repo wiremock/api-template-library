@@ -1,0 +1,11 @@
+---
+slug: "motaword-com"
+name: "MotaWord API"
+provider: "motaword.com"
+description: "Use MotaWord API to post and track your translation projects."
+logo: "motaword.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "text"
+stubs: "motaword.com-stubs.json"
+---

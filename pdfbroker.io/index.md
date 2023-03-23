@@ -1,0 +1,12 @@
+---
+slug: "pdfbroker-io"
+name: "PdfBroker.io API"
+provider: "pdfbroker.io"
+description: "PdfBroker.io is an api for creating pdf files from Xsl-Fo or Html and\
+  \ other useful pdf utilities."
+logo: "pdfbroker.io-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "text"
+stubs: "pdfbroker.io-stubs.json"
+---

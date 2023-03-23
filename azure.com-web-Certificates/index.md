@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-Certificates"
+name: "Certificates API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-Certificates-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-Certificates-stubs.json"
+---

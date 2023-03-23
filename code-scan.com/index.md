@@ -1,0 +1,11 @@
+---
+slug: "code-scan-com"
+name: "CodeScan API"
+provider: "code-scan.com"
+description: "Manage your Hosted CodeScan Service"
+logo: "code-scan.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "developer_tools"
+stubs: "code-scan.com-stubs.json"
+---

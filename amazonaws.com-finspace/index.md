@@ -1,0 +1,12 @@
+---
+slug: "amazonaws-com-finspace"
+name: "FinSpace User Environment Management service"
+provider: "amazonaws.com"
+description: "The FinSpace management service provides the APIs for managing FinSpace\
+  \ environments."
+logo: "amazonaws.com-finspace-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "amazonaws.com-finspace-stubs.json"
+---

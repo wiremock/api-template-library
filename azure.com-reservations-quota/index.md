@@ -1,0 +1,11 @@
+---
+slug: "azure-com-reservations-quota"
+name: "Azure Reservation"
+provider: "azure.com"
+description: "Microsoft Azure Quota Resource Provider."
+logo: "azure.com-reservations-quota-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-reservations-quota-stubs.json"
+---

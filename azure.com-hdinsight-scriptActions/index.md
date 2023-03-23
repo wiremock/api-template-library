@@ -1,0 +1,11 @@
+---
+slug: "azure-com-hdinsight-scriptActions"
+name: "HDInsightManagementClient"
+provider: "azure.com"
+description: "The HDInsight Management Client."
+logo: "azure.com-hdinsight-scriptActions-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-hdinsight-scriptActions-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-storSimple1200Series-StorSimple"
+name: "StorSimpleManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-storSimple1200Series-StorSimple-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-storSimple1200Series-StorSimple-stubs.json"
+---

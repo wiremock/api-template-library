@@ -1,0 +1,12 @@
+---
+slug: "azure-com-serialconsole"
+name: "MicrosoftSerialConsoleClient"
+provider: "azure.com"
+description: "The Azure Serial Console allows you to access the serial console of\
+  \ a Virtual Machine or VM scale set instance"
+logo: "azure.com-serialconsole-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-serialconsole-stubs.json"
+---

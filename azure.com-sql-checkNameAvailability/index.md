@@ -1,0 +1,13 @@
+---
+slug: "azure-com-sql-checkNameAvailability"
+name: "Azure SQL Database"
+provider: "azure.com"
+description: "Provides create, read, update and delete functionality for Azure SQL\
+  \ Database resources including servers, databases, elastic pools, recommendations,\
+  \ and operations."
+logo: "azure.com-sql-checkNameAvailability-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-sql-checkNameAvailability-stubs.json"
+---

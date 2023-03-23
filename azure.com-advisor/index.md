@@ -1,0 +1,11 @@
+---
+slug: "azure-com-advisor"
+name: "AdvisorManagementClient"
+provider: "azure.com"
+description: "REST APIs for Azure Advisor"
+logo: "azure.com-advisor-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-advisor-stubs.json"
+---

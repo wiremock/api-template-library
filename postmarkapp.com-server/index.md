@@ -1,0 +1,11 @@
+---
+slug: "postmarkapp-com-server"
+name: "Postmark API"
+provider: "postmarkapp.com"
+description: "Postmark makes sending and receiving email\nincredibly easy.\n"
+logo: "postmarkapp.com-server-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "email"
+stubs: "postmarkapp.com-server-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "azure-com-sql-replicationLinks"
+name: "Azure SQL Database replication links"
+provider: "azure.com"
+description: "Provides read, delete, and failover functionality for Azure SQL Database\
+  \ replication links."
+logo: "azure.com-sql-replicationLinks-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-sql-replicationLinks-stubs.json"
+---

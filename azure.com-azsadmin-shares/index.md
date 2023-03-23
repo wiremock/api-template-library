@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-shares"
+name: "StorageManagementClient"
+provider: "azure.com"
+description: "The Admin Storage Management Client."
+logo: "azure.com-azsadmin-shares-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-shares-stubs.json"
+---

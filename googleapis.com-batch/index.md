@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-batch"
+name: "Batch API"
+provider: "googleapis.com"
+description: "An API to manage the running of batch jobs on Google Cloud Platform."
+logo: "googleapis.com-batch-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-batch-stubs.json"
+---

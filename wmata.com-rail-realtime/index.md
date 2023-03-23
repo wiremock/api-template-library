@@ -1,0 +1,11 @@
+---
+slug: "wmata-com-rail-realtime"
+name: "Real-Time Rail Predictions"
+provider: "wmata.com"
+description: "Real-time rail prediction methods."
+logo: "wmata.com-rail-realtime-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "transport"
+stubs: "wmata.com-rail-realtime-stubs.json"
+---

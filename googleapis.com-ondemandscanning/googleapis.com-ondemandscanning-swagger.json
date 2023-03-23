@@ -1363,6 +1363,21 @@
         },
         "type" : "object"
       },
+      "Justification" : {
+        "description" : "Justification provides the justification when the state of the assessment if NOT_AFFECTED.",
+        "properties" : {
+          "details" : {
+            "description" : "Additional details on why this justification was chosen.",
+            "type" : "string"
+          },
+          "justificationType" : {
+            "description" : "The justification type for this vulnerability.",
+            "enum" : [ "JUSTIFICATION_TYPE_UNSPECIFIED", "COMPONENT_NOT_PRESENT", "VULNERABLE_CODE_NOT_PRESENT", "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH", "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY", "INLINE_MITIGATIONS_ALREADY_EXIST" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "Jwt" : {
         "properties" : {
           "compactJwt" : {
@@ -1567,7 +1582,7 @@
           },
           "kind" : {
             "description" : "Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.",
-            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "UPGRADE", "COMPLIANCE", "DSSE_ATTESTATION" ],
+            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "UPGRADE", "COMPLIANCE", "DSSE_ATTESTATION", "VULNERABILITY_ASSESSMENT" ],
             "type" : "string"
           },
           "name" : {
@@ -1851,6 +1866,24 @@
           "url" : {
             "description" : "Specific URL associated with the resource.",
             "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Remediation" : {
+        "description" : "Specifies details on how to handle (and presumably, fix) a vulnerability.",
+        "properties" : {
+          "details" : {
+            "description" : "Contains a comprehensive human-readable discussion of the remediation.",
+            "type" : "string"
+          },
+          "remediationType" : {
+            "description" : "The type of remediation that can be applied.",
+            "enum" : [ "REMEDIATION_TYPE_UNSPECIFIED", "MITIGATION", "NO_FIX_PLANNED", "NONE_AVAILABLE", "VENDOR_FIX", "WORKAROUND" ],
+            "type" : "string"
+          },
+          "remediationUri" : {
+            "$ref" : "#/components/schemas/RelatedUrl"
           }
         },
         "type" : "object"
@@ -2185,6 +2218,49 @@
         },
         "type" : "object"
       },
+      "VexAssessment" : {
+        "description" : "VexAssessment provides all publisher provided Vex information that is related to this vulnerability.",
+        "properties" : {
+          "cve" : {
+            "description" : "Holds the MITRE standard Common Vulnerabilities and Exposures (CVE) tracking number for the vulnerability.",
+            "type" : "string"
+          },
+          "impacts" : {
+            "description" : "Contains information about the impact of this vulnerability, this will change with time.",
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "justification" : {
+            "$ref" : "#/components/schemas/Justification"
+          },
+          "noteName" : {
+            "description" : "The VulnerabilityAssessment note from which this VexAssessment was generated. This will be of the form: `projects/[PROJECT_ID]/notes/[NOTE_ID]`.",
+            "type" : "string"
+          },
+          "relatedUris" : {
+            "description" : "Holds a list of references associated with this vulnerability item and assessment.",
+            "items" : {
+              "$ref" : "#/components/schemas/RelatedUrl"
+            },
+            "type" : "array"
+          },
+          "remediations" : {
+            "description" : "Specifies details on how to handle (and presumably, fix) a vulnerability.",
+            "items" : {
+              "$ref" : "#/components/schemas/Remediation"
+            },
+            "type" : "array"
+          },
+          "state" : {
+            "description" : "Provides the state of this Vulnerability assessment.",
+            "enum" : [ "STATE_UNSPECIFIED", "AFFECTED", "NOT_AFFECTED", "FIXED", "UNDER_INVESTIGATION" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "VulnerabilityOccurrence" : {
         "description" : "An occurrence of a severity vulnerability on a resource.",
         "properties" : {
@@ -2243,6 +2319,9 @@
           "type" : {
             "description" : "The type of package; whether native or non native (e.g., ruby gems, node.js packages, etc.).",
             "type" : "string"
+          },
+          "vexAssessment" : {
+            "$ref" : "#/components/schemas/VexAssessment"
           }
         },
         "type" : "object"

@@ -1,0 +1,11 @@
+---
+slug: "archive-org-search"
+name: "Search Services"
+provider: "archive.org"
+description: "API for Internet Archive's Search-related services\n"
+logo: "archive.org-search-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "search"
+stubs: "archive.org-search-stubs.json"
+---

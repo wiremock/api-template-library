@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-ServiceHealth"
+name: "InfrastructureInsightsManagementClient"
+provider: "azure.com"
+description: "Resource provider health operation endpoints and objects."
+logo: "azure.com-azsadmin-ServiceHealth-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-ServiceHealth-stubs.json"
+---

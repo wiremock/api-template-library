@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-apigeeregistry"
+name: "Apigee Registry API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-apigeeregistry-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-apigeeregistry-stubs.json"
+---

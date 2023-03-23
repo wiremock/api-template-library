@@ -1,0 +1,11 @@
+---
+slug: "squareup-com"
+name: "Square Connect API"
+provider: "squareup.com"
+description: "Client library for accessing the Square Connect APIs"
+logo: "squareup.com-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "payment"
+stubs: "squareup.com-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "azure-com-apimanagement-apimissues"
+name: "ApiManagementClient"
+provider: "azure.com"
+description: "Use this REST API to get all the issues across an Azure Api Management\
+  \ service."
+logo: "azure.com-apimanagement-apimissues-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-apimanagement-apimissues-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-LogicalNetwork"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Logical network operation endpoints and objects."
+logo: "azure.com-azsadmin-LogicalNetwork-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-LogicalNetwork-stubs.json"
+---

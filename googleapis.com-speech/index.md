@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-speech"
+name: "Cloud Speech-to-Text API"
+provider: "googleapis.com"
+description: "Converts audio to text by applying powerful neural network models."
+logo: "googleapis.com-speech-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-speech-stubs.json"
+---

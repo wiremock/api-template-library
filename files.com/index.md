@@ -1,0 +1,11 @@
+---
+slug: "files-com"
+name: "Files.com API"
+provider: "files.com"
+description: null
+logo: "files.com-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+stubs: "files.com-stubs.json"
+---

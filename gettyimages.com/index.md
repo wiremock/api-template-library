@@ -1,0 +1,11 @@
+---
+slug: "gettyimages-com"
+name: "Getty Images"
+provider: "gettyimages.com"
+description: null
+logo: "gettyimages.com-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "media"
+stubs: "gettyimages.com-stubs.json"
+---

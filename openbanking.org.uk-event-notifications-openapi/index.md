@@ -1,0 +1,11 @@
+---
+slug: "openbanking-org-uk-event-notifications-openapi"
+name: "Event Notification API Specification - TPP Endpoints"
+provider: "openbanking.org.uk"
+description: "Swagger for Event Notification API Specification - TPP Endpoints"
+logo: "openbanking.org.uk-event-notifications-openapi-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "financial"
+stubs: "openbanking.org.uk-event-notifications-openapi-stubs.json"
+---

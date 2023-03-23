@@ -1,0 +1,12 @@
+---
+slug: "fungenerators-com-uuid"
+name: "UUID Generation API"
+provider: "fungenerators.com"
+description: "A full featured, REST based UUID generator with json/xml/jsonp result\
+  \ support. You can try them out right here. [Click here to subscribe](http://fungenerators.com/api/uuid/)\n"
+logo: "fungenerators.com-uuid-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "text"
+stubs: "fungenerators.com-uuid-stubs.json"
+---

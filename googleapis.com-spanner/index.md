@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-spanner"
+name: "Cloud Spanner API"
+provider: "googleapis.com"
+description: "Cloud Spanner is a managed, mission-critical, globally consistent and\
+  \ scalable relational database service."
+logo: "googleapis.com-spanner-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-spanner-stubs.json"
+---

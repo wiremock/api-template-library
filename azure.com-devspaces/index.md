@@ -1,0 +1,11 @@
+---
+slug: "azure-com-devspaces"
+name: "DevSpacesManagement"
+provider: "azure.com"
+description: "Dev Spaces REST API"
+logo: "azure.com-devspaces-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-devspaces-stubs.json"
+---

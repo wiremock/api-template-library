@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-texttospeech"
+name: "Cloud Text-to-Speech API"
+provider: "googleapis.com"
+description: "Synthesizes natural-sounding speech by applying powerful neural network\
+  \ models."
+logo: "googleapis.com-texttospeech-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-texttospeech-stubs.json"
+---

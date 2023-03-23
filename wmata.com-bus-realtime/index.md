@@ -1,0 +1,11 @@
+---
+slug: "wmata-com-bus-realtime"
+name: "Real-Time Bus Predictions"
+provider: "wmata.com"
+description: "Real-time bus prediction methods."
+logo: "wmata.com-bus-realtime-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "transport"
+stubs: "wmata.com-bus-realtime-stubs.json"
+---

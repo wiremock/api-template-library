@@ -1,0 +1,11 @@
+---
+slug: "azure-com-cost-management-costmanagement"
+name: "CostManagementClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-cost-management-costmanagement-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-cost-management-costmanagement-stubs.json"
+---

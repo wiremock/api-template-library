@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-datacatalog"
+name: "Google Cloud Data Catalog API"
+provider: "googleapis.com"
+description: "A fully managed and highly scalable data discovery and metadata management\
+  \ service. "
+logo: "googleapis.com-datacatalog-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-datacatalog-stubs.json"
+---

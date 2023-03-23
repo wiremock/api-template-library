@@ -1,0 +1,12 @@
+---
+slug: "ideaconsult-net-enanomapper"
+name: "eNanoMapper database"
+provider: "ideaconsult.net"
+description: "AMBIT REST web services [eNanoMapper profile] with free text & faceted\
+  \ search"
+logo: "ideaconsult.net-enanomapper-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "open_data"
+stubs: "ideaconsult.net-enanomapper-stubs.json"
+---

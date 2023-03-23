@@ -1,0 +1,10 @@
+---
+slug: "mastercard-com-masterpassqr"
+name: "Send Person to Merchant"
+provider: "mastercard.com"
+description: null
+logo: "mastercard.com-masterpassqr-logo.svg"
+logoMediaType: "image/svg+xml"
+tags: []
+stubs: "mastercard.com-masterpassqr-stubs.json"
+---

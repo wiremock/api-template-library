@@ -1,0 +1,11 @@
+---
+slug: "powerdns-local"
+name: "PowerDNS Authoritative HTTP API"
+provider: "powerdns.local"
+description: null
+logo: "powerdns.local-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+stubs: "powerdns.local-stubs.json"
+---

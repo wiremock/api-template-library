@@ -4654,6 +4654,13 @@
             }, {
               "description" : "The ARN for your Amazon S3 Access Point. Customers can also access their entitled data using the S3 Access Point ARN."
             } ]
+          },
+          "KmsKeysToGrant" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListOfKmsKeysToGrant"
+            }, {
+              "description" : " List of AWS KMS CMKs (Key Management System Customer Managed Keys) and ARNs used to encrypt S3 objects being shared in this S3 Data Access asset. Providers must include all AWS KMS keys used to encrypt these shared S3 objects."
+            } ]
           }
         },
         "description" : "The Amazon S3 data access that is the asset."
@@ -5223,6 +5230,13 @@
               "$ref" : "#/components/schemas/ListOf__string"
             }, {
               "description" : "The keys used to create the Amazon S3 data access."
+            } ]
+          },
+          "KmsKeysToGrant" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListOfKmsKeysToGrant"
+            }, {
+              "description" : "List of AWS KMS CMKs (Key Management System Customer Managed Keys) and ARNs used to encrypt S3 objects being shared in this S3 Data Access asset."
             } ]
           }
         },
@@ -6043,6 +6057,25 @@
         },
         "description" : "An error that occurred with the job request."
       },
+      "KmsKeyArn" : {
+        "type" : "string",
+        "minLength" : 1,
+        "maxLength" : 2048
+      },
+      "KmsKeyToGrant" : {
+        "type" : "object",
+        "required" : [ "KmsKeyArn" ],
+        "properties" : {
+          "KmsKeyArn" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/KmsKeyArn"
+            }, {
+              "description" : "The AWS KMS CMK (Key Management System Customer Managed Key) used to encrypt S3 objects in the shared S3 Bucket. AWS Data exchange will create a KMS grant for each subscriber to allow them to access and decrypt their entitled data that is encrypted using this KMS key specified."
+            } ]
+          }
+        },
+        "description" : "The Amazon Resource Name (ARN) of the AWS KMS key used to encrypt the shared S3 objects."
+      },
       "LFPermission" : {
         "type" : "string",
         "enum" : [ "DESCRIBE", "SELECT" ]
@@ -6219,6 +6252,14 @@
         "items" : {
           "$ref" : "#/components/schemas/AssetEntry"
         }
+      },
+      "ListOfKmsKeysToGrant" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/KmsKeyToGrant"
+        },
+        "minItems" : 1,
+        "maxItems" : 10
       },
       "RedshiftDataShareAssetSourceEntry" : {
         "type" : "object",

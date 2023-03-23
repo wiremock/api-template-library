@@ -535,7 +535,179 @@
             "content" : {
               "application/json" : {
                 "schema" : {
+                  "required" : [ "value" ],
                   "type" : "object",
+                  "properties" : {
+                    "nextLink" : {
+                      "type" : "string",
+                      "description" : "The uri to fetch the next page of DMS SKUs. Call ListNext() with this to fetch the next page of DMS SKUs."
+                    },
+                    "value" : {
+                      "type" : "array",
+                      "description" : "The list of SKUs available for the subscription.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "apiVersions" : {
+                            "type" : "array",
+                            "description" : "The api versions that support this SKU.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "string"
+                            }
+                          },
+                          "capabilities" : {
+                            "type" : "array",
+                            "description" : "A name value pair to describe the capability.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "name" : {
+                                  "type" : "string",
+                                  "description" : "An invariant to describe the feature.",
+                                  "readOnly" : true
+                                },
+                                "value" : {
+                                  "type" : "string",
+                                  "description" : "An invariant if the feature is measured by quantity.",
+                                  "readOnly" : true
+                                }
+                              },
+                              "description" : "Describes The SKU capabilites object."
+                            }
+                          },
+                          "capacity" : {
+                            "type" : "object",
+                            "properties" : {
+                              "default" : {
+                                "type" : "integer",
+                                "description" : "The default capacity.",
+                                "format" : "int64",
+                                "readOnly" : true
+                              },
+                              "maximum" : {
+                                "type" : "integer",
+                                "description" : "The maximum capacity.",
+                                "format" : "int64",
+                                "readOnly" : true
+                              },
+                              "minimum" : {
+                                "type" : "integer",
+                                "description" : "The minimum capacity.",
+                                "format" : "int64",
+                                "readOnly" : true
+                              },
+                              "scaleType" : {
+                                "type" : "string",
+                                "description" : "The scale type applicable to the SKU.",
+                                "readOnly" : true,
+                                "enum" : [ "Automatic", "Manual", "None" ]
+                              }
+                            },
+                            "description" : "Describes scaling information of a SKU."
+                          },
+                          "costs" : {
+                            "type" : "array",
+                            "description" : "Metadata for retrieving price info.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "extendedUnit" : {
+                                  "type" : "string",
+                                  "description" : "An invariant to show the extended unit.",
+                                  "readOnly" : true
+                                },
+                                "meterID" : {
+                                  "type" : "string",
+                                  "description" : "Used for querying price from commerce.",
+                                  "readOnly" : true
+                                },
+                                "quantity" : {
+                                  "type" : "integer",
+                                  "description" : "The multiplier is needed to extend the base metered cost.",
+                                  "format" : "int64",
+                                  "readOnly" : true
+                                }
+                              },
+                              "description" : "Describes metadata for retrieving price info."
+                            }
+                          },
+                          "family" : {
+                            "type" : "string",
+                            "description" : "The Family of this particular SKU.",
+                            "readOnly" : true
+                          },
+                          "kind" : {
+                            "type" : "string",
+                            "description" : "The Kind of resources that are supported in this SKU.",
+                            "readOnly" : true
+                          },
+                          "locations" : {
+                            "type" : "array",
+                            "description" : "The set of locations that the SKU is available.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "string"
+                            }
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "description" : "The name of SKU.",
+                            "readOnly" : true
+                          },
+                          "resourceType" : {
+                            "type" : "string",
+                            "description" : "The type of resource the SKU applies to.",
+                            "readOnly" : true
+                          },
+                          "restrictions" : {
+                            "type" : "array",
+                            "description" : "The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.",
+                            "readOnly" : true,
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "reasonCode" : {
+                                  "type" : "string",
+                                  "description" : "The reason code for restriction.",
+                                  "readOnly" : true,
+                                  "enum" : [ "QuotaId", "NotAvailableForSubscription" ]
+                                },
+                                "type" : {
+                                  "type" : "string",
+                                  "description" : "The type of restrictions.",
+                                  "readOnly" : true,
+                                  "enum" : [ "location" ]
+                                },
+                                "values" : {
+                                  "type" : "array",
+                                  "description" : "The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.",
+                                  "readOnly" : true,
+                                  "items" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              },
+                              "description" : "Describes scaling information of a SKU."
+                            }
+                          },
+                          "size" : {
+                            "type" : "string",
+                            "description" : "The Size of the SKU.",
+                            "readOnly" : true
+                          },
+                          "tier" : {
+                            "type" : "string",
+                            "description" : "Specifies the tier of DMS in a scale set.",
+                            "readOnly" : true
+                          }
+                        },
+                        "description" : "Describes an available DMS SKU."
+                      }
+                    }
+                  },
                   "description" : "The DMS List SKUs operation response."
                 }
               }
@@ -774,8 +946,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A Data Migration Service resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. Ignored if submitted"
+                    },
+                    "kind" : {
+                      "type" : "string",
+                      "description" : "The resource kind. Only 'vm' (the default) is supported."
+                    },
+                    "properties" : {
+                      "required" : [ "virtualSubnetId" ],
+                      "type" : "object",
+                      "properties" : {
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The resource's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Accepted", "Deleting", "Deploying", "Stopped", "Stopping", "Starting", "FailedToStart", "FailedToStop", "Succeeded", "Failed" ]
+                        },
+                        "publicKey" : {
+                          "type" : "string",
+                          "description" : "The public key of the service, used to encrypt secrets sent to the service"
+                        },
+                        "virtualSubnetId" : {
+                          "type" : "string",
+                          "description" : "The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined"
+                        }
+                      },
+                      "description" : "Properties of the Data Migration service instance"
+                    },
+                    "sku" : {
+                      "type" : "object",
+                      "properties" : {
+                        "capacity" : {
+                          "type" : "integer",
+                          "description" : "The capacity of the SKU, if it supports scaling"
+                        },
+                        "family" : {
+                          "type" : "string",
+                          "description" : "The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "The unique name of the SKU, such as 'P3'"
+                        },
+                        "size" : {
+                          "type" : "string",
+                          "description" : "The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines"
+                        },
+                        "tier" : {
+                          "type" : "string",
+                          "description" : "The tier of the SKU, such as 'Free', 'Basic', 'Standard', or 'Premium'"
+                        }
+                      },
+                      "description" : "An Azure SKU instance"
+                    }
+                  },
+                  "description" : "A Data Migration Service resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -918,6 +1184,7 @@
                 },
                 "description" : "A Data Migration Service resource",
                 "allOf" : [ {
+                  "required" : [ "location" ],
                   "properties" : {
                     "location" : {
                       "type" : "string",
@@ -965,8 +1232,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A Data Migration Service resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. Ignored if submitted"
+                    },
+                    "kind" : {
+                      "type" : "string",
+                      "description" : "The resource kind. Only 'vm' (the default) is supported."
+                    },
+                    "properties" : {
+                      "required" : [ "virtualSubnetId" ],
+                      "type" : "object",
+                      "properties" : {
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The resource's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Accepted", "Deleting", "Deploying", "Stopped", "Stopping", "Starting", "FailedToStart", "FailedToStop", "Succeeded", "Failed" ]
+                        },
+                        "publicKey" : {
+                          "type" : "string",
+                          "description" : "The public key of the service, used to encrypt secrets sent to the service"
+                        },
+                        "virtualSubnetId" : {
+                          "type" : "string",
+                          "description" : "The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined"
+                        }
+                      },
+                      "description" : "Properties of the Data Migration service instance"
+                    },
+                    "sku" : {
+                      "type" : "object",
+                      "properties" : {
+                        "capacity" : {
+                          "type" : "integer",
+                          "description" : "The capacity of the SKU, if it supports scaling"
+                        },
+                        "family" : {
+                          "type" : "string",
+                          "description" : "The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "The unique name of the SKU, such as 'P3'"
+                        },
+                        "size" : {
+                          "type" : "string",
+                          "description" : "The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines"
+                        },
+                        "tier" : {
+                          "type" : "string",
+                          "description" : "The tier of the SKU, such as 'Free', 'Basic', 'Standard', or 'Premium'"
+                        }
+                      },
+                      "description" : "An Azure SKU instance"
+                    }
+                  },
+                  "description" : "A Data Migration Service resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -976,8 +1337,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A Data Migration Service resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. Ignored if submitted"
+                    },
+                    "kind" : {
+                      "type" : "string",
+                      "description" : "The resource kind. Only 'vm' (the default) is supported."
+                    },
+                    "properties" : {
+                      "required" : [ "virtualSubnetId" ],
+                      "type" : "object",
+                      "properties" : {
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The resource's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Accepted", "Deleting", "Deploying", "Stopped", "Stopping", "Starting", "FailedToStart", "FailedToStop", "Succeeded", "Failed" ]
+                        },
+                        "publicKey" : {
+                          "type" : "string",
+                          "description" : "The public key of the service, used to encrypt secrets sent to the service"
+                        },
+                        "virtualSubnetId" : {
+                          "type" : "string",
+                          "description" : "The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined"
+                        }
+                      },
+                      "description" : "Properties of the Data Migration service instance"
+                    },
+                    "sku" : {
+                      "type" : "object",
+                      "properties" : {
+                        "capacity" : {
+                          "type" : "integer",
+                          "description" : "The capacity of the SKU, if it supports scaling"
+                        },
+                        "family" : {
+                          "type" : "string",
+                          "description" : "The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "The unique name of the SKU, such as 'P3'"
+                        },
+                        "size" : {
+                          "type" : "string",
+                          "description" : "The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines"
+                        },
+                        "tier" : {
+                          "type" : "string",
+                          "description" : "The tier of the SKU, such as 'Free', 'Basic', 'Standard', or 'Premium'"
+                        }
+                      },
+                      "description" : "An Azure SKU instance"
+                    }
+                  },
+                  "description" : "A Data Migration Service resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -1214,6 +1669,7 @@
                 },
                 "description" : "A Data Migration Service resource",
                 "allOf" : [ {
+                  "required" : [ "location" ],
                   "properties" : {
                     "location" : {
                       "type" : "string",
@@ -1261,8 +1717,102 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A Data Migration Service resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. Ignored if submitted"
+                    },
+                    "kind" : {
+                      "type" : "string",
+                      "description" : "The resource kind. Only 'vm' (the default) is supported."
+                    },
+                    "properties" : {
+                      "required" : [ "virtualSubnetId" ],
+                      "type" : "object",
+                      "properties" : {
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The resource's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Accepted", "Deleting", "Deploying", "Stopped", "Stopping", "Starting", "FailedToStart", "FailedToStop", "Succeeded", "Failed" ]
+                        },
+                        "publicKey" : {
+                          "type" : "string",
+                          "description" : "The public key of the service, used to encrypt secrets sent to the service"
+                        },
+                        "virtualSubnetId" : {
+                          "type" : "string",
+                          "description" : "The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined"
+                        }
+                      },
+                      "description" : "Properties of the Data Migration service instance"
+                    },
+                    "sku" : {
+                      "type" : "object",
+                      "properties" : {
+                        "capacity" : {
+                          "type" : "integer",
+                          "description" : "The capacity of the SKU, if it supports scaling"
+                        },
+                        "family" : {
+                          "type" : "string",
+                          "description" : "The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "The unique name of the SKU, such as 'P3'"
+                        },
+                        "size" : {
+                          "type" : "string",
+                          "description" : "The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines"
+                        },
+                        "tier" : {
+                          "type" : "string",
+                          "description" : "The tier of the SKU, such as 'Free', 'Basic', 'Standard', or 'Premium'"
+                        }
+                      },
+                      "description" : "An Azure SKU instance"
+                    }
+                  },
+                  "description" : "A Data Migration Service resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -1781,8 +2331,129 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A project resource"
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "sourcePlatform", "targetPlatform" ],
+                      "type" : "object",
+                      "properties" : {
+                        "creationTime" : {
+                          "type" : "string",
+                          "description" : "UTC Date and time when project was created",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "databasesInfo" : {
+                          "type" : "array",
+                          "description" : "List of DatabaseInfo",
+                          "items" : {
+                            "required" : [ "sourceDatabaseName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "sourceDatabaseName" : {
+                                "type" : "string",
+                                "description" : "Name of the database"
+                              }
+                            },
+                            "description" : "Project Database Details"
+                          }
+                        },
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The project's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Deleting", "Succeeded" ]
+                        },
+                        "sourceConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "sourcePlatform" : {
+                          "type" : "string",
+                          "description" : "Source platform of the project",
+                          "enum" : [ "SQL", "Unknown" ]
+                        },
+                        "targetConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "targetPlatform" : {
+                          "type" : "string",
+                          "description" : "Target platform of the project",
+                          "enum" : [ "SQLDB", "Unknown" ]
+                        }
+                      },
+                      "description" : "Project-specific properties"
+                    }
+                  },
+                  "description" : "A project resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -1960,6 +2631,7 @@
                 },
                 "description" : "A project resource",
                 "allOf" : [ {
+                  "required" : [ "location" ],
                   "properties" : {
                     "location" : {
                       "type" : "string",
@@ -2007,8 +2679,129 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A project resource"
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "sourcePlatform", "targetPlatform" ],
+                      "type" : "object",
+                      "properties" : {
+                        "creationTime" : {
+                          "type" : "string",
+                          "description" : "UTC Date and time when project was created",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "databasesInfo" : {
+                          "type" : "array",
+                          "description" : "List of DatabaseInfo",
+                          "items" : {
+                            "required" : [ "sourceDatabaseName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "sourceDatabaseName" : {
+                                "type" : "string",
+                                "description" : "Name of the database"
+                              }
+                            },
+                            "description" : "Project Database Details"
+                          }
+                        },
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The project's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Deleting", "Succeeded" ]
+                        },
+                        "sourceConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "sourcePlatform" : {
+                          "type" : "string",
+                          "description" : "Source platform of the project",
+                          "enum" : [ "SQL", "Unknown" ]
+                        },
+                        "targetConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "targetPlatform" : {
+                          "type" : "string",
+                          "description" : "Target platform of the project",
+                          "enum" : [ "SQLDB", "Unknown" ]
+                        }
+                      },
+                      "description" : "Project-specific properties"
+                    }
+                  },
+                  "description" : "A project resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -2018,8 +2811,129 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A project resource"
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "sourcePlatform", "targetPlatform" ],
+                      "type" : "object",
+                      "properties" : {
+                        "creationTime" : {
+                          "type" : "string",
+                          "description" : "UTC Date and time when project was created",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "databasesInfo" : {
+                          "type" : "array",
+                          "description" : "List of DatabaseInfo",
+                          "items" : {
+                            "required" : [ "sourceDatabaseName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "sourceDatabaseName" : {
+                                "type" : "string",
+                                "description" : "Name of the database"
+                              }
+                            },
+                            "description" : "Project Database Details"
+                          }
+                        },
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The project's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Deleting", "Succeeded" ]
+                        },
+                        "sourceConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "sourcePlatform" : {
+                          "type" : "string",
+                          "description" : "Source platform of the project",
+                          "enum" : [ "SQL", "Unknown" ]
+                        },
+                        "targetConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "targetPlatform" : {
+                          "type" : "string",
+                          "description" : "Target platform of the project",
+                          "enum" : [ "SQLDB", "Unknown" ]
+                        }
+                      },
+                      "description" : "Project-specific properties"
+                    }
+                  },
+                  "description" : "A project resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -2293,6 +3207,7 @@
                 },
                 "description" : "A project resource",
                 "allOf" : [ {
+                  "required" : [ "location" ],
                   "properties" : {
                     "location" : {
                       "type" : "string",
@@ -2340,8 +3255,129 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A project resource"
+                  "properties" : {
+                    "properties" : {
+                      "required" : [ "sourcePlatform", "targetPlatform" ],
+                      "type" : "object",
+                      "properties" : {
+                        "creationTime" : {
+                          "type" : "string",
+                          "description" : "UTC Date and time when project was created",
+                          "format" : "date-time",
+                          "readOnly" : true
+                        },
+                        "databasesInfo" : {
+                          "type" : "array",
+                          "description" : "List of DatabaseInfo",
+                          "items" : {
+                            "required" : [ "sourceDatabaseName" ],
+                            "type" : "object",
+                            "properties" : {
+                              "sourceDatabaseName" : {
+                                "type" : "string",
+                                "description" : "Name of the database"
+                              }
+                            },
+                            "description" : "Project Database Details"
+                          }
+                        },
+                        "provisioningState" : {
+                          "type" : "string",
+                          "description" : "The project's provisioning state",
+                          "readOnly" : true,
+                          "enum" : [ "Deleting", "Succeeded" ]
+                        },
+                        "sourceConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "sourcePlatform" : {
+                          "type" : "string",
+                          "description" : "Source platform of the project",
+                          "enum" : [ "SQL", "Unknown" ]
+                        },
+                        "targetConnectionInfo" : {
+                          "required" : [ "type" ],
+                          "type" : "object",
+                          "properties" : {
+                            "password" : {
+                              "type" : "string",
+                              "description" : "Password credential."
+                            },
+                            "type" : {
+                              "type" : "string",
+                              "description" : "Type of connection info"
+                            },
+                            "userName" : {
+                              "type" : "string",
+                              "description" : "User name"
+                            }
+                          },
+                          "description" : "Defines the connection properties of a server"
+                        },
+                        "targetPlatform" : {
+                          "type" : "string",
+                          "description" : "Target platform of the project",
+                          "enum" : [ "SQLDB", "Unknown" ]
+                        }
+                      },
+                      "description" : "Project-specific properties"
+                    }
+                  },
+                  "description" : "A project resource",
+                  "allOf" : [ {
+                    "required" : [ "location" ],
+                    "properties" : {
+                      "location" : {
+                        "type" : "string",
+                        "description" : "Resource location."
+                      },
+                      "tags" : {
+                        "type" : "object",
+                        "additionalProperties" : {
+                          "type" : "string"
+                        },
+                        "description" : "Resource tags."
+                      }
+                    },
+                    "description" : "ARM tracked top level resource.",
+                    "allOf" : [ {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string",
+                          "description" : "Resource ID.",
+                          "readOnly" : true
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Resource name.",
+                          "readOnly" : true
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "description" : "Resource type.",
+                          "readOnly" : true
+                        }
+                      },
+                      "description" : "ARM resource."
+                    } ]
+                  } ]
                 }
               }
             }
@@ -2617,8 +3653,77 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A task resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. This is ignored if submitted."
+                    },
+                    "properties" : {
+                      "required" : [ "taskType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "errors" : {
+                          "type" : "array",
+                          "description" : "Array of errors. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'"
+                              },
+                              "details" : {
+                                "type" : "array",
+                                "description" : "Inner errors that caused this error",
+                                "items" : {
+                                  "$ref" : "#/components/schemas/ODataError"
+                                }
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "The human-readable description of the error"
+                              }
+                            },
+                            "description" : "Error information in OData format."
+                          }
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "The state of the task. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "enum" : [ "Unknown", "Queued", "Running", "Canceled", "Succeeded", "Failed", "FailedInputValidation", "Faulted" ]
+                        },
+                        "taskType" : {
+                          "type" : "string",
+                          "description" : "Task type."
+                        }
+                      },
+                      "description" : "Base class for all types of DMS task properties. If task is not supported by current client, this object is returned."
+                    }
+                  },
+                  "description" : "A task resource",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "ARM resource."
+                  } ]
                 }
               }
             }
@@ -2800,8 +3905,77 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A task resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. This is ignored if submitted."
+                    },
+                    "properties" : {
+                      "required" : [ "taskType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "errors" : {
+                          "type" : "array",
+                          "description" : "Array of errors. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'"
+                              },
+                              "details" : {
+                                "type" : "array",
+                                "description" : "Inner errors that caused this error",
+                                "items" : {
+                                  "$ref" : "#/components/schemas/ODataError"
+                                }
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "The human-readable description of the error"
+                              }
+                            },
+                            "description" : "Error information in OData format."
+                          }
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "The state of the task. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "enum" : [ "Unknown", "Queued", "Running", "Canceled", "Succeeded", "Failed", "FailedInputValidation", "Faulted" ]
+                        },
+                        "taskType" : {
+                          "type" : "string",
+                          "description" : "Task type."
+                        }
+                      },
+                      "description" : "Base class for all types of DMS task properties. If task is not supported by current client, this object is returned."
+                    }
+                  },
+                  "description" : "A task resource",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "ARM resource."
+                  } ]
                 }
               }
             }
@@ -2811,8 +3985,77 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A task resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. This is ignored if submitted."
+                    },
+                    "properties" : {
+                      "required" : [ "taskType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "errors" : {
+                          "type" : "array",
+                          "description" : "Array of errors. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'"
+                              },
+                              "details" : {
+                                "type" : "array",
+                                "description" : "Inner errors that caused this error",
+                                "items" : {
+                                  "$ref" : "#/components/schemas/ODataError"
+                                }
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "The human-readable description of the error"
+                              }
+                            },
+                            "description" : "Error information in OData format."
+                          }
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "The state of the task. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "enum" : [ "Unknown", "Queued", "Running", "Canceled", "Succeeded", "Failed", "FailedInputValidation", "Faulted" ]
+                        },
+                        "taskType" : {
+                          "type" : "string",
+                          "description" : "Task type."
+                        }
+                      },
+                      "description" : "Base class for all types of DMS task properties. If task is not supported by current client, this object is returned."
+                    }
+                  },
+                  "description" : "A task resource",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "ARM resource."
+                  } ]
                 }
               }
             }
@@ -3098,8 +4341,77 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A task resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. This is ignored if submitted."
+                    },
+                    "properties" : {
+                      "required" : [ "taskType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "errors" : {
+                          "type" : "array",
+                          "description" : "Array of errors. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'"
+                              },
+                              "details" : {
+                                "type" : "array",
+                                "description" : "Inner errors that caused this error",
+                                "items" : {
+                                  "$ref" : "#/components/schemas/ODataError"
+                                }
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "The human-readable description of the error"
+                              }
+                            },
+                            "description" : "Error information in OData format."
+                          }
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "The state of the task. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "enum" : [ "Unknown", "Queued", "Running", "Canceled", "Succeeded", "Failed", "FailedInputValidation", "Faulted" ]
+                        },
+                        "taskType" : {
+                          "type" : "string",
+                          "description" : "Task type."
+                        }
+                      },
+                      "description" : "Base class for all types of DMS task properties. If task is not supported by current client, this object is returned."
+                    }
+                  },
+                  "description" : "A task resource",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "ARM resource."
+                  } ]
                 }
               }
             }
@@ -3202,8 +4514,77 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "description" : "A task resource"
+                  "properties" : {
+                    "etag" : {
+                      "type" : "string",
+                      "description" : "HTTP strong entity tag value. This is ignored if submitted."
+                    },
+                    "properties" : {
+                      "required" : [ "taskType" ],
+                      "type" : "object",
+                      "properties" : {
+                        "errors" : {
+                          "type" : "array",
+                          "description" : "Array of errors. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "code" : {
+                                "type" : "string",
+                                "description" : "The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'"
+                              },
+                              "details" : {
+                                "type" : "array",
+                                "description" : "Inner errors that caused this error",
+                                "items" : {
+                                  "$ref" : "#/components/schemas/ODataError"
+                                }
+                              },
+                              "message" : {
+                                "type" : "string",
+                                "description" : "The human-readable description of the error"
+                              }
+                            },
+                            "description" : "Error information in OData format."
+                          }
+                        },
+                        "state" : {
+                          "type" : "string",
+                          "description" : "The state of the task. This is ignored if submitted.",
+                          "readOnly" : true,
+                          "enum" : [ "Unknown", "Queued", "Running", "Canceled", "Succeeded", "Failed", "FailedInputValidation", "Faulted" ]
+                        },
+                        "taskType" : {
+                          "type" : "string",
+                          "description" : "Task type."
+                        }
+                      },
+                      "description" : "Base class for all types of DMS task properties. If task is not supported by current client, this object is returned."
+                    }
+                  },
+                  "description" : "A task resource",
+                  "allOf" : [ {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "string",
+                        "description" : "Resource ID.",
+                        "readOnly" : true
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "description" : "Resource name.",
+                        "readOnly" : true
+                      },
+                      "type" : {
+                        "type" : "string",
+                        "description" : "Resource type.",
+                        "readOnly" : true
+                      }
+                    },
+                    "description" : "ARM resource."
+                  } ]
                 }
               }
             }
@@ -3753,6 +5134,7 @@
               },
               "description" : "A project resource",
               "allOf" : [ {
+                "required" : [ "location" ],
                 "properties" : {
                   "location" : {
                     "type" : "string",
@@ -3961,6 +5343,7 @@
               },
               "description" : "A Data Migration Service resource",
               "allOf" : [ {
+                "required" : [ "location" ],
                 "properties" : {
                   "location" : {
                     "type" : "string",

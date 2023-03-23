@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-python2package"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-python2package-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-python2package-stubs.json"
+---

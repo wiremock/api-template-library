@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-acmedns"
+name: "ACME DNS API"
+provider: "googleapis.com"
+description: "Google Domains ACME DNS API that allows users to complete ACME DNS-01\
+  \ challenges for a domain."
+logo: "googleapis.com-acmedns-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-acmedns-stubs.json"
+---

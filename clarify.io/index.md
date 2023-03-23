@@ -1,0 +1,11 @@
+---
+slug: "clarify-io"
+name: "api.clarify.io"
+provider: "clarify.io"
+description: "The API to Search and Understand Audio & Video Data."
+logo: "clarify.io-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "search"
+stubs: "clarify.io-stubs.json"
+---

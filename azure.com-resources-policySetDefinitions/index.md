@@ -1,0 +1,12 @@
+---
+slug: "azure-com-resources-policySetDefinitions"
+name: "PolicyClient"
+provider: "azure.com"
+description: "To manage and control access to your resources, you can define customized\
+  \ policies and assign them at a scope."
+logo: "azure.com-resources-policySetDefinitions-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-resources-policySetDefinitions-stubs.json"
+---

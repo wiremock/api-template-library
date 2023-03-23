@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-people"
+name: "People API"
+provider: "googleapis.com"
+description: "Provides access to information about profiles and contacts."
+logo: "googleapis.com-people-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-people-stubs.json"
+---

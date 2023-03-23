@@ -1,0 +1,11 @@
+---
+slug: "azure-com-automation-connectionType"
+name: "AutomationManagement"
+provider: "azure.com"
+description: null
+logo: "azure.com-automation-connectionType-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-automation-connectionType-stubs.json"
+---

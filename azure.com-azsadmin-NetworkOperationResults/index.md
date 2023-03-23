@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azsadmin-NetworkOperationResults"
+name: "FabricAdminClient"
+provider: "azure.com"
+description: "Network operation results."
+logo: "azure.com-azsadmin-NetworkOperationResults-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azsadmin-NetworkOperationResults-stubs.json"
+---

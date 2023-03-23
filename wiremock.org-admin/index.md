@@ -1,0 +1,11 @@
+---
+slug: "wiremock-org-admin"
+name: "WireMock"
+provider: "wiremock.org"
+description: null
+logo: "wiremock.org-admin-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "developer_tools"
+stubs: "wiremock.org-admin-stubs.json"
+---

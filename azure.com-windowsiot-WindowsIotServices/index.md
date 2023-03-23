@@ -1,0 +1,12 @@
+---
+slug: "azure-com-windowsiot-WindowsIotServices"
+name: "DeviceServices"
+provider: "azure.com"
+description: "Use this API to manage the Windows IoT device services in your Azure\
+  \ subscription."
+logo: "azure.com-windowsiot-WindowsIotServices-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-windowsiot-WindowsIotServices-stubs.json"
+---

@@ -1,0 +1,11 @@
+---
+slug: "cycat-org"
+name: "CyCAT.org API"
+provider: "cycat.org"
+description: "CyCAT - The Cybersecurity Resource Catalogue public API services."
+logo: "cycat.org-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "security"
+stubs: "cycat.org-stubs.json"
+---

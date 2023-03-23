@@ -91,7 +91,176 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object"
+                  "type" : "object",
+                  "properties" : {
+                    "language" : {
+                      "required" : [ "code", "detectedLanguage", "name" ],
+                      "type" : "object",
+                      "properties" : {
+                        "code" : {
+                          "type" : "string",
+                          "description" : "ISO 639-1 code like 'en', 'en-US', or 'ca-ES-valencia'"
+                        },
+                        "detectedLanguage" : {
+                          "required" : [ "code", "name" ],
+                          "type" : "object",
+                          "properties" : {
+                            "code" : {
+                              "type" : "string",
+                              "description" : "ISO 639-1 code like 'en', 'en-US', or 'ca-ES-valencia'."
+                            },
+                            "name" : {
+                              "type" : "string",
+                              "description" : "Language name like 'French' or 'English (US)'."
+                            }
+                          },
+                          "description" : "The automatically detected text language (might be different from the language actually used for checking)."
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Language name like 'French' or 'English (US)'."
+                        }
+                      },
+                      "description" : "The language used for checking the text."
+                    },
+                    "matches" : {
+                      "type" : "array",
+                      "items" : {
+                        "required" : [ "context", "length", "message", "offset", "replacements", "sentence" ],
+                        "type" : "object",
+                        "properties" : {
+                          "context" : {
+                            "required" : [ "length", "offset", "text" ],
+                            "type" : "object",
+                            "properties" : {
+                              "length" : {
+                                "type" : "integer",
+                                "description" : "The length of the error in characters in the context."
+                              },
+                              "offset" : {
+                                "type" : "integer",
+                                "description" : "The 0-based character offset of the error in the context text."
+                              },
+                              "text" : {
+                                "type" : "string",
+                                "description" : "Context of the error, i.e. the error and some text to the left and to the left."
+                              }
+                            }
+                          },
+                          "length" : {
+                            "type" : "integer",
+                            "description" : "The length of the error in characters."
+                          },
+                          "message" : {
+                            "type" : "string",
+                            "description" : "Message about the error displayed to the user."
+                          },
+                          "offset" : {
+                            "type" : "integer",
+                            "description" : "The 0-based character offset of the error in the text."
+                          },
+                          "replacements" : {
+                            "type" : "array",
+                            "description" : "Replacements that might correct the error. The array can be empty, in this case there is no suggested replacement.",
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "value" : {
+                                  "type" : "string",
+                                  "description" : "the replacement string"
+                                }
+                              }
+                            }
+                          },
+                          "rule" : {
+                            "required" : [ "category", "description", "id" ],
+                            "type" : "object",
+                            "properties" : {
+                              "category" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "string",
+                                    "description" : "A category's identifier that's unique for this language."
+                                  },
+                                  "name" : {
+                                    "type" : "string",
+                                    "description" : "A short description of the category."
+                                  }
+                                }
+                              },
+                              "description" : {
+                                "type" : "string"
+                              },
+                              "id" : {
+                                "type" : "string",
+                                "description" : "An rule's identifier that's unique for this language."
+                              },
+                              "issueType" : {
+                                "type" : "string",
+                                "description" : "The <a href=\"http://www.w3.org/International/multilingualweb/lt/drafts/its20/its20.html#lqissue-typevalues\">Localization Quality Issue Type</a>. This is not defined for all languages, in which case it will always be 'Uncategorized'."
+                              },
+                              "subId" : {
+                                "type" : "string",
+                                "description" : "An optional sub identifier of the rule, used when several rules are grouped."
+                              },
+                              "urls" : {
+                                "type" : "array",
+                                "description" : "An optional array of URLs with a more detailed description of the error.",
+                                "items" : {
+                                  "type" : "object",
+                                  "properties" : {
+                                    "value" : {
+                                      "type" : "string",
+                                      "description" : "the URL"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "sentence" : {
+                            "type" : "string",
+                            "description" : "The sentence the error occurred in (since LanguageTool 4.0 or later)"
+                          },
+                          "shortMessage" : {
+                            "type" : "string",
+                            "description" : "An optional shorter version of 'message'."
+                          }
+                        }
+                      }
+                    },
+                    "software" : {
+                      "required" : [ "apiVersion", "buildDate", "name", "version" ],
+                      "type" : "object",
+                      "properties" : {
+                        "apiVersion" : {
+                          "type" : "integer",
+                          "description" : "Version of this API response. We don't expect to make incompatible changes, so this can also be increased for newly added fields."
+                        },
+                        "buildDate" : {
+                          "type" : "string",
+                          "description" : "Date when the software was built, e.g. '2016-05-25'."
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "description" : "Usually 'LanguageTool'."
+                        },
+                        "premium" : {
+                          "type" : "boolean",
+                          "description" : "true if you're using a Premium account with all the premium text checks (since LanguageTool 4.2)"
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "description" : "An optional warning, e.g. when the API format is not stable."
+                        },
+                        "version" : {
+                          "type" : "string",
+                          "description" : "A version string like '3.3' or '3.4-SNAPSHOT'."
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -183,7 +352,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object"
+                  "type" : "object",
+                  "properties" : {
+                    "words" : {
+                      "type" : "array",
+                      "description" : "array of words",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -231,7 +409,13 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object"
+                  "type" : "object",
+                  "properties" : {
+                    "added" : {
+                      "type" : "boolean",
+                      "description" : "true if the word has been added. false means the word hasn't been added because it had been added before."
+                    }
+                  }
                 }
               }
             }
@@ -279,7 +463,13 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object"
+                  "type" : "object",
+                  "properties" : {
+                    "deleted" : {
+                      "type" : "boolean",
+                      "description" : "true if the word has been removed. false means the word hasn't been removed because it was not in the dictionary."
+                    }
+                  }
                 }
               }
             }

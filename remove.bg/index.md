@@ -1,0 +1,11 @@
+---
+slug: "remove-bg"
+name: "Background Removal API"
+provider: "remove.bg"
+description: "Remove the background of any image"
+logo: "remove.bg-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "developer_tools"
+stubs: "remove.bg-stubs.json"
+---

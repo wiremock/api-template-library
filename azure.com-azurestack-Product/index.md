@@ -1,0 +1,11 @@
+---
+slug: "azure-com-azurestack-Product"
+name: "AzureStack Azure Bridge Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-azurestack-Product-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-azurestack-Product-stubs.json"
+---

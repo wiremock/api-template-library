@@ -1,0 +1,11 @@
+---
+slug: "nlpcloud-io"
+name: "NLPCloud"
+provider: "nlpcloud.io"
+description: null
+logo: "nlpcloud.io-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "text"
+stubs: "nlpcloud.io-stubs.json"
+---

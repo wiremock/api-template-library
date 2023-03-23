@@ -1,0 +1,11 @@
+---
+slug: "azure-com-compute-swagger"
+name: "ComputeManagementConvenienceClient"
+provider: "azure.com"
+description: null
+logo: "azure.com-compute-swagger-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-compute-swagger-stubs.json"
+---

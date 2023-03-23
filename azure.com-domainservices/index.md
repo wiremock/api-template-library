@@ -1,0 +1,11 @@
+---
+slug: "azure-com-domainservices"
+name: "Domain Services Resource Provider"
+provider: "azure.com"
+description: "The AAD Domain Services API."
+logo: "azure.com-domainservices-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-domainservices-stubs.json"
+---

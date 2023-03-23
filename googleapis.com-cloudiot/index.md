@@ -1,0 +1,13 @@
+---
+slug: "googleapis-com-cloudiot"
+name: "Cloud IoT API"
+provider: "googleapis.com"
+description: "Registers and manages IoT (Internet of Things) devices that connect\
+  \ to the Google Cloud Platform. "
+logo: "googleapis.com-cloudiot-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-cloudiot-stubs.json"
+---

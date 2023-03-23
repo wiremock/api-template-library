@@ -1,0 +1,11 @@
+---
+slug: "zeno-fm"
+name: "Aggregators API Service"
+provider: "zeno.fm"
+description: "Aggregators API"
+logo: "zeno.fm-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "media"
+stubs: "zeno.fm-stubs.json"
+---

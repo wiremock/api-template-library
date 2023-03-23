@@ -1,0 +1,11 @@
+---
+slug: "hillbillysoftware-com-shinobi"
+name: "shinobiapi"
+provider: "hillbillysoftware.com"
+description: null
+logo: "hillbillysoftware.com-shinobi-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "media"
+stubs: "hillbillysoftware.com-shinobi-stubs.json"
+---

@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-integrations"
+name: "Application Integration API"
+provider: "googleapis.com"
+description: ""
+logo: "googleapis.com-integrations-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-integrations-stubs.json"
+---

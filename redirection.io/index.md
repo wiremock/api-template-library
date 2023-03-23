@@ -1,0 +1,11 @@
+---
+slug: "redirection-io"
+name: "redirection.io"
+provider: "redirection.io"
+description: "API documentation for redirection.io"
+logo: "redirection.io-logo.jpeg"
+logoMediaType: "image/jpeg"
+tags:
+- name: "hosting"
+stubs: "redirection.io-stubs.json"
+---

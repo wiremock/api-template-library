@@ -1,0 +1,11 @@
+---
+slug: "tsapi-net"
+name: "TSAPI"
+provider: "tsapi.net"
+description: null
+logo: "tsapi.net-logo.svg"
+logoMediaType: "image/svg+xml"
+tags:
+- name: "analytics"
+stubs: "tsapi.net-stubs.json"
+---

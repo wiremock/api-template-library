@@ -1,0 +1,12 @@
+---
+slug: "googleapis-com-androidenterprise"
+name: "Google Play EMM API"
+provider: "googleapis.com"
+description: "Manages the deployment of apps to Android Enterprise devices."
+logo: "googleapis.com-androidenterprise-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "analytics"
+- name: "media"
+stubs: "googleapis.com-androidenterprise-stubs.json"
+---

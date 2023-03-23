@@ -1,0 +1,10 @@
+---
+slug: "hubapi-com-auth"
+name: "auth"
+provider: "hubapi.com"
+description: null
+logo: "hubapi.com-auth-logo.png"
+logoMediaType: "image/png"
+tags: []
+stubs: "hubapi.com-auth-stubs.json"
+---

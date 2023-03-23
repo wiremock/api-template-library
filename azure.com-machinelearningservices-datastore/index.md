@@ -1,0 +1,11 @@
+---
+slug: "azure-com-machinelearningservices-datastore"
+name: "Azure Machine Learning Datastore Management Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-machinelearningservices-datastore-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-machinelearningservices-datastore-stubs.json"
+---

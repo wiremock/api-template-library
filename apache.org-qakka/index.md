@@ -1,0 +1,11 @@
+---
+slug: "apache-org-qakka"
+name: "Qakka"
+provider: "apache.org"
+description: "API for Qakka Queue System"
+logo: "apache.org-qakka-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "messaging"
+stubs: "apache.org-qakka-stubs.json"
+---

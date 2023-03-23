@@ -1,0 +1,11 @@
+---
+slug: "azure-com-web-AppServicePlans"
+name: "AppServicePlans API Client"
+provider: "azure.com"
+description: null
+logo: "azure.com-web-AppServicePlans-logo.png"
+logoMediaType: "image/png"
+tags:
+- name: "cloud"
+stubs: "azure.com-web-AppServicePlans-stubs.json"
+---
