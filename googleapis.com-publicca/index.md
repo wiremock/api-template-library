@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-publicca"
-name: "Public Certificate Authority API"
+title: "Public Certificate Authority API"
 provider: "googleapis.com"
 description: "The Public Certificate Authority API may be used to create and manage\
   \ ACME external account binding keys associated with Google Trust Services' publicly\
@@ -8,7 +8,8 @@ description: "The Public Certificate Authority API may be used to create and man
 logo: "googleapis.com-publicca-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-publicca-stubs.json"
+swagger: "googleapis.com-publicca-swagger.json"
 ---

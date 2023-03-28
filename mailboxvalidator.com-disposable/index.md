@@ -1,6 +1,6 @@
 ---
 slug: "mailboxvalidator-com-disposable"
-name: "MailboxValidator Disposable Email Checker"
+title: "MailboxValidator Disposable Email Checker"
 provider: "mailboxvalidator.com"
 description: "The MailboxValidator Disposable Email Checker API checks if a single\
   \ email address is from a disposable email provider and returns the results in either\
@@ -9,6 +9,7 @@ description: "The MailboxValidator Disposable Email Checker API checks if a sing
 logo: "mailboxvalidator.com-disposable-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "email"
+- "email"
 stubs: "mailboxvalidator.com-disposable-stubs.json"
+swagger: "mailboxvalidator.com-disposable-swagger.json"
 ---

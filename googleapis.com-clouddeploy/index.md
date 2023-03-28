@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-clouddeploy"
-name: "Google Cloud Deploy API"
+title: "Google Cloud Deploy API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-clouddeploy-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-clouddeploy-stubs.json"
+swagger: "googleapis.com-clouddeploy-swagger.json"
 ---

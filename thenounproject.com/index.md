@@ -1,11 +1,12 @@
 ---
 slug: "thenounproject-com"
-name: "The Noun Project"
+title: "The Noun Project"
 provider: "thenounproject.com"
 description: "Icons for Everything"
 logo: "thenounproject.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "thenounproject.com-stubs.json"
+swagger: "thenounproject.com-swagger.json"
 ---

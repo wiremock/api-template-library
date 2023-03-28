@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudsearch"
-name: "Amazon CloudSearch"
+title: "Amazon CloudSearch"
 provider: "amazonaws.com"
 description: "<fullname>Amazon CloudSearch Configuration Service</fullname> <p>You\
   \ use the Amazon CloudSearch configuration service to create, configure, and manage\
@@ -14,6 +14,7 @@ description: "<fullname>Amazon CloudSearch Configuration Service</fullname> <p>Y
 logo: "amazonaws.com-cloudsearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudsearch-stubs.json"
+swagger: "amazonaws.com-cloudsearch-swagger.json"
 ---

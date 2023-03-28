@@ -1,11 +1,12 @@
 ---
 slug: "nic-at-domainfinder"
-name: "nic.at Domainfinder API Documentation"
+title: "nic.at Domainfinder API Documentation"
 provider: "nic.at"
 description: null
 logo: "nic.at-domainfinder-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "nic.at-domainfinder-stubs.json"
+swagger: "nic.at-domainfinder-swagger.json"
 ---

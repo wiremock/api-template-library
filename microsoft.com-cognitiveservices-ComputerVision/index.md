@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-ComputerVision"
-name: "Computer Vision Client"
+title: "Computer Vision Client"
 provider: "microsoft.com"
 description: "The Computer Vision API provides state-of-the-art algorithms to process\
   \ images and return information. For example, it can be used to determine if an\
@@ -12,7 +12,8 @@ description: "The Computer Vision API provides state-of-the-art algorithms to pr
 logo: "microsoft.com-cognitiveservices-ComputerVision-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-ComputerVision-stubs.json"
+swagger: "microsoft.com-cognitiveservices-ComputerVision-swagger.json"
 ---

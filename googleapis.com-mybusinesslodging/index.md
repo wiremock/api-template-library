@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-mybusinesslodging"
-name: "My Business Lodging API"
+title: "My Business Lodging API"
 provider: "googleapis.com"
 description: "The My Business Lodging API enables managing lodging business information\
   \ on Google. Note - If you have a quota of 0 after enabling the API, please request\
@@ -8,7 +8,8 @@ description: "The My Business Lodging API enables managing lodging business info
 logo: "googleapis.com-mybusinesslodging-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-mybusinesslodging-stubs.json"
+swagger: "googleapis.com-mybusinesslodging-swagger.json"
 ---

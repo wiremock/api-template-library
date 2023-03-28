@@ -1,6 +1,6 @@
 ---
 slug: "amentum-space-atmosphere"
-name: "Atmosphere API"
+title: "Atmosphere API"
 provider: "amentum.space"
 description: "Instantly access empirical models of atmospheric density and  composition\
   \ that are recommended by the Committee on Space Research (COSPAR) for  satellite\
@@ -14,6 +14,7 @@ description: "Instantly access empirical models of atmospheric density and  comp
 logo: "amentum.space-atmosphere-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "amentum.space-atmosphere-stubs.json"
+swagger: "amentum.space-atmosphere-swagger.json"
 ---

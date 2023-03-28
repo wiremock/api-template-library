@@ -1,6 +1,6 @@
 ---
 slug: "data2crm-com"
-name: "Data2CRM.API"
+title: "Data2CRM.API"
 provider: "data2crm.com"
 description: "<p>Make use of our in-depth documentation to get more information about\
   \ the various functions of the service. Those willing to explore the mechanics of\
@@ -17,4 +17,5 @@ logo: "data2crm.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "data2crm.com-stubs.json"
+swagger: "data2crm.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "miataru-com"
-name: "Miataru"
+title: "Miataru"
 provider: "miataru.com"
 description: "The Miataru API is very simple and straight forward. Generally you're\
   \ posting (HTTP POST) a JSON formatted request to a service method locations and\
@@ -11,6 +11,7 @@ description: "The Miataru API is very simple and straight forward. Generally you
 logo: "miataru.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "miataru.com-stubs.json"
+swagger: "miataru.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-backup"
-name: "AWS Backup"
+title: "AWS Backup"
 provider: "amazonaws.com"
 description: "<fullname>Backup</fullname> <p>Backup is a unified backup service designed\
   \ to protect Amazon Web Services services and their associated data. Backup simplifies\
@@ -9,6 +9,7 @@ description: "<fullname>Backup</fullname> <p>Backup is a unified backup service 
 logo: "amazonaws.com-backup-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-backup-stubs.json"
+swagger: "amazonaws.com-backup-swagger.json"
 ---

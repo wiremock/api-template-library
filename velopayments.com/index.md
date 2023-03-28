@@ -1,6 +1,6 @@
 ---
 slug: "velopayments-com"
-name: "Velo Payments APIs"
+title: "Velo Payments APIs"
 provider: "velopayments.com"
 description: "## Terms and Definitions\n\nThroughout this document and the Velo platform\
   \ the following terms are used:\n\n* **Payor.** An entity (typically a corporation)\
@@ -60,6 +60,7 @@ description: "## Terms and Definitions\n\nThroughout this document and the Velo 
 logo: "velopayments.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "velopayments.com-stubs.json"
+swagger: "velopayments.com-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "lyft-com"
-name: "Lyft"
+title: "Lyft"
 provider: "lyft.com"
 description: "Drive your app to success with Lyft's API"
 logo: "lyft.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "lyft.com-stubs.json"
+swagger: "lyft.com-swagger.json"
 ---

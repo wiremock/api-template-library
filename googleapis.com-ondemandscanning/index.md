@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-ondemandscanning"
-name: "On-Demand Scanning API"
+title: "On-Demand Scanning API"
 provider: "googleapis.com"
 description: "A service to scan container images for vulnerabilities."
 logo: "googleapis.com-ondemandscanning-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-ondemandscanning-stubs.json"
+swagger: "googleapis.com-ondemandscanning-swagger.json"
 ---

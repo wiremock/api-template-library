@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-hpsbys"
-name: "HP Swasthya Bima Yojna Society, Himachal Pradesh"
+title: "HP Swasthya Bima Yojna Society, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Himachal Pradesh Swasthya Bima Yojna Society (http://admis.hp.nic.in/epraman/https://www.hpsbys.in/)\
   \ is the online service delivery portal by Himachal Pradesh Govt.  Digital Health\
@@ -9,6 +9,7 @@ description: "Himachal Pradesh Swasthya Bima Yojna Society (http://admis.hp.nic.
 logo: "apisetu.gov.in-hpsbys-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-hpsbys-stubs.json"
+swagger: "apisetu.gov.in-hpsbys-swagger.json"
 ---

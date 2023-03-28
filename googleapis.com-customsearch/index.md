@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-customsearch"
-name: "Custom Search API"
+title: "Custom Search API"
 provider: "googleapis.com"
 description: "Searches over a website or collection of websites"
 logo: "googleapis.com-customsearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-customsearch-stubs.json"
+swagger: "googleapis.com-customsearch-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "redeal-io"
-name: "Redeal Analytics API"
+title: "Redeal Analytics API"
 provider: "redeal.io"
 description: "Access analytics for Redeal"
 logo: "redeal.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
+- "analytics"
 stubs: "redeal.io-stubs.json"
+swagger: "redeal.io-swagger.json"
 ---

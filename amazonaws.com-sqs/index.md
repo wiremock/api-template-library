@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-sqs"
-name: "Amazon Simple Queue Service"
+title: "Amazon Simple Queue Service"
 provider: "amazonaws.com"
 description: "<p>Welcome to the <i>Amazon SQS API Reference</i>.</p> <p>Amazon SQS\
   \ is a reliable, highly-scalable hosted queue for storing messages as they travel\
@@ -24,6 +24,7 @@ description: "<p>Welcome to the <i>Amazon SQS API Reference</i>.</p> <p>Amazon S
 logo: "amazonaws.com-sqs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-sqs-stubs.json"
+swagger: "amazonaws.com-sqs-swagger.json"
 ---

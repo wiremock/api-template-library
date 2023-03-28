@@ -1,6 +1,6 @@
 ---
 slug: "wordassociations-net"
-name: "Word Associations API"
+title: "Word Associations API"
 provider: "wordassociations.net"
 description: "The Word Associations Network API allows developers to embed the ability\
   \ to find associations for a word or phrase into their mobile apps or web services.\
@@ -11,6 +11,7 @@ description: "The Word Associations Network API allows developers to embed the a
 logo: "wordassociations.net-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "wordassociations.net-stubs.json"
+swagger: "wordassociations.net-swagger.json"
 ---

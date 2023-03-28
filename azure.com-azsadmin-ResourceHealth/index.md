@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-ResourceHealth"
-name: "InfrastructureInsightsManagementClient"
+title: "InfrastructureInsightsManagementClient"
 provider: "azure.com"
 description: "Resource health operation endpoints and objects."
 logo: "azure.com-azsadmin-ResourceHealth-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-ResourceHealth-stubs.json"
+swagger: "azure.com-azsadmin-ResourceHealth-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-identitystore"
-name: "AWS SSO Identity Store"
+title: "AWS SSO Identity Store"
 provider: "amazonaws.com"
 description: "<p>The Identity Store service used by AWS IAM Identity Center (successor\
   \ to AWS Single Sign-On) provides a single place to retrieve all of your identities\
@@ -15,6 +15,7 @@ description: "<p>The Identity Store service used by AWS IAM Identity Center (suc
 logo: "amazonaws.com-identitystore-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-identitystore-stubs.json"
+swagger: "amazonaws.com-identitystore-swagger.json"
 ---

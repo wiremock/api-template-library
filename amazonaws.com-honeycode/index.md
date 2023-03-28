@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-honeycode"
-name: "Amazon Honeycode"
+title: "Amazon Honeycode"
 provider: "amazonaws.com"
 description: " Amazon Honeycode is a fully managed service that allows you to quickly\
   \ build mobile and web apps for teams—without programming. Build Honeycode apps\
@@ -9,6 +9,7 @@ description: " Amazon Honeycode is a fully managed service that allows you to qu
 logo: "amazonaws.com-honeycode-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-honeycode-stubs.json"
+swagger: "amazonaws.com-honeycode-swagger.json"
 ---

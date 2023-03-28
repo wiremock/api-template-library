@@ -1,6 +1,6 @@
 ---
 slug: "cisco-com"
-name: "Cisco PSIRT openVuln API"
+title: "Cisco PSIRT openVuln API"
 provider: "cisco.com"
 description: "The Cisco Product Security Incident Response Team (PSIRT) openVuln API\
   \ is a RESTful API that allows customers to obtain Cisco Security Vulnerability\
@@ -23,6 +23,7 @@ description: "The Cisco Product Security Incident Response Team (PSIRT) openVuln
 logo: "cisco.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "security"
+- "security"
 stubs: "cisco.com-stubs.json"
+swagger: "cisco.com-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "apisetu-gov-in-mizoramlesde"
-name: "Labour Employment, Skill Development and Entrepreneurship, Mizoram"
+title: "Labour Employment, Skill Development and Entrepreneurship, Mizoram"
 provider: "apisetu.gov.in"
 description: "APIs provided by Labour Employment, Skill Development and Entrepreneurship,\
   \ Mizoram."
 logo: "apisetu.gov.in-mizoramlesde-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-mizoramlesde-stubs.json"
+swagger: "apisetu.gov.in-mizoramlesde-swagger.json"
 ---

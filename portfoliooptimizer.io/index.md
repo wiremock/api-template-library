@@ -1,6 +1,6 @@
 ---
 slug: "portfoliooptimizer-io"
-name: "Portfolio Optimizer"
+title: "Portfolio Optimizer"
 provider: "portfoliooptimizer.io"
 description: "Portfolio Optimizer is a [Web API](https://en.wikipedia.org/wiki/Web_API)\
   \ to analyze and optimize investment portfolios (collection of financial assets\
@@ -71,6 +71,7 @@ description: "Portfolio Optimizer is a [Web API](https://en.wikipedia.org/wiki/W
 logo: "portfoliooptimizer.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "portfoliooptimizer.io-stubs.json"
+swagger: "portfoliooptimizer.io-swagger.json"
 ---

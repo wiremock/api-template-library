@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ecs"
-name: "Amazon EC2 Container Service"
+title: "Amazon EC2 Container Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Elastic Container Service</fullname> <p>Amazon Elastic\
   \ Container Service (Amazon ECS) is a highly scalable, fast, container management\
@@ -19,6 +19,7 @@ description: "<fullname>Amazon Elastic Container Service</fullname> <p>Amazon El
 logo: "amazonaws.com-ecs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ecs-stubs.json"
+swagger: "amazonaws.com-ecs-swagger.json"
 ---

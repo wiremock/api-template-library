@@ -1,6 +1,6 @@
 ---
 slug: "firmalyzer-com-iotvas"
-name: "IoTVAS API"
+title: "IoTVAS API"
 provider: "firmalyzer.com"
 description: "IOTVAS API enables you to discover IoT/Connected devices in the network\
   \ and provides \n    detailed real-time risk analysis, including firmware vulnerability\
@@ -15,7 +15,8 @@ description: "IOTVAS API enables you to discover IoT/Connected devices in the ne
 logo: "firmalyzer.com-iotvas-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "iot"
-- name: "security"
+- "iot"
+- "security"
 stubs: "firmalyzer.com-iotvas-stubs.json"
+swagger: "firmalyzer.com-iotvas-swagger.json"
 ---

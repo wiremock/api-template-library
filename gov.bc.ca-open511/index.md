@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-open511"
-name: "DriveBC's Open511 API"
+title: "DriveBC's Open511 API"
 provider: "gov.bc.ca"
 description: "This API is DriveBC's implementation of the Open511 specification. \
   \ It provides information about known road events (traffic accidents, construction,\
@@ -10,6 +10,7 @@ description: "This API is DriveBC's implementation of the Open511 specification.
 logo: "gov.bc.ca-open511-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-open511-stubs.json"
+swagger: "gov.bc.ca-open511-swagger.json"
 ---

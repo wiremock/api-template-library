@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-kinesis"
-name: "Amazon Kinesis"
+title: "Amazon Kinesis"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Kinesis Data Streams Service API Reference</fullname>\
   \ <p>Amazon Kinesis Data Streams is a managed service that scales elastically for\
@@ -8,6 +8,7 @@ description: "<fullname>Amazon Kinesis Data Streams Service API Reference</fulln
 logo: "amazonaws.com-kinesis-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kinesis-stubs.json"
+swagger: "amazonaws.com-kinesis-swagger.json"
 ---

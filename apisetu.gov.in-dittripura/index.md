@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-dittripura"
-name: "Directorate of Information Technology, Government of Tripura, Tripura"
+title: "Directorate of Information Technology, Government of Tripura, Tripura"
 provider: "apisetu.gov.in"
 description: "eDistrict Tripura (http://edistrict.tripura.gov.in/) is the online service\
   \ delivery portal for TripuraState Govt. Certain documents issued by it (e.g. Income,\
@@ -8,6 +8,7 @@ description: "eDistrict Tripura (http://edistrict.tripura.gov.in/) is the online
 logo: "apisetu.gov.in-dittripura-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-dittripura-stubs.json"
+swagger: "apisetu.gov.in-dittripura-swagger.json"
 ---

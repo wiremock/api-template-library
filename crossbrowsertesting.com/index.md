@@ -1,6 +1,6 @@
 ---
 slug: "crossbrowsertesting-com"
-name: "Crossbrowsertesting.com Screenshot Comparisons API"
+title: "Crossbrowsertesting.com Screenshot Comparisons API"
 provider: "crossbrowsertesting.com"
 description: "What's in this version: \n 1. Compare two screenshots for layout differences\
   \ \n 2. Compare a full screenshot test of browsers to a single baseline browser\
@@ -10,6 +10,7 @@ description: "What's in this version: \n 1. Compare two screenshots for layout d
 logo: "crossbrowsertesting.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "crossbrowsertesting.com-stubs.json"
+swagger: "crossbrowsertesting.com-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-PublicIpAddresses"
-name: "NetworkAdminManagementClient"
+title: "NetworkAdminManagementClient"
 provider: "azure.com"
 description: "Public IP Address admin endpoints and objects."
 logo: "azure.com-azsadmin-PublicIpAddresses-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-PublicIpAddresses-stubs.json"
+swagger: "azure.com-azsadmin-PublicIpAddresses-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-random-facts"
-name: "Facts API"
+title: "Facts API"
 provider: "fungenerators.com"
 description: "A full featured Facts API. REST access with json/xml/jsonp result support.\
   \ On this day birth and death support, random fact, keyword search support etc.\
@@ -9,6 +9,7 @@ description: "A full featured Facts API. REST access with json/xml/jsonp result 
 logo: "fungenerators.com-random-facts-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-random-facts-stubs.json"
+swagger: "fungenerators.com-random-facts-swagger.json"
 ---

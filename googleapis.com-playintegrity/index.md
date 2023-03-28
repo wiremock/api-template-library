@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-playintegrity"
-name: "Google Play Integrity API"
+title: "Google Play Integrity API"
 provider: "googleapis.com"
 description: "The Play Integrity API helps you check that you're interacting with\
   \ your genuine app on a genuine Android device powered by Google Play services.\
@@ -8,7 +8,8 @@ description: "The Play Integrity API helps you check that you're interacting wit
 logo: "googleapis.com-playintegrity-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-playintegrity-stubs.json"
+swagger: "googleapis.com-playintegrity-swagger.json"
 ---

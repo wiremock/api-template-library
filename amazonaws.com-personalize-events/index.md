@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-personalize-events"
-name: "Amazon Personalize Events"
+title: "Amazon Personalize Events"
 provider: "amazonaws.com"
 description: "Amazon Personalize can consume real-time user event data, such as <i>stream</i>\
   \ or <i>click</i> data, and use it for model training either alone or combined with\
@@ -9,6 +9,7 @@ description: "Amazon Personalize can consume real-time user event data, such as 
 logo: "amazonaws.com-personalize-events-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-personalize-events-stubs.json"
+swagger: "amazonaws.com-personalize-events-swagger.json"
 ---

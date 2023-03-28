@@ -1,6 +1,6 @@
 ---
 slug: "just-eat-co-uk"
-name: "Just Eat UK"
+title: "Just Eat UK"
 provider: "just-eat.co.uk"
 description: "# Just Eat API\nJust Eat offers services for our various business partners\
   \ and our consumer applications.\nHow you interact with the API depends on the services\
@@ -41,6 +41,7 @@ description: "# Just Eat API\nJust Eat offers services for our various business 
 logo: "just-eat.co.uk-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "just-eat.co.uk-stubs.json"
+swagger: "just-eat.co.uk-swagger.json"
 ---

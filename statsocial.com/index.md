@@ -1,6 +1,6 @@
 ---
 slug: "statsocial-com"
-name: "StatSocial Platform API"
+title: "StatSocial Platform API"
 provider: "statsocial.com"
 description: "API Reference: <br><br> The StatSocial API is organized around REST.\
   \ Our API is designed to have predictable, resource-oriented URLs and to use HTTP\
@@ -15,7 +15,8 @@ description: "API Reference: <br><br> The StatSocial API is organized around RES
 logo: "statsocial.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "social"
-- name: "marketing"
+- "social"
+- "marketing"
 stubs: "statsocial.com-stubs.json"
+swagger: "statsocial.com-swagger.json"
 ---

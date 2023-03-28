@@ -1,6 +1,6 @@
 ---
 slug: "nytimes-com-times_tags"
-name: "TimesTags API"
+title: "TimesTags API"
 provider: "nytimes.com"
 description: "With the TimesTags API, you can mine the riches of the New York Times\
   \ tag set. The TimesTags service matches your query to the controlled vocabularies\
@@ -9,7 +9,8 @@ description: "With the TimesTags API, you can mine the riches of the New York Ti
 logo: "nytimes.com-times_tags-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-times_tags-stubs.json"
+swagger: "nytimes.com-times_tags-swagger.json"
 ---

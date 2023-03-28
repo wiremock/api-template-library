@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-opsworks"
-name: "AWS OpsWorks"
+title: "AWS OpsWorks"
 provider: "amazonaws.com"
 description: "<fullname>AWS OpsWorks</fullname> <p>Welcome to the <i>AWS OpsWorks\
   \ Stacks API Reference</i>. This guide provides descriptions, syntax, and usage\
@@ -40,6 +40,7 @@ description: "<fullname>AWS OpsWorks</fullname> <p>Welcome to the <i>AWS OpsWork
 logo: "amazonaws.com-opsworks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-opsworks-stubs.json"
+swagger: "amazonaws.com-opsworks-swagger.json"
 ---

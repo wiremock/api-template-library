@@ -1,6 +1,6 @@
 ---
 slug: "viator-com"
-name: "Viator API Documentation &amp; Specification – Merchant Partners"
+title: "Viator API Documentation &amp; Specification – Merchant Partners"
 provider: "viator.com"
 description: "&lt;style type='text/css'&gt;\ncode { white-space: nowrap; }\na { font-weight:\
   \ bold; }\n\nfigure {\n  width: 100%;\n  text-align: center;\n  font-style: italic;\n\
@@ -3098,7 +3098,8 @@ description: "&lt;style type='text/css'&gt;\ncode { white-space: nowrap; }\na { 
 logo: "viator.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
-- name: "ecommerce"
+- "location"
+- "ecommerce"
 stubs: "viator.com-stubs.json"
+swagger: "viator.com-swagger.json"
 ---

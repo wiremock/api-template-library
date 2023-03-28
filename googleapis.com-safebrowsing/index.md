@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-safebrowsing"
-name: "Safe Browsing API"
+title: "Safe Browsing API"
 provider: "googleapis.com"
 description: "Enables client applications to check web resources (most commonly URLs)\
   \ against Google-generated lists of unsafe web resources. The Safe Browsing APIs\
@@ -10,7 +10,8 @@ description: "Enables client applications to check web resources (most commonly 
 logo: "googleapis.com-safebrowsing-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-safebrowsing-stubs.json"
+swagger: "googleapis.com-safebrowsing-swagger.json"
 ---

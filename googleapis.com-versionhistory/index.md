@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-versionhistory"
-name: "versionhistory.googleapis.com API"
+title: "versionhistory.googleapis.com API"
 provider: "googleapis.com"
 description: "Version History API - Prod"
 logo: "googleapis.com-versionhistory-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-versionhistory-stubs.json"
+swagger: "googleapis.com-versionhistory-swagger.json"
 ---

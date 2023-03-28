@@ -1,6 +1,6 @@
 ---
 slug: "adafruit-com"
-name: "Adafruit IO REST API"
+title: "Adafruit IO REST API"
 provider: "adafruit.com"
 description: "### The Internet of Things for Everyone\n\nThe Adafruit IO HTTP API\
   \ provides access to your Adafruit IO data from any programming language or hardware\
@@ -55,6 +55,7 @@ description: "### The Internet of Things for Everyone\n\nThe Adafruit IO HTTP AP
 logo: "adafruit.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "iot"
+- "iot"
 stubs: "adafruit.com-stubs.json"
+swagger: "adafruit.com-swagger.json"
 ---

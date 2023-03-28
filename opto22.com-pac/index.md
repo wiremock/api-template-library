@@ -1,6 +1,6 @@
 ---
 slug: "opto22-com-pac"
-name: "PAC Control REST API"
+title: "PAC Control REST API"
 provider: "opto22.com"
 description: "#### Revised: 6/15/2018\n\n### Overview\nThis API provides secure access\
   \ to a SNAP-PAC-R or -S series controller's variable and I/O tags. Confidentiality\
@@ -23,6 +23,7 @@ description: "#### Revised: 6/15/2018\n\n### Overview\nThis API provides secure 
 logo: "opto22.com-pac-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "iot"
+- "iot"
 stubs: "opto22.com-pac-stubs.json"
+swagger: "opto22.com-pac-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimcaches"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Cache entity in your\
   \ Azure API Management deployment. Azure API Management also allows for caching\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on Cache entity in y
 logo: "azure.com-apimanagement-apimcaches-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimcaches-stubs.json"
+swagger: "azure.com-apimanagement-apimcaches-swagger.json"
 ---

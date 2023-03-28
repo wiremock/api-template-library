@@ -1,6 +1,6 @@
 ---
 slug: "dracoon-team"
-name: "DRACOON API"
+title: "DRACOON API"
 provider: "dracoon.team"
 description: "REST Web Services for DRACOON<br><br>This page provides an overview\
   \ of all available and documented DRACOON APIs, which are grouped by tags.<br>Each\
@@ -12,6 +12,7 @@ description: "REST Web Services for DRACOON<br><br>This page provides an overvie
 logo: "dracoon.team-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "dracoon.team-stubs.json"
+swagger: "dracoon.team-swagger.json"
 ---

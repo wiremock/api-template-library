@@ -1,6 +1,6 @@
 ---
 slug: "configcat-com"
-name: "ConfigCat Public Management API"
+title: "ConfigCat Public Management API"
 provider: "configcat.com"
 description: "**Base API URL**: https://api.configcat.com\n\nIf you prefer the swagger\
   \ documentation, you can find it here: [Swagger UI](https://api.configcat.com/swagger).\n\
@@ -26,6 +26,7 @@ description: "**Base API URL**: https://api.configcat.com\n\nIf you prefer the s
 logo: "configcat.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "configcat.com-stubs.json"
+swagger: "configcat.com-swagger.json"
 ---

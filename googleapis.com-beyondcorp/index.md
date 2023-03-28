@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-beyondcorp"
-name: "BeyondCorp API"
+title: "BeyondCorp API"
 provider: "googleapis.com"
 description: "Beyondcorp Enterprise provides identity and context aware access controls\
   \ for enterprise resources and enables zero-trust access. Using the Beyondcorp Enterprise\
@@ -8,7 +8,8 @@ description: "Beyondcorp Enterprise provides identity and context aware access c
 logo: "googleapis.com-beyondcorp-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-beyondcorp-stubs.json"
+swagger: "googleapis.com-beyondcorp-swagger.json"
 ---

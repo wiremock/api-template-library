@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-TransferService"
-name: "Transfers API"
+title: "Transfers API"
 provider: "adyen.com"
 description: "The Transfers API provides endpoints that you can use to get information\
   \ about all your transactions, move funds within your balance platform or send funds\
@@ -23,6 +23,7 @@ description: "The Transfers API provides endpoints that you can use to get infor
 logo: "adyen.com-TransferService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-TransferService-stubs.json"
+swagger: "adyen.com-TransferService-swagger.json"
 ---

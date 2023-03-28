@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-storagetransfer"
-name: "Storage Transfer API"
+title: "Storage Transfer API"
 provider: "googleapis.com"
 description: "Transfers data from external data sources to a Google Cloud Storage\
   \ bucket or between Google Cloud Storage buckets. "
 logo: "googleapis.com-storagetransfer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-storagetransfer-stubs.json"
+swagger: "googleapis.com-storagetransfer-swagger.json"
 ---

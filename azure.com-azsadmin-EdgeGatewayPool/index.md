@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-EdgeGatewayPool"
-name: "FabricAdminClient"
+title: "FabricAdminClient"
 provider: "azure.com"
 description: "Edge gateway pool operation endpoints and objects."
 logo: "azure.com-azsadmin-EdgeGatewayPool-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-EdgeGatewayPool-stubs.json"
+swagger: "azure.com-azsadmin-EdgeGatewayPool-swagger.json"
 ---

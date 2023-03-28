@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-metadata"
-name: "Metadata API"
+title: "Metadata API"
 provider: "ebay.com"
 description: "The Metadata API has operations that retrieve configuration details\
   \ pertaining to the different eBay marketplaces. In addition to marketplace information,\
@@ -9,6 +9,7 @@ description: "The Metadata API has operations that retrieve configuration detail
 logo: "ebay.com-sell-metadata-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-metadata-stubs.json"
+swagger: "ebay.com-sell-metadata-swagger.json"
 ---

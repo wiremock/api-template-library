@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-negotiation"
-name: "Negotiation API"
+title: "Negotiation API"
 provider: "ebay.com"
 description: "The <b>Negotiations API</b> gives sellers the ability to proactively\
   \ send discount offers to buyers who have shown an \"interest\" in their listings.\
@@ -17,6 +17,7 @@ description: "The <b>Negotiations API</b> gives sellers the ability to proactive
 logo: "ebay.com-sell-negotiation-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-negotiation-stubs.json"
+swagger: "ebay.com-sell-negotiation-swagger.json"
 ---

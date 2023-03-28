@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-customerlockbox"
-name: "Customer Lockbox"
+title: "Customer Lockbox"
 provider: "azure.com"
 description: "Azure Customer Lockbox API Reference"
 logo: "azure.com-customerlockbox-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-customerlockbox-stubs.json"
+swagger: "azure.com-customerlockbox-swagger.json"
 ---

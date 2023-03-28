@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-jac"
-name: "Jharkhand State Board (Jharkhand Academic Council), Jharkhand"
+title: "Jharkhand State Board (Jharkhand Academic Council), Jharkhand"
 provider: "apisetu.gov.in"
 description: "Jharkhand Academic Council (JAC) is issuing marksheets & passing certificates\
   \ through DigiLocker. These can be pulled by students into their DigiLocker accounts.\
@@ -8,6 +8,7 @@ description: "Jharkhand Academic Council (JAC) is issuing marksheets & passing c
 logo: "apisetu.gov.in-jac-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-jac-stubs.json"
+swagger: "apisetu.gov.in-jac-swagger.json"
 ---

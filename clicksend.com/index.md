@@ -1,6 +1,6 @@
 ---
 slug: "clicksend-com"
-name: "ClickSend REST API v3"
+title: "ClickSend REST API v3"
 provider: "clicksend.com"
 description: "This is the official API documentation for ClickSend.com\n\nBelow you\
   \ will find a current list of the available methods for clicksend.\n\n**NOTE**:\
@@ -118,6 +118,7 @@ description: "This is the official API documentation for ClickSend.com\n\nBelow 
 logo: "clicksend.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "email"
+- "email"
 stubs: "clicksend.com-stubs.json"
+swagger: "clicksend.com-swagger.json"
 ---

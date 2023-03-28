@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-waf"
-name: "AWS WAF"
+title: "AWS WAF"
 provider: "amazonaws.com"
 description: "<note> <p>This is <b>AWS WAF Classic</b> documentation. For more information,\
   \ see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html\"\
@@ -19,6 +19,7 @@ description: "<note> <p>This is <b>AWS WAF Classic</b> documentation. For more i
 logo: "amazonaws.com-waf-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-waf-stubs.json"
+swagger: "amazonaws.com-waf-swagger.json"
 ---

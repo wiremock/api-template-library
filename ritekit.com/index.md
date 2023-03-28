@@ -1,6 +1,6 @@
 ---
 slug: "ritekit-com"
-name: "RiteKit API"
+title: "RiteKit API"
 provider: "ritekit.com"
 description: "RiteKit API is based on REST principles.\n\nAuthentication uses standard\
   \ OAuth 2.0 process\n\n##Getting started\n\n1. Sign up for [RiteKit](https://ritekit.com/)\n\
@@ -14,6 +14,7 @@ description: "RiteKit API is based on REST principles.\n\nAuthentication uses st
 logo: "ritekit.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "social"
+- "social"
 stubs: "ritekit.com-stubs.json"
+swagger: "ritekit.com-swagger.json"
 ---

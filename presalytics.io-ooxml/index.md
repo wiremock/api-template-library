@@ -1,12 +1,13 @@
 ---
 slug: "presalytics-io-ooxml"
-name: "OOXML Automation"
+title: "OOXML Automation"
 provider: "presalytics.io"
 description: "This API helps users convert Excel and Powerpoint documents into rich,\
   \ live dashboards and stories."
 logo: "presalytics.io-ooxml-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
+- "analytics"
 stubs: "presalytics.io-ooxml-stubs.json"
+swagger: "presalytics.io-ooxml-swagger.json"
 ---

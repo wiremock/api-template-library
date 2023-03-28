@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Catalog-API-Seller-Portal"
-name: "Catalog API - Seller Portal"
+title: "Catalog API - Seller Portal"
 provider: "vtex.local"
 description: "\r\nWith the Catalog API for Seller Portal, you will be able to create,\
   \ edit and consult products and their variations, brands, and categories.\r\n\r\n\
@@ -29,4 +29,5 @@ logo: "vtex.local-Catalog-API-Seller-Portal-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Catalog-API-Seller-Portal-stubs.json"
+swagger: "vtex.local-Catalog-API-Seller-Portal-swagger.json"
 ---

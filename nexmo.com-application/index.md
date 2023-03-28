@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-application"
-name: "Nexmo Application API"
+title: "Nexmo Application API"
 provider: "nexmo.com"
 description: "<div class=\"Vlt-callout Vlt-callout--critical\"> <i></i> <div class=\"\
   Vlt-callout__content\">\n  <h4>Applications V1 is deprecated</h4>\n  This version\
@@ -12,4 +12,5 @@ logo: "nexmo.com-application-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-application-stubs.json"
+swagger: "nexmo.com-application-swagger.json"
 ---

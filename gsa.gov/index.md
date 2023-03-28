@@ -1,6 +1,6 @@
 ---
 slug: "gsa-gov"
-name: "Discovery Market Research"
+title: "Discovery Market Research"
 provider: "gsa.gov"
 description: "<p>This API drives the <a href=\"https://discovery.gsa.gov\">Discovery\
   \ Market Research Tool</a>.\nIt contains information on the vendors that are part\
@@ -16,4 +16,5 @@ logo: "gsa.gov-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "gsa.gov-stubs.json"
+swagger: "gsa.gov-swagger.json"
 ---

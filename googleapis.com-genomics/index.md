@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-genomics"
-name: "Genomics API"
+title: "Genomics API"
 provider: "googleapis.com"
 description: "Uploads, processes, queries, and searches Genomics data in the cloud."
 logo: "googleapis.com-genomics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-genomics-stubs.json"
+swagger: "googleapis.com-genomics-swagger.json"
 ---

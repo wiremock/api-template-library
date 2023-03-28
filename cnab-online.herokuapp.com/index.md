@@ -1,11 +1,12 @@
 ---
 slug: "cnab-online-herokuapp-com"
-name: "Cnab Online"
+title: "Cnab Online"
 provider: "cnab-online.herokuapp.com"
 description: "Processe arquivos de retorno CNAB"
 logo: "cnab-online.herokuapp.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "cnab-online.herokuapp.com-stubs.json"
+swagger: "cnab-online.herokuapp.com-swagger.json"
 ---

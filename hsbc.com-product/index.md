@@ -1,11 +1,12 @@
 ---
 slug: "hsbc-com-product"
-name: "Product Finder API"
+title: "Product Finder API"
 provider: "hsbc.com"
 description: null
 logo: "hsbc.com-product-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "hsbc.com-product-stubs.json"
+swagger: "hsbc.com-product-swagger.json"
 ---

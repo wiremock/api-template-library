@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-discovery"
-name: "AWS Application Discovery Service"
+title: "AWS Application Discovery Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Web Services Application Discovery Service</fullname>\
   \ <p>Amazon Web Services Application Discovery Service helps you plan application\
@@ -60,6 +60,7 @@ description: "<fullname>Amazon Web Services Application Discovery Service</fulln
 logo: "amazonaws.com-discovery-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-discovery-stubs.json"
+swagger: "amazonaws.com-discovery-swagger.json"
 ---

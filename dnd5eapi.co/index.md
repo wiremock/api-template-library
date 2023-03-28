@@ -1,6 +1,6 @@
 ---
 slug: "dnd5eapi-co"
-name: "D&D 5e API"
+title: "D&D 5e API"
 provider: "dnd5eapi.co"
 description: "# Introduction\n\nWelcome to the dnd5eapi, the Dungeons & Dragons 5th\
   \ Edition API!\nThis documentation should help you familiarize yourself with the\
@@ -127,6 +127,7 @@ description: "# Introduction\n\nWelcome to the dnd5eapi, the Dungeons & Dragons 
 logo: "dnd5eapi.co-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "dnd5eapi.co-stubs.json"
+swagger: "dnd5eapi.co-swagger.json"
 ---

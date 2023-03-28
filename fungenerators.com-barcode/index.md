@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-barcode"
-name: "Barcode API"
+title: "Barcode API"
 provider: "fungenerators.com"
 description: "Generate Barcode images for a given barcode number. You can decode Barcode\
   \ images and get the barcodes in a numberic form as well. Many industry standard\
@@ -9,6 +9,7 @@ description: "Generate Barcode images for a given barcode number. You can decode
 logo: "fungenerators.com-barcode-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-barcode-stubs.json"
+swagger: "fungenerators.com-barcode-swagger.json"
 ---

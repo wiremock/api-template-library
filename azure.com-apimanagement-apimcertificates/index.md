@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimcertificates"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Certificate entity\
   \ in your Azure API Management deployment. Certificates can be used to setup mutual\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on Certificate entit
 logo: "azure.com-apimanagement-apimcertificates-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimcertificates-stubs.json"
+swagger: "azure.com-apimanagement-apimcertificates-swagger.json"
 ---

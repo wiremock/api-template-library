@@ -1,11 +1,12 @@
 ---
 slug: "tsapi-net"
-name: "TSAPI"
+title: "TSAPI"
 provider: "tsapi.net"
 description: null
 logo: "tsapi.net-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
+- "analytics"
 stubs: "tsapi.net-stubs.json"
+swagger: "tsapi.net-swagger.json"
 ---

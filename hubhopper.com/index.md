@@ -1,6 +1,6 @@
 ---
 slug: "hubhopper-com"
-name: "Hubhopper Partner Integration API(s) - Production"
+title: "Hubhopper Partner Integration API(s) - Production"
 provider: "hubhopper.com"
 description: "This is an interactive document explaining the API(s) that could be\
   \ used to fetch data from [Hubhopper](https://hubhopper.com). Use the api key provided\
@@ -9,6 +9,7 @@ description: "This is an interactive document explaining the API(s) that could b
 logo: "hubhopper.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "hubhopper.com-stubs.json"
+swagger: "hubhopper.com-swagger.json"
 ---

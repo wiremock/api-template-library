@@ -1,6 +1,6 @@
 ---
 slug: "circleci-com"
-name: "CircleCI REST API"
+title: "CircleCI REST API"
 provider: "circleci.com"
 description: "The CircleCI API is a RESTful, fully-featured API that allows you to\
   \ do almost anything in CircleCI.\nYou can access all information and trigger all\
@@ -9,6 +9,7 @@ description: "The CircleCI API is a RESTful, fully-featured API that allows you 
 logo: "circleci.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "circleci.com-stubs.json"
+swagger: "circleci.com-swagger.json"
 ---

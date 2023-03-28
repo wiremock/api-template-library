@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-mriu"
-name: "Manav Rachna International Institute of Research & Studies"
+title: "Manav Rachna International Institute of Research & Studies"
 provider: "apisetu.gov.in"
 description: "Manav Rachna International Institute of Research & Studies, Faridabad\
   \ (http://manavrachna.edu.in) is issuing Degree certificates through DigiLocker.\
@@ -10,6 +10,7 @@ description: "Manav Rachna International Institute of Research & Studies, Farida
 logo: "apisetu.gov.in-mriu-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-mriu-stubs.json"
+swagger: "apisetu.gov.in-mriu-swagger.json"
 ---

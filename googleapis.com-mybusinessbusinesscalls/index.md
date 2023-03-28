@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-mybusinessbusinesscalls"
-name: "My Business Business Calls API"
+title: "My Business Business Calls API"
 provider: "googleapis.com"
 description: "The My Business Business Calls API manages business calls information\
   \ of a location on Google and collect insights like the number of missed calls to\
@@ -16,7 +16,8 @@ description: "The My Business Business Calls API manages business calls informat
 logo: "googleapis.com-mybusinessbusinesscalls-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-mybusinessbusinesscalls-stubs.json"
+swagger: "googleapis.com-mybusinessbusinesscalls-swagger.json"
 ---

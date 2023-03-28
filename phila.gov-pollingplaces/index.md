@@ -1,6 +1,6 @@
 ---
 slug: "phila-gov-pollingplaces"
-name: "Polling Places API"
+title: "Polling Places API"
 provider: "phila.gov"
 description: "\nThis data set contains the list of polling places. It can be organized\
   \ by ward/division, accessibility rating, or type of building.\n\nThis list is used\
@@ -9,6 +9,7 @@ description: "\nThis data set contains the list of polling places. It can be org
 logo: "phila.gov-pollingplaces-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "phila.gov-pollingplaces-stubs.json"
+swagger: "phila.gov-pollingplaces-swagger.json"
 ---

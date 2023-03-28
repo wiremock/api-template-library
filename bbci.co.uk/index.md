@@ -1,11 +1,12 @@
 ---
 slug: "bbci-co-uk"
-name: "BBC iPlayer Business Layer"
+title: "BBC iPlayer Business Layer"
 provider: "bbci.co.uk"
 description: "The definitive iPlayer API."
 logo: "bbci.co.uk-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "bbci.co.uk-stubs.json"
+swagger: "bbci.co.uk-swagger.json"
 ---

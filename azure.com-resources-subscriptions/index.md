@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-resources-subscriptions"
-name: "SubscriptionClient"
+title: "SubscriptionClient"
 provider: "azure.com"
 description: "All resource groups and resources exist within subscriptions. These\
   \ operation enable you get information about your subscriptions and tenants. A tenant\
@@ -8,6 +8,7 @@ description: "All resource groups and resources exist within subscriptions. Thes
 logo: "azure.com-resources-subscriptions-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-resources-subscriptions-stubs.json"
+swagger: "azure.com-resources-subscriptions-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-visualstudio-Csm"
-name: "Visual Studio Resource Provider Client"
+title: "Visual Studio Resource Provider Client"
 provider: "azure.com"
 description: "Use these APIs to manage Visual Studio Team Services resources through\
   \ the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol\
@@ -10,6 +10,7 @@ description: "Use these APIs to manage Visual Studio Team Services resources thr
 logo: "azure.com-visualstudio-Csm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-visualstudio-Csm-stubs.json"
+swagger: "azure.com-visualstudio-Csm-swagger.json"
 ---

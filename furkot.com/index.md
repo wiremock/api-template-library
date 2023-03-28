@@ -1,6 +1,6 @@
 ---
 slug: "furkot-com"
-name: "Furkot Trips"
+title: "Furkot Trips"
 provider: "furkot.com"
 description: "Furkot provides Rest API to access user trip data.\nUsing Furkot API\
   \ an application can list user trips and display stops for a specific trip.\nFurkot\
@@ -9,6 +9,7 @@ description: "Furkot provides Rest API to access user trip data.\nUsing Furkot A
 logo: "furkot.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "furkot.com-stubs.json"
+swagger: "furkot.com-swagger.json"
 ---

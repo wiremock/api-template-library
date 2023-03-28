@@ -1,6 +1,6 @@
 ---
 slug: "corrently-io"
-name: "Corrently.io"
+title: "Corrently.io"
 provider: "corrently.io"
 description: "*Corrently - from italian corrente, which is energy*\n# Introduction\n\
   The Corrently ecosystem gets maintained by [STROMDAO GmbH](https://www.stromdao.de/)\
@@ -12,6 +12,7 @@ description: "*Corrently - from italian corrente, which is energy*\n# Introducti
 logo: "corrently.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "corrently.io-stubs.json"
+swagger: "corrently.io-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "formapi-io"
-name: "API v1"
+title: "API v1"
 provider: "formapi.io"
 description: "DocSpring is a service that helps you fill out and sign PDF templates."
 logo: "formapi.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "text"
+- "text"
 stubs: "formapi.io-stubs.json"
+swagger: "formapi.io-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotthingsgraph"
-name: "AWS IoT Things Graph"
+title: "AWS IoT Things Graph"
 provider: "amazonaws.com"
 description: "<fullname>AWS IoT Things Graph</fullname> <p>AWS IoT Things Graph provides\
   \ an integrated set of tools that enable developers to connect devices and services\
@@ -13,6 +13,7 @@ description: "<fullname>AWS IoT Things Graph</fullname> <p>AWS IoT Things Graph 
 logo: "amazonaws.com-iotthingsgraph-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotthingsgraph-stubs.json"
+swagger: "amazonaws.com-iotthingsgraph-swagger.json"
 ---

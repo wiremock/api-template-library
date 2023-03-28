@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-resourcesettings"
-name: "Resource Settings API"
+title: "Resource Settings API"
 provider: "googleapis.com"
 description: "The Resource Settings API allows users to control and modify the behavior\
   \ of their GCP resources (e.g., VM, firewall, Project, etc.) across the Cloud Resource\
@@ -8,7 +8,8 @@ description: "The Resource Settings API allows users to control and modify the b
 logo: "googleapis.com-resourcesettings-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-resourcesettings-stubs.json"
+swagger: "googleapis.com-resourcesettings-swagger.json"
 ---

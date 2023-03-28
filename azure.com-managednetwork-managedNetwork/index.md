@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-managednetwork-managedNetwork"
-name: "ManagedNetworkManagementClient"
+title: "ManagedNetworkManagementClient"
 provider: "azure.com"
 description: "The Microsoft Azure Managed Network management API provides a RESTful\
   \ set of web services that interact with Microsoft Azure Networks service to programmatically\
@@ -9,6 +9,7 @@ description: "The Microsoft Azure Managed Network management API provides a REST
 logo: "azure.com-managednetwork-managedNetwork-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-managednetwork-managedNetwork-stubs.json"
+swagger: "azure.com-managednetwork-managedNetwork-swagger.json"
 ---

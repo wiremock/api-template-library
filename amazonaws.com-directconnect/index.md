@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-directconnect"
-name: "AWS Direct Connect"
+title: "AWS Direct Connect"
 provider: "amazonaws.com"
 description: "Direct Connect links your internal network to an Direct Connect location\
   \ over a standard Ethernet fiber-optic cable. One end of the cable is connected\
@@ -14,6 +14,7 @@ description: "Direct Connect links your internal network to an Direct Connect lo
 logo: "amazonaws.com-directconnect-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-directconnect-stubs.json"
+swagger: "amazonaws.com-directconnect-swagger.json"
 ---

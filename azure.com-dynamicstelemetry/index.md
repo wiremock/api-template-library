@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-dynamicstelemetry"
-name: "Dynamics Telemetry"
+title: "Dynamics Telemetry"
 provider: "azure.com"
 description: null
 logo: "azure.com-dynamicstelemetry-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-dynamicstelemetry-stubs.json"
+swagger: "azure.com-dynamicstelemetry-swagger.json"
 ---

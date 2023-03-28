@@ -1,6 +1,6 @@
 ---
 slug: "o2-cz-sociodemo"
-name: "Socio-demo API"
+title: "Socio-demo API"
 provider: "o2.cz"
 description: "Socio-demo API can be used to obtain time-aggregated data representing\
   \ groups of people on the given location in the Czech Republic. Having a location,\
@@ -10,6 +10,7 @@ description: "Socio-demo API can be used to obtain time-aggregated data represen
 logo: "o2.cz-sociodemo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "telecom"
+- "telecom"
 stubs: "o2.cz-sociodemo-stubs.json"
+swagger: "o2.cz-sociodemo-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-dynamodb"
-name: "Amazon DynamoDB"
+title: "Amazon DynamoDB"
 provider: "amazonaws.com"
 description: "<fullname>Amazon DynamoDB</fullname> <p>Amazon DynamoDB is a fully managed\
   \ NoSQL database service that provides fast and predictable performance with seamless\
@@ -20,6 +20,7 @@ description: "<fullname>Amazon DynamoDB</fullname> <p>Amazon DynamoDB is a fully
 logo: "amazonaws.com-dynamodb-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-dynamodb-stubs.json"
+swagger: "amazonaws.com-dynamodb-swagger.json"
 ---

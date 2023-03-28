@@ -1,6 +1,6 @@
 ---
 slug: "billingo-hu"
-name: "Billingo API v3"
+title: "Billingo API v3"
 provider: "billingo.hu"
 description: "This is a Billingo API v3 documentation. Our API based on REST software\
   \ architectural style. API has resource-oriented URLs, accepts JSON-encoded request\
@@ -10,6 +10,7 @@ description: "This is a Billingo API v3 documentation. Our API based on REST sof
 logo: "billingo.hu-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "billingo.hu-stubs.json"
+swagger: "billingo.hu-swagger.json"
 ---

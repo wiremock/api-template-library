@@ -1,6 +1,6 @@
 ---
 slug: "victorops-com"
-name: "VictorOps"
+title: "VictorOps"
 provider: "victorops.com"
 description: "This API allows you to interact with the VictorOps platform in various\
   \ ways. Your account may be limited\nto a total number of API calls per month. Also,\
@@ -12,6 +12,7 @@ description: "This API allows you to interact with the VictorOps platform in var
 logo: "victorops.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "victorops.com-stubs.json"
+swagger: "victorops.com-swagger.json"
 ---

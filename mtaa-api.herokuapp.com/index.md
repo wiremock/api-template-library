@@ -1,6 +1,6 @@
 ---
 slug: "mtaa-api-herokuapp-com"
-name: "Mtaa API Documentation"
+title: "Mtaa API Documentation"
 provider: "mtaa-api.herokuapp.com"
 description: "Mtaa A simple REST API to access Tanzania's location information,With\
   \ mtaa API you can easily query and integrate all the location in tanzania from\
@@ -8,7 +8,8 @@ description: "Mtaa A simple REST API to access Tanzania's location information,W
 logo: "mtaa-api.herokuapp.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
-- name: "location"
+- "open_data"
+- "location"
 stubs: "mtaa-api.herokuapp.com-stubs.json"
+swagger: "mtaa-api.herokuapp.com-swagger.json"
 ---

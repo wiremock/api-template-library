@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Policies-System-API"
-name: "Policies System API"
+title: "Policies System API"
 provider: "vtex.local"
 description: "\r\n This API will create promotion alarms when selling products with\
   \ undesired prices and promotions. It will create conditions that will check if\
@@ -16,4 +16,5 @@ logo: "vtex.local-Policies-System-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Policies-System-API-stubs.json"
+swagger: "vtex.local-Policies-System-API-swagger.json"
 ---

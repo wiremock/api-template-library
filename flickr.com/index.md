@@ -1,11 +1,12 @@
 ---
 slug: "flickr-com"
-name: "Flickr API Schema"
+title: "Flickr API Schema"
 provider: "flickr.com"
 description: "A subset of Flickr's API defined in Swagger format."
 logo: "flickr.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "flickr.com-stubs.json"
+swagger: "flickr.com-swagger.json"
 ---

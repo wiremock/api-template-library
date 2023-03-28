@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-datafusion"
-name: "Cloud Data Fusion API"
+title: "Cloud Data Fusion API"
 provider: "googleapis.com"
 description: "Cloud Data Fusion is a fully-managed, cloud native, enterprise data\
   \ integration service for quickly building and managing data pipelines. It provides\
@@ -11,7 +11,8 @@ description: "Cloud Data Fusion is a fully-managed, cloud native, enterprise dat
 logo: "googleapis.com-datafusion-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-datafusion-stubs.json"
+swagger: "googleapis.com-datafusion-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-rcra"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Resource Conservation\
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Resource Conservation\
   \ and Recovery Act "
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
@@ -32,6 +32,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-rcra-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-rcra-stubs.json"
+swagger: "epa.gov-rcra-swagger.json"
 ---

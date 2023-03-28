@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-echo"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - All Data"
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - All Data"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
   \ and maintained by EPA's Office of Enforcement and Compliance Assurance for public\
@@ -33,6 +33,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-echo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-echo-stubs.json"
+swagger: "epa.gov-echo-swagger.json"
 ---

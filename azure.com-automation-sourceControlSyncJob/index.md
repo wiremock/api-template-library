@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-automation-sourceControlSyncJob"
-name: "AutomationManagement"
+title: "AutomationManagement"
 provider: "azure.com"
 description: null
 logo: "azure.com-automation-sourceControlSyncJob-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-automation-sourceControlSyncJob-stubs.json"
+swagger: "azure.com-automation-sourceControlSyncJob-swagger.json"
 ---

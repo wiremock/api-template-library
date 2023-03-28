@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-textract"
-name: "Amazon Textract"
+title: "Amazon Textract"
 provider: "amazonaws.com"
 description: "Amazon Textract detects and analyzes text in documents and converts\
   \ it into machine-readable text. This is the API reference documentation for Amazon\
@@ -8,6 +8,7 @@ description: "Amazon Textract detects and analyzes text in documents and convert
 logo: "amazonaws.com-textract-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-textract-stubs.json"
+swagger: "amazonaws.com-textract-swagger.json"
 ---

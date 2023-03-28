@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-sts"
-name: "AWS Security Token Service"
+title: "AWS Security Token Service"
 provider: "amazonaws.com"
 description: "<fullname>Security Token Service</fullname> <p>Security Token Service\
   \ (STS) enables you to request temporary, limited-privilege credentials for Identity\
@@ -11,6 +11,7 @@ description: "<fullname>Security Token Service</fullname> <p>Security Token Serv
 logo: "amazonaws.com-sts-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-sts-stubs.json"
+swagger: "amazonaws.com-sts-swagger.json"
 ---

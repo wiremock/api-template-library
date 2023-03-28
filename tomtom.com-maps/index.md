@@ -1,6 +1,6 @@
 ---
 slug: "tomtom-com-maps"
-name: "Maps"
+title: "Maps"
 provider: "tomtom.com"
 description: "The Maps API web services suite offers the following APIs:\n  - Raster\n\
   \  The Maps Raster API renders map data that is divided into gridded sections called\
@@ -19,6 +19,7 @@ description: "The Maps API web services suite offers the following APIs:\n  - Ra
 logo: "tomtom.com-maps-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "tomtom.com-maps-stubs.json"
+swagger: "tomtom.com-maps-swagger.json"
 ---

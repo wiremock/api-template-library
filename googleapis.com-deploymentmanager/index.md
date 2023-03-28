@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-deploymentmanager"
-name: "Cloud Deployment Manager V2 API"
+title: "Cloud Deployment Manager V2 API"
 provider: "googleapis.com"
 description: "The Google Cloud Deployment Manager v2 API provides services for configuring,\
   \ deploying, and viewing Google Cloud services and APIs via templates which specify\
@@ -8,7 +8,8 @@ description: "The Google Cloud Deployment Manager v2 API provides services for c
 logo: "googleapis.com-deploymentmanager-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-deploymentmanager-stubs.json"
+swagger: "googleapis.com-deploymentmanager-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "ote-godaddy-com-abuse"
-name: "abuse"
+title: "abuse"
 provider: "ote-godaddy.com"
 description: "<strong>GoDaddy Abuse API Terms of Use:</strong><p>GoDaddy’s Abuse API\
   \ is provided to simplify and standardize the abuse reporting experience. To help\
@@ -43,6 +43,7 @@ description: "<strong>GoDaddy Abuse API Terms of Use:</strong><p>GoDaddy’s Abu
 logo: "ote-godaddy.com-abuse-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "ote-godaddy.com-abuse-stubs.json"
+swagger: "ote-godaddy.com-abuse-swagger.json"
 ---

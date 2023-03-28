@@ -1,6 +1,6 @@
 ---
 slug: "text2data-org"
-name: "Text Analytics & Sentiment Analysis API | api.text2data.com"
+title: "Text Analytics & Sentiment Analysis API | api.text2data.com"
 provider: "text2data.org"
 description: "<p>The current api version is <b>v3.4</b></p><br><br><p>The api methods\
   \ listed below can be called directly from this page to test the output. You might\
@@ -11,6 +11,7 @@ description: "<p>The current api version is <b>v3.4</b></p><br><br><p>The api me
 logo: "text2data.org-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "text2data.org-stubs.json"
+swagger: "text2data.org-swagger.json"
 ---

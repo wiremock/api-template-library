@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cognito-idp"
-name: "Amazon Cognito Identity Provider"
+title: "Amazon Cognito Identity Provider"
 provider: "amazonaws.com"
 description: "<p>Using the Amazon Cognito user pools API, you can create a user pool\
   \ to manage directories and users. You can authenticate a user to obtain tokens\
@@ -11,6 +11,7 @@ description: "<p>Using the Amazon Cognito user pools API, you can create a user 
 logo: "amazonaws.com-cognito-idp-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cognito-idp-stubs.json"
+swagger: "amazonaws.com-cognito-idp-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-clouddirectory"
-name: "Amazon CloudDirectory"
+title: "Amazon CloudDirectory"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Cloud Directory</fullname> <p>Amazon Cloud Directory\
   \ is a component of the AWS Directory Service that simplifies the development and\
@@ -13,6 +13,7 @@ description: "<fullname>Amazon Cloud Directory</fullname> <p>Amazon Cloud Direct
 logo: "amazonaws.com-clouddirectory-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-clouddirectory-stubs.json"
+swagger: "amazonaws.com-clouddirectory-swagger.json"
 ---

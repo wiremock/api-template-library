@@ -1,6 +1,6 @@
 ---
 slug: "languagetool-org"
-name: "LanguageTool API"
+title: "LanguageTool API"
 provider: "languagetool.org"
 description: "Check texts for style and grammar issues with <a href='https://languagetool.org'>LanguageTool</a>.\
   \ Please consider the following default limitations:<ul><li>your daily request limit\
@@ -15,6 +15,7 @@ description: "Check texts for style and grammar issues with <a href='https://lan
 logo: "languagetool.org-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "text"
+- "text"
 stubs: "languagetool.org-stubs.json"
+swagger: "languagetool.org-swagger.json"
 ---

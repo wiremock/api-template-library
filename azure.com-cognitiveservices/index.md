@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-cognitiveservices"
-name: "CognitiveServicesManagementClient"
+title: "CognitiveServicesManagementClient"
 provider: "azure.com"
 description: "Cognitive Services Management Client"
 logo: "azure.com-cognitiveservices-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-stubs.json"
+swagger: "azure.com-cognitiveservices-swagger.json"
 ---

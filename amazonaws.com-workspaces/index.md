@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-workspaces"
-name: "Amazon WorkSpaces"
+title: "Amazon WorkSpaces"
 provider: "amazonaws.com"
 description: "<fullname>Amazon WorkSpaces Service</fullname> <p>Amazon WorkSpaces\
   \ enables you to provision virtual, cloud-based Microsoft Windows or Amazon Linux\
@@ -25,6 +25,7 @@ description: "<fullname>Amazon WorkSpaces Service</fullname> <p>Amazon WorkSpace
 logo: "amazonaws.com-workspaces-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-workspaces-stubs.json"
+swagger: "amazonaws.com-workspaces-swagger.json"
 ---

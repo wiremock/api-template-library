@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-ComputerVision"
-name: "Computer Vision"
+title: "Computer Vision"
 provider: "azure.com"
 description: "The Computer Vision API provides state-of-the-art algorithms to process\
   \ images and return information. For example, it can be used to determine if an\
@@ -12,6 +12,7 @@ description: "The Computer Vision API provides state-of-the-art algorithms to pr
 logo: "azure.com-cognitiveservices-ComputerVision-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-ComputerVision-stubs.json"
+swagger: "azure.com-cognitiveservices-ComputerVision-swagger.json"
 ---

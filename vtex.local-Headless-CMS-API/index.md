@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Headless-CMS-API"
-name: "VTEX Headless CMS"
+title: "VTEX Headless CMS"
 provider: "vtex.local"
 description: "\nThe VTEX Headless CMS is a no-code management system for storefront\
   \ content. \nThat means you can store your content as structured data in a layer\
@@ -15,4 +15,5 @@ logo: "vtex.local-Headless-CMS-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Headless-CMS-API-stubs.json"
+swagger: "vtex.local-Headless-CMS-API-swagger.json"
 ---

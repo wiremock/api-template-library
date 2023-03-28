@@ -1,6 +1,6 @@
 ---
 slug: "quarantine-country"
-name: "Coronavirus API"
+title: "Coronavirus API"
 provider: "quarantine.country"
 description: "Coronavirus API with free COVID-19 live updates. The best free coronavirus\
   \ API and COVID-19 update source. Programmatically access live corona virus updates\
@@ -9,6 +9,7 @@ description: "Coronavirus API with free COVID-19 live updates. The best free cor
 logo: "quarantine.country-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "quarantine.country-stubs.json"
+swagger: "quarantine.country-swagger.json"
 ---

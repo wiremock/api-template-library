@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Logistics-API"
-name: "Logistics API"
+title: "Logistics API"
 provider: "vtex.local"
 description: "\r\n\r\n>Check the [Fulfillment onboarding guide](https://developers.vtex.com/docs/guides/fulfillment).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -13,4 +13,5 @@ logo: "vtex.local-Logistics-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Logistics-API-stubs.json"
+swagger: "vtex.local-Logistics-API-swagger.json"
 ---

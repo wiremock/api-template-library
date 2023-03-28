@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codecommit"
-name: "AWS CodeCommit"
+title: "AWS CodeCommit"
 provider: "amazonaws.com"
 description: "<fullname>AWS CodeCommit</fullname> <p>This is the <i>AWS CodeCommit\
   \ API Reference</i>. This reference provides descriptions of the operations and\
@@ -143,6 +143,7 @@ description: "<fullname>AWS CodeCommit</fullname> <p>This is the <i>AWS CodeComm
 logo: "amazonaws.com-codecommit-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codecommit-stubs.json"
+swagger: "amazonaws.com-codecommit-swagger.json"
 ---

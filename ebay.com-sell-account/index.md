@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-account"
-name: "Account API"
+title: "Account API"
 provider: "ebay.com"
 description: "The <b>Account API</b> gives sellers the ability to configure their\
   \ eBay seller accounts, including the seller's policies (eBay business policies\
@@ -11,6 +11,7 @@ description: "The <b>Account API</b> gives sellers the ability to configure thei
 logo: "ebay.com-sell-account-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-account-stubs.json"
+swagger: "ebay.com-sell-account-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codeguru-reviewer"
-name: "Amazon CodeGuru Reviewer"
+title: "Amazon CodeGuru Reviewer"
 provider: "amazonaws.com"
 description: "<p>This section provides documentation for the Amazon CodeGuru Reviewer\
   \ API operations. CodeGuru Reviewer is a service that uses program analysis and\
@@ -19,6 +19,7 @@ description: "<p>This section provides documentation for the Amazon CodeGuru Rev
 logo: "amazonaws.com-codeguru-reviewer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codeguru-reviewer-stubs.json"
+swagger: "amazonaws.com-codeguru-reviewer-swagger.json"
 ---

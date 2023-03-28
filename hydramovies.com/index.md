@@ -1,6 +1,6 @@
 ---
 slug: "hydramovies-com"
-name: "Hydra Movies"
+title: "Hydra Movies"
 provider: "hydramovies.com"
 description: "Hydra Movies is a streaming service that holds information on thousands\
   \ of popular movies. \n\nThe Hydra Movies API gives you access to [their entire\
@@ -11,6 +11,7 @@ description: "Hydra Movies is a streaming service that holds information on thou
 logo: "hydramovies.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "hydramovies.com-stubs.json"
+swagger: "hydramovies.com-swagger.json"
 ---

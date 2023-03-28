@@ -1,6 +1,6 @@
 ---
 slug: "getpostman-com"
-name: "Postman API"
+title: "Postman API"
 provider: "getpostman.com"
 description: "The Postman API allows you to programmatically access data stored in\
   \ Postman account with ease.\n\nThe easiest way to get started with the API is to\
@@ -67,6 +67,7 @@ description: "The Postman API allows you to programmatically access data stored 
 logo: "getpostman.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "getpostman.com-stubs.json"
+swagger: "getpostman.com-swagger.json"
 ---

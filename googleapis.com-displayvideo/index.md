@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-displayvideo"
-name: "Display & Video 360 API"
+title: "Display & Video 360 API"
 provider: "googleapis.com"
 description: "Display & Video 360 API allows users to automate complex Display & Video\
   \ 360 workflows, such as creating insertion orders and setting targeting options\
@@ -8,7 +8,8 @@ description: "Display & Video 360 API allows users to automate complex Display &
 logo: "googleapis.com-displayvideo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-displayvideo-stubs.json"
+swagger: "googleapis.com-displayvideo-swagger.json"
 ---

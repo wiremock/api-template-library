@@ -1,6 +1,6 @@
 ---
 slug: "nasa-gov-apod"
-name: "APOD"
+title: "APOD"
 provider: "nasa.gov"
 description: "This endpoint structures the APOD imagery and associated metadata so\
   \ that it can be repurposed for other applications. In addition, if the concept_tags\
@@ -10,7 +10,8 @@ description: "This endpoint structures the APOD imagery and associated metadata 
 logo: "nasa.gov-apod-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nasa.gov-apod-stubs.json"
+swagger: "nasa.gov-apod-swagger.json"
 ---

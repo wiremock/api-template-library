@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-mysql"
-name: "MySQLManagementClient"
+title: "MySQLManagementClient"
 provider: "azure.com"
 description: "The Microsoft Azure management API provides create, read, update, and\
   \ delete functionality for Azure MySQL resources including servers, databases, firewall\
@@ -8,6 +8,7 @@ description: "The Microsoft Azure management API provides create, read, update, 
 logo: "azure.com-mysql-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-mysql-stubs.json"
+swagger: "azure.com-mysql-swagger.json"
 ---

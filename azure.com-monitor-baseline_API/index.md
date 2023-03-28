@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-monitor-baseline_API"
-name: "MonitorManagementClient"
+title: "MonitorManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-monitor-baseline_API-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-monitor-baseline_API-stubs.json"
+swagger: "azure.com-monitor-baseline_API-swagger.json"
 ---

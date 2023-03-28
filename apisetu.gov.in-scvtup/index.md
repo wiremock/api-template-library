@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-scvtup"
-name: "UP State Council of Vocational Training, Uttar Pradesh, Uttar Pradesh"
+title: "UP State Council of Vocational Training, Uttar Pradesh, Uttar Pradesh"
 provider: "apisetu.gov.in"
 description: "The State Council for Vocational Training (SCVT), Uttar Pradesh (http://www.vppup.in/)\
   \ provides semester and consolidated mark sheets as well as vocational certificates\
@@ -8,6 +8,7 @@ description: "The State Council for Vocational Training (SCVT), Uttar Pradesh (h
 logo: "apisetu.gov.in-scvtup-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-scvtup-stubs.json"
+swagger: "apisetu.gov.in-scvtup-swagger.json"
 ---

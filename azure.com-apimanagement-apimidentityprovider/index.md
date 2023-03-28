@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimidentityprovider"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Identity Provider entity\
   \ associated with your Azure API Management deployment. Setting up an external Identity\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on Identity Provider
 logo: "azure.com-apimanagement-apimidentityprovider-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimidentityprovider-stubs.json"
+swagger: "azure.com-apimanagement-apimidentityprovider-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "lgtm-com"
-name: "LGTM API specification"
+title: "LGTM API specification"
 provider: "lgtm.com"
 description: "The REST API for LGTM provides data so that you can customize how you\
   \ integrate LGTM analysis into your workflow. It includes the following resources:\n\
@@ -23,6 +23,7 @@ description: "The REST API for LGTM provides data so that you can customize how 
 logo: "lgtm.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "lgtm.com-stubs.json"
+swagger: "lgtm.com-swagger.json"
 ---

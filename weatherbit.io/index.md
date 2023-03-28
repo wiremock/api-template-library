@@ -1,6 +1,6 @@
 ---
 slug: "weatherbit-io"
-name: "Weatherbit - Interactive Swagger UI Documentation"
+title: "Weatherbit - Interactive Swagger UI Documentation"
 provider: "weatherbit.io"
 description: "This an interactive version of the documentation for the Weatherbit\
   \ API.  The base URL for the API is [http://api.weatherbit.io/v2.0/](http://api.weatherbit.io/v2.0/)\
@@ -12,6 +12,7 @@ description: "This an interactive version of the documentation for the Weatherbi
 logo: "weatherbit.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "weatherbit.io-stubs.json"
+swagger: "weatherbit.io-swagger.json"
 ---

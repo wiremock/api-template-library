@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-civicinfo"
-name: "Google Civic Information API"
+title: "Google Civic Information API"
 provider: "googleapis.com"
 description: "Provides polling places, early vote locations, contest data, election\
   \ officials, and government representatives for U.S. residential addresses."
 logo: "googleapis.com-civicinfo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-civicinfo-stubs.json"
+swagger: "googleapis.com-civicinfo-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "va-gov-confirmation"
-name: "Veteran Confirmation"
+title: "Veteran Confirmation"
 provider: "va.gov"
 description: "The Veteran Confirmation API allows you to confirm Veteran status for\
   \ a given person. This can be useful for offering Veterans discounts or other benefits.\n\
@@ -42,6 +42,7 @@ description: "The Veteran Confirmation API allows you to confirm Veteran status 
 logo: "va.gov-confirmation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "va.gov-confirmation-stubs.json"
+swagger: "va.gov-confirmation-swagger.json"
 ---

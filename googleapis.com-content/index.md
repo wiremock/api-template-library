@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-content"
-name: "Content API for Shopping"
+title: "Content API for Shopping"
 provider: "googleapis.com"
 description: "Manage your product listings and accounts for Google Shopping"
 logo: "googleapis.com-content-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-content-stubs.json"
+swagger: "googleapis.com-content-swagger.json"
 ---

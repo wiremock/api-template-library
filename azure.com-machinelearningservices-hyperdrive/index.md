@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-machinelearningservices-hyperdrive"
-name: "HyperDrive"
+title: "HyperDrive"
 provider: "azure.com"
 description: "HyperDrive REST API"
 logo: "azure.com-machinelearningservices-hyperdrive-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearningservices-hyperdrive-stubs.json"
+swagger: "azure.com-machinelearningservices-hyperdrive-swagger.json"
 ---

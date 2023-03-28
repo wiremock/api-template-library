@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-mq"
-name: "AmazonMQ"
+title: "AmazonMQ"
 provider: "amazonaws.com"
 description: "Amazon MQ is a managed message broker service for Apache ActiveMQ and\
   \ RabbitMQ that makes it easy to set up and operate message brokers in the cloud.\
@@ -9,6 +9,7 @@ description: "Amazon MQ is a managed message broker service for Apache ActiveMQ 
 logo: "amazonaws.com-mq-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-mq-stubs.json"
+swagger: "amazonaws.com-mq-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-vault"
-name: "Google Vault API"
+title: "Google Vault API"
 provider: "googleapis.com"
 description: "Retention and eDiscovery for Google Workspace. To work with Vault resources,\
   \ the account must have the [required Vault privileges](https://support.google.com/vault/answer/2799699)\
@@ -11,7 +11,8 @@ description: "Retention and eDiscovery for Google Workspace. To work with Vault 
 logo: "googleapis.com-vault-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-vault-stubs.json"
+swagger: "googleapis.com-vault-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-videointelligence"
-name: "Cloud Video Intelligence API"
+title: "Cloud Video Intelligence API"
 provider: "googleapis.com"
 description: "Detects objects, explicit content, and scene changes in videos. It also\
   \ specifies the region for annotation and transcribes speech to text. Supports both\
@@ -8,7 +8,8 @@ description: "Detects objects, explicit content, and scene changes in videos. It
 logo: "googleapis.com-videointelligence-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-videointelligence-stubs.json"
+swagger: "googleapis.com-videointelligence-swagger.json"
 ---

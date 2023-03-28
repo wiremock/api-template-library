@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-namegen"
-name: "Name Generation API"
+title: "Name Generation API"
 provider: "fungenerators.com"
 description: "Fungenerators name generation API generates random names relevant to\
   \ the given category. Lots of categories are supported with many variations supported.\
@@ -8,6 +8,7 @@ description: "Fungenerators name generation API generates random names relevant 
 logo: "fungenerators.com-namegen-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-namegen-stubs.json"
+swagger: "fungenerators.com-namegen-swagger.json"
 ---

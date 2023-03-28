@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-organizations"
-name: "AWS Organizations"
+title: "AWS Organizations"
 provider: "amazonaws.com"
 description: "<p>Organizations is a web service that enables you to consolidate your\
   \ multiple Amazon Web Services accounts into an <i>organization</i> and centrally\
@@ -45,6 +45,7 @@ description: "<p>Organizations is a web service that enables you to consolidate 
 logo: "amazonaws.com-organizations-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-organizations-stubs.json"
+swagger: "amazonaws.com-organizations-swagger.json"
 ---

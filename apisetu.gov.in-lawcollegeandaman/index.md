@@ -1,12 +1,13 @@
 ---
 slug: "apisetu-gov-in-lawcollegeandaman"
-name: "Andaman Law College, Andaman & Nicobar"
+title: "Andaman Law College, Andaman & Nicobar"
 provider: "apisetu.gov.in"
 description: "Transfer Certificate issued by Andaman Law College can be downloaded\
   \ in citizen's DigiLocker account."
 logo: "apisetu.gov.in-lawcollegeandaman-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-lawcollegeandaman-stubs.json"
+swagger: "apisetu.gov.in-lawcollegeandaman-swagger.json"
 ---

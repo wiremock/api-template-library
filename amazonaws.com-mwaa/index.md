@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-mwaa"
-name: "AmazonMWAA"
+title: "AmazonMWAA"
 provider: "amazonaws.com"
 description: "<p><fullname>Amazon Managed Workflows for Apache Airflow</fullname>\
   \ <p>This section contains the Amazon Managed Workflows for Apache Airflow (MWAA)\
@@ -28,6 +28,7 @@ description: "<p><fullname>Amazon Managed Workflows for Apache Airflow</fullname
 logo: "amazonaws.com-mwaa-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-mwaa-stubs.json"
+swagger: "amazonaws.com-mwaa-swagger.json"
 ---

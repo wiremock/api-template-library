@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-networkmanager"
-name: "AWS Network Manager"
+title: "AWS Network Manager"
 provider: "amazonaws.com"
 description: "Amazon Web Services enables you to centrally manage your Amazon Web\
   \ Services Cloud WAN core network and your Transit Gateway network across Amazon\
@@ -8,6 +8,7 @@ description: "Amazon Web Services enables you to centrally manage your Amazon We
 logo: "amazonaws.com-networkmanager-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-networkmanager-stubs.json"
+swagger: "amazonaws.com-networkmanager-swagger.json"
 ---

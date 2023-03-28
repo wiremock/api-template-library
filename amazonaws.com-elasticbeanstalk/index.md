@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-elasticbeanstalk"
-name: "AWS Elastic Beanstalk"
+title: "AWS Elastic Beanstalk"
 provider: "amazonaws.com"
 description: "<fullname>AWS Elastic Beanstalk</fullname> <p>AWS Elastic Beanstalk\
   \ makes it easy for you to create, deploy, and manage scalable, fault-tolerant applications\
@@ -18,6 +18,7 @@ description: "<fullname>AWS Elastic Beanstalk</fullname> <p>AWS Elastic Beanstal
 logo: "amazonaws.com-elasticbeanstalk-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-elasticbeanstalk-stubs.json"
+swagger: "amazonaws.com-elasticbeanstalk-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "parliament-uk-now"
-name: "Annunciator content API"
+title: "Annunciator content API"
 provider: "parliament.uk"
 description: "Get data from the annunciator system."
 logo: "parliament.uk-now-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "parliament.uk-now-stubs.json"
+swagger: "parliament.uk-now-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "facecheck-id"
-name: "Facial Recognition Reverse Image Face Search API"
+title: "Facial Recognition Reverse Image Face Search API"
 provider: "facecheck.id"
 description: "Let your users search the Internet by face! Integrate FaceCheck facial\
   \ search seamlessly with your app, website or software platform. \r\nFaceCheck's\
@@ -9,4 +9,5 @@ logo: "facecheck.id-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "facecheck.id-stubs.json"
+swagger: "facecheck.id-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-workloadmanager"
-name: "Workload Manager API"
+title: "Workload Manager API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-workloadmanager-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-workloadmanager-stubs.json"
+swagger: "googleapis.com-workloadmanager-swagger.json"
 ---

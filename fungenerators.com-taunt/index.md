@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-taunt"
-name: "Taunt as a service"
+title: "Taunt as a service"
 provider: "fungenerators.com"
 description: "Fungenerators taunt generation API generates random taunts / insults,\
   \  relevant to the given category. Many categories are supported and new ones are\
@@ -8,6 +8,7 @@ description: "Fungenerators taunt generation API generates random taunts / insul
 logo: "fungenerators.com-taunt-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-taunt-stubs.json"
+swagger: "fungenerators.com-taunt-swagger.json"
 ---

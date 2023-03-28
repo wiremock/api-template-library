@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-edgegateway"
-name: "DataBoxEdgeManagementClient"
+title: "DataBoxEdgeManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-edgegateway-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-edgegateway-stubs.json"
+swagger: "azure.com-edgegateway-swagger.json"
 ---

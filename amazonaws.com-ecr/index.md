@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ecr"
-name: "Amazon EC2 Container Registry"
+title: "Amazon EC2 Container Registry"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Elastic Container Registry</fullname> <p>Amazon Elastic\
   \ Container Registry (Amazon ECR) is a managed container image registry service.\
@@ -15,6 +15,7 @@ description: "<fullname>Amazon Elastic Container Registry</fullname> <p>Amazon E
 logo: "amazonaws.com-ecr-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ecr-stubs.json"
+swagger: "amazonaws.com-ecr-swagger.json"
 ---

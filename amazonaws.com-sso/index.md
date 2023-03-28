@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-sso"
-name: "AWS Single Sign-On"
+title: "AWS Single Sign-On"
 provider: "amazonaws.com"
 description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) Portal\
   \ is a web service that makes it easy for you to assign user access to IAM Identity\
@@ -21,6 +21,7 @@ description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) Porta
 logo: "amazonaws.com-sso-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-sso-stubs.json"
+swagger: "amazonaws.com-sso-swagger.json"
 ---

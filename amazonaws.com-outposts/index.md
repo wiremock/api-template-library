@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-outposts"
-name: "AWS Outposts"
+title: "AWS Outposts"
 provider: "amazonaws.com"
 description: "Amazon Web Services Outposts is a fully managed service that extends\
   \ Amazon Web Services infrastructure, APIs, and tools to customer premises. By providing\
@@ -11,6 +11,7 @@ description: "Amazon Web Services Outposts is a fully managed service that exten
 logo: "amazonaws.com-outposts-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-outposts-stubs.json"
+swagger: "amazonaws.com-outposts-swagger.json"
 ---

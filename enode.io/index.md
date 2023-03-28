@@ -1,6 +1,6 @@
 ---
 slug: "enode-io"
-name: "Enode API"
+title: "Enode API"
 provider: "enode.io"
 description: "Download [OpenAPI 3.0 Specification](/OpenAPI-Enode-v1.4.0.json)\n\n\
   Download [Postman Collection](/Postman-Enode-v1.4.0.json)\n\nThe Enode API is designed\
@@ -111,6 +111,7 @@ description: "Download [OpenAPI 3.0 Specification](/OpenAPI-Enode-v1.4.0.json)\n
 logo: "enode.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "enode.io-stubs.json"
+swagger: "enode.io-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-fulfillment"
-name: "Fulfillment API"
+title: "Fulfillment API"
 provider: "ebay.com"
 description: "Use the Fulfillment API to complete the process of packaging, addressing,\
   \ handling, and shipping each order on behalf of the seller, in accordance with\
@@ -8,6 +8,7 @@ description: "Use the Fulfillment API to complete the process of packaging, addr
 logo: "ebay.com-sell-fulfillment-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-fulfillment-stubs.json"
+swagger: "ebay.com-sell-fulfillment-swagger.json"
 ---

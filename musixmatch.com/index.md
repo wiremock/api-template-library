@@ -1,6 +1,6 @@
 ---
 slug: "musixmatch-com"
-name: "Musixmatch API"
+title: "Musixmatch API"
 provider: "musixmatch.com"
 description: "Musixmatch lyrics API is a robust service that permits you to search\
   \ and retrieve lyrics in the simplest possible way. It just works.\n\nInclude millions\
@@ -88,6 +88,7 @@ description: "Musixmatch lyrics API is a robust service that permits you to sear
 logo: "musixmatch.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "musixmatch.com-stubs.json"
+swagger: "musixmatch.com-swagger.json"
 ---

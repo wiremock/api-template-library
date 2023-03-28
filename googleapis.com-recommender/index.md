@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-recommender"
-name: "Recommender API"
+title: "Recommender API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-recommender-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-recommender-stubs.json"
+swagger: "googleapis.com-recommender-swagger.json"
 ---

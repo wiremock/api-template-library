@@ -1,11 +1,12 @@
 ---
 slug: "ote-godaddy-com-agreements"
-name: "agreements"
+title: "agreements"
 provider: "ote-godaddy.com"
 description: null
 logo: "ote-godaddy.com-agreements-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "ote-godaddy.com-agreements-stubs.json"
+swagger: "ote-godaddy.com-agreements-swagger.json"
 ---

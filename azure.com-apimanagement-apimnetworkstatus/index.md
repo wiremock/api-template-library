@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimnetworkstatus"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for getting the network connectivity status of your\
   \ Azure API Management deployment. When the API Management service is deployed inside\
@@ -10,6 +10,7 @@ description: "Use these REST APIs for getting the network connectivity status of
 logo: "azure.com-apimanagement-apimnetworkstatus-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimnetworkstatus-stubs.json"
+swagger: "azure.com-apimanagement-apimnetworkstatus-swagger.json"
 ---

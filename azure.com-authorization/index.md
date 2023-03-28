@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-authorization"
-name: "AuthorizationManagementClient"
+title: "AuthorizationManagementClient"
 provider: "azure.com"
 description: "Role based access control provides you a way to apply granular level\
   \ policy administration down to individual resources or resource groups. These operations\
@@ -10,6 +10,7 @@ description: "Role based access control provides you a way to apply granular lev
 logo: "azure.com-authorization-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-authorization-stubs.json"
+swagger: "azure.com-authorization-swagger.json"
 ---

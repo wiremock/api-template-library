@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-emr-containers"
-name: "Amazon EMR Containers"
+title: "Amazon EMR Containers"
 provider: "amazonaws.com"
 description: "<p>Amazon EMR on EKS provides a deployment option for Amazon EMR that\
   \ allows you to run open-source big data frameworks on Amazon Elastic Kubernetes\
@@ -22,6 +22,7 @@ description: "<p>Amazon EMR on EKS provides a deployment option for Amazon EMR t
 logo: "amazonaws.com-emr-containers-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-emr-containers-stubs.json"
+swagger: "amazonaws.com-emr-containers-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cognito-identity"
-name: "Amazon Cognito Identity"
+title: "Amazon Cognito Identity"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Cognito Federated Identities</fullname> <p>Amazon Cognito\
   \ Federated Identities is a web service that delivers scoped temporary credentials\
@@ -18,6 +18,7 @@ description: "<fullname>Amazon Cognito Federated Identities</fullname> <p>Amazon
 logo: "amazonaws.com-cognito-identity-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cognito-identity-stubs.json"
+swagger: "amazonaws.com-cognito-identity-swagger.json"
 ---

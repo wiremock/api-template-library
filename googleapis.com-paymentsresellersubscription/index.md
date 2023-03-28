@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-paymentsresellersubscription"
-name: "Payments Reseller Subscription API"
+title: "Payments Reseller Subscription API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-paymentsresellersubscription-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-paymentsresellersubscription-stubs.json"
+swagger: "googleapis.com-paymentsresellersubscription-swagger.json"
 ---

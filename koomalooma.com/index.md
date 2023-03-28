@@ -1,6 +1,6 @@
 ---
 slug: "koomalooma-com"
-name: "koomalooma Partner API"
+title: "koomalooma Partner API"
 provider: "koomalooma.com"
 description: "This is the koomalooma Partner API. koomalooma is the first Loyalty\
   \ BPaaS (Business Process as a Service) for mobile and web companies. With koomalooma\
@@ -12,6 +12,7 @@ description: "This is the koomalooma Partner API. koomalooma is the first Loyalt
 logo: "koomalooma.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "koomalooma.com-stubs.json"
+swagger: "koomalooma.com-swagger.json"
 ---

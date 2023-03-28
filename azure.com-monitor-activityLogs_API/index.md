@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-monitor-activityLogs_API"
-name: "MonitorManagementClient"
+title: "MonitorManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-monitor-activityLogs_API-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-monitor-activityLogs_API-stubs.json"
+swagger: "azure.com-monitor-activityLogs_API-swagger.json"
 ---

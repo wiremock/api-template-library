@@ -1,11 +1,12 @@
 ---
 slug: "onsched-com-utility"
-name: "OnSched API Utility"
+title: "OnSched API Utility"
 provider: "onsched.com"
 description: "Endpoints for system utilities. e.g.Health"
 logo: "onsched.com-utility-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "onsched.com-utility-stubs.json"
+swagger: "onsched.com-utility-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-LoadBalancers"
-name: "NetworkAdminManagementClient"
+title: "NetworkAdminManagementClient"
 provider: "azure.com"
 description: "Load balancer admin operation endpoints and objects."
 logo: "azure.com-azsadmin-LoadBalancers-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-LoadBalancers-stubs.json"
+swagger: "azure.com-azsadmin-LoadBalancers-swagger.json"
 ---

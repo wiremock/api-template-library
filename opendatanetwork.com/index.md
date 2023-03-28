@@ -1,6 +1,6 @@
 ---
 slug: "opendatanetwork-com"
-name: "ODN API"
+title: "ODN API"
 provider: "opendatanetwork.com"
 description: "The Socrata OpenDataNetwork (ODN) REST API exposes public data, often\
   \ continuosly updated and enhanced, from many thousands of public\ngovernment and\
@@ -32,6 +32,7 @@ description: "The Socrata OpenDataNetwork (ODN) REST API exposes public data, of
 logo: "opendatanetwork.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "opendatanetwork.com-stubs.json"
+swagger: "opendatanetwork.com-swagger.json"
 ---

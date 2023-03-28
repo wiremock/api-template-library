@@ -1,6 +1,6 @@
 ---
 slug: "xtrf-eu"
-name: "XTRF Home Portal API"
+title: "XTRF Home Portal API"
 provider: "xtrf.eu"
 description: "XTRF Home Portal API enables you to perform operations on Projects,\
   \ Quotes, Customers, Vendors etc. as a XTRF Home Portal user. <br>The documentation\
@@ -17,4 +17,5 @@ logo: "xtrf.eu-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "xtrf.eu-stubs.json"
+swagger: "xtrf.eu-swagger.json"
 ---

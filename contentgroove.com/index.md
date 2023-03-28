@@ -1,6 +1,6 @@
 ---
 slug: "contentgroove-com"
-name: "ContentGroove API"
+title: "ContentGroove API"
 provider: "contentgroove.com"
 description: "# Overview\n\nThe ContentGroove Developer API enables you to add the\
   \ power of ContentGroove's video AI to your own applications and workflows.\n\n\
@@ -83,4 +83,5 @@ logo: "contentgroove.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "contentgroove.com-stubs.json"
+swagger: "contentgroove.com-swagger.json"
 ---

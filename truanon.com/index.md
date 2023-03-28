@@ -1,6 +1,6 @@
 ---
 slug: "truanon-com"
-name: "TruAnon Private API"
+title: "TruAnon Private API"
 provider: "truanon.com"
 description: "Welcome to TruAnon!\nThank you for helping make the Internet a safer\
   \ place to be.\n\nAdopting TruAnon is simple. There is no setup or dependencies,\
@@ -18,6 +18,7 @@ description: "Welcome to TruAnon!\nThank you for helping make the Internet a saf
 logo: "truanon.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "security"
+- "security"
 stubs: "truanon.com-stubs.json"
+swagger: "truanon.com-swagger.json"
 ---

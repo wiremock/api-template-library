@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-FileContainer"
-name: "DeploymentAdminClient"
+title: "DeploymentAdminClient"
 provider: "azure.com"
 description: "Deployment Admin Client."
 logo: "azure.com-azsadmin-FileContainer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-FileContainer-stubs.json"
+swagger: "azure.com-azsadmin-FileContainer-swagger.json"
 ---

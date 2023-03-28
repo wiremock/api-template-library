@@ -1,11 +1,12 @@
 ---
 slug: "apisetu-gov-in-apmcservices"
-name: "Department of Agricultural Marketing, Karnataka"
+title: "Department of Agricultural Marketing, Karnataka"
 provider: "apisetu.gov.in"
 description: "APIs provided by Department of Agricultural Marketing, Karnataka."
 logo: "apisetu.gov.in-apmcservices-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-apmcservices-stubs.json"
+swagger: "apisetu.gov.in-apmcservices-swagger.json"
 ---

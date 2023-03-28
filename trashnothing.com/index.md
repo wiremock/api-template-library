@@ -1,6 +1,6 @@
 ---
 slug: "trashnothing-com"
-name: "trash nothing"
+title: "trash nothing"
 provider: "trashnothing.com"
 description: "This is the REST API for [trashnothing.com](https://trashnothing.com).\n\
   \nTo learn more about the API or to register your app for use with the API\nvisit\
@@ -10,6 +10,7 @@ description: "This is the REST API for [trashnothing.com](https://trashnothing.c
 logo: "trashnothing.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "social"
+- "social"
 stubs: "trashnothing.com-stubs.json"
+swagger: "trashnothing.com-swagger.json"
 ---

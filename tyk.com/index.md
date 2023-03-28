@@ -1,11 +1,12 @@
 ---
 slug: "tyk-com"
-name: "Gateway REST API"
+title: "Gateway REST API"
 provider: "tyk.com"
 description: null
 logo: "tyk.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "enterprise"
+- "enterprise"
 stubs: "tyk.com-stubs.json"
+swagger: "tyk.com-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-hdinsight-job"
-name: "HDInsightJobManagementClient"
+title: "HDInsightJobManagementClient"
 provider: "azure.com"
 description: "The HDInsight Job Client."
 logo: "azure.com-hdinsight-job-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-hdinsight-job-stubs.json"
+swagger: "azure.com-hdinsight-job-swagger.json"
 ---

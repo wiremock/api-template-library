@@ -1,11 +1,12 @@
 ---
 slug: "letmc-com-customer"
-name: "agentOS Api V2, Customer Login Call Group"
+title: "agentOS Api V2, Customer Login Call Group"
 provider: "letmc.com"
 description: null
 logo: "letmc.com-customer-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "letmc.com-customer-stubs.json"
+swagger: "letmc.com-customer-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "openpolicy-local"
-name: "Open Policy Agent (OPA) REST API"
+title: "Open Policy Agent (OPA) REST API"
 provider: "openpolicy.local"
 description: "OPA provides policy-based control for cloud native environments. The\
   \ following *endpoints* (such as `PUT /v1/policies`) provide reference documentation\
@@ -10,6 +10,7 @@ description: "OPA provides policy-based control for cloud native environments. T
 logo: "openpolicy.local-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "openpolicy.local-stubs.json"
+swagger: "openpolicy.local-swagger.json"
 ---

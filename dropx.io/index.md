@@ -1,12 +1,13 @@
 ---
 slug: "dropx-io"
-name: "DropX"
+title: "DropX"
 provider: "dropx.io"
 description: "dropX.io API provides programmatic access to the e-commerce intelligence\
   \ data."
 logo: "dropx.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "dropx.io-stubs.json"
+swagger: "dropx.io-swagger.json"
 ---

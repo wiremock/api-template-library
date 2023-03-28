@@ -1,6 +1,6 @@
 ---
 slug: "optimade-local"
-name: "OPTIMADE API"
+title: "OPTIMADE API"
 provider: "optimade.local"
 description: "The [Open Databases Integration for Materials Design (OPTIMADE) consortium](https://www.optimade.org/)\
   \ aims to make materials databases interoperational by developing a common REST\
@@ -9,6 +9,7 @@ description: "The [Open Databases Integration for Materials Design (OPTIMADE) co
 logo: "optimade.local-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "optimade.local-stubs.json"
+swagger: "optimade.local-swagger.json"
 ---

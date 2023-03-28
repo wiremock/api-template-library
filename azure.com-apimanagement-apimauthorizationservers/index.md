@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimauthorizationservers"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for managing OAuth2 servers configuration in your\
   \ Azure API Management deployment. OAuth 2.0 can be used to authorize developer\
@@ -8,6 +8,7 @@ description: "Use these REST APIs for managing OAuth2 servers configuration in y
 logo: "azure.com-apimanagement-apimauthorizationservers-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimauthorizationservers-stubs.json"
+swagger: "azure.com-apimanagement-apimauthorizationservers-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-autoscaling"
-name: "Auto Scaling"
+title: "Auto Scaling"
 provider: "amazonaws.com"
 description: "<fullname>Amazon EC2 Auto Scaling</fullname> <p>Amazon EC2 Auto Scaling\
   \ is designed to automatically launch and terminate EC2 instances based on user-defined\
@@ -11,6 +11,7 @@ description: "<fullname>Amazon EC2 Auto Scaling</fullname> <p>Amazon EC2 Auto Sc
 logo: "amazonaws.com-autoscaling-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-autoscaling-stubs.json"
+swagger: "amazonaws.com-autoscaling-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "pdfblocks-com"
-name: "PDF Blocks API"
+title: "PDF Blocks API"
 provider: "pdfblocks.com"
 description: "PDF Blocks is a secure, reliable, and fast API to work with PDF documents.\
   \ Actions include: Merge PDF documents, add or remove passwords, add watermarks,\
@@ -8,6 +8,7 @@ description: "PDF Blocks is a secure, reliable, and fast API to work with PDF do
 logo: "pdfblocks.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "pdfblocks.com-stubs.json"
+swagger: "pdfblocks.com-swagger.json"
 ---

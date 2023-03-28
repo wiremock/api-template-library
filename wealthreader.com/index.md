@@ -1,6 +1,6 @@
 ---
 slug: "wealthreader-com"
-name: "Wealth Reader API"
+title: "Wealth Reader API"
 provider: "wealthreader.com"
 description: "Las APIs regulatorias basadas en PSD2 proporcionan acceso a cierta informació\
   n financiera como saldos de cuentas bancarias y transacciones. Sin embargo, hay\
@@ -15,4 +15,5 @@ logo: "wealthreader.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "wealthreader.com-stubs.json"
+swagger: "wealthreader.com-swagger.json"
 ---

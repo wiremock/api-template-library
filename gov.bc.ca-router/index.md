@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-router"
-name: "BC Route Planner REST API"
+title: "BC Route Planner REST API"
 provider: "gov.bc.ca"
 description: "Finds shortest/fastest route between a start point and one or more stop\
   \ points on British Columbia's public road network. The BC Route planner [webpage](https://www2.gov.bc.ca/gov/content?id=9D99E684CCD042CD88FADC51E079B4B5)\
@@ -22,6 +22,7 @@ description: "Finds shortest/fastest route between a start point and one or more
 logo: "gov.bc.ca-router-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-router-stubs.json"
+swagger: "gov.bc.ca-router-swagger.json"
 ---

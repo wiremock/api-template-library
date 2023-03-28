@@ -1,6 +1,6 @@
 ---
 slug: "nytimes-com-semantic_api"
-name: "Semantic API"
+title: "Semantic API"
 provider: "nytimes.com"
 description: "The Semantic API complements the Articles API. With the Semantic API,\
   \ you get access to the long list of people, places, organizations and other locations,\
@@ -17,7 +17,8 @@ description: "The Semantic API complements the Articles API. With the Semantic A
 logo: "nytimes.com-semantic_api-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-semantic_api-stubs.json"
+swagger: "nytimes.com-semantic_api-swagger.json"
 ---

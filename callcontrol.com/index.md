@@ -1,6 +1,6 @@
 ---
 slug: "callcontrol-com"
-name: "Call Control API"
+title: "Call Control API"
 provider: "callcontrol.com"
 description: "API for blocking phone calls with Call Control. Data is from crowdsourced\
   \ community blacklist from 12+ million users and government agencies (FTC, FCC,\
@@ -8,6 +8,7 @@ description: "API for blocking phone calls with Call Control. Data is from crowd
 logo: "callcontrol.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "telecom"
+- "telecom"
 stubs: "callcontrol.com-stubs.json"
+swagger: "callcontrol.com-swagger.json"
 ---

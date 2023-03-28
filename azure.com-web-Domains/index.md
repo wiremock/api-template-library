@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-Domains"
-name: "Domains API Client"
+title: "Domains API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-Domains-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-Domains-stubs.json"
+swagger: "azure.com-web-Domains-swagger.json"
 ---

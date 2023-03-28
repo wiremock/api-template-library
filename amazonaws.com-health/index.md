@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-health"
-name: "AWS Health APIs and Notifications"
+title: "AWS Health APIs and Notifications"
 provider: "amazonaws.com"
 description: "<fullname>Health</fullname> <p>The Health API provides programmatic\
   \ access to the Health information that appears in the <a href=\"https://phd.aws.amazon.com/phd/home#/\"\
@@ -39,6 +39,7 @@ description: "<fullname>Health</fullname> <p>The Health API provides programmati
 logo: "amazonaws.com-health-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-health-stubs.json"
+swagger: "amazonaws.com-health-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "hetzner-cloud"
-name: "Hetzner Cloud API"
+title: "Hetzner Cloud API"
 provider: "hetzner.cloud"
 description: "This is the official API documentation for the Public Hetzner Cloud.\n\
   \n## Introduction\n\nThe Hetzner Cloud API operates over HTTPS and uses JSON as\
@@ -186,6 +186,7 @@ description: "This is the official API documentation for the Public Hetzner Clou
 logo: "hetzner.cloud-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "hetzner.cloud-stubs.json"
+swagger: "hetzner.cloud-swagger.json"
 ---

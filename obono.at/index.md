@@ -1,6 +1,6 @@
 ---
 slug: "obono-at"
-name: "obono RKSV API"
+title: "obono RKSV API"
 provider: "obono.at"
 description: "Provides a RESTful API for interacting with virtual cash registers and\
   \ creating receipts that are conform with the Registrierkassensicherheitsverordnung\
@@ -9,6 +9,7 @@ description: "Provides a RESTful API for interacting with virtual cash registers
 logo: "obono.at-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "obono.at-stubs.json"
+swagger: "obono.at-swagger.json"
 ---

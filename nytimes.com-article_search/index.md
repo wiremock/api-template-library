@@ -1,6 +1,6 @@
 ---
 slug: "nytimes-com-article_search"
-name: "Article Search API"
+title: "Article Search API"
 provider: "nytimes.com"
 description: "With the Article Search API, you can search New York Times articles\
   \ from Sept. 18, 1851 to today, retrieving headlines, abstracts, lead paragraphs,\
@@ -11,7 +11,8 @@ description: "With the Article Search API, you can search New York Times article
 logo: "nytimes.com-article_search-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-article_search-stubs.json"
+swagger: "nytimes.com-article_search-swagger.json"
 ---

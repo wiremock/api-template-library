@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-frontdoor-webapplicationfirewall"
-name: "WebApplicationFirewallManagement"
+title: "WebApplicationFirewallManagement"
 provider: "azure.com"
 description: "APIs to manage web application firewall rules."
 logo: "azure.com-frontdoor-webapplicationfirewall-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-frontdoor-webapplicationfirewall-stubs.json"
+swagger: "azure.com-frontdoor-webapplicationfirewall-swagger.json"
 ---

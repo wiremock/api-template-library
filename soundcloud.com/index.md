@@ -1,11 +1,12 @@
 ---
 slug: "soundcloud-com"
-name: "SoundCloud Public API Specification"
+title: "SoundCloud Public API Specification"
 provider: "soundcloud.com"
 description: null
 logo: "soundcloud.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "soundcloud.com-stubs.json"
+swagger: "soundcloud.com-swagger.json"
 ---

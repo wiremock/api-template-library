@@ -1911,6 +1911,13 @@
             },
             "type" : "array"
           },
+          "providerConfigs" : {
+            "description" : "A list of usable second factors for this project along with their configurations. This field does not support phone based MFA, for that use the 'enabled_providers' field.",
+            "items" : {
+              "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitAdminV2ProviderConfig"
+            },
+            "type" : "array"
+          },
           "state" : {
             "description" : "Whether MultiFactor Authentication has been enabled for this project.",
             "enum" : [ "STATE_UNSPECIFIED", "DISABLED", "ENABLED", "MANDATORY" ],
@@ -2027,6 +2034,20 @@
             },
             "description" : "A map of that can be used for phone auth testing.",
             "type" : "object"
+          }
+        },
+        "type" : "object"
+      },
+      "GoogleCloudIdentitytoolkitAdminV2ProviderConfig" : {
+        "description" : "ProviderConfig describes the supported MFA providers along with their configurations.",
+        "properties" : {
+          "state" : {
+            "description" : "Describes the state of the MultiFactor Authentication type.",
+            "enum" : [ "MFA_STATE_UNSPECIFIED", "DISABLED", "ENABLED", "MANDATORY" ],
+            "type" : "string"
+          },
+          "totpProviderConfig" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig"
           }
         },
         "type" : "object"
@@ -2297,6 +2318,17 @@
         },
         "type" : "object"
       },
+      "GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig" : {
+        "description" : "TotpMFAProviderConfig represents the TOTP based MFA provider.",
+        "properties" : {
+          "adjacentIntervals" : {
+            "description" : "The allowed number of adjacent intervals that will be used for verification to avoid clock skew.",
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
       "GoogleCloudIdentitytoolkitAdminV2Trigger" : {
         "description" : "Synchronous Cloud Function with HTTP Trigger",
         "properties" : {
@@ -2339,6 +2371,9 @@
           "tenantId" : {
             "description" : "The ID of the Identity Platform tenant that the user enrolling MFA belongs to. If not set, the user belongs to the default Identity Platform project.",
             "type" : "string"
+          },
+          "totpVerificationInfo" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo"
           }
         },
         "type" : "object"
@@ -2356,6 +2391,9 @@
           "refreshToken" : {
             "description" : "Refresh token updated to reflect MFA enrollment.",
             "type" : "string"
+          },
+          "totpAuthInfo" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo"
           }
         },
         "type" : "object"
@@ -2404,6 +2442,10 @@
       "GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest" : {
         "description" : "Finalizes sign-in by verifying MFA challenge.",
         "properties" : {
+          "mfaEnrollmentId" : {
+            "description" : "The MFA enrollment ID from the user's list of current MFA enrollments.",
+            "type" : "string"
+          },
           "mfaPendingCredential" : {
             "description" : "Required. Pending credential from first factor sign-in.",
             "type" : "string"
@@ -2414,6 +2456,9 @@
           "tenantId" : {
             "description" : "The ID of the Identity Platform tenant the user is signing in to. If not set, the user will sign in to the default Identity Platform project.",
             "type" : "string"
+          },
+          "totpVerificationInfo" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo"
           }
         },
         "type" : "object"
@@ -2435,6 +2480,34 @@
         },
         "type" : "object"
       },
+      "GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo" : {
+        "description" : "Mfa request info specific to TOTP auth for FinalizeMfa.",
+        "properties" : {
+          "sessionInfo" : {
+            "description" : "An opaque string that represents the enrollment session.",
+            "type" : "string"
+          },
+          "verificationCode" : {
+            "description" : "User-entered verification code.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo" : {
+        "description" : "Mfa response info specific to TOTP auth for FinalizeMfa.",
+        "type" : "object"
+      },
+      "GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo" : {
+        "description" : "TOTP verification info for FinalizeMfaSignInRequest.",
+        "properties" : {
+          "verificationCode" : {
+            "description" : "User-entered verification code.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest" : {
         "description" : "Sends MFA enrollment verification SMS for a user.",
         "properties" : {
@@ -2448,6 +2521,9 @@
           "tenantId" : {
             "description" : "The ID of the Identity Platform tenant that the user enrolling MFA belongs to. If not set, the user belongs to the default Identity Platform project.",
             "type" : "string"
+          },
+          "totpEnrollmentInfo" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo"
           }
         },
         "type" : "object"
@@ -2457,6 +2533,9 @@
         "properties" : {
           "phoneSessionInfo" : {
             "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo"
+          },
+          "totpSessionInfo" : {
+            "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo"
           }
         },
         "type" : "object"
@@ -2530,6 +2609,43 @@
         "properties" : {
           "phoneResponseInfo" : {
             "$ref" : "#/components/schemas/GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo"
+          }
+        },
+        "type" : "object"
+      },
+      "GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo" : {
+        "description" : "Mfa request info specific to TOTP auth for StartMfa.",
+        "type" : "object"
+      },
+      "GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo" : {
+        "description" : "Mfa response info specific to TOTP auth for StartMfa.",
+        "properties" : {
+          "finalizeEnrollmentTime" : {
+            "description" : "The time by which the enrollment must finish.",
+            "format" : "google-datetime",
+            "type" : "string"
+          },
+          "hashingAlgorithm" : {
+            "description" : "The hashing algorithm used to generate the verification code.",
+            "type" : "string"
+          },
+          "periodSec" : {
+            "description" : "Duration in seconds at which the verification code will change.",
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "sessionInfo" : {
+            "description" : "An encoded string that represents the enrollment session.",
+            "type" : "string"
+          },
+          "sharedSecretKey" : {
+            "description" : "A base 32 encoded string that represents the shared TOTP secret. The base 32 encoding is the one specified by [RFC4648#section-6](https://datatracker.ietf.org/doc/html/rfc4648#section-6). (This is the same as the base 32 encoding from [RFC3548#section-5](https://datatracker.ietf.org/doc/html/rfc3548#section-5).)",
+            "type" : "string"
+          },
+          "verificationCodeLength" : {
+            "description" : "The length of the verification code that needs to be generated.",
+            "format" : "int32",
+            "type" : "integer"
           }
         },
         "type" : "object"

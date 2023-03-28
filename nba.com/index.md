@@ -1,12 +1,13 @@
 ---
 slug: "nba-com"
-name: "NBA Stats API"
+title: "NBA Stats API"
 provider: "nba.com"
 description: "The destination for current and historic NBA statistics."
 logo: "nba.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nba.com-stubs.json"
+swagger: "nba.com-swagger.json"
 ---

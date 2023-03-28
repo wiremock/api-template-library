@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-puekar"
-name: "Karnataka State Board (Department of Pre University Education), Karnataka"
+title: "Karnataka State Board (Department of Pre University Education), Karnataka"
 provider: "apisetu.gov.in"
 description: "Department of Pre University Education (http://pue.kar.nic.in) is providing\
   \ certificates of II PUC (Class XII) March, July 2018 and March 2019  Examination\
@@ -8,6 +8,7 @@ description: "Department of Pre University Education (http://pue.kar.nic.in) is 
 logo: "apisetu.gov.in-puekar-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-puekar-stubs.json"
+swagger: "apisetu.gov.in-puekar-swagger.json"
 ---

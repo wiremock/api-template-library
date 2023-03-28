@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-datapipeline"
-name: "AWS Data Pipeline"
+title: "AWS Data Pipeline"
 provider: "amazonaws.com"
 description: "<p>AWS Data Pipeline configures and manages a data-driven workflow called\
   \ a pipeline. AWS Data Pipeline handles the details of scheduling and ensuring that\
@@ -23,6 +23,7 @@ description: "<p>AWS Data Pipeline configures and manages a data-driven workflow
 logo: "amazonaws.com-datapipeline-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-datapipeline-stubs.json"
+swagger: "amazonaws.com-datapipeline-swagger.json"
 ---

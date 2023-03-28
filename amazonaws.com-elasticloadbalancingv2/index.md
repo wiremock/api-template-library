@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-elasticloadbalancingv2"
-name: "Elastic Load Balancing"
+title: "Elastic Load Balancing"
 provider: "amazonaws.com"
 description: "<fullname>Elastic Load Balancing</fullname> <p>A load balancer distributes\
   \ incoming traffic across targets, such as your EC2 instances. This enables you\
@@ -25,6 +25,7 @@ description: "<fullname>Elastic Load Balancing</fullname> <p>A load balancer dis
 logo: "amazonaws.com-elasticloadbalancingv2-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-elasticloadbalancingv2-stubs.json"
+swagger: "amazonaws.com-elasticloadbalancingv2-swagger.json"
 ---

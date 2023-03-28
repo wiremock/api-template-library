@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-ContentModerator"
-name: "Content Moderator Client"
+title: "Content Moderator Client"
 provider: "azure.com"
 description: "You use the API to scan your content as it is generated. Content Moderator\
   \ then processes your content and sends the results along with relevant information\
@@ -13,6 +13,7 @@ description: "You use the API to scan your content as it is generated. Content M
 logo: "azure.com-cognitiveservices-ContentModerator-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-ContentModerator-stubs.json"
+swagger: "azure.com-cognitiveservices-ContentModerator-swagger.json"
 ---

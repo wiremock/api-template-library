@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-kms"
-name: "AWS Key Management Service"
+title: "AWS Key Management Service"
 provider: "amazonaws.com"
 description: "<fullname>Key Management Service</fullname> <p>Key Management Service\
   \ (KMS) is an encryption and key management web service. This guide describes the\
@@ -61,6 +61,7 @@ description: "<fullname>Key Management Service</fullname> <p>Key Management Serv
 logo: "amazonaws.com-kms-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kms-stubs.json"
+swagger: "amazonaws.com-kms-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-bcdc"
-name: "BC Data Catalogue API"
+title: "BC Data Catalogue API"
 provider: "gov.bc.ca"
 description: "This API provides live access to the BC Data Catalogue. Further documentation\
   \ on the API is available from http://docs.ckan.org/en/latest/ Confirm the version\
@@ -11,6 +11,7 @@ description: "This API provides live access to the BC Data Catalogue. Further do
 logo: "gov.bc.ca-bcdc-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-bcdc-stubs.json"
+swagger: "gov.bc.ca-bcdc-swagger.json"
 ---

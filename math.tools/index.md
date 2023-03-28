@@ -1,6 +1,6 @@
 ---
 slug: "math-tools"
-name: "Numbers API"
+title: "Numbers API"
 provider: "math.tools"
 description: "All about Numbers. REST access with json/xml/jsonp result support. Below\
   \ is the documentation for the Numbers API. You can try them out right here. Find\
@@ -9,6 +9,7 @@ description: "All about Numbers. REST access with json/xml/jsonp result support.
 logo: "math.tools-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "math.tools-stubs.json"
+swagger: "math.tools-swagger.json"
 ---

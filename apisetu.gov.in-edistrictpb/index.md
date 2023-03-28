@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-edistrictpb"
-name: "Punjab State eGovernance Society, Punjab"
+title: "Punjab State eGovernance Society, Punjab"
 provider: "apisetu.gov.in"
 description: "eDistrict Punjab (http://edistrict.punjabgovt.gov.in) is the online\
   \ service delivery portal for Punjab State Govt. Certain documents issued by it\
@@ -9,6 +9,7 @@ description: "eDistrict Punjab (http://edistrict.punjabgovt.gov.in) is the onlin
 logo: "apisetu.gov.in-edistrictpb-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-edistrictpb-stubs.json"
+swagger: "apisetu.gov.in-edistrictpb-swagger.json"
 ---

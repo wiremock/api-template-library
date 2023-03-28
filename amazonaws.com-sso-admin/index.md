@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-sso-admin"
-name: "AWS Single Sign-On Admin"
+title: "AWS Single Sign-On Admin"
 provider: "amazonaws.com"
 description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) helps you\
   \ securely create, or connect, your workforce identities and manage their access\
@@ -27,6 +27,7 @@ description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) helps
 logo: "amazonaws.com-sso-admin-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-sso-admin-stubs.json"
+swagger: "amazonaws.com-sso-admin-swagger.json"
 ---

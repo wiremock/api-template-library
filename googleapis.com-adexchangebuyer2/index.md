@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-adexchangebuyer2"
-name: "Ad Exchange Buyer API II"
+title: "Ad Exchange Buyer API II"
 provider: "googleapis.com"
 description: "Accesses the latest features for managing Authorized Buyers accounts,\
   \ Real-Time Bidding configurations and auction metrics, and Marketplace programmatic\
@@ -8,7 +8,8 @@ description: "Accesses the latest features for managing Authorized Buyers accoun
 logo: "googleapis.com-adexchangebuyer2-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-adexchangebuyer2-stubs.json"
+swagger: "googleapis.com-adexchangebuyer2-swagger.json"
 ---

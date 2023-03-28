@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-pseb"
-name: "Punjab School Education Board, Punjab"
+title: "Punjab School Education Board, Punjab"
 provider: "apisetu.gov.in"
 description: "Punjab School Education Board (http://www.pseb.ac.in) has made available\
   \ 2018-20 Class V, VIII, X and XII Certificate cum Detailed Marks Sheet in DigiLocker,\
@@ -8,6 +8,7 @@ description: "Punjab School Education Board (http://www.pseb.ac.in) has made ava
 logo: "apisetu.gov.in-pseb-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-pseb-stubs.json"
+swagger: "apisetu.gov.in-pseb-swagger.json"
 ---

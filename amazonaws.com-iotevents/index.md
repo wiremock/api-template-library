@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotevents"
-name: "AWS IoT Events"
+title: "AWS IoT Events"
 provider: "amazonaws.com"
 description: "AWS IoT Events monitors your equipment or device fleets for failures\
   \ or changes in operation, and triggers actions when such events occur. You can\
@@ -9,6 +9,7 @@ description: "AWS IoT Events monitors your equipment or device fleets for failur
 logo: "amazonaws.com-iotevents-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotevents-stubs.json"
+swagger: "amazonaws.com-iotevents-swagger.json"
 ---

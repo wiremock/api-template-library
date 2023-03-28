@@ -1,14 +1,15 @@
 ---
 slug: "amadeus-com-amadeus-flight-choice-prediction"
-name: "Flight Choice Prediction"
+title: "Flight Choice Prediction"
 provider: "amadeus.com"
 description: "\nBefore using this API, we recommend you read our **[Authorization\
   \ Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\
   \ for more information on how to generate an access token. \n\nPlease also be aware\
   \ that our test environment is based on a subset of the production, to see what\
   \ is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**.\n"
-logo: "amadeus.com-amadeus-flight-choice-prediction-logo.svg"
-logoMediaType: "image/svg+xml"
+logo: "amadeus.com-amadeus-flight-choice-prediction-logo.jpeg"
+logoMediaType: "image/jpeg"
 tags: []
 stubs: "amadeus.com-amadeus-flight-choice-prediction-stubs.json"
+swagger: "amadeus.com-amadeus-flight-choice-prediction-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-NotificationConfigurationService"
-name: "Notification Configuration API"
+title: "Notification Configuration API"
 provider: "adyen.com"
 description: "This API is used for the classic integration. If you are just starting\
   \ your implementation, refer to our [new integration guide](https://docs.adyen.com/marketplaces-and-platforms)\
@@ -23,6 +23,7 @@ description: "This API is used for the classic integration. If you are just star
 logo: "adyen.com-NotificationConfigurationService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-NotificationConfigurationService-stubs.json"
+swagger: "adyen.com-NotificationConfigurationService-swagger.json"
 ---

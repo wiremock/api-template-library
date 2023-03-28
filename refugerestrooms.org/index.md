@@ -1,12 +1,13 @@
 ---
 slug: "refugerestrooms-org"
-name: "Refuge Restrooms API"
+title: "Refuge Restrooms API"
 provider: "refugerestrooms.org"
 description: "REFUGE is a web application that seeks to provide safe restroom access\
   \ for transgender, intersex, and gender nonconforming individuals."
 logo: "refugerestrooms.org-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "refugerestrooms.org-stubs.json"
+swagger: "refugerestrooms.org-swagger.json"
 ---

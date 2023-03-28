@@ -1,6 +1,6 @@
 ---
 slug: "beezup-com"
-name: "BeezUP Merchant API "
+title: "BeezUP Merchant API "
 provider: "beezup.com"
 description: "# The REST API of BeezUP system\n## Overview\nThe REST APIs provide\
   \ programmatic access to read and write BeezUP data. \nBasically, with this API\
@@ -39,6 +39,7 @@ description: "# The REST API of BeezUP system\n## Overview\nThe REST APIs provid
 logo: "beezup.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "beezup.com-stubs.json"
+swagger: "beezup.com-swagger.json"
 ---

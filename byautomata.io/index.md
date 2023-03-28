@@ -1,6 +1,6 @@
 ---
 slug: "byautomata-io"
-name: "Automata Market Intelligence API"
+title: "Automata Market Intelligence API"
 provider: "byautomata.io"
 description: "This document provides the documentation for the Market Intelligence\
   \ API by Automata. Get your API Key at https://apis.byautomata.io and check out\
@@ -14,4 +14,5 @@ logo: "byautomata.io-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "byautomata.io-stubs.json"
+swagger: "byautomata.io-swagger.json"
 ---

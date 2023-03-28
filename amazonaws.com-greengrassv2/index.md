@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-greengrassv2"
-name: "AWS IoT Greengrass V2"
+title: "AWS IoT Greengrass V2"
 provider: "amazonaws.com"
 description: "<p>IoT Greengrass brings local compute, messaging, data management,\
   \ sync, and ML inference capabilities to edge devices. This enables devices to collect\
@@ -18,6 +18,7 @@ description: "<p>IoT Greengrass brings local compute, messaging, data management
 logo: "amazonaws.com-greengrassv2-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-greengrassv2-stubs.json"
+swagger: "amazonaws.com-greengrassv2-swagger.json"
 ---

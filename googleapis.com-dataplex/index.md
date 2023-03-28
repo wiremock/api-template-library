@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-dataplex"
-name: "Cloud Dataplex API"
+title: "Cloud Dataplex API"
 provider: "googleapis.com"
 description: "Dataplex API is used to manage the lifecycle of data lakes."
 logo: "googleapis.com-dataplex-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-dataplex-stubs.json"
+swagger: "googleapis.com-dataplex-swagger.json"
 ---

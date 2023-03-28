@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-network-expressRouteCircuit"
-name: "NetworkManagementClient"
+title: "NetworkManagementClient"
 provider: "azure.com"
 description: "The Microsoft Azure Network management API provides a RESTful set of\
   \ web services that interact with Microsoft Azure Networks service to manage your\
@@ -9,6 +9,7 @@ description: "The Microsoft Azure Network management API provides a RESTful set 
 logo: "azure.com-network-expressRouteCircuit-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-network-expressRouteCircuit-stubs.json"
+swagger: "azure.com-network-expressRouteCircuit-swagger.json"
 ---

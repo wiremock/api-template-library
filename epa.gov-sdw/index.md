@@ -1,7 +1,7 @@
 ---
 slug: "epa-gov-sdw"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Safe Drinking Water\
-  \ Act"
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Safe Drinking\
+  \ Water Act"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
   \ and maintained by EPA's Office of Enforcement and Compliance Assurance for public\
@@ -28,6 +28,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-sdw-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-sdw-stubs.json"
+swagger: "epa.gov-sdw-swagger.json"
 ---

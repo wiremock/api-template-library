@@ -1,6 +1,6 @@
 ---
 slug: "ip2location-io"
-name: "IP2Location.io IP Geolocation API"
+title: "IP2Location.io IP Geolocation API"
 provider: "ip2location.io"
 description: "IP2Location.io IP Geolocation API provides RESTful API to obtain visitors’\
   \ geolocation information such as country, region, city, latitude & longitude, ZIP\
@@ -10,6 +10,7 @@ description: "IP2Location.io IP Geolocation API provides RESTful API to obtain v
 logo: "ip2location.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "ip2location.io-stubs.json"
+swagger: "ip2location.io-swagger.json"
 ---

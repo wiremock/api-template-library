@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-applicationcostprofiler"
-name: "AWS Application Cost Profiler"
+title: "AWS Application Cost Profiler"
 provider: "amazonaws.com"
 description: "<p>This reference provides descriptions of the AWS Application Cost\
   \ Profiler API.</p> <p>The AWS Application Cost Profiler API provides programmatic\
@@ -11,6 +11,7 @@ description: "<p>This reference provides descriptions of the AWS Application Cos
 logo: "amazonaws.com-applicationcostprofiler-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-applicationcostprofiler-stubs.json"
+swagger: "amazonaws.com-applicationcostprofiler-swagger.json"
 ---

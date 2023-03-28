@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-run"
-name: "Cloud Run Admin API"
+title: "Cloud Run Admin API"
 provider: "googleapis.com"
 description: "Deploy and manage user provided container images that scale automatically\
   \ based on incoming requests. The Cloud Run Admin API v1 follows the Knative Serving\
@@ -9,7 +9,8 @@ description: "Deploy and manage user provided container images that scale automa
 logo: "googleapis.com-run-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-run-stubs.json"
+swagger: "googleapis.com-run-swagger.json"
 ---

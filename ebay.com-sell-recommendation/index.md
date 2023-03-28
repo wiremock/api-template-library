@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-recommendation"
-name: "Recommendation API"
+title: "Recommendation API"
 provider: "ebay.com"
 description: "The <b>Recommendation API</b> returns information that sellers can use\
   \ to optimize the configuration of their listings on eBay. <br><br>Currently, the\
@@ -10,6 +10,7 @@ description: "The <b>Recommendation API</b> returns information that sellers can
 logo: "ebay.com-sell-recommendation-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-recommendation-stubs.json"
+swagger: "ebay.com-sell-recommendation-swagger.json"
 ---

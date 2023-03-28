@@ -1,6 +1,6 @@
 ---
 slug: "snyk-io"
-name: "Snyk API"
+title: "Snyk API"
 provider: "snyk.io"
 description: "The Snyk API is available to customers on [Business and Enterprise plans](https://snyk.io/plans)\
   \ and allows you to programatically integrate with Snyk.\n\n## REST API\n\nWe are\
@@ -323,6 +323,7 @@ description: "The Snyk API is available to customers on [Business and Enterprise
 logo: "snyk.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "snyk.io-stubs.json"
+swagger: "snyk.io-swagger.json"
 ---

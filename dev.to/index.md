@@ -1,6 +1,6 @@
 ---
 slug: "dev-to"
-name: "Forem API V1"
+title: "Forem API V1"
 provider: "dev.to"
 description: "Access Forem articles, users and other resources via API.\n        For\
   \ a real-world example of Forem in action, check out [DEV](https://www.dev.to).\n\
@@ -11,6 +11,7 @@ description: "Access Forem articles, users and other resources via API.\n       
 logo: "dev.to-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "social"
+- "social"
 stubs: "dev.to-stubs.json"
+swagger: "dev.to-swagger.json"
 ---

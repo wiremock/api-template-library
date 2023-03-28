@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-sms"
-name: "SMS API"
+title: "SMS API"
 provider: "apideck.com"
 description: "Welcome to the SMS API.\n\nYou can use this API to access all SMS API\
   \ endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the SMS API.\n\nYou can use this API to access all SMS 
 logo: "apideck.com-sms-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-sms-stubs.json"
+swagger: "apideck.com-sms-swagger.json"
 ---

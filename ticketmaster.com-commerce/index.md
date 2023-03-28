@@ -1,6 +1,6 @@
 ---
 slug: "ticketmaster-com-commerce"
-name: "Commerce API"
+title: "Commerce API"
 provider: "ticketmaster.com"
 description: "Use the Ticketmaster Commerce API to look up available offers and products\
   \ on various Ticketmaster platforms for North America markets. For formal partnerships\
@@ -11,4 +11,5 @@ logo: "ticketmaster.com-commerce-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "ticketmaster.com-commerce-stubs.json"
+swagger: "ticketmaster.com-commerce-swagger.json"
 ---

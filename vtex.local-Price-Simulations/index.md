@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Price-Simulations"
-name: "Price Simulations API"
+title: "Price Simulations API"
 provider: "vtex.local"
 description: "\r\n> Check the new [Pricing onboarding guide](https://developers.vtex.com/docs/guides/pricing-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -26,4 +26,5 @@ logo: "vtex.local-Price-Simulations-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Price-Simulations-stubs.json"
+swagger: "vtex.local-Price-Simulations-swagger.json"
 ---

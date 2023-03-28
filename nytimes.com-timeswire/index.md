@@ -1,6 +1,6 @@
 ---
 slug: "nytimes-com-timeswire"
-name: "Times Newswire API"
+title: "Times Newswire API"
 provider: "nytimes.com"
 description: "With the Times Newswire API, you can get links and metadata for Times\
   \ articles and blog posts as soon as they are published on NYTimes.com. The Times\
@@ -8,7 +8,8 @@ description: "With the Times Newswire API, you can get links and metadata for Ti
 logo: "nytimes.com-timeswire-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-timeswire-stubs.json"
+swagger: "nytimes.com-timeswire-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "jokes-one"
-name: "Jokes One API"
+title: "Jokes One API"
 provider: "jokes.one"
 description: " Jokes One API offers a complete feature rich REST API access to its\
   \ jokes platform.  This is the documentation for the world famous [jokes API](https://jokes.one/api/joke/).\
@@ -11,6 +11,7 @@ description: " Jokes One API offers a complete feature rich REST API access to i
 logo: "jokes.one-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "jokes.one-stubs.json"
+swagger: "jokes.one-swagger.json"
 ---

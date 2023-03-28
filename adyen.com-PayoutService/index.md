@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-PayoutService"
-name: "Adyen Payout API"
+title: "Adyen Payout API"
 provider: "adyen.com"
 description: "A set of API endpoints that allow you to store payout details, confirm,\
   \ or decline a payout.\n\nFor more information, refer to [Online payouts](https://docs.adyen.com/online-payments/online-payouts).\n\
@@ -23,6 +23,7 @@ description: "A set of API endpoints that allow you to store payout details, con
 logo: "adyen.com-PayoutService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-PayoutService-stubs.json"
+swagger: "adyen.com-PayoutService-swagger.json"
 ---

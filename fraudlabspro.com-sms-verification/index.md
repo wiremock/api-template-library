@@ -1,6 +1,6 @@
 ---
 slug: "fraudlabspro-com-sms-verification"
-name: "FraudLabs Pro SMS Verification"
+title: "FraudLabs Pro SMS Verification"
 provider: "fraudlabspro.com"
 description: "Send an SMS with verification code and a custom message for authentication\
   \ purpose. It helps merchants to minimize chargebacks and fraud for various kinds\
@@ -9,7 +9,8 @@ description: "Send an SMS with verification code and a custom message for authen
 logo: "fraudlabspro.com-sms-verification-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "telecom"
-- name: "ecommerce"
+- "telecom"
+- "ecommerce"
 stubs: "fraudlabspro.com-sms-verification-stubs.json"
+swagger: "fraudlabspro.com-sms-verification-swagger.json"
 ---

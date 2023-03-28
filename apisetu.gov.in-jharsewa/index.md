@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-jharsewa"
-name: "Jharsewa (eDistrict), Jharkhand"
+title: "Jharsewa (eDistrict), Jharkhand"
 provider: "apisetu.gov.in"
 description: "Jharkhand e-District is a comprehensive and web enabled service portal\
   \ that acts as an electronic gateway into the Government's portfolio of services.\
@@ -9,6 +9,7 @@ description: "Jharkhand e-District is a comprehensive and web enabled service po
 logo: "apisetu.gov.in-jharsewa-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-jharsewa-stubs.json"
+swagger: "apisetu.gov.in-jharsewa-swagger.json"
 ---

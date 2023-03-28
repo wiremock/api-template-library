@@ -1,12 +1,13 @@
 ---
 slug: "aiception-com"
-name: "AIception Interactive"
+title: "AIception Interactive"
 provider: "aiception.com"
 description: "Here you can play & test & prototype all the endpoints using just your\
   \ browser! Go ahead!"
 logo: "aiception.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "machine_learning"
+- "machine_learning"
 stubs: "aiception.com-stubs.json"
+swagger: "aiception.com-swagger.json"
 ---

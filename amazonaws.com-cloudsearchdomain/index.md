@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudsearchdomain"
-name: "Amazon CloudSearch Domain"
+title: "Amazon CloudSearch Domain"
 provider: "amazonaws.com"
 description: "<p>You use the AmazonCloudSearch2013 API to upload documents to a search\
   \ domain and search those documents. </p> <p>The endpoints for submitting <code>UploadDocuments</code>,\
@@ -13,6 +13,7 @@ description: "<p>You use the AmazonCloudSearch2013 API to upload documents to a 
 logo: "amazonaws.com-cloudsearchdomain-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudsearchdomain-stubs.json"
+swagger: "amazonaws.com-cloudsearchdomain-swagger.json"
 ---

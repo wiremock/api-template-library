@@ -1,6 +1,6 @@
 ---
 slug: "amadeus-com-amadeus-airport-&-city-search"
-name: "Airport & City Search"
+title: "Airport & City Search"
 provider: "amadeus.com"
 description: "\nBefore using this API, we recommend you read our **[Authorization\
   \ Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\
@@ -8,8 +8,9 @@ description: "\nBefore using this API, we recommend you read our **[Authorizatio
   \ that our test environment is based on a subset of the production, in test this\
   \ API only contains data from the United States, Spain, United Kingdom, Germany\
   \ and India. "
-logo: "amadeus.com-amadeus-airport-&-city-search-logo.svg"
-logoMediaType: "image/svg+xml"
+logo: "amadeus.com-amadeus-airport-&-city-search-logo.jpeg"
+logoMediaType: "image/jpeg"
 tags: []
 stubs: "amadeus.com-amadeus-airport-&-city-search-stubs.json"
+swagger: "amadeus.com-amadeus-airport-&-city-search-swagger.json"
 ---

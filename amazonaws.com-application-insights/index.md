@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-application-insights"
-name: "Amazon CloudWatch Application Insights"
+title: "Amazon CloudWatch Application Insights"
 provider: "amazonaws.com"
 description: "<fullname>Amazon CloudWatch Application Insights</fullname> <p> Amazon\
   \ CloudWatch Application Insights is a service that helps you detect common problems\
@@ -17,6 +17,7 @@ description: "<fullname>Amazon CloudWatch Application Insights</fullname> <p> Am
 logo: "amazonaws.com-application-insights-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-application-insights-stubs.json"
+swagger: "amazonaws.com-application-insights-swagger.json"
 ---

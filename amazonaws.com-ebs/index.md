@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ebs"
-name: "Amazon Elastic Block Store"
+title: "Amazon Elastic Block Store"
 provider: "amazonaws.com"
 description: "<p>You can use the Amazon Elastic Block Store (Amazon EBS) direct APIs\
   \ to create Amazon EBS snapshots, write data directly to your snapshots, read data\
@@ -27,6 +27,7 @@ description: "<p>You can use the Amazon Elastic Block Store (Amazon EBS) direct 
 logo: "amazonaws.com-ebs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ebs-stubs.json"
+swagger: "amazonaws.com-ebs-swagger.json"
 ---

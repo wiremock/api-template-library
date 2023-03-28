@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudfront"
-name: "Amazon CloudFront"
+title: "Amazon CloudFront"
 provider: "amazonaws.com"
 description: "<fullname>Amazon CloudFront</fullname> <p>This is the <i>Amazon CloudFront\
   \ API Reference</i>. This guide is for developers who need detailed information\
@@ -9,6 +9,7 @@ description: "<fullname>Amazon CloudFront</fullname> <p>This is the <i>Amazon Cl
 logo: "amazonaws.com-cloudfront-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudfront-stubs.json"
+swagger: "amazonaws.com-cloudfront-swagger.json"
 ---

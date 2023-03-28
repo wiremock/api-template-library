@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-storagegateway"
-name: "AWS Storage Gateway"
+title: "AWS Storage Gateway"
 provider: "amazonaws.com"
 description: "<fullname>Storage Gateway Service</fullname> <p>Storage Gateway is the\
   \ service that connects an on-premises software appliance with cloud-based storage\
@@ -44,6 +44,7 @@ description: "<fullname>Storage Gateway Service</fullname> <p>Storage Gateway is
 logo: "amazonaws.com-storagegateway-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-storagegateway-stubs.json"
+swagger: "amazonaws.com-storagegateway-swagger.json"
 ---

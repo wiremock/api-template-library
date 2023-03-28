@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-datamigration"
-name: "Azure Data Migration Service Resource Provider"
+title: "Azure Data Migration Service Resource Provider"
 provider: "azure.com"
 description: "The Data Migration Service helps people migrate their data from on-premise\
   \ database servers to Azure, or from older database software to newer software.\
@@ -15,6 +15,7 @@ description: "The Data Migration Service helps people migrate their data from on
 logo: "azure.com-datamigration-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-datamigration-stubs.json"
+swagger: "azure.com-datamigration-swagger.json"
 ---

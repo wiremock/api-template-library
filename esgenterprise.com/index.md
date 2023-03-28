@@ -1,11 +1,12 @@
 ---
 slug: "esgenterprise-com"
-name: "ESG Rating Data"
+title: "ESG Rating Data"
 provider: "esgenterprise.com"
 description: null
 logo: "esgenterprise.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "esgenterprise.com-stubs.json"
+swagger: "esgenterprise.com-swagger.json"
 ---

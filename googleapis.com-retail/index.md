@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-retail"
-name: "Retail API"
+title: "Retail API"
 provider: "googleapis.com"
 description: "Cloud Retail service enables customers to build end-to-end personalized\
   \ recommendation systems without requiring a high level of expertise in machine\
@@ -8,7 +8,8 @@ description: "Cloud Retail service enables customers to build end-to-end persona
 logo: "googleapis.com-retail-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-retail-stubs.json"
+swagger: "googleapis.com-retail-swagger.json"
 ---

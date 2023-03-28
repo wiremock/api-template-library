@@ -1,6 +1,6 @@
 ---
 slug: "openstates-org"
-name: "Open States API v3"
+title: "Open States API v3"
 provider: "openstates.org"
 description: "\n* [More documentation](https://docs.openstates.org/en/latest/api/v3/index.html)\n\
   * [Register for an account](https://openstates.org/accounts/signup/)\n\n\n**We are\
@@ -12,6 +12,7 @@ description: "\n* [More documentation](https://docs.openstates.org/en/latest/api
 logo: "openstates.org-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "openstates.org-stubs.json"
+swagger: "openstates.org-swagger.json"
 ---

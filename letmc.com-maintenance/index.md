@@ -1,11 +1,12 @@
 ---
 slug: "letmc-com-maintenance"
-name: "agentOS API V3, Maintenance Call Group"
+title: "agentOS API V3, Maintenance Call Group"
 provider: "letmc.com"
 description: null
 logo: "letmc.com-maintenance-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "letmc.com-maintenance-stubs.json"
+swagger: "letmc.com-maintenance-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-Provider"
-name: "Provider API Client"
+title: "Provider API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-Provider-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-Provider-stubs.json"
+swagger: "azure.com-web-Provider-swagger.json"
 ---

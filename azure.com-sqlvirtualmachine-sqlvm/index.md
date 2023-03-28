@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-sqlvirtualmachine-sqlvm"
-name: "SqlVirtualMachineManagementClient"
+title: "SqlVirtualMachineManagementClient"
 provider: "azure.com"
 description: "The SQL virtual machine management API provides a RESTful set of web\
   \ APIs that interact with Azure Compute, Network & Storage services to manage your\
@@ -9,6 +9,7 @@ description: "The SQL virtual machine management API provides a RESTful set of w
 logo: "azure.com-sqlvirtualmachine-sqlvm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-sqlvirtualmachine-sqlvm-stubs.json"
+swagger: "azure.com-sqlvirtualmachine-sqlvm-swagger.json"
 ---

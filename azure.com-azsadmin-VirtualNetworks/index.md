@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-VirtualNetworks"
-name: "NetworkAdminManagementClient"
+title: "NetworkAdminManagementClient"
 provider: "azure.com"
 description: "Virtual Network admin operation endpoints and objects."
 logo: "azure.com-azsadmin-VirtualNetworks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-VirtualNetworks-stubs.json"
+swagger: "azure.com-azsadmin-VirtualNetworks-swagger.json"
 ---

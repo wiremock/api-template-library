@@ -1,6 +1,6 @@
 ---
 slug: "docker-com-dvp"
-name: "DVP Data API"
+title: "DVP Data API"
 provider: "docker.com"
 description: "The Docker DVP Data API allows [Docker Verified Publishers](https://docs.docker.com/docker-hub/publish/)\
   \ to view image pull analytics data for their namespaces. Analytics data can be\
@@ -23,6 +23,7 @@ description: "The Docker DVP Data API allows [Docker Verified Publishers](https:
 logo: "docker.com-dvp-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "docker.com-dvp-stubs.json"
+swagger: "docker.com-dvp-swagger.json"
 ---

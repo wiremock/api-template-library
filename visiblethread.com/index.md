@@ -1,6 +1,6 @@
 ---
 slug: "visiblethread-com"
-name: "VisibleThread API"
+title: "VisibleThread API"
 provider: "visiblethread.com"
 description: "## Introduction\nThe VisibleThread b API provides services for analyzing/searching\
   \ documents and web pages.\nTo use the service you need an API key. \n\n**Contact\
@@ -50,6 +50,7 @@ description: "## Introduction\nThe VisibleThread b API provides services for ana
 logo: "visiblethread.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "text"
+- "text"
 stubs: "visiblethread.com-stubs.json"
+swagger: "visiblethread.com-swagger.json"
 ---

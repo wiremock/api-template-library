@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-email"
-name: "Amazon Simple Email Service"
+title: "Amazon Simple Email Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Simple Email Service</fullname> <p> This document contains\
   \ reference information for the <a href=\"https://aws.amazon.com/ses/\">Amazon Simple\
@@ -13,6 +13,7 @@ description: "<fullname>Amazon Simple Email Service</fullname> <p> This document
 logo: "amazonaws.com-email-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-email-stubs.json"
+swagger: "amazonaws.com-email-swagger.json"
 ---

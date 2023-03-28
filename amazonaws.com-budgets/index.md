@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-budgets"
-name: "AWS Budgets"
+title: "AWS Budgets"
 provider: "amazonaws.com"
 description: "<p>Use the Amazon Web Services Budgets API to plan your service usage,\
   \ service costs, and instance reservations. This API reference provides descriptions,\
@@ -30,6 +30,7 @@ description: "<p>Use the Amazon Web Services Budgets API to plan your service us
 logo: "amazonaws.com-budgets-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-budgets-stubs.json"
+swagger: "amazonaws.com-budgets-swagger.json"
 ---

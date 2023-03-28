@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-autoscaling-plans"
-name: "AWS Auto Scaling Plans"
+title: "AWS Auto Scaling Plans"
 provider: "amazonaws.com"
 description: "<fullname>AWS Auto Scaling</fullname> <p>Use AWS Auto Scaling to create\
   \ scaling plans for your applications to automatically scale your scalable AWS resources.\
@@ -19,6 +19,7 @@ description: "<fullname>AWS Auto Scaling</fullname> <p>Use AWS Auto Scaling to c
 logo: "amazonaws.com-autoscaling-plans-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-autoscaling-plans-stubs.json"
+swagger: "amazonaws.com-autoscaling-plans-swagger.json"
 ---

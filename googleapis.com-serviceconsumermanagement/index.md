@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-serviceconsumermanagement"
-name: "Service Consumer Management API"
+title: "Service Consumer Management API"
 provider: "googleapis.com"
 description: "Manages the service consumers of a Service Infrastructure service."
 logo: "googleapis.com-serviceconsumermanagement-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-serviceconsumermanagement-stubs.json"
+swagger: "googleapis.com-serviceconsumermanagement-swagger.json"
 ---

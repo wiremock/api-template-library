@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-storagesync"
-name: "Microsoft Storage Sync"
+title: "Microsoft Storage Sync"
 provider: "azure.com"
 description: "Microsoft Storage Sync Service API"
 logo: "azure.com-storagesync-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-storagesync-stubs.json"
+swagger: "azure.com-storagesync-swagger.json"
 ---

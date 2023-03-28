@@ -1,6 +1,6 @@
 ---
 slug: "api2pdf-com"
-name: "Api2Pdf - PDF Generation, Powered by AWS Lambda"
+title: "Api2Pdf - PDF Generation, Powered by AWS Lambda"
 provider: "api2pdf.com"
 description: "\n# Introduction\n[Api2Pdf](https://www.api2pdf.com) is a powerful PDF\
   \ generation API with no rate limits or file size constraints. Api2Pdf runs on AWS\
@@ -21,6 +21,7 @@ description: "\n# Introduction\n[Api2Pdf](https://www.api2pdf.com) is a powerful
 logo: "api2pdf.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "api2pdf.com-stubs.json"
+swagger: "api2pdf.com-swagger.json"
 ---

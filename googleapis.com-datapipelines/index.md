@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-datapipelines"
-name: "Data pipelines API"
+title: "Data pipelines API"
 provider: "googleapis.com"
 description: "Data Pipelines provides an interface for creating, updating, and managing\
   \ recurring Data Analytics jobs."
 logo: "googleapis.com-datapipelines-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-datapipelines-stubs.json"
+swagger: "googleapis.com-datapipelines-swagger.json"
 ---

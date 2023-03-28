@@ -1,12 +1,13 @@
 ---
 slug: "parliament-uk-bills"
-name: "Bills API"
+title: "Bills API"
 provider: "parliament.uk"
 description: "API to get and search for information regarding Bills, their stages,\
   \ associated amendments and publications."
 logo: "parliament.uk-bills-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "parliament.uk-bills-stubs.json"
+swagger: "parliament.uk-bills-swagger.json"
 ---

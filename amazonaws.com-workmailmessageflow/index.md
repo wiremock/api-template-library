@@ -1,12 +1,13 @@
 ---
 slug: "amazonaws-com-workmailmessageflow"
-name: "Amazon WorkMail Message Flow"
+title: "Amazon WorkMail Message Flow"
 provider: "amazonaws.com"
 description: "The WorkMail Message Flow API provides access to email messages as they\
   \ are being sent and received by a WorkMail organization."
 logo: "amazonaws.com-workmailmessageflow-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-workmailmessageflow-stubs.json"
+swagger: "amazonaws.com-workmailmessageflow-swagger.json"
 ---

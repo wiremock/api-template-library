@@ -1,6 +1,6 @@
 ---
 slug: "geneea-com"
-name: "Geneea Natural Language Processing"
+title: "Geneea Natural Language Processing"
 provider: "geneea.com"
 description: "<div class=\"api-description\">\n    <h2>Authentication</h2>\n    <p>For\
   \ all calls, supply your API key. <a href=\"https://www.geneea.com/pricing\">Sign\
@@ -53,6 +53,7 @@ description: "<div class=\"api-description\">\n    <h2>Authentication</h2>\n    
 logo: "geneea.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "geneea.com-stubs.json"
+swagger: "geneea.com-swagger.json"
 ---

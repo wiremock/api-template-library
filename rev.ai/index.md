@@ -1,6 +1,6 @@
 ---
 slug: "rev-ai"
-name: "Asynchronous Speech-To-Text API Documentation"
+title: "Asynchronous Speech-To-Text API Documentation"
 provider: "rev.ai"
 description: "Rev.ai provides quality speech-text recognition via a RESTful API. All\
   \ public methods and objects are documented here for developer reference.\nFor a\
@@ -105,6 +105,7 @@ description: "Rev.ai provides quality speech-text recognition via a RESTful API.
 logo: "rev.ai-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "rev.ai-stubs.json"
+swagger: "rev.ai-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-machinelearningcompute-machineLearningCompute"
-name: "Machine Learning Compute Management Client"
+title: "Machine Learning Compute Management Client"
 provider: "azure.com"
 description: "These APIs allow end users to operate on Azure Machine Learning Compute\
   \ resources. They support the following operations:<ul><li>Create or update a cluster</li><li>Get\
@@ -11,6 +11,7 @@ description: "These APIs allow end users to operate on Azure Machine Learning Co
 logo: "azure.com-machinelearningcompute-machineLearningCompute-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearningcompute-machineLearningCompute-stubs.json"
+swagger: "azure.com-machinelearningcompute-machineLearningCompute-swagger.json"
 ---

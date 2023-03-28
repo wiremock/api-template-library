@@ -1,11 +1,12 @@
 ---
 slug: "roaring-io"
-name: "CompanyAPI"
+title: "CompanyAPI"
 provider: "roaring.io"
 description: null
 logo: "roaring.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "customer_relation"
+- "customer_relation"
 stubs: "roaring.io-stubs.json"
+swagger: "roaring.io-swagger.json"
 ---

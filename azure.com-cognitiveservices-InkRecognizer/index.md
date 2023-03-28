@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-InkRecognizer"
-name: "Ink Recognizer Client"
+title: "Ink Recognizer Client"
 provider: "azure.com"
 description: "The service is used to perform ink layout and recognition of written\
   \ words and shapes. Ink strokes passed to the service are recognized and organized\
@@ -8,6 +8,7 @@ description: "The service is used to perform ink layout and recognition of writt
 logo: "azure.com-cognitiveservices-InkRecognizer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-InkRecognizer-stubs.json"
+swagger: "azure.com-cognitiveservices-InkRecognizer-swagger.json"
 ---

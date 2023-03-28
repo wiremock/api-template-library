@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-mybusinessbusinessinformation"
-name: "My Business Business Information API"
+title: "My Business Business Information API"
 provider: "googleapis.com"
 description: "The My Business Business Information API provides an interface for managing\
   \ business information. Note - If you have a quota of 0 after enabling the API,\
@@ -8,7 +8,8 @@ description: "The My Business Business Information API provides an interface for
 logo: "googleapis.com-mybusinessbusinessinformation-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-mybusinessbusinessinformation-stubs.json"
+swagger: "googleapis.com-mybusinessbusinessinformation-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-homegraph"
-name: "HomeGraph API"
+title: "HomeGraph API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-homegraph-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-homegraph-stubs.json"
+swagger: "googleapis.com-homegraph-swagger.json"
 ---

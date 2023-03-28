@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-vssut"
-name: "Veer Surendra Sai University Of Technology"
+title: "Veer Surendra Sai University Of Technology"
 provider: "apisetu.gov.in"
 description: "Veer Surendra Sai University Of Technology, Odisha (http://vssut.ac.in)\
   \ is issuing Degree certificates through DigiLocker. These can be pulled by students\
@@ -9,6 +9,7 @@ description: "Veer Surendra Sai University Of Technology, Odisha (http://vssut.a
 logo: "apisetu.gov.in-vssut-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-vssut-stubs.json"
+swagger: "apisetu.gov.in-vssut-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "pendo-io"
-name: "Pendo Feedback API"
+title: "Pendo Feedback API"
 provider: "pendo.io"
 description: "## Who is this for?\n\nThis documentation is for developers creating\
   \ their own integration with [Feedback's](https://www.pendo.io/product/feedback/)\
@@ -24,6 +24,7 @@ description: "## Who is this for?\n\nThis documentation is for developers creati
 logo: "pendo.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "pendo.io-stubs.json"
+swagger: "pendo.io-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-sql-deprecated"
-name: "Azure SQL Database"
+title: "Azure SQL Database"
 provider: "azure.com"
 description: "Provides create, read, update and delete functionality for Azure SQL\
   \ Database resources including servers, databases, elastic pools, recommendations,\
@@ -8,6 +8,7 @@ description: "Provides create, read, update and delete functionality for Azure S
 logo: "azure.com-sql-deprecated-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-sql-deprecated-stubs.json"
+swagger: "azure.com-sql-deprecated-swagger.json"
 ---

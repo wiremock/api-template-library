@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-containerservice-openShiftManagedClusters"
-name: "ContainerServiceClient"
+title: "ContainerServiceClient"
 provider: "azure.com"
 description: "The Container Service Client."
 logo: "azure.com-containerservice-openShiftManagedClusters-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-containerservice-openShiftManagedClusters-stubs.json"
+swagger: "azure.com-containerservice-openShiftManagedClusters-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-AnomalyFinder"
-name: "Anomaly Finder Client"
+title: "Anomaly Finder Client"
 provider: "azure.com"
 description: "The Anomaly Finder API detects anomalies automatically in time series\
   \ data. It supports two functionalities, one is for detecting the whole series with\
@@ -10,6 +10,7 @@ description: "The Anomaly Finder API detects anomalies automatically in time ser
 logo: "azure.com-cognitiveservices-AnomalyFinder-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-AnomalyFinder-stubs.json"
+swagger: "azure.com-cognitiveservices-AnomalyFinder-swagger.json"
 ---

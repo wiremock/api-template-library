@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-nimble"
-name: "AmazonNimbleStudio"
+title: "AmazonNimbleStudio"
 provider: "amazonaws.com"
 description: "<p>Welcome to the Amazon Nimble Studio API reference. This API reference\
   \ provides methods, schema, resources, parameters, and more to help you get the\
@@ -10,6 +10,7 @@ description: "<p>Welcome to the Amazon Nimble Studio API reference. This API ref
 logo: "amazonaws.com-nimble-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-nimble-stubs.json"
+swagger: "amazonaws.com-nimble-swagger.json"
 ---

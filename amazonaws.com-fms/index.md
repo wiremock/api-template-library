@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-fms"
-name: "Firewall Management Service"
+title: "Firewall Management Service"
 provider: "amazonaws.com"
 description: "<p>This is the <i>Firewall Manager API Reference</i>. This guide is\
   \ for developers who need detailed information about the Firewall Manager API actions,\
@@ -13,6 +13,7 @@ description: "<p>This is the <i>Firewall Manager API Reference</i>. This guide i
 logo: "amazonaws.com-fms-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-fms-stubs.json"
+swagger: "amazonaws.com-fms-swagger.json"
 ---

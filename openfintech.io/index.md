@@ -1,6 +1,6 @@
 ---
 slug: "openfintech-io"
-name: "OpenFinTech.io"
+title: "OpenFinTech.io"
 provider: "openfintech.io"
 description: "# Introduction\n[OpenFinTech.io](https://openfintech.io) is an open\
   \ database that comprises of standardized primary data for FinTech industry.<br>\n\
@@ -79,6 +79,7 @@ description: "# Introduction\n[OpenFinTech.io](https://openfintech.io) is an ope
 logo: "openfintech.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "openfintech.io-stubs.json"
+swagger: "openfintech.io-swagger.json"
 ---

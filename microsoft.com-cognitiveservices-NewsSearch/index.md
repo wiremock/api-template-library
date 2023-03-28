@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-NewsSearch"
-name: "News Search Client"
+title: "News Search Client"
 provider: "microsoft.com"
 description: "The News Search API lets you send a search query to Bing and get back\
   \ a list of news that are relevant to the search query. This section provides technical\
@@ -10,7 +10,8 @@ description: "The News Search API lets you send a search query to Bing and get b
 logo: "microsoft.com-cognitiveservices-NewsSearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-NewsSearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-NewsSearch-swagger.json"
 ---

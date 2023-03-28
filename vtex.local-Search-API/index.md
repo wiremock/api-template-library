@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Search-API"
-name: "Legacy Search API"
+title: "Legacy Search API"
 provider: "vtex.local"
 description: "\r\n> Check the new [Search onboarding guide](https://developers.vtex.com/vtex-rest-api/docs/search-onboarding).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -12,4 +12,5 @@ logo: "vtex.local-Search-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Search-API-stubs.json"
+swagger: "vtex.local-Search-API-swagger.json"
 ---

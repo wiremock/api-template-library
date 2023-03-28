@@ -1,6 +1,6 @@
 ---
 slug: "apptigent-com"
-name: "PowerTools Developer"
+title: "PowerTools Developer"
 provider: "apptigent.com"
 description: "Apptigent PowerTools Developer Edition is a powerful suite of API endpoints\
   \ for custom applications running on any stack. Manipulate text, modify collections,\
@@ -11,6 +11,7 @@ description: "Apptigent PowerTools Developer Edition is a powerful suite of API 
 logo: "apptigent.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apptigent.com-stubs.json"
+swagger: "apptigent.com-swagger.json"
 ---

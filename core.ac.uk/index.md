@@ -1,6 +1,6 @@
 ---
 slug: "core-ac-uk"
-name: "CORE API v2"
+title: "CORE API v2"
 provider: "core.ac.uk"
 description: "<p style=\"text-align: justify;\">You can use the CORE API to access\
   \ the \n    resources harvested and enriched by CORE. If you encounter any problems\
@@ -47,6 +47,7 @@ description: "<p style=\"text-align: justify;\">You can use the CORE API to acce
 logo: "core.ac.uk-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "core.ac.uk-stubs.json"
+swagger: "core.ac.uk-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-ComputeOperationResults"
-name: "FabricAdminClient"
+title: "FabricAdminClient"
 provider: "azure.com"
 description: "Compute operation results."
 logo: "azure.com-azsadmin-ComputeOperationResults-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-ComputeOperationResults-stubs.json"
+swagger: "azure.com-azsadmin-ComputeOperationResults-swagger.json"
 ---

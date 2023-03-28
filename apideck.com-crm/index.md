@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-crm"
-name: "CRM API"
+title: "CRM API"
 provider: "apideck.com"
 description: "Welcome to the CRM API.\n\nYou can use this API to access all CRM API\
   \ endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the CRM API.\n\nYou can use this API to access all CRM 
 logo: "apideck.com-crm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-crm-stubs.json"
+swagger: "apideck.com-crm-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-cisce"
-name: "CISCE"
+title: "CISCE"
 provider: "apisetu.gov.in"
 description: "CISCE (http://www.cisce.org/) is issuing marksheets, passing certificates,\
   \ migration certificates through DigiLocker. These can be pulled by students into\
@@ -9,6 +9,7 @@ description: "CISCE (http://www.cisce.org/) is issuing marksheets, passing certi
 logo: "apisetu.gov.in-cisce-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-cisce-stubs.json"
+swagger: "apisetu.gov.in-cisce-swagger.json"
 ---

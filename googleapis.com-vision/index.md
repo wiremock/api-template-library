@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-vision"
-name: "Cloud Vision API"
+title: "Cloud Vision API"
 provider: "googleapis.com"
 description: "Integrates Google Vision features, including image labeling, face, logo,\
   \ and landmark detection, optical character recognition (OCR), and detection of\
@@ -8,7 +8,8 @@ description: "Integrates Google Vision features, including image labeling, face,
 logo: "googleapis.com-vision-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-vision-stubs.json"
+swagger: "googleapis.com-vision-swagger.json"
 ---

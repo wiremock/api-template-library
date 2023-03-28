@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-support"
-name: "Microsoft.Support"
+title: "Microsoft.Support"
 provider: "azure.com"
 description: "Microsoft Azure Support Resource Provider."
 logo: "azure.com-support-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-support-stubs.json"
+swagger: "azure.com-support-swagger.json"
 ---

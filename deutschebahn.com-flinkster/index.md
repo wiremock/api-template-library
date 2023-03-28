@@ -1,6 +1,6 @@
 ---
 slug: "deutschebahn-com-flinkster"
-name: "Flinkster_API_NG"
+title: "Flinkster_API_NG"
 provider: "deutschebahn.com"
 description: "This REST-API enables you to query for private transport sharing offers\
   \ provided by companies and cities in Germany, Netherland and Austria. \nYou can\
@@ -17,7 +17,8 @@ description: "This REST-API enables you to query for private transport sharing o
 logo: "deutschebahn.com-flinkster-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "transport"
-- name: "open_data"
+- "transport"
+- "open_data"
 stubs: "deutschebahn.com-flinkster-stubs.json"
+swagger: "deutschebahn.com-flinkster-swagger.json"
 ---

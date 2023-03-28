@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-globalaccelerator"
-name: "AWS Global Accelerator"
+title: "AWS Global Accelerator"
 provider: "amazonaws.com"
 description: "<fullname>Global Accelerator</fullname> <p>This is the <i>Global Accelerator\
   \ API Reference</i>. This guide is for developers who need detailed information\
@@ -53,6 +53,7 @@ description: "<fullname>Global Accelerator</fullname> <p>This is the <i>Global A
 logo: "amazonaws.com-globalaccelerator-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-globalaccelerator-stubs.json"
+swagger: "amazonaws.com-globalaccelerator-swagger.json"
 ---

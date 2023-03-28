@@ -1,11 +1,12 @@
 ---
 slug: "xkcd-com"
-name: "XKCD"
+title: "XKCD"
 provider: "xkcd.com"
 description: "Webcomic of romance, sarcasm, math, and language."
 logo: "xkcd.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "xkcd.com-stubs.json"
+swagger: "xkcd.com-swagger.json"
 ---

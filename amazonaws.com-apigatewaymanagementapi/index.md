@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-apigatewaymanagementapi"
-name: "AmazonApiGatewayManagementApi"
+title: "AmazonApiGatewayManagementApi"
 provider: "amazonaws.com"
 description: "The Amazon API Gateway Management API allows you to directly manage\
   \ runtime aspects of your deployed APIs. To use it, you must explicitly set the\
@@ -11,6 +11,7 @@ description: "The Amazon API Gateway Management API allows you to directly manag
 logo: "amazonaws.com-apigatewaymanagementapi-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-apigatewaymanagementapi-stubs.json"
+swagger: "amazonaws.com-apigatewaymanagementapi-swagger.json"
 ---

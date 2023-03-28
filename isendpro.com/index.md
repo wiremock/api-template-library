@@ -1,6 +1,6 @@
 ---
 slug: "isendpro-com"
-name: "API iSendPro"
+title: "API iSendPro"
 provider: "isendpro.com"
 description: "[1] Liste des fonctionnalités :\n- envoi de SMS à un ou plusieurs destinataires,\n\
   - lookup HLR,\n- récupération des récapitulatifs de campagne,\n- gestion des ré\
@@ -16,6 +16,7 @@ description: "[1] Liste des fonctionnalités :\n- envoi de SMS à un ou plusieur
 logo: "isendpro.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "messaging"
+- "messaging"
 stubs: "isendpro.com-stubs.json"
+swagger: "isendpro.com-swagger.json"
 ---

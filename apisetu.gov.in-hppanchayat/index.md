@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-hppanchayat"
-name: "Panchayati Raj Department, Himachal Pradesh, Himachal Pradesh"
+title: "Panchayati Raj Department, Himachal Pradesh, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Parivar Patra (http://aadhaar.hp.gov.in/epanchayat/) is the online service\
   \  portal by Govt. of Himachal Pradesh. Parivar Register issued online certificate\
@@ -8,6 +8,7 @@ description: "Parivar Patra (http://aadhaar.hp.gov.in/epanchayat/) is the online
 logo: "apisetu.gov.in-hppanchayat-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-hppanchayat-stubs.json"
+swagger: "apisetu.gov.in-hppanchayat-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-sportsdata"
-name: "SportsData API"
+title: "SportsData API"
 provider: "whapi.com"
 description: "The William Hill SportsData REST API is a collection of GET methods\
   \ to provide William Hill product data such as sport, competition, event, market\
@@ -8,6 +8,7 @@ description: "The William Hill SportsData REST API is a collection of GET method
 logo: "whapi.com-sportsdata-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-sportsdata-stubs.json"
+swagger: "whapi.com-sportsdata-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-compute-optimizer"
-name: "AWS Compute Optimizer"
+title: "AWS Compute Optimizer"
 provider: "amazonaws.com"
 description: "Compute Optimizer is a service that analyzes the configuration and utilization\
   \ metrics of your Amazon Web Services compute resources, such as Amazon EC2 instances,\
@@ -18,6 +18,7 @@ description: "Compute Optimizer is a service that analyzes the configuration and
 logo: "amazonaws.com-compute-optimizer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-compute-optimizer-stubs.json"
+swagger: "amazonaws.com-compute-optimizer-swagger.json"
 ---

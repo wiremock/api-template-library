@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-pi"
-name: "AWS Performance Insights"
+title: "AWS Performance Insights"
 provider: "amazonaws.com"
 description: "<fullname>Amazon RDS Performance Insights</fullname> <p>Amazon RDS Performance\
   \ Insights enables you to monitor and explore different dimensions of database load\
@@ -25,6 +25,7 @@ description: "<fullname>Amazon RDS Performance Insights</fullname> <p>Amazon RDS
 logo: "amazonaws.com-pi-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-pi-stubs.json"
+swagger: "amazonaws.com-pi-swagger.json"
 ---

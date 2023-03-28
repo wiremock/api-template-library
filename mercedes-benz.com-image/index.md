@@ -1,6 +1,6 @@
 ---
 slug: "mercedes-benz-com-image"
-name: "Vehicle Image"
+title: "Vehicle Image"
 provider: "mercedes-benz.com"
 description: "The vehicle images API offers access to original Mercedes-Benz vehicle\
   \ images.  It provides access to exterior and interior images with parameters e.g.\
@@ -10,6 +10,7 @@ description: "The vehicle images API offers access to original Mercedes-Benz veh
 logo: "mercedes-benz.com-image-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "mercedes-benz.com-image-stubs.json"
+swagger: "mercedes-benz.com-image-swagger.json"
 ---

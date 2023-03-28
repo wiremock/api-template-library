@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-Personalizer"
-name: "Personalizer Client"
+title: "Personalizer Client"
 provider: "azure.com"
 description: "Personalizer Service is an Azure Cognitive Service that makes it easy\
   \ to target content and experiences without complex pre-analysis or cleanup of past\
@@ -11,6 +11,7 @@ description: "Personalizer Service is an Azure Cognitive Service that makes it e
 logo: "azure.com-cognitiveservices-Personalizer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-Personalizer-stubs.json"
+swagger: "azure.com-cognitiveservices-Personalizer-swagger.json"
 ---

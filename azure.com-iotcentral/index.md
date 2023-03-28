@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-iotcentral"
-name: "IotCentralClient"
+title: "IotCentralClient"
 provider: "azure.com"
 description: "Use this API to manage IoT Central Applications in your Azure subscription."
 logo: "azure.com-iotcentral-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-iotcentral-stubs.json"
+swagger: "azure.com-iotcentral-swagger.json"
 ---

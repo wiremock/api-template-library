@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Payments-Gateway-API"
-name: "Payments Gateway API"
+title: "Payments Gateway API"
 provider: "vtex.local"
 description: ">ℹ️ Onboarding guide\r\n>\r\n> Check the new [Payments onboarding guide](https://developers.vtex.com/docs/guides/payments-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -11,4 +11,5 @@ logo: "vtex.local-Payments-Gateway-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Payments-Gateway-API-stubs.json"
+swagger: "vtex.local-Payments-Gateway-API-swagger.json"
 ---

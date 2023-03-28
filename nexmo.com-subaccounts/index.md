@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-subaccounts"
-name: "Subaccounts API"
+title: "Subaccounts API"
 provider: "nexmo.com"
 description: "The Subaccounts API enables you to create subaccounts under your primary\
   \ account. Subaccounts facilitate differential product configuration, reporting,\
@@ -10,4 +10,5 @@ logo: "nexmo.com-subaccounts-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-subaccounts-stubs.json"
+swagger: "nexmo.com-subaccounts-swagger.json"
 ---

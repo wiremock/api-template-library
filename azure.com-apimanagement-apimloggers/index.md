@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimloggers"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on logger entity Azure\
   \ API Management deployment.The Logger entity in API Management represents an event\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on logger entity Azu
 logo: "azure.com-apimanagement-apimloggers-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimloggers-stubs.json"
+swagger: "azure.com-apimanagement-apimloggers-swagger.json"
 ---

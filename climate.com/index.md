@@ -1,6 +1,6 @@
 ---
 slug: "climate-com"
-name: "Climate FieldView Platform APIs"
+title: "Climate FieldView Platform APIs"
 provider: "climate.com"
 description: "**Last Modified**: Wed Jan  4 12:47:29 UTC 2023\n\n\nAll endpoints are\
   \ only accessible via HTTPS.\n\n* All API endpoints are located at `https://platform.climate.com`\
@@ -69,6 +69,7 @@ description: "**Last Modified**: Wed Jan  4 12:47:29 UTC 2023\n\n\nAll endpoints
 logo: "climate.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "climate.com-stubs.json"
+swagger: "climate.com-swagger.json"
 ---

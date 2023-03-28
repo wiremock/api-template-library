@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-streamanalytics-subscriptions"
-name: "StreamAnalyticsManagementClient"
+title: "StreamAnalyticsManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-streamanalytics-subscriptions-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-streamanalytics-subscriptions-stubs.json"
+swagger: "azure.com-streamanalytics-subscriptions-swagger.json"
 ---

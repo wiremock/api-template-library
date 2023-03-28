@@ -1,6 +1,6 @@
 ---
 slug: "svix-com"
-name: "Svix API"
+title: "Svix API"
 provider: "svix.com"
 description: "Welcome to the Svix API documentation!\n\nUseful links: [Homepage](https://www.svix.com)\
   \ | [Support email](mailto:support+docs@svix.com) | [Blog](https://www.svix.com/blog/)\
@@ -42,4 +42,5 @@ logo: "svix.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "svix.com-stubs.json"
+swagger: "svix.com-swagger.json"
 ---

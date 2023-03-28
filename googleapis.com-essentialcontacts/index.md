@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-essentialcontacts"
-name: "Essential Contacts API"
+title: "Essential Contacts API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-essentialcontacts-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-essentialcontacts-stubs.json"
+swagger: "googleapis.com-essentialcontacts-swagger.json"
 ---

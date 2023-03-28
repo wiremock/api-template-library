@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-TextAnalytics"
-name: "Text Analytics Client"
+title: "Text Analytics Client"
 provider: "azure.com"
 description: "The Text Analytics API is a suite of text analytics web services built\
   \ with best-in-class Microsoft machine learning algorithms. The API can be used\
@@ -12,6 +12,7 @@ description: "The Text Analytics API is a suite of text analytics web services b
 logo: "azure.com-cognitiveservices-TextAnalytics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-TextAnalytics-stubs.json"
+swagger: "azure.com-cognitiveservices-TextAnalytics-swagger.json"
 ---

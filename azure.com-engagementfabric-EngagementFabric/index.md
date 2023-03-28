@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-engagementfabric-EngagementFabric"
-name: "EngagementFabric"
+title: "EngagementFabric"
 provider: "azure.com"
 description: "Microsoft Customer Engagement Fabric"
 logo: "azure.com-engagementfabric-EngagementFabric-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-engagementfabric-EngagementFabric-stubs.json"
+swagger: "azure.com-engagementfabric-EngagementFabric-swagger.json"
 ---

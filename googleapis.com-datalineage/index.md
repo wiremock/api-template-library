@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-datalineage"
-name: "Data Lineage API"
+title: "Data Lineage API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-datalineage-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-datalineage-stubs.json"
+swagger: "googleapis.com-datalineage-swagger.json"
 ---

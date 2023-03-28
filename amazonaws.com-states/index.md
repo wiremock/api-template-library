@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-states"
-name: "AWS Step Functions"
+title: "AWS Step Functions"
 provider: "amazonaws.com"
 description: "<fullname>Step Functions</fullname> <p>Step Functions is a service that\
   \ lets you coordinate the components of distributed applications and microservices\
@@ -21,6 +21,7 @@ description: "<fullname>Step Functions</fullname> <p>Step Functions is a service
 logo: "amazonaws.com-states-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-states-stubs.json"
+swagger: "amazonaws.com-states-swagger.json"
 ---

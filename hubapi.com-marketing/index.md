@@ -1,6 +1,6 @@
 ---
 slug: "hubapi-com-marketing"
-name: "Marketing Events Extension"
+title: "Marketing Events Extension"
 provider: "hubapi.com"
 description: "These APIs allow you to interact with HubSpot's Marketing Events Extension.\
   \ It allows you to:\n* Create, Read or update Marketing Event information in HubSpot\n\
@@ -11,4 +11,5 @@ logo: "hubapi.com-marketing-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "hubapi.com-marketing-stubs.json"
+swagger: "hubapi.com-marketing-swagger.json"
 ---

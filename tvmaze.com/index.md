@@ -1,6 +1,6 @@
 ---
 slug: "tvmaze-com"
-name: "TVmaze user API"
+title: "TVmaze user API"
 provider: "tvmaze.com"
 description: "Access to the user API is only possible for users with a [premium](http://www.tvmaze.com/premium)\
   \ account. A user can only access their own user data.\n\nAuthentication uses HTTP\
@@ -11,6 +11,7 @@ description: "Access to the user API is only possible for users with a [premium]
 logo: "tvmaze.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "tvmaze.com-stubs.json"
+swagger: "tvmaze.com-swagger.json"
 ---

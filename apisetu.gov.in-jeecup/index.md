@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-jeecup"
-name: "Joint Entrance Examination Council, Uttar Pradesh, Uttar Pradesh"
+title: "Joint Entrance Examination Council, Uttar Pradesh, Uttar Pradesh"
 provider: "apisetu.gov.in"
 description: "Joint Entrance Examination Council (https://jeecup.nic.in) is providing\
   \ digital Admit Cards for 2018 entrance examination of Diploma courses in the Polytechnics\
@@ -8,6 +8,7 @@ description: "Joint Entrance Examination Council (https://jeecup.nic.in) is prov
 logo: "apisetu.gov.in-jeecup-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-jeecup-stubs.json"
+swagger: "apisetu.gov.in-jeecup-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "ornl-gov-daymet"
-name: "Daymet Single Pixel Extraction Tool API"
+title: "Daymet Single Pixel Extraction Tool API"
 provider: "ornl.gov"
 description: "Welcome to the Daymet Single Pixel Extraction Tool API. You can use\
   \ this API to download daily surface data within the Daymet database in a `csv`\
@@ -15,6 +15,7 @@ description: "Welcome to the Daymet Single Pixel Extraction Tool API. You can us
 logo: "ornl.gov-daymet-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "ornl.gov-daymet-stubs.json"
+swagger: "ornl.gov-daymet-swagger.json"
 ---

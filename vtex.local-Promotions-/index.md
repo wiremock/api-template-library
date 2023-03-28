@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Promotions-"
-name: "Promotions & Taxes API"
+title: "Promotions & Taxes API"
 provider: "vtex.local"
 description: "\r\n> Check the new [Promotions onboarding guide](https://developers.vtex.com/vtex-rest-api/docs/promotions-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -34,4 +34,5 @@ logo: "vtex.local-Promotions--logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Promotions--stubs.json"
+swagger: "vtex.local-Promotions--swagger.json"
 ---

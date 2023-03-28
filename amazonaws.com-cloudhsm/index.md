@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudhsm"
-name: "Amazon CloudHSM"
+title: "Amazon CloudHSM"
 provider: "amazonaws.com"
 description: "<fullname>AWS CloudHSM Service</fullname> <p>This is documentation for\
   \ <b>AWS CloudHSM Classic</b>. For more information, see <a href=\"http://aws.amazon.com/cloudhsm/faqs-classic/\"\
@@ -14,6 +14,7 @@ description: "<fullname>AWS CloudHSM Service</fullname> <p>This is documentation
 logo: "amazonaws.com-cloudhsm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudhsm-stubs.json"
+swagger: "amazonaws.com-cloudhsm-swagger.json"
 ---

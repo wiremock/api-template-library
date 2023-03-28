@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-dax"
-name: "Amazon DynamoDB Accelerator (DAX)"
+title: "Amazon DynamoDB Accelerator (DAX)"
 provider: "amazonaws.com"
 description: "DAX is a managed caching service engineered for Amazon DynamoDB. DAX\
   \ dramatically speeds up database reads by caching frequently-accessed data from\
@@ -11,6 +11,7 @@ description: "DAX is a managed caching service engineered for Amazon DynamoDB. D
 logo: "amazonaws.com-dax-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-dax-stubs.json"
+swagger: "amazonaws.com-dax-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "change-local"
-name: "API V1"
+title: "API V1"
 provider: "change.local"
 description: null
 logo: "change.local-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "change.local-stubs.json"
+swagger: "change.local-swagger.json"
 ---

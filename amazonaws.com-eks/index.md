@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-eks"
-name: "Amazon Elastic Kubernetes Service"
+title: "Amazon Elastic Kubernetes Service"
 provider: "amazonaws.com"
 description: "<p>Amazon Elastic Kubernetes Service (Amazon EKS) is a managed service\
   \ that makes it easy for you to run Kubernetes on Amazon Web Services without needing\
@@ -15,6 +15,7 @@ description: "<p>Amazon Elastic Kubernetes Service (Amazon EKS) is a managed ser
 logo: "amazonaws.com-eks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-eks-stubs.json"
+swagger: "amazonaws.com-eks-swagger.json"
 ---

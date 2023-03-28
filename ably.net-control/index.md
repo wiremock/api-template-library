@@ -1,6 +1,6 @@
 ---
 slug: "ably-net-control"
-name: "Control API v1"
+title: "Control API v1"
 provider: "ably.net"
 description: "Use the Control API to manage your applications, namespaces, keys, queues,\
   \ rules, and more.\n\nDetailed information on using this API can be found in the\
@@ -9,6 +9,7 @@ description: "Use the Control API to manage your applications, namespaces, keys,
 logo: "ably.net-control-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "ably.net-control-stubs.json"
+swagger: "ably.net-control-swagger.json"
 ---

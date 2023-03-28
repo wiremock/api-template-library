@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-accounting"
-name: "Accounting API"
+title: "Accounting API"
 provider: "apideck.com"
 description: "Welcome to the Accounting API.\n\nYou can use this API to access all\
   \ Accounting API endpoints.\n\n## Base URL\n\nThe base URL for all API requests\
@@ -231,6 +231,7 @@ description: "Welcome to the Accounting API.\n\nYou can use this API to access a
 logo: "apideck.com-accounting-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-accounting-stubs.json"
+swagger: "apideck.com-accounting-swagger.json"
 ---

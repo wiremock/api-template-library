@@ -1,6 +1,6 @@
 ---
 slug: "freesound-org"
-name: "Freesound"
+title: "Freesound"
 provider: "freesound.org"
 description: "With the Freesound APIv2 you can browse, search, and retrieve information\
   \ about Freesound users, packs, and the sounds themselves of course. You can find\
@@ -11,6 +11,7 @@ description: "With the Freesound APIv2 you can browse, search, and retrieve info
 logo: "freesound.org-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "freesound.org-stubs.json"
+swagger: "freesound.org-swagger.json"
 ---

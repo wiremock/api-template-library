@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-dataexchange"
-name: "AWS Data Exchange"
+title: "AWS Data Exchange"
 provider: "amazonaws.com"
 description: "<p>AWS Data Exchange is a service that makes it easy for AWS customers\
   \ to exchange data in the cloud. You can use the AWS Data Exchange APIs to create,\
@@ -23,6 +23,7 @@ description: "<p>AWS Data Exchange is a service that makes it easy for AWS custo
 logo: "amazonaws.com-dataexchange-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-dataexchange-stubs.json"
+swagger: "amazonaws.com-dataexchange-swagger.json"
 ---

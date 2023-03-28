@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-redact"
-name: "Redact API"
+title: "Redact API"
 provider: "nexmo.com"
 description: "The [Redact API](/redact/overview) helps organisations meet their privacy\
   \ compliance obligations. It provides controlled, on-demand redaction of private\
@@ -12,4 +12,5 @@ logo: "nexmo.com-redact-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-redact-stubs.json"
+swagger: "nexmo.com-redact-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "healthcare-gov"
-name: "Healthcare"
+title: "Healthcare"
 provider: "healthcare.gov"
 description: null
 logo: "healthcare.gov-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "healthcare.gov-stubs.json"
+swagger: "healthcare.gov-swagger.json"
 ---

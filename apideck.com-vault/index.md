@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-vault"
-name: "Vault API"
+title: "Vault API"
 provider: "apideck.com"
 description: "Welcome to the Vault API 👋\n\nWhen you're looking to connect to an\
   \ API, the first step is authentication.\n\nVault helps you handle OAuth flows,\
@@ -104,6 +104,7 @@ description: "Welcome to the Vault API 👋\n\nWhen you're looking to connect to
 logo: "apideck.com-vault-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-vault-stubs.json"
+swagger: "apideck.com-vault-swagger.json"
 ---

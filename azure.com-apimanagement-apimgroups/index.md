@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimgroups"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Group entity in your\
   \ Azure API Management deployment. Groups are used to manage the visibility of products\
@@ -19,6 +19,7 @@ description: "Use these REST APIs for performing operations on Group entity in y
 logo: "azure.com-apimanagement-apimgroups-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimgroups-stubs.json"
+swagger: "azure.com-apimanagement-apimgroups-swagger.json"
 ---

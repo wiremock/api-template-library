@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-braket"
-name: "Braket"
+title: "Braket"
 provider: "amazonaws.com"
 description: "<p>The Amazon Braket API Reference provides information about the operations\
   \ and structures supported in Amazon Braket.</p> <p>Additional Resources:</p> <ul>\
@@ -9,6 +9,7 @@ description: "<p>The Amazon Braket API Reference provides information about the 
 logo: "amazonaws.com-braket-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-braket-stubs.json"
+swagger: "amazonaws.com-braket-swagger.json"
 ---

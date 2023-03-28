@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-machinelearning-commitmentPlans"
-name: "Azure ML Commitment Plans Management Client"
+title: "Azure ML Commitment Plans Management Client"
 provider: "azure.com"
 description: "These APIs allow end users to operate on Azure Machine Learning Commitment\
   \ Plans resources and their child Commitment Association resources. They support\
@@ -10,6 +10,7 @@ description: "These APIs allow end users to operate on Azure Machine Learning Co
 logo: "azure.com-machinelearning-commitmentPlans-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearning-commitmentPlans-stubs.json"
+swagger: "azure.com-machinelearning-commitmentPlans-swagger.json"
 ---

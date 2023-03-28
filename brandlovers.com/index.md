@@ -1,6 +1,6 @@
 ---
 slug: "brandlovers-com"
-name: "BrandLovers Marketplace API V1"
+title: "BrandLovers Marketplace API V1"
 provider: "brandlovers.com"
 description: "Allows sellers to: 1) Load products definitions to the BrandLovers marktplace.\
   \ 2) Receive and update orders status. 3) Receive and update shipping information.\
@@ -9,6 +9,7 @@ description: "Allows sellers to: 1) Load products definitions to the BrandLovers
 logo: "brandlovers.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "brandlovers.com-stubs.json"
+swagger: "brandlovers.com-swagger.json"
 ---

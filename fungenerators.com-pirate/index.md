@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-pirate"
-name: "Pirates API"
+title: "Pirates API"
 provider: "fungenerators.com"
 description: "Ahoy matey! We help the landlubbers to get to know about the seamen\
   \ way! You can generate pirate names, get some real pirate insults and pirate filler\
@@ -9,6 +9,7 @@ description: "Ahoy matey! We help the landlubbers to get to know about the seame
 logo: "fungenerators.com-pirate-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-pirate-stubs.json"
+swagger: "fungenerators.com-pirate-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-qldb-session"
-name: "Amazon QLDB Session"
+title: "Amazon QLDB Session"
 provider: "amazonaws.com"
 description: "<p>The transactional data APIs for Amazon QLDB</p> <note> <p>Instead\
   \ of interacting directly with this API, we recommend using the QLDB driver or the\
@@ -17,6 +17,7 @@ description: "<p>The transactional data APIs for Amazon QLDB</p> <note> <p>Inste
 logo: "amazonaws.com-qldb-session-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-qldb-session-stubs.json"
+swagger: "amazonaws.com-qldb-session-swagger.json"
 ---

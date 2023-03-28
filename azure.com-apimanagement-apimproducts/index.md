@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimproducts"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Product entity associated\
   \ with your Azure API Management deployment. The Product entity represents a product\
@@ -10,6 +10,7 @@ description: "Use these REST APIs for performing operations on Product entity as
 logo: "azure.com-apimanagement-apimproducts-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimproducts-stubs.json"
+swagger: "azure.com-apimanagement-apimproducts-swagger.json"
 ---

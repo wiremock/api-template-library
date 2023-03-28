@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ds"
-name: "AWS Directory Service"
+title: "AWS Directory Service"
 provider: "amazonaws.com"
 description: "<fullname>Directory Service</fullname> <p>Directory Service is a web\
   \ service that makes it easy for you to setup and run directories in the Amazon\
@@ -19,6 +19,7 @@ description: "<fullname>Directory Service</fullname> <p>Directory Service is a w
 logo: "amazonaws.com-ds-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ds-stubs.json"
+swagger: "amazonaws.com-ds-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "nfusionsolutions-biz"
-name: "nFusion Solutions Market Data API"
+title: "nFusion Solutions Market Data API"
 provider: "nfusionsolutions.biz"
 description: "[nFusion Solutions](https://nfusionsolutions.com) provides [REST APIs](https://nfusionsolutions.com/data-feeds/)\
   \ that deliver enterprise-grade financial data. Data sets include real-time and\
@@ -14,6 +14,7 @@ description: "[nFusion Solutions](https://nfusionsolutions.com) provides [REST A
 logo: "nfusionsolutions.biz-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "nfusionsolutions.biz-stubs.json"
+swagger: "nfusionsolutions.biz-swagger.json"
 ---

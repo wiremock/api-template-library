@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-resources-features"
-name: "FeatureClient"
+title: "FeatureClient"
 provider: "azure.com"
 description: "Azure Feature Exposure Control (AFEC) provides a mechanism for the resource\
   \ providers to control feature exposure to users. Resource providers typically use\
@@ -10,6 +10,7 @@ description: "Azure Feature Exposure Control (AFEC) provides a mechanism for the
 logo: "azure.com-resources-features-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-resources-features-stubs.json"
+swagger: "azure.com-resources-features-swagger.json"
 ---

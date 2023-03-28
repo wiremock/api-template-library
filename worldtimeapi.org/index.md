@@ -1,11 +1,12 @@
 ---
 slug: "worldtimeapi-org"
-name: "World Time API"
+title: "World Time API"
 provider: "worldtimeapi.org"
 description: "A simple API to get the current time based on a request with a timezone."
 logo: "worldtimeapi.org-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "worldtimeapi.org-stubs.json"
+swagger: "worldtimeapi.org-swagger.json"
 ---

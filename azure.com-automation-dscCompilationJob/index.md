@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-automation-dscCompilationJob"
-name: "AutomationManagement"
+title: "AutomationManagement"
 provider: "azure.com"
 description: null
 logo: "azure.com-automation-dscCompilationJob-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-automation-dscCompilationJob-stubs.json"
+swagger: "azure.com-automation-dscCompilationJob-swagger.json"
 ---

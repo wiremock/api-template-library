@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-databox"
-name: "DataBoxManagementClient"
+title: "DataBoxManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-databox-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-databox-stubs.json"
+swagger: "azure.com-databox-swagger.json"
 ---

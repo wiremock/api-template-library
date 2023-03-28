@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-DataProtectionService"
-name: "Adyen Data Protection API"
+title: "Adyen Data Protection API"
 provider: "adyen.com"
 description: "Adyen Data Protection API provides a way for you to process [Subject\
   \ Erasure Requests](https://gdpr-info.eu/art-17-gdpr/) as mandated in GDPR.\n\n\
@@ -20,6 +20,7 @@ description: "Adyen Data Protection API provides a way for you to process [Subje
 logo: "adyen.com-DataProtectionService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-DataProtectionService-stubs.json"
+swagger: "adyen.com-DataProtectionService-swagger.json"
 ---

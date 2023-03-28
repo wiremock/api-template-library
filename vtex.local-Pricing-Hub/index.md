@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Pricing-Hub"
-name: "Pricing Hub"
+title: "Pricing Hub"
 provider: "vtex.local"
 description: "> This feature is in closed beta, available only for selected customers.\
   \ If you have any questions, contact our [Support](https://support.vtex.com/hc/en-us/requests).\
@@ -99,4 +99,5 @@ logo: "vtex.local-Pricing-Hub-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Pricing-Hub-stubs.json"
+swagger: "vtex.local-Pricing-Hub-swagger.json"
 ---

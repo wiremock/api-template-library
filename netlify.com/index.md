@@ -1,6 +1,6 @@
 ---
 slug: "netlify-com"
-name: "Netlify's API documentation"
+title: "Netlify's API documentation"
 provider: "netlify.com"
 description: "Netlify is a hosting service for the programmable web. It understands\
   \ your documents and provides an API to handle atomic deploys of websites, manage\
@@ -15,6 +15,7 @@ description: "Netlify is a hosting service for the programmable web. It understa
 logo: "netlify.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "netlify.com-stubs.json"
+swagger: "netlify.com-swagger.json"
 ---

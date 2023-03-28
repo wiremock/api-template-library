@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-apigee"
-name: "Apigee API"
+title: "Apigee API"
 provider: "googleapis.com"
 description: "Use the Apigee API to programmatically develop and manage APIs with\
   \ a set of RESTful operations. Develop and secure API proxies, deploy and undeploy\
@@ -9,7 +9,8 @@ description: "Use the Apigee API to programmatically develop and manage APIs wit
 logo: "googleapis.com-apigee-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-apigee-stubs.json"
+swagger: "googleapis.com-apigee-swagger.json"
 ---

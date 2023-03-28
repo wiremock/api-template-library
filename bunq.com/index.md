@@ -1,6 +1,6 @@
 ---
 slug: "bunq-com"
-name: "bunq API"
+title: "bunq API"
 provider: "bunq.com"
 description: "***UPDATE:*** *We have released a [beta version of the new bunq API\
   \ documentation.](https://beta.doc.bunq.com)*\n\n***NOTICE:***  *We have updated\
@@ -868,6 +868,7 @@ description: "***UPDATE:*** *We have released a [beta version of the new bunq AP
 logo: "bunq.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "bunq.com-stubs.json"
+swagger: "bunq.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "elmah-io"
-name: "elmah.io API"
+title: "elmah.io API"
 provider: "elmah.io"
 description: "This is the public REST API for elmah.io. All of the integrations communicates\
   \ with elmah.io through this API.<br/><br/>For additional help getting started with\
@@ -11,6 +11,7 @@ description: "This is the public REST API for elmah.io. All of the integrations 
 logo: "elmah.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "elmah.io-stubs.json"
+swagger: "elmah.io-swagger.json"
 ---

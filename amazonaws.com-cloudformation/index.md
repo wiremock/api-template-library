@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudformation"
-name: "AWS CloudFormation"
+title: "AWS CloudFormation"
 provider: "amazonaws.com"
 description: "<fullname>CloudFormation</fullname> <p>CloudFormation allows you to\
   \ create and manage Amazon Web Services infrastructure deployments predictably and\
@@ -21,6 +21,7 @@ description: "<fullname>CloudFormation</fullname> <p>CloudFormation allows you t
 logo: "amazonaws.com-cloudformation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudformation-stubs.json"
+swagger: "amazonaws.com-cloudformation-swagger.json"
 ---

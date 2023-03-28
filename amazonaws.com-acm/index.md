@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-acm"
-name: "AWS Certificate Manager"
+title: "AWS Certificate Manager"
 provider: "amazonaws.com"
 description: "<fullname>Certificate Manager</fullname> <p>You can use Certificate\
   \ Manager (ACM) to manage SSL/TLS certificates for your Amazon Web Services-based\
@@ -9,6 +9,7 @@ description: "<fullname>Certificate Manager</fullname> <p>You can use Certificat
 logo: "amazonaws.com-acm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-acm-stubs.json"
+swagger: "amazonaws.com-acm-swagger.json"
 ---

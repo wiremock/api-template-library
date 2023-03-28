@@ -1,11 +1,12 @@
 ---
 slug: "apple-com-app-store-connect"
-name: "App Store Connect API"
+title: "App Store Connect API"
 provider: "apple.com"
 description: null
 logo: "apple.com-app-store-connect-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apple.com-app-store-connect-stubs.json"
+swagger: "apple.com-app-store-connect-swagger.json"
 ---

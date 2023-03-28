@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-chromepolicy"
-name: "Chrome Policy API"
+title: "Chrome Policy API"
 provider: "googleapis.com"
 description: "The Chrome Policy API is a suite of services that allows Chrome administrators\
   \ to control the policies applied to their managed Chrome OS devices and Chrome\
@@ -8,7 +8,8 @@ description: "The Chrome Policy API is a suite of services that allows Chrome ad
 logo: "googleapis.com-chromepolicy-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-chromepolicy-stubs.json"
+swagger: "googleapis.com-chromepolicy-swagger.json"
 ---

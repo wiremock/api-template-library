@@ -1,6 +1,6 @@
 ---
 slug: "meshery-local"
-name: "Meshery API."
+title: "Meshery API."
 provider: "meshery.local"
 description: "the purpose of this application is to provide an application\nthat is\
   \ using plain go code to define an API\n\nThis should demonstrate all the possible\
@@ -9,6 +9,7 @@ description: "the purpose of this application is to provide an application\nthat
 logo: "meshery.local-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "meshery.local-stubs.json"
+swagger: "meshery.local-swagger.json"
 ---

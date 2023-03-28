@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-RecurringService"
-name: "Adyen Recurring API"
+title: "Adyen Recurring API"
 provider: "adyen.com"
 description: "The Recurring APIs allow you to manage and remove your tokens or saved\
   \ payment details. Tokens should be created with validation during a payment request.\n\
@@ -24,6 +24,7 @@ description: "The Recurring APIs allow you to manage and remove your tokens or s
 logo: "adyen.com-RecurringService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-RecurringService-stubs.json"
+swagger: "adyen.com-RecurringService-swagger.json"
 ---

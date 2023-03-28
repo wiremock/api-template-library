@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-commentanalyzer"
-name: "Perspective Comment Analyzer API"
+title: "Perspective Comment Analyzer API"
 provider: "googleapis.com"
 description: "The Perspective Comment Analyzer API provides information about the\
   \ potential impact of a comment on a conversation (e.g. it can provide a score for\
@@ -11,7 +11,8 @@ description: "The Perspective Comment Analyzer API provides information about th
 logo: "googleapis.com-commentanalyzer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-commentanalyzer-stubs.json"
+swagger: "googleapis.com-commentanalyzer-swagger.json"
 ---

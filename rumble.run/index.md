@@ -1,6 +1,6 @@
 ---
 slug: "rumble-run"
-name: "Rumble API (deprecated)"
+title: "Rumble API (deprecated)"
 provider: "rumble.run"
 description: "<p><b><i>Rumble Network Discovery is now runZero. <a href=\"https://www.runzero.com/blog/introducing-runzero/\"\
   >Read the announcement</a></i></b>.</p> <p>This API is frozen and no longer being\
@@ -9,6 +9,7 @@ description: "<p><b><i>Rumble Network Discovery is now runZero. <a href=\"https:
 logo: "rumble.run-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "monitoring"
+- "monitoring"
 stubs: "rumble.run-stubs.json"
+swagger: "rumble.run-swagger.json"
 ---

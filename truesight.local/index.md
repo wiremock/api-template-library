@@ -1,11 +1,12 @@
 ---
 slug: "truesight-local"
-name: "Hardware Sentry TrueSight Presentation Server REST API"
+title: "Hardware Sentry TrueSight Presentation Server REST API"
 provider: "truesight.local"
 description: "Hardware Sentry TrueSight Presentation Server REST API"
 logo: "truesight.local-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "iot"
+- "iot"
 stubs: "truesight.local-stubs.json"
+swagger: "truesight.local-swagger.json"
 ---

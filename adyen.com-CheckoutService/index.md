@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-CheckoutService"
-name: "Adyen Checkout API"
+title: "Adyen Checkout API"
 provider: "adyen.com"
 description: "Adyen Checkout API provides a simple and flexible way to initiate and\
   \ authorise online payments. You can use the same integration for payments made\
@@ -27,6 +27,7 @@ description: "Adyen Checkout API provides a simple and flexible way to initiate 
 logo: "adyen.com-CheckoutService-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-CheckoutService-stubs.json"
+swagger: "adyen.com-CheckoutService-swagger.json"
 ---

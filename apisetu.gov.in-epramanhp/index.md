@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-epramanhp"
-name: "Himachal Pradesh Department of Revenue, Himachal Pradesh"
+title: "Himachal Pradesh Department of Revenue, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Lok Praman Patra (http://admis.hp.nic.in/epraman/) is the online service\
   \ delivery portal by Himachal Pradesh Govt. Certain documents issued by it (e.g.\
@@ -9,6 +9,7 @@ description: "Lok Praman Patra (http://admis.hp.nic.in/epraman/) is the online s
 logo: "apisetu.gov.in-epramanhp-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-epramanhp-stubs.json"
+swagger: "apisetu.gov.in-epramanhp-swagger.json"
 ---

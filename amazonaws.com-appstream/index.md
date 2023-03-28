@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-appstream"
-name: "Amazon AppStream"
+title: "Amazon AppStream"
 provider: "amazonaws.com"
 description: "<fullname>Amazon AppStream 2.0</fullname> <p>This is the <i>Amazon AppStream\
   \ 2.0 API Reference</i>. This documentation provides descriptions and syntax for\
@@ -20,6 +20,7 @@ description: "<fullname>Amazon AppStream 2.0</fullname> <p>This is the <i>Amazon
 logo: "amazonaws.com-appstream-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-appstream-stubs.json"
+swagger: "amazonaws.com-appstream-swagger.json"
 ---

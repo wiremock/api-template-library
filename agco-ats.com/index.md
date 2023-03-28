@@ -1,11 +1,12 @@
 ---
 slug: "agco-ats-com"
-name: "AGCO API"
+title: "AGCO API"
 provider: "agco-ats.com"
 description: null
 logo: "agco-ats.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "agco-ats.com-stubs.json"
+swagger: "agco-ats.com-swagger.json"
 ---

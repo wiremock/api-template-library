@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ssm-contacts"
-name: "AWS Systems Manager Incident Manager Contacts"
+title: "AWS Systems Manager Incident Manager Contacts"
 provider: "amazonaws.com"
 description: "<p>Systems Manager Incident Manager is an incident management console\
   \ designed to help users mitigate and recover from incidents affecting their Amazon\
@@ -14,6 +14,7 @@ description: "<p>Systems Manager Incident Manager is an incident management cons
 logo: "amazonaws.com-ssm-contacts-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ssm-contacts-stubs.json"
+swagger: "amazonaws.com-ssm-contacts-swagger.json"
 ---

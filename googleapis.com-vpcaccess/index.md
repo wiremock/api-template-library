@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-vpcaccess"
-name: "Serverless VPC Access API"
+title: "Serverless VPC Access API"
 provider: "googleapis.com"
 description: "API for managing VPC access connectors."
 logo: "googleapis.com-vpcaccess-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-vpcaccess-stubs.json"
+swagger: "googleapis.com-vpcaccess-swagger.json"
 ---

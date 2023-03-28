@@ -1,6 +1,6 @@
 ---
 slug: "rapidapi-com-idealspot-geodata"
-name: "IdealSpot GeoData"
+title: "IdealSpot GeoData"
 provider: "rapidapi.com"
 description: "Hyperlocal Demographics, Vehicle Traffic, Economic, Market Signals,\
   \ and More. Use this API to request IdealSpot hyperlocal geospatial market insight\
@@ -60,6 +60,7 @@ description: "Hyperlocal Demographics, Vehicle Traffic, Economic, Market Signals
 logo: "rapidapi.com-idealspot-geodata-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "text"
+- "text"
 stubs: "rapidapi.com-idealspot-geodata-stubs.json"
+swagger: "rapidapi.com-idealspot-geodata-swagger.json"
 ---

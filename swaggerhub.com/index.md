@@ -1,6 +1,6 @@
 ---
 slug: "swaggerhub-com"
-name: "SwaggerHub Registry API"
+title: "SwaggerHub Registry API"
 provider: "swaggerhub.com"
 description: "# Overview\nUse SwaggerHub Registry API to access, manage, and update\
   \ the following resources in SwaggerHub, bypassing the web interface:\n  * APIs\n\
@@ -28,6 +28,7 @@ description: "# Overview\nUse SwaggerHub Registry API to access, manage, and upd
 logo: "swaggerhub.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "swaggerhub.com-stubs.json"
+swagger: "swaggerhub.com-swagger.json"
 ---

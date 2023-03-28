@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ram"
-name: "AWS Resource Access Manager"
+title: "AWS Resource Access Manager"
 provider: "amazonaws.com"
 description: "<p>This is the <i>Resource Access Manager API Reference</i>. This documentation\
   \ provides descriptions and syntax for each of the actions and data types in RAM.\
@@ -17,6 +17,7 @@ description: "<p>This is the <i>Resource Access Manager API Reference</i>. This 
 logo: "amazonaws.com-ram-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ram-stubs.json"
+swagger: "amazonaws.com-ram-swagger.json"
 ---

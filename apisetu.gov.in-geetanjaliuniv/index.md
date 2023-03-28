@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-geetanjaliuniv"
-name: "Geetanjali University, Udaipur"
+title: "Geetanjali University, Udaipur"
 provider: "apisetu.gov.in"
 description: "Geetanjali University, Udaipur (http://www.geetanjaliuniversity.com/)\
   \ is issuing Degree certificates through DigiLocker. These can be pulled by students\
@@ -9,6 +9,7 @@ description: "Geetanjali University, Udaipur (http://www.geetanjaliuniversity.co
 logo: "apisetu.gov.in-geetanjaliuniv-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-geetanjaliuniv-stubs.json"
+swagger: "apisetu.gov.in-geetanjaliuniv-swagger.json"
 ---

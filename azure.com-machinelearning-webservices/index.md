@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-machinelearning-webservices"
-name: "Azure ML Web Services Management Client"
+title: "Azure ML Web Services Management Client"
 provider: "azure.com"
 description: "These APIs allow end users to operate on Azure Machine Learning Web\
   \ Services resources. They support the following operations:<ul><li>Create or update\
@@ -10,6 +10,7 @@ description: "These APIs allow end users to operate on Azure Machine Learning We
 logo: "azure.com-machinelearning-webservices-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearning-webservices-stubs.json"
+swagger: "azure.com-machinelearning-webservices-swagger.json"
 ---

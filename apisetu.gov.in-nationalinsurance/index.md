@@ -1,11 +1,12 @@
 ---
 slug: "apisetu-gov-in-nationalinsurance"
-name: "National Insurance Company Ltd."
+title: "National Insurance Company Ltd."
 provider: "apisetu.gov.in"
 description: "APIs provided by National Insurance Company Ltd.."
 logo: "apisetu.gov.in-nationalinsurance-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-nationalinsurance-stubs.json"
+swagger: "apisetu.gov.in-nationalinsurance-swagger.json"
 ---

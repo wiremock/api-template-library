@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-imagebuilder"
-name: "EC2 Image Builder"
+title: "EC2 Image Builder"
 provider: "amazonaws.com"
 description: "EC2 Image Builder is a fully managed Amazon Web Services service that\
   \ makes it easier to automate the creation, management, and deployment of customized,\
@@ -9,6 +9,7 @@ description: "EC2 Image Builder is a fully managed Amazon Web Services service t
 logo: "amazonaws.com-imagebuilder-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-imagebuilder-stubs.json"
+swagger: "amazonaws.com-imagebuilder-swagger.json"
 ---

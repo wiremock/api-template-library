@@ -1,6 +1,6 @@
 ---
 slug: "apiz-ebay-com-commerce-identity"
-name: "Identity API"
+title: "Identity API"
 provider: "apiz.ebay.com"
 description: "<span class=\"tablenote\"><b>Note:</b> Not all the account related fields\
   \ are returned for an authenticated user. The fields returned in the response are\
@@ -12,6 +12,7 @@ description: "<span class=\"tablenote\"><b>Note:</b> Not all the account related
 logo: "apiz.ebay.com-commerce-identity-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "apiz.ebay.com-commerce-identity-stubs.json"
+swagger: "apiz.ebay.com-commerce-identity-swagger.json"
 ---

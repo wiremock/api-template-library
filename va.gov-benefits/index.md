@@ -1,6 +1,6 @@
 ---
 slug: "va-gov-benefits"
-name: "Benefits Intake"
+title: "Benefits Intake"
 provider: "va.gov"
 description: "The Benefits Intake API allows authorized third-party systems used by\
   \ Veteran Service Organizations (VSOs), agencies, and Veterans to digitally submit\
@@ -132,6 +132,7 @@ description: "The Benefits Intake API allows authorized third-party systems used
 logo: "va.gov-benefits-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "va.gov-benefits-stubs.json"
+swagger: "va.gov-benefits-swagger.json"
 ---

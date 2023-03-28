@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-HopService"
-name: "Hosted onboarding API"
+title: "Hosted onboarding API"
 provider: "adyen.com"
 description: "This API is used for the classic integration. If you are just starting\
   \ your implementation, refer to our [new integration guide](https://docs.adyen.com/marketplaces-and-platforms)\
@@ -23,6 +23,7 @@ description: "This API is used for the classic integration. If you are just star
 logo: "adyen.com-HopService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-HopService-stubs.json"
+swagger: "adyen.com-HopService-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-network-availableServiceAliases"
-name: "NetworkManagementClient"
+title: "NetworkManagementClient"
 provider: "azure.com"
 description: "The Microsoft Azure Network management API provides a RESTful set of\
   \ web services that interact with Microsoft Azure Networks service to manage your\
@@ -9,6 +9,7 @@ description: "The Microsoft Azure Network management API provides a RESTful set 
 logo: "azure.com-network-availableServiceAliases-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-network-availableServiceAliases-stubs.json"
+swagger: "azure.com-network-availableServiceAliases-swagger.json"
 ---

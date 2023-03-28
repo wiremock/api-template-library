@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-cloudsearch"
-name: "Cloud Search API"
+title: "Cloud Search API"
 provider: "googleapis.com"
 description: "Cloud Search provides cloud-based search capabilities over Google Workspace\
   \ data. The Cloud Search API allows indexing of non-Google Workspace data into Cloud\
@@ -8,7 +8,8 @@ description: "Cloud Search provides cloud-based search capabilities over Google 
 logo: "googleapis.com-cloudsearch-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudsearch-stubs.json"
+swagger: "googleapis.com-cloudsearch-swagger.json"
 ---

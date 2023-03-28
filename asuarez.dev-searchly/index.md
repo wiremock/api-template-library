@@ -1,6 +1,6 @@
 ---
 slug: "asuarez-dev-searchly"
-name: "SearchLy API v1"
+title: "SearchLy API v1"
 provider: "asuarez.dev"
 description: "# Introduction\nThe SearchLy API provides similarity searching based\
   \ on song lyrics.\n\n# Operations\nThe API allows for the `/similarity/by_song`\
@@ -23,6 +23,7 @@ description: "# Introduction\nThe SearchLy API provides similarity searching bas
 logo: "asuarez.dev-searchly-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
+- "media"
 stubs: "asuarez.dev-searchly-stubs.json"
+swagger: "asuarez.dev-searchly-swagger.json"
 ---

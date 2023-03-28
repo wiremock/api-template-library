@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-monitor-actionGroups_API"
-name: "Azure Action Groups"
+title: "Azure Action Groups"
 provider: "azure.com"
 description: null
 logo: "azure.com-monitor-actionGroups_API-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-monitor-actionGroups_API-stubs.json"
+swagger: "azure.com-monitor-actionGroups_API-swagger.json"
 ---

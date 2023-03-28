@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-gamelift"
-name: "Amazon GameLift"
+title: "Amazon GameLift"
 provider: "amazonaws.com"
 description: "<p>Amazon GameLift provides solutions for hosting session-based multiplayer\
   \ game servers in the cloud, including tools for deploying, operating, and scaling\
@@ -37,6 +37,7 @@ description: "<p>Amazon GameLift provides solutions for hosting session-based mu
 logo: "amazonaws.com-gamelift-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-gamelift-stubs.json"
+swagger: "amazonaws.com-gamelift-swagger.json"
 ---

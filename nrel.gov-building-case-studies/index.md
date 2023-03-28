@@ -1,6 +1,6 @@
 ---
 slug: "nrel-gov-building-case-studies"
-name: "High Performance Building Database"
+title: "High Performance Building Database"
 provider: "nrel.gov"
 description: "The Buildings Database is a shared resource for the building industry.\
   \ The Database, developed by the U.S. Department of Energy and the National Renewable\
@@ -10,6 +10,7 @@ description: "The Buildings Database is a shared resource for the building indus
 logo: "nrel.gov-building-case-studies-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "nrel.gov-building-case-studies-stubs.json"
+swagger: "nrel.gov-building-case-studies-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-elasticache"
-name: "Amazon ElastiCache"
+title: "Amazon ElastiCache"
 provider: "amazonaws.com"
 description: "<fullname>Amazon ElastiCache</fullname> <p>Amazon ElastiCache is a web\
   \ service that makes it easier to set up, operate, and scale a distributed cache\
@@ -14,6 +14,7 @@ description: "<fullname>Amazon ElastiCache</fullname> <p>Amazon ElastiCache is a
 logo: "amazonaws.com-elasticache-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-elasticache-stubs.json"
+swagger: "amazonaws.com-elasticache-swagger.json"
 ---

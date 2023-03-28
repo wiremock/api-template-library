@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-greengrass"
-name: "AWS Greengrass"
+title: "AWS Greengrass"
 provider: "amazonaws.com"
 description: "AWS IoT Greengrass seamlessly extends AWS onto physical devices so they\
   \ can act locally on the data they generate, while still using the cloud for management,\
@@ -11,6 +11,7 @@ description: "AWS IoT Greengrass seamlessly extends AWS onto physical devices so
 logo: "amazonaws.com-greengrass-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-greengrass-stubs.json"
+swagger: "amazonaws.com-greengrass-swagger.json"
 ---

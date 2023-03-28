@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-datafactory"
-name: "DataFactoryManagementClient"
+title: "DataFactoryManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-datafactory-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-datafactory-stubs.json"
+swagger: "azure.com-datafactory-swagger.json"
 ---

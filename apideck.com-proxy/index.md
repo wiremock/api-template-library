@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-proxy"
-name: "Proxy API"
+title: "Proxy API"
 provider: "apideck.com"
 description: "Welcome to the Proxy API.\n\nYou can use this API to access all Proxy\
   \ API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -167,6 +167,7 @@ description: "Welcome to the Proxy API.\n\nYou can use this API to access all Pr
 logo: "apideck.com-proxy-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-proxy-stubs.json"
+swagger: "apideck.com-proxy-swagger.json"
 ---

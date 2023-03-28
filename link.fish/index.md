@@ -1,6 +1,6 @@
 ---
 slug: "link-fish"
-name: "link.fish API"
+title: "link.fish API"
 provider: "link.fish"
 description: "API to easily extract data from websites.\n\n\n# Base URL\n\n\nAll URLs\
   \ referenced in the documentation have the following base:\n\n\n```\nhttps://api.link.fish\n\
@@ -45,6 +45,7 @@ description: "API to easily extract data from websites.\n\n\n# Base URL\n\n\nAll
 logo: "link.fish-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "link.fish-stubs.json"
+swagger: "link.fish-swagger.json"
 ---

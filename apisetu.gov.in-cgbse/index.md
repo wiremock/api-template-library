@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-cgbse"
-name: "Chhattisgarh State Board of Secondary Education, Chhattisgarh"
+title: "Chhattisgarh State Board of Secondary Education, Chhattisgarh"
 provider: "apisetu.gov.in"
 description: "CBBSE (http://cgbse.nic.in) is issuing marksheets  through DigiLocker.\
   \ These can be pulled by students into their DigiLocker accounts. Currently available\
@@ -8,6 +8,7 @@ description: "CBBSE (http://cgbse.nic.in) is issuing marksheets  through DigiLoc
 logo: "apisetu.gov.in-cgbse-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-cgbse-stubs.json"
+swagger: "apisetu.gov.in-cgbse-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Intelligent-Search-API"
-name: "Intelligent Search API"
+title: "Intelligent Search API"
 provider: "vtex.local"
 description: ">ℹ️ Onboarding guide\r\n>\r\n> Check the new [Search onboarding guide](https://developers.vtex.com/docs/guides/search-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -20,4 +20,5 @@ logo: "vtex.local-Intelligent-Search-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Intelligent-Search-API-stubs.json"
+swagger: "vtex.local-Intelligent-Search-API-swagger.json"
 ---

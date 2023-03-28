@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-transportts"
-name: "State Transport Department, Telangana"
+title: "State Transport Department, Telangana"
 provider: "apisetu.gov.in"
 description: "Driving License (DL) and Vehicle Registration Certificate (RC) of the\
   \ State, as available on Parivahan Sewa (http://parivahan.co.in/) of Ministry of\
@@ -9,6 +9,7 @@ description: "Driving License (DL) and Vehicle Registration Certificate (RC) of 
 logo: "apisetu.gov.in-transportts-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-transportts-stubs.json"
+swagger: "apisetu.gov.in-transportts-swagger.json"
 ---

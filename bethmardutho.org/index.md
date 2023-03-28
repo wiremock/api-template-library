@@ -1,6 +1,6 @@
 ---
 slug: "bethmardutho-org"
-name: "SEDRA IV API"
+title: "SEDRA IV API"
 provider: "bethmardutho.org"
 description: "The SEDRA API is documented in **OpenAPI format** and uses [ReDoc](https://github.com/Rebilly/ReDoc)\
   \ for documentation.\n# Introduction\nThis document describes the JSON API for the\
@@ -36,4 +36,5 @@ logo: "bethmardutho.org-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags: []
 stubs: "bethmardutho.org-stubs.json"
+swagger: "bethmardutho.org-swagger.json"
 ---

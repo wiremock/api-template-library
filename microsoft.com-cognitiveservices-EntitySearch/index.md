@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-EntitySearch"
-name: "Entity Search Client"
+title: "Entity Search Client"
 provider: "microsoft.com"
 description: "The Entity Search API lets you send a search query to Bing and get back\
   \ search results that include entities and places. Place results include restaurants,\
@@ -11,7 +11,8 @@ description: "The Entity Search API lets you send a search query to Bing and get
 logo: "microsoft.com-cognitiveservices-EntitySearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-EntitySearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-EntitySearch-swagger.json"
 ---

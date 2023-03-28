@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-mybusinessplaceactions"
-name: "My Business Place Actions API"
+title: "My Business Place Actions API"
 provider: "googleapis.com"
 description: "The My Business Place Actions API provides an interface for managing\
   \ place action links of a location on Google. Note - If you have a quota of 0 after\
@@ -8,7 +8,8 @@ description: "The My Business Place Actions API provides an interface for managi
 logo: "googleapis.com-mybusinessplaceactions-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-mybusinessplaceactions-stubs.json"
+swagger: "googleapis.com-mybusinessplaceactions-swagger.json"
 ---

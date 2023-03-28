@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-logs"
-name: "Amazon CloudWatch Logs"
+title: "Amazon CloudWatch Logs"
 provider: "amazonaws.com"
 description: "<p>You can use Amazon CloudWatch Logs to monitor, store, and access\
   \ your log files from EC2 instances, CloudTrail, and other sources. You can then\
@@ -29,6 +29,7 @@ description: "<p>You can use Amazon CloudWatch Logs to monitor, store, and acces
 logo: "amazonaws.com-logs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-logs-stubs.json"
+swagger: "amazonaws.com-logs-swagger.json"
 ---

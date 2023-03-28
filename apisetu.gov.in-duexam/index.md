@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-duexam"
-name: "University Of Delhi"
+title: "University Of Delhi"
 provider: "apisetu.gov.in"
 description: "University of Delhi (http://www.du.ac.in/) is issuing Degree certificates\
   \ through DigiLocker. These can be pulled by students into their DigiLocker accounts.\
@@ -8,6 +8,7 @@ description: "University of Delhi (http://www.du.ac.in/) is issuing Degree certi
 logo: "apisetu.gov.in-duexam-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-duexam-stubs.json"
+swagger: "apisetu.gov.in-duexam-swagger.json"
 ---

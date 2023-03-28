@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ce"
-name: "AWS Cost Explorer Service"
+title: "AWS Cost Explorer Service"
 provider: "amazonaws.com"
 description: "<p>You can use the Cost Explorer API to programmatically query your\
   \ cost and usage data. You can query for aggregated data such as total monthly costs\
@@ -14,6 +14,7 @@ description: "<p>You can use the Cost Explorer API to programmatically query you
 logo: "amazonaws.com-ce-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ce-stubs.json"
+swagger: "amazonaws.com-ce-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "files-com"
-name: "Files.com API"
+title: "Files.com API"
 provider: "files.com"
 description: null
 logo: "files.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "files.com-stubs.json"
+swagger: "files.com-swagger.json"
 ---

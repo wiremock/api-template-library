@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-logic"
-name: "LogicManagementClient"
+title: "LogicManagementClient"
 provider: "azure.com"
 description: "REST API for Azure Logic Apps."
 logo: "azure.com-logic-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-logic-stubs.json"
+swagger: "azure.com-logic-swagger.json"
 ---

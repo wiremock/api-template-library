@@ -1,11 +1,12 @@
 ---
 slug: "openaq-local"
-name: "OpenAQ"
+title: "OpenAQ"
 provider: "openaq.local"
 description: "API for OpenAQ LCS"
 logo: "openaq.local-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "openaq.local-stubs.json"
+swagger: "openaq.local-swagger.json"
 ---

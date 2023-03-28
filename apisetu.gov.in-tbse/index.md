@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-tbse"
-name: "Tripura State Board of Secondary Education, Tripura"
+title: "Tripura State Board of Secondary Education, Tripura"
 provider: "apisetu.gov.in"
 description: "Tripura Board of Secondary Education, (http://tbse.in) has made available\
   \ Class X (2017-2019) Marksheets in DigiLocker, which can be pulled by students\
@@ -8,6 +8,7 @@ description: "Tripura Board of Secondary Education, (http://tbse.in) has made av
 logo: "apisetu.gov.in-tbse-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-tbse-stubs.json"
+swagger: "apisetu.gov.in-tbse-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "xero-com-xero_bankfeeds"
-name: "Xero Bank Feeds API"
+title: "Xero Bank Feeds API"
 provider: "xero.com"
 description: "The Bank Feeds API is a closed API that is only available to financial\
   \ institutions that have an established financial services partnership with Xero.\
@@ -11,6 +11,7 @@ description: "The Bank Feeds API is a closed API that is only available to finan
 logo: "xero.com-xero_bankfeeds-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "xero.com-xero_bankfeeds-stubs.json"
+swagger: "xero.com-xero_bankfeeds-swagger.json"
 ---

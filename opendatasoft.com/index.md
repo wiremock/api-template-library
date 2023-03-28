@@ -1,11 +1,12 @@
 ---
 slug: "opendatasoft-com"
-name: "opendatasoft"
+title: "opendatasoft"
 provider: "opendatasoft.com"
 description: null
 logo: "opendatasoft.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "opendatasoft.com-stubs.json"
+swagger: "opendatasoft.com-swagger.json"
 ---

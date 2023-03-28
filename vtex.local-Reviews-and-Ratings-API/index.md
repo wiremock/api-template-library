@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Reviews-and-Ratings-API"
-name: "Reviews and Ratings API"
+title: "Reviews and Ratings API"
 provider: "vtex.local"
 description: "\r\nReviews & Ratings is a [VTEX IO native solution](https://developers.vtex.com/vtex-developer-docs/docs/vtex-reviews-and-ratings)\
   \ that allows shoppers to submit reviews and ratings for products, as well as see\
@@ -16,4 +16,5 @@ logo: "vtex.local-Reviews-and-Ratings-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Reviews-and-Ratings-API-stubs.json"
+swagger: "vtex.local-Reviews-and-Ratings-API-swagger.json"
 ---

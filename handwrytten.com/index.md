@@ -1,6 +1,6 @@
 ---
 slug: "handwrytten-com"
-name: "Handwrytten API"
+title: "Handwrytten API"
 provider: "handwrytten.com"
 description: "This is the Handwrytten API for sending cards written in the handwriting\
   \ of your choice.\nUsing this api, you can send cards to users.  You can also customize\
@@ -11,6 +11,7 @@ description: "This is the Handwrytten API for sending cards written in the handw
 logo: "handwrytten.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "handwrytten.com-stubs.json"
+swagger: "handwrytten.com-swagger.json"
 ---

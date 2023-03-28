@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-webrisk"
-name: "Web Risk API"
+title: "Web Risk API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-webrisk-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-webrisk-stubs.json"
+swagger: "googleapis.com-webrisk-swagger.json"
 ---

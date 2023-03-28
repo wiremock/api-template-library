@@ -1,6 +1,6 @@
 ---
 slug: "paylocity-com"
-name: "Paylocity API"
+title: "Paylocity API"
 provider: "paylocity.com"
 description: "For general questions and support of the API, contact: webservices@paylocity.com\r\
   \n# Overview\r\n\r\nPaylocity Web Services API is an externally facing RESTful Internet\
@@ -115,6 +115,7 @@ description: "For general questions and support of the API, contact: webservices
 logo: "paylocity.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "paylocity.com-stubs.json"
+swagger: "paylocity.com-swagger.json"
 ---

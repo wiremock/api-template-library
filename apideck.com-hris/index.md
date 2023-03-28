@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-hris"
-name: "HRIS API"
+title: "HRIS API"
 provider: "apideck.com"
 description: "Welcome to the HRIS API.\n\nYou can use this API to access all HRIS\
   \ API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the HRIS API.\n\nYou can use this API to access all HRI
 logo: "apideck.com-hris-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-hris-stubs.json"
+swagger: "apideck.com-hris-swagger.json"
 ---

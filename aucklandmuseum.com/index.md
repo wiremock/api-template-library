@@ -1,11 +1,12 @@
 ---
 slug: "aucklandmuseum-com"
-name: "Auckland Museum API"
+title: "Auckland Museum API"
 provider: "aucklandmuseum.com"
 description: "This is technical documentation for the Auckland Museum API\n"
 logo: "aucklandmuseum.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "aucklandmuseum.com-stubs.json"
+swagger: "aucklandmuseum.com-swagger.json"
 ---

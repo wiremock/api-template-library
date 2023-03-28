@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-mysql-PerformanceRecommendations"
-name: "MySQLManagementClient"
+title: "MySQLManagementClient"
 provider: "azure.com"
 description: "The Microsoft Azure management API provides create, read, update, and\
   \ delete functionality for Azure MySQL resources including servers, databases, firewall\
@@ -9,6 +9,7 @@ description: "The Microsoft Azure management API provides create, read, update, 
 logo: "azure.com-mysql-PerformanceRecommendations-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-mysql-PerformanceRecommendations-stubs.json"
+swagger: "azure.com-mysql-PerformanceRecommendations-swagger.json"
 ---

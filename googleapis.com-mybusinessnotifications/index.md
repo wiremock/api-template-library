@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-mybusinessnotifications"
-name: "My Business Notifications API"
+title: "My Business Notifications API"
 provider: "googleapis.com"
 description: "The My Business Notification Settings API enables managing notification\
   \ settings for business accounts. Note - If you have a quota of 0 after enabling\
@@ -8,7 +8,8 @@ description: "The My Business Notification Settings API enables managing notific
 logo: "googleapis.com-mybusinessnotifications-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-mybusinessnotifications-stubs.json"
+swagger: "googleapis.com-mybusinessnotifications-swagger.json"
 ---

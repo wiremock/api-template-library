@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-devops-guru"
-name: "Amazon DevOps Guru"
+title: "Amazon DevOps Guru"
 provider: "amazonaws.com"
 description: "<p> Amazon DevOps Guru is a fully managed service that helps you identify\
   \ anomalous behavior in business critical operational applications. You specify\
@@ -21,6 +21,7 @@ description: "<p> Amazon DevOps Guru is a fully managed service that helps you i
 logo: "amazonaws.com-devops-guru-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-devops-guru-stubs.json"
+swagger: "amazonaws.com-devops-guru-swagger.json"
 ---

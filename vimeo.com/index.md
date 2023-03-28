@@ -1,11 +1,12 @@
 ---
 slug: "vimeo-com"
-name: "Vimeo"
+title: "Vimeo"
 provider: "vimeo.com"
 description: null
 logo: "vimeo.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "vimeo.com-stubs.json"
+swagger: "vimeo.com-swagger.json"
 ---

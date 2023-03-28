@@ -1,11 +1,12 @@
 ---
 slug: "hackathonwatch-com"
-name: "HackathonWatch"
+title: "HackathonWatch"
 provider: "hackathonwatch.com"
 description: null
 logo: "hackathonwatch.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "social"
+- "social"
 stubs: "hackathonwatch.com-stubs.json"
+swagger: "hackathonwatch.com-swagger.json"
 ---

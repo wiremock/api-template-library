@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-FundService"
-name: "Fund API"
+title: "Fund API"
 provider: "adyen.com"
 description: "This API is used for the classic integration. If you are just starting\
   \ your implementation, refer to our [new integration guide](https://docs.adyen.com/marketplaces-and-platforms)\
@@ -24,6 +24,7 @@ description: "This API is used for the classic integration. If you are just star
 logo: "adyen.com-FundService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-FundService-stubs.json"
+swagger: "adyen.com-FundService-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-migrateprojects-migrate"
-name: "Azure Migrate Hub"
+title: "Azure Migrate Hub"
 provider: "azure.com"
 description: "Migrate your workloads to Azure."
 logo: "azure.com-migrateprojects-migrate-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-migrateprojects-migrate-stubs.json"
+swagger: "azure.com-migrateprojects-migrate-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-automation-account"
-name: "AutomationManagement"
+title: "AutomationManagement"
 provider: "azure.com"
 description: null
 logo: "azure.com-automation-account-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-automation-account-stubs.json"
+swagger: "azure.com-automation-account-swagger.json"
 ---

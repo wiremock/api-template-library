@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-notificationhubs"
-name: "NotificationHubsManagementClient"
+title: "NotificationHubsManagementClient"
 provider: "azure.com"
 description: "Azure NotificationHub client"
 logo: "azure.com-notificationhubs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-notificationhubs-stubs.json"
+swagger: "azure.com-notificationhubs-swagger.json"
 ---

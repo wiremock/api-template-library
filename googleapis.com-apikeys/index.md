@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-apikeys"
-name: "API Keys API"
+title: "API Keys API"
 provider: "googleapis.com"
 description: "Manages the API keys associated with developer projects."
 logo: "googleapis.com-apikeys-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-apikeys-stubs.json"
+swagger: "googleapis.com-apikeys-swagger.json"
 ---

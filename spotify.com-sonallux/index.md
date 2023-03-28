@@ -1,6 +1,6 @@
 ---
 slug: "spotify-com-sonallux"
-name: "Spotify Web API with fixes and improvements from sonallux"
+title: "Spotify Web API with fixes and improvements from sonallux"
 provider: "spotify.com"
 description: "You can use Spotify's Web API to discover music and podcasts, manage\
   \ your Spotify library, control audio playback, and much more. Browse our available\
@@ -16,6 +16,7 @@ description: "You can use Spotify's Web API to discover music and podcasts, mana
 logo: "spotify.com-sonallux-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
+- "media"
 stubs: "spotify.com-sonallux-stubs.json"
+swagger: "spotify.com-sonallux-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-readerrevenuesubscriptionlinking"
-name: "Reader Revenue Subscription Linking API"
+title: "Reader Revenue Subscription Linking API"
 provider: "googleapis.com"
 description: "readerrevenuesubscriptionlinking.googleapis.com API."
 logo: "googleapis.com-readerrevenuesubscriptionlinking-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-readerrevenuesubscriptionlinking-stubs.json"
+swagger: "googleapis.com-readerrevenuesubscriptionlinking-swagger.json"
 ---

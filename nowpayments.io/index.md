@@ -1,6 +1,6 @@
 ---
 slug: "nowpayments-io"
-name: "NOWPayments API"
+title: "NOWPayments API"
 provider: "nowpayments.io"
 description: "NOWPayments is a non-custodial cryptocurrency payment processing platform.\
   \ Accept payments in a wide range of cryptos and get them instantly converted into\
@@ -116,6 +116,7 @@ description: "NOWPayments is a non-custodial cryptocurrency payment processing p
 logo: "nowpayments.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "nowpayments.io-stubs.json"
+swagger: "nowpayments.io-swagger.json"
 ---

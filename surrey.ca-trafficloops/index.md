@@ -1,6 +1,6 @@
 ---
 slug: "surrey-ca-trafficloops"
-name: "City of Surrey Traffic Loop Count API."
+title: "City of Surrey Traffic Loop Count API."
 provider: "surrey.ca"
 description: "This API provides locations of City of Surrey traffic loops and the\
   \ corresponding traffic loop counts in 15 minute intervals. While the counts are\
@@ -10,6 +10,7 @@ description: "This API provides locations of City of Surrey traffic loops and th
 logo: "surrey.ca-trafficloops-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "surrey.ca-trafficloops-stubs.json"
+swagger: "surrey.ca-trafficloops-swagger.json"
 ---

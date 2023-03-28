@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-analyticsreporting"
-name: "Analytics Reporting API"
+title: "Analytics Reporting API"
 provider: "googleapis.com"
 description: "Accesses Analytics report data."
 logo: "googleapis.com-analyticsreporting-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-analyticsreporting-stubs.json"
+swagger: "googleapis.com-analyticsreporting-swagger.json"
 ---

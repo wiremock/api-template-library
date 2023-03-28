@@ -1,6 +1,6 @@
 ---
 slug: "nytimes-com-geo_api"
-name: "Geographic API"
+title: "Geographic API"
 provider: "nytimes.com"
 description: "The Geographic API extends the Semantic API, using a linked data approach\
   \ to enhance location concepts used in The New York Times' controlled vocabulary\
@@ -9,7 +9,8 @@ description: "The Geographic API extends the Semantic API, using a linked data a
 logo: "nytimes.com-geo_api-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-geo_api-stubs.json"
+swagger: "nytimes.com-geo_api-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "meteosource-com"
-name: "Interactive documentation for your Premium plan"
+title: "Interactive documentation for your Premium plan"
 provider: "meteosource.com"
 description: "\n\nThis interactive documentation is using your API key which is filled\
   \ in automatically, you can find and change this in [your dashboard](https://www.meteosource.com/client).\n\
@@ -14,4 +14,5 @@ logo: "meteosource.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "meteosource.com-stubs.json"
+swagger: "meteosource.com-swagger.json"
 ---

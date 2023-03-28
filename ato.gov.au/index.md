@@ -1,6 +1,6 @@
 ---
 slug: "ato-gov-au"
-name: "Business Registries"
+title: "Business Registries"
 provider: "ato.gov.au"
 description: "# Introduction\nThe Business Registries API is built on HTTP. The API\
   \ is RESTful. It has predictable resource URIs.\n\n  The API is documented in <a\
@@ -54,6 +54,7 @@ description: "# Introduction\nThe Business Registries API is built on HTTP. The 
 logo: "ato.gov.au-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "ato.gov.au-stubs.json"
+swagger: "ato.gov.au-swagger.json"
 ---

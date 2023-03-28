@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Marketplace-Protocol"
-name: "Marketplace Protocol"
+title: "Marketplace Protocol"
 provider: "vtex.local"
 description: "\r\nThe _Marketplace Protocol_ is a set of API requests and definitions\
   \ to help you integrate external sellers into a VTEX marketplace as well as external\
@@ -34,4 +34,5 @@ logo: "vtex.local-Marketplace-Protocol-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Marketplace-Protocol-stubs.json"
+swagger: "vtex.local-Marketplace-Protocol-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-CheckoutUtilityService"
-name: "Adyen Checkout Utility Service"
+title: "Adyen Checkout Utility Service"
 provider: "adyen.com"
 description: "A web service containing utility functions available for merchants integrating\
   \ with Checkout APIs.\n## Authentication\nEach request to the Checkout Utility API\
@@ -17,6 +17,7 @@ description: "A web service containing utility functions available for merchants
 logo: "adyen.com-CheckoutUtilityService-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-CheckoutUtilityService-stubs.json"
+swagger: "adyen.com-CheckoutUtilityService-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-logicAppsManagementClient"
-name: "LogicAppsManagementClient"
+title: "LogicAppsManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-logicAppsManagementClient-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-logicAppsManagementClient-stubs.json"
+swagger: "azure.com-web-logicAppsManagementClient-swagger.json"
 ---

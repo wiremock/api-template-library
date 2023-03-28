@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-mixedreality-spatial-anchors"
-name: "Mixed Reality"
+title: "Mixed Reality"
 provider: "azure.com"
 description: "Mixed Reality Resource Provider Spatial Anchors Resource API"
 logo: "azure.com-mixedreality-spatial-anchors-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-mixedreality-spatial-anchors-stubs.json"
+swagger: "azure.com-mixedreality-spatial-anchors-swagger.json"
 ---

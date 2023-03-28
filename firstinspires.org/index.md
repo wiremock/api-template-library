@@ -1,6 +1,6 @@
 ---
 slug: "firstinspires-org"
-name: "FRC Events"
+title: "FRC Events"
 provider: "firstinspires.org"
 description: "<html><head></head><body><h1 id=\"overview\">Overview</h1>\n<p><em>FIRST</em>/FMS\
   \ FRC Events API is a service to return relevant information about the <em>FIRST</em>\
@@ -176,6 +176,7 @@ description: "<html><head></head><body><h1 id=\"overview\">Overview</h1>\n<p><em
 logo: "firstinspires.org-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "firstinspires.org-stubs.json"
+swagger: "firstinspires.org-swagger.json"
 ---

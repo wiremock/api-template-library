@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-VideoSearch"
-name: "Video Search Client"
+title: "Video Search Client"
 provider: "microsoft.com"
 description: "The Video Search API lets you search on Bing for video that are relevant\
   \ to the user's search query, for insights about a video or for videos that are\
@@ -11,7 +11,8 @@ description: "The Video Search API lets you search on Bing for video that are re
 logo: "microsoft.com-cognitiveservices-VideoSearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-VideoSearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-VideoSearch-swagger.json"
 ---

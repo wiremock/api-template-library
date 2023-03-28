@@ -1,6 +1,6 @@
 ---
 slug: "up-com-au"
-name: "Up API"
+title: "Up API"
 provider: "up.com.au"
 description: "The Up API gives you programmatic access to your balances and\ntransaction\
   \ data. You can request past transactions or set up\nwebhooks to receive real-time\
@@ -9,6 +9,7 @@ description: "The Up API gives you programmatic access to your balances and\ntra
 logo: "up.com.au-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "up.com.au-stubs.json"
+swagger: "up.com.au-swagger.json"
 ---

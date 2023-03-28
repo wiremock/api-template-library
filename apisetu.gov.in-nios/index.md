@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-nios"
-name: "National Institute of Open Schooling"
+title: "National Institute of Open Schooling"
 provider: "apisetu.gov.in"
 description: "National Institute of Open Schooling (NIOS) is issuing marksheets, Provisional\
   \ certificates, migration certificates through DigiLocker. These can be pulled by\
@@ -9,6 +9,7 @@ description: "National Institute of Open Schooling (NIOS) is issuing marksheets,
 logo: "apisetu.gov.in-nios-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-nios-stubs.json"
+swagger: "apisetu.gov.in-nios-swagger.json"
 ---

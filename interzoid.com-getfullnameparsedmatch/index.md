@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getfullnameparsedmatch"
-name: "Interzoid Get Full Name Parsed Match Similarity Key API"
+title: "Interzoid Get Full Name Parsed Match Similarity Key API"
 provider: "interzoid.com"
 description: "This API provides a similarity key used to match with other similar\
   \ full name data when data fields are parsed into first name and last name components,\
@@ -12,6 +12,7 @@ description: "This API provides a similarity key used to match with other simila
 logo: "interzoid.com-getfullnameparsedmatch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getfullnameparsedmatch-stubs.json"
+swagger: "interzoid.com-getfullnameparsedmatch-swagger.json"
 ---

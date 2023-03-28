@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimproperties"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Property entity associated\
   \ with your Azure API Management deployment. API Management policies are a powerful\
@@ -14,6 +14,7 @@ description: "Use these REST APIs for performing operations on Property entity a
 logo: "azure.com-apimanagement-apimproperties-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimproperties-stubs.json"
+swagger: "azure.com-apimanagement-apimproperties-swagger.json"
 ---

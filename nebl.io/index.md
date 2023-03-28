@@ -1,11 +1,12 @@
 ---
 slug: "nebl-io"
-name: "Neblio REST API Suite"
+title: "Neblio REST API Suite"
 provider: "nebl.io"
 description: "APIs for Interacting with NTP1 Tokens & The Neblio Blockchain"
 logo: "nebl.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "enterprise"
+- "enterprise"
 stubs: "nebl.io-stubs.json"
+swagger: "nebl.io-swagger.json"
 ---

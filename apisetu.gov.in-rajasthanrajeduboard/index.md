@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-rajasthanrajeduboard"
-name: "Rajasthan Board of Secondary Education"
+title: "Rajasthan Board of Secondary Education"
 provider: "apisetu.gov.in"
 description: "Board of High School and Intermediate Education, Rajasthan (http://rajeduboard.rajasthan.gov.in/)\
   \ has made available Class X (2018-2019)& Class XII (2019) mark sheet available\
@@ -8,6 +8,7 @@ description: "Board of High School and Intermediate Education, Rajasthan (http:/
 logo: "apisetu.gov.in-rajasthanrajeduboard-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-rajasthanrajeduboard-stubs.json"
+swagger: "apisetu.gov.in-rajasthanrajeduboard-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-edistrictandaman"
-name: "eDistrict Andaman & Nicobar Islands, Andaman & Nicobar"
+title: "eDistrict Andaman & Nicobar Islands, Andaman & Nicobar"
 provider: "apisetu.gov.in"
 description: "eDistrict Andaman (https://edistrict.andaman.gov.in/) is the online\
   \ service delivery portal for Andaman & Nicobar Islands. Certain documents issued\
@@ -9,6 +9,7 @@ description: "eDistrict Andaman (https://edistrict.andaman.gov.in/) is the onlin
 logo: "apisetu.gov.in-edistrictandaman-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-edistrictandaman-stubs.json"
+swagger: "apisetu.gov.in-edistrictandaman-swagger.json"
 ---

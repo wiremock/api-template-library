@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Customer-Credit-API"
-name: "Customer Credit API"
+title: "Customer Credit API"
 provider: "vtex.local"
 description: "With Customer Credit your store can enable **credit payments** through\
   \ the checkout. You can also control **invoices** and the **credit limits** of your\
@@ -16,4 +16,5 @@ logo: "vtex.local-Customer-Credit-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Customer-Credit-API-stubs.json"
+swagger: "vtex.local-Customer-Credit-API-swagger.json"
 ---

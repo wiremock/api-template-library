@@ -1,6 +1,6 @@
 ---
 slug: "rbaskets-in"
-name: "Request Baskets API"
+title: "Request Baskets API"
 provider: "rbaskets.in"
 description: "RESTful API of [Request Baskets](https://rbaskets.in) service.\n\nRequest\
   \ Baskets is an open source project of a service to collect HTTP requests and inspect\
@@ -9,7 +9,8 @@ description: "RESTful API of [Request Baskets](https://rbaskets.in) service.\n\n
 logo: "rbaskets.in-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
-- name: "monitoring"
+- "developer_tools"
+- "monitoring"
 stubs: "rbaskets.in-stubs.json"
+swagger: "rbaskets.in-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-apigateway"
-name: "Amazon API Gateway"
+title: "Amazon API Gateway"
 provider: "amazonaws.com"
 description: "<fullname>Amazon API Gateway</fullname> <p>Amazon API Gateway helps\
   \ developers deliver robust, secure, and scalable mobile and web application back\
@@ -10,6 +10,7 @@ description: "<fullname>Amazon API Gateway</fullname> <p>Amazon API Gateway help
 logo: "amazonaws.com-apigateway-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-apigateway-stubs.json"
+swagger: "amazonaws.com-apigateway-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-marketing"
-name: "Marketing API"
+title: "Marketing API"
 provider: "ebay.com"
 description: "<p>The <i>Marketing API </i> offers two platforms that sellers can use\
   \ to promote and advertise their products:</p> <ul><li><b>Promoted Listings</b>\
@@ -30,6 +30,7 @@ description: "<p>The <i>Marketing API </i> offers two platforms that sellers can
 logo: "ebay.com-sell-marketing-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-marketing-stubs.json"
+swagger: "ebay.com-sell-marketing-swagger.json"
 ---

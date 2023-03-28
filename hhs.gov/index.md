@@ -1,6 +1,6 @@
 ---
 slug: "hhs-gov"
-name: "HHS Media Services API"
+title: "HHS Media Services API"
 provider: "hhs.gov"
 description: "<div class=\"swagger-ui-wrap extraFooter\"><h3>Common Features / Behaviors</h3>\
   \ <div class=\"features\"> <ul> <li><strong>* \"sort\" param:</strong> supports\
@@ -18,6 +18,7 @@ description: "<div class=\"swagger-ui-wrap extraFooter\"><h3>Common Features / B
 logo: "hhs.gov-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "hhs.gov-stubs.json"
+swagger: "hhs.gov-swagger.json"
 ---

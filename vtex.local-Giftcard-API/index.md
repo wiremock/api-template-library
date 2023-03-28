@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Giftcard-API"
-name: "GiftCard API"
+title: "GiftCard API"
 provider: "vtex.local"
 description: ">ℹ️ Onboarding guide\r\n>\r\n> Check the new [Payments onboarding guide](https://developers.vtex.com/docs/guides/payments-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -13,4 +13,5 @@ logo: "vtex.local-Giftcard-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Giftcard-API-stubs.json"
+swagger: "vtex.local-Giftcard-API-swagger.json"
 ---

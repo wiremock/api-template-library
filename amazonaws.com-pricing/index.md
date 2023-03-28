@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-pricing"
-name: "AWS Price List Service"
+title: "AWS Price List Service"
 provider: "amazonaws.com"
 description: "<p>Amazon Web Services Price List API is a centralized and convenient\
   \ way to programmatically query Amazon Web Services for services, products, and\
@@ -23,6 +23,7 @@ description: "<p>Amazon Web Services Price List API is a centralized and conveni
 logo: "amazonaws.com-pricing-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-pricing-stubs.json"
+swagger: "amazonaws.com-pricing-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-cwa"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Water Act\
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Water Act\
   \ (CWA) Rest Services"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
@@ -33,6 +33,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-cwa-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-cwa-stubs.json"
+swagger: "epa.gov-cwa-swagger.json"
 ---

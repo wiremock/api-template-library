@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-storage-blob"
-name: "StorageManagementClient"
+title: "StorageManagementClient"
 provider: "azure.com"
 description: "The Azure Storage Management API."
 logo: "azure.com-storage-blob-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-storage-blob-stubs.json"
+swagger: "azure.com-storage-blob-swagger.json"
 ---

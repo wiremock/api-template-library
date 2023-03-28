@@ -1,11 +1,12 @@
 ---
 slug: "sportsdata-io-mlb-v3-stats"
-name: "MLB v3 Stats"
+title: "MLB v3 Stats"
 provider: "sportsdata.io"
 description: "MLB scores, stats, and news API."
 logo: "sportsdata.io-mlb-v3-stats-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "sportsdata.io-mlb-v3-stats-stubs.json"
+swagger: "sportsdata.io-mlb-v3-stats-swagger.json"
 ---

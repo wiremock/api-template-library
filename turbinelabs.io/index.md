@@ -1,6 +1,6 @@
 ---
 slug: "turbinelabs-io"
-name: "Turbine Labs API"
+title: "Turbine Labs API"
 provider: "turbinelabs.io"
 description: "The Turbine Labs API provides CRUD operations for core object types,\
   \ and is\nmostly RESTy. The easiest way to interact with the API is with\n[tbnctl](https://docs.turbinelabs.io/advanced/tbnctl.html).\n\
@@ -11,6 +11,7 @@ description: "The Turbine Labs API provides CRUD operations for core object type
 logo: "turbinelabs.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "turbinelabs.io-stubs.json"
+swagger: "turbinelabs.io-swagger.json"
 ---

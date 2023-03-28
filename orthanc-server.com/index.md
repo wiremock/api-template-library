@@ -1,6 +1,6 @@
 ---
 slug: "orthanc-server-com"
-name: "Orthanc API"
+title: "Orthanc API"
 provider: "orthanc-server.com"
 description: "This is the full documentation of the [REST API](https://book.orthanc-server.com/users/rest.html)\
   \ of Orthanc.<p>This reference is automatically generated from the source code of\
@@ -11,6 +11,7 @@ description: "This is the full documentation of the [REST API](https://book.orth
 logo: "orthanc-server.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "orthanc-server.com-stubs.json"
+swagger: "orthanc-server.com-swagger.json"
 ---

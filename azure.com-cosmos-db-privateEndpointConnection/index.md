@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-cosmos-db-privateEndpointConnection"
-name: "Cosmos DB"
+title: "Cosmos DB"
 provider: "azure.com"
 description: "Azure Cosmos DB Database Service Resource Provider REST API"
 logo: "azure.com-cosmos-db-privateEndpointConnection-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cosmos-db-privateEndpointConnection-stubs.json"
+swagger: "azure.com-cosmos-db-privateEndpointConnection-swagger.json"
 ---

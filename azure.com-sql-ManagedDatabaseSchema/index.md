@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-sql-ManagedDatabaseSchema"
-name: "SqlManagementClient"
+title: "SqlManagementClient"
 provider: "azure.com"
 description: "The Azure SQL Database management API provides a RESTful set of web\
   \ APIs that interact with Azure SQL Database services to manage your databases.\
@@ -9,6 +9,7 @@ description: "The Azure SQL Database management API provides a RESTful set of we
 logo: "azure.com-sql-ManagedDatabaseSchema-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-sql-ManagedDatabaseSchema-stubs.json"
+swagger: "azure.com-sql-ManagedDatabaseSchema-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-keralapsc"
-name: "KERALA PUBLIC SERVICE COMMISSION, Kerala"
+title: "KERALA PUBLIC SERVICE COMMISSION, Kerala"
 provider: "apisetu.gov.in"
 description: "The following issued documents can be integrated with DigiLocker and\
   \ get used by candidates for service delivery - 1.One Time Verification -OTV certificate\
@@ -12,6 +12,7 @@ description: "The following issued documents can be integrated with DigiLocker a
 logo: "apisetu.gov.in-keralapsc-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-keralapsc-stubs.json"
+swagger: "apisetu.gov.in-keralapsc-swagger.json"
 ---

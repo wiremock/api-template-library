@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-security-securityContacts"
-name: "Security Center"
+title: "Security Center"
 provider: "azure.com"
 description: "API spec for Microsoft.Security (Azure Security Center) resource provider"
 logo: "azure.com-security-securityContacts-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-security-securityContacts-stubs.json"
+swagger: "azure.com-security-securityContacts-swagger.json"
 ---

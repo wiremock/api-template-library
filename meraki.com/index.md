@@ -1,6 +1,6 @@
 ---
 slug: "meraki-com"
-name: "Meraki Dashboard API"
+title: "Meraki Dashboard API"
 provider: "meraki.com"
 description: "The Cisco Meraki Dashboard API is a modern REST API based on the OpenAPI\
   \ specification.\n\n> Date: 05 March, 2023\n>\n> [Recent Updates](https://meraki.io/whats-new/)\n\
@@ -9,7 +9,8 @@ description: "The Cisco Meraki Dashboard API is a modern REST API based on the O
 logo: "meraki.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "iot"
-- name: "enterprise"
+- "iot"
+- "enterprise"
 stubs: "meraki.com-stubs.json"
+swagger: "meraki.com-swagger.json"
 ---

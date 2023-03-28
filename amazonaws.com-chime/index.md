@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-chime"
-name: "Amazon Chime"
+title: "Amazon Chime"
 provider: "amazonaws.com"
 description: "<p>The Amazon Chime API (application programming interface) is designed\
   \ for developers to perform key tasks, such as creating and managing Amazon Chime\
@@ -37,6 +37,7 @@ description: "<p>The Amazon Chime API (application programming interface) is des
 logo: "amazonaws.com-chime-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-chime-stubs.json"
+swagger: "amazonaws.com-chime-swagger.json"
 ---

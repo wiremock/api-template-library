@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-swf"
-name: "Amazon Simple Workflow Service"
+title: "Amazon Simple Workflow Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Simple Workflow Service</fullname> <p>The Amazon Simple\
   \ Workflow Service (Amazon SWF) makes it easy to build applications that use Amazon's\
@@ -16,6 +16,7 @@ description: "<fullname>Amazon Simple Workflow Service</fullname> <p>The Amazon 
 logo: "amazonaws.com-swf-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-swf-stubs.json"
+swagger: "amazonaws.com-swf-swagger.json"
 ---

@@ -1,15 +1,16 @@
 ---
 slug: "neutrinoapi-net"
-name: "Neutrino API"
+title: "Neutrino API"
 provider: "neutrinoapi.net"
 description: "The general-purpose API"
 logo: "neutrinoapi.net-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "email"
-- name: "messaging"
-- name: "telecom"
-- name: "location"
-- name: "text"
+- "email"
+- "messaging"
+- "telecom"
+- "location"
+- "text"
 stubs: "neutrinoapi.net-stubs.json"
+swagger: "neutrinoapi.net-swagger.json"
 ---

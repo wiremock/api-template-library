@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-firehose"
-name: "Amazon Kinesis Firehose"
+title: "Amazon Kinesis Firehose"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Kinesis Data Firehose API Reference</fullname> <p>Amazon\
   \ Kinesis Data Firehose is a fully managed service that delivers real-time streaming\
@@ -9,6 +9,7 @@ description: "<fullname>Amazon Kinesis Data Firehose API Reference</fullname> <p
 logo: "amazonaws.com-firehose-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-firehose-stubs.json"
+swagger: "amazonaws.com-firehose-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-businessprofileperformance"
-name: "Business Profile Performance API"
+title: "Business Profile Performance API"
 provider: "googleapis.com"
 description: "The Business Profile Performance API allows merchants to fetch performance\
   \ reports about their business profile on Google. Note - If you have a quota of\
@@ -8,7 +8,8 @@ description: "The Business Profile Performance API allows merchants to fetch per
 logo: "googleapis.com-businessprofileperformance-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-businessprofileperformance-stubs.json"
+swagger: "googleapis.com-businessprofileperformance-swagger.json"
 ---

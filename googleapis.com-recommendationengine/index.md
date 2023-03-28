@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-recommendationengine"
-name: "Recommendations AI (Beta)"
+title: "Recommendations AI (Beta)"
 provider: "googleapis.com"
 description: "Note that we now highly recommend new customers to use Retail API, which\
   \ incorporates the GA version of the Recommendations AI funtionalities. To enable\
@@ -11,7 +11,8 @@ description: "Note that we now highly recommend new customers to use Retail API,
 logo: "googleapis.com-recommendationengine-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-recommendationengine-stubs.json"
+swagger: "googleapis.com-recommendationengine-swagger.json"
 ---

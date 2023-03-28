@@ -1,6 +1,6 @@
 ---
 slug: "instagram-com"
-name: "Instagram API"
+title: "Instagram API"
 provider: "instagram.com"
 description: "Description of Instagram RESTful API.\n\nCurrent limitations:\n  * Instagram\
   \ service does not support [cross origin headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)\n\
@@ -17,7 +17,8 @@ description: "Description of Instagram RESTful API.\n\nCurrent limitations:\n  *
 logo: "instagram.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "social"
-- name: "media"
+- "social"
+- "media"
 stubs: "instagram.com-stubs.json"
+swagger: "instagram.com-swagger.json"
 ---

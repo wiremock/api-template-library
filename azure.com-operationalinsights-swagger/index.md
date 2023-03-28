@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-operationalinsights-swagger"
-name: "Azure Log Analytics"
+title: "Azure Log Analytics"
 provider: "azure.com"
 description: "This API exposes Azure Log Analytics query capabilities"
 logo: "azure.com-operationalinsights-swagger-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-operationalinsights-swagger-stubs.json"
+swagger: "azure.com-operationalinsights-swagger-swagger.json"
 ---

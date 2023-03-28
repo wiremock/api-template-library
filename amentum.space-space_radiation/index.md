@@ -1,6 +1,6 @@
 ---
 slug: "amentum-space-space_radiation"
-name: "Space Radiation API"
+title: "Space Radiation API"
 provider: "amentum.space"
 description: "Space has a hostile radiation environment that increases the risk of\
   \ cancers in humans and malfunctions in spacecraft electronics. The types of space\
@@ -25,7 +25,8 @@ description: "Space has a hostile radiation environment that increases the risk 
 logo: "amentum.space-space_radiation-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
-- name: "open_data"
+- "location"
+- "open_data"
 stubs: "amentum.space-space_radiation-stubs.json"
+swagger: "amentum.space-space_radiation-swagger.json"
 ---

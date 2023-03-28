@@ -1,6 +1,6 @@
 ---
 slug: "apicurio-local-registry"
-name: "Apicurio Registry API [v2]"
+title: "Apicurio Registry API [v2]"
 provider: "apicurio.local"
 description: "Apicurio Registry is a datastore for standard event schemas and API\
   \ designs. Apicurio Registry enables developers to manage and share the structure\
@@ -20,6 +20,7 @@ description: "Apicurio Registry is a datastore for standard event schemas and AP
 logo: "apicurio.local-registry-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apicurio.local-registry-stubs.json"
+swagger: "apicurio.local-registry-swagger.json"
 ---

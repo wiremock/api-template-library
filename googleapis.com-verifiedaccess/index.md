@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-verifiedaccess"
-name: "Chrome Verified Access API"
+title: "Chrome Verified Access API"
 provider: "googleapis.com"
 description: "API for Verified Access chrome extension to provide credential verification\
   \ for chrome devices connecting to an enterprise network"
 logo: "googleapis.com-verifiedaccess-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-verifiedaccess-stubs.json"
+swagger: "googleapis.com-verifiedaccess-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Subscriptions-API-(v3)"
-name: "Subscriptions API (v3)"
+title: "Subscriptions API (v3)"
 provider: "vtex.local"
 description: "\r\nA **Subscription** is a list of items (SKUs) tied to certain recurring\
   \ purchase settings:\r\n\r\n- User profile\r\n- Address\r\n- Payment method\r\n\
@@ -13,4 +13,5 @@ logo: "vtex.local-Subscriptions-API-(v3)-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Subscriptions-API-(v3)-stubs.json"
+swagger: "vtex.local-Subscriptions-API-(v3)-swagger.json"
 ---

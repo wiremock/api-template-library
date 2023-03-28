@@ -1,11 +1,12 @@
 ---
 slug: "openbanking-org-uk-account-info-openapi"
-name: "Account and Transaction API Specification"
+title: "Account and Transaction API Specification"
 provider: "openbanking.org.uk"
 description: "Swagger for Account and Transaction API Specification"
 logo: "openbanking.org.uk-account-info-openapi-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "openbanking.org.uk-account-info-openapi-stubs.json"
+swagger: "openbanking.org.uk-account-info-openapi-swagger.json"
 ---

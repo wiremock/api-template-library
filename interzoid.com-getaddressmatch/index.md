@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getaddressmatch"
-name: "Interzoid Get Address Match Similarity Key API"
+title: "Interzoid Get Address Match Similarity Key API"
 provider: "interzoid.com"
 description: "This API provides a similarity key used to match with other similar\
   \ street address data, including for purposes of deduplication, fuzzy matching,\
@@ -9,6 +9,7 @@ description: "This API provides a similarity key used to match with other simila
 logo: "interzoid.com-getaddressmatch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getaddressmatch-stubs.json"
+swagger: "interzoid.com-getaddressmatch-swagger.json"
 ---

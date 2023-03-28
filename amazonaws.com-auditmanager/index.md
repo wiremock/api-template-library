@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-auditmanager"
-name: "AWS Audit Manager"
+title: "AWS Audit Manager"
 provider: "amazonaws.com"
 description: "<p>Welcome to the Audit Manager API reference. This guide is for developers\
   \ who need detailed information about the Audit Manager API operations, data types,\
@@ -27,6 +27,7 @@ description: "<p>Welcome to the Audit Manager API reference. This guide is for d
 logo: "amazonaws.com-auditmanager-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-auditmanager-stubs.json"
+swagger: "amazonaws.com-auditmanager-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "netlicensing-io"
-name: "Labs64 NetLicensing RESTful API Test Center"
+title: "Labs64 NetLicensing RESTful API Test Center"
 provider: "netlicensing.io"
 description: "The Labs64 <a href='https://netlicensing.io/wiki/restful-api' target='_blank'>NetLicensing\
   \ RESTful API</a> gives you access to NetLicensing’s core features.<br/><br/><strong>Authentication</strong><br/>You\
@@ -10,6 +10,7 @@ description: "The Labs64 <a href='https://netlicensing.io/wiki/restful-api' targ
 logo: "netlicensing.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "netlicensing.io-stubs.json"
+swagger: "netlicensing.io-swagger.json"
 ---

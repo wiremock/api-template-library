@@ -1,6 +1,6 @@
 ---
 slug: "icons8-com"
-name: "Use a [New Version](https://icons8.github.io/icons8-docs/) Instead"
+title: "Use a [New Version](https://icons8.github.io/icons8-docs/) Instead"
 provider: "icons8.com"
 description: "# Icons8 API\n\nIcons8 API allows us to search and obtain [our icons](https://icons8.com/web-app).\n\
   \nYou're welcome to use our icons to extend the functionality of your web and mobile\
@@ -15,6 +15,7 @@ description: "# Icons8 API\n\nIcons8 API allows us to search and obtain [our ico
 logo: "icons8.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "icons8.com-stubs.json"
+swagger: "icons8.com-swagger.json"
 ---

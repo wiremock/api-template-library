@@ -1,6 +1,6 @@
 ---
 slug: "chaingateway-io"
-name: "Chaingateway.io"
+title: "Chaingateway.io"
 provider: "chaingateway.io"
 description: "# Chaingateway.io\n\nREST API to build the bridge between Ethereum and\
   \ the real world\n\nPlease check out our [website](https://chaingateway.io?utm_source=postman)\
@@ -14,6 +14,7 @@ description: "# Chaingateway.io\n\nREST API to build the bridge between Ethereum
 logo: "chaingateway.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "chaingateway.io-stubs.json"
+swagger: "chaingateway.io-swagger.json"
 ---

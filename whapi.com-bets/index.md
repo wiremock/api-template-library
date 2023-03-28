@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-bets"
-name: "Bets API"
+title: "Bets API"
 provider: "whapi.com"
 description: "The Bets API methods are used to place single, multiple and complex\
   \ bets and to retrieve a customer’s bet history. When retrieving a customer’s bet\
@@ -15,6 +15,7 @@ description: "The Bets API methods are used to place single, multiple and comple
 logo: "whapi.com-bets-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-bets-stubs.json"
+swagger: "whapi.com-bets-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "bintable-com"
-name: "BIN Lookup API"
+title: "BIN Lookup API"
 provider: "bintable.com"
 description: "BIN lookup API, the free api service from bintable.com to lookup card\
   \ information using it's BIN. the service maintains updated database based on the\
@@ -9,6 +9,7 @@ description: "BIN lookup API, the free api service from bintable.com to lookup c
 logo: "bintable.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "bintable.com-stubs.json"
+swagger: "bintable.com-swagger.json"
 ---

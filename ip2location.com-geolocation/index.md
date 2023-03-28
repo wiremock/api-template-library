@@ -1,6 +1,6 @@
 ---
 slug: "ip2location-com-geolocation"
-name: "IP2Location IP Geolocation"
+title: "IP2Location IP Geolocation"
 provider: "ip2location.com"
 description: "IP2Location web service providing a service to do a reverse lookup of\
   \ an IP address to an ISO3166 country code, region or state, city, latitude and\
@@ -14,6 +14,7 @@ description: "IP2Location web service providing a service to do a reverse lookup
 logo: "ip2location.com-geolocation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "ip2location.com-geolocation-stubs.json"
+swagger: "ip2location.com-geolocation-swagger.json"
 ---

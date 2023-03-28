@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-cbse"
-name: "Central Board of Secondary Education"
+title: "Central Board of Secondary Education"
 provider: "apisetu.gov.in"
 description: "CBSE (http://www.cbse.nic.in/) is issuing marksheets, passing certificates,\
   \ migration certificates etc. through DigiLocker. These are either pushed, or can\
@@ -10,6 +10,7 @@ description: "CBSE (http://www.cbse.nic.in/) is issuing marksheets, passing cert
 logo: "apisetu.gov.in-cbse-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-cbse-stubs.json"
+swagger: "apisetu.gov.in-cbse-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-CertificateRegistrationProvider"
-name: "CertificateRegistrationProvider API Client"
+title: "CertificateRegistrationProvider API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-CertificateRegistrationProvider-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-CertificateRegistrationProvider-stubs.json"
+swagger: "azure.com-web-CertificateRegistrationProvider-swagger.json"
 ---

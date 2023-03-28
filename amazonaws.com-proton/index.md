@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-proton"
-name: "AWS Proton"
+title: "AWS Proton"
 provider: "amazonaws.com"
 description: "<p>This is the Proton Service API Reference. It provides descriptions,\
   \ syntax and usage examples for each of the <a href=\"https://docs.aws.amazon.com/proton/latest/APIReference/API_Operations.html\"\
@@ -81,6 +81,7 @@ description: "<p>This is the Proton Service API Reference. It provides descripti
 logo: "amazonaws.com-proton-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-proton-stubs.json"
+swagger: "amazonaws.com-proton-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-containerregistry"
-name: "Azure Container Registry"
+title: "Azure Container Registry"
 provider: "azure.com"
 description: "Metadata API definition for the Azure Container Registry runtime"
 logo: "azure.com-containerregistry-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-containerregistry-stubs.json"
+swagger: "azure.com-containerregistry-swagger.json"
 ---

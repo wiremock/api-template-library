@@ -1,6 +1,6 @@
 ---
 slug: "intellifi-nl"
-name: "Brain Web API"
+title: "Brain Web API"
 provider: "intellifi.nl"
 description: "This document describes the [Intellifi Brain](https://intellifi.zendesk.com/hc/en-us/categories/360000685454)\n\
   Web API specification using the [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification).\n\
@@ -22,6 +22,7 @@ description: "This document describes the [Intellifi Brain](https://intellifi.ze
 logo: "intellifi.nl-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "iot"
+- "iot"
 stubs: "intellifi.nl-stubs.json"
+swagger: "intellifi.nl-swagger.json"
 ---

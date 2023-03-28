@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-pagespeedonline"
-name: "PageSpeed Insights API"
+title: "PageSpeed Insights API"
 provider: "googleapis.com"
 description: "The PageSpeed Insights API lets you analyze the performance of your\
   \ website with a simple API. It offers tailored suggestions for how you can optimize\
@@ -9,7 +9,8 @@ description: "The PageSpeed Insights API lets you analyze the performance of you
 logo: "googleapis.com-pagespeedonline-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-pagespeedonline-stubs.json"
+swagger: "googleapis.com-pagespeedonline-swagger.json"
 ---

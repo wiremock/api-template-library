@@ -1,6 +1,6 @@
 ---
 slug: "voodoomfg-com"
-name: "Voodoo Manufacturing 3D Print API"
+title: "Voodoo Manufacturing 3D Print API"
 provider: "voodoomfg.com"
 description: "Welcome to the Voodoo Manufacturing API docs!\n\nYour Voodoo Manufacturing\
   \ API key must be included with each request to the API. The API will look for the\
@@ -20,6 +20,7 @@ description: "Welcome to the Voodoo Manufacturing API docs!\n\nYour Voodoo Manuf
 logo: "voodoomfg.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "tools"
+- "tools"
 stubs: "voodoomfg.com-stubs.json"
+swagger: "voodoomfg.com-swagger.json"
 ---

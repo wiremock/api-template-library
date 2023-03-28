@@ -1,6 +1,6 @@
 ---
 slug: "apache-org"
-name: "Airflow API (Stable)"
+title: "Airflow API (Stable)"
 provider: "apache.org"
 description: "# Overview\n\nTo facilitate management, Apache Airflow supports a range\
   \ of REST API endpoints across its\nobjects.\nThis section provides an overview\
@@ -104,6 +104,7 @@ description: "# Overview\n\nTo facilitate management, Apache Airflow supports a 
 logo: "apache.org-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "messaging"
+- "messaging"
 stubs: "apache.org-stubs.json"
+swagger: "apache.org-swagger.json"
 ---

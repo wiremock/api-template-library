@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-accessanalyzer"
-name: "Access Analyzer"
+title: "Access Analyzer"
 provider: "amazonaws.com"
 description: "<p>Identity and Access Management Access Analyzer helps identify potential\
   \ resource-access risks by enabling you to identify any policies that grant access\
@@ -18,6 +18,7 @@ description: "<p>Identity and Access Management Access Analyzer helps identify p
 logo: "amazonaws.com-accessanalyzer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-accessanalyzer-stubs.json"
+swagger: "amazonaws.com-accessanalyzer-swagger.json"
 ---

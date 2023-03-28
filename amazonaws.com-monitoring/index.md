@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-monitoring"
-name: "Amazon CloudWatch"
+title: "Amazon CloudWatch"
 provider: "amazonaws.com"
 description: "<p>Amazon CloudWatch monitors your Amazon Web Services (Amazon Web Services)\
   \ resources and the applications you run on Amazon Web Services in real time. You\
@@ -17,6 +17,7 @@ description: "<p>Amazon CloudWatch monitors your Amazon Web Services (Amazon Web
 logo: "amazonaws.com-monitoring-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-monitoring-stubs.json"
+swagger: "amazonaws.com-monitoring-swagger.json"
 ---

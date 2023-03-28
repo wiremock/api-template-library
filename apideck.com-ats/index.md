@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-ats"
-name: "ATS API"
+title: "ATS API"
 provider: "apideck.com"
 description: "Welcome to the ATS API.\n\nYou can use this API to access all ATS API\
   \ endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the ATS API.\n\nYou can use this API to access all ATS 
 logo: "apideck.com-ats-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-ats-stubs.json"
+swagger: "apideck.com-ats-swagger.json"
 ---

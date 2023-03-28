@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-pubsublite"
-name: "Pub/Sub Lite API"
+title: "Pub/Sub Lite API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-pubsublite-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-pubsublite-stubs.json"
+swagger: "googleapis.com-pubsublite-swagger.json"
 ---

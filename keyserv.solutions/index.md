@@ -1,11 +1,12 @@
 ---
 slug: "keyserv-solutions"
-name: "KeyServ"
+title: "KeyServ"
 provider: "keyserv.solutions"
 description: "KeyServ API"
 logo: "keyserv.solutions-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "iot"
+- "iot"
 stubs: "keyserv.solutions-stubs.json"
+swagger: "keyserv.solutions-swagger.json"
 ---

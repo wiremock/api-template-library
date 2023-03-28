@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-workmail"
-name: "Amazon WorkMail"
+title: "Amazon WorkMail"
 provider: "amazonaws.com"
 description: "<p>WorkMail is a secure, managed business email and calendaring service\
   \ with support for existing desktop and mobile email clients. You can access your\
@@ -24,6 +24,7 @@ description: "<p>WorkMail is a secure, managed business email and calendaring se
 logo: "amazonaws.com-workmail-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-workmail-stubs.json"
+swagger: "amazonaws.com-workmail-swagger.json"
 ---

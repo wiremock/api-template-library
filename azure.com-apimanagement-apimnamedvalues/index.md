@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimnamedvalues"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on NamedValue entity associated\
   \ with your Azure API Management deployment. API Management policies are a powerful\
@@ -14,6 +14,7 @@ description: "Use these REST APIs for performing operations on NamedValue entity
 logo: "azure.com-apimanagement-apimnamedvalues-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimnamedvalues-stubs.json"
+swagger: "azure.com-apimanagement-apimnamedvalues-swagger.json"
 ---

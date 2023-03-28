@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-entitlement-marketplace"
-name: "AWS Marketplace Entitlement Service"
+title: "AWS Marketplace Entitlement Service"
 provider: "amazonaws.com"
 description: "<fullname>AWS Marketplace Entitlement Service</fullname> <p>This reference\
   \ provides descriptions of the AWS Marketplace Entitlement Service API.</p> <p>AWS\
@@ -13,6 +13,7 @@ description: "<fullname>AWS Marketplace Entitlement Service</fullname> <p>This r
 logo: "amazonaws.com-entitlement.marketplace-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-entitlement.marketplace-stubs.json"
+swagger: "amazonaws.com-entitlement.marketplace-swagger.json"
 ---

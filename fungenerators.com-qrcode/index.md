@@ -1,6 +1,6 @@
 ---
 slug: "fungenerators-com-qrcode"
-name: "Fun Generators API"
+title: "Fun Generators API"
 provider: "fungenerators.com"
 description: "Fungenerators API gives access to the full set of generators available\
   \ at fungenerators.com so that you can integrate them in your workflow or an app.\
@@ -12,6 +12,7 @@ description: "Fungenerators API gives access to the full set of generators avail
 logo: "fungenerators.com-qrcode-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "fungenerators.com-qrcode-stubs.json"
+swagger: "fungenerators.com-qrcode-swagger.json"
 ---

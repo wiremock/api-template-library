@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-application-autoscaling"
-name: "Application Auto Scaling"
+title: "Application Auto Scaling"
 provider: "amazonaws.com"
 description: "<p>With Application Auto Scaling, you can configure automatic scaling\
   \ for the following resources:</p> <ul> <li> <p>Amazon AppStream 2.0 fleets</p>\
@@ -33,6 +33,7 @@ description: "<p>With Application Auto Scaling, you can configure automatic scal
 logo: "amazonaws.com-application-autoscaling-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-application-autoscaling-stubs.json"
+swagger: "amazonaws.com-application-autoscaling-swagger.json"
 ---

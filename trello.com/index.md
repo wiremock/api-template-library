@@ -1,6 +1,6 @@
 ---
 slug: "trello-com"
-name: "Trello"
+title: "Trello"
 provider: "trello.com"
 description: "This document describes the REST API of Trello as published by Trello.com.\n\
   \ - <a href='https://trello.com/docs/index.html' target='_blank'>Official Documentation</a>\n\
@@ -9,6 +9,7 @@ description: "This document describes the REST API of Trello as published by Tre
 logo: "trello.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "trello.com-stubs.json"
+swagger: "trello.com-swagger.json"
 ---

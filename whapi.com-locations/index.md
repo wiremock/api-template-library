@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-locations"
-name: "Locations"
+title: "Locations"
 provider: "whapi.com"
 description: "The Locations API is a collection of methods that support geographical\
   \ information. The first method is an address lookup service for UK addresses. This\
@@ -9,6 +9,7 @@ description: "The Locations API is a collection of methods that support geograph
 logo: "whapi.com-locations-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-locations-stubs.json"
+swagger: "whapi.com-locations-swagger.json"
 ---

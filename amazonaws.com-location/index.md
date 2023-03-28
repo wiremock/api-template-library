@@ -1,12 +1,13 @@
 ---
 slug: "amazonaws-com-location"
-name: "Amazon Location Service"
+title: "Amazon Location Service"
 provider: "amazonaws.com"
 description: "\"Suite of geospatial services including Maps, Places, Routes, Tracking,\
   \ and Geofencing\""
 logo: "amazonaws.com-location-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-location-stubs.json"
+swagger: "amazonaws.com-location-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-networksecurity"
-name: "Network Security API"
+title: "Network Security API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-networksecurity-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-networksecurity-stubs.json"
+swagger: "googleapis.com-networksecurity-swagger.json"
 ---

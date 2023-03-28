@@ -1,11 +1,12 @@
 ---
 slug: "opentrials-local"
-name: "OpenTrials API"
+title: "OpenTrials API"
 provider: "opentrials.local"
 description: null
 logo: "opentrials.local-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "opentrials.local-stubs.json"
+swagger: "opentrials.local-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-wafv2"
-name: "AWS WAFV2"
+title: "AWS WAFV2"
 provider: "amazonaws.com"
 description: "<fullname>WAF</fullname> <note> <p>This is the latest version of the\
   \ <b>WAF</b> API, released in November, 2019. The names of the entities that you\
@@ -50,6 +50,7 @@ description: "<fullname>WAF</fullname> <note> <p>This is the latest version of t
 logo: "amazonaws.com-wafv2-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-wafv2-stubs.json"
+swagger: "amazonaws.com-wafv2-swagger.json"
 ---

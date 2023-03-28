@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-synthetics"
-name: "Synthetics"
+title: "Synthetics"
 provider: "amazonaws.com"
 description: "<fullname>Amazon CloudWatch Synthetics</fullname> <p>You can use Amazon\
   \ CloudWatch Synthetics to continually monitor your services. You can create and\
@@ -18,6 +18,7 @@ description: "<fullname>Amazon CloudWatch Synthetics</fullname> <p>You can use A
 logo: "amazonaws.com-synthetics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-synthetics-stubs.json"
+swagger: "amazonaws.com-synthetics-swagger.json"
 ---

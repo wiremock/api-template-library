@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-workflows"
-name: "Workflows API"
+title: "Workflows API"
 provider: "googleapis.com"
 description: "Manage workflow definitions. To execute workflows and manage executions,\
   \ see the Workflows Executions API."
 logo: "googleapis.com-workflows-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-workflows-stubs.json"
+swagger: "googleapis.com-workflows-swagger.json"
 ---

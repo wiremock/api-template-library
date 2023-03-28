@@ -1,6 +1,6 @@
 ---
 slug: "britbox-co-uk"
-name: "Rocket Services"
+title: "Rocket Services"
 provider: "britbox.co.uk"
 description: "An Orchestration Layer that takes ISL services and packages them in\
   \ a more targeted way for front-end applications.\nThis in turn makes client integration\
@@ -10,6 +10,7 @@ description: "An Orchestration Layer that takes ISL services and packages them i
 logo: "britbox.co.uk-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "britbox.co.uk-stubs.json"
+swagger: "britbox.co.uk-swagger.json"
 ---

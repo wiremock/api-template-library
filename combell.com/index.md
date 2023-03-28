@@ -1,6 +1,6 @@
 ---
 slug: "combell-com"
-name: "Public Api"
+title: "Public Api"
 provider: "combell.com"
 description: "# Introduction\n\nThis API allows resellers to manage their resources\
   \ in a simple, programmatic way using HTTP requests.\n\n# Conventions\n\n## Requests\n\
@@ -150,6 +150,7 @@ description: "# Introduction\n\nThis API allows resellers to manage their resour
 logo: "combell.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "combell.com-stubs.json"
+swagger: "combell.com-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "parliament-uk-statutoryinstruments"
-name: "Statutory Instruments API"
+title: "Statutory Instruments API"
 provider: "parliament.uk"
 description: "An API exposing details of the various types of Statutory Instruments\
   \ laid before Parliament."
 logo: "parliament.uk-statutoryinstruments-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "parliament.uk-statutoryinstruments-stubs.json"
+swagger: "parliament.uk-statutoryinstruments-swagger.json"
 ---

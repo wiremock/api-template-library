@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codestar-notifications"
-name: "AWS CodeStar Notifications"
+title: "AWS CodeStar Notifications"
 provider: "amazonaws.com"
 description: "<p>This AWS CodeStar Notifications API Reference provides descriptions\
   \ and usage examples of the operations and data types for the AWS CodeStar Notifications\
@@ -31,6 +31,7 @@ description: "<p>This AWS CodeStar Notifications API Reference provides descript
 logo: "amazonaws.com-codestar-notifications-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codestar-notifications-stubs.json"
+swagger: "amazonaws.com-codestar-notifications-swagger.json"
 ---

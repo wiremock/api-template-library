@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-dispatch"
-name: "Dispatch API"
+title: "Dispatch API"
 provider: "nexmo.com"
 description: "The Dispatch API enables the developer to specify a multiple message\
   \ workflow. A workflow follows a template. The first one we are adding is the failover\
@@ -13,4 +13,5 @@ logo: "nexmo.com-dispatch-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-dispatch-stubs.json"
+swagger: "nexmo.com-dispatch-swagger.json"
 ---

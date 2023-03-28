@@ -1,6 +1,6 @@
 ---
 slug: "weber-gesamtausgabe-de"
-name: "WeGA API"
+title: "WeGA API"
 provider: "weber-gesamtausgabe.de"
 description: "⚠️<b>DEPRECATION WARNING</b>⚠️<br/>This version of the WeGA API specification\
   \ is outdated and superseded by [version 1.1.0](https://weber-gesamtausgabe.de/api/v1/openapi.json).\
@@ -9,6 +9,7 @@ description: "⚠️<b>DEPRECATION WARNING</b>⚠️<br/>This version of the WeG
 logo: "weber-gesamtausgabe.de-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "weber-gesamtausgabe.de-stubs.json"
+swagger: "weber-gesamtausgabe.de-swagger.json"
 ---

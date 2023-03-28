@@ -1,11 +1,12 @@
 ---
 slug: "akeneo-com"
-name: "Akeneo PIM REST API"
+title: "Akeneo PIM REST API"
 provider: "akeneo.com"
 description: null
 logo: "akeneo.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "enterprise"
+- "enterprise"
 stubs: "akeneo.com-stubs.json"
+swagger: "akeneo.com-swagger.json"
 ---

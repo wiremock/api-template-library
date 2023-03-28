@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-devops"
-name: "Azure DevOps"
+title: "Azure DevOps"
 provider: "azure.com"
 description: "Azure DevOps Resource Provider"
 logo: "azure.com-devops-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-devops-stubs.json"
+swagger: "azure.com-devops-swagger.json"
 ---

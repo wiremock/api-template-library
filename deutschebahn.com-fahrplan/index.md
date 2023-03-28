@@ -1,6 +1,6 @@
 ---
 slug: "deutschebahn-com-fahrplan"
-name: "Fahrplan-Free"
+title: "Fahrplan-Free"
 provider: "deutschebahn.com"
 description: "A RESTful webservice to request a railway journey - FREE plan with restricted\
   \ access (max. 10 requests per minute). Please ignore the message in the API Console\
@@ -9,7 +9,8 @@ description: "A RESTful webservice to request a railway journey - FREE plan with
 logo: "deutschebahn.com-fahrplan-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "transport"
-- name: "open_data"
+- "transport"
+- "open_data"
 stubs: "deutschebahn.com-fahrplan-stubs.json"
+swagger: "deutschebahn.com-fahrplan-swagger.json"
 ---

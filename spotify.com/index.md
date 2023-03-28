@@ -1,6 +1,6 @@
 ---
 slug: "spotify-com"
-name: "Spotify Web API"
+title: "Spotify Web API"
 provider: "spotify.com"
 description: "You can use Spotify's Web API to discover music and podcasts, manage\
   \ your Spotify library, control audio playback, and much more. Browse our available\
@@ -16,6 +16,7 @@ description: "You can use Spotify's Web API to discover music and podcasts, mana
 logo: "spotify.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
+- "media"
 stubs: "spotify.com-stubs.json"
+swagger: "spotify.com-swagger.json"
 ---

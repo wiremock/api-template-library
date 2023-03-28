@@ -1,11 +1,12 @@
 ---
 slug: "lufthansa-com-partner"
-name: "LH Partner API"
+title: "LH Partner API"
 provider: "lufthansa.com"
 description: ""
 logo: "lufthansa.com-partner-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "lufthansa.com-partner-stubs.json"
+swagger: "lufthansa.com-partner-swagger.json"
 ---

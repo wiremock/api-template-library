@@ -1,13 +1,14 @@
 ---
 slug: "nytimes-com-top_stories"
-name: "Top Stories"
+title: "Top Stories"
 provider: "nytimes.com"
 description: "The Top Stories API provides lists of articles and associated images\
   \ by section."
 logo: "nytimes.com-top_stories-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "nytimes.com-top_stories-stubs.json"
+swagger: "nytimes.com-top_stories-swagger.json"
 ---

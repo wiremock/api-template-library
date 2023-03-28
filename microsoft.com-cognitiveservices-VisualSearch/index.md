@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-VisualSearch"
-name: "Visual Search Client"
+title: "Visual Search Client"
 provider: "microsoft.com"
 description: "Visual Search API lets you discover insights about an image such as\
   \ visually similar images, shopping sources, and related searches. The API can also\
@@ -16,7 +16,8 @@ description: "Visual Search API lets you discover insights about an image such a
 logo: "microsoft.com-cognitiveservices-VisualSearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-VisualSearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-VisualSearch-swagger.json"
 ---

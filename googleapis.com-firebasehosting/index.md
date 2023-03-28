@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-firebasehosting"
-name: "Firebase Hosting API"
+title: "Firebase Hosting API"
 provider: "googleapis.com"
 description: "The Firebase Hosting REST API enables programmatic and customizable\
   \ management and deployments to your Firebase-hosted sites. Use this REST API to\
@@ -9,7 +9,8 @@ description: "The Firebase Hosting REST API enables programmatic and customizabl
 logo: "googleapis.com-firebasehosting-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-firebasehosting-stubs.json"
+swagger: "googleapis.com-firebasehosting-swagger.json"
 ---

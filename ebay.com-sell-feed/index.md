@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-feed"
-name: "Feed API"
+title: "Feed API"
 provider: "ebay.com"
 description: "<p>The <strong>Feed API</strong> lets sellers upload input files, download\
   \ reports and files including their status, filter reports using URI parameters,\
@@ -8,6 +8,7 @@ description: "<p>The <strong>Feed API</strong> lets sellers upload input files, 
 logo: "ebay.com-sell-feed-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-feed-stubs.json"
+swagger: "ebay.com-sell-feed-swagger.json"
 ---

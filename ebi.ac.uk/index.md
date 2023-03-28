@@ -1,6 +1,6 @@
 ---
 slug: "ebi-ac-uk"
-name: "CROssBAR Data API"
+title: "CROssBAR Data API"
 provider: "ebi.ac.uk"
 description: "# About CROssBAR & data\n**CROssBAR**: Comprehensive Resource of Biomedical\
   \ Relations with Deep Learning Applications and Knowledge Graph Representations\n\
@@ -50,6 +50,7 @@ description: "# About CROssBAR & data\n**CROssBAR**: Comprehensive Resource of B
 logo: "ebi.ac.uk-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "ebi.ac.uk-stubs.json"
+swagger: "ebi.ac.uk-swagger.json"
 ---

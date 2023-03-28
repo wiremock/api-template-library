@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-meark"
-name: "Meark Enterprise Pvt. Ltd."
+title: "Meark Enterprise Pvt. Ltd."
 provider: "apisetu.gov.in"
 description: "A single consolidated system of MEARK has been integrated with DigiLocker\
   \ to produce Co-curricular activity Awards for Universities and Academic Institutions\
@@ -8,6 +8,7 @@ description: "A single consolidated system of MEARK has been integrated with Dig
 logo: "apisetu.gov.in-meark-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-meark-stubs.json"
+swagger: "apisetu.gov.in-meark-swagger.json"
 ---

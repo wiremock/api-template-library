@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-queueServices"
-name: "StorageManagementClient"
+title: "StorageManagementClient"
 provider: "azure.com"
 description: "The Admin Storage Management Client."
 logo: "azure.com-azsadmin-queueServices-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-queueServices-stubs.json"
+swagger: "azure.com-azsadmin-queueServices-swagger.json"
 ---

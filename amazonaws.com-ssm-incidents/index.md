@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ssm-incidents"
-name: "AWS Systems Manager Incident Manager"
+title: "AWS Systems Manager Incident Manager"
 provider: "amazonaws.com"
 description: "<p>Systems Manager Incident Manager is an incident management console\
   \ designed to help users mitigate and recover from incidents affecting their Amazon\
@@ -14,6 +14,7 @@ description: "<p>Systems Manager Incident Manager is an incident management cons
 logo: "amazonaws.com-ssm-incidents-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ssm-incidents-stubs.json"
+swagger: "amazonaws.com-ssm-incidents-swagger.json"
 ---

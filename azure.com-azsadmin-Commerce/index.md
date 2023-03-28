@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-Commerce"
-name: "CommerceManagementClient"
+title: "CommerceManagementClient"
 provider: "azure.com"
 description: "The Admin Commerce Management Client."
 logo: "azure.com-azsadmin-Commerce-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-Commerce-stubs.json"
+swagger: "azure.com-azsadmin-Commerce-swagger.json"
 ---

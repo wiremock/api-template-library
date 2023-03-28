@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-policyinsights-policyTrackedResources"
-name: "PolicyTrackedResourcesClient"
+title: "PolicyTrackedResourcesClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-policyinsights-policyTrackedResources-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-policyinsights-policyTrackedResources-stubs.json"
+swagger: "azure.com-policyinsights-policyTrackedResources-swagger.json"
 ---

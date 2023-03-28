@@ -1,6 +1,6 @@
 ---
 slug: "api-video"
-name: "api.video"
+title: "api.video"
 provider: "api.video"
 description: "api.video is an API that encodes on the go to facilitate immediate playback,\
   \ enhancing viewer streaming experiences across multiple devices and platforms.\
@@ -8,6 +8,7 @@ description: "api.video is an API that encodes on the go to facilitate immediate
 logo: "api.video-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "api.video-stubs.json"
+swagger: "api.video-swagger.json"
 ---

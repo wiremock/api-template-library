@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-hanaonazure"
-name: "HanaManagementClient"
+title: "HanaManagementClient"
 provider: "azure.com"
 description: "The SAP HANA on Azure Management Client."
 logo: "azure.com-hanaonazure-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-hanaonazure-stubs.json"
+swagger: "azure.com-hanaonazure-swagger.json"
 ---

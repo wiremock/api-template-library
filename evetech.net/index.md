@@ -1,11 +1,12 @@
 ---
 slug: "evetech-net"
-name: "EVE Swagger Interface"
+title: "EVE Swagger Interface"
 provider: "evetech.net"
 description: "An OpenAPI for EVE Online"
 logo: "evetech.net-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "evetech.net-stubs.json"
+swagger: "evetech.net-swagger.json"
 ---

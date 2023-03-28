@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-monitor-guestDiagnosticSettings_API"
-name: "Guest Diagnostic Settings"
+title: "Guest Diagnostic Settings"
 provider: "azure.com"
 description: "API to Add/Remove/List Guest Diagnostics Configuration to Azure Resources"
 logo: "azure.com-monitor-guestDiagnosticSettings_API-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-monitor-guestDiagnosticSettings_API-stubs.json"
+swagger: "azure.com-monitor-guestDiagnosticSettings_API-swagger.json"
 ---

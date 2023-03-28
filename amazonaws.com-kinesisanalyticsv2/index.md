@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-kinesisanalyticsv2"
-name: "Amazon Kinesis Analytics"
+title: "Amazon Kinesis Analytics"
 provider: "amazonaws.com"
 description: "Amazon Kinesis Data Analytics is a fully managed service that you can\
   \ use to process and analyze streaming data using Java, SQL, or Scala. The service\
@@ -10,6 +10,7 @@ description: "Amazon Kinesis Data Analytics is a fully managed service that you 
 logo: "amazonaws.com-kinesisanalyticsv2-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kinesisanalyticsv2-stubs.json"
+swagger: "amazonaws.com-kinesisanalyticsv2-swagger.json"
 ---

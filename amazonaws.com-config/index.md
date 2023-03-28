@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-config"
-name: "AWS Config"
+title: "AWS Config"
 provider: "amazonaws.com"
 description: "<fullname>Config</fullname> <p>Config provides a way to keep track of\
   \ the configurations of all the Amazon Web Services resources associated with your\
@@ -24,6 +24,7 @@ description: "<fullname>Config</fullname> <p>Config provides a way to keep track
 logo: "amazonaws.com-config-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-config-stubs.json"
+swagger: "amazonaws.com-config-swagger.json"
 ---

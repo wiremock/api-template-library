@@ -1,6 +1,6 @@
 ---
 slug: "citrixonline-com-gotomeeting"
-name: "GoToMeeting"
+title: "GoToMeeting"
 provider: "citrixonline.com"
 description: "<br>The GoToMeeting API provides seamless integration of GoToMeeting\
   \ provisioning and meeting management into your existing infrastructure or third\
@@ -17,6 +17,7 @@ description: "<br>The GoToMeeting API provides seamless integration of GoToMeeti
 logo: "citrixonline.com-gotomeeting-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "citrixonline.com-gotomeeting-stubs.json"
+swagger: "citrixonline.com-gotomeeting-swagger.json"
 ---

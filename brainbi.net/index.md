@@ -1,6 +1,6 @@
 ---
 slug: "brainbi-net"
-name: "brainbi"
+title: "brainbi"
 provider: "brainbi.net"
 description: "Welcome to the official API of the brainbi platform. Using this API\
   \ you can freely integrate our analytics platform with any other solution. \nPlease\
@@ -12,6 +12,7 @@ description: "Welcome to the official API of the brainbi platform. Using this AP
 logo: "brainbi.net-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "brainbi.net-stubs.json"
+swagger: "brainbi.net-swagger.json"
 ---

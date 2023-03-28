@@ -1,6 +1,6 @@
 ---
 slug: "journy-io"
-name: "Developer documentation"
+title: "Developer documentation"
 provider: "journy.io"
 description: "# Welcome\n\nImplementing a new tool can be daunting, but it doesn't\
   \ have to. You can implement journy.io in a few different ways to ensure it fits\
@@ -236,6 +236,7 @@ description: "# Welcome\n\nImplementing a new tool can be daunting, but it doesn
 logo: "journy.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "customer_relation"
+- "customer_relation"
 stubs: "journy.io-stubs.json"
+swagger: "journy.io-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-hpbose"
-name: "Himachal Pradesh Board of School Education, Himachal Pradesh"
+title: "Himachal Pradesh Board of School Education, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Himachal Pradesh Board of School Education, Dharamshala (http://hpbose.org/)\
   \ has made available Class X (2012-18) & Class XII (2012-18) provisional certificates,\
@@ -8,6 +8,7 @@ description: "Himachal Pradesh Board of School Education, Dharamshala (http://hp
 logo: "apisetu.gov.in-hpbose-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-hpbose-stubs.json"
+swagger: "apisetu.gov.in-hpbose-swagger.json"
 ---

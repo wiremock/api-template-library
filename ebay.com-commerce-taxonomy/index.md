@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-commerce-taxonomy"
-name: "Taxonomy API"
+title: "Taxonomy API"
 provider: "ebay.com"
 description: "Use the Taxonomy API to discover the most appropriate eBay categories\
   \ under which sellers can offer inventory items for sale, and the most likely categories\
@@ -11,6 +11,7 @@ description: "Use the Taxonomy API to discover the most appropriate eBay categor
 logo: "ebay.com-commerce-taxonomy-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-commerce-taxonomy-stubs.json"
+swagger: "ebay.com-commerce-taxonomy-swagger.json"
 ---

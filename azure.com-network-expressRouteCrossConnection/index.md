@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-network-expressRouteCrossConnection"
-name: "ExpressRouteCrossConnection REST APIs"
+title: "ExpressRouteCrossConnection REST APIs"
 provider: "azure.com"
 description: "The Microsoft Azure ExpressRouteCrossConnection Resource Provider REST\
   \ APIs describes the operations for the connectivity provider to provision ExpressRoute\
@@ -9,6 +9,7 @@ description: "The Microsoft Azure ExpressRouteCrossConnection Resource Provider 
 logo: "azure.com-network-expressRouteCrossConnection-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-network-expressRouteCrossConnection-stubs.json"
+swagger: "azure.com-network-expressRouteCrossConnection-swagger.json"
 ---

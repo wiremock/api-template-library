@@ -1,6 +1,6 @@
 ---
 slug: "idtbeyond-com"
-name: "Active Documentation for /v1"
+title: "Active Documentation for /v1"
 provider: "idtbeyond.com"
 description: "Our active docs provide the ability to test out your account and to\
   \ see the responses to your queries. The services are RESTful, and are accessed\
@@ -9,6 +9,7 @@ description: "Our active docs provide the ability to test out your account and t
 logo: "idtbeyond.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "telecom"
+- "telecom"
 stubs: "idtbeyond.com-stubs.json"
+swagger: "idtbeyond.com-swagger.json"
 ---

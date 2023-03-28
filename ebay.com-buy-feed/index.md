@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-buy-feed"
-name: "Item Feed Service"
+title: "Item Feed Service"
 provider: "ebay.com"
 description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\
   \ \" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon\
@@ -18,6 +18,7 @@ description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https:/
 logo: "ebay.com-buy-feed-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-buy-feed-stubs.json"
+swagger: "ebay.com-buy-feed-swagger.json"
 ---

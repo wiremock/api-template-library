@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-kinesisanalytics"
-name: "Amazon Kinesis Analytics"
+title: "Amazon Kinesis Analytics"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Kinesis Analytics</fullname> <p> <b>Overview</b> </p>\
   \ <note> <p>This documentation is for version 1 of the Amazon Kinesis Data Analytics\
@@ -12,6 +12,7 @@ description: "<fullname>Amazon Kinesis Analytics</fullname> <p> <b>Overview</b> 
 logo: "amazonaws.com-kinesisanalytics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kinesisanalytics-stubs.json"
+swagger: "amazonaws.com-kinesisanalytics-swagger.json"
 ---

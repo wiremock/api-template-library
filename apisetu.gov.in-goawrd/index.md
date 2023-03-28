@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-goawrd"
-name: "Goa Water Resources Department, Goa"
+title: "Goa Water Resources Department, Goa"
 provider: "apisetu.gov.in"
 description: "Goa WRD (https://goawrd.gov.in/) is the official departmental portal\
   \ of the Water Resources Department, Govt. of Goa, through which citizens can avail\
@@ -10,6 +10,7 @@ description: "Goa WRD (https://goawrd.gov.in/) is the official departmental port
 logo: "apisetu.gov.in-goawrd-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-goawrd-stubs.json"
+swagger: "apisetu.gov.in-goawrd-swagger.json"
 ---

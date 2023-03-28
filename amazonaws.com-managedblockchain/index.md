@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-managedblockchain"
-name: "Amazon Managed Blockchain"
+title: "Amazon Managed Blockchain"
 provider: "amazonaws.com"
 description: "<p/> <p>Amazon Managed Blockchain is a fully managed service for creating\
   \ and managing blockchain networks using open-source frameworks. Blockchain allows\
@@ -17,6 +17,7 @@ description: "<p/> <p>Amazon Managed Blockchain is a fully managed service for c
 logo: "amazonaws.com-managedblockchain-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-managedblockchain-stubs.json"
+swagger: "amazonaws.com-managedblockchain-swagger.json"
 ---

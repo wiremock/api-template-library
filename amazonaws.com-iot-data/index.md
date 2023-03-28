@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iot-data"
-name: "AWS IoT Data Plane"
+title: "AWS IoT Data Plane"
 provider: "amazonaws.com"
 description: "<fullname>IoT data</fullname> <p>IoT data enables secure, bi-directional\
   \ communication between Internet-connected things (such as sensors, actuators, embedded\
@@ -15,6 +15,7 @@ description: "<fullname>IoT data</fullname> <p>IoT data enables secure, bi-direc
 logo: "amazonaws.com-iot-data-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iot-data-stubs.json"
+swagger: "amazonaws.com-iot-data-swagger.json"
 ---

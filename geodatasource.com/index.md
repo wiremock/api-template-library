@@ -1,6 +1,6 @@
 ---
 slug: "geodatasource-com"
-name: "GeoDataSource Location Search"
+title: "GeoDataSource Location Search"
 provider: "geodatasource.com"
 description: "GeoDataSource™ Web Service is a REST API enable user to lookup for a\
   \ city by using latitude and longitude coordinate. It will return the result in\
@@ -9,6 +9,7 @@ description: "GeoDataSource™ Web Service is a REST API enable user to lookup f
 logo: "geodatasource.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "geodatasource.com-stubs.json"
+swagger: "geodatasource.com-swagger.json"
 ---

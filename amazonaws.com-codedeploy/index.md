@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codedeploy"
-name: "AWS CodeDeploy"
+title: "AWS CodeDeploy"
 provider: "amazonaws.com"
 description: "<p>CodeDeploy is a deployment service that automates application deployments\
   \ to Amazon EC2 instances, on-premises instances running in your own facility, serverless\
@@ -53,6 +53,7 @@ description: "<p>CodeDeploy is a deployment service that automates application d
 logo: "amazonaws.com-codedeploy-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codedeploy-stubs.json"
+swagger: "amazonaws.com-codedeploy-swagger.json"
 ---

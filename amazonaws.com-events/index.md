@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-events"
-name: "Amazon CloudWatch Events"
+title: "Amazon CloudWatch Events"
 provider: "amazonaws.com"
 description: "<p>Amazon EventBridge helps you to respond to state changes in your\
   \ Amazon Web Services resources. When your resources change state, they automatically\
@@ -18,6 +18,7 @@ description: "<p>Amazon EventBridge helps you to respond to state changes in you
 logo: "amazonaws.com-events-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-events-stubs.json"
+swagger: "amazonaws.com-events-swagger.json"
 ---

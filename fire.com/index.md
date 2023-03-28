@@ -1,6 +1,6 @@
 ---
 slug: "fire-com"
-name: "Fire Financial Services Business API"
+title: "Fire Financial Services Business API"
 provider: "fire.com"
 description: "The fire.com API allows you to deeply integrate Business Account features\
   \ into your application or back-office systems.\n\nThe API provides read access\
@@ -16,6 +16,7 @@ description: "The fire.com API allows you to deeply integrate Business Account f
 logo: "fire.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "fire.com-stubs.json"
+swagger: "fire.com-swagger.json"
 ---

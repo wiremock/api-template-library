@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-elasticfilesystem"
-name: "Amazon Elastic File System"
+title: "Amazon Elastic File System"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Elastic File System</fullname> <p>Amazon Elastic File\
   \ System (Amazon EFS) provides simple, scalable file storage for use with Amazon\
@@ -13,6 +13,7 @@ description: "<fullname>Amazon Elastic File System</fullname> <p>Amazon Elastic 
 logo: "amazonaws.com-elasticfilesystem-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-elasticfilesystem-stubs.json"
+swagger: "amazonaws.com-elasticfilesystem-swagger.json"
 ---

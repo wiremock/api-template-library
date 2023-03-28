@@ -1,6 +1,6 @@
 ---
 slug: "datumbox-com"
-name: "api.datumbox.com"
+title: "api.datumbox.com"
 provider: "datumbox.com"
 description: "Datumbox offers a Machine Learning platform composed of 14 classifiers\
   \ and Natural Language processing functions. Functions include sentiment analysis,\
@@ -8,7 +8,8 @@ description: "Datumbox offers a Machine Learning platform composed of 14 classif
 logo: "datumbox.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "machine_learning"
-- name: "text"
+- "machine_learning"
+- "text"
 stubs: "datumbox.com-stubs.json"
+swagger: "datumbox.com-swagger.json"
 ---

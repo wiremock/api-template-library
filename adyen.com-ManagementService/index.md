@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-ManagementService"
-name: "Management API"
+title: "Management API"
 provider: "adyen.com"
 description: "Configure and manage your Adyen company and merchant accounts, stores,\
   \ and payment terminals.\n## Authentication\nEach request to the Management API\
@@ -16,6 +16,7 @@ description: "Configure and manage your Adyen company and merchant accounts, sto
 logo: "adyen.com-ManagementService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-ManagementService-stubs.json"
+swagger: "adyen.com-ManagementService-swagger.json"
 ---

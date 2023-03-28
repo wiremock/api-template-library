@@ -1,6 +1,6 @@
 ---
 slug: "dweet-io"
-name: "dweet.io"
+title: "dweet.io"
 provider: "dweet.io"
 description: "Dweet.io allows users to share data from mobile, tablets, and pcs, and\
   \ them to other devices and accounts across social media platforms. Dweet.io provides\
@@ -10,6 +10,7 @@ description: "Dweet.io allows users to share data from mobile, tablets, and pcs,
 logo: "dweet.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "iot"
+- "iot"
 stubs: "dweet.io-stubs.json"
+swagger: "dweet.io-swagger.json"
 ---

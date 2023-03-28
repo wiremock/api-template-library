@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-databricks"
-name: "DatabricksClient"
+title: "DatabricksClient"
 provider: "azure.com"
 description: "ARM Databricks"
 logo: "azure.com-databricks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-databricks-stubs.json"
+swagger: "azure.com-databricks-swagger.json"
 ---

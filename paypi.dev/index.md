@@ -1,6 +1,6 @@
 ---
 slug: "paypi-dev"
-name: "EmailVerify"
+title: "EmailVerify"
 provider: "paypi.dev"
 description: "OTP email verification API by PayPI. <br/><br/>\nEmailVerify provides\
   \ a simple way to verify email addresses. We send emails ourselves taking the burden\
@@ -14,6 +14,7 @@ description: "OTP email verification API by PayPI. <br/><br/>\nEmailVerify provi
 logo: "paypi.dev-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "email"
+- "email"
 stubs: "paypi.dev-stubs.json"
+swagger: "paypi.dev-swagger.json"
 ---

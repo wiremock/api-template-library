@@ -1,12 +1,13 @@
 ---
 slug: "azure-com-sql-sql-core"
-name: "Azure SQL Database"
+title: "Azure SQL Database"
 provider: "azure.com"
 description: "Provides create, read, update and delete functionality for Azure SQL\
   \ Database resources including recommendations and operations."
 logo: "azure.com-sql-sql.core-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-sql-sql.core-stubs.json"
+swagger: "azure.com-sql-sql.core-swagger.json"
 ---

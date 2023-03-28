@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ssm"
-name: "Amazon Simple Systems Manager (SSM)"
+title: "Amazon Simple Systems Manager (SSM)"
 provider: "amazonaws.com"
 description: "<p>Amazon Web Services Systems Manager is the operations hub for your\
   \ Amazon Web Services applications and resources and a secure end-to-end management\
@@ -24,6 +24,7 @@ description: "<p>Amazon Web Services Systems Manager is the operations hub for y
 logo: "amazonaws.com-ssm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ssm-stubs.json"
+swagger: "amazonaws.com-ssm-swagger.json"
 ---

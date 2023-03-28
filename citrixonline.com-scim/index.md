@@ -1,6 +1,6 @@
 ---
 slug: "citrixonline-com-scim"
-name: "SCIM"
+title: "SCIM"
 provider: "citrixonline.com"
 description: "The SCIM API lets you manage users in your organization. You can then\
   \ automate the provisioning of product licenses for these users, and they can use\
@@ -9,4 +9,5 @@ logo: "citrixonline.com-scim-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags: []
 stubs: "citrixonline.com-scim-stubs.json"
+swagger: "citrixonline.com-scim-swagger.json"
 ---

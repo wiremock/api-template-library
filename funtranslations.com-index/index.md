@@ -1,6 +1,6 @@
 ---
 slug: "funtranslations-com-index"
-name: "FunTranslations API"
+title: "FunTranslations API"
 provider: "funtranslations.com"
 description: "Funtranslations API gives access to the full set of translations available\
   \ at funtranslations.com so that you can integrate them in your workflow or an app.\
@@ -26,6 +26,7 @@ description: "Funtranslations API gives access to the full set of translations a
 logo: "funtranslations.com-index-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "funtranslations.com-index-stubs.json"
+swagger: "funtranslations.com-index-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimbackends"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Backend entity in Azure\
   \ API Management deployment. The Backend entity in API Management represents a backend\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on Backend entity in
 logo: "azure.com-apimanagement-apimbackends-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimbackends-stubs.json"
+swagger: "azure.com-apimanagement-apimbackends-swagger.json"
 ---

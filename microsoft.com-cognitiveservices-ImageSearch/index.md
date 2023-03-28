@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-ImageSearch"
-name: "Image Search Client"
+title: "Image Search Client"
 provider: "microsoft.com"
 description: "The Image Search API lets you send a search query to Bing and get back\
   \ a list of relevant images. This section provides technical details about the query\
@@ -10,7 +10,8 @@ description: "The Image Search API lets you send a search query to Bing and get 
 logo: "microsoft.com-cognitiveservices-ImageSearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-ImageSearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-ImageSearch-swagger.json"
 ---

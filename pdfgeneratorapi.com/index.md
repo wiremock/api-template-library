@@ -1,6 +1,6 @@
 ---
 slug: "pdfgeneratorapi-com"
-name: "PDF Generator API"
+title: "PDF Generator API"
 provider: "pdfgeneratorapi.com"
 description: "# Introduction\nPDF Generator API allows you easily generate transactional\
   \ PDF documents and reduce the development and support costs by enabling your users\
@@ -125,6 +125,7 @@ description: "# Introduction\nPDF Generator API allows you easily generate trans
 logo: "pdfgeneratorapi.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "pdfgeneratorapi.com-stubs.json"
+swagger: "pdfgeneratorapi.com-swagger.json"
 ---

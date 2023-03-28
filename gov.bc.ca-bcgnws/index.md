@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-bcgnws"
-name: "BC Geographical Names Web Service - REST API"
+title: "BC Geographical Names Web Service - REST API"
 provider: "gov.bc.ca"
 description: "This REST API provides searchable access to information about geographical\
   \ names in the province of British Columbia, including name status and details about\
@@ -11,6 +11,7 @@ description: "This REST API provides searchable access to information about geog
 logo: "gov.bc.ca-bcgnws-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-bcgnws-stubs.json"
+swagger: "gov.bc.ca-bcgnws-swagger.json"
 ---

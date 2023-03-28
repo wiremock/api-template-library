@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-hdinsight-capabilities"
-name: "HDInsightManagementClient"
+title: "HDInsightManagementClient"
 provider: "azure.com"
 description: "The HDInsight Management Client."
 logo: "azure.com-hdinsight-capabilities-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-hdinsight-capabilities-stubs.json"
+swagger: "azure.com-hdinsight-capabilities-swagger.json"
 ---

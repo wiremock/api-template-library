@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotanalytics"
-name: "AWS IoT Analytics"
+title: "AWS IoT Analytics"
 provider: "amazonaws.com"
 description: "<p>IoT Analytics allows you to collect large amounts of device data,\
   \ process messages, and store them. You can then query the data and run sophisticated\
@@ -25,6 +25,7 @@ description: "<p>IoT Analytics allows you to collect large amounts of device dat
 logo: "amazonaws.com-iotanalytics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotanalytics-stubs.json"
+swagger: "amazonaws.com-iotanalytics-swagger.json"
 ---

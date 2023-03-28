@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotwireless"
-name: "AWS IoT Wireless"
+title: "AWS IoT Wireless"
 provider: "amazonaws.com"
 description: "<p>AWS IoT Wireless provides bi-directional communication between internet-connected\
   \ wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices\
@@ -17,6 +17,7 @@ description: "<p>AWS IoT Wireless provides bi-directional communication between 
 logo: "amazonaws.com-iotwireless-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotwireless-stubs.json"
+swagger: "amazonaws.com-iotwireless-swagger.json"
 ---

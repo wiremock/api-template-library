@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getemailinfo"
-name: "Interzoid Get Email Information API"
+title: "Interzoid Get Email Information API"
 provider: "interzoid.com"
 description: "This API provides validation information for email addresses to aid\
   \ in deliverability. Syntax, existence of mail servers, and other tests are run\
@@ -10,6 +10,7 @@ description: "This API provides validation information for email addresses to ai
 logo: "interzoid.com-getemailinfo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getemailinfo-stubs.json"
+swagger: "interzoid.com-getemailinfo-swagger.json"
 ---

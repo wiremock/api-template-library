@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codebuild"
-name: "AWS CodeBuild"
+title: "AWS CodeBuild"
 provider: "amazonaws.com"
 description: "<fullname>CodeBuild</fullname> <p>CodeBuild is a fully managed build\
   \ service in the cloud. CodeBuild compiles your source code, runs unit tests, and\
@@ -15,6 +15,7 @@ description: "<fullname>CodeBuild</fullname> <p>CodeBuild is a fully managed bui
 logo: "amazonaws.com-codebuild-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codebuild-stubs.json"
+swagger: "amazonaws.com-codebuild-swagger.json"
 ---

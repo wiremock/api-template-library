@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-policyanalyzer"
-name: "Policy Analyzer API"
+title: "Policy Analyzer API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-policyanalyzer-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-policyanalyzer-stubs.json"
+swagger: "googleapis.com-policyanalyzer-swagger.json"
 ---

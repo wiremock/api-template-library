@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iot-jobs-data"
-name: "AWS IoT Jobs Data Plane"
+title: "AWS IoT Jobs Data Plane"
 provider: "amazonaws.com"
 description: "<p>AWS IoT Jobs is a service that allows you to define a set of jobs\
   \ — remote operations that are sent to and executed on one or more devices connected\
@@ -17,6 +17,7 @@ description: "<p>AWS IoT Jobs is a service that allows you to define a set of jo
 logo: "amazonaws.com-iot-jobs-data-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iot-jobs-data-stubs.json"
+swagger: "amazonaws.com-iot-jobs-data-swagger.json"
 ---

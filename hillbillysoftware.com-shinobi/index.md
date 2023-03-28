@@ -1,11 +1,12 @@
 ---
 slug: "hillbillysoftware-com-shinobi"
-name: "shinobiapi"
+title: "shinobiapi"
 provider: "hillbillysoftware.com"
 description: null
 logo: "hillbillysoftware.com-shinobi-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
+- "media"
 stubs: "hillbillysoftware.com-shinobi-stubs.json"
+swagger: "hillbillysoftware.com-shinobi-swagger.json"
 ---

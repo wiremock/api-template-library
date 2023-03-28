@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-issuer"
-name: "DigiLocker Issuer APIs"
+title: "DigiLocker Issuer APIs"
 provider: "apisetu.gov.in"
 description: "This document provides detailed specification of the Digital Locker\
   \ Pull APIs. The Pull model of integration with Digital Locker enables a Digital\
@@ -14,6 +14,7 @@ description: "This document provides detailed specification of the Digital Locke
 logo: "apisetu.gov.in-issuer-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-issuer-stubs.json"
+swagger: "apisetu.gov.in-issuer-swagger.json"
 ---

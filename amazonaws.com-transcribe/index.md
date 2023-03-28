@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-transcribe"
-name: "Amazon Transcribe Service"
+title: "Amazon Transcribe Service"
 provider: "amazonaws.com"
 description: "<p>Amazon Transcribe offers three main types of batch transcription:\
   \ <b>Standard</b>, <b>Medical</b>, and <b>Call Analytics</b>.</p> <ul> <li> <p>\
@@ -14,6 +14,7 @@ description: "<p>Amazon Transcribe offers three main types of batch transcriptio
 logo: "amazonaws.com-transcribe-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-transcribe-stubs.json"
+swagger: "amazonaws.com-transcribe-swagger.json"
 ---

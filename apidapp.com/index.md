@@ -1,11 +1,12 @@
 ---
 slug: "apidapp-com"
-name: "ApiDapp"
+title: "ApiDapp"
 provider: "apidapp.com"
 description: null
 logo: "apidapp.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "apidapp.com-stubs.json"
+swagger: "apidapp.com-swagger.json"
 ---

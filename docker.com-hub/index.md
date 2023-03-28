@@ -1,6 +1,6 @@
 ---
 slug: "docker-com-hub"
-name: "Docker HUB API"
+title: "Docker HUB API"
 provider: "docker.com"
 description: "Docker Hub is a service provided by Docker for finding and sharing container\n\
   images with your team.\n\nIt is the world's largest library and community for container\
@@ -12,6 +12,7 @@ description: "Docker Hub is a service provided by Docker for finding and sharing
 logo: "docker.com-hub-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "docker.com-hub-stubs.json"
+swagger: "docker.com-hub-swagger.json"
 ---

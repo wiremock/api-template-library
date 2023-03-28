@@ -1,6 +1,6 @@
 ---
 slug: "ndhm-gov-in-ndhm-cm"
-name: "Health Data Consent Manager"
+title: "Health Data Consent Manager"
 provider: "ndhm.gov.in"
 description: "Entity which provides health information aggregation services to customers\
   \ of health care services.\nIt enables customers to fetch their health information\
@@ -12,6 +12,7 @@ description: "Entity which provides health information aggregation services to c
 logo: "ndhm.gov.in-ndhm-cm-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "ndhm.gov.in-ndhm-cm-stubs.json"
+swagger: "ndhm.gov.in-ndhm-cm-swagger.json"
 ---

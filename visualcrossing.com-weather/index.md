@@ -1,11 +1,12 @@
 ---
 slug: "visualcrossing-com-weather"
-name: "Visual Crossing Weather API"
+title: "Visual Crossing Weather API"
 provider: "visualcrossing.com"
 description: "Weather Forecast and Historical Weather Data via RESTful API."
 logo: "visualcrossing.com-weather-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "visualcrossing.com-weather-stubs.json"
+swagger: "visualcrossing.com-weather-swagger.json"
 ---

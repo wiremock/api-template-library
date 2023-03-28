@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-elasticmapreduce"
-name: "Amazon EMR"
+title: "Amazon EMR"
 provider: "amazonaws.com"
 description: "Amazon EMR is a web service that makes it easier to process large amounts\
   \ of data efficiently. Amazon EMR uses Hadoop processing combined with several Amazon\
@@ -9,6 +9,7 @@ description: "Amazon EMR is a web service that makes it easier to process large 
 logo: "amazonaws.com-elasticmapreduce-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-elasticmapreduce-stubs.json"
+swagger: "amazonaws.com-elasticmapreduce-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "iqualify-com"
-name: "iQualify Management API"
+title: "iQualify Management API"
 provider: "iqualify.com"
 description: "The iQualify API offers management responses for building\nlearning\
   \ experiences using your iQualify instance data.\n\nOnce you’ve registered with\
@@ -13,6 +13,7 @@ description: "The iQualify API offers management responses for building\nlearnin
 logo: "iqualify.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "education"
+- "education"
 stubs: "iqualify.com-stubs.json"
+swagger: "iqualify.com-swagger.json"
 ---

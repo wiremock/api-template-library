@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-lookoutmetrics"
-name: "Amazon Lookout for Metrics"
+title: "Amazon Lookout for Metrics"
 provider: "amazonaws.com"
 description: "This is the <i>Amazon Lookout for Metrics API Reference</i>. For an\
   \ introduction to the service with tutorials for getting started, visit <a href=\"\
@@ -9,6 +9,7 @@ description: "This is the <i>Amazon Lookout for Metrics API Reference</i>. For a
 logo: "amazonaws.com-lookoutmetrics-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-lookoutmetrics-stubs.json"
+swagger: "amazonaws.com-lookoutmetrics-swagger.json"
 ---

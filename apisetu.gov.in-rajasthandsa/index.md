@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-rajasthandsa"
-name: "Social Justice and Empowerment Department, Rajasthan"
+title: "Social Justice and Empowerment Department, Rajasthan"
 provider: "apisetu.gov.in"
 description: "Social Justice and Empowerment Department of Rajasthan is live on DigiLocker.\
   \ Citizens can pull their disability digital certificate and save into their respective\
@@ -8,6 +8,7 @@ description: "Social Justice and Empowerment Department of Rajasthan is live on 
 logo: "apisetu.gov.in-rajasthandsa-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-rajasthandsa-stubs.json"
+swagger: "apisetu.gov.in-rajasthandsa-swagger.json"
 ---

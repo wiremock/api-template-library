@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-service-map-arm-service-map"
-name: "Service Map"
+title: "Service Map"
 provider: "azure.com"
 description: "Service Map API Reference"
 logo: "azure.com-service-map-arm-service-map-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-service-map-arm-service-map-stubs.json"
+swagger: "azure.com-service-map-arm-service-map-swagger.json"
 ---

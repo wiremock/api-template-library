@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimopenidconnectproviders"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on OpenId Connect Provider\
   \ entity associated with your Azure API Management deployment. API Management allows\
@@ -9,6 +9,7 @@ description: "Use these REST APIs for performing operations on OpenId Connect Pr
 logo: "azure.com-apimanagement-apimopenidconnectproviders-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimopenidconnectproviders-stubs.json"
+swagger: "azure.com-apimanagement-apimopenidconnectproviders-swagger.json"
 ---

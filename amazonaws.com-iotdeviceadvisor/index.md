@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotdeviceadvisor"
-name: "AWS IoT Core Device Advisor"
+title: "AWS IoT Core Device Advisor"
 provider: "amazonaws.com"
 description: "Amazon Web Services IoT Core Device Advisor is a cloud-based, fully\
   \ managed test capability for validating IoT devices during device software development.\
@@ -16,6 +16,7 @@ description: "Amazon Web Services IoT Core Device Advisor is a cloud-based, full
 logo: "amazonaws.com-iotdeviceadvisor-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotdeviceadvisor-stubs.json"
+swagger: "amazonaws.com-iotdeviceadvisor-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "covid19-api-com"
-name: "COVID-19 data API"
+title: "COVID-19 data API"
 provider: "covid19-api.com"
 description: null
 logo: "covid19-api.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "covid19-api.com-stubs.json"
+swagger: "covid19-api.com-swagger.json"
 ---

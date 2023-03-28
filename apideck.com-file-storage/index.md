@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-file-storage"
-name: "File storage API"
+title: "File storage API"
 provider: "apideck.com"
 description: "Welcome to the File Storage API.\n\nYou can use this API to access all\
   \ File Storage API endpoints.\n\n## Base URL\n\nThe base URL for all API requests\
@@ -231,6 +231,7 @@ description: "Welcome to the File Storage API.\n\nYou can use this API to access
 logo: "apideck.com-file-storage-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-file-storage-stubs.json"
+swagger: "apideck.com-file-storage-swagger.json"
 ---

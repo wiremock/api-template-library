@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Catalog-API"
-name: "Catalog API"
+title: "Catalog API"
 provider: "vtex.local"
 description: "\r\n> Check the new [Catalog onboarding guide](https://developers.vtex.com/docs/guides/catalog-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -110,4 +110,5 @@ logo: "vtex.local-Catalog-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Catalog-API-stubs.json"
+swagger: "vtex.local-Catalog-API-swagger.json"
 ---

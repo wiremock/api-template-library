@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-buy-browse"
-name: "Browse API"
+title: "Browse API"
 provider: "ebay.com"
 description: "The Browse API has the following resources: item_summary: Lets shoppers\
   \ search for specific items by keyword, GTIN, category, charity, product, or item\
@@ -21,6 +21,7 @@ description: "The Browse API has the following resources: item_summary: Lets sho
 logo: "ebay.com-buy-browse-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-buy-browse-stubs.json"
+swagger: "ebay.com-buy-browse-swagger.json"
 ---

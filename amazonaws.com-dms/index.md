@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-dms"
-name: "AWS Database Migration Service"
+title: "AWS Database Migration Service"
 provider: "amazonaws.com"
 description: "<fullname>Database Migration Service</fullname> <p>Database Migration\
   \ Service (DMS) can migrate your data to and from the most widely used commercial\
@@ -15,6 +15,7 @@ description: "<fullname>Database Migration Service</fullname> <p>Database Migrat
 logo: "amazonaws.com-dms-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-dms-stubs.json"
+swagger: "amazonaws.com-dms-swagger.json"
 ---

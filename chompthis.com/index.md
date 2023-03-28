@@ -1,6 +1,6 @@
 ---
 slug: "chompthis-com"
-name: "Chomp Food Database API Documentation"
+title: "Chomp Food Database API Documentation"
 provider: "chompthis.com"
 description: "## Important\nAn **[API key](https://chompthis.com/api/)** is required\
   \ for access to this API. Get yours at **[https://chompthis.com/api](https://chompthis.com/api/)**.\n\
@@ -27,6 +27,7 @@ description: "## Important\nAn **[API key](https://chompthis.com/api/)** is requ
 logo: "chompthis.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "tools"
+- "tools"
 stubs: "chompthis.com-stubs.json"
+swagger: "chompthis.com-swagger.json"
 ---

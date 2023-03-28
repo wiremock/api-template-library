@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-dlm"
-name: "Amazon Data Lifecycle Manager"
+title: "Amazon Data Lifecycle Manager"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Data Lifecycle Manager</fullname> <p>With Amazon Data\
   \ Lifecycle Manager, you can manage the lifecycle of your Amazon Web Services resources.\
@@ -12,6 +12,7 @@ description: "<fullname>Amazon Data Lifecycle Manager</fullname> <p>With Amazon 
 logo: "amazonaws.com-dlm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-dlm-stubs.json"
+swagger: "amazonaws.com-dlm-swagger.json"
 ---

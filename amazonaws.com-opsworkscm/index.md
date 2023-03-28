@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-opsworkscm"
-name: "AWS OpsWorks CM"
+title: "AWS OpsWorks CM"
 provider: "amazonaws.com"
 description: "<fullname>AWS OpsWorks CM</fullname> <p>AWS OpsWorks for configuration\
   \ management (CM) is a service that runs and manages configuration management servers.\
@@ -41,6 +41,7 @@ description: "<fullname>AWS OpsWorks CM</fullname> <p>AWS OpsWorks for configura
 logo: "amazonaws.com-opsworkscm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-opsworkscm-stubs.json"
+swagger: "amazonaws.com-opsworkscm-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-assuredworkloads"
-name: "Assured Workloads API"
+title: "Assured Workloads API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-assuredworkloads-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-assuredworkloads-stubs.json"
+swagger: "googleapis.com-assuredworkloads-swagger.json"
 ---

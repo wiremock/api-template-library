@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-recoveryservices-replicationusages"
-name: "RecoveryServicesClient"
+title: "RecoveryServicesClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-recoveryservices-replicationusages-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-recoveryservices-replicationusages-stubs.json"
+swagger: "azure.com-recoveryservices-replicationusages-swagger.json"
 ---

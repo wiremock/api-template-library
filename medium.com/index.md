@@ -1,15 +1,15 @@
 ---
 slug: "medium-com"
-name: "Medium.com - Unofficial API Spec"
+title: "Medium API"
 provider: "medium.com"
-description: "Medium’s unofficial API documentation using OpenAPI specification.\n\
-  \n# Official API\nOfficial API document can also be viewed for most up to date API\
-  \ spec at [https://github.com/Medium/medium-api-docs](https://github.com/Medium/medium-api-docs).\n\
-  \nDeveloper Blog - [Welcome to the Medium API](https://medium.com/blog/welcome-to-the-medium-api-3418f956552)\n"
+description: "Medium API helps you to quickly extract data from Medium's Website (https://medium.com).\
+  \ \n\nYou can gather data related to users, publications, articles (including its\
+  \ textual content), latest posts &amp; top writers within a topic/niche, etc…\n"
 logo: "medium.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "social"
+- "media"
+- "social"
 stubs: "medium.com-stubs.json"
+swagger: "medium.com-swagger.json"
 ---

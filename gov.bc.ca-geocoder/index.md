@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-geocoder"
-name: "Geocoder REST API"
+title: "Geocoder REST API"
 provider: "gov.bc.ca"
 description: "This API represents address cleaning, correction, completion, geocoding,\
   \ reverse geocoding, and proximity resources for intersection addresses, physical\
@@ -18,6 +18,7 @@ description: "This API represents address cleaning, correction, completion, geoc
 logo: "gov.bc.ca-geocoder-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-geocoder-stubs.json"
+swagger: "gov.bc.ca-geocoder-swagger.json"
 ---

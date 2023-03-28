@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-appmesh"
-name: "AWS App Mesh"
+title: "AWS App Mesh"
 provider: "amazonaws.com"
 description: "<p>App Mesh is a service mesh based on the Envoy proxy that makes it\
   \ easy to monitor and control microservices. App Mesh standardizes how your microservices\
@@ -18,6 +18,7 @@ description: "<p>App Mesh is a service mesh based on the Envoy proxy that makes 
 logo: "amazonaws.com-appmesh-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-appmesh-stubs.json"
+swagger: "amazonaws.com-appmesh-swagger.json"
 ---

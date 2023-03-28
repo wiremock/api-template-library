@@ -1,11 +1,12 @@
 ---
 slug: "import-io-data"
-name: "import.io"
+title: "import.io"
 provider: "import.io"
 description: null
 logo: "import.io-data-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "tools"
+- "tools"
 stubs: "import.io-data-stubs.json"
+swagger: "import.io-data-swagger.json"
 ---

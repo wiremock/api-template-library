@@ -1,11 +1,12 @@
 ---
 slug: "ibanapi-com"
-name: "IBANAPI OpenApi Documentation"
+title: "IBANAPI OpenApi Documentation"
 provider: "ibanapi.com"
 description: "IBANAPI OpenApi documentation"
 logo: "ibanapi.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "ibanapi.com-stubs.json"
+swagger: "ibanapi.com-swagger.json"
 ---

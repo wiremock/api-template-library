@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codeguruprofiler"
-name: "Amazon CodeGuru Profiler"
+title: "Amazon CodeGuru Profiler"
 provider: "amazonaws.com"
 description: "<p> This section provides documentation for the Amazon CodeGuru Profiler\
   \ API operations. </p> <p> Amazon CodeGuru Profiler collects runtime performance\
@@ -21,6 +21,7 @@ description: "<p> This section provides documentation for the Amazon CodeGuru Pr
 logo: "amazonaws.com-codeguruprofiler-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codeguruprofiler-stubs.json"
+swagger: "amazonaws.com-codeguruprofiler-swagger.json"
 ---

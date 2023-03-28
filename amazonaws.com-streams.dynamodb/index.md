@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-streams-dynamodb"
-name: "Amazon DynamoDB Streams"
+title: "Amazon DynamoDB Streams"
 provider: "amazonaws.com"
 description: "<fullname>Amazon DynamoDB</fullname> <p>Amazon DynamoDB Streams provides\
   \ API actions for accessing streams and processing stream records. To learn more\
@@ -10,6 +10,7 @@ description: "<fullname>Amazon DynamoDB</fullname> <p>Amazon DynamoDB Streams pr
 logo: "amazonaws.com-streams.dynamodb-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-streams.dynamodb-stubs.json"
+swagger: "amazonaws.com-streams.dynamodb-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "bigoven-com"
-name: "1,000,000+ Recipe and Grocery List API (v2)"
+title: "1,000,000+ Recipe and Grocery List API (v2)"
 provider: "bigoven.com"
 description: "#Documentation\r\n\r\nThis is the documentation for the partner endpoint\
   \ of the BigOven Recipe and Grocery List API.\r\n\r\nThe update brings with it Swagger-based\
@@ -37,4 +37,5 @@ logo: "bigoven.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags: []
 stubs: "bigoven.com-stubs.json"
+swagger: "bigoven.com-swagger.json"
 ---

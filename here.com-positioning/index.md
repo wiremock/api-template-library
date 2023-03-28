@@ -1,6 +1,6 @@
 ---
 slug: "here-com-positioning"
-name: "HERE Network Positioning API v2"
+title: "HERE Network Positioning API v2"
 provider: "here.com"
 description: "Positioning API accepts requests with radio network measurements and\
   \ replies with corresponding location estimate. For more details and examples, see\
@@ -17,6 +17,7 @@ description: "Positioning API accepts requests with radio network measurements a
 logo: "here.com-positioning-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "here.com-positioning-stubs.json"
+swagger: "here.com-positioning-swagger.json"
 ---

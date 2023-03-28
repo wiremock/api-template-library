@@ -1,6 +1,6 @@
 ---
 slug: "walmart-com-order"
-name: "Orders API"
+title: "Orders API"
 provider: "walmart.com"
 description: "Please make sure you use the correct version of the APIs for your use\
   \ case. To find out the appropriate version, go to the API Docs  drop down on the\
@@ -8,6 +8,7 @@ description: "Please make sure you use the correct version of the APIs for your 
 logo: "walmart.com-order-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "walmart.com-order-stubs.json"
+swagger: "walmart.com-order-swagger.json"
 ---

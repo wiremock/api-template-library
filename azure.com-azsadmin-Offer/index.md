@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-Offer"
-name: "SubscriptionClient"
+title: "SubscriptionClient"
 provider: "azure.com"
 description: "The User Subscription Management Client."
 logo: "azure.com-azsadmin-Offer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-Offer-stubs.json"
+swagger: "azure.com-azsadmin-Offer-swagger.json"
 ---

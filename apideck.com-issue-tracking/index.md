@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-issue-tracking"
-name: "Issue Tracking API"
+title: "Issue Tracking API"
 provider: "apideck.com"
 description: "Welcome to the Issue Tracking API.\n\nYou can use this API to access\
   \ all Issue Tracking API endpoints.\n\n## Base URL\n\nThe base URL for all API requests\
@@ -231,6 +231,7 @@ description: "Welcome to the Issue Tracking API.\n\nYou can use this API to acce
 logo: "apideck.com-issue-tracking-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-issue-tracking-stubs.json"
+swagger: "apideck.com-issue-tracking-swagger.json"
 ---

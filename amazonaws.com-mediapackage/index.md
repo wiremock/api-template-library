@@ -1,11 +1,12 @@
 ---
 slug: "amazonaws-com-mediapackage"
-name: "AWS Elemental MediaPackage"
+title: "AWS Elemental MediaPackage"
 provider: "amazonaws.com"
 description: "AWS Elemental MediaPackage"
 logo: "amazonaws.com-mediapackage-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-mediapackage-stubs.json"
+swagger: "amazonaws.com-mediapackage-swagger.json"
 ---

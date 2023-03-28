@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-botservice"
-name: "Azure Bot Service"
+title: "Azure Bot Service"
 provider: "azure.com"
 description: "Azure Bot Service is a platform for creating smart conversational agents."
 logo: "azure.com-botservice-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-botservice-stubs.json"
+swagger: "azure.com-botservice-swagger.json"
 ---

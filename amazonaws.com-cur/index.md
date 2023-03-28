@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cur"
-name: "AWS Cost and Usage Report Service"
+title: "AWS Cost and Usage Report Service"
 provider: "amazonaws.com"
 description: "<p>The AWS Cost and Usage Report API enables you to programmatically\
   \ create, query, and delete AWS Cost and Usage report definitions.</p> <p>AWS Cost\
@@ -14,6 +14,7 @@ description: "<p>The AWS Cost and Usage Report API enables you to programmatical
 logo: "amazonaws.com-cur-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cur-stubs.json"
+swagger: "amazonaws.com-cur-swagger.json"
 ---

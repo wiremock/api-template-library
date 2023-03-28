@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codestar"
-name: "AWS CodeStar"
+title: "AWS CodeStar"
 provider: "amazonaws.com"
 description: "<fullname>AWS CodeStar</fullname> <p>This is the API reference for AWS\
   \ CodeStar. This reference provides descriptions of the operations and data types\
@@ -31,6 +31,7 @@ description: "<fullname>AWS CodeStar</fullname> <p>This is the API reference for
 logo: "amazonaws.com-codestar-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codestar-stubs.json"
+swagger: "amazonaws.com-codestar-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-TfmAPIService"
-name: "POS Terminal Management API"
+title: "POS Terminal Management API"
 provider: "adyen.com"
 description: "This API provides endpoints for managing your point-of-sale (POS) payment\
   \ terminals. You can use the API to obtain information about a specific terminal,\
@@ -22,6 +22,7 @@ description: "This API provides endpoints for managing your point-of-sale (POS) 
 logo: "adyen.com-TfmAPIService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-TfmAPIService-stubs.json"
+swagger: "adyen.com-TfmAPIService-swagger.json"
 ---

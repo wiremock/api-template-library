@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-transfer"
-name: "AWS Transfer Family"
+title: "AWS Transfer Family"
 provider: "amazonaws.com"
 description: "Transfer Family is a fully managed service that enables the transfer\
   \ of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL\
@@ -17,6 +17,7 @@ description: "Transfer Family is a fully managed service that enables the transf
 logo: "amazonaws.com-transfer-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-transfer-stubs.json"
+swagger: "amazonaws.com-transfer-swagger.json"
 ---

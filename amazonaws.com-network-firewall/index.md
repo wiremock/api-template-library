@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-network-firewall"
-name: "AWS Network Firewall"
+title: "AWS Network Firewall"
 provider: "amazonaws.com"
 description: "<p>This is the API Reference for Network Firewall. This guide is for\
   \ developers who need detailed information about the Network Firewall API actions,\
@@ -51,6 +51,7 @@ description: "<p>This is the API Reference for Network Firewall. This guide is f
 logo: "amazonaws.com-network-firewall-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-network-firewall-stubs.json"
+swagger: "amazonaws.com-network-firewall-swagger.json"
 ---

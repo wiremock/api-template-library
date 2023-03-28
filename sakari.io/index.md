@@ -1,6 +1,6 @@
 ---
 slug: "sakari-io"
-name: "Sakari"
+title: "Sakari"
 provider: "sakari.io"
 description: "# Introduction\n\nWelcome to the documentation for the Sakari Messaging\
   \ REST API. \n\nSakari provides an advanced platform to drive large scale customized\
@@ -44,6 +44,7 @@ description: "# Introduction\n\nWelcome to the documentation for the Sakari Mess
 logo: "sakari.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "messaging"
+- "messaging"
 stubs: "sakari.io-stubs.json"
+swagger: "sakari.io-swagger.json"
 ---

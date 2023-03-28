@@ -1,6 +1,6 @@
 ---
 slug: "omdbapi-com"
-name: "OMDb"
+title: "OMDb"
 provider: "omdbapi.com"
 description: "The Open Movie Database. The OMDb API is a free web service to obtain\
   \ movie information, all content and images on the site are contributed and maintained\
@@ -8,7 +8,8 @@ description: "The Open Movie Database. The OMDb API is a free web service to obt
 logo: "omdbapi.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "omdbapi.com-stubs.json"
+swagger: "omdbapi.com-swagger.json"
 ---

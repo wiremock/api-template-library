@@ -1,6 +1,6 @@
 ---
 slug: "netatmo-net"
-name: "Netatmo"
+title: "Netatmo"
 provider: "netatmo.net"
 description: "<h3>Welcome to the Netatmo swagger on-line documentation !</h3>\nThis\
   \ site is a complement to the official <a href=\"https://dev.netatmo.com/\">Netatmo\
@@ -14,6 +14,7 @@ description: "<h3>Welcome to the Netatmo swagger on-line documentation !</h3>\nT
 logo: "netatmo.net-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "iot"
+- "iot"
 stubs: "netatmo.net-stubs.json"
+swagger: "netatmo.net-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-transportrj"
-name: "Transport Department, Rajasthan"
+title: "Transport Department, Rajasthan"
 provider: "apisetu.gov.in"
 description: "Driving License (DL) and Vehicle Registration Certificate (RC) of the\
   \ State, as available on Parivahan Sewa (http://parivahan.co.in/) of Ministry of\
@@ -9,6 +9,7 @@ description: "Driving License (DL) and Vehicle Registration Certificate (RC) of 
 logo: "apisetu.gov.in-transportrj-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-transportrj-stubs.json"
+swagger: "apisetu.gov.in-transportrj-swagger.json"
 ---

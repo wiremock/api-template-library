@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-cloudchannel"
-name: "Cloud Channel API"
+title: "Cloud Channel API"
 provider: "googleapis.com"
 description: "The Cloud Channel API enables Google Cloud partners to have a single\
   \ unified resale platform and APIs across all of Google Cloud including GCP, Workspace,\
@@ -8,7 +8,8 @@ description: "The Cloud Channel API enables Google Cloud partners to have a sing
 logo: "googleapis.com-cloudchannel-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudchannel-stubs.json"
+swagger: "googleapis.com-cloudchannel-swagger.json"
 ---

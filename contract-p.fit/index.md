@@ -1,6 +1,6 @@
 ---
 slug: "contract-p-fit"
-name: "Contract.fit API"
+title: "Contract.fit API"
 provider: "contract-p.fit"
 description: "This OpenAPI describes the API exposed by the contract.fit backend.\n\
   \n## Security\n\n### Authentication\n\nAll endpoints are protected: you need to\
@@ -33,6 +33,7 @@ description: "This OpenAPI describes the API exposed by the contract.fit backend
 logo: "contract-p.fit-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "contract-p.fit-stubs.json"
+swagger: "contract-p.fit-swagger.json"
 ---

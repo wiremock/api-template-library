@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-macie"
-name: "Amazon Macie"
+title: "Amazon Macie"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Macie Classic</fullname> <p>Amazon Macie Classic has\
   \ been discontinued and is no longer available.</p> <p>A new Amazon Macie is now\
@@ -13,6 +13,7 @@ description: "<fullname>Amazon Macie Classic</fullname> <p>Amazon Macie Classic 
 logo: "amazonaws.com-macie-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-macie-stubs.json"
+swagger: "amazonaws.com-macie-swagger.json"
 ---

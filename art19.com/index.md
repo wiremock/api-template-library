@@ -1,6 +1,6 @@
 ---
 slug: "art19-com"
-name: "ART19 Content API Documentation"
+title: "ART19 Content API Documentation"
 provider: "art19.com"
 description: "The ART19 Content API conforms to the [JSON:API specification](http://jsonapi.org).\n\
   \nAPI requests **MUST** use the HTTP Accept header:\n\n`Accept: application/vnd.api+json`\n\
@@ -44,6 +44,7 @@ description: "The ART19 Content API conforms to the [JSON:API specification](htt
 logo: "art19.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "art19.com-stubs.json"
+swagger: "art19.com-swagger.json"
 ---

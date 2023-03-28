@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-pos"
-name: "POS API"
+title: "POS API"
 provider: "apideck.com"
 description: "Welcome to the POS API.\n\nYou can use this API to access all POS API\
   \ endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the POS API.\n\nYou can use this API to access all POS 
 logo: "apideck.com-pos-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-pos-stubs.json"
+swagger: "apideck.com-pos-swagger.json"
 ---

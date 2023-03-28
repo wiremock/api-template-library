@@ -1,11 +1,12 @@
 ---
 slug: "poemist-com"
-name: "Poemist API"
+title: "Poemist API"
 provider: "poemist.com"
 description: null
 logo: "poemist.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "poemist.com-stubs.json"
+swagger: "poemist.com-swagger.json"
 ---

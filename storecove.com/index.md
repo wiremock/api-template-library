@@ -1,11 +1,12 @@
 ---
 slug: "storecove-com"
-name: "Storecove API"
+title: "Storecove API"
 provider: "storecove.com"
 description: "Storecove API"
 logo: "storecove.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "storecove.com-stubs.json"
+swagger: "storecove.com-swagger.json"
 ---

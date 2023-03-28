@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-mediatailor"
-name: "AWS MediaTailor"
+title: "AWS MediaTailor"
 provider: "amazonaws.com"
 description: "<p>Use the AWS Elemental MediaTailor SDKs and CLI to configure scalable\
   \ ad insertion and linear channels. With MediaTailor, you can assemble existing\
@@ -15,6 +15,7 @@ description: "<p>Use the AWS Elemental MediaTailor SDKs and CLI to configure sca
 logo: "amazonaws.com-mediatailor-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-mediatailor-stubs.json"
+swagger: "amazonaws.com-mediatailor-swagger.json"
 ---

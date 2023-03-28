@@ -1,11 +1,12 @@
 ---
 slug: "atlassian-com-jira"
-name: "The Jira Cloud platform REST API"
+title: "The Jira Cloud platform REST API"
 provider: "atlassian.com"
 description: "Jira Cloud platform REST API documentation"
 logo: "atlassian.com-jira-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "atlassian.com-jira-stubs.json"
+swagger: "atlassian.com-jira-swagger.json"
 ---

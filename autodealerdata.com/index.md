@@ -1,6 +1,6 @@
 ---
 slug: "autodealerdata-com"
-name: "CIS Automotive API"
+title: "CIS Automotive API"
 provider: "autodealerdata.com"
 description: "<div style=\"\">This API provides access to our Automotive Data. Use\
   \ of this API is subject to our <a href=\"https://autodealerdata.com/tos\">Terms\
@@ -25,6 +25,7 @@ description: "<div style=\"\">This API provides access to our Automotive Data. U
 logo: "autodealerdata.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "autodealerdata.com-stubs.json"
+swagger: "autodealerdata.com-swagger.json"
 ---

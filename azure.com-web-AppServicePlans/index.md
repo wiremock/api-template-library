@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-AppServicePlans"
-name: "AppServicePlans API Client"
+title: "AppServicePlans API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-AppServicePlans-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-AppServicePlans-stubs.json"
+swagger: "azure.com-web-AppServicePlans-swagger.json"
 ---

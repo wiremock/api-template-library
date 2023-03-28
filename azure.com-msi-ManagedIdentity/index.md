@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-msi-ManagedIdentity"
-name: "ManagedServiceIdentityClient"
+title: "ManagedServiceIdentityClient"
 provider: "azure.com"
 description: "The Managed Service Identity Client."
 logo: "azure.com-msi-ManagedIdentity-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-msi-ManagedIdentity-stubs.json"
+swagger: "azure.com-msi-ManagedIdentity-swagger.json"
 ---

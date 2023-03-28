@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-servicefabricmesh"
-name: "SeaBreezeManagementClient"
+title: "SeaBreezeManagementClient"
 provider: "azure.com"
 description: "APIs to deploy and manage resources to SeaBreeze."
 logo: "azure.com-servicefabricmesh-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-servicefabricmesh-stubs.json"
+swagger: "azure.com-servicefabricmesh-swagger.json"
 ---

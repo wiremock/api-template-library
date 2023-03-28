@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Orders-API"
-name: "Orders API"
+title: "Orders API"
 provider: "vtex.local"
 description: "\r\n\r\n>Check the new [Orders onboarding guide](https://developers.vtex.com/docs/guides/orders-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -11,4 +11,5 @@ logo: "vtex.local-Orders-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Orders-API-stubs.json"
+swagger: "vtex.local-Orders-API-swagger.json"
 ---

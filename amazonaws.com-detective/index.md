@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-detective"
-name: "Amazon Detective"
+title: "Amazon Detective"
 provider: "amazonaws.com"
 description: "<p>Detective uses machine learning and purpose-built visualizations\
   \ to help you to analyze and investigate security issues across your Amazon Web\
@@ -47,6 +47,7 @@ description: "<p>Detective uses machine learning and purpose-built visualization
 logo: "amazonaws.com-detective-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-detective-stubs.json"
+swagger: "amazonaws.com-detective-swagger.json"
 ---

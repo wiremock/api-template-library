@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-advisorynotifications"
-name: "Advisory Notifications API"
+title: "Advisory Notifications API"
 provider: "googleapis.com"
 description: "An API for accessing Advisory Notifications in Google Cloud"
 logo: "googleapis.com-advisorynotifications-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-advisorynotifications-stubs.json"
+swagger: "googleapis.com-advisorynotifications-swagger.json"
 ---

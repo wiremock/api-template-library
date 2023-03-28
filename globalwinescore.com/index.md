@@ -1,6 +1,6 @@
 ---
 slug: "globalwinescore-com"
-name: "GlobalWineScore API Documentation"
+title: "GlobalWineScore API Documentation"
 provider: "globalwinescore.com"
 description: "\n\nThe GlobalWineScore API is designed as a RESTful API, providing\
   \ several resources and methods depending on your usage plan.\n\nFor further information\
@@ -38,6 +38,7 @@ description: "\n\nThe GlobalWineScore API is designed as a RESTful API, providin
 logo: "globalwinescore.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "globalwinescore.com-stubs.json"
+swagger: "globalwinescore.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "fulfillment-com"
-name: "Fulfillment.com APIv2"
+title: "Fulfillment.com APIv2"
 provider: "fulfillment.com"
 description: "Welcome to our current iteration of our REST API. While we encourage\
   \ you to upgrade to v2.0 we will continue support for our [SOAP API](https://github.com/fulfillment/soap-integration).\n\
@@ -102,6 +102,7 @@ description: "Welcome to our current iteration of our REST API. While we encoura
 logo: "fulfillment.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "fulfillment.com-stubs.json"
+swagger: "fulfillment.com-swagger.json"
 ---

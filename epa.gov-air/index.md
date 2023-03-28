@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-air"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act"
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
   \ and maintained by EPA's Office of Enforcement and Compliance Assurance for public\
@@ -30,6 +30,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-air-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-air-stubs.json"
+swagger: "epa.gov-air-swagger.json"
 ---

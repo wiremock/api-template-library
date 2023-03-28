@@ -1,6 +1,6 @@
 ---
 slug: "getgo-com-gototraining"
-name: "GoToTraining"
+title: "GoToTraining"
 provider: "getgo.com"
 description: "The GoToTraining API enables developers to use the stable and robust\
   \ GoToTraining functionality as the basis for online trainings in a proprietary\
@@ -13,4 +13,5 @@ logo: "getgo.com-gototraining-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "getgo.com-gototraining-stubs.json"
+swagger: "getgo.com-gototraining-swagger.json"
 ---

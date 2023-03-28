@@ -1,6 +1,6 @@
 ---
 slug: "gsmtasks-com"
-name: "GSMTasks Project API"
+title: "GSMTasks Project API"
 provider: "gsmtasks.com"
 description: "The GSMtasks API is a RESTful web service for developers to programmatically\
   \ interact with GSMtasks data, real-time delivery and task management and route\
@@ -9,4 +9,5 @@ logo: "gsmtasks.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "gsmtasks.com-stubs.json"
+swagger: "gsmtasks.com-swagger.json"
 ---

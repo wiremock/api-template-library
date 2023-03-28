@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-number-insight"
-name: "Number Insight API"
+title: "Number Insight API"
 provider: "nexmo.com"
 description: "The Number Insight API delivers real-time intelligence about the validity,\
   \ reachability and roaming status of a phone number and tells you how to format\
@@ -11,4 +11,5 @@ logo: "nexmo.com-number-insight-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-number-insight-stubs.json"
+swagger: "nexmo.com-number-insight-swagger.json"
 ---

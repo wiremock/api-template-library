@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-negd"
-name: "National e-Governance Division"
+title: "National e-Governance Division"
 provider: "apisetu.gov.in"
 description: "NeGD (http://negd.gov.in/) conducts trainings in the area of egovernance.\
   \ Certificates for certain training programmes by NeGD are made available in participants'\
@@ -8,6 +8,7 @@ description: "NeGD (http://negd.gov.in/) conducts trainings in the area of egove
 logo: "apisetu.gov.in-negd-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-negd-stubs.json"
+swagger: "apisetu.gov.in-negd-swagger.json"
 ---

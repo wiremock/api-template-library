@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-peering"
-name: "PeeringManagementClient"
+title: "PeeringManagementClient"
 provider: "azure.com"
 description: "APIs to manage Peering resources through the Azure Resource Manager."
 logo: "azure.com-peering-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-peering-stubs.json"
+swagger: "azure.com-peering-swagger.json"
 ---

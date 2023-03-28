@@ -1,6 +1,6 @@
 ---
 slug: "amentum-space-aviation_radiation"
-name: "Aviation Radiation API"
+title: "Aviation Radiation API"
 provider: "amentum.space"
 description: "Our atmosphere protects us from a hostile space radiation environment\
   \ comprising high energy particles of solar and intergalactic origin. Solar radiation\
@@ -31,7 +31,8 @@ description: "Our atmosphere protects us from a hostile space radiation environm
 logo: "amentum.space-aviation_radiation-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
-- name: "open_data"
+- "location"
+- "open_data"
 stubs: "amentum.space-aviation_radiation-stubs.json"
+swagger: "amentum.space-aviation_radiation-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-waf-regional"
-name: "AWS WAF Regional"
+title: "AWS WAF Regional"
 provider: "amazonaws.com"
 description: "<note> <p>This is <b>AWS WAF Classic Regional</b> documentation. For\
   \ more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html\"\
@@ -22,6 +22,7 @@ description: "<note> <p>This is <b>AWS WAF Classic Regional</b> documentation. F
 logo: "amazonaws.com-waf-regional-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-waf-regional-stubs.json"
+swagger: "amazonaws.com-waf-regional-swagger.json"
 ---

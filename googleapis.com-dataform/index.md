@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-dataform"
-name: "Dataform API"
+title: "Dataform API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-dataform-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-dataform-stubs.json"
+swagger: "googleapis.com-dataform-swagger.json"
 ---

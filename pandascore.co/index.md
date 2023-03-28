@@ -1,6 +1,6 @@
 ---
 slug: "pandascore-co"
-name: "PandaScore REST API for All Videogames"
+title: "PandaScore REST API for All Videogames"
 provider: "pandascore.co"
 description: "\n# Introduction\n\nWhether you're looking to build an official Pandascore\
   \ integration for your service, or you just want to build something awesome, [we\
@@ -86,6 +86,7 @@ description: "\n# Introduction\n\nWhether you're looking to build an official Pa
 logo: "pandascore.co-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "pandascore.co-stubs.json"
+swagger: "pandascore.co-swagger.json"
 ---

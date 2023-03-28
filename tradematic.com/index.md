@@ -1,6 +1,6 @@
 ---
 slug: "tradematic-com"
-name: "Tradematic Cloud API"
+title: "Tradematic Cloud API"
 provider: "tradematic.com"
 description: "### Overview\nTradematic Cloud is a trading infrastructure for building\
   \ investment services.\n\nIt’s a trading engine + API + ready-made adapters to stock\
@@ -14,6 +14,7 @@ description: "### Overview\nTradematic Cloud is a trading infrastructure for bui
 logo: "tradematic.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "tradematic.com-stubs.json"
+swagger: "tradematic.com-swagger.json"
 ---

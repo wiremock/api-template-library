@@ -1,6 +1,6 @@
 ---
 slug: "jumpseller-com"
-name: "Jumpseller API"
+title: "Jumpseller API"
 provider: "jumpseller.com"
 description: "# Endpoint Structure\n\nAll URLs are in the format: \n\n```text\nhttps://api.jumpseller.com/v1/path.json?login=XXXXXX&authtoken=storetoken\
   \  \n```\n\nThe path is prefixed by the API version and the URL takes as parameters\
@@ -69,6 +69,7 @@ description: "# Endpoint Structure\n\nAll URLs are in the format: \n\n```text\nh
 logo: "jumpseller.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "jumpseller.com-stubs.json"
+swagger: "jumpseller.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "hubapi-com-communication-preferences"
-name: "Subscriptions"
+title: "Subscriptions"
 provider: "hubapi.com"
 description: "Subscriptions allow contacts to control what forms of communications\
   \ they receive. Contacts can decide whether they want to receive communication pertaining\
@@ -9,4 +9,5 @@ logo: "hubapi.com-communication-preferences-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "hubapi.com-communication-preferences-stubs.json"
+swagger: "hubapi.com-communication-preferences-swagger.json"
 ---

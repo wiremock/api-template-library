@@ -1,6 +1,6 @@
 ---
 slug: "o2-cz-mobility"
-name: "Mobility API"
+title: "Mobility API"
 provider: "o2.cz"
 description: "Transit API can be used to obtain time-aggregated data representing\
   \ moving the people between various spatial points within the Czech Republic. Having\
@@ -10,6 +10,7 @@ description: "Transit API can be used to obtain time-aggregated data representin
 logo: "o2.cz-mobility-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "telecom"
+- "telecom"
 stubs: "o2.cz-mobility-stubs.json"
+swagger: "o2.cz-mobility-swagger.json"
 ---

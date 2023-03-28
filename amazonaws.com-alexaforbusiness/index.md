@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-alexaforbusiness"
-name: "Alexa For Business"
+title: "Alexa For Business"
 provider: "amazonaws.com"
 description: "Alexa for Business helps you use Alexa in your organization. Alexa for\
   \ Business provides you with the tools to manage Alexa devices, enroll your users,\
@@ -15,6 +15,7 @@ description: "Alexa for Business helps you use Alexa in your organization. Alexa
 logo: "amazonaws.com-alexaforbusiness-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-alexaforbusiness-stubs.json"
+swagger: "amazonaws.com-alexaforbusiness-swagger.json"
 ---

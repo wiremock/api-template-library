@@ -1,11 +1,12 @@
 ---
 slug: "apisetu-gov-in-phedharyana"
-name: "Public Health Engineering Department, Haryana, Haryana"
+title: "Public Health Engineering Department, Haryana, Haryana"
 provider: "apisetu.gov.in"
 description: "APIs provided by Public Health Engineering Department, Haryana, Haryana."
 logo: "apisetu.gov.in-phedharyana-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-phedharyana-stubs.json"
+swagger: "apisetu.gov.in-phedharyana-swagger.json"
 ---

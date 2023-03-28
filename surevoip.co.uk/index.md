@@ -1,6 +1,6 @@
 ---
 slug: "surevoip-co-uk"
-name: "The SureVoIP RESTful API"
+title: "The SureVoIP RESTful API"
 provider: "surevoip.co.uk"
 description: "# Introduction\nWelcome to the SureVoIP RESTful hypermedia API (sometimes\
   \ known as a VoIP REST API, Telecom REST API, SIP API, Hypermedia API or just VoIP\
@@ -14,6 +14,7 @@ description: "# Introduction\nWelcome to the SureVoIP RESTful hypermedia API (so
 logo: "surevoip.co.uk-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "telecom"
+- "telecom"
 stubs: "surevoip.co.uk-stubs.json"
+swagger: "surevoip.co.uk-swagger.json"
 ---

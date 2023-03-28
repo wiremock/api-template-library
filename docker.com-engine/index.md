@@ -1,6 +1,6 @@
 ---
 slug: "docker-com-engine"
-name: "Docker Engine API"
+title: "Docker Engine API"
 provider: "docker.com"
 description: "The Engine API is an HTTP API served by Docker Engine. It is the API\
   \ the Docker client uses to communicate with the Engine, so everything the Docker\
@@ -52,6 +52,7 @@ description: "The Engine API is an HTTP API served by Docker Engine. It is the A
 logo: "docker.com-engine-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "docker.com-engine-stubs.json"
+swagger: "docker.com-engine-swagger.json"
 ---

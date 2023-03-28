@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-BalanceControlService"
-name: "Adyen Balance Control API"
+title: "Adyen Balance Control API"
 provider: "adyen.com"
 description: "The Balance Control API lets you transfer funds between merchant accounts\
   \ that belong to the same legal entity and are under the same company account.\n\
@@ -18,6 +18,7 @@ description: "The Balance Control API lets you transfer funds between merchant a
 logo: "adyen.com-BalanceControlService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-BalanceControlService-stubs.json"
+swagger: "adyen.com-BalanceControlService-swagger.json"
 ---

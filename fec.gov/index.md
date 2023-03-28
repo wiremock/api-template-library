@@ -1,6 +1,6 @@
 ---
 slug: "fec-gov"
-name: "OpenFEC"
+title: "OpenFEC"
 provider: "fec.gov"
 description: "This application programming interface (API) allows you to explore the\
   \ way candidates and committees fund their campaigns. \n\n The Federal Election\
@@ -33,6 +33,7 @@ description: "This application programming interface (API) allows you to explore
 logo: "fec.gov-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "fec.gov-stubs.json"
+swagger: "fec.gov-swagger.json"
 ---

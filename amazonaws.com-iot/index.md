@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iot"
-name: "AWS IoT"
+title: "AWS IoT"
 provider: "amazonaws.com"
 description: "<fullname>IoT</fullname> <p>IoT provides secure, bi-directional communication\
   \ between Internet-connected devices (such as sensors, actuators, embedded devices,\
@@ -21,6 +21,7 @@ description: "<fullname>IoT</fullname> <p>IoT provides secure, bi-directional co
 logo: "amazonaws.com-iot-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iot-stubs.json"
+swagger: "amazonaws.com-iot-swagger.json"
 ---

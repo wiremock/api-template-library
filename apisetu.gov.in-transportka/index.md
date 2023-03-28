@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-transportka"
-name: "Karnataka Department of Transport, Karnataka"
+title: "Karnataka Department of Transport, Karnataka"
 provider: "apisetu.gov.in"
 description: "Driving License (DL) & Vehicle Registration Certificate (RC) as issued\
   \ by Transport Department, Government of Karnataka (http://transport.karnataka.gov.in)\
@@ -8,6 +8,7 @@ description: "Driving License (DL) & Vehicle Registration Certificate (RC) as is
 logo: "apisetu.gov.in-transportka-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-transportka-stubs.json"
+swagger: "apisetu.gov.in-transportka-swagger.json"
 ---

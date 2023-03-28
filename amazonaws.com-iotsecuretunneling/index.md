@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotsecuretunneling"
-name: "AWS IoT Secure Tunneling"
+title: "AWS IoT Secure Tunneling"
 provider: "amazonaws.com"
 description: "<fullname>IoT Secure Tunneling</fullname> <p>IoT Secure Tunneling creates\
   \ remote connections to devices deployed in the field.</p> <p>For more information\
@@ -9,6 +9,7 @@ description: "<fullname>IoT Secure Tunneling</fullname> <p>IoT Secure Tunneling 
 logo: "amazonaws.com-iotsecuretunneling-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotsecuretunneling-stubs.json"
+swagger: "amazonaws.com-iotsecuretunneling-swagger.json"
 ---

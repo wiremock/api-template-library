@@ -1,11 +1,12 @@
 ---
 slug: "twitter-com-legacy"
-name: "Twitter API"
+title: "Twitter API"
 provider: "twitter.com"
 description: null
 logo: "twitter.com-legacy-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "social"
+- "social"
 stubs: "twitter.com-legacy-stubs.json"
+swagger: "twitter.com-legacy-swagger.json"
 ---

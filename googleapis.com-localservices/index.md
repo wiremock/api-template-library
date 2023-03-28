@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-localservices"
-name: "Local Services API"
+title: "Local Services API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-localservices-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-localservices-stubs.json"
+swagger: "googleapis.com-localservices-swagger.json"
 ---

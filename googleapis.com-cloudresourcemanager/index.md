@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-cloudresourcemanager"
-name: "Cloud Resource Manager API"
+title: "Cloud Resource Manager API"
 provider: "googleapis.com"
 description: "Creates, reads, and updates metadata for Google Cloud Platform resource\
   \ containers."
 logo: "googleapis.com-cloudresourcemanager-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudresourcemanager-stubs.json"
+swagger: "googleapis.com-cloudresourcemanager-swagger.json"
 ---

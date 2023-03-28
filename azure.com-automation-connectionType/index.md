@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-automation-connectionType"
-name: "AutomationManagement"
+title: "AutomationManagement"
 provider: "azure.com"
 description: null
 logo: "azure.com-automation-connectionType-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-automation-connectionType-stubs.json"
+swagger: "azure.com-automation-connectionType-swagger.json"
 ---

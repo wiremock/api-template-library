@@ -1,11 +1,12 @@
 ---
 slug: "superset-apache-local-superset"
-name: "Superset"
+title: "Superset"
 provider: "superset.apache.local"
 description: "Superset"
 logo: "superset.apache.local-superset-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "enterprise"
+- "enterprise"
 stubs: "superset.apache.local-superset-stubs.json"
+swagger: "superset.apache.local-superset-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "gov-bc-ca-geomark"
-name: "GeoMark Web Service REST API"
+title: "GeoMark Web Service REST API"
 provider: "gov.bc.ca"
 description: "The Geomark Web Service allows you to create and share geographic areas\
   \ of interest over the web in a variety of formats and coordinate systems. This\
@@ -12,6 +12,7 @@ description: "The Geomark Web Service allows you to create and share geographic 
 logo: "gov.bc.ca-geomark-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-geomark-stubs.json"
+swagger: "gov.bc.ca-geomark-swagger.json"
 ---

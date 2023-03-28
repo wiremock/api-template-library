@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-dfr"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Detailed Facility\
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Detailed Facility\
   \ Report (DFR)"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
@@ -20,6 +20,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-dfr-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-dfr-stubs.json"
+swagger: "epa.gov-dfr-swagger.json"
 ---

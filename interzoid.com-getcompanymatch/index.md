@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getcompanymatch"
-name: "Interzoid Get Company Name Match Similarity Key API"
+title: "Interzoid Get Company Name Match Similarity Key API"
 provider: "interzoid.com"
 description: "This API provides a similarity key used to match with other similar\
   \ company name data, including for purposes of deduplication, fuzzy matching, or\
@@ -9,6 +9,7 @@ description: "This API provides a similarity key used to match with other simila
 logo: "interzoid.com-getcompanymatch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getcompanymatch-stubs.json"
+swagger: "interzoid.com-getcompanymatch-swagger.json"
 ---

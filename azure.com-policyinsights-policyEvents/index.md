@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-policyinsights-policyEvents"
-name: "PolicyEventsClient"
+title: "PolicyEventsClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-policyinsights-policyEvents-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-policyinsights-policyEvents-stubs.json"
+swagger: "azure.com-policyinsights-policyEvents-swagger.json"
 ---

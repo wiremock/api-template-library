@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-marketplace-catalog"
-name: "AWS Marketplace Catalog Service"
+title: "AWS Marketplace Catalog Service"
 provider: "amazonaws.com"
 description: "<p>Catalog API actions allow you to manage your entities through list,\
   \ describe, and update capabilities. An entity can be a product or an offer on AWS\
@@ -11,6 +11,7 @@ description: "<p>Catalog API actions allow you to manage your entities through l
 logo: "amazonaws.com-marketplace-catalog-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-marketplace-catalog-stubs.json"
+swagger: "amazonaws.com-marketplace-catalog-swagger.json"
 ---

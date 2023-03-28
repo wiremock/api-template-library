@@ -1,6 +1,6 @@
 ---
 slug: "va-gov-forms"
-name: "VA Forms"
+title: "VA Forms"
 provider: "va.gov"
 description: "Use the VA Forms API to search for VA forms, get the form's PDF link\
   \ and metadata, and check for new versions.\n\nVisit our VA Lighthouse [Contact\
@@ -37,6 +37,7 @@ description: "Use the VA Forms API to search for VA forms, get the form's PDF li
 logo: "va.gov-forms-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "forms"
+- "forms"
 stubs: "va.gov-forms-stubs.json"
+swagger: "va.gov-forms-swagger.json"
 ---

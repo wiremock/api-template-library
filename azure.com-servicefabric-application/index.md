@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-servicefabric-application"
-name: "ServiceFabricManagementClient"
+title: "ServiceFabricManagementClient"
 provider: "azure.com"
 description: "Azure Service Fabric Resource Provider API Client"
 logo: "azure.com-servicefabric-application-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-servicefabric-application-stubs.json"
+swagger: "azure.com-servicefabric-application-swagger.json"
 ---

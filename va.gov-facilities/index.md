@@ -1,6 +1,6 @@
 ---
 slug: "va-gov-facilities"
-name: "VA Facilities"
+title: "VA Facilities"
 provider: "va.gov"
 description: "## Background\n\nThis RESTful API provides information about physical\
   \ VA facilities. Information available includes\ngeographic location, address, phone,\
@@ -45,6 +45,7 @@ description: "## Background\n\nThis RESTful API provides information about physi
 logo: "va.gov-facilities-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "va.gov-facilities-stubs.json"
+swagger: "va.gov-facilities-swagger.json"
 ---

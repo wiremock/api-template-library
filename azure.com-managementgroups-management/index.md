@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-managementgroups-management"
-name: "Management Groups"
+title: "Management Groups"
 provider: "azure.com"
 description: "The Azure Management Groups API enables consolidation of multiple subscriptions/resources\
   \ into an organizational hierarchy and centrally manage access control, policies,\
@@ -8,6 +8,7 @@ description: "The Azure Management Groups API enables consolidation of multiple 
 logo: "azure.com-managementgroups-management-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-managementgroups-management-stubs.json"
+swagger: "azure.com-managementgroups-management-swagger.json"
 ---

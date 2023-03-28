@@ -1,6 +1,6 @@
 ---
 slug: "notion-com"
-name: "Notion API"
+title: "Notion API"
 provider: "notion.com"
 description: "Hello and welcome!\n\nTo make use of this API collection collection\
   \ as it's written, please duplicate [this database template](https://www.notion.so/8e2c2b769e1d47d287b9ed3035d607ae?v=dc1b92875fb94f10834ba8d36549bd2a).\n\
@@ -12,6 +12,7 @@ description: "Hello and welcome!\n\nTo make use of this API collection collectio
 logo: "notion.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "notion.com-stubs.json"
+swagger: "notion.com-swagger.json"
 ---

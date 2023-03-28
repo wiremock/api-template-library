@@ -1,6 +1,6 @@
 ---
 slug: "mercedes-benz-com-diagnostics"
-name: "Remote Diagnostic Support"
+title: "Remote Diagnostic Support"
 provider: "mercedes-benz.com"
 description: "The Remote Diagnostic Support API will provide the possibility for 3rd\
   \ party applications (e.g. ADAC, ATU, etc.) to access vehicle diagnostics data remotely\
@@ -9,6 +9,7 @@ description: "The Remote Diagnostic Support API will provide the possibility for
 logo: "mercedes-benz.com-diagnostics-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "mercedes-benz.com-diagnostics-stubs.json"
+swagger: "mercedes-benz.com-diagnostics-swagger.json"
 ---

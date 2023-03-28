@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-LocalSearch"
-name: "Local Search Client"
+title: "Local Search Client"
 provider: "microsoft.com"
 description: "The Local Search client lets you send a search query to Bing and get\
   \ back search results that include local businesses such as restaurants, hotels,\
@@ -9,7 +9,8 @@ description: "The Local Search client lets you send a search query to Bing and g
 logo: "microsoft.com-cognitiveservices-LocalSearch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-LocalSearch-stubs.json"
+swagger: "microsoft.com-cognitiveservices-LocalSearch-swagger.json"
 ---

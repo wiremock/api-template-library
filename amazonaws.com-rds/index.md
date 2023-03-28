@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-rds"
-name: "Amazon Relational Database Service"
+title: "Amazon Relational Database Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Relational Database Service</fullname> <p/> <p>Amazon\
   \ Relational Database Service (Amazon RDS) is a web service that makes it easier\
@@ -39,6 +39,7 @@ description: "<fullname>Amazon Relational Database Service</fullname> <p/> <p>Am
 logo: "amazonaws.com-rds-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-rds-stubs.json"
+swagger: "amazonaws.com-rds-swagger.json"
 ---

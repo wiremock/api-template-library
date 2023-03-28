@@ -1,6 +1,6 @@
 ---
 slug: "bandsintown-com"
-name: "Bandsintown API"
+title: "Bandsintown API"
 provider: "bandsintown.com"
 description: "# What is the Bandsintown API?\nThe Bandsintown API is designed for\
   \ artists and enterprises representing artists.\n\nIt offers read-only access to\
@@ -23,6 +23,7 @@ description: "# What is the Bandsintown API?\nThe Bandsintown API is designed fo
 logo: "bandsintown.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "social"
+- "social"
 stubs: "bandsintown.com-stubs.json"
+swagger: "bandsintown.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Pricing-API"
-name: "Pricing API"
+title: "Pricing API"
 provider: "vtex.local"
 description: "\r\n> Check the new [Pricing onboarding guide](https://developers.vtex.com/vtex-rest-api/docs/pricing-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -46,4 +46,5 @@ logo: "vtex.local-Pricing-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Pricing-API-stubs.json"
+swagger: "vtex.local-Pricing-API-swagger.json"
 ---

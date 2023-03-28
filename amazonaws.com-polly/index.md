@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-polly"
-name: "Amazon Polly"
+title: "Amazon Polly"
 provider: "amazonaws.com"
 description: "<p>Amazon Polly is a web service that makes it easy to synthesize speech\
   \ from text.</p> <p>The Amazon Polly service provides API operations for synthesizing\
@@ -10,6 +10,7 @@ description: "<p>Amazon Polly is a web service that makes it easy to synthesize 
 logo: "amazonaws.com-polly-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-polly-stubs.json"
+swagger: "amazonaws.com-polly-swagger.json"
 ---

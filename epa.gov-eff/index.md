@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-eff"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Effluent Charting\
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Effluent Charting\
   \ and Reporting"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
@@ -27,6 +27,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-eff-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-eff-stubs.json"
+swagger: "epa.gov-eff-swagger.json"
 ---

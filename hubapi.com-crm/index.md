@@ -1,6 +1,6 @@
 ---
 slug: "hubapi-com-crm"
-name: "CRM cards"
+title: "CRM cards"
 provider: "hubapi.com"
 description: "Allows an app to extend the CRM UI by surfacing custom cards in the\
   \ sidebar of record pages. These cards are defined up-front as part of app configuration,\
@@ -10,4 +10,5 @@ logo: "hubapi.com-crm-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "hubapi.com-crm-stubs.json"
+swagger: "hubapi.com-crm-swagger.json"
 ---

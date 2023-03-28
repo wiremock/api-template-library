@@ -1,11 +1,12 @@
 ---
 slug: "linuxfoundation-org-reimbursement"
-name: "Reimbursements API"
+title: "Reimbursements API"
 provider: "linuxfoundation.org"
 description: null
 logo: "linuxfoundation.org-reimbursement-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "linuxfoundation.org-reimbursement-stubs.json"
+swagger: "linuxfoundation.org-reimbursement-swagger.json"
 ---

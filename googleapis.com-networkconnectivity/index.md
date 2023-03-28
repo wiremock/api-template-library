@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-networkconnectivity"
-name: "Network Connectivity API"
+title: "Network Connectivity API"
 provider: "googleapis.com"
 description: "This API enables connectivity with and between Google Cloud resources."
 logo: "googleapis.com-networkconnectivity-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-networkconnectivity-stubs.json"
+swagger: "googleapis.com-networkconnectivity-swagger.json"
 ---

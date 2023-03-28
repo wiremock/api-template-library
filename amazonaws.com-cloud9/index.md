@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloud9"
-name: "AWS Cloud9"
+title: "AWS Cloud9"
 provider: "amazonaws.com"
 description: "<fullname>Cloud9</fullname> <p>Cloud9 is a collection of tools that\
   \ you can use to code, build, run, test, debug, and release software in the cloud.</p>\
@@ -27,6 +27,7 @@ description: "<fullname>Cloud9</fullname> <p>Cloud9 is a collection of tools tha
 logo: "amazonaws.com-cloud9-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloud9-stubs.json"
+swagger: "amazonaws.com-cloud9-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Checkout-API"
-name: "Checkout API"
+title: "Checkout API"
 provider: "vtex.local"
 description: ">ℹ️ Check the new [Checkout onboarding guide](https://developers.vtex.com/vtex-rest-api/docs/checkout-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -63,4 +63,5 @@ logo: "vtex.local-Checkout-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Checkout-API-stubs.json"
+swagger: "vtex.local-Checkout-API-swagger.json"
 ---

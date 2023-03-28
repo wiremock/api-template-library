@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-chromemanagement"
-name: "Chrome Management API"
+title: "Chrome Management API"
 provider: "googleapis.com"
 description: "The Chrome Management API is a suite of services that allows Chrome\
   \ administrators to view, manage and gain insights on their Chrome OS and Chrome\
@@ -8,7 +8,8 @@ description: "The Chrome Management API is a suite of services that allows Chrom
 logo: "googleapis.com-chromemanagement-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-chromemanagement-stubs.json"
+swagger: "googleapis.com-chromemanagement-swagger.json"
 ---

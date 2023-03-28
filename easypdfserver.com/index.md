@@ -1,11 +1,12 @@
 ---
 slug: "easypdfserver-com"
-name: "EasyPDFServer"
+title: "EasyPDFServer"
 provider: "easypdfserver.com"
 description: "API for converting HTML to PDF."
 logo: "easypdfserver.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "easypdfserver.com-stubs.json"
+swagger: "easypdfserver.com-swagger.json"
 ---

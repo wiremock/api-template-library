@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-verify"
-name: "Verify API"
+title: "Verify API"
 provider: "nexmo.com"
 description: "The Verify API helps you to implement 2FA (two-factor authentication)\
   \ in your applications. This is useful for:\n\n* Protecting against spam, by preventing\
@@ -12,4 +12,5 @@ logo: "nexmo.com-verify-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-verify-stubs.json"
+swagger: "nexmo.com-verify-swagger.json"
 ---

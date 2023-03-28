@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-datasync"
-name: "AWS DataSync"
+title: "AWS DataSync"
 provider: "amazonaws.com"
 description: "<fullname>DataSync</fullname> <p>DataSync is a managed data transfer\
   \ service that makes it simpler for you to automate moving data between on-premises\
@@ -12,6 +12,7 @@ description: "<fullname>DataSync</fullname> <p>DataSync is a managed data transf
 logo: "amazonaws.com-datasync-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-datasync-stubs.json"
+swagger: "amazonaws.com-datasync-swagger.json"
 ---

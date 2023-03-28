@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-msde"
-name: "Ministry of Skill Development And Entrepreneurship"
+title: "Ministry of Skill Development And Entrepreneurship"
 provider: "apisetu.gov.in"
 description: "National Council for Vocational Training (NCVT) under Ministry of Skill\
   \ Development And Entrepreneurship has been entrusted with the responsibilities\
@@ -11,6 +11,7 @@ description: "National Council for Vocational Training (NCVT) under Ministry of 
 logo: "apisetu.gov.in-msde-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-msde-stubs.json"
+swagger: "apisetu.gov.in-msde-swagger.json"
 ---

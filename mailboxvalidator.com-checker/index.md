@@ -1,6 +1,6 @@
 ---
 slug: "mailboxvalidator-com-checker"
-name: "MailboxValidator Free Email Checker"
+title: "MailboxValidator Free Email Checker"
 provider: "mailboxvalidator.com"
 description: "The MailboxValidator Free Email Checker checks if a single email address\
   \ is from a free email provider and returns the results in either JSON or XML format.\
@@ -8,6 +8,7 @@ description: "The MailboxValidator Free Email Checker checks if a single email a
 logo: "mailboxvalidator.com-checker-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "email"
+- "email"
 stubs: "mailboxvalidator.com-checker-stubs.json"
+swagger: "mailboxvalidator.com-checker-swagger.json"
 ---

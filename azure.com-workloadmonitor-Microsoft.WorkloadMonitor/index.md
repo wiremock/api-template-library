@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-workloadmonitor-Microsoft-WorkloadMonitor"
-name: "Workload Monitor"
+title: "Workload Monitor"
 provider: "azure.com"
 description: "APIs for workload monitoring"
 logo: "azure.com-workloadmonitor-Microsoft.WorkloadMonitor-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-workloadmonitor-Microsoft.WorkloadMonitor-stubs.json"
+swagger: "azure.com-workloadmonitor-Microsoft.WorkloadMonitor-swagger.json"
 ---

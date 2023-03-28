@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-search"
-name: "SearchManagementClient"
+title: "SearchManagementClient"
 provider: "azure.com"
 description: "Client that can be used to manage Azure Search services and API keys."
 logo: "azure.com-search-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-search-stubs.json"
+swagger: "azure.com-search-swagger.json"
 ---

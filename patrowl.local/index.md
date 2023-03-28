@@ -1,11 +1,12 @@
 ---
 slug: "patrowl-local"
-name: "Swagger API-REST for Patrowl Engines"
+title: "Swagger API-REST for Patrowl Engines"
 provider: "patrowl.local"
 description: "This is the API documentation for Patrowl Engines usage."
 logo: "patrowl.local-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "security"
+- "security"
 stubs: "patrowl.local-stubs.json"
+swagger: "patrowl.local-swagger.json"
 ---

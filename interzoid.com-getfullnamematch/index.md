@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getfullnamematch"
-name: "Interzoid Get Full Name Match Similarity Key API"
+title: "Interzoid Get Full Name Match Similarity Key API"
 provider: "interzoid.com"
 description: "This API provides a similarity key used to match with other similar\
   \ full name data, including for purposes of deduplication, fuzzy matching, or merging\
@@ -11,6 +11,7 @@ description: "This API provides a similarity key used to match with other simila
 logo: "interzoid.com-getfullnamematch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getfullnamematch-stubs.json"
+swagger: "interzoid.com-getfullnamematch-swagger.json"
 ---

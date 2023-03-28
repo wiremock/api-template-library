@@ -1,6 +1,6 @@
 ---
 slug: "opentargets-io"
-name: "Open Targets Platform REST API"
+title: "Open Targets Platform REST API"
 provider: "opentargets.io"
 description: "### The Open Targets Platform REST API\n\nThe Open Targets Platform\
   \ API ('Application Programming Interface') allows programmatic retrieval of the\
@@ -45,6 +45,7 @@ description: "### The Open Targets Platform REST API\n\nThe Open Targets Platfor
 logo: "opentargets.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "opentargets.io-stubs.json"
+swagger: "opentargets.io-swagger.json"
 ---

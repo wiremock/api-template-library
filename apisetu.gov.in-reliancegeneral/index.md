@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-reliancegeneral"
-name: "Reliance General Insurance Company Ltd"
+title: "Reliance General Insurance Company Ltd"
 provider: "apisetu.gov.in"
 description: "Insurance policies issued by Reliance General Insurance Company Limited\
   \  is available on DigiLocker at (https://www.reliancegeneral.co.in) can be fetched\
@@ -8,6 +8,7 @@ description: "Insurance policies issued by Reliance General Insurance Company Li
 logo: "apisetu.gov.in-reliancegeneral-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-reliancegeneral-stubs.json"
+swagger: "apisetu.gov.in-reliancegeneral-swagger.json"
 ---

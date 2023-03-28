@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-Manifest"
-name: "SubscriptionsManagementClient"
+title: "SubscriptionsManagementClient"
 provider: "azure.com"
 description: "The Admin Subscriptions Management Client."
 logo: "azure.com-azsadmin-Manifest-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-Manifest-stubs.json"
+swagger: "azure.com-azsadmin-Manifest-swagger.json"
 ---

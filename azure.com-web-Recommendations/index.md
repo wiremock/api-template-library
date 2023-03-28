@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-Recommendations"
-name: "Recommendations API Client"
+title: "Recommendations API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-Recommendations-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-Recommendations-stubs.json"
+swagger: "azure.com-web-Recommendations-swagger.json"
 ---

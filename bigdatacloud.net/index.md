@@ -1,6 +1,6 @@
 ---
 slug: "bigdatacloud-net"
-name: "IP Geolocation API"
+title: "IP Geolocation API"
 provider: "bigdatacloud.net"
 description: "BigDataCloud's IP Geolocation API returns detailed information about\
   \ the geographical location, ownership and connectivity of the provided IPv4 IP\
@@ -16,6 +16,7 @@ description: "BigDataCloud's IP Geolocation API returns detailed information abo
 logo: "bigdatacloud.net-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "bigdatacloud.net-stubs.json"
+swagger: "bigdatacloud.net-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-AWSMigrationHub"
-name: "AWS Migration Hub"
+title: "AWS Migration Hub"
 provider: "amazonaws.com"
 description: "<p>The AWS Migration Hub API methods help to obtain server and application\
   \ migration status and integrate your resource-specific migration tool by providing\
@@ -10,6 +10,7 @@ description: "<p>The AWS Migration Hub API methods help to obtain server and app
 logo: "amazonaws.com-AWSMigrationHub-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-AWSMigrationHub-stubs.json"
+swagger: "amazonaws.com-AWSMigrationHub-swagger.json"
 ---

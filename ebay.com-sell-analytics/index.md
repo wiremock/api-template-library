@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-analytics"
-name: " Seller Service Metrics API "
+title: " Seller Service Metrics API "
 provider: "ebay.com"
 description: "The <i>Analytics API</i> provides data and information about a seller\
   \ and their eBay business.  <br><br>The resources and methods in this API let sellers\
@@ -20,6 +20,7 @@ description: "The <i>Analytics API</i> provides data and information about a sel
 logo: "ebay.com-sell-analytics-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-analytics-stubs.json"
+swagger: "ebay.com-sell-analytics-swagger.json"
 ---

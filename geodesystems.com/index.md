@@ -1,6 +1,6 @@
 ---
 slug: "geodesystems-com"
-name: "geodesystems.com:443"
+title: "geodesystems.com:443"
 provider: "geodesystems.com"
 description: "Search for data in lots of places - manage your documents, photos and\
   \ critical business knowledge - communicate and coordinate with blogs, interactive\
@@ -9,4 +9,5 @@ logo: "geodesystems.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "geodesystems.com-stubs.json"
+swagger: "geodesystems.com-swagger.json"
 ---

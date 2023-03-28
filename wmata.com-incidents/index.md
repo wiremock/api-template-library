@@ -1,11 +1,12 @@
 ---
 slug: "wmata-com-incidents"
-name: "Incidents"
+title: "Incidents"
 provider: "wmata.com"
 description: "Rail, bus, and elevator disruptions/outages."
 logo: "wmata.com-incidents-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "transport"
+- "transport"
 stubs: "wmata.com-incidents-stubs.json"
+swagger: "wmata.com-incidents-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "telematicssdk-com"
-name: "Quick start - Telematics SDK"
+title: "Quick start - Telematics SDK"
 provider: "telematicssdk.com"
 description: "# Introduction\nWe have prepared a set of APIs for quick start to integrate\
   \ telematics SDK that powers mobile telematics inside 3rd party mobile applications.\n\
@@ -32,6 +32,7 @@ description: "# Introduction\nWe have prepared a set of APIs for quick start to 
 logo: "telematicssdk.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "iot"
+- "iot"
 stubs: "telematicssdk.com-stubs.json"
+swagger: "telematicssdk.com-swagger.json"
 ---

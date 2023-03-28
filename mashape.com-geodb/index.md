@@ -1,6 +1,6 @@
 ---
 slug: "mashape-com-geodb"
-name: "GeoDB Cities API"
+title: "GeoDB Cities API"
 provider: "mashape.com"
 description: "The GeoDB API focuses on getting global city and region data. Easily\
   \ obtain country, region, and city data for use\nin your apps! \n<ul>\n  <li>Filter\
@@ -29,7 +29,8 @@ description: "The GeoDB API focuses on getting global city and region data. Easi
 logo: "mashape.com-geodb-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "location"
+- "developer_tools"
+- "location"
 stubs: "mashape.com-geodb-stubs.json"
+swagger: "mashape.com-geodb-swagger.json"
 ---

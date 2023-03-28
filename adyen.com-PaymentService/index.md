@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-PaymentService"
-name: "Adyen Payment API"
+title: "Adyen Payment API"
 provider: "adyen.com"
 description: "A set of API endpoints that allow you to initiate, settle, and modify\
   \ payments on the Adyen payments platform. You can use the API to accept card payments\
@@ -25,6 +25,7 @@ description: "A set of API endpoints that allow you to initiate, settle, and mod
 logo: "adyen.com-PaymentService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-PaymentService-stubs.json"
+swagger: "adyen.com-PaymentService-swagger.json"
 ---

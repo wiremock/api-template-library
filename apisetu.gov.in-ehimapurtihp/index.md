@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-ehimapurtihp"
-name: "Department of Food and Civil Supplies Himachal Pradesh, Himachal Pradesh"
+title: "Department of Food and Civil Supplies Himachal Pradesh, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Ration Cards Issued by Department of Food, Civil Supplies and Consumer\
   \ Affairs, Himachal Pradesh (http://food.hp.nic.in/) are available for download\
@@ -8,6 +8,7 @@ description: "Ration Cards Issued by Department of Food, Civil Supplies and Cons
 logo: "apisetu.gov.in-ehimapurtihp-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-ehimapurtihp-stubs.json"
+swagger: "apisetu.gov.in-ehimapurtihp-swagger.json"
 ---

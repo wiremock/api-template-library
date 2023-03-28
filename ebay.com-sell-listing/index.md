@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-listing"
-name: "Listing API"
+title: "Listing API"
 provider: "ebay.com"
 description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\"\
   \ target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon\
@@ -11,6 +11,7 @@ description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https:/
 logo: "ebay.com-sell-listing-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-listing-stubs.json"
+swagger: "ebay.com-sell-listing-swagger.json"
 ---

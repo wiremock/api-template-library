@@ -1,11 +1,12 @@
 ---
 slug: "domainsdb-info"
-name: "Domains-Index API"
+title: "Domains-Index API"
 provider: "domainsdb.info"
 description: "Domains-Index database powered API"
 logo: "domainsdb.info-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "domainsdb.info-stubs.json"
+swagger: "domainsdb.info-swagger.json"
 ---

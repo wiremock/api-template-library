@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimtenant"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on tenant entity associated\
   \ with your Azure API Management deployment. Using this entity you can manage properties\
@@ -8,6 +8,7 @@ description: "Use these REST APIs for performing operations on tenant entity ass
 logo: "azure.com-apimanagement-apimtenant-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimtenant-stubs.json"
+swagger: "azure.com-apimanagement-apimtenant-swagger.json"
 ---

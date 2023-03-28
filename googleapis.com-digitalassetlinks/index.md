@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-digitalassetlinks"
-name: "Digital Asset Links API"
+title: "Digital Asset Links API"
 provider: "googleapis.com"
 description: "Discovers relationships between online assets such as websites or mobile\
   \ apps."
 logo: "googleapis.com-digitalassetlinks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-digitalassetlinks-stubs.json"
+swagger: "googleapis.com-digitalassetlinks-swagger.json"
 ---

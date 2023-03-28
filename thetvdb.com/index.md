@@ -1,6 +1,6 @@
 ---
 slug: "thetvdb-com"
-name: "TheTVDB API v3"
+title: "TheTVDB API v3"
 provider: "thetvdb.com"
 description: "API v3 targets v2 functionality with a few minor additions. The API\
   \ is accessible via https://api.thetvdb.com and provides the following REST endpoints\
@@ -31,7 +31,8 @@ description: "API v3 targets v2 functionality with a few minor additions. The AP
 logo: "thetvdb.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
-- name: "open_data"
+- "media"
+- "open_data"
 stubs: "thetvdb.com-stubs.json"
+swagger: "thetvdb.com-swagger.json"
 ---

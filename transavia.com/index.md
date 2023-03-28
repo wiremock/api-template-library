@@ -1,11 +1,12 @@
 ---
 slug: "transavia-com"
-name: "Airports API v2"
+title: "Airports API v2"
 provider: "transavia.com"
 description: "Returns all airports"
 logo: "transavia.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "transavia.com-stubs.json"
+swagger: "transavia.com-swagger.json"
 ---

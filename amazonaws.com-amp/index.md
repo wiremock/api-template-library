@@ -1,11 +1,12 @@
 ---
 slug: "amazonaws-com-amp"
-name: "Amazon Prometheus Service"
+title: "Amazon Prometheus Service"
 provider: "amazonaws.com"
 description: "Amazon Managed Service for Prometheus"
 logo: "amazonaws.com-amp-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-amp-stubs.json"
+swagger: "amazonaws.com-amp-swagger.json"
 ---

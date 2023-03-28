@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-containerinstance-containerInstance"
-name: "ContainerInstanceManagementClient"
+title: "ContainerInstanceManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-containerinstance-containerInstance-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-containerinstance-containerInstance-stubs.json"
+swagger: "azure.com-containerinstance-containerInstance-swagger.json"
 ---

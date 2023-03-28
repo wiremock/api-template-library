@@ -1,6 +1,6 @@
 ---
 slug: "taxrates-io"
-name: "Taxrates.io API"
+title: "Taxrates.io API"
 provider: "taxrates.io"
 description: "<h3>Introduction</h3>\n<p>Taxrates.io is a global tax rate service that\
   \ automates the management of monitoring tax rates changes in 181 countries. We\
@@ -104,6 +104,7 @@ description: "<h3>Introduction</h3>\n<p>Taxrates.io is a global tax rate service
 logo: "taxrates.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "taxrates.io-stubs.json"
+swagger: "taxrates.io-swagger.json"
 ---

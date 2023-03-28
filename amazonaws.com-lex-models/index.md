@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-lex-models"
-name: "Amazon Lex Model Building Service"
+title: "Amazon Lex Model Building Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Lex Build-Time Actions</fullname> <p> Amazon Lex is\
   \ an AWS service for building conversational voice and text interfaces. Use these\
@@ -9,6 +9,7 @@ description: "<fullname>Amazon Lex Build-Time Actions</fullname> <p> Amazon Lex 
 logo: "amazonaws.com-lex-models-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-lex-models-stubs.json"
+swagger: "amazonaws.com-lex-models-swagger.json"
 ---

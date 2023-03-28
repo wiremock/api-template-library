@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-eventbridge"
-name: "Amazon EventBridge"
+title: "Amazon EventBridge"
 provider: "amazonaws.com"
 description: "<p>Amazon EventBridge helps you to respond to state changes in your\
   \ Amazon Web Services resources. When your resources change state, they automatically\
@@ -18,6 +18,7 @@ description: "<p>Amazon EventBridge helps you to respond to state changes in you
 logo: "amazonaws.com-eventbridge-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-eventbridge-stubs.json"
+swagger: "amazonaws.com-eventbridge-swagger.json"
 ---

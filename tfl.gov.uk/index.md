@@ -1,6 +1,6 @@
 ---
 slug: "tfl-gov-uk"
-name: "Transport for London Unified API"
+title: "Transport for London Unified API"
 provider: "tfl.gov.uk"
 description: "Our unified API brings together data across all modes of transport into\
   \ a single RESTful API. This API provides access to the most highly requested realtime\
@@ -9,7 +9,8 @@ description: "Our unified API brings together data across all modes of transport
 logo: "tfl.gov.uk-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
-- name: "open_data"
+- "transport"
+- "open_data"
 stubs: "tfl.gov.uk-stubs.json"
+swagger: "tfl.gov.uk-swagger.json"
 ---

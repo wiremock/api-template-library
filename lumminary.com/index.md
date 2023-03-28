@@ -1,6 +1,6 @@
 ---
 slug: "lumminary-com"
-name: "Lumminary API"
+title: "Lumminary API"
 provider: "lumminary.com"
 description: "# Introduction\nThe Lumminary API was built to allow third parties to\
   \ interact with Lumminary customers and gain access to their genetic data. The Lumminary\
@@ -598,6 +598,7 @@ description: "# Introduction\nThe Lumminary API was built to allow third parties
 logo: "lumminary.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "lumminary.com-stubs.json"
+swagger: "lumminary.com-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apis-guru"
-name: "APIs.guru"
+title: "APIs.guru"
 provider: "apis.guru"
 description: "Wikipedia for Web APIs. Repository of API specs in OpenAPI format.\n\
   \n**Warning**: If you want to be notified about changes in advance please join our\
@@ -9,7 +9,8 @@ description: "Wikipedia for Web APIs. Repository of API specs in OpenAPI format.
 logo: "apis.guru-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
-- name: "developer_tools"
+- "open_data"
+- "developer_tools"
 stubs: "apis.guru-stubs.json"
+swagger: "apis.guru-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "archive-org-wayback"
-name: "Wayback API"
+title: "Wayback API"
 provider: "archive.org"
 description: "API for Internet Archive's Wayback Machine"
 logo: "archive.org-wayback-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "search"
+- "search"
 stubs: "archive.org-wayback-stubs.json"
+swagger: "archive.org-wayback-swagger.json"
 ---

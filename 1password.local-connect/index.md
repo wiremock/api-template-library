@@ -1,11 +1,12 @@
 ---
 slug: "1password-local-connect"
-name: "1Password Connect"
+title: "1Password Connect"
 provider: "1password.local"
 description: "REST API interface for 1Password Connect."
 logo: "1password.local-connect-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "security"
+- "security"
 stubs: "1password.local-connect-stubs.json"
+swagger: "1password.local-connect-swagger.json"
 ---

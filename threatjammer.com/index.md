@@ -1,6 +1,6 @@
 ---
 slug: "threatjammer-com"
-name: "ThreatJammer.com User API"
+title: "ThreatJammer.com User API"
 provider: "threatjammer.com"
 description: "\nThe public API open to the users. [Read the docs and learn more.](https://threatjammer.com/docs).\n\
   \n## General information\n\n### Description\nThreat Jammer supports two end-user\
@@ -35,4 +35,5 @@ logo: "threatjammer.com-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "threatjammer.com-stubs.json"
+swagger: "threatjammer.com-swagger.json"
 ---

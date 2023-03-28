@@ -1,6 +1,6 @@
 ---
 slug: "tomtom-com-routing"
-name: "Routing"
+title: "Routing"
 provider: "tomtom.com"
 description: "Routing consists of the following service:\n<b>Calculate Route</b>\n\
   Calculates a route between an origin and a destination, passing through waypoints\
@@ -11,6 +11,7 @@ description: "Routing consists of the following service:\n<b>Calculate Route</b>
 logo: "tomtom.com-routing-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "tomtom.com-routing-stubs.json"
+swagger: "tomtom.com-routing-swagger.json"
 ---

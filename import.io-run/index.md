@@ -1,11 +1,12 @@
 ---
 slug: "import-io-run"
-name: "import.io"
+title: "import.io"
 provider: "import.io"
 description: null
 logo: "import.io-run-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "tools"
+- "tools"
 stubs: "import.io-run-stubs.json"
+swagger: "import.io-run-swagger.json"
 ---

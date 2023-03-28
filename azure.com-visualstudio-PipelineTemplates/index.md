@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-visualstudio-PipelineTemplates"
-name: "Visual Studio Projects Resource Provider Client"
+title: "Visual Studio Projects Resource Provider Client"
 provider: "azure.com"
 description: "Use these APIs to manage Visual Studio Team Services resources through\
   \ the Azure Resource Manager. All task operations conform to the HTTP/1.1 protocol\
@@ -10,6 +10,7 @@ description: "Use these APIs to manage Visual Studio Team Services resources thr
 logo: "azure.com-visualstudio-PipelineTemplates-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-visualstudio-PipelineTemplates-stubs.json"
+swagger: "azure.com-visualstudio-PipelineTemplates-swagger.json"
 ---

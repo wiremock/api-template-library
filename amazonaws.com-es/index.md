@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-es"
-name: "Amazon Elasticsearch Service"
+title: "Amazon Elasticsearch Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Elasticsearch Configuration Service</fullname> <p>Use\
   \ the Amazon Elasticsearch Configuration API to create, configure, and manage Elasticsearch\
@@ -16,6 +16,7 @@ description: "<fullname>Amazon Elasticsearch Configuration Service</fullname> <p
 logo: "amazonaws.com-es-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-es-stubs.json"
+swagger: "amazonaws.com-es-swagger.json"
 ---

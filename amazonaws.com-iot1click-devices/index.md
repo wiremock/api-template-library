@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iot1click-devices"
-name: "AWS IoT 1-Click Devices Service"
+title: "AWS IoT 1-Click Devices Service"
 provider: "amazonaws.com"
 description: "Describes all of the AWS IoT 1-Click device-related API operations for\
   \ the service.\n Also provides sample requests, responses, and errors for the supported\
@@ -8,6 +8,7 @@ description: "Describes all of the AWS IoT 1-Click device-related API operations
 logo: "amazonaws.com-iot1click-devices-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iot1click-devices-stubs.json"
+swagger: "amazonaws.com-iot1click-devices-swagger.json"
 ---

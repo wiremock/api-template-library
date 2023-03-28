@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Master-Data-API-"
-name: "Master Data API - v2"
+title: "Master Data API - v2"
 provider: "vtex.local"
 description: "# ATTENTION: **This version isn't compliant with data entities of old\
   \ version (e.g. CL and AD). It's possible to use this configuration only to new\
@@ -32,4 +32,5 @@ logo: "vtex.local-Master-Data-API--logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Master-Data-API--stubs.json"
+swagger: "vtex.local-Master-Data-API--swagger.json"
 ---

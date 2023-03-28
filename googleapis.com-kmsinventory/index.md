@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-kmsinventory"
-name: "KMS Inventory API"
+title: "KMS Inventory API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-kmsinventory-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-kmsinventory-stubs.json"
+swagger: "googleapis.com-kmsinventory-swagger.json"
 ---

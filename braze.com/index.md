@@ -1,6 +1,6 @@
 ---
 slug: "braze-com"
-name: "Braze Endpoints"
+title: "Braze Endpoints"
 provider: "braze.com"
 description: "# Braze API Overview\n\nBraze provides a high performance REST API to\
   \ allow you to track users, send messages, export data, and more.\n\nA REST API\
@@ -62,6 +62,7 @@ description: "# Braze API Overview\n\nBraze provides a high performance REST API
 logo: "braze.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "marketing"
+- "marketing"
 stubs: "braze.com-stubs.json"
+swagger: "braze.com-swagger.json"
 ---

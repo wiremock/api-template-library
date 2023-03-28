@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-connect"
-name: "Amazon Connect Service"
+title: "Amazon Connect Service"
 provider: "amazonaws.com"
 description: "<p>Amazon Connect is a cloud-based contact center solution that you\
   \ use to set up and manage a customer contact center and provide reliable customer\
@@ -17,6 +17,7 @@ description: "<p>Amazon Connect is a cloud-based contact center solution that yo
 logo: "amazonaws.com-connect-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-connect-stubs.json"
+swagger: "amazonaws.com-connect-swagger.json"
 ---

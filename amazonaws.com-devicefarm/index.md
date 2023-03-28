@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-devicefarm"
-name: "AWS Device Farm"
+title: "AWS Device Farm"
 provider: "amazonaws.com"
 description: "<p>Welcome to the AWS Device Farm API documentation, which contains\
   \ APIs for:</p> <ul> <li> <p>Testing on desktop browsers</p> <p> Device Farm makes\
@@ -15,6 +15,7 @@ description: "<p>Welcome to the AWS Device Farm API documentation, which contain
 logo: "amazonaws.com-devicefarm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-devicefarm-stubs.json"
+swagger: "amazonaws.com-devicefarm-swagger.json"
 ---

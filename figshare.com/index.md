@@ -1,11 +1,12 @@
 ---
 slug: "figshare-com"
-name: "Figshare API"
+title: "Figshare API"
 provider: "figshare.com"
 description: "Figshare apiv2. Using Swagger 2.0"
 logo: "figshare.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "figshare.com-stubs.json"
+swagger: "figshare.com-swagger.json"
 ---

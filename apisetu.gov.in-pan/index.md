@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-pan"
-name: "Income Tax Department"
+title: "Income Tax Department"
 provider: "apisetu.gov.in"
 description: "Income Tax Department, Govt of India has provided PAN Verification Records\
   \ to Indian citizens via DigiLocker. You can verify the correctness of your PAN\
@@ -8,6 +8,7 @@ description: "Income Tax Department, Govt of India has provided PAN Verification
 logo: "apisetu.gov.in-pan-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-pan-stubs.json"
+swagger: "apisetu.gov.in-pan-swagger.json"
 ---

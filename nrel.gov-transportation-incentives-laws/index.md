@@ -1,6 +1,6 @@
 ---
 slug: "nrel-gov-transportation-incentives-laws"
-name: "Transportation Laws and Incentives"
+title: "Transportation Laws and Incentives"
 provider: "nrel.gov"
 description: "Query our database of federal and state laws and incentives for alternative\
   \ fuels and vehicles, air quality, fuel efficiency, and other transportation-related\
@@ -9,6 +9,7 @@ description: "Query our database of federal and state laws and incentives for al
 logo: "nrel.gov-transportation-incentives-laws-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "nrel.gov-transportation-incentives-laws-stubs.json"
+swagger: "nrel.gov-transportation-incentives-laws-swagger.json"
 ---

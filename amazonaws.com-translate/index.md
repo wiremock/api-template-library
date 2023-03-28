@@ -1,12 +1,13 @@
 ---
 slug: "amazonaws-com-translate"
-name: "Amazon Translate"
+title: "Amazon Translate"
 provider: "amazonaws.com"
 description: "Provides translation of the input content from the source language to\
   \ the target language."
 logo: "amazonaws.com-translate-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-translate-stubs.json"
+swagger: "amazonaws.com-translate-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-amplify"
-name: "AWS Amplify"
+title: "AWS Amplify"
 provider: "amazonaws.com"
 description: "Amplify enables developers to develop and deploy cloud-powered mobile\
   \ and web apps. The Amplify Console provides a continuous delivery and hosting service\
@@ -11,6 +11,7 @@ description: "Amplify enables developers to develop and deploy cloud-powered mob
 logo: "amazonaws.com-amplify-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-amplify-stubs.json"
+swagger: "amazonaws.com-amplify-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "azure-com-powerbiembedded"
-name: "Power BI Embedded Management Client"
+title: "Power BI Embedded Management Client"
 provider: "azure.com"
 description: "Client to manage your Power BI Embedded workspace collections and retrieve\
   \ workspaces."
 logo: "azure.com-powerbiembedded-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-powerbiembedded-stubs.json"
+swagger: "azure.com-powerbiembedded-swagger.json"
 ---

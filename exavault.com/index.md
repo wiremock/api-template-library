@@ -1,6 +1,6 @@
 ---
 slug: "exavault-com"
-name: "ExaVault"
+title: "ExaVault"
 provider: "exavault.com"
 description: "ExaVaults API allows you to incorporate ExaVaults suite of file transfer\
   \ and user management tools into your own application.\\nExaVault supports both\
@@ -9,6 +9,7 @@ description: "ExaVaults API allows you to incorporate ExaVaults suite of file tr
 logo: "exavault.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "storage"
+- "storage"
 stubs: "exavault.com-stubs.json"
+swagger: "exavault.com-swagger.json"
 ---

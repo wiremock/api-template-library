@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-cloudtasks"
-name: "Cloud Tasks API"
+title: "Cloud Tasks API"
 provider: "googleapis.com"
 description: "Manages the execution of large numbers of distributed requests."
 logo: "googleapis.com-cloudtasks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudtasks-stubs.json"
+swagger: "googleapis.com-cloudtasks-swagger.json"
 ---

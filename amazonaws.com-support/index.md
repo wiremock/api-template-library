@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-support"
-name: "AWS Support"
+title: "AWS Support"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Web Services Support</fullname> <p>The <i>Amazon Web\
   \ Services Support API Reference</i> is intended for programmers who need detailed\
@@ -38,6 +38,7 @@ description: "<fullname>Amazon Web Services Support</fullname> <p>The <i>Amazon 
 logo: "amazonaws.com-support-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-support-stubs.json"
+swagger: "amazonaws.com-support-swagger.json"
 ---

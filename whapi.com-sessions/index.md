@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-sessions"
-name: "Sessions API"
+title: "Sessions API"
 provider: "whapi.com"
 description: "The William Hill Sessions API uses a central authentication service\
   \ (CAS*) on all resources that require access to a customer’s account or betting\
@@ -30,6 +30,7 @@ description: "The William Hill Sessions API uses a central authentication servic
 logo: "whapi.com-sessions-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-sessions-stubs.json"
+swagger: "whapi.com-sessions-swagger.json"
 ---

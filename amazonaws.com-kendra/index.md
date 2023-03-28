@@ -1,11 +1,12 @@
 ---
 slug: "amazonaws-com-kendra"
-name: "AWSKendraFrontendService"
+title: "AWSKendraFrontendService"
 provider: "amazonaws.com"
 description: "Amazon Kendra is a service for indexing large document sets."
 logo: "amazonaws.com-kendra-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kendra-stubs.json"
+swagger: "amazonaws.com-kendra-swagger.json"
 ---

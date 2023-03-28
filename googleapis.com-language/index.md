@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-language"
-name: "Cloud Natural Language API"
+title: "Cloud Natural Language API"
 provider: "googleapis.com"
 description: "Provides natural language understanding technologies, such as sentiment\
   \ analysis, entity recognition, entity sentiment analysis, and other text annotations,\
@@ -8,7 +8,8 @@ description: "Provides natural language understanding technologies, such as sent
 logo: "googleapis.com-language-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-language-stubs.json"
+swagger: "googleapis.com-language-swagger.json"
 ---

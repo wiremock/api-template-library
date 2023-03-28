@@ -1,11 +1,12 @@
 ---
 slug: "nrm-se-georg"
-name: "Georg API"
+title: "Georg API"
 provider: "nrm.se"
 description: null
 logo: "nrm.se-georg-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
+- "location"
 stubs: "nrm.se-georg-stubs.json"
+swagger: "nrm.se-georg-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-lookoutvision"
-name: "Amazon Lookout for Vision"
+title: "Amazon Lookout for Vision"
 provider: "amazonaws.com"
 description: "<p>This is the Amazon Lookout for Vision API Reference. It provides\
   \ descriptions of actions, data types, common parameters, and common errors.</p>\
@@ -13,6 +13,7 @@ description: "<p>This is the Amazon Lookout for Vision API Reference. It provide
 logo: "amazonaws.com-lookoutvision-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-lookoutvision-stubs.json"
+swagger: "amazonaws.com-lookoutvision-swagger.json"
 ---

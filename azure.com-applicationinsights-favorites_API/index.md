@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-applicationinsights-favorites_API"
-name: "ApplicationInsightsManagementClient"
+title: "ApplicationInsightsManagementClient"
 provider: "azure.com"
 description: "Azure Application Insights client for favorites."
 logo: "azure.com-applicationinsights-favorites_API-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-applicationinsights-favorites_API-stubs.json"
+swagger: "azure.com-applicationinsights-favorites_API-swagger.json"
 ---

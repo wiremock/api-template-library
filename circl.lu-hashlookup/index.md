@@ -1,6 +1,6 @@
 ---
 slug: "circl-lu-hashlookup"
-name: "hashlookup CIRCL API"
+title: "hashlookup CIRCL API"
 provider: "circl.lu"
 description: "![](https://www.circl.lu/assets/images/circl-logo.png)\n[CIRCL hash\
   \ lookup](https://hashlookup.circl.lu/) is a public API to lookup hash values against\
@@ -14,6 +14,7 @@ description: "![](https://www.circl.lu/assets/images/circl-logo.png)\n[CIRCL has
 logo: "circl.lu-hashlookup-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "security"
+- "security"
 stubs: "circl.lu-hashlookup-stubs.json"
+swagger: "circl.lu-hashlookup-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ivs"
-name: "Amazon Interactive Video Service"
+title: "Amazon Interactive Video Service"
 provider: "amazonaws.com"
 description: "<p> <b>Introduction</b> </p> <p>The Amazon Interactive Video Service\
   \ (IVS) API is REST compatible, using a standard HTTP API and an Amazon Web Services\
@@ -133,6 +133,7 @@ description: "<p> <b>Introduction</b> </p> <p>The Amazon Interactive Video Servi
 logo: "amazonaws.com-ivs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ivs-stubs.json"
+swagger: "amazonaws.com-ivs-swagger.json"
 ---

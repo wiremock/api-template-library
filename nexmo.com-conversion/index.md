@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-conversion"
-name: "Nexmo Conversion API"
+title: "Nexmo Conversion API"
 provider: "nexmo.com"
 description: "The Conversion API allows you to tell Nexmo about the reliability of\
   \ your 2FA communications. Sending conversion data back to us means that Nexmo can\
@@ -15,4 +15,5 @@ logo: "nexmo.com-conversion-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-conversion-stubs.json"
+swagger: "nexmo.com-conversion-swagger.json"
 ---

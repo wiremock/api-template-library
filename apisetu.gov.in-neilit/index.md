@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-neilit"
-name: "National Institute of Electronics and Information Technology"
+title: "National Institute of Electronics and Information Technology"
 provider: "apisetu.gov.in"
 description: "NIELIT, under Ministry of Electronics & IT (http://www.nielit.gov.in/)\
   \ provides education and training in the area of Information, Electronics & Communication\
@@ -9,6 +9,7 @@ description: "NIELIT, under Ministry of Electronics & IT (http://www.nielit.gov.
 logo: "apisetu.gov.in-neilit-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-neilit-stubs.json"
+swagger: "apisetu.gov.in-neilit-swagger.json"
 ---

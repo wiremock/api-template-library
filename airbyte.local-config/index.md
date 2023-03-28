@@ -1,6 +1,6 @@
 ---
 slug: "airbyte-local-config"
-name: "Airbyte Configuration API"
+title: "Airbyte Configuration API"
 provider: "airbyte.local"
 description: "Airbyte Configuration API\n[https://airbyte.io](https://airbyte.io).\n\
   \nThis API is a collection of HTTP RPC-style methods. While it is not a REST API,\
@@ -19,6 +19,7 @@ description: "Airbyte Configuration API\n[https://airbyte.io](https://airbyte.io
 logo: "airbyte.local-config-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "airbyte.local-config-stubs.json"
+swagger: "airbyte.local-config-swagger.json"
 ---

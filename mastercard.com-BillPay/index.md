@@ -1,6 +1,6 @@
 ---
 slug: "mastercard-com-BillPay"
-name: "Bill Payment Validator"
+title: "Bill Payment Validator"
 provider: "mastercard.com"
 description: "The Bill Payment Validator service allows RPPS origination (payment\
   \ sender) customers to identify if a potential RPPS transaction would process successfully\
@@ -10,4 +10,5 @@ logo: "mastercard.com-BillPay-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "mastercard.com-BillPay-stubs.json"
+swagger: "mastercard.com-BillPay-swagger.json"
 ---

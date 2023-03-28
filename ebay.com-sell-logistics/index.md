@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-sell-logistics"
-name: "Logistics API"
+title: "Logistics API"
 provider: "ebay.com"
 description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\"\
   \ target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon\
@@ -24,6 +24,7 @@ description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https:/
 logo: "ebay.com-sell-logistics-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-sell-logistics-stubs.json"
+swagger: "ebay.com-sell-logistics-swagger.json"
 ---

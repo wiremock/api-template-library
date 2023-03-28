@@ -1,6 +1,6 @@
 ---
 slug: "graphhopper-com"
-name: "GraphHopper Directions API"
+title: "GraphHopper Directions API"
 provider: "graphhopper.com"
 description: "\nWith the [GraphHopper Directions API](https://www.graphhopper.com/products/)\
   \ you can integrate A-to-B route planning, turn-by-turn navigation,\nroute optimization,\
@@ -100,6 +100,7 @@ description: "\nWith the [GraphHopper Directions API](https://www.graphhopper.co
 logo: "graphhopper.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "graphhopper.com-stubs.json"
+swagger: "graphhopper.com-swagger.json"
 ---

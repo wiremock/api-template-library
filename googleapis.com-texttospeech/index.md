@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-texttospeech"
-name: "Cloud Text-to-Speech API"
+title: "Cloud Text-to-Speech API"
 provider: "googleapis.com"
 description: "Synthesizes natural-sounding speech by applying powerful neural network\
   \ models."
 logo: "googleapis.com-texttospeech-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-texttospeech-stubs.json"
+swagger: "googleapis.com-texttospeech-swagger.json"
 ---

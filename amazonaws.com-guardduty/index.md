@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-guardduty"
-name: "Amazon GuardDuty"
+title: "Amazon GuardDuty"
 provider: "amazonaws.com"
 description: "<p>Amazon GuardDuty is a continuous security monitoring service that\
   \ analyzes and processes the following data sources: VPC flow logs, Amazon Web Services\
@@ -23,6 +23,7 @@ description: "<p>Amazon GuardDuty is a continuous security monitoring service th
 logo: "amazonaws.com-guardduty-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-guardduty-stubs.json"
+swagger: "amazonaws.com-guardduty-swagger.json"
 ---

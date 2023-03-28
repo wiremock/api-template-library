@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimquotas"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Quota entity associated\
   \ with your Azure API Management deployment. To configure call rate limit and quota\
@@ -8,6 +8,7 @@ description: "Use these REST APIs for performing operations on Quota entity asso
 logo: "azure.com-apimanagement-apimquotas-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimquotas-stubs.json"
+swagger: "azure.com-apimanagement-apimquotas-swagger.json"
 ---

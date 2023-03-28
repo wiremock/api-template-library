@@ -1,11 +1,12 @@
 ---
 slug: "illumidesk-com"
-name: "IllumiDesk"
+title: "IllumiDesk"
 provider: "illumidesk.com"
 description: null
 logo: "illumidesk.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "illumidesk.com-stubs.json"
+swagger: "illumidesk.com-swagger.json"
 ---

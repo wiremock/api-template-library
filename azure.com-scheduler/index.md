@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-scheduler"
-name: "SchedulerManagementClient"
+title: "SchedulerManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-scheduler-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-scheduler-stubs.json"
+swagger: "azure.com-scheduler-swagger.json"
 ---

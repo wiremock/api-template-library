@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-recoveryservices-vaultusages"
-name: "RecoveryServicesClient"
+title: "RecoveryServicesClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-recoveryservices-vaultusages-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-recoveryservices-vaultusages-stubs.json"
+swagger: "azure.com-recoveryservices-vaultusages-swagger.json"
 ---

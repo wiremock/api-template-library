@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-AzureBridge"
-name: "AzureBridgeAdminClient"
+title: "AzureBridgeAdminClient"
 provider: "azure.com"
 description: "AzureBridge Admin Client."
 logo: "azure.com-azsadmin-AzureBridge-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-AzureBridge-stubs.json"
+swagger: "azure.com-azsadmin-AzureBridge-swagger.json"
 ---

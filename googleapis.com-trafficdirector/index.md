@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-trafficdirector"
-name: "Traffic Director API"
+title: "Traffic Director API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-trafficdirector-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-trafficdirector-stubs.json"
+swagger: "googleapis.com-trafficdirector-swagger.json"
 ---

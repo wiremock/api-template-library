@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cloudtrail"
-name: "AWS CloudTrail"
+title: "AWS CloudTrail"
 provider: "amazonaws.com"
 description: "<fullname>CloudTrail</fullname> <p>This is the CloudTrail API Reference.\
   \ It provides descriptions of actions, data types, common parameters, and common\
@@ -22,6 +22,7 @@ description: "<fullname>CloudTrail</fullname> <p>This is the CloudTrail API Refe
 logo: "amazonaws.com-cloudtrail-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cloudtrail-stubs.json"
+swagger: "amazonaws.com-cloudtrail-swagger.json"
 ---

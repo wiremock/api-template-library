@@ -1,11 +1,12 @@
 ---
 slug: "n-auth-com"
-name: "nextAuth API"
+title: "nextAuth API"
 provider: "n-auth.com"
 description: "API for the nextAuth server"
 logo: "n-auth.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "security"
+- "security"
 stubs: "n-auth.com-stubs.json"
+swagger: "n-auth.com-swagger.json"
 ---

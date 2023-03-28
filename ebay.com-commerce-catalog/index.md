@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-commerce-catalog"
-name: "Catalog API"
+title: "Catalog API"
 provider: "ebay.com"
 description: "The Catalog API allows users to search for and locate an eBay catalog\
   \ product that is a direct match for the product that they wish to sell. Listing\
@@ -15,6 +15,7 @@ description: "The Catalog API allows users to search for and locate an eBay cata
 logo: "ebay.com-commerce-catalog-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-commerce-catalog-stubs.json"
+swagger: "ebay.com-commerce-catalog-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-ecr-public"
-name: "Amazon Elastic Container Registry Public"
+title: "Amazon Elastic Container Registry Public"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Elastic Container Registry Public</fullname> <p>Amazon\
   \ Elastic Container Registry Public (Amazon ECR Public) is a managed container image\
@@ -14,6 +14,7 @@ description: "<fullname>Amazon Elastic Container Registry Public</fullname> <p>A
 logo: "amazonaws.com-ecr-public-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-ecr-public-stubs.json"
+swagger: "amazonaws.com-ecr-public-swagger.json"
 ---

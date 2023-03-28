@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-resourcehealth"
-name: "Microsoft.ResourceHealth"
+title: "Microsoft.ResourceHealth"
 provider: "azure.com"
 description: "The Resource Health Client."
 logo: "azure.com-resourcehealth-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-resourcehealth-stubs.json"
+swagger: "azure.com-resourcehealth-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "apigee-local-registry"
-name: "Registry API"
+title: "Registry API"
 provider: "apigee.local"
 description: "The Registry service allows teams to manage descriptions of APIs."
 logo: "apigee.local-registry-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apigee.local-registry-stubs.json"
+swagger: "apigee.local-registry-swagger.json"
 ---

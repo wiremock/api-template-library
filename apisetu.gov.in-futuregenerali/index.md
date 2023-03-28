@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-futuregenerali"
-name: "Future Generali Total Insurance Solutions"
+title: "Future Generali Total Insurance Solutions"
 provider: "apisetu.gov.in"
 description: "Two Wheeler, Car, Commercial Vehicle, Home and Travel Insurance policies\
   \ issued by Future Generali are available on DigiLocker and can be pulled by citizens\
@@ -8,6 +8,7 @@ description: "Two Wheeler, Car, Commercial Vehicle, Home and Travel Insurance po
 logo: "apisetu.gov.in-futuregenerali-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-futuregenerali-stubs.json"
+swagger: "apisetu.gov.in-futuregenerali-swagger.json"
 ---

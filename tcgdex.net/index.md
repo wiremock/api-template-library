@@ -1,6 +1,6 @@
 ---
 slug: "tcgdex-net"
-name: "TCGdex API"
+title: "TCGdex API"
 provider: "tcgdex.net"
 description: "A Multilanguage Pokémon TCG Database with Cards Pictures and most of\
   \ the informations contained on the cards.\nYou can find out more about TCGdex at\
@@ -9,4 +9,5 @@ logo: "tcgdex.net-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "tcgdex.net-stubs.json"
+swagger: "tcgdex.net-swagger.json"
 ---

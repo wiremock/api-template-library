@@ -1,11 +1,12 @@
 ---
 slug: "letmc-com-reporting"
-name: "LetMC Api V3, reporting"
+title: "LetMC Api V3, reporting"
 provider: "letmc.com"
 description: null
 logo: "letmc.com-reporting-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "letmc.com-reporting-stubs.json"
+swagger: "letmc.com-reporting-swagger.json"
 ---

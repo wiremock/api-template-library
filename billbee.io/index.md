@@ -1,6 +1,6 @@
 ---
 slug: "billbee-io"
-name: "Billbee API"
+title: "Billbee API"
 provider: "billbee.io"
 description: "Documentation of the Billbee REST API to connect a Billbee account to\
   \ external aplications.\n\n## Endpoint\n\nThe Billbee API endpoint base url is https://api.billbee.io/api/v1\
@@ -18,6 +18,7 @@ description: "Documentation of the Billbee REST API to connect a Billbee account
 logo: "billbee.io-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "billbee.io-stubs.json"
+swagger: "billbee.io-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-policytroubleshooter"
-name: "Policy Troubleshooter API"
+title: "Policy Troubleshooter API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-policytroubleshooter-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-policytroubleshooter-stubs.json"
+swagger: "googleapis.com-policytroubleshooter-swagger.json"
 ---

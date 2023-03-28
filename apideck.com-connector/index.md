@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-connector"
-name: "Connector API"
+title: "Connector API"
 provider: "apideck.com"
 description: "Welcome to the Connector API.\n\nYou can use this API to access all\
   \ Connector API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is\
@@ -231,6 +231,7 @@ description: "Welcome to the Connector API.\n\nYou can use this API to access al
 logo: "apideck.com-connector-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-connector-stubs.json"
+swagger: "apideck.com-connector-swagger.json"
 ---

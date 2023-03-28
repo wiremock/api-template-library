@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-developer-analytics"
-name: "Analytics API"
+title: "Analytics API"
 provider: "ebay.com"
 description: "The <b>Analytics API</b> retrieves call-limit data and the quotas that\
   \ are set for the RESTful APIs and the legacy Trading API.  <br><br>Responses from\
@@ -22,6 +22,7 @@ description: "The <b>Analytics API</b> retrieves call-limit data and the quotas 
 logo: "ebay.com-developer-analytics-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-developer-analytics-stubs.json"
+swagger: "ebay.com-developer-analytics-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-lightsail"
-name: "Amazon Lightsail"
+title: "Amazon Lightsail"
 provider: "amazonaws.com"
 description: "<p>Amazon Lightsail is the easiest way to get started with Amazon Web\
   \ Services (Amazon Web Services) for developers who need to build websites or web\
@@ -21,6 +21,7 @@ description: "<p>Amazon Lightsail is the easiest way to get started with Amazon 
 logo: "amazonaws.com-lightsail-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-lightsail-stubs.json"
+swagger: "amazonaws.com-lightsail-swagger.json"
 ---

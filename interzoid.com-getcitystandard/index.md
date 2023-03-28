@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getcitystandard"
-name: "Interzoid City Data Standardization API"
+title: "Interzoid City Data Standardization API"
 provider: "interzoid.com"
 description: "This API provides a standard for US and international cities for the\
   \ purposes of standardizing city name data, improving query results, analytics,\
@@ -8,6 +8,7 @@ description: "This API provides a standard for US and international cities for t
 logo: "interzoid.com-getcitystandard-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getcitystandard-stubs.json"
+swagger: "interzoid.com-getcitystandard-swagger.json"
 ---

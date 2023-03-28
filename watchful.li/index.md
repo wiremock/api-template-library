@@ -1,11 +1,12 @@
 ---
 slug: "watchful-li"
-name: "watchful.li"
+title: "watchful.li"
 provider: "watchful.li"
 description: null
 logo: "watchful.li-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "hosting"
+- "hosting"
 stubs: "watchful.li-stubs.json"
+swagger: "watchful.li-swagger.json"
 ---

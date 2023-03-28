@@ -1,11 +1,12 @@
 ---
 slug: "qualtrics-com"
-name: "Qualtrics API"
+title: "Qualtrics API"
 provider: "qualtrics.com"
 description: "Work with Qualtrics surveys, distributions and response events"
 logo: "qualtrics.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "forms"
+- "forms"
 stubs: "qualtrics.com-stubs.json"
+swagger: "qualtrics.com-swagger.json"
 ---

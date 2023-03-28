@@ -1,11 +1,12 @@
 ---
 slug: "fisheye-local"
-name: "FishEye"
+title: "FishEye"
 provider: "fisheye.local"
 description: null
 logo: "fisheye.local-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "fisheye.local-stubs.json"
+swagger: "fisheye.local-swagger.json"
 ---

@@ -2684,7 +2684,7 @@
         "properties" : {
           "analysisKind" : {
             "description" : "Required. Immutable. The kind of analysis that is handled by this discovery.",
-            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT" ],
+            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT", "SBOM_REFERENCE" ],
             "type" : "string"
           }
         },
@@ -3542,7 +3542,7 @@
           },
           "kind" : {
             "description" : "Output only. The type of analysis. This field can be used as a filter in list requests.",
-            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT" ],
+            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT", "SBOM_REFERENCE" ],
             "type" : "string"
           },
           "longDescription" : {
@@ -3572,6 +3572,9 @@
           },
           "sbom" : {
             "$ref" : "#/components/schemas/DocumentNote"
+          },
+          "sbomReference" : {
+            "$ref" : "#/components/schemas/SBOMReferenceNote"
           },
           "shortDescription" : {
             "description" : "A one sentence description of this note.",
@@ -3634,7 +3637,7 @@
           },
           "kind" : {
             "description" : "Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.",
-            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT" ],
+            "enum" : [ "NOTE_KIND_UNSPECIFIED", "VULNERABILITY", "BUILD", "IMAGE", "PACKAGE", "DEPLOYMENT", "DISCOVERY", "ATTESTATION", "INTOTO", "SBOM", "SPDX_PACKAGE", "SPDX_FILE", "SPDX_RELATIONSHIP", "VULNERABILITY_ASSESSMENT", "SBOM_REFERENCE" ],
             "type" : "string"
           },
           "name" : {
@@ -3654,6 +3657,9 @@
           },
           "sbom" : {
             "$ref" : "#/components/schemas/DocumentOccurrence"
+          },
+          "sbomReference" : {
+            "$ref" : "#/components/schemas/SBOMReferenceOccurrence"
           },
           "spdxFile" : {
             "$ref" : "#/components/schemas/FileOccurrence"
@@ -4074,6 +4080,89 @@
         },
         "type" : "object"
       },
+      "SBOMReferenceNote" : {
+        "description" : "The note representing an SBOM reference.",
+        "properties" : {
+          "format" : {
+            "description" : "The format that SBOM takes. E.g. may be spdx, cyclonedx, etc...",
+            "type" : "string"
+          },
+          "version" : {
+            "description" : "The version of the format that the SBOM takes. E.g. if the format is spdx, the version may be 2.3.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "SBOMReferenceOccurrence" : {
+        "description" : "The occurrence representing an SBOM reference as applied to a specific resource. The occurrence follows the DSSE specification. See https://github.com/secure-systems-lab/dsse/blob/master/envelope.md for more details.",
+        "properties" : {
+          "payload" : {
+            "$ref" : "#/components/schemas/SbomReferenceIntotoPayload"
+          },
+          "payloadType" : {
+            "description" : "The kind of payload that SbomReferenceIntotoPayload takes. Since it's in the intoto format, this value is expected to be 'application/vnd.in-toto+json'.",
+            "type" : "string"
+          },
+          "signatures" : {
+            "description" : "The signatures over the payload.",
+            "items" : {
+              "$ref" : "#/components/schemas/EnvelopeSignature"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "SbomReferenceIntotoPayload" : {
+        "description" : "The actual payload that contains the SBOM Reference data. The payload follows the intoto statement specification. See https://github.com/in-toto/attestation/blob/main/spec/v1.0/statement.md for more details.",
+        "properties" : {
+          "_type" : {
+            "description" : "Identifier for the schema of the Statement.",
+            "type" : "string"
+          },
+          "predicate" : {
+            "$ref" : "#/components/schemas/SbomReferenceIntotoPredicate"
+          },
+          "predicateType" : {
+            "description" : "URI identifying the type of the Predicate.",
+            "type" : "string"
+          },
+          "subject" : {
+            "description" : "Set of software artifacts that the attestation applies to. Each element represents a single software artifact.",
+            "items" : {
+              "$ref" : "#/components/schemas/Subject"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "SbomReferenceIntotoPredicate" : {
+        "description" : "A predicate which describes the SBOM being referenced.",
+        "properties" : {
+          "digest" : {
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "A map of algorithm to digest of the contents of the SBOM.",
+            "type" : "object"
+          },
+          "location" : {
+            "description" : "The location of the SBOM.",
+            "type" : "string"
+          },
+          "mimeType" : {
+            "description" : "The mime type of the SBOM.",
+            "type" : "string"
+          },
+          "referrerId" : {
+            "description" : "The person or system referring this predicate to the consumer.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "SetIamPolicyRequest" : {
         "description" : "Request message for `SetIamPolicy` method.",
         "properties" : {
@@ -4189,6 +4278,23 @@
           },
           "message" : {
             "description" : "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Subject" : {
+        "description" : "Set of software artifacts that the attestation applies to. Each element represents a single software artifact.",
+        "properties" : {
+          "digest" : {
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "description" : "`\"\": \"\"` Algorithms can be e.g. sha256, sha512 See https://github.com/in-toto/attestation/blob/main/spec/field_types.md#DigestSet",
+            "type" : "object"
+          },
+          "name" : {
+            "description" : "Identifier to distinguish this artifact from others within the subject.",
             "type" : "string"
           }
         },

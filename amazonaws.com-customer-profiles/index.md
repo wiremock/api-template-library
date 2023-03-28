@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-customer-profiles"
-name: "Amazon Connect Customer Profiles"
+title: "Amazon Connect Customer Profiles"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Connect Customer Profiles</fullname> <p>Amazon Connect\
   \ Customer Profiles is a unified customer profile for your contact center that has\
@@ -13,6 +13,7 @@ description: "<fullname>Amazon Connect Customer Profiles</fullname> <p>Amazon Co
 logo: "amazonaws.com-customer-profiles-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-customer-profiles-stubs.json"
+swagger: "amazonaws.com-customer-profiles-swagger.json"
 ---

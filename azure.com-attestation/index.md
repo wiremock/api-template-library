@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-attestation"
-name: "AttestationClient"
+title: "AttestationClient"
 provider: "azure.com"
 description: "Describes the interface for the per-tenant enclave service."
 logo: "azure.com-attestation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-attestation-stubs.json"
+swagger: "azure.com-attestation-swagger.json"
 ---

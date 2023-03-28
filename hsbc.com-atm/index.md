@@ -1,11 +1,12 @@
 ---
 slug: "hsbc-com-atm"
-name: "ATM Locator API"
+title: "ATM Locator API"
 provider: "hsbc.com"
 description: null
 logo: "hsbc.com-atm-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "financial"
+- "financial"
 stubs: "hsbc.com-atm-stubs.json"
+swagger: "hsbc.com-atm-swagger.json"
 ---

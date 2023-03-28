@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-worklink"
-name: "Amazon WorkLink"
+title: "Amazon WorkLink"
 provider: "amazonaws.com"
 description: "Amazon WorkLink is a cloud-based service that provides secure access\
   \ to internal websites and web apps from iOS and Android phones. In a single step,\
@@ -13,6 +13,7 @@ description: "Amazon WorkLink is a cloud-based service that provides secure acce
 logo: "amazonaws.com-worklink-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-worklink-stubs.json"
+swagger: "amazonaws.com-worklink-swagger.json"
 ---

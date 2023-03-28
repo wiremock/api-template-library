@@ -1,6 +1,6 @@
 ---
 slug: "envoice-in"
-name: "API v1.0.0"
+title: "API v1.0.0"
 provider: "envoice.in"
 description: "[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/80638214aa04722c9203)\r\
   \n<span style='margin-left: 0.5em;'>or</span>\r\n<a href='https://documenter.getpostman.com/view/3559821/TVeqcn2L'\
@@ -47,6 +47,7 @@ description: "[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.g
 logo: "envoice.in-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "envoice.in-stubs.json"
+swagger: "envoice.in-swagger.json"
 ---

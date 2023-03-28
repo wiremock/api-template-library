@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-groundstation"
-name: "AWS Ground Station"
+title: "AWS Ground Station"
 provider: "amazonaws.com"
 description: "Welcome to the AWS Ground Station API Reference. AWS Ground Station\
   \ is a fully managed service that enables you to control satellite communications,\
@@ -10,6 +10,7 @@ description: "Welcome to the AWS Ground Station API Reference. AWS Ground Statio
 logo: "amazonaws.com-groundstation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-groundstation-stubs.json"
+swagger: "amazonaws.com-groundstation-swagger.json"
 ---

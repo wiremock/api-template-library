@@ -1,6 +1,6 @@
 ---
 slug: "departureboard-io"
-name: "departureboard.io API"
+title: "departureboard.io API"
 provider: "departureboard.io"
 description: "The departureboard.io is a high performance API written in Golang. Its\
   \ goal is to provide to main functions:<br><br> (1): A JSON API interface to the\
@@ -20,6 +20,7 @@ description: "The departureboard.io is a high performance API written in Golang.
 logo: "departureboard.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "departureboard.io-stubs.json"
+swagger: "departureboard.io-swagger.json"
 ---

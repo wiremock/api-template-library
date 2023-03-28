@@ -1,6 +1,6 @@
 ---
 slug: "pims-io"
-name: "Pims"
+title: "Pims"
 provider: "pims.io"
 description: "\nHereafter is the documentation of the private API of [Pims: Pointages\
   \ Intelligents pour le Monde du Spectacle](https://pims.io). This API is designed\
@@ -94,6 +94,7 @@ description: "\nHereafter is the documentation of the private API of [Pims: Poin
 logo: "pims.io-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "pims.io-stubs.json"
+swagger: "pims.io-swagger.json"
 ---

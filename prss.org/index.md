@@ -1,6 +1,6 @@
 ---
 slug: "prss-org"
-name: "ContentDepot"
+title: "ContentDepot"
 provider: "prss.org"
 description: "ContentDepot hosts a range of API’s that allow clients to manage, discover,\
   \ and obtain content. The API spans many parts of the ContentDepot functionality\
@@ -49,6 +49,7 @@ description: "ContentDepot hosts a range of API’s that allow clients to manage
 logo: "prss.org-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "media"
+- "media"
 stubs: "prss.org-stubs.json"
+swagger: "prss.org-swagger.json"
 ---

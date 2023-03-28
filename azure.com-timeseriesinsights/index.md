@@ -1,12 +1,13 @@
 ---
 slug: "azure-com-timeseriesinsights"
-name: "TimeSeriesInsightsClient"
+title: "TimeSeriesInsightsClient"
 provider: "azure.com"
 description: "Time Series Insights environment data plane client for PAYG (Preview\
   \ L1 SKU) environments."
 logo: "azure.com-timeseriesinsights-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-timeseriesinsights-stubs.json"
+swagger: "azure.com-timeseriesinsights-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-dgecerttn"
-name: "Tamil Nadu State Board (Tamil Nadu Directorate of Government Examinations),\
+title: "Tamil Nadu State Board (Tamil Nadu Directorate of Government Examinations),\
   \ Tamil Nadu"
 provider: "apisetu.gov.in"
 description: "Tamilnadu - Government Examinations (https://dgecert.tn.nic.in/) is\
@@ -10,6 +10,7 @@ description: "Tamilnadu - Government Examinations (https://dgecert.tn.nic.in/) i
 logo: "apisetu.gov.in-dgecerttn-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-dgecerttn-stubs.json"
+swagger: "apisetu.gov.in-dgecerttn-swagger.json"
 ---

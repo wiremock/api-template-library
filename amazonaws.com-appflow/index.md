@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-appflow"
-name: "Amazon Appflow"
+title: "Amazon Appflow"
 provider: "amazonaws.com"
 description: "<p>Welcome to the Amazon AppFlow API reference. This guide is for developers\
   \ who need detailed information about the Amazon AppFlow API operations, data types,\
@@ -27,6 +27,7 @@ description: "<p>Welcome to the Amazon AppFlow API reference. This guide is for 
 logo: "amazonaws.com-appflow-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-appflow-stubs.json"
+swagger: "amazonaws.com-appflow-swagger.json"
 ---

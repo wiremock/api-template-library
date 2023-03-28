@@ -1,6 +1,6 @@
 ---
 slug: "neowsapp-com"
-name: "NeoWs - (Near Earth Object Web Service)"
+title: "NeoWs - (Near Earth Object Web Service)"
 provider: "neowsapp.com"
 description: "A web service for near earth objects. All the data is from the <a href=\"\
   http://neo.jpl.nasa.gov/\" target=\"_blank\">NASA JPL Asteroid team</a>. \n\n \n\
@@ -11,6 +11,7 @@ description: "A web service for near earth objects. All the data is from the <a 
 logo: "neowsapp.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "neowsapp.com-stubs.json"
+swagger: "neowsapp.com-swagger.json"
 ---

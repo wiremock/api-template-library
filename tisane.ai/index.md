@@ -1,6 +1,6 @@
 ---
 slug: "tisane-ai"
-name: "Tisane API Documentation"
+title: "Tisane API Documentation"
 provider: "tisane.ai"
 description: "Tisane is a natural language processing library, providing:\n\n*   standard\
   \ NLP functionality\n*   special functions for detection of problematic or abusive\
@@ -435,6 +435,7 @@ description: "Tisane is a natural language processing library, providing:\n\n*  
 logo: "tisane.ai-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "text"
+- "text"
 stubs: "tisane.ai-stubs.json"
+swagger: "tisane.ai-swagger.json"
 ---

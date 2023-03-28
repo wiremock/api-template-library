@@ -1,6 +1,6 @@
 ---
 slug: "rudder-example-local"
-name: "Rudder API"
+title: "Rudder API"
 provider: "rudder.example.local"
 description: "Download OpenAPI specification: [openapi.yml](openapi.yml)\n\n# Introduction\n\
   \nRudder exposes a REST API, enabling the user to interact with Rudder without using\
@@ -139,6 +139,7 @@ description: "Download OpenAPI specification: [openapi.yml](openapi.yml)\n\n# In
 logo: "rudder.example.local-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "rudder.example.local-stubs.json"
+swagger: "rudder.example.local-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "hubapi-com-webhooks"
-name: "Webhooks API"
+title: "Webhooks API"
 provider: "hubapi.com"
 description: "Provides a way for apps to subscribe to certain change events in HubSpot.\
   \ Once configured, apps will receive event payloads containing details about the\
@@ -9,6 +9,7 @@ description: "Provides a way for apps to subscribe to certain change events in H
 logo: "hubapi.com-webhooks-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "customer_relation"
+- "customer_relation"
 stubs: "hubapi.com-webhooks-stubs.json"
+swagger: "hubapi.com-webhooks-swagger.json"
 ---

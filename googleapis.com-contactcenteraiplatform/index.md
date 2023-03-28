@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-contactcenteraiplatform"
-name: "Contact Center AI Platform API"
+title: "Contact Center AI Platform API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-contactcenteraiplatform-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-contactcenteraiplatform-stubs.json"
+swagger: "googleapis.com-contactcenteraiplatform-swagger.json"
 ---

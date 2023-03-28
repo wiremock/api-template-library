@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-glacier"
-name: "Amazon Glacier"
+title: "Amazon Glacier"
 provider: "amazonaws.com"
 description: "<p> Amazon S3 Glacier (Glacier) is a storage solution for \"cold data.\"\
   </p> <p>Glacier is an extremely low-cost storage service that provides secure, durable,\
@@ -28,6 +28,7 @@ description: "<p> Amazon S3 Glacier (Glacier) is a storage solution for \"cold d
 logo: "amazonaws.com-glacier-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-glacier-stubs.json"
+swagger: "amazonaws.com-glacier-swagger.json"
 ---

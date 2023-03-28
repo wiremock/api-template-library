@@ -1,6 +1,6 @@
 ---
 slug: "waterlinked-com"
-name: "The Water Linked Underwater GPS API"
+title: "The Water Linked Underwater GPS API"
 provider: "waterlinked.com"
 description: "API for the Water Linked Underwater GPS. For more details: http://www.waterlinked.com\n\
   \nRecommended approach for connecting to a Underwater GPS via the API is:\n- If\
@@ -16,6 +16,7 @@ description: "API for the Water Linked Underwater GPS. For more details: http://
 logo: "waterlinked.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "waterlinked.com-stubs.json"
+swagger: "waterlinked.com-swagger.json"
 ---

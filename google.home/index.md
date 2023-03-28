@@ -1,6 +1,6 @@
 ---
 slug: "google-home"
-name: "Google Home"
+title: "Google Home"
 provider: "google.home"
 description: "# Google Home Local API\nThis is an unofficial documentation of the\
   \ local API used by the Home app to communicate with GH devices.\n[GitHub Repo](https://github.com/rithvikvibhu/GHLocalApi)\n\
@@ -47,4 +47,5 @@ logo: "google.home-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "google.home-stubs.json"
+swagger: "google.home-swagger.json"
 ---

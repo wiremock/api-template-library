@@ -1,6 +1,6 @@
 ---
 slug: "ptv-vic-gov-au"
-name: "PTV Timetable API - Version 3"
+title: "PTV Timetable API - Version 3"
 provider: "ptv.vic.gov.au"
 description: "The PTV Timetable API provides direct access to Public Transport Victoria’\
   s public transport timetable data.\r\n\r\nThe API returns scheduled timetable, route\
@@ -32,6 +32,7 @@ description: "The PTV Timetable API provides direct access to Public Transport V
 logo: "ptv.vic.gov.au-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "ptv.vic.gov.au-stubs.json"
+swagger: "ptv.vic.gov.au-swagger.json"
 ---

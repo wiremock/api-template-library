@@ -1,6 +1,6 @@
 ---
 slug: "dodo-ac"
-name: "Nookipedia"
+title: "Nookipedia"
 provider: "dodo.ac"
 description: "The Nookipedia API provides endpoints for retrieving *Animal Crossing*\
   \ data pulled from the [Nookipedia wiki](https://nookipedia.com/wiki/Main_Page).\
@@ -17,4 +17,5 @@ logo: "dodo.ac-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "dodo.ac-stubs.json"
+swagger: "dodo.ac-swagger.json"
 ---

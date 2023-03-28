@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-Quotas"
-name: "Compute Admin Client"
+title: "Compute Admin Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-azsadmin-Quotas-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-Quotas-stubs.json"
+swagger: "azure.com-azsadmin-Quotas-swagger.json"
 ---

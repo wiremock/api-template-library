@@ -1,6 +1,6 @@
 ---
 slug: "gisgraphy-com"
-name: "Gisgraphy webservices"
+title: "Gisgraphy webservices"
 provider: "gisgraphy.com"
 description: "Since 2006, [Gisgraphy](http://www.gisgraphy.com) is a free, open source\
   \ framework that offers the possibility to do geolocalisation and geocoding via\
@@ -19,6 +19,7 @@ description: "Since 2006, [Gisgraphy](http://www.gisgraphy.com) is a free, open 
 logo: "gisgraphy.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "gisgraphy.com-stubs.json"
+swagger: "gisgraphy.com-swagger.json"
 ---

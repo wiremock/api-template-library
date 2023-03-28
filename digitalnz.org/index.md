@@ -1,6 +1,6 @@
 ---
 slug: "digitalnz-org"
-name: "DigitalNZ API"
+title: "DigitalNZ API"
 provider: "digitalnz.org"
 description: "OpenAPI specification of DigitalNZ's Record API.  \nFor more information\
   \ about the API see [digitalnz.org/developers](https://digitalnz.org/developers).\
@@ -12,6 +12,7 @@ description: "OpenAPI specification of DigitalNZ's Record API.  \nFor more infor
 logo: "digitalnz.org-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "digitalnz.org-stubs.json"
+swagger: "digitalnz.org-swagger.json"
 ---

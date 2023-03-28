@@ -1,11 +1,12 @@
 ---
 slug: "i-cue-solutions"
-name: "Growth Services"
+title: "Growth Services"
 provider: "i-cue.solutions"
 description: null
 logo: "i-cue.solutions-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
+- "analytics"
 stubs: "i-cue.solutions-stubs.json"
+swagger: "i-cue.solutions-swagger.json"
 ---

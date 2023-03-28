@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-contactcenterinsights"
-name: "Contact Center AI Insights API"
+title: "Contact Center AI Insights API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-contactcenterinsights-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-contactcenterinsights-stubs.json"
+swagger: "googleapis.com-contactcenterinsights-swagger.json"
 ---

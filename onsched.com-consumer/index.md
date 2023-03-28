@@ -1,6 +1,6 @@
 ---
 slug: "onsched-com-consumer"
-name: "OnSched Consumer API"
+title: "OnSched Consumer API"
 provider: "onsched.com"
 description: "Build secure and scalable custom apps for Online Booking. Our flexible\
   \ API provides many options for availability and booking.\r\n<br><br>\r\nTake the\
@@ -15,6 +15,7 @@ description: "Build secure and scalable custom apps for Online Booking. Our flex
 logo: "onsched.com-consumer-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "onsched.com-consumer-stubs.json"
+swagger: "onsched.com-consumer-swagger.json"
 ---

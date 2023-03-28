@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-reports"
-name: "Reports API"
+title: "Reports API"
 provider: "nexmo.com"
 description: "The [Reports API](/reports/overview) enables you to request a report\
   \ of activity for your Vonage account.\n\nDepending on your query pattern, you can\
@@ -17,4 +17,5 @@ logo: "nexmo.com-reports-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-reports-stubs.json"
+swagger: "nexmo.com-reports-swagger.json"
 ---

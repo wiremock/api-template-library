@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-acm-pca"
-name: "AWS Certificate Manager Private Certificate Authority"
+title: "AWS Certificate Manager Private Certificate Authority"
 provider: "amazonaws.com"
 description: "<p>This is the <i>Amazon Web Services Private Certificate Authority\
   \ API Reference</i>. It provides descriptions, syntax, and usage examples for each\
@@ -25,6 +25,7 @@ description: "<p>This is the <i>Amazon Web Services Private Certificate Authorit
 logo: "amazonaws.com-acm-pca-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-acm-pca-stubs.json"
+swagger: "amazonaws.com-acm-pca-swagger.json"
 ---

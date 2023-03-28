@@ -1,6 +1,6 @@
 ---
 slug: "microsoft-com-cognitiveservices-AutoSuggest"
-name: "AutoSuggest Client"
+title: "AutoSuggest Client"
 provider: "microsoft.com"
 description: "Autosuggest supplies search terms derived from a root text sent to the\
   \ service.  The terms Autosuggest supplies are related to the root text based on\
@@ -9,7 +9,8 @@ description: "Autosuggest supplies search terms derived from a root text sent to
 logo: "microsoft.com-cognitiveservices-AutoSuggest-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
-- name: "cloud"
+- "developer_tools"
+- "cloud"
 stubs: "microsoft.com-cognitiveservices-AutoSuggest-stubs.json"
+swagger: "microsoft.com-cognitiveservices-AutoSuggest-swagger.json"
 ---

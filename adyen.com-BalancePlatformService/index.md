@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-BalancePlatformService"
-name: "Configuration API"
+title: "Configuration API"
 provider: "adyen.com"
 description: "The Configuration API enables you to create a platform where you can\
   \ onboard your users as account holders and create balance accounts, cards, and\
@@ -20,6 +20,7 @@ description: "The Configuration API enables you to create a platform where you c
 logo: "adyen.com-BalancePlatformService-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-BalancePlatformService-stubs.json"
+swagger: "adyen.com-BalancePlatformService-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-batch"
-name: "AWS Batch"
+title: "AWS Batch"
 provider: "amazonaws.com"
 description: "<fullname>Batch</fullname> <p>Using Batch, you can run batch computing\
   \ workloads on the Amazon Web Services Cloud. Batch computing is a common means\
@@ -18,6 +18,7 @@ description: "<fullname>Batch</fullname> <p>Using Batch, you can run batch compu
 logo: "amazonaws.com-batch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-batch-stubs.json"
+swagger: "amazonaws.com-batch-swagger.json"
 ---

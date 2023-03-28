@@ -1,14 +1,15 @@
 ---
 slug: "spectrocoin-com"
-name: "SpectroCoin Merchant"
+title: "SpectroCoin Merchant"
 provider: "spectrocoin.com"
 description: "This is an API designed for merchants who are using SpectroCoin services\
   \ and wishes to integrate them locally."
 logo: "spectrocoin.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
-- name: "financial"
-- name: "payment"
+- "ecommerce"
+- "financial"
+- "payment"
 stubs: "spectrocoin.com-stubs.json"
+swagger: "spectrocoin.com-swagger.json"
 ---

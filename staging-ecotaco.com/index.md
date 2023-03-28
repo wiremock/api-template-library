@@ -1,6 +1,6 @@
 ---
 slug: "staging-ecotaco-com"
-name: "api.ecota.co v2"
+title: "api.ecota.co v2"
 provider: "staging-ecotaco.com"
 description: "The API ecotaco allows you to connect, create an account,\nmanage your\
   \ credit cards and order rides.\n\n# Authentication\n\nEcotaco API use a system\
@@ -24,6 +24,7 @@ description: "The API ecotaco allows you to connect, create an account,\nmanage 
 logo: "staging-ecotaco.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "staging-ecotaco.com-stubs.json"
+swagger: "staging-ecotaco.com-swagger.json"
 ---

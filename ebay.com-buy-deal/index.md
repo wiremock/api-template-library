@@ -1,6 +1,6 @@
 ---
 slug: "ebay-com-buy-deal"
-name: "Deal API"
+title: "Deal API"
 provider: "ebay.com"
 description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\"\
   \ target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon\
@@ -12,6 +12,7 @@ description: "<span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https:/
 logo: "ebay.com-buy-deal-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "ebay.com-buy-deal-stubs.json"
+swagger: "ebay.com-buy-deal-swagger.json"
 ---

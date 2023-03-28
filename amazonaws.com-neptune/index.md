@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-neptune"
-name: "Amazon Neptune"
+title: "Amazon Neptune"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Neptune</fullname> <p>Amazon Neptune is a fast, reliable,\
   \ fully-managed graph database service that makes it easy to build and run applications\
@@ -22,6 +22,7 @@ description: "<fullname>Amazon Neptune</fullname> <p>Amazon Neptune is a fast, r
 logo: "amazonaws.com-neptune-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-neptune-stubs.json"
+swagger: "amazonaws.com-neptune-swagger.json"
 ---

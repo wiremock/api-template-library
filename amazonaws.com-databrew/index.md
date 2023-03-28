@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-databrew"
-name: "AWS Glue DataBrew"
+title: "AWS Glue DataBrew"
 provider: "amazonaws.com"
 description: "Glue DataBrew is a visual, cloud-scale data-preparation service. DataBrew\
   \ simplifies data preparation tasks, targeting data issues that are hard to spot\
@@ -10,6 +10,7 @@ description: "Glue DataBrew is a visual, cloud-scale data-preparation service. D
 logo: "amazonaws.com-databrew-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-databrew-stubs.json"
+swagger: "amazonaws.com-databrew-swagger.json"
 ---

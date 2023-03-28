@@ -1,11 +1,12 @@
 ---
 slug: "gettyimages-com"
-name: "Getty Images"
+title: "Getty Images"
 provider: "gettyimages.com"
 description: null
 logo: "gettyimages.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "gettyimages.com-stubs.json"
+swagger: "gettyimages.com-swagger.json"
 ---

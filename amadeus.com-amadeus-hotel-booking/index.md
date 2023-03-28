@@ -1,6 +1,6 @@
 ---
 slug: "amadeus-com-amadeus-hotel-booking"
-name: "Hotel Booking"
+title: "Hotel Booking"
 provider: "amadeus.com"
 description: "\nBefore using this API, we recommend you read our **[Authorization\
   \ Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\
@@ -10,8 +10,9 @@ description: "\nBefore using this API, we recommend you read our **[Authorizatio
   \ NYC (New-York).\n\n\n**Warning: Do not perform test booking in production**. All\
   \ requests are sent and processed by hotel providers. An excessive amount of fake/canceled\
   \ reservation will make you blacklisted by hotel providers.\n"
-logo: "amadeus.com-amadeus-hotel-booking-logo.svg"
-logoMediaType: "image/svg+xml"
+logo: "amadeus.com-amadeus-hotel-booking-logo.jpeg"
+logoMediaType: "image/jpeg"
 tags: []
 stubs: "amadeus.com-amadeus-hotel-booking-stubs.json"
+swagger: "amadeus.com-amadeus-hotel-booking-swagger.json"
 ---

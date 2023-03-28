@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getcitymatch"
-name: "Interzoid Get City Match Similarity Key API"
+title: "Interzoid Get City Match Similarity Key API"
 provider: "interzoid.com"
 description: "This API provides a similarity key used to match with other similar\
   \ city name data, including for purposes of deduplication, fuzzy matching, or merging\
@@ -9,6 +9,7 @@ description: "This API provides a similarity key used to match with other simila
 logo: "interzoid.com-getcitymatch-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getcitymatch-stubs.json"
+swagger: "interzoid.com-getcitymatch-swagger.json"
 ---

@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-machinelearningservices-runHistory"
-name: "Run History APIs"
+title: "Run History APIs"
 provider: "azure.com"
 description: null
 logo: "azure.com-machinelearningservices-runHistory-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearningservices-runHistory-stubs.json"
+swagger: "azure.com-machinelearningservices-runHistory-swagger.json"
 ---

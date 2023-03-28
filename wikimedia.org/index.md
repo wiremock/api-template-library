@@ -1,6 +1,6 @@
 ---
 slug: "wikimedia-org"
-name: "Wikimedia"
+title: "Wikimedia"
 provider: "wikimedia.org"
 description: "This API provides cacheable and straightforward access to Wikimedia\
   \ content and data, in machine-readable formats.\n### Global Rules\n- Limit your\
@@ -22,6 +22,7 @@ description: "This API provides cacheable and straightforward access to Wikimedi
 logo: "wikimedia.org-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "media"
+- "media"
 stubs: "wikimedia.org-stubs.json"
+swagger: "wikimedia.org-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-apprunner"
-name: "AWS App Runner"
+title: "AWS App Runner"
 provider: "amazonaws.com"
 description: "<fullname>App Runner</fullname> <p>App Runner is an application service\
   \ that provides a fast, simple, and cost-effective way to go directly from an existing\
@@ -21,6 +21,7 @@ description: "<fullname>App Runner</fullname> <p>App Runner is an application se
 logo: "amazonaws.com-apprunner-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-apprunner-stubs.json"
+swagger: "amazonaws.com-apprunner-swagger.json"
 ---

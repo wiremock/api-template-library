@@ -1,6 +1,6 @@
 ---
 slug: "fraudlabspro-com-fraud-detection"
-name: "FraudLabs Pro Fraud Detection"
+title: "FraudLabs Pro Fraud Detection"
 provider: "fraudlabspro.com"
 description: "Online payment fraud detection service. It helps merchants to minimize\
   \ chargebacks and therefore maximize the revenue. It can be used to detect fraud\
@@ -9,6 +9,7 @@ description: "Online payment fraud detection service. It helps merchants to mini
 logo: "fraudlabspro.com-fraud-detection-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "fraudlabspro.com-fraud-detection-stubs.json"
+swagger: "fraudlabspro.com-fraud-detection-swagger.json"
 ---

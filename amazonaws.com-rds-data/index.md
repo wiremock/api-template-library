@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-rds-data"
-name: "AWS RDS DataService"
+title: "AWS RDS DataService"
 provider: "amazonaws.com"
 description: "<p><fullname>Amazon RDS Data Service</fullname> <p>Amazon RDS provides\
   \ an HTTP endpoint to run SQL statements on an Amazon Aurora Serverless v1 DB cluster.\
@@ -11,6 +11,7 @@ description: "<p><fullname>Amazon RDS Data Service</fullname> <p>Amazon RDS prov
 logo: "amazonaws.com-rds-data-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-rds-data-stubs.json"
+swagger: "amazonaws.com-rds-data-swagger.json"
 ---

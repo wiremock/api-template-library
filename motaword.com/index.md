@@ -1,11 +1,12 @@
 ---
 slug: "motaword-com"
-name: "MotaWord API"
+title: "MotaWord API"
 provider: "motaword.com"
 description: "Use MotaWord API to post and track your translation projects."
 logo: "motaword.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "motaword.com-stubs.json"
+swagger: "motaword.com-swagger.json"
 ---

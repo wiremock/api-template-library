@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-appconfig"
-name: "Amazon AppConfig"
+title: "Amazon AppConfig"
 provider: "amazonaws.com"
 description: "<p>Use AppConfig, a capability of Amazon Web Services Systems Manager,\
   \ to create, manage, and quickly deploy application configurations. AppConfig supports\
@@ -34,6 +34,7 @@ description: "<p>Use AppConfig, a capability of Amazon Web Services Systems Mana
 logo: "amazonaws.com-appconfig-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-appconfig-stubs.json"
+swagger: "amazonaws.com-appconfig-swagger.json"
 ---

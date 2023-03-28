@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iam"
-name: "AWS Identity and Access Management"
+title: "AWS Identity and Access Management"
 provider: "amazonaws.com"
 description: "<fullname>Identity and Access Management</fullname> <p>Identity and\
   \ Access Management (IAM) is a web service for securely controlling access to Amazon\
@@ -13,6 +13,7 @@ description: "<fullname>Identity and Access Management</fullname> <p>Identity an
 logo: "amazonaws.com-iam-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iam-stubs.json"
+swagger: "amazonaws.com-iam-swagger.json"
 ---

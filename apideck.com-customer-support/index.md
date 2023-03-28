@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-customer-support"
-name: "Customer Support"
+title: "Customer Support"
 provider: "apideck.com"
 description: "Welcome to the Customer Support API.\n\nYou can use this API to access\
   \ all Customer Support API endpoints.\n\n## Base URL\n\nThe base URL for all API\
@@ -231,6 +231,7 @@ description: "Welcome to the Customer Support API.\n\nYou can use this API to ac
 logo: "apideck.com-customer-support-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-customer-support-stubs.json"
+swagger: "apideck.com-customer-support-swagger.json"
 ---

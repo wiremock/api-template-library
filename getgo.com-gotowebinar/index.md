@@ -1,6 +1,6 @@
 ---
 slug: "getgo-com-gotowebinar"
-name: "GoToWebinar"
+title: "GoToWebinar"
 provider: "getgo.com"
 description: "The GoToWebinar API provides seamless integration of webinar registrant\
   \ and attendee data into your existing infrastructure or third-party applications.\
@@ -11,4 +11,5 @@ logo: "getgo.com-gotowebinar-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "getgo.com-gotowebinar-stubs.json"
+swagger: "getgo.com-gotowebinar-swagger.json"
 ---

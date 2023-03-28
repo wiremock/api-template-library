@@ -1,11 +1,12 @@
 ---
 slug: "gov-bc-ca-news"
-name: "BC Gov News API Service 1.0"
+title: "BC Gov News API Service 1.0"
 provider: "gov.bc.ca"
 description: "News API"
 logo: "gov.bc.ca-news-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "gov.bc.ca-news-stubs.json"
+swagger: "gov.bc.ca-news-swagger.json"
 ---

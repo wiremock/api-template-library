@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-numbers"
-name: "Numbers API"
+title: "Numbers API"
 provider: "whapi.com"
 description: "The William Hill Numbers API uses a single method that allows you to\
   \ generate random numbers for your application. Numbers can either be unique or\
@@ -14,6 +14,7 @@ description: "The William Hill Numbers API uses a single method that allows you 
 logo: "whapi.com-numbers-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-numbers-stubs.json"
+swagger: "whapi.com-numbers-swagger.json"
 ---

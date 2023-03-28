@@ -1,6 +1,6 @@
 ---
 slug: "abstractapi-com-geolocation"
-name: "IP geolocation API"
+title: "IP geolocation API"
 provider: "abstractapi.com"
 description: "Abstract IP geolocation API allows developers to retrieve the region,\
   \ country and city behind any IP worldwide. The API covers the geolocation of IPv4\
@@ -9,6 +9,7 @@ description: "Abstract IP geolocation API allows developers to retrieve the regi
 logo: "abstractapi.com-geolocation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "location"
+- "location"
 stubs: "abstractapi.com-geolocation-stubs.json"
+swagger: "abstractapi.com-geolocation-swagger.json"
 ---

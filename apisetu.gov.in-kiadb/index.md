@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-kiadb"
-name: "Karnataka Industrial Areas Development Board, Karnataka"
+title: "Karnataka Industrial Areas Development Board, Karnataka"
 provider: "apisetu.gov.in"
 description: "KIADB, AP (http://en.kiadb.in/) is the online s for Karnataka State\
   \ Govt. Certain documents issued by it (e.g. Allotment Letter,Building Plan, Water\
@@ -9,6 +9,7 @@ description: "KIADB, AP (http://en.kiadb.in/) is the online s for Karnataka Stat
 logo: "apisetu.gov.in-kiadb-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-kiadb-stubs.json"
+swagger: "apisetu.gov.in-kiadb-swagger.json"
 ---

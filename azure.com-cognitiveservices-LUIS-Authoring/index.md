@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-cognitiveservices-LUIS-Authoring"
-name: "LUIS Authoring Client"
+title: "LUIS Authoring Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-cognitiveservices-LUIS-Authoring-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-LUIS-Authoring-stubs.json"
+swagger: "azure.com-cognitiveservices-LUIS-Authoring-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-upmsp"
-name: "UP State Board of High School and Intermediate Education, Uttar Pradesh"
+title: "UP State Board of High School and Intermediate Education, Uttar Pradesh"
 provider: "apisetu.gov.in"
 description: "Board of High School and Intermediate Education, Allahabad (https://upmsp.edu.in)\
   \ has made available Class X & Class XII (2013-2017) results, as declared on http://upresults.nic.in,\
@@ -8,6 +8,7 @@ description: "Board of High School and Intermediate Education, Allahabad (https:
 logo: "apisetu.gov.in-upmsp-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-upmsp-stubs.json"
+swagger: "apisetu.gov.in-upmsp-swagger.json"
 ---

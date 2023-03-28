@@ -1,6 +1,6 @@
 ---
 slug: "quotes-rest"
-name: "They Said So Quotes API"
+title: "They Said So Quotes API"
 provider: "quotes.rest"
 description: " They Said So Quotes API offers a complete feature rich REST API access\
   \ to its quotes platform.  This is the documentation for the world famous [quotes\
@@ -12,6 +12,7 @@ description: " They Said So Quotes API offers a complete feature rich REST API a
 logo: "quotes.rest-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "quotes.rest-stubs.json"
+swagger: "quotes.rest-swagger.json"
 ---

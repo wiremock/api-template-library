@@ -1,6 +1,6 @@
 ---
 slug: "onsched-com-setup"
-name: "OnSched Setup API"
+title: "OnSched Setup API"
 provider: "onsched.com"
 description: "Build secure and scalable custom apps for onboarding and setup. Our\
   \ flexible API provides many options for configuration.\r\n<br><br>\r\nTake the\
@@ -15,6 +15,7 @@ description: "Build secure and scalable custom apps for onboarding and setup. Ou
 logo: "onsched.com-setup-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "collaboration"
+- "collaboration"
 stubs: "onsched.com-setup-stubs.json"
+swagger: "onsched.com-setup-swagger.json"
 ---

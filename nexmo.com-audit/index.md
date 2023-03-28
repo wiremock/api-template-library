@@ -1,6 +1,6 @@
 ---
 slug: "nexmo-com-audit"
-name: "Audit API"
+title: "Audit API"
 provider: "nexmo.com"
 description: "The Vonage Audit API allows you to view details of changes to your account.\
   \ More information is available at <https://developer.nexmo.com/audit/overview>.\n\
@@ -9,4 +9,5 @@ logo: "nexmo.com-audit-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "nexmo.com-audit-stubs.json"
+swagger: "nexmo.com-audit-swagger.json"
 ---

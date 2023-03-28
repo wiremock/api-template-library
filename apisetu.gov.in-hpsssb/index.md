@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-hpsssb"
-name: "HP Staff Selection Commission - HPSSC - Himachal Pradesh, Himachal Pradesh"
+title: "HP Staff Selection Commission - HPSSC - Himachal Pradesh, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "Himachal Pradesh Staff Selection Commision (http://hpsssb.hp.gov.in/)\
   \ is the online service portal by Govt. of Himachal Pradesh. Admit Cards issued\
@@ -8,6 +8,7 @@ description: "Himachal Pradesh Staff Selection Commision (http://hpsssb.hp.gov.i
 logo: "apisetu.gov.in-hpsssb-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-hpsssb-stubs.json"
+swagger: "apisetu.gov.in-hpsssb-swagger.json"
 ---

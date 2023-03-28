@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-cognito-sync"
-name: "Amazon Cognito Sync"
+title: "Amazon Cognito Sync"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Cognito Sync</fullname> <p>Amazon Cognito Sync provides\
   \ an AWS service and client library that enable cross-device syncing of application-related\
@@ -21,6 +21,7 @@ description: "<fullname>Amazon Cognito Sync</fullname> <p>Amazon Cognito Sync pr
 logo: "amazonaws.com-cognito-sync-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-cognito-sync-stubs.json"
+swagger: "amazonaws.com-cognito-sync-swagger.json"
 ---

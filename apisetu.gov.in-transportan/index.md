@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-transportan"
-name: "Transport Department, Andaman & Nicobar"
+title: "Transport Department, Andaman & Nicobar"
 provider: "apisetu.gov.in"
 description: "Driving License (DL) and Vehicle Registration Certificate (RC) of the\
   \ State, as available on Parivahan Sewa (http://parivahan.co.in/) of Ministry of\
@@ -9,6 +9,7 @@ description: "Driving License (DL) and Vehicle Registration Certificate (RC) of 
 logo: "apisetu.gov.in-transportan-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-transportan-stubs.json"
+swagger: "apisetu.gov.in-transportan-swagger.json"
 ---

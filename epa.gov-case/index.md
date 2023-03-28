@@ -1,6 +1,6 @@
 ---
 slug: "epa-gov-case"
-name: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Enforcement Case\
+title: "U.S. EPA Enforcement and Compliance History Online (ECHO) - Enforcement Case\
   \ Search"
 provider: "epa.gov"
 description: "Enforcement and Compliance History Online (ECHO) is a tool developed\
@@ -35,6 +35,7 @@ description: "Enforcement and Compliance History Online (ECHO) is a tool develop
 logo: "epa.gov-case-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "epa.gov-case-stubs.json"
+swagger: "epa.gov-case-swagger.json"
 ---

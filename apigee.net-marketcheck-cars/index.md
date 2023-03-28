@@ -1,11 +1,12 @@
 ---
 slug: "apigee-net-marketcheck-cars"
-name: "Marketcheck APIs"
+title: "Marketcheck APIs"
 provider: "apigee.net"
 description: "One API serving data spanned across multiple verticals"
 logo: "apigee.net-marketcheck-cars-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "ecommerce"
+- "ecommerce"
 stubs: "apigee.net-marketcheck-cars-stubs.json"
+swagger: "apigee.net-marketcheck-cars-swagger.json"
 ---

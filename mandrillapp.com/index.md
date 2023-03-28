@@ -1,6 +1,6 @@
 ---
 slug: "mandrillapp-com"
-name: "Mandrill"
+title: "Mandrill"
 provider: "mandrillapp.com"
 description: "Mandrill is a reliable, scalable, and secure delivery API for transactional\
   \ emails from websites and applications. It's ideal for sending data-driven transactional\
@@ -8,7 +8,8 @@ description: "Mandrill is a reliable, scalable, and secure delivery API for tran
 logo: "mandrillapp.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "email"
-- name: "marketing"
+- "email"
+- "marketing"
 stubs: "mandrillapp.com-stubs.json"
+swagger: "mandrillapp.com-swagger.json"
 ---

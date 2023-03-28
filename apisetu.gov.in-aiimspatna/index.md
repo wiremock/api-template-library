@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-aiimspatna"
-name: "AIIMS, Patna"
+title: "AIIMS, Patna"
 provider: "apisetu.gov.in"
 description: "All India Institute of Medical Sciences Patna, previously Jaya Prakash\
   \ Narayan All India Institute of Medical Sciences, is a medical college and medical\
@@ -8,6 +8,7 @@ description: "All India Institute of Medical Sciences Patna, previously Jaya Pra
 logo: "apisetu.gov.in-aiimspatna-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-aiimspatna-stubs.json"
+swagger: "apisetu.gov.in-aiimspatna-swagger.json"
 ---

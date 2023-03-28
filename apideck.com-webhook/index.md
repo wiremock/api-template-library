@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-webhook"
-name: "Webhook API"
+title: "Webhook API"
 provider: "apideck.com"
 description: "Welcome to the Webhook API.\n\nYou can use this API to access all Webhook\
   \ API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the Webhook API.\n\nYou can use this API to access all 
 logo: "apideck.com-webhook-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-webhook-stubs.json"
+swagger: "apideck.com-webhook-swagger.json"
 ---

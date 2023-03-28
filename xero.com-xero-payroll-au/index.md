@@ -1,11 +1,12 @@
 ---
 slug: "xero-com-xero-payroll-au"
-name: "Xero Payroll AU API"
+title: "Xero Payroll AU API"
 provider: "xero.com"
 description: "This is the Xero Payroll API for orgs in Australia region."
 logo: "xero.com-xero-payroll-au-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "xero.com-xero-payroll-au-stubs.json"
+swagger: "xero.com-xero-payroll-au-swagger.json"
 ---

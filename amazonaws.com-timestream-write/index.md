@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-timestream-write"
-name: "Amazon Timestream Write"
+title: "Amazon Timestream Write"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Timestream Write</fullname> <p>Amazon Timestream is\
   \ a fast, scalable, fully managed time-series database service that makes it easy\
@@ -18,6 +18,7 @@ description: "<fullname>Amazon Timestream Write</fullname> <p>Amazon Timestream 
 logo: "amazonaws.com-timestream-write-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-timestream-write-stubs.json"
+swagger: "amazonaws.com-timestream-write-swagger.json"
 ---

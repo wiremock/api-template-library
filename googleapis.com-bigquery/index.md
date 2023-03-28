@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-bigquery"
-name: "BigQuery API"
+title: "BigQuery API"
 provider: "googleapis.com"
 description: "A data platform for customers to create, manage, share and query data."
 logo: "googleapis.com-bigquery-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-bigquery-stubs.json"
+swagger: "googleapis.com-bigquery-swagger.json"
 ---

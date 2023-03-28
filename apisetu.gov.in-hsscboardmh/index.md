@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-hsscboardmh"
-name: "Maharashtra State Board of Secondary and Higher Secondary Education, Maharashtra"
+title: "Maharashtra State Board of Secondary and Higher Secondary Education, Maharashtra"
 provider: "apisetu.gov.in"
 description: "Class X and XII marksheets and passing certificates of Maharashtra State\
   \ Board of Secondary and Higher Secondary Education (https://mahahsscboard.maharashtra.gov.in/)\
@@ -8,6 +8,7 @@ description: "Class X and XII marksheets and passing certificates of Maharashtra
 logo: "apisetu.gov.in-hsscboardmh-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-hsscboardmh-stubs.json"
+swagger: "apisetu.gov.in-hsscboardmh-swagger.json"
 ---

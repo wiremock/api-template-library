@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-codepipeline"
-name: "AWS CodePipeline"
+title: "AWS CodePipeline"
 provider: "amazonaws.com"
 description: "<fullname>AWS CodePipeline</fullname> <p> <b>Overview</b> </p> <p>This\
   \ is the AWS CodePipeline API Reference. This guide provides descriptions of the\
@@ -77,6 +77,7 @@ description: "<fullname>AWS CodePipeline</fullname> <p> <b>Overview</b> </p> <p>
 logo: "amazonaws.com-codepipeline-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-codepipeline-stubs.json"
+swagger: "amazonaws.com-codepipeline-swagger.json"
 ---

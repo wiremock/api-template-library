@@ -1,6 +1,6 @@
 ---
 slug: "amentum-space-global-magnet"
-name: "Geomag API"
+title: "Geomag API"
 provider: "amentum.space"
 description: "\nThe World Magnetic Model calculates the intensity and direction of\
   \ the Earth's magnetic field on a specific date-time, geodetic altitude, latitude,\
@@ -20,6 +20,7 @@ description: "\nThe World Magnetic Model calculates the intensity and direction 
 logo: "amentum.space-global-magnet-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "location"
+- "location"
 stubs: "amentum.space-global-magnet-stubs.json"
+swagger: "amentum.space-global-magnet-swagger.json"
 ---

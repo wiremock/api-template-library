@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-frauddetector"
-name: "Amazon Fraud Detector"
+title: "Amazon Fraud Detector"
 provider: "amazonaws.com"
 description: "<p>This is the Amazon Fraud Detector API Reference. This guide is for\
   \ developers who need detailed information about Amazon Fraud Detector API actions,\
@@ -20,6 +20,7 @@ description: "<p>This is the Amazon Fraud Detector API Reference. This guide is 
 logo: "amazonaws.com-frauddetector-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-frauddetector-stubs.json"
+swagger: "amazonaws.com-frauddetector-swagger.json"
 ---

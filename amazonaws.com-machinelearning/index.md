@@ -1,11 +1,12 @@
 ---
 slug: "amazonaws-com-machinelearning"
-name: "Amazon Machine Learning"
+title: "Amazon Machine Learning"
 provider: "amazonaws.com"
 description: "Definition of the public APIs exposed by Amazon Machine Learning"
 logo: "amazonaws.com-machinelearning-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-machinelearning-stubs.json"
+swagger: "amazonaws.com-machinelearning-swagger.json"
 ---

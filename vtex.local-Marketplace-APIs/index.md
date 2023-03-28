@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-Marketplace-APIs"
-name: "Marketplace API"
+title: "Marketplace API"
 provider: "vtex.local"
 description: "\r\nThe **Marketplace API** enables marketplaces and sellers hosted\
   \ on VTEX to perform their collaborative operations.  \r\n\r\n>⚠️ The marketplace\
@@ -41,4 +41,5 @@ logo: "vtex.local-Marketplace-APIs-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-Marketplace-APIs-stubs.json"
+swagger: "vtex.local-Marketplace-APIs-swagger.json"
 ---

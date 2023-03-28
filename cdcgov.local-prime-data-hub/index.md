@@ -1,12 +1,13 @@
 ---
 slug: "cdcgov-local-prime-data-hub"
-name: "Prime ReportStream"
+title: "Prime ReportStream"
 provider: "cdcgov.local"
 description: "A router of public health data from multiple senders and receivers"
 logo: "cdcgov.local-prime-data-hub-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
-- name: "collaboration"
+- "open_data"
+- "collaboration"
 stubs: "cdcgov.local-prime-data-hub-stubs.json"
+swagger: "cdcgov.local-prime-data-hub-swagger.json"
 ---

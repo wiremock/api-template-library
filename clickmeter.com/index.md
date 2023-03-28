@@ -1,11 +1,12 @@
 ---
 slug: "clickmeter-com"
-name: "ClickMeter API"
+title: "ClickMeter API"
 provider: "clickmeter.com"
 description: "Api dashboard for ClickMeter API"
 logo: "clickmeter.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "marketing"
+- "marketing"
 stubs: "clickmeter.com-stubs.json"
+swagger: "clickmeter.com-swagger.json"
 ---

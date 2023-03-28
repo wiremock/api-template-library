@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimusers"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on User entity in Azure\
   \ API Management deployment. The User entity in API Management represents the developers\
@@ -8,6 +8,7 @@ description: "Use these REST APIs for performing operations on User entity in Az
 logo: "azure.com-apimanagement-apimusers-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimusers-stubs.json"
+swagger: "azure.com-apimanagement-apimusers-swagger.json"
 ---

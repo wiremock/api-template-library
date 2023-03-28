@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-appintegrations"
-name: "Amazon AppIntegrations Service"
+title: "Amazon AppIntegrations Service"
 provider: "amazonaws.com"
 description: "<p>The Amazon AppIntegrations service enables you to configure and reuse\
   \ connections to external applications.</p> <p>For information about how you can\
@@ -11,6 +11,7 @@ description: "<p>The Amazon AppIntegrations service enables you to configure and
 logo: "amazonaws.com-appintegrations-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-appintegrations-stubs.json"
+swagger: "amazonaws.com-appintegrations-swagger.json"
 ---

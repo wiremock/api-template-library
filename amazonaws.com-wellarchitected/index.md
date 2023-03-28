@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-wellarchitected"
-name: "AWS Well-Architected Tool"
+title: "AWS Well-Architected Tool"
 provider: "amazonaws.com"
 description: "<fullname>Well-Architected Tool</fullname> <p>This is the <i>Well-Architected\
   \ Tool API Reference</i>. The WA Tool API provides programmatic access to the <a\
@@ -12,6 +12,7 @@ description: "<fullname>Well-Architected Tool</fullname> <p>This is the <i>Well-
 logo: "amazonaws.com-wellarchitected-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-wellarchitected-stubs.json"
+swagger: "amazonaws.com-wellarchitected-swagger.json"
 ---

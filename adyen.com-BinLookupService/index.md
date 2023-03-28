@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-BinLookupService"
-name: "Adyen BinLookup API"
+title: "Adyen BinLookup API"
 provider: "adyen.com"
 description: "The BIN Lookup API provides endpoints for retrieving information, such\
   \ as cost estimates, and 3D Secure supported version based on a given BIN.\n\n##\
@@ -22,6 +22,7 @@ description: "The BIN Lookup API provides endpoints for retrieving information, 
 logo: "adyen.com-BinLookupService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-BinLookupService-stubs.json"
+swagger: "adyen.com-BinLookupService-swagger.json"
 ---

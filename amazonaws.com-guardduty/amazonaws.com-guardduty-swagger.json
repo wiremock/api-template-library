@@ -2532,7 +2532,7 @@
       } ],
       "post" : {
         "operationId" : "DeleteMembers",
-        "description" : "Deletes GuardDuty member accounts (to the current GuardDuty administrator account) specified by the account IDs.",
+        "description" : "<p>Deletes GuardDuty member accounts (to the current GuardDuty administrator account) specified by the account IDs.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disable GuardDuty for a member account in your organization.</p>",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -3273,7 +3273,7 @@
       },
       "post" : {
         "operationId" : "UpdateOrganizationConfiguration",
-        "description" : "<p>Updates the delegated administrator account with the values provided.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
+        "description" : "<p>Configures the delegated administrator account with the provided values. You must provide the value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>. </p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -3310,7 +3310,7 @@
           "name" : "detectorId",
           "in" : "path",
           "required" : true,
-          "description" : "The ID of the detector to update the delegated administrator for.",
+          "description" : "The ID of the detector that configures the delegated administrator.",
           "schema" : {
             "type" : "string",
             "minLength" : 1,
@@ -3323,7 +3323,6 @@
             "application/json" : {
               "schema" : {
                 "type" : "object",
-                "required" : [ "autoEnable" ],
                 "properties" : {
                   "autoEnable" : {
                     "description" : "Indicates whether to automatically enable member accounts in the organization.",
@@ -3371,6 +3370,11 @@
                     "items" : {
                       "$ref" : "#/components/schemas/OrganizationFeatureConfiguration"
                     }
+                  },
+                  "autoEnableOrganizationMembers" : {
+                    "description" : "<p>Indicates the auto-enablement configuration of GuardDuty for the member accounts in the organization. </p> <ul> <li> <p> <code>NEW</code>: Indicates that new accounts joining the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>ALL</code>: Indicates that all accounts (new and existing members) in the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>NONE</code>: Indicates that no account in the organization will be configured to have GuardDuty enabled automatically.</p> </li> </ul>",
+                    "type" : "string",
+                    "enum" : [ "NEW", "ALL", "NONE" ]
                   }
                 }
               }
@@ -3467,7 +3471,7 @@
       } ],
       "post" : {
         "operationId" : "DisassociateFromAdministratorAccount",
-        "description" : "Disassociates the current GuardDuty member account from its administrator account.",
+        "description" : "<p>Disassociates the current GuardDuty member account from its administrator account.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disable GuardDuty in a member account.</p>",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -3596,7 +3600,7 @@
       } ],
       "post" : {
         "operationId" : "DisassociateMembers",
-        "description" : "Disassociates GuardDuty member accounts (to the current administrator account) specified by the account IDs.",
+        "description" : "<p>Disassociates GuardDuty member accounts (to the current administrator account) specified by the account IDs.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disassociate a member account before removing them from your Amazon Web Services organization.</p>",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -5134,7 +5138,7 @@
       } ],
       "post" : {
         "operationId" : "StartMonitoringMembers",
-        "description" : "Turns on GuardDuty monitoring of the specified member accounts. Use this operation to restart monitoring of accounts that you stopped monitoring with the <code>StopMonitoringMembers</code> operation.",
+        "description" : "Turns on GuardDuty monitoring of the specified member accounts. Use this operation to restart monitoring of accounts that you stopped monitoring with the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_StopMonitoringMembers.html\">StopMonitoringMembers</a> operation.",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -5220,7 +5224,7 @@
       } ],
       "post" : {
         "operationId" : "StopMonitoringMembers",
-        "description" : "Stops GuardDuty monitoring for the specified member accounts. Use the <code>StartMonitoringMembers</code> operation to restart monitoring for those accounts.",
+        "description" : "<p>Stops GuardDuty monitoring for the specified member accounts. Use the <code>StartMonitoringMembers</code> operation to restart monitoring for those accounts.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to stop monitoring the member accounts in your organization.</p>",
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -6099,16 +6103,17 @@
       },
       "DescribeOrganizationConfigurationResponse" : {
         "type" : "object",
-        "required" : [ "AutoEnable", "MemberAccountLimitReached" ],
+        "required" : [ "MemberAccountLimitReached" ],
         "properties" : {
           "AutoEnable" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/Boolean"
             }, {
+              "deprecated" : true,
               "xml" : {
                 "name" : "autoEnable"
               },
-              "description" : "Indicates whether GuardDuty is automatically enabled for accounts added to the organization."
+              "description" : "Indicates whether GuardDuty is automatically enabled for accounts added to the organization.This field is deprecated, use AutoEnableOrganizationMembers instead"
             } ]
           },
           "MemberAccountLimitReached" : {
@@ -6150,6 +6155,16 @@
                 "name" : "nextToken"
               },
               "description" : "The pagination parameter to be used on the next list operation to retrieve more items."
+            } ]
+          },
+          "AutoEnableOrganizationMembers" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AutoEnableMembers"
+            }, {
+              "xml" : {
+                "name" : "autoEnableOrganizationMembers"
+              },
+              "description" : "<p>Indicates the auto-enablement configuration of GuardDuty for the member accounts in the organization.</p> <ul> <li> <p> <code>NEW</code>: Indicates that new accounts joining the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>ALL</code>: Indicates that all accounts (new and existing members) in the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>NONE</code>: Indicates that no account in the organization will be configured to have GuardDuty enabled automatically.</p> </li> </ul>"
             } ]
           }
         }
@@ -8063,6 +8078,10 @@
             } ]
           }
         }
+      },
+      "AutoEnableMembers" : {
+        "type" : "string",
+        "enum" : [ "NEW", "ALL", "NONE" ]
       },
       "DomainDetails" : {
         "type" : "object",
@@ -13846,17 +13865,17 @@
       },
       "UpdateOrganizationConfigurationRequest" : {
         "type" : "object",
-        "required" : [ "AutoEnable" ],
         "title" : "UpdateOrganizationConfigurationRequest",
         "properties" : {
           "AutoEnable" : {
             "allOf" : [ {
               "$ref" : "#/components/schemas/Boolean"
             }, {
+              "deprecated" : true,
               "xml" : {
                 "name" : "autoEnable"
               },
-              "description" : "Indicates whether to automatically enable member accounts in the organization."
+              "description" : "Indicates whether to automatically enable member accounts in the organization.This field is deprecated, use AutoEnableOrganizationMembers instead"
             } ]
           },
           "DataSources" : {
@@ -13878,6 +13897,16 @@
                 "name" : "features"
               },
               "description" : "A list of features that will be configured for the organization."
+            } ]
+          },
+          "AutoEnableOrganizationMembers" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AutoEnableMembers"
+            }, {
+              "xml" : {
+                "name" : "autoEnableOrganizationMembers"
+              },
+              "description" : "<p>Indicates the auto-enablement configuration of GuardDuty for the member accounts in the organization. </p> <ul> <li> <p> <code>NEW</code>: Indicates that new accounts joining the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>ALL</code>: Indicates that all accounts (new and existing members) in the organization are configured to have GuardDuty enabled automatically.</p> </li> <li> <p> <code>NONE</code>: Indicates that no account in the organization will be configured to have GuardDuty enabled automatically.</p> </li> </ul>"
             } ]
           }
         }

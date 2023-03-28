@@ -1,11 +1,12 @@
 ---
 slug: "amazonaws-com-kinesis-video-archived-media"
-name: "Amazon Kinesis Video Streams Archived Media"
+title: "Amazon Kinesis Video Streams Archived Media"
 provider: "amazonaws.com"
 description: "<p/>"
 logo: "amazonaws.com-kinesis-video-archived-media-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-kinesis-video-archived-media-stubs.json"
+swagger: "amazonaws.com-kinesis-video-archived-media-swagger.json"
 ---

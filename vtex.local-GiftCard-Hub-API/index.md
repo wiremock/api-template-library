@@ -1,6 +1,6 @@
 ---
 slug: "vtex-local-GiftCard-Hub-API"
-name: "GiftCard Hub API"
+title: "GiftCard Hub API"
 provider: "vtex.local"
 description: ">ℹ️ Check the new [Payments onboarding guide](https://developers.vtex.com/vtex-rest-api/docs/payments-overview).\
   \ We created this guide to improve the onboarding experience for developers at VTEX.\
@@ -19,4 +19,5 @@ logo: "vtex.local-GiftCard-Hub-API-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "vtex.local-GiftCard-Hub-API-stubs.json"
+swagger: "vtex.local-GiftCard-Hub-API-swagger.json"
 ---

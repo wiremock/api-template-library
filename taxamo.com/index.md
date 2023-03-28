@@ -1,6 +1,6 @@
 ---
 slug: "taxamo-com"
-name: "Taxamo"
+title: "Taxamo"
 provider: "taxamo.com"
 description: "Taxamo’s elegant suite of APIs and comprehensive reporting dashboard\
   \ enables digital merchants to easily comply with EU regulatory requirements on\
@@ -8,6 +8,7 @@ description: "Taxamo’s elegant suite of APIs and comprehensive reporting dashb
 logo: "taxamo.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "payment"
+- "payment"
 stubs: "taxamo.com-stubs.json"
+swagger: "taxamo.com-swagger.json"
 ---

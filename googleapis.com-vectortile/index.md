@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-vectortile"
-name: "Semantic Tile API"
+title: "Semantic Tile API"
 provider: "googleapis.com"
 description: "Serves vector tiles containing geospatial data. "
 logo: "googleapis.com-vectortile-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-vectortile-stubs.json"
+swagger: "googleapis.com-vectortile-swagger.json"
 ---

@@ -1,13 +1,14 @@
 ---
 slug: "beanstream-com"
-name: "Beanstream Payments"
+title: "Beanstream Payments"
 provider: "beanstream.com"
 description: "https://www.beanstream.com/api/v1"
 logo: "beanstream.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "payment"
-- name: "financial"
-- name: "ecommerce"
+- "payment"
+- "financial"
+- "ecommerce"
 stubs: "beanstream.com-stubs.json"
+swagger: "beanstream.com-swagger.json"
 ---

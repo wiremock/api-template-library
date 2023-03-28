@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-mppmc"
-name: "Paramedical Council, Madhya Pradesh"
+title: "Paramedical Council, Madhya Pradesh"
 provider: "apisetu.gov.in"
 description: "Registration Certificate, Duplicate Registration Certificate, Good Standing\
   \ Certificate, Registration Renewal, Tatkal Registration, Tatkal  Registration Renewal\
@@ -9,6 +9,7 @@ description: "Registration Certificate, Duplicate Registration Certificate, Good
 logo: "apisetu.gov.in-mppmc-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-mppmc-stubs.json"
+swagger: "apisetu.gov.in-mppmc-swagger.json"
 ---

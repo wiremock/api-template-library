@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-lead"
-name: "Lead API"
+title: "Lead API"
 provider: "apideck.com"
 description: "Welcome to the Lead API.\n\nYou can use this API to access all Lead\
   \ API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is `https://unify.apideck.com`\n\
@@ -231,6 +231,7 @@ description: "Welcome to the Lead API.\n\nYou can use this API to access all Lea
 logo: "apideck.com-lead-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-lead-stubs.json"
+swagger: "apideck.com-lead-swagger.json"
 ---

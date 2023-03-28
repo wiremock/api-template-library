@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-connect-contact-lens"
-name: "Amazon Connect Contact Lens"
+title: "Amazon Connect Contact Lens"
 provider: "amazonaws.com"
 description: "<p>Contact Lens for Amazon Connect enables you to analyze conversations\
   \ between customer and agents, by using speech transcription, natural language processing,\
@@ -13,6 +13,7 @@ description: "<p>Contact Lens for Amazon Connect enables you to analyze conversa
 logo: "amazonaws.com-connect-contact-lens-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-connect-contact-lens-stubs.json"
+swagger: "amazonaws.com-connect-contact-lens-swagger.json"
 ---

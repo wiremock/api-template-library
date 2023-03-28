@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-nitap"
-name: "National Institute Of Technology Arunachal Pradesh"
+title: "National Institute Of Technology Arunachal Pradesh"
 provider: "apisetu.gov.in"
 description: "National Institute Of Technology, Arunachal Pradesh (http://www.nitap.ac.in/)\
   \ is issuing Degree certificates through DigiLocker. These can be pulled by students\
@@ -8,6 +8,7 @@ description: "National Institute Of Technology, Arunachal Pradesh (http://www.ni
 logo: "apisetu.gov.in-nitap-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-nitap-stubs.json"
+swagger: "apisetu.gov.in-nitap-swagger.json"
 ---

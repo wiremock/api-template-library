@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-trafficmanager"
-name: "TrafficManagerManagementClient"
+title: "TrafficManagerManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-trafficmanager-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-trafficmanager-stubs.json"
+swagger: "azure.com-trafficmanager-swagger.json"
 ---

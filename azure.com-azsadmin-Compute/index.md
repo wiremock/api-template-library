@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-azsadmin-Compute"
-name: "Compute Admin Client"
+title: "Compute Admin Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-azsadmin-Compute-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-azsadmin-Compute-stubs.json"
+swagger: "azure.com-azsadmin-Compute-swagger.json"
 ---

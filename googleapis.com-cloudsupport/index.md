@@ -1,13 +1,14 @@
 ---
 slug: "googleapis-com-cloudsupport"
-name: "Google Cloud Support API"
+title: "Google Cloud Support API"
 provider: "googleapis.com"
 description: "Manages Google Cloud technical support cases for Customer Care support\
   \ offerings. "
 logo: "googleapis.com-cloudsupport-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudsupport-stubs.json"
+swagger: "googleapis.com-cloudsupport-swagger.json"
 ---

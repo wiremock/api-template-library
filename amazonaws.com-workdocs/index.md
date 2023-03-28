@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-workdocs"
-name: "Amazon WorkDocs"
+title: "Amazon WorkDocs"
 provider: "amazonaws.com"
 description: "<p>The Amazon WorkDocs API is designed for the following use cases:</p>\
   \ <ul> <li> <p>File Migration: File migration applications are supported for users\
@@ -35,6 +35,7 @@ description: "<p>The Amazon WorkDocs API is designed for the following use cases
 logo: "amazonaws.com-workdocs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-workdocs-stubs.json"
+swagger: "amazonaws.com-workdocs-swagger.json"
 ---

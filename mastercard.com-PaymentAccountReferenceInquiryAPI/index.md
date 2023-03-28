@@ -1,6 +1,6 @@
 ---
 slug: "mastercard-com-PaymentAccountReferenceInquiryAPI"
-name: "Payment Account Reference Inquiry API"
+title: "Payment Account Reference Inquiry API"
 provider: "mastercard.com"
 description: "The Payment Account Reference Inquiry API is the unified Mastercard\
   \ interface for allowing Mastercard Customers involved in payment card acceptance\
@@ -11,4 +11,5 @@ logo: "mastercard.com-PaymentAccountReferenceInquiryAPI-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "mastercard.com-PaymentAccountReferenceInquiryAPI-stubs.json"
+swagger: "mastercard.com-PaymentAccountReferenceInquiryAPI-swagger.json"
 ---

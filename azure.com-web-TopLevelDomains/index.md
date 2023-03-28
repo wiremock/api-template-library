@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-web-TopLevelDomains"
-name: "TopLevelDomains API Client"
+title: "TopLevelDomains API Client"
 provider: "azure.com"
 description: null
 logo: "azure.com-web-TopLevelDomains-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-TopLevelDomains-stubs.json"
+swagger: "azure.com-web-TopLevelDomains-swagger.json"
 ---

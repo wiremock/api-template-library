@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-meteringmarketplace"
-name: "AWSMarketplace Metering"
+title: "AWSMarketplace Metering"
 provider: "amazonaws.com"
 description: "<fullname>AWS Marketplace Metering Service</fullname> <p>This reference\
   \ provides descriptions of the low-level AWS Marketplace Metering Service API.</p>\
@@ -36,6 +36,7 @@ description: "<fullname>AWS Marketplace Metering Service</fullname> <p>This refe
 logo: "amazonaws.com-meteringmarketplace-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-meteringmarketplace-stubs.json"
+swagger: "amazonaws.com-meteringmarketplace-swagger.json"
 ---

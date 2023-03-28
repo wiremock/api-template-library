@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-civilsupplieskerala"
-name: "Civil Supplies Department, Kerala"
+title: "Civil Supplies Department, Kerala"
 provider: "apisetu.gov.in"
 description: "Ration Cards issued by The Department of Civil Supplies functions under\
   \ the Department of Food, Civil Supplies and Consumer Affairs of the Government\
@@ -9,6 +9,7 @@ description: "Ration Cards issued by The Department of Civil Supplies functions 
 logo: "apisetu.gov.in-civilsupplieskerala-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-civilsupplieskerala-stubs.json"
+swagger: "apisetu.gov.in-civilsupplieskerala-swagger.json"
 ---

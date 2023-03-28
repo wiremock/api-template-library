@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-analyticsadmin"
-name: "Google Analytics Admin API"
+title: "Google Analytics Admin API"
 provider: "googleapis.com"
 description: ""
 logo: "googleapis.com-analyticsadmin-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-analyticsadmin-stubs.json"
+swagger: "googleapis.com-analyticsadmin-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "phantauth-net"
-name: "PhantAuth"
+title: "PhantAuth"
 provider: "phantauth.net"
 description: "Random User Generator + OpenID Connect Provider. Like Lorem Ipsum, but\
   \ for user accounts and authentication.\n\nThe PhantAuth API documentation is available\
@@ -397,4 +397,5 @@ logo: "phantauth.net-logo.svg"
 logoMediaType: "image/svg+xml"
 tags: []
 stubs: "phantauth.net-stubs.json"
+swagger: "phantauth.net-swagger.json"
 ---

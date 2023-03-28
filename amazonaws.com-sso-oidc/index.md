@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-sso-oidc"
-name: "AWS SSO OIDC"
+title: "AWS SSO OIDC"
 provider: "amazonaws.com"
 description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) OpenID\
   \ Connect (OIDC) is a web service that enables a client (such as AWS CLI or a native\
@@ -33,6 +33,7 @@ description: "<p>AWS IAM Identity Center (successor to AWS Single Sign-On) OpenI
 logo: "amazonaws.com-sso-oidc-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-sso-oidc-stubs.json"
+swagger: "amazonaws.com-sso-oidc-swagger.json"
 ---

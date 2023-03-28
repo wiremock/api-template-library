@@ -1,6 +1,6 @@
 ---
 slug: "ndhm-gov-in-ndhm-gateway"
-name: "Gateway"
+title: "Gateway"
 provider: "ndhm.gov.in"
 description: "Gateway is the hub that routes/orchestrates the interaction between\
   \ consent managers and API bridges. There are 5 categories of APIs; discovery, link,\
@@ -9,6 +9,7 @@ description: "Gateway is the hub that routes/orchestrates the interaction betwee
 logo: "ndhm.gov.in-ndhm-gateway-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "ndhm.gov.in-ndhm-gateway-stubs.json"
+swagger: "ndhm.gov.in-ndhm-gateway-swagger.json"
 ---

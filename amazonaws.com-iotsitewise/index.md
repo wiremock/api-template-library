@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-iotsitewise"
-name: "AWS IoT SiteWise"
+title: "AWS IoT SiteWise"
 provider: "amazonaws.com"
 description: "Welcome to the IoT SiteWise API Reference. IoT SiteWise is an Amazon\
   \ Web Services service that connects <a href=\"https://en.wikipedia.org/wiki/Internet_of_things#Industrial_applications\"\
@@ -12,6 +12,7 @@ description: "Welcome to the IoT SiteWise API Reference. IoT SiteWise is an Amaz
 logo: "amazonaws.com-iotsitewise-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-iotsitewise-stubs.json"
+swagger: "amazonaws.com-iotsitewise-swagger.json"
 ---

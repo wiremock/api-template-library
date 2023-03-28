@@ -1,11 +1,12 @@
 ---
 slug: "mercedes-benz-com-dealer"
-name: "Dealer"
+title: "Dealer"
 provider: "mercedes-benz.com"
 description: "The Dealer API provides Dealer search functions."
 logo: "mercedes-benz.com-dealer-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "transport"
+- "transport"
 stubs: "mercedes-benz.com-dealer-stubs.json"
+swagger: "mercedes-benz.com-dealer-swagger.json"
 ---

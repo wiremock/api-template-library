@@ -1,11 +1,12 @@
 ---
 slug: "polygon-io"
-name: "Polygon"
+title: "Polygon"
 provider: "polygon.io"
 description: "The future of fintech."
 logo: "polygon.io-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "financial"
+- "financial"
 stubs: "polygon.io-stubs.json"
+swagger: "polygon.io-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-web-service"
-name: "WebSite Management Client"
+title: "WebSite Management Client"
 provider: "azure.com"
 description: "Use these APIs to manage Azure Websites resources through the Azure\
   \ Resource Manager. All task operations conform to the HTTP/1.1 protocol specification\
@@ -10,6 +10,7 @@ description: "Use these APIs to manage Azure Websites resources through the Azur
 logo: "azure.com-web-service-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-web-service-stubs.json"
+swagger: "azure.com-web-service-swagger.json"
 ---

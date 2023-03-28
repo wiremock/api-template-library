@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-edistricthp"
-name: "eDistrict Himachal Pradesh, Himachal Pradesh"
+title: "eDistrict Himachal Pradesh, Himachal Pradesh"
 provider: "apisetu.gov.in"
 description: "eDistrict Himachal (http://edistrict.hp.gov.in/) is the online service\
   \ delivery portal for Himachal Pradesh State Govt. Certain documents issued by it\
@@ -9,6 +9,7 @@ description: "eDistrict Himachal (http://edistrict.hp.gov.in/) is the online ser
 logo: "apisetu.gov.in-edistricthp-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-edistricthp-stubs.json"
+swagger: "apisetu.gov.in-edistricthp-swagger.json"
 ---

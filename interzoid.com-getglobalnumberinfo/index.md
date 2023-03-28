@@ -1,6 +1,6 @@
 ---
 slug: "interzoid-com-getglobalnumberinfo"
-name: "Interzoid Get Global Phone Number Information API"
+title: "Interzoid Get Global Phone Number Information API"
 provider: "interzoid.com"
 description: "This API provides geographic information for a global telephone number,\
   \ including city and country information, primary languages spoken, and mobile device\
@@ -8,6 +8,7 @@ description: "This API provides geographic information for a global telephone nu
 logo: "interzoid.com-getglobalnumberinfo-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "interzoid.com-getglobalnumberinfo-stubs.json"
+swagger: "interzoid.com-getglobalnumberinfo-swagger.json"
 ---

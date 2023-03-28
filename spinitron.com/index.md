@@ -1,6 +1,6 @@
 ---
 slug: "spinitron-com"
-name: "Spinitron v2 API"
+title: "Spinitron v2 API"
 provider: "spinitron.com"
 description: "## Notes\n\n**Tutorial demo** using this API is at [https://spinitron.com/v2-api-demo/](https://spinitron.com/v2-api-demo/).\
   \ For web integration using iframes and/or JavaScript instead of an API, see [https://spinitron.github.io/v2-web-integration/](https://spinitron.github.io/v2-web-integration/).\n\
@@ -20,6 +20,7 @@ description: "## Notes\n\n**Tutorial demo** using this API is at [https://spinit
 logo: "spinitron.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "media"
+- "media"
 stubs: "spinitron.com-stubs.json"
+swagger: "spinitron.com-swagger.json"
 ---

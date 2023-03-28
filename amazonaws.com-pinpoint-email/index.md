@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-pinpoint-email"
-name: "Amazon Pinpoint Email Service"
+title: "Amazon Pinpoint Email Service"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Pinpoint Email Service</fullname> <p>Welcome to the\
   \ <i>Amazon Pinpoint Email API Reference</i>. This guide provides information about\
@@ -35,6 +35,7 @@ description: "<fullname>Amazon Pinpoint Email Service</fullname> <p>Welcome to t
 logo: "amazonaws.com-pinpoint-email-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-pinpoint-email-stubs.json"
+swagger: "amazonaws.com-pinpoint-email-swagger.json"
 ---

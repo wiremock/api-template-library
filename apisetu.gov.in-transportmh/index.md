@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-transportmh"
-name: "Motor Vehicle Department, Maharashtra"
+title: "Motor Vehicle Department, Maharashtra"
 provider: "apisetu.gov.in"
 description: "Driving License (DL) and Vehicle Registration Certificate (RC) of the\
   \ State, as available on Parivahan Sewa (http://parivahan.co.in/) of Ministry of\
@@ -9,6 +9,7 @@ description: "Driving License (DL) and Vehicle Registration Certificate (RC) of 
 logo: "apisetu.gov.in-transportmh-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-transportmh-stubs.json"
+swagger: "apisetu.gov.in-transportmh-swagger.json"
 ---

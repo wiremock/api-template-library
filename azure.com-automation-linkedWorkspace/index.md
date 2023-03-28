@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-automation-linkedWorkspace"
-name: "AutomationManagement"
+title: "AutomationManagement"
 provider: "azure.com"
 description: null
 logo: "azure.com-automation-linkedWorkspace-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-automation-linkedWorkspace-stubs.json"
+swagger: "azure.com-automation-linkedWorkspace-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "ndhm-gov-in-ndhm-healthid"
-name: "Health ID Service"
+title: "Health ID Service"
 provider: "ndhm.gov.in"
 description: "It is important to standardize the process of identification of an individual\
   \ across healthcare providers, to ensure that the created medical records are issued\
@@ -11,6 +11,7 @@ description: "It is important to standardize the process of identification of an
 logo: "ndhm.gov.in-ndhm-healthid-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "ndhm.gov.in-ndhm-healthid-stubs.json"
+swagger: "ndhm.gov.in-ndhm-healthid-swagger.json"
 ---

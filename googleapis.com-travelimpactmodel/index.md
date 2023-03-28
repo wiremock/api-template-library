@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-travelimpactmodel"
-name: "Travel Impact Model API"
+title: "Travel Impact Model API"
 provider: "googleapis.com"
 description: "Travel Impact Model API lets you query travel carbon emission estimates."
 logo: "googleapis.com-travelimpactmodel-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-travelimpactmodel-stubs.json"
+swagger: "googleapis.com-travelimpactmodel-swagger.json"
 ---

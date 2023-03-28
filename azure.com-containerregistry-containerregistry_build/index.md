@@ -1,11 +1,12 @@
 ---
 slug: "azure-com-containerregistry-containerregistry_build"
-name: "ContainerRegistryManagementClient"
+title: "ContainerRegistryManagementClient"
 provider: "azure.com"
 description: null
 logo: "azure.com-containerregistry-containerregistry_build-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-containerregistry-containerregistry_build-stubs.json"
+swagger: "azure.com-containerregistry-containerregistry_build-swagger.json"
 ---

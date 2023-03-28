@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-inspector"
-name: "Amazon Inspector"
+title: "Amazon Inspector"
 provider: "amazonaws.com"
 description: "<fullname>Amazon Inspector</fullname> <p>Amazon Inspector enables you\
   \ to analyze the behavior of your AWS resources and to identify potential security\
@@ -9,6 +9,7 @@ description: "<fullname>Amazon Inspector</fullname> <p>Amazon Inspector enables 
 logo: "amazonaws.com-inspector-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-inspector-stubs.json"
+swagger: "amazonaws.com-inspector-swagger.json"
 ---

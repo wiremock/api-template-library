@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-policysimulator"
-name: "Policy Simulator API"
+title: "Policy Simulator API"
 provider: "googleapis.com"
 description: " Policy Simulator is a collection of endpoints for creating, running,\
   \ and viewing a Replay. A `Replay` is a type of simulation that lets you see how\
@@ -11,7 +11,8 @@ description: " Policy Simulator is a collection of endpoints for creating, runni
 logo: "googleapis.com-policysimulator-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-policysimulator-stubs.json"
+swagger: "googleapis.com-policysimulator-swagger.json"
 ---

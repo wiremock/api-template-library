@@ -1,6 +1,6 @@
 ---
 slug: "regcheck-org-uk"
-name: "Car Registration API"
+title: "Car Registration API"
 provider: "regcheck.org.uk"
 description: "Car Registration API, An API that retrieves car information from its\
   \ numberplate in many countries worldwide, uncluding the USA, UK, India, Australia\
@@ -11,4 +11,5 @@ logo: "regcheck.org.uk-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags: []
 stubs: "regcheck.org.uk-stubs.json"
+swagger: "regcheck.org.uk-swagger.json"
 ---

@@ -1,12 +1,13 @@
 ---
 slug: "googleapis-com-notebooks"
-name: "Notebooks API"
+title: "Notebooks API"
 provider: "googleapis.com"
 description: "Notebooks API is used to manage notebook resources in Google Cloud."
 logo: "googleapis.com-notebooks-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-notebooks-stubs.json"
+swagger: "googleapis.com-notebooks-swagger.json"
 ---

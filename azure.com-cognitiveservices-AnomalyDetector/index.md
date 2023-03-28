@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-cognitiveservices-AnomalyDetector"
-name: "Anomaly Detector Client"
+title: "Anomaly Detector Client"
 provider: "azure.com"
 description: "The Anomaly Detector API detects anomalies automatically in time series\
   \ data. It supports two kinds of mode, one is for stateless using, another is for\
@@ -21,6 +21,7 @@ description: "The Anomaly Detector API detects anomalies automatically in time s
 logo: "azure.com-cognitiveservices-AnomalyDetector-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-cognitiveservices-AnomalyDetector-stubs.json"
+swagger: "azure.com-cognitiveservices-AnomalyDetector-swagger.json"
 ---

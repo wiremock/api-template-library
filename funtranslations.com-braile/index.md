@@ -1,6 +1,6 @@
 ---
 slug: "funtranslations-com-braile"
-name: "FunTranslations Braille API"
+title: "FunTranslations Braille API"
 provider: "funtranslations.com"
 description: "Braille conversion API on the cloud. Translate from English text to\
   \ Braille and get Braille results suitable for many display types.[Click here to\
@@ -8,6 +8,7 @@ description: "Braille conversion API on the cloud. Translate from English text t
 logo: "funtranslations.com-braile-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "funtranslations.com-braile-stubs.json"
+swagger: "funtranslations.com-braile-swagger.json"
 ---

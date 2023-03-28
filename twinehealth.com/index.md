@@ -1,6 +1,6 @@
 ---
 slug: "twinehealth-com"
-name: "Fitbit Plus API"
+title: "Fitbit Plus API"
 provider: "twinehealth.com"
 description: "# Overview\nThe Fitbit Plus API is a RESTful API. The requests and responses\
   \ are formated according to the\n[JSON API](http://jsonapi.org/format/1.0/) specification.\n\
@@ -53,6 +53,7 @@ description: "# Overview\nThe Fitbit Plus API is a RESTful API. The requests and
 logo: "twinehealth.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "support"
+- "support"
 stubs: "twinehealth.com-stubs.json"
+swagger: "twinehealth.com-swagger.json"
 ---

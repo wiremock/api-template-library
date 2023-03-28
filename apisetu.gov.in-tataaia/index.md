@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-tataaia"
-name: "Tata AIA Life Insurance Co. Ltd."
+title: "Tata AIA Life Insurance Co. Ltd."
 provider: "apisetu.gov.in"
 description: "Tata AIA Life Insurance Company Limited provides life insurance solutions\
   \ to its consumers. Customers can access their policy details [Insurance Policy\
@@ -10,6 +10,7 @@ description: "Tata AIA Life Insurance Company Limited provides life insurance so
 logo: "apisetu.gov.in-tataaia-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-tataaia-stubs.json"
+swagger: "apisetu.gov.in-tataaia-swagger.json"
 ---

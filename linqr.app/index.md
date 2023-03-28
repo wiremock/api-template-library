@@ -1,6 +1,6 @@
 ---
 slug: "linqr-app"
-name: "LinQR"
+title: "LinQR"
 provider: "linqr.app"
 description: "This is LinQR QR Code API documentation. This API allows you to generate\
   \ custom, visually attractive QR Codes. The cloud infrastructure guarantees high\
@@ -15,4 +15,5 @@ logo: "linqr.app-logo.png"
 logoMediaType: "image/png"
 tags: []
 stubs: "linqr.app-stubs.json"
+swagger: "linqr.app-swagger.json"
 ---

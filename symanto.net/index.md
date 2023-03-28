@@ -1,12 +1,13 @@
 ---
 slug: "symanto-net"
-name: "Psycholinguistic Text Analytics"
+title: "Psycholinguistic Text Analytics"
 provider: "symanto.net"
 description: "We aim to provide the deepest understanding of people through psychology\
   \ & AI"
 logo: "symanto.net-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "text"
+- "text"
 stubs: "symanto.net-stubs.json"
+swagger: "symanto.net-swagger.json"
 ---

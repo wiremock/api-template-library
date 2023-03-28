@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-AccountService"
-name: "Account API"
+title: "Account API"
 provider: "adyen.com"
 description: "This API is used for the classic integration. If you are just starting\
   \ your implementation, refer to our [new integration guide](https://docs.adyen.com/marketplaces-and-platforms)\
@@ -24,6 +24,7 @@ description: "This API is used for the classic integration. If you are just star
 logo: "adyen.com-AccountService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-AccountService-stubs.json"
+swagger: "adyen.com-AccountService-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-athena"
-name: "Amazon Athena"
+title: "Amazon Athena"
 provider: "amazonaws.com"
 description: "<p>Amazon Athena is an interactive query service that lets you use standard\
   \ SQL to analyze data directly in Amazon S3. You can point Athena at your data in\
@@ -19,6 +19,7 @@ description: "<p>Amazon Athena is an interactive query service that lets you use
 logo: "amazonaws.com-athena-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-athena-stubs.json"
+swagger: "amazonaws.com-athena-swagger.json"
 ---

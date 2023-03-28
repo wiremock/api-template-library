@@ -1,6 +1,6 @@
 ---
 slug: "amentum-space-gravity"
-name: "Gravity API"
+title: "Gravity API"
 provider: "amentum.space"
 description: "The gravitational field of the earth is non-uniform.  The <a href='https://en.wikipedia.org/wiki/Geoid'>geoid</a>\
   \ is the shape the\n ocean surface would take if only gravity and the rotation of\
@@ -20,7 +20,8 @@ description: "The gravitational field of the earth is non-uniform.  The <a href=
 logo: "amentum.space-gravity-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "location"
-- name: "open_data"
+- "location"
+- "open_data"
 stubs: "amentum.space-gravity-stubs.json"
+swagger: "amentum.space-gravity-swagger.json"
 ---

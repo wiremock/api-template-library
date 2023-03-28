@@ -1,6 +1,6 @@
 ---
 slug: "namsor-com"
-name: "NamSor API v2"
+title: "NamSor API v2"
 provider: "namsor.com"
 description: "NamSor API v2 : enpoints to process personal names (gender, cultural\
   \ origin or ethnicity) in all alphabets or languages. By default, enpoints use 1\
@@ -12,6 +12,7 @@ description: "NamSor API v2 : enpoints to process personal names (gender, cultur
 logo: "namsor.com-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "namsor.com-stubs.json"
+swagger: "namsor.com-swagger.json"
 ---

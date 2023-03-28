@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-apimanagement-apimsubscriptions"
-name: "ApiManagementClient"
+title: "ApiManagementClient"
 provider: "azure.com"
 description: "Use these REST APIs for performing operations on Subscription entity\
   \ associated with your Azure API Management deployment. The Subscription entity\
@@ -10,6 +10,7 @@ description: "Use these REST APIs for performing operations on Subscription enti
 logo: "azure.com-apimanagement-apimsubscriptions-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-apimanagement-apimsubscriptions-stubs.json"
+swagger: "azure.com-apimanagement-apimsubscriptions-swagger.json"
 ---

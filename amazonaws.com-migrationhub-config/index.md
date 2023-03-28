@@ -1,6 +1,6 @@
 ---
 slug: "amazonaws-com-migrationhub-config"
-name: "AWS Migration Hub Config"
+title: "AWS Migration Hub Config"
 provider: "amazonaws.com"
 description: "<p>The AWS Migration Hub home region APIs are available specifically\
   \ for working with your Migration Hub home region. You can use these APIs to determine\
@@ -17,6 +17,7 @@ description: "<p>The AWS Migration Hub home region APIs are available specifical
 logo: "amazonaws.com-migrationhub-config-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "amazonaws.com-migrationhub-config-stubs.json"
+swagger: "amazonaws.com-migrationhub-config-swagger.json"
 ---

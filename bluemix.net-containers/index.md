@@ -1,6 +1,6 @@
 ---
 slug: "bluemix-net-containers"
-name: "IBM Containers API"
+title: "IBM Containers API"
 provider: "bluemix.net"
 description: "Containers are virtual software objects that include all the elements\
   \ that an app needs to run. A container has the benefits of resource isolation and\
@@ -43,6 +43,7 @@ description: "Containers are virtual software objects that include all the eleme
 logo: "bluemix.net-containers-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "bluemix.net-containers-stubs.json"
+swagger: "bluemix.net-containers-swagger.json"
 ---

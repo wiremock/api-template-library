@@ -1,6 +1,6 @@
 ---
 slug: "nbg-gr"
-name: "Account and Transaction API Specification - UK"
+title: "Account and Transaction API Specification - UK"
 provider: "nbg.gr"
 description: "## Functionality at a glance\r\n\r\nThe NBG \"UK OPB - Account and Transaction\
   \ v3.1.5\" API follows the [UK Open Banking Specification\r\n    v3.1.5](https://openbankinguk.github.io/read-write-api-site3/v3.1.5/profiles/account-and-transaction-api-profile.html)\r\
@@ -651,6 +651,7 @@ description: "## Functionality at a glance\r\n\r\nThe NBG \"UK OPB - Account and
 logo: "nbg.gr-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "nbg.gr-stubs.json"
+swagger: "nbg.gr-swagger.json"
 ---

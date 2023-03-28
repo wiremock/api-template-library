@@ -1,6 +1,6 @@
 ---
 slug: "googleapis-com-cloudtrace"
-name: "Cloud Trace API"
+title: "Cloud Trace API"
 provider: "googleapis.com"
 description: "Sends application trace data to Cloud Trace for viewing. Trace data\
   \ is collected for all App Engine applications by default. Trace data from other\
@@ -10,7 +10,8 @@ description: "Sends application trace data to Cloud Trace for viewing. Trace dat
 logo: "googleapis.com-cloudtrace-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "analytics"
-- name: "media"
+- "analytics"
+- "media"
 stubs: "googleapis.com-cloudtrace-stubs.json"
+swagger: "googleapis.com-cloudtrace-swagger.json"
 ---

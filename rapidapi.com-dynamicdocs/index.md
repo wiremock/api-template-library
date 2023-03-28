@@ -1,6 +1,6 @@
 ---
 slug: "rapidapi-com-dynamicdocs"
-name: "DynamicDocs"
+title: "DynamicDocs"
 provider: "rapidapi.com"
 description: "ADVICEment's [DynamicDocs API automates your document generation](https://advicement.io/dynamic-documents-api)\
   \ and creates dynamic, optimized, interactive PDFs. Write your templates in LaTeX\
@@ -15,7 +15,8 @@ description: "ADVICEment's [DynamicDocs API automates your document generation](
 logo: "rapidapi.com-dynamicdocs-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
-- name: "developer_tools"
+- "text"
+- "developer_tools"
 stubs: "rapidapi.com-dynamicdocs-stubs.json"
+swagger: "rapidapi.com-dynamicdocs-swagger.json"
 ---

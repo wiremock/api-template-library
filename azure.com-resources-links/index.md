@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-resources-links"
-name: "ManagementLinkClient"
+title: "ManagementLinkClient"
 provider: "azure.com"
 description: "Azure resources can be linked together to form logical relationships.\
   \ You can establish links between resources belonging to different resource groups.\
@@ -10,6 +10,7 @@ description: "Azure resources can be linked together to form logical relationshi
 logo: "azure.com-resources-links-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-resources-links-stubs.json"
+swagger: "azure.com-resources-links-swagger.json"
 ---

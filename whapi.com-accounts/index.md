@@ -1,6 +1,6 @@
 ---
 slug: "whapi-com-accounts"
-name: "Accounts API"
+title: "Accounts API"
 provider: "whapi.com"
 description: "The Accounts API is a collection of methods used to query a customer\
   \ account. It allows the developer to retrieve account-related data such as the\
@@ -9,6 +9,7 @@ description: "The Accounts API is a collection of methods used to query a custom
 logo: "whapi.com-accounts-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
-- name: "entertainment"
+- "entertainment"
 stubs: "whapi.com-accounts-stubs.json"
+swagger: "whapi.com-accounts-swagger.json"
 ---

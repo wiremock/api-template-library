@@ -1,6 +1,6 @@
 ---
 slug: "apisetu-gov-in-mbse"
-name: "Mizoram State Board of School education"
+title: "Mizoram State Board of School education"
 provider: "apisetu.gov.in"
 description: "Mizoram Board of School Education, Mizoram (http://www.mbse.edu.in)\
   \ has made available 2018 Class X and class XII marksheets and passing certificates\
@@ -8,6 +8,7 @@ description: "Mizoram Board of School Education, Mizoram (http://www.mbse.edu.in
 logo: "apisetu.gov.in-mbse-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "open_data"
+- "open_data"
 stubs: "apisetu.gov.in-mbse-stubs.json"
+swagger: "apisetu.gov.in-mbse-swagger.json"
 ---

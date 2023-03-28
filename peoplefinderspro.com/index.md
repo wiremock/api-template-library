@@ -1,6 +1,6 @@
 ---
 slug: "peoplefinderspro-com"
-name: "Self Service Developer API"
+title: "Self Service Developer API"
 provider: "peoplefinderspro.com"
 description: "Self Service Developer API documentation and demo.\n\n##Getting Started\n\
   \nYou will need an API access profile user and password in order to access search\
@@ -10,6 +10,7 @@ description: "Self Service Developer API documentation and demo.\n\n##Getting St
 logo: "peoplefinderspro.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "marketing"
+- "marketing"
 stubs: "peoplefinderspro.com-stubs.json"
+swagger: "peoplefinderspro.com-swagger.json"
 ---

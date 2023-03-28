@@ -1,6 +1,6 @@
 ---
 slug: "bigredcloud-com"
-name: "Big Red Cloud API"
+title: "Big Red Cloud API"
 provider: "bigredcloud.com"
 description: "\r\n<div style='line-height: 30px;'>\r\n    <strong>Welcome to the Big\
   \ Red Cloud API</strong><br/>\r\n    This API enables programmatic access to Big\
@@ -18,6 +18,7 @@ description: "\r\n<div style='line-height: 30px;'>\r\n    <strong>Welcome to the
 logo: "bigredcloud.com-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "financial"
+- "financial"
 stubs: "bigredcloud.com-stubs.json"
+swagger: "bigredcloud.com-swagger.json"
 ---

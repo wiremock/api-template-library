@@ -1,6 +1,6 @@
 ---
 slug: "funtranslations-com-starwars"
-name: "Starwars Translations API"
+title: "Starwars Translations API"
 provider: "funtranslations.com"
 description: "Funtranslations Starwars API gives access to the full set of starwars\
   \ language translations available at funtranslations.com so that you can integrate\
@@ -16,6 +16,7 @@ description: "Funtranslations Starwars API gives access to the full set of starw
 logo: "funtranslations.com-starwars-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "text"
+- "text"
 stubs: "funtranslations.com-starwars-stubs.json"
+swagger: "funtranslations.com-starwars-swagger.json"
 ---

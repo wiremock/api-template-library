@@ -1,6 +1,6 @@
 ---
 slug: "adyen-com-LegalEntityService"
-name: "Legal Entity Management API"
+title: "Legal Entity Management API"
 provider: "adyen.com"
 description: "The Legal Entity Management API enables you to manage legal entities\
   \ that contain information required for verification. \n## Authentication\nTo connect\
@@ -19,6 +19,7 @@ description: "The Legal Entity Management API enables you to manage legal entiti
 logo: "adyen.com-LegalEntityService-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
-- name: "payment"
+- "payment"
 stubs: "adyen.com-LegalEntityService-stubs.json"
+swagger: "adyen.com-LegalEntityService-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "azure-com-machinelearningexperimentation-machineLearningExperimentation"
-name: "ML Team Account Management Client"
+title: "ML Team Account Management Client"
 provider: "azure.com"
 description: "These APIs allow end users to operate on Azure Machine Learning Team\
   \ Account resources. They support CRUD operations for Azure Machine Learning Team\
@@ -8,6 +8,7 @@ description: "These APIs allow end users to operate on Azure Machine Learning Te
 logo: "azure.com-machinelearningexperimentation-machineLearningExperimentation-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "cloud"
+- "cloud"
 stubs: "azure.com-machinelearningexperimentation-machineLearningExperimentation-stubs.json"
+swagger: "azure.com-machinelearningexperimentation-machineLearningExperimentation-swagger.json"
 ---

@@ -1,6 +1,6 @@
 ---
 slug: "apideck-com-ecommerce"
-name: "Ecommerce API"
+title: "Ecommerce API"
 provider: "apideck.com"
 description: "Welcome to the Ecommerce API.\n\nYou can use this API to access all\
   \ Ecommerce API endpoints.\n\n## Base URL\n\nThe base URL for all API requests is\
@@ -231,6 +231,7 @@ description: "Welcome to the Ecommerce API.\n\nYou can use this API to access al
 logo: "apideck.com-ecommerce-logo.png"
 logoMediaType: "image/png"
 tags:
-- name: "developer_tools"
+- "developer_tools"
 stubs: "apideck.com-ecommerce-stubs.json"
+swagger: "apideck.com-ecommerce-swagger.json"
 ---
