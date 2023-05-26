@@ -21,4 +21,4 @@ or on the website to learn more about template licenses.
 
 ## Contributing
 
-See the [Contributing Guide](./CONTRIBUTING.md).
+See the [Contributing Guide](./docs/CONTRIBUTING.md).
