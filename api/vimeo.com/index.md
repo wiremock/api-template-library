@@ -7,6 +7,7 @@ logo: "vimeo.com-logo.jpeg"
 logoMediaType: "image/jpeg"
 tags:
 - "entertainment"
+- "featured"
 stubs: "vimeo.com-stubs.json"
 swagger: "vimeo.com-swagger.json"
 ---

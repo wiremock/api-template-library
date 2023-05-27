@@ -7,6 +7,8 @@ logo: "wiremock.org-admin-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
 - "developer_tools"
+- "wiremock"
+- "featured"
 stubs: "wiremock.org-admin-stubs.json"
 swagger: "wiremock.org-admin-swagger.json"
 ---
