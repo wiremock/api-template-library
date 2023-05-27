@@ -9,6 +9,12 @@ both [WireMock](https://wiremock.org/) or [WireMock Cloud](https://wiremock.io).
 
 See the [WireMock API Templates Library site](https://github.com/wiremock/library.wiremock.org-sources)
 
+## Featured templates
+
+Featured templates is a set of templates curated by the maintainers.
+They are expected to have high quality and
+to be also a popular use-case for WireMock.
+
 ## License
 
 The repository, scripts and custom code there are licensed under [Apache License Version 2.0](./LICENSE).

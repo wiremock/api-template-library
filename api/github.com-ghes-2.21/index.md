@@ -8,6 +8,7 @@ logoMediaType: "image/jpeg"
 tags:
 - "collaboration"
 - "developer_tools"
+- "featured"
 stubs: "github.com-ghes-2.21-stubs.json"
 swagger: "github.com-ghes-2.21-swagger.json"
 ---

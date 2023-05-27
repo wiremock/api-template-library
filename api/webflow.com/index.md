@@ -5,7 +5,8 @@ provider: "webflow.com"
 description: null
 logo: "webflow.com-logo.png"
 logoMediaType: "image/png"
-tags: []
+tags:
+- "featured"
 stubs: "webflow.com-stubs.json"
 swagger: "webflow.com-swagger.json"
 ---

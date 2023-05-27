@@ -7,6 +7,7 @@ logo: "twitter.com-current-logo.png"
 logoMediaType: "image/png"
 tags:
 - "social"
+- "featured"
 stubs: "twitter.com-current-stubs.json"
 swagger: "twitter.com-current-swagger.json"
 ---

@@ -7,7 +7,9 @@ description: "The platform for modern developers\nGitLab unifies issues, code re
 logo: "gitlab.com-logo.png"
 logoMediaType: "image/png"
 tags:
+- "collaboration"
 - "developer_tools"
+- "featured"
 stubs: "gitlab.com-stubs.json"
 swagger: "gitlab.com-swagger.json"
 ---

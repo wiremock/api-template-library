@@ -10,6 +10,7 @@ logoMediaType: "image/png"
 tags:
 - "media"
 - "social"
+- "featured"
 stubs: "medium.com-stubs.json"
 swagger: "medium.com-swagger.json"
 ---

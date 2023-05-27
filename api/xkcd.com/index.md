@@ -7,6 +7,7 @@ logo: "xkcd.com-logo.png"
 logoMediaType: "image/png"
 tags:
 - "media"
+- "featured"
 stubs: "xkcd.com-stubs.json"
 swagger: "xkcd.com-swagger.json"
 ---
