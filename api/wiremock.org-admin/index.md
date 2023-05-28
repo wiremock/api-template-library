@@ -2,7 +2,7 @@
 slug: "wiremock-org-admin"
 title: "WireMock"
 provider: "wiremock.org"
-description: null
+description: "WireMock Admin API"
 logo: "wiremock.org-admin-logo.svg"
 logoMediaType: "image/svg+xml"
 tags:
