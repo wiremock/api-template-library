@@ -1,0 +1,29 @@
+name: Keep WireMock Cloud Public API Template Library in sync with repo
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+permissions: write-all
+
+jobs:
+  compare_difference_between_branches_and_upgrade_cloud_when_its_different:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check if branch is ahead of main
+        run: |
+          if ! git merge-base --is-ancestor origin/main ${{ github.event.pull_request.head.sha }};
+          then echo "This branch is not up to date with main";
+          exit 1; fi
+
+      - name: Check difference with main branch and update or delete on cloud side
+        run: .update-by-difference.sh
