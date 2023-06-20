@@ -3,6 +3,8 @@ set -euo pipefail
 
 # shellcheck disable=SC2153
 main() {
+  echo "$SYSTEM_API_TOKEN"
+  echo "$WIREMOCK_CLOUD_URL"
   local wiremock_cloud_url="$WIREMOCK_CLOUD_URL"
   local wiremock_cloud_username="$WIREMOCK_CLOUD_USERNAME"
   local wiremock_cloud_api_token="$WIREMOCK_CLOUD_API_TOKEN"
