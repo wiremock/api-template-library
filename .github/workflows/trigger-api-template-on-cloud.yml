@@ -31,10 +31,21 @@ jobs:
         run: |
           if ! git merge-base --is-ancestor origin/main ${{ github.event.pull_request.head.sha }};
           then echo "This branch is not up to date with main";
-          exit 1; fi
+          exit 1; fi 
+
+      - uses: aws-actions/configure-aws-credentials@v2.1.0
+        with:
+          role-to-assume: arn:aws:iam::499333472133:role/GitHub-Manage-WireMock-Api-Templates
+          aws-region: us-east-1
+
+      - uses: aws-actions/amazon-ecr-login@v1
+
+      - run: echo "environment=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+      - run: echo "product=${2%-${{ env.environment }}" >> $GITHUB_ENV
+      - run: echo "token=${aws secretsmanager get-secret-value --secret-id "${{ env.product }}/${{ env.environment }}/system" | jq -r .SecretString | jq -r .apiToken}" >> $GITHUB_ENV
 
       - name: Grant execute permission for execution script
         run: chmod +x ./.github/sync_changed_templates_with_cloud.sh
 
       - name: Check difference with main branch and sync on cloud side
-        run: ./.github/sync_changed_templates_with_cloud.sh wiremock-cloud-${{ inputs.environment }}
+        run: ./.github/sync_changed_templates_with_cloud.sh wiremock-cloud-${{ inputs.environment }} ${{ env.token }}
