@@ -33,8 +33,5 @@ jobs:
 
       - run: echo "token=${aws secretsmanager get-secret-value --secret-id wiremock.cloud/live/system | jq -r .SecretString | jq -r .apiToken}" >> $GITHUB_ENV
 
-      - name: Grant execute permission for execution script
-        run: chmod +x ./.github/sync_changed_templates_with_cloud.sh
-
       - name: Check difference with main branch and sync on cloud side
         run: ./.github/sync_changed_templates_with_cloud.sh app.wiremock.cloud ${{ env.token }}
