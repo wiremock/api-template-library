@@ -2,13 +2,6 @@ name: Keep WireMock Cloud Public API Template Library in sync with repo
 
 on:
   workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
-    secrets:
-      ENV_SPECIFIC_SECRET:
-        required: true
   push:
     branches:
       - main
@@ -31,7 +24,5 @@ jobs:
 
       - uses: aws-actions/amazon-ecr-login@v1
 
-      - run: echo "token=${aws secretsmanager get-secret-value --secret-id wiremock.cloud/live/system | jq -r .SecretString | jq -r .apiToken}" >> $GITHUB_ENV
-
       - name: Check difference with main branch and sync on cloud side
-        run: ./.github/sync_changed_templates_with_cloud.sh app.wiremock.cloud ${{ env.token }}
+        run: ./.github/sync_changed_templates_with_cloud.sh app.wiremock.cloud
