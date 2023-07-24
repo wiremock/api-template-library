@@ -1,0 +1,28 @@
+name: Keep WireMock Cloud Public API Template Library in sync with repo
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+
+permissions: write-all
+
+jobs:
+  compare_difference_between_branches_and_upgrade_cloud_when_its_different:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: aws-actions/configure-aws-credentials@v2.1.0
+        with:
+          role-to-assume: arn:aws:iam::499333472133:role/GitHub-Manage-WireMock-Api-Templates
+          aws-region: us-east-1
+
+      - uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Check difference with main branch and sync on cloud side
+        run: ./scripts/sync_changed_templates_with_cloud.sh
