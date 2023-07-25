@@ -4,6 +4,10 @@ IFS=$'\n\t'
 
 # shellcheck disable=SC2153
 main() {
+  WIREMOCK_CLOUD_URL=$1
+  WIREMOCK_CLOUD_SECRET_ID=$2
+  WIREMOCK_CLOUD_API_TOKEN="$(aws secretsmanager get-secret-value --secret-id "$WIREMOCK_CLOUD_SECRET_ID" | jq -r .SecretString | jq -r .teamUserApiKey)"
+
   cd "$(git rev-parse --show-toplevel)"
   delete_deleted_templates
   update_changed_templates
@@ -97,7 +101,7 @@ next() {
 
 curl_auth() {
   curl -sS --fail-with-body \
-    -u "$WIREMOCK_CLOUD_USERNAME:$WIREMOCK_CLOUD_API_TOKEN" \
+    -u "team@wiremock.io:$WIREMOCK_CLOUD_API_TOKEN" \
     "$@"
 }
 
