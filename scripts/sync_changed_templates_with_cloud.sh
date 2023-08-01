@@ -72,13 +72,13 @@ put_template() {
       -d "$data" \
       "$WIREMOCK_CLOUD_URL/v1/api-templates/catalogues/public/$slug" \
   )"; then
-    next "$metadata" "$apiTemplate"
+    put_stubs "$metadata" "$apiTemplate"
   else
     echo "Failed to PUT /v1/api-templates/catalogues/public/$slug"
   fi
 }
 
-next() {
+put_stubs() {
   local metadata=$1
   local apiTemplate=$2
 
@@ -100,7 +100,7 @@ next() {
 }
 
 curl_auth() {
-  curl -sS --fail-with-body \
+  curl -sS \
     -u "team@wiremock.io:$WIREMOCK_CLOUD_API_TOKEN" \
     "$@"
 }
