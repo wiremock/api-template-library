@@ -6,3 +6,4 @@ description: "DigitalOcean API"
 tags:
 - "cloud"
 stubs: "digitalocean.com-stubs.json"
+swagger: "digitalocean.com-swagger.json"
