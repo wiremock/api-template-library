@@ -14,4 +14,4 @@ TODO: description
 - [ ] The PR title represents the desired changelog entry
 - [ ] OpenAPI and WireMock JSON files are valid
 - [ ] The metadata files are added
-- [ ] If provided, you have a permission to use this logo
+- [ ] If provided, you have permission to use this logo
